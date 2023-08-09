@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <link href="../css/mainCss.css" rel="stylesheet">
 <title>Insert title here</title>
 <style>
@@ -75,8 +75,15 @@
 	    height: 50px;
 	    padding: 8px;
 	}
-	input, select{
-		margin-bottom : 20px;
+	.part{
+		margin : 20px 0px;
+	}
+	.red{
+		color : #ff9797;
+	}
+	h2{
+		font-weight : 100;
+		margin : 5px 0px;
 	}
 </style>
 </head>
@@ -84,12 +91,13 @@
 <div id="app">
 	<div id="container">
 	<div><img src="../css/image/footer_img.png" id="logo"></div>
-	<div><h1>È¸¿ø°¡ÀÔ</h1></div>
+	<div><h1>íšŒì›ê°€ì…</h1></div>
 	<hr>
-	<div>ÀÌ¸ŞÀÏ<span class="clause1"> *</span></div>
-	<div><input class="email" type="text" v-model="user.userEmail1" @keyup="fnCheck" autofocus placeholder="ÀÌ¸ŞÀÏ"> @ 
+	<div class="part">
+	<div><h2>ì´ë©”ì¼<span class="clause1"> *</span></h2></div>
+	<div><input class="email" type="text" v-model="user.userEmail1" @click="fnMailCheck" @keyup="fnMailCheck" placeholder="ì´ë©”ì¼"> @ 
 	<select v-model="user.userEmail2" class="email2">
-		<option value="">¼±ÅÃÇÏ¼¼¿ä</option>
+		<option value="">ì„ íƒí•´ì£¼ì„¸ìš”.</option>
 		<option value="naver.com">naver.com</option>
 		<option value="hanmail.net">hanmail.net</option>
 		<option value="daum.net">daum.net</option>
@@ -99,24 +107,36 @@
 		<option value="icloud.com">icloud.com</option>
 	</select>
 	</div>
-	<div><span v-if="user.userEmail != ''">{{message}}</span></div>
+	<div><span class="red">{{emailMs}}</span></div>
+	</div>
 	
-	<div>ºñ¹Ğ¹øÈ£<span class="clause1"> *</span></div>
-	<div><input class="put" type="password" v-model="user.pw1" placeholder="ºñ¹Ğ¹øÈ£"></div>
-	
-	<div>ºñ¹Ğ¹øÈ£ È®ÀÎ<span class="clause1"> *</span></div>
-	<div><input class="put" type="password" v-model="user.pw2" placeholder="ºñ¹Ğ¹øÈ£ È®ÀÎ"></div>
-	
-	<div>ÀÌ¸§<span class="clause1"> *</span></div>
-	<div><input class="put" type="text" v-model="user.userName" placeholder="ÀÌ¸§"></div>
-	
-	<div>´Ğ³×ÀÓ<span class="clause1"> *</span></div>
-	<div><input class="put" type="text" v-model="user.nick" placeholder="´Ğ³×ÀÓ"></div>
-	
-	<div>ÈŞ´ëÆù ¹øÈ£<span class="clause1"> *</span></div>
-	<div><input class="put" type="text" v-model="user.phone" placeholder="ÈŞ´ëÆù ¹øÈ£ '-'Á¦¿Ü ¼ıÀÚ¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä."></div>
-	
-	<div>»ı³â¿ùÀÏ</div>
+	<div class="part">
+	<div><h2>ë¹„ë°€ë²ˆí˜¸<span class="clause1"> *</span></h2></div>
+	<div><input class="put" type="password" v-model="user.pw1" placeholder="ë¹„ë°€ë²ˆí˜¸" @click="fnPwdCheck" @keyup="fnPwdCheck"></div>
+	<div><span class="red">{{pw1Ms}}</span></div>
+	</div>
+	<div class="part">
+	<div><h2>ë¹„ë°€ë²ˆí˜¸ í™•ì¸<span class="clause1"> *</span></h2></div>
+	<div><input class="put" type="password" v-model="user.pw2" placeholder="ë¹„ë°€ë²ˆí˜¸ í™•ì¸" @click="fnPwd2Check" @keyup="fnPwd2Check"></div>
+	<div><span class="red">{{pw2Ms}}</span></div>
+	</div>
+	<div class="part">
+	<div><h2>ì´ë¦„<span class="clause1"> *</span></h2></div>
+	<div><input class="put" type="text" v-model="user.userName" placeholder="ì´ë¦„" @click="fnNameCheck" @keyup="fnNameCheck"></div>
+	<div><span class="red">{{nameMs}}</span></div>
+	</div>
+	<div class="part">
+	<div><h2>ë‹‰ë„¤ì„<span class="clause1"> *</span></h2></div>
+	<div><input class="put" type="text" v-model="user.nick" placeholder="ë‹‰ë„¤ì„" @click="fnNickCheck" @keyup="fnNickCheck"></div>
+	<div><span class="red">{{nickMs}}</span></div>
+	</div>
+	<div class="part">
+	<div><h2>íœ´ëŒ€í° ë²ˆí˜¸<span class="clause1"> *</span></h2></div>
+	<div><input class="put" type="text" v-model="user.phone" placeholder="íœ´ëŒ€í° ë²ˆí˜¸ '-'ì œì™¸ ìˆ«ìë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”." @click="fnPhoneCheck" @keyup="fnPhoneCheck"></div>
+	<div><span class="red">{{phoneMs}}</span></div>
+	</div>
+	<div class="part">
+	<div><h2>ìƒë…„ì›”ì¼</h2></div>
 	<div>
 		<select v-model="user.bYear" class="select">
 			<% for(int i=2009; i>=1950; i--){%>
@@ -134,23 +154,25 @@
 			<%}%>
 		</select>
 	</div>
-	<div>¼ºº°</div> 
-	<div>
-		¿©¼º <input type="radio" v-model="user.gender" value="F">¡¡¡¡¡¡
-		¡¡³²¼º <input type="radio" v-model="user.gender" value="M">
 	</div>
-	
+	<div class="part">
+	<div><h2>ì„±ë³„</h2></div> 
+	<div>
+		ì—¬ì„± <input type="radio" v-model="user.gender" value="F">ã€€ã€€ã€€
+		ã€€ë‚¨ì„± <input type="radio" v-model="user.gender" value="M">
+	</div>
+	</div>
 	<hr>
-	<div>¾à°üµ¿ÀÇ</div>
-	<div><label><input type="checkbox" @click="fnAll" v-model="clause"> ÀüÃ¼µ¿ÀÇ</label></div>
-	<div><label><input type="checkbox" v-model="clause"> ¸¸ 14¼¼ ÀÌ»óÀÔ´Ï´Ù<span class="clause1">(ÇÊ¼ö)</span></label></div>
-	<div><label><input type="checkbox" v-model="clause"> ÀÌ¿ë¾à°ü<span class="clause1">(ÇÊ¼ö)</span></label></div>
-	<div><label><input type="checkbox" v-model="clause"> °³ÀÎÁ¤º¸¼öÁı ¹× ÀÌ¿ëµ¿ÀÇ<span class="clause1">(ÇÊ¼ö)</span></label></div>
-	<div><label><input type="checkbox" v-model="clause"> ÀÌº¥Æ®, ÄíÆù, Æ¯°¡ ¾Ë¸² ¸ŞÀÏ ¹× SMS µî ¼ö½Å<span class="clause2">(¼±ÅÃ)</span></label></div>
+	<div><h2>ì•½ê´€ë™ì˜</h2></div>
+	<div><label><input type="checkbox" @click="fnAll" v-model="clause"> ì „ì²´ë™ì˜</label></div>
+	<div><label><input type="checkbox" v-model="clause" value="m14"> ë§Œ 14ì„¸ ì´ìƒì…ë‹ˆë‹¤<span class="clause1">(í•„ìˆ˜)</span></label></div>
+	<div><label><input type="checkbox" v-model="clause" value="cla"> ì´ìš©ì•½ê´€<span class="clause1">(í•„ìˆ˜)</span></label></div>
+	<div><label><input type="checkbox" v-model="clause" value="cla2"> ê°œì¸ì •ë³´ìˆ˜ì§‘ ë° ì´ìš©ë™ì˜<span class="clause1">(í•„ìˆ˜)</span></label></div>
+	<div><label><input type="checkbox" v-model="clause" value="sms"> ì´ë²¤íŠ¸, ì¿ í°, íŠ¹ê°€ ì•Œë¦¼ ë©”ì¼ ë° SMS ë“± ìˆ˜ì‹ <span class="clause2">(ì„ íƒ)</span></label></div>
 	<hr>
-	<div><button @click="fnJoin" class="btn">È¸¿ø°¡ÀÔ</button></div>
+	<div><button @click="fnJoin" class="btn">íšŒì›ê°€ì…</button></div>
 
-	<div id="login">ÀÌ¹Ì ¾ÆÀÌµğ°¡ ÀÖÀ¸½Å°¡¿ä? <a href="login.do">·Î±×ÀÎ</a></div>
+	<div id="login">ì´ë¯¸ ì•„ì´ë””ê°€ ìˆìœ¼ì‹ ê°€ìš”? <a href="login.do">ë¡œê·¸ì¸</a></div>
 	
 	</div>
 </div>
@@ -177,42 +199,63 @@ var app = new Vue({
 		clause : [],
 		emailFlg : false,
 		nickFlg : false,
-		message : ""
+		message : "",
+		emailMs : "",
+		m14 : "",
+		sms : "",
+		cla : "",
+		cla2 : "",
+		pw1Ms : "",
+		pw2Ms : "",
+		nameMs : "",
+		nickMs : "",
+		phoneMs : ""
 	},// data
 	methods : {
+		
 		fnJoin : function(){
 			var self = this;
 			if(self.user.userEmail1 == ""){
-				alert("ÀÌ¸ŞÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
+				alert("ì´ë©”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”.");
 				return;
 			}
 			if(self.user.userEmail2 == ""){
-				alert("ÀÌ¸ŞÀÏÀ» ¼±ÅÃÇØÁÖ¼¼¿ä.");
+				alert("ì´ë©”ì¼ì„ ì„ íƒí•´ì£¼ì„¸ìš”.");
 				return;
 			}
 			if(self.user.pw1 == ""){
-				alert("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
+				alert("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
 				return;
 			}
 			if(self.user.pw1 != self.user.pw2){
-				alert("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+				alert("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 				return;
 			}
 			if(self.user.userName == ""){
-				alert("ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+				alert("ì´ë¦„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+				return;
+			}
+			var regType3 = /^[ê°€-í£a-zA-Z\s]*$/;
+			if(!regType3.test(self.user.userName)){
+				alert("ì´ë¦„ì€ ì˜ë¬¸, í•œê¸€ë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
 				return;
 			}
 			if(self.user.nick == ""){
-				alert("´Ğ³×ÀÓÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+				alert("ë‹‰ë„¤ì„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 				return;
 			}
-			if(self.user.phone == ""){
-				alert("ÈŞ´ëÆù ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			if(self.user.phone == "" || self.user.phone.length < 11){
+				alert("íœ´ëŒ€í° ë²ˆí˜¸ë¥¼ ì •í™•íˆ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 				return;
 			}
 			var regType1 = /^[0-9]+$/;
-			if(!regType1.test(self.user.phone) ){
-				alert("ÈŞ´ëÆù ¹øÈ£ ¼ıÀÚ¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			if(!regType1.test(self.user.phone)){
+				alert("íœ´ëŒ€í° ë²ˆí˜¸ ìˆ«ìë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+				return;
+			}
+			var regType2 = /^[ê°€-í£ã„±-ã…a-zA-Z0-9\s]*$/;
+			if(!regType2.test(self.user.nick)){
+				alert("ë‹‰ë„¤ì„ì— íŠ¹ìˆ˜ë¬¸ìë¥¼ ì œì™¸í•˜ì—¬ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 				return;
 			}
 		 	var nparmap = self.user;
@@ -222,7 +265,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	alert("È¸¿ø°¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+                	alert("íšŒì›ê°€ì…ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
                 }
             });
 		},
@@ -236,9 +279,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	if(data.cnt > 0){
-                		self.message = "Áßº¹µÈ ÀÌ¸ŞÀÏÀÔ´Ï´Ù.";
+                		self.message = "ì¤‘ë³µëœ ì´ë©”ì¼ì…ë‹ˆë‹¤.";
                 	} else {
-                		self.message = "»ç¿ë °¡´ÉÇÑ ÀÌ¸ŞÀÏÀÔ´Ï´Ù.";
+                		self.message = "ì‚¬ìš© ê°€ëŠ¥í•œ ì´ë©”ì¼ì…ë‹ˆë‹¤.";
                 		self.emailFlg = true;
                 	}
                 }
@@ -254,17 +297,82 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	if(data.cnt > 0){
-                		self.message = "Áßº¹µÈ ´Ğ³×ÀÓÀÔ´Ï´Ù.";
+                		self.message = "ì¤‘ë³µëœ ë‹‰ë„¤ì„ì…ë‹ˆë‹¤.";
                 	} else {
-                		self.message = "»ç¿ë °¡´ÉÇÑ ´Ğ³×ÀÓÀÔ´Ï´Ù.";
+                		self.message = "ì‚¬ìš© ê°€ëŠ¥í•œ ë‹‰ë„¤ì„ì…ë‹ˆë‹¤.";
                 		self.emailFlg = true;
                 	}
                 }
             });
 		},
+		fnMailCheck : function(){
+			var self = this;
+			if(self.user.userEmail1 == ""){
+				self.emailMs = "ì´ë©”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”.";
+			}else{
+				self.emailMs = "";
+			}
+		},
+		fnPwdCheck : function(){
+			var self = this;
+			if(self.user.pw1 == ""){
+				self.pw1Ms = "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.";
+			}else{
+				self.pw1Ms = "";
+			}
+		},
+		fnPwd2Check : function(){
+			var self = this;
+			if(self.user.pw1 == ""){
+				self.pw2Ms = "ë¹„ë°€ë²ˆí˜¸ í™•ì¸ì„ ì…ë ¥í•˜ì„¸ìš”.";
+			}else{
+				self.pw2Ms = "";
+			}
+		},
+		fnNameCheck : function(){
+			var self = this;
+			var regType3 = /^[ê°€-í£a-zA-Z\s]*$/;
+			if(self.user.userName == ""){
+				self.nameMs = "ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.";
+			}else if(!regType3.test(self.user.userName)){
+				self.nameMs = "ì´ë¦„ì€ ì˜ë¬¸, í•œê¸€ë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤.";
+			}else{
+				self.nameMs = "";
+			}
+		},
+		fnNickCheck : function(){
+			var self = this;
+			var regType2 = /^[a-zA-Z0-9\s]*$/;
+			if(self.user.nick == ""){
+				self.nickMs = "ë‹‰ë„¤ì„ì„ ì…ë ¥í•˜ì„¸ìš”.";
+			}else if(!regType2.test(self.user.nick)){
+				self.nickMs = "ë‹‰ë„¤ì„ì€ íŠ¹ìˆ˜ë¬¸ì ì œì™¸í•˜ê³  ì‚¬ìš©ê°€ëŠ¥í•©ë‹ˆë‹¤."
+			}else{
+				self.nickMs = "";
+			}
+		},
+		fnPhoneCheck : function(){
+			var self = this;
+			var regType1 = /^[0-9]+$/;
+			if(self.user.phone == ""){
+				self.phoneMs = "íœ´ëŒ€í° ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.";
+			}else if(!regType1.test(self.user.phone)){
+				self.phoneMs = "ìˆ«ìë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”.";
+			}else if(self.user.phone.length < 10){
+				self.phoneMs = "íœ´ëŒ€í° ë²ˆí˜¸ë¥¼ ì •í™•íˆ ì…ë ¥í•´ì£¼ì„¸ìš”.(10ìë¦¬ ì´ìƒ)";
+			}else{
+				self.phoneMs = "";
+			}
+		},
         fnAll : function(){
         	var self = this;
-        	/* self.clause = []; */
+        	if(self.clause.length > 0){
+        		self.clause = [];
+        	}else{
+        		self.clause = ['m14', 'cla', 'cla2', 'sms'];
+        	}
+        	
+        	
         }
 	}, // methods
 	created : function() {
