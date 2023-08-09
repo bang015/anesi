@@ -23,19 +23,28 @@ public class LoginController {
 		LoginService loginService;
 	@Autowired
 		HttpSession session;
+	//로그인
 	@RequestMapping("/login.do") 
 	public String login(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		
 		return "/login";
 		
 	}
-
-	
-	@RequestMapping("/text.do") 
-    public String test(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		return "/test";
+	//비회원 주문 조회
+	@RequestMapping("/nOrder.do") 
+	public String nOrder(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		
+		return "/non_user_order_search";
+		
+	}
+	// 주소 팝업창
+	@RequestMapping("/addr.do") 
+    public String addr(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception{
+		
+		return "/jusoPopup";
     }
 	
+	// 헤더
 	@RequestMapping("/header.do") 
 	public String header(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		return "/header";

@@ -13,6 +13,7 @@
 	
 </style>
 </head>
+<!-- 로그인 페이지 -->
 <body>
 <div id="app">
 	<div id="container">
@@ -24,7 +25,7 @@
 				<div class="login-title">
 					<span class="title1">로그인</span>
 				</div>
-				<div class="login-box">
+				<div class="login-box"> <!-- 로그인 입력 박스 -->
 					<input class="login-input" v-model="userEmail" placeholder="이메일">
 					<input class="login-input" type="password" v-model="pwd" placeholder="패스워드">
 				</div>
@@ -32,11 +33,11 @@
 					<button class="loginBtn btn" @click="fnLogin">로그인</button>
 				</div>
 			</div>
-			<div class="a-wrap">
+			<div class="a-wrap"> <!-- 기타등등 -->
 				<a  class="a a1">아이디찾기</a>
 				<a href="/join.do" class="a a2">회원가입</a>
 			</div>
-			<div class="non-user-wrap">
+			<div class="non-user-wrap"> <!-- 비회원 주문 조회 -->
 				<div class="non-user-title">
 					<a href="javascript:;" id="hidden-btn">비회원 주문 조회하기</a>
 				</div>

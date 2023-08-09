@@ -20,11 +20,11 @@ public class UserController {
 	
 	@Autowired 
 	HttpSession session;
-	
+	// 회원가입
 	@RequestMapping("/join.do") 
     public String test(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
         session.invalidate();
 		return "/join";
     }
-
+	
 }

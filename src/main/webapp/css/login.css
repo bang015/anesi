@@ -36,13 +36,13 @@
 		display: inline-block;
 		width: 80%;
 		height: 30px;
-		margin-left: 30px;
+		margin-left: 40px;
 		margin-top: 5px;
 	} 
 	.login-btn .loginBtn{
 		width: 82%;
 		height : 40px;
-		margin-left: 30px;
+		margin-left: 40px;
 		margin-top: 10px;
 		background: #A782C3;
 		border: 0;
@@ -61,10 +61,10 @@
 		
 	}
 	.a-wrap .a1{
-		margin-left: 120px;
+		margin-left: 130px;
 	}
 	.a-wrap .a2{
-		margin-left: 20px;
+		margin-left: 30px;
 	}
 	.non-user-wrap{
 		width: 100%;
@@ -91,13 +91,13 @@
 		display: inline-block;
 		width: 80%;
 		height: 30px;
-		margin-left: 30px;
+		margin-left:40px;
 		margin-top: 5px;
 	}
 	.non-user-btn .btn{
 		width: 82%;
 		height : 40px;
-		margin-left: 30px;
+		margin-left: 40px;
 		margin-top: 10px;
 		background: #A782C3;
 		border: 0;
