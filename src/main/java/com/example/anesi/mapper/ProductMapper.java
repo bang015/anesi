@@ -1,20 +1,16 @@
 package com.example.anesi.mapper;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.anesi.model.User;
+import com.example.anesi.model.Product;
 
 
 @Mapper
 public interface ProductMapper {
-	// 로그인
-	User selectUser(HashMap<String, Object> map);
-	// 로그인 아이디 존재 확인
-	User userCheckId(HashMap<String, Object> map);
-	// 로그인 실패 횟수 증가
-	int updateCnt(HashMap<String, Object> map);
-	// 로그인 실패 횟수 초기화
-	int reSetCnt(HashMap<String, Object> map);	
+	// Store서비스에 상품기본정보 가져오는 매퍼
+	List<Product> selectProduct(HashMap<String, Object> map);
+	
 }

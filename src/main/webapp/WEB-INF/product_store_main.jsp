@@ -74,29 +74,32 @@ body{
 	
 	<div><h1>인기상품</h1></div>
 	
-		<div class="production-item__content">
+		<div class="production-item__content" v-for="item in list">
 			<a href="javascript:;" class="production-item-thumnail">
 			    <img class="production-item-thumnail__image" src="../css/image/productMain/productMain_category1.png" >
 		    </a>
-		    <div class="production-item-header">
-			    <span class="production-item-header__brand">한샘</span>
-			    <span class="production-item-header__name">빕스타르</span>
-			    <div class="production-item-header__kind">식탁보
-			    <span class="production-item-header__size">150X150</span>
+		    <div class="production-item-header" >
+			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
+			    <span class="production-item-header__name">{{item.productName}}</span>
+			    <div class="production-item-header__kind">{{item.categoryName}} 
+			    <span class="production-item-header__country">{{item.country}}</span>
 			    </div>
 		    </div>
 			 
 		    <span class="production-item-price">
 		    
-		       <span class="production-item-price__orginal">
+		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
 			    정가
 			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__orginal2">109,000</span>
-			    </span>
+			    <span class="production-item-price__orginal2" >{{item.productPrice}}</span>
+			   </span>
+			    
+			    
 			    <!-- production-item-price__sell  : 파는 가격 -->
 		       <div class="production-item-price__sell">
 			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__sell2">87,200</span>
+			    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{item.discountPrice}}</span>
+			    <span class="production-item-price__sell2" v-else>{{item.productPrice}}</span>
 			    </div>
 	        </span>
 	        
@@ -110,187 +113,7 @@ body{
 				<a><i class="fa fa-shopping-cart "></i></a>
 		    
 	    </div> <!-- class="production-item__content" 끝-->
-		<div class="production-item__content">
-			<a href="javascript:;" class="production-item-thumnail">
-			    <img class="production-item-thumnail__image" src="../css/image/productMain/productMain_category1.png" >
-		    </a>
-		    <div class="production-item-header">
-			    <span class="production-item-header__brand">한샘</span>
-			    <span class="production-item-header__name">빕스타르</span>
-			    <div class="production-item-header__kind">식탁보
-			    <span class="production-item-header__size">150X150</span>
-			    </div>
-		    </div>
-			 
-		    <span class="production-item-price">
-		    
-		       <span class="production-item-price__orginal">
-			    정가
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__orginal2">109,000</span>
-			    </span>
-			    <!-- production-item-price__sell  : 파는 가격 -->
-		       <div class="production-item-price__sell">
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__sell2">87,200</span>
-			    </div>
-	        </span>
-	        
-	        
-			    <!--  production-item-rating : 별점-->
-		       <div class="production-item-rating">
-		       	<!-- 별모양-->
-			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
-			    <span class="production-item-rating__score">4.5</span>
-			   </div>
-				<a><i class="fa fa-shopping-cart "></i></a>
-				<a><i class="fa-regular fa-bookmark"></i></a>
-		    
-	    </div> <!-- class="production-item__content" 끝-->
-		<div class="production-item__content">
-			<a href="javascript:;" class="production-item-thumnail">
-			    <img class="production-item-thumnail__image" src="../css/image/productMain/productMain_category1.png" >
-		    </a>
-		    <div class="production-item-header">
-			    <span class="production-item-header__brand">한샘</span>
-			    <span class="production-item-header__name">빕스타르</span>
-			    <div class="production-item-header__kind">식탁보
-			    <span class="production-item-header__size">150X150</span>
-			    </div>
-		    </div>
-			 
-		    <span class="production-item-price">
-		    
-		       <span class="production-item-price__orginal">
-			    정가
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__orginal2">109,000</span>
-			    </span>
-			    <!-- production-item-price__sell  : 파는 가격 -->
-		       <div class="production-item-price__sell">
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__sell2">87,200</span>
-			    </div>
-	        </span>
-	        
-	        
-			    <!--  production-item-rating : 별점-->
-		       <div class="production-item-rating">
-		       	<!-- 별모양-->
-			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
-			    <span class="production-item-rating__score">4.5</span>
-			   </div>
-				<a><i class="fa fa-shopping-cart "></i></a>
-		    
-	    </div> <!-- class="production-item__content" 끝-->
-		<div class="production-item__content">
-			<a href="javascript:;" class="production-item-thumnail">
-			    <img class="production-item-thumnail__image" src="../css/image/productMain/productMain_category1.png" >
-		    </a>
-		    <div class="production-item-header">
-			    <span class="production-item-header__brand">한샘</span>
-			    <span class="production-item-header__name">빕스타르</span>
-			    <div class="production-item-header__kind">식탁보
-			    <span class="production-item-header__size">150X150</span>
-			    </div>
-		    </div>
-			 
-		    <span class="production-item-price">
-		    
-		       <span class="production-item-price__orginal">
-			    정가
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__orginal2">109,000</span>
-			    </span>
-			    <!-- production-item-price__sell  : 파는 가격 -->
-		       <div class="production-item-price__sell">
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__sell2">87,200</span>
-			    </div>
-	        </span>
-	        
-	        
-			    <!--  production-item-rating : 별점-->
-		       <div class="production-item-rating">
-		       	<!-- 별모양-->
-			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
-			    <span class="production-item-rating__score">4.5</span>
-			   </div>
-				<a><i class="fa fa-shopping-cart "></i></a>
-		    
-	    </div> <!-- class="production-item__content" 끝-->
-		<div class="production-item__content">
-			<a href="javascript:;" class="production-item-thumnail">
-			    <img class="production-item-thumnail__image" src="../css/image/productMain/productMain_category1.png" >
-		    </a>
-		    <div class="production-item-header">
-			    <span class="production-item-header__brand">한샘</span>
-			    <span class="production-item-header__name">빕스타르</span>
-			    <div class="production-item-header__kind">식탁보
-			    <span class="production-item-header__size">150X150</span>
-			    </div>
-		    </div>
-			 
-		    <span class="production-item-price">
-		    
-		       <span class="production-item-price__orginal">
-			    정가
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__orginal2">109,000</span>
-			    </span>
-			    <!-- production-item-price__sell  : 파는 가격 -->
-		       <div class="production-item-price__sell">
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__sell2">87,200</span>
-			    </div>
-	        </span>
-	        
-	        
-			    <!--  production-item-rating : 별점-->
-		       <div class="production-item-rating">
-		       	<!-- 별모양-->
-			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
-			    <span class="production-item-rating__score">4.5</span>
-			   </div>
-				<a><i class="fa fa-shopping-cart "></i></a>
-		    
-	    </div> <!-- class="production-item__content" 끝-->
-		<div class="production-item__content">
-			<a href="javascript:;" class="production-item-thumnail">
-			    <img class="production-item-thumnail__image" src="../css/image/productMain/productMain_category1.png" >
-		    </a>
-		    <div class="production-item-header">
-			    <span class="production-item-header__brand">한샘</span>
-			    <span class="production-item-header__name">빕스타르</span>
-			    <div class="production-item-header__kind">식탁보
-			    <span class="production-item-header__size">150X150</span>
-			    </div>
-		    </div>
-			 
-		    <span class="production-item-price">
-		    
-		       <span class="production-item-price__orginal">
-			    정가
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__orginal2">109,000</span>
-			    </span>
-			    <!-- production-item-price__sell  : 파는 가격 -->
-		       <div class="production-item-price__sell">
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__sell2">87,200</span>
-			    </div>
-	        </span>
-	        
-	        
-			    <!--  production-item-rating : 별점-->
-		       <div class="production-item-rating">
-		       	<!-- 별모양-->
-			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
-			    <span class="production-item-rating__score">4.5</span>
-			   </div>
-				<a><i class="fa fa-shopping-cart "></i></a>
-		    
-	    </div> <!-- class="production-item__content" 끝-->
+		
 	</div>
 </body>
 </html>
@@ -298,13 +121,28 @@ body{
 var app = new Vue({
 	el : '#app',
 	data : {
-
+		list : [],
+		item : ""
 	},// data
 	methods : {
-		
-	}, // methods
+		fnGetList : function(){
+            var self = this;
+            var nparmap = {};
+            $.ajax({
+                url : "/product/store_main.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	console.log(data);
+                	self.list = data.list;
+                }
+            }); 
+		}
+     }, // methods
 	created : function() {
 		var self = this;
+		self.fnGetList();
 
 	}// created
 });
