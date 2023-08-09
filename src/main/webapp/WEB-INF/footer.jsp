@@ -18,9 +18,7 @@
   	float : left;
 }
 
-
-
-#app{
+#container_footer{
 	height: .300px;
 	padding : 30px 20px;
 }
@@ -31,18 +29,12 @@
 	
 }
 
-
 #f_part1 {
 	
     float : left;
     width :40%;
     padding-left : 20px;
-
-    
 }
-
-
-
 
 #f_part2 {
 
@@ -73,8 +65,6 @@
 	font-weight : bold;
 }
 
-
-
 /*파트1의 content */
 .pt1_content{
 	font-weight : bold;
@@ -90,39 +80,18 @@
 }
 
 
-a:link,
-a:visited {
-  color: black;
-  text-decoration: none;
-  transition: color 0.3s, background 0.3s;
-}
-
-/* 호버 스타일 */
-a:hover {
-  color: #A782C3;
-  background: #f5f5f5;
-  text-decoration: underline;
-}
-
-/* 활성 스타일 */
-a:active {
-  color: #A782C3;
-  text-decoration: none;
-}
-
-
 </style>
 </head>
 <!-- 주석 꼭 남겨주세요 넹 -->
 <body>
 
 <hr>
-	<div id="app">
+	<div id="container_footer">
 	<!-- 로고 클릭시 main화면으로 전환 또는, 제일 상단으로-->
 	<!-- 이미지를 포함 모든 링크는 href="javascript:;"-->
 	
 	<a href="javascript:;">
-    <img id="f_img" src="../css/image/footer_img.png" >
+    <img id="f_img" src="../css/image/anesilogo.png" >
     </a>
     <div id="f_part1">
        <div class="pt_title"><p id="anesi_info">anesi 기본정보</p></div>
