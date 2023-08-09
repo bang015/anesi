@@ -4,33 +4,36 @@ package com.example.anesi.model;
 
 
 public class User {
-	private String uId;
-	private String pwd;
-	private String uName;
+	private int userNo;
+	private String userEmail;
+	private String userPwd;
 	private String phone;
-	private String age;
-	private String addr;
+	private String nick;
+	private String userName;
 	private String status;
 	private int cnt;
-	private String banyn;
-	
-	public String getuId() {
-		return uId;
+	private String borthday;
+	private String gender;
+	private String cDateTime;
+	private String uDateTime;
+	private String deleteYn;
+	public int getUserNo() {
+		return userNo;
 	}
-	public void setuId(String uId) {
-		this.uId = uId;
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
-	public String getPwd() {
-		return pwd;
+	public String getUserEmail() {
+		return userEmail;
 	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
-	public String getuName() {
-		return uName;
+	public String getUserPwd() {
+		return userPwd;
 	}
-	public void setuName(String uName) {
-		this.uName = uName;
+	public void setUserPwd(String userPwd) {
+		this.userPwd = userPwd;
 	}
 	public String getPhone() {
 		return phone;
@@ -38,17 +41,17 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getAge() {
-		return age;
+	public String getNick() {
+		return nick;
 	}
-	public void setAge(String age) {
-		this.age = age;
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
-	public String getAddr() {
-		return addr;
+	public String getUserName() {
+		return userName;
 	}
-	public void setAddr(String addr) {
-		this.addr = addr;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getStatus() {
 		return status;
@@ -62,12 +65,37 @@ public class User {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
-	public String getBanyn() {
-		return banyn;
+	public String getBorthday() {
+		return borthday;
 	}
-	public void setBanyn(String banyn) {
-		this.banyn = banyn;
+	public void setBorthday(String borthday) {
+		this.borthday = borthday;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getcDateTime() {
+		return cDateTime;
+	}
+	public void setcDateTime(String cDateTime) {
+		this.cDateTime = cDateTime;
+	}
+	public String getuDateTime() {
+		return uDateTime;
+	}
+	public void setuDateTime(String uDateTime) {
+		this.uDateTime = uDateTime;
+	}
+	public String getDeleteYn() {
+		return deleteYn;
+	}
+	public void setDeleteYn(String deleteYn) {
+		this.deleteYn = deleteYn;
 	}
 	
+
 
 }

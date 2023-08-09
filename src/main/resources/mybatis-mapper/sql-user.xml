@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="com.example.anesi.mapper.user">
+<mapper namespace="com.example.anesi.mapper.LoginMapper">
 	<!-- 로그인 쿼리 -->
 	<select id="selectUser" parameterType="hashmap" resultType="com.example.anesi.model.User">
 		SELECT * 
-		FROM TBL_USER
-		WHERE U_ID = #{userId} AND PWD = #{pwd}
+		FROM t3_TBL_USER
+		WHERE USER_EMAIL = #{userEmail} AND USER_PWD = #{pwd}
 	</select>
 	<!-- 로그인 아이디 확인 -->
-	<select id="userCnt" parameterType="hashmap" resultType="int">
-		select count(*) as cnt
-		from tbl_user
-		where u_id = #{userId}
+	<select id="userCheckId" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		select *
+		from t3_tbl_user
+		where USER_EMAIL = #{userEmail}
 	</select>
+	<!-- 로그인 실패 횟수 증가 -->
+	<update id="updateCnt" parameterType="hashmap">
+		update t3_tbl_user
+		set
+		cnt = cnt + 1
+		where USER_EMAIL = #{userEmail}
+	</update>
+	<!-- 로그인 실패 횟수 초기화 -->
+	<update id="reSetCnt" parameterType="hashmap">
+		update t3_tbl_user
+		set
+		cnt = 0
+		where USER_EMAIL = #{userEmail}
+	</update>	
 </mapper>
