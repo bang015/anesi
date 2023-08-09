@@ -90,27 +90,25 @@
 }
 
 
-a:link {
-  color : black;
-    text-decoration: none;
-  
-}
+a:link,
 a:visited {
-  color : black;
-    text-decoration: none;
-  
-}
-a:hover {
-  color : #A782C3;
-  text-decoration: underline;
-  
-}
-a:active {
-  color : #A782C3;
+  color: black;
   text-decoration: none;
-  
+  transition: color 0.3s, background 0.3s;
 }
 
+/* 호버 스타일 */
+a:hover {
+  color: #A782C3;
+  background: #f5f5f5;
+  text-decoration: underline;
+}
+
+/* 활성 스타일 */
+a:active {
+  color: #A782C3;
+  text-decoration: none;
+}
 
 
 </style>
