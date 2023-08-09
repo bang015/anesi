@@ -27,19 +27,19 @@
 			<div class="box"><!-- 상품 내용 -->
 				<div><h3>상품 정보</h3> <span class="err"> {{errMsg1}}</span></div>
 				<div>
-					<div>상품 이름*</div>
+					<div>상품 이름</div>
 					<input v-model="product.productName">
 				</div>
 				<div>
-					<div>제조사*</div>
+					<div>제조사</div>
 					<input v-model="product.manufacturer">
 				</div>
 				<div>
-					<div>제조국*</div>
+					<div>제조국</div>
 					<input v-model="product.country">
 				</div>
 				<div>
-					<div>상품 가격*</div>
+					<div>상품 가격</div>
 					<input v-model="product.productPrice">
 				</div>
 			</div>
@@ -61,7 +61,7 @@
 						<td class="tdthsy"><input v-model="optionList[index].optionName"></td>
 						<td class="tdthsy"><input v-model="optionList[index].productStock"></td>
 						<td class="tdthsy"><input v-model="optionList[index].optionPrice"></td>
-						<td class="tdthsy"><button @click="fnOptionDelete(index)">삭제</button></td>
+						<td class="tdthsy"><button @click="fnOptionDelete(index)" class="delBtn">삭제</button></td>
 				</table>
 			</div>
 			<div class="box"> <!-- 상품 이미지 등록 -->
@@ -80,8 +80,8 @@
 					<tr v-for="(item, index) in productImgList">
 						<td class="tdthsy"><input type="radio" v-model="item.thumbnail" value="Y" name="thumbnail"></td>
 						<td class="tdthsy"><input v-model="item.orgName"></td>
-						<td class="tdthsy"> <input type="file" @change="fnOnFileChange"></td>
-						<td class="tdthsy"><button @click="fnProductImgDel(index)">삭제</button></td>
+						<td class="tdthsy"><label class="fileBox">파일선택<input type="file" @change="fnOnFileChange" class="fileBtn"></label></td>
+						<td class="tdthsy"><button @click="fnProductImgDel(index)" class="delBtn">삭제</button></td>
 					</tr>
 				</table>
 				<div class="imgDiv">
@@ -101,11 +101,11 @@
 					</tr>
 					<tr v-for="(item, index) in contentImgList">
 						<td class="tdthsy"><input type="file"></td>
-						<td class="tdthsy"><button @click="fnContentImgDel(index)">삭제</button></td>
+						<td class="tdthsy"><button @click="fnContentImgDel(index, event)" class="delBtn">삭제</button></td>
 					</tr>
 				</table>
 			</div>
-			<button @click="">판매등록</button>
+			<button @click="" class="addBtn">판매등록</button>
 		</div>
 	</div>
 </body>
@@ -160,21 +160,33 @@ var app = new Vue({
 			var self = this;
 			self.contentImgList.splice(index,1);
 		},
-		fnOnFileChange(event) {
+		fnOnFileChange(event, index) {
 			var self = this;
 			self.errMsg2 = "";
-		      const file = event.target.files[0];
-		      if (file) {
-		    	  self.imageList.push(URL.createObjectURL(file));
-		      }
+		    const file = event.target.files[0];	
+		    if (file) {
+		      self.imageList.splice(index,1)
+		      self.imageList.push(URL.createObjectURL(file));
+		    }
 		},
 		fnGetcategoryList1(){
-
+			var self = this;
+			var nparmap = {};
+            $.ajax({
+                url : "category.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	self.categoryList1 = data.list;
+                	console.log(self.categoryList1)
+                }
+            });
 		}
 	}, // methods
 	created : function() {
 		var self = this;
-		//self.fnGetcategoryList1();
+		self.fnGetcategoryList1();
 	}// created
 });
 </script>

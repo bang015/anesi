@@ -5,8 +5,14 @@
 	<!-- 로그인 쿼리 -->
 	<select id="selectProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
 		SELECT * 
-		FROM T3_TBL_PRODUCT
+		FROM t3_tbl_product
 		WHERE USER_EMAIL = #{userEmail} AND USER_PWD = #{pwd}
 	</select>
 	
+	<!-- 카테고리 검색 -->
+	<select id="selectCategoryList" parameterType="hashmap" resultType="com.example.anesi.model.Category">
+		SELECT *
+		FROM t3_tbl_product_category
+		WHERE MOD(CATEGORY_NO, 10) = 0
+	</select>
 </mapper>
