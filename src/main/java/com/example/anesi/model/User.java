@@ -67,10 +67,10 @@ public class User {
 		this.cnt = cnt;
 	}
 	public String getBorthday() {
-		return borthday;
+		return birthday;
 	}
 	public void setBorthday(String borthday) {
-		this.borthday = borthday;
+		this.birthday = borthday;
 	}
 	public String getGender() {
 		return gender;
