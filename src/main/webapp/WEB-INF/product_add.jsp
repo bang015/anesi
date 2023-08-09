@@ -5,7 +5,7 @@
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<link href="../css/mainCss.css" rel="stylesheet">>
+<link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <style>
@@ -14,7 +14,7 @@
 <!-- 주석 꼭 남겨주세요 -->
 <body>
 	<div id="app">
-	
+		집
 	</div>
 </body>
 </html>
