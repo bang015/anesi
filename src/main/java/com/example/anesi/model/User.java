@@ -17,6 +17,7 @@ public class User {
 	private String cDateTime;
 	private String uDateTime;
 	private String deleteYn;
+	
 	public int getUserNo() {
 		return userNo;
 	}

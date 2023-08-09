@@ -10,3 +10,38 @@
 	text-align: center;
 	padding: 10px;
 }
+.productTitleAdd{
+	margin-bottom: 20px;
+	border-bottom: 1px solid #aaa;
+}
+.pvImg{
+	width: 200px;
+	height: 200px;
+}
+.guide{
+	font-size: 13px;
+	color: #A782C3;
+}
+
+.err{
+	color : #ff9797;
+}
+.box{
+	border: 2px solid #eee;
+	padding: 20px;
+	padding-top: 0px;
+	border-radius: 10px;
+	margin-bottom: 20px;
+}
+
+.btn{
+	width: 10%;
+	padding: 5px 10px;
+	height : 30px;
+	margin-left: 40px;
+	margin-top: 10px;
+	background: #A782C3;
+	border: 0;
+	border-radius: 5px;
+	color: #fff;
+}
