@@ -46,4 +46,10 @@
 		cnt = 0
 		where USER_EMAIL = #{userEmail}
 	</update>	
+	<!-- 비회원 주문 조회 -->
+	<select id="selectNOrder" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT * 
+		FROM t3_tbl_nonuser_order o
+		WHERE o.ORDER_NO='1' AND o.NONUSER_PHONE = '01012341234'
+	</select> 	
 </mapper>

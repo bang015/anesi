@@ -10,7 +10,6 @@
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <style>
-	
 </style>
 </head>
 <!-- 비회원 주문 조회페이지 -->
@@ -18,26 +17,23 @@
 	<div id="app">
 		<div id="container">
 			<div class="content">
-				<div class="nUser-title">
-					<span>비회원 주문 조회</span>
-				</div>
 				<div class="table-wrap">
 					<table>
 						<tr>
-							<td>받으시는 분</td>
-							<td><input v-model="user.nUserName"></td>
+							<td>주문자 성함</td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>휴대폰 번호</td>
-							<td><input v-model="user.nUserPhone"></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td>주소</td>
 							<td>
-								<input type="text" v-model="user.zipNo" placeholder="우편번호">
+								<input type="text" v-model="zipNo" placeholder="우편번호">
 								<button @click="fnSearchAddr">주소 검색</button><br>
-								<input type="text" v-model="user.addr" placeholder="주소"><br>
-								<input type="text" v-model="user.addrDetail" placeholder="상세주소">
+								<input type="text" v-model="addr" placeholder="주소"><br>
+								<input type="text" v-model="addrDetail" placeholder="상세주소">
 						
 							</td>
 						</tr>
@@ -55,20 +51,11 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 var app = new Vue({
 	el : '#app',
 	data : {
-		user : {
-			nUserName : "",
-			nUserPhone : "",
-			addr : "",
-			addrDetail : "",
-			zipNo : ""	
-		}
-		
+		addr : "",
+		addrDetail : "",
+		zipNo : ""
 	},// data
 	methods : {
-		fnGetList : function(){
-			
-			
-		},
 		fnSearchAddr : function (){
 			var self = this;
     		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
@@ -78,12 +65,16 @@ var app = new Vue({
     		var self = this;
     		self.user.addr = roadAddrPart1;
     		self.user.addrDetail = addrDetail;
-    		self.user.zipNo = zipNo;
+    		// 콘솔 통해 각 변수 값 찍어보고 필요한거 가져다 쓰면 됩니다.
+    		console.log(zipNo);
+    		console.log(roadAddrPart1);
+    		console.log(addrDetail);
+    		console.log(engAddr);
     	}
 	}, // methods
 	created : function() {
 		var self = this;
-		
+
 	}// created
 });
 </script>

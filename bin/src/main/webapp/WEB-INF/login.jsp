@@ -43,11 +43,11 @@
 				</div>
 				<div id="hidden" v-if="true" class="non-user-hidden">
 					<div class="non-user-box">
-						<input v-model="orderNo" placeholder="주문번호">
-						<input v-model="email" placeholder="이메일">
+						<input placeholder="주문번호">
+						<input placeholder="이메일">
 					</div>
 					<div class="non-user-btn">
-						<button @click="nUserPage" class="btn">주문조회</button>
+						<button class="btn">주문조회</button>
 					</div>
 				</div>
 			</div>
@@ -67,11 +67,7 @@ var app = new Vue({
 	data : {
 		userEmail : "",
 		pwd : "",
-		hidden : false,
-		orderNo : "",
-		email : ""	
-	
-		
+		hidden : false
 	},// data
 	methods : {
 		fnLogin : function(){
@@ -100,24 +96,6 @@ var app = new Vue({
         		self.hidden=false;
         	}
         	console.log(self.hidden);
-        },
-        nUserPage : function(){
-        	var self = this;
-            var nparmap = {orderNo: self.orderNo, email : self.email};            
-            $.ajax({
-                url : "nOrder.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {                
-               		if(data.success){                		
-               				alert(data.message);
-                       			                	
-                   	} else {	
-                   		alert(data.message);
-                   	}
-                }                
-            }); 
         }
 	}, // methods
 	created : function() {

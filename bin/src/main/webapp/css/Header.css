@@ -1,0 +1,86 @@
+@charset "EUC-KR";
+.logo{
+  width: 100px;
+}
+
+header {
+  position: relative;
+}
+
+#header_navi {
+  position: absolute;
+  right: 50px;
+  bottom: 40px;
+}
+
+#header_navi li {
+  display: inline-flex;
+  align-items: center;
+  margin: 10px;
+  flex-direction: column;
+}
+
+#header_navi li span {
+  margin-left: 0;
+  margin-top: 10px;
+}
+
+#header_navi li i {
+  font-size: 20px;
+}
+.headerbtn {
+    position: absolute;
+    top:40%;
+    background-color:#A782C3;
+    text-align: center;
+    color: #fff;
+    border:none; 
+    border-radius:10px; 
+    padding:15px;
+    min-height:15px; 
+    min-width: 50px;
+       right: -55px;
+       top:0px;
+  }
+  .headerbtn:hover {
+      background-color:rgb(164, 80, 239);
+      transition: 0.7s;
+  }
+  .category-toggle{
+  background-color:#fff;
+  border: #fff;
+    text-align: center;
+     border-radius:10px; 
+    padding:8px;
+    min-height:10px; 
+    min-width: 50px;
+    }
+    .category-toggle:hover {
+      background-color:rgb(235, 236, 237);
+      transition: 0.7s;
+  }
+  .headerfont{
+	  font-size: 17px;
+	  margin-left: 20px;
+  }
+  .v-line {
+  border-left : thin  solid #000;
+   height:100%;
+}
+.category-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-list li {
+  /* 카테고리 스타일링 */
+  padding: .5em;
+  border-bottom: 1px solid #ccc;
+}
+.category-list-container {
+    position: absolute;
+    width: 20%;
+}
+  
+  
