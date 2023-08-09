@@ -31,8 +31,8 @@
 
 		<ul id="header_navi">
 			<li><a><i class="fa fa-shopping-cart "></i></a></li>
-			<li><a><i class="fa-solid fa-door-open "></i></a><span>로그인</span></li>
-			<li><a><i class="fa-solid fa-user-plus "></i></a><span>회원가입</span></li>
+			<li><a href="login.do"><i class="fa-solid fa-door-open "></i></a><span>로그인</span></li>
+			<li><a href="join.do"><i class="fa-solid fa-user-plus "></i></a><span>회원가입</span></li>
 			<li><a><i class="fa-solid fa-user "></i></a><span>마이페이지</span></li>
 			<li><a><i class="fa-solid fa-bookmark "></i></a><span></span></li>
 			<li><a><i class="fa-solid fa-bell "></i></a><span></span></li>
