@@ -65,8 +65,6 @@
 	font-weight : bold;
 }
 
-
-
 /*파트1의 content */
 .pt1_content{
 	font-weight : bold;
