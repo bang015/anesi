@@ -1,63 +1,223 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<link href="../css/mainCss.css">
-<meta charset="EUC-KR">
+<link href="../css/mainCss.css" rel="stylesheet">
+<meta charset="UTF-8">
 <title>Footer</title>
 <style>
+
+
+
+#f_img{
+	width : 100px;
+	height : 100px;
+  	float : left;
+}
+
+
+
+#app{
+	height: .300px;
+	padding : 30px 20px;
+}
+
+#anesi_info{
+	margin : 0px 0px 5px;
+	font-size : 14px;
+	
+}
+
+
+#f_part1 {
+	
+    float : left;
+    width :40%;
+    padding-left : 20px;
+
+    
+}
+
+
+
+
+#f_part2 {
+
+  margin-top : 20px; 
+}
+#f_part3 {
+
+   float : left;
+    width :15%;
+}
+#f_part4 {
+    float : left;
+    width :20%;
+}
+#f_part5 {
+    float : left;
+    width :10%;
+
+}
+#f_part6 {
+    position: absolute;
+    top : 180px;
+    width: 100%;
+    text-align: center;
+    padding: 10px ;
+}
+.content_bold{
+	font-weight : bold;
+}
+
+
+
+/*íŒŒíŠ¸1ì˜ content */
+.pt1_content{
+	font-weight : bold;
+}
+.pt_title{
+	font-weight : bold;
+	font-size : 13px;
+	margin-bottom : 5px;
+}
+.pt2_content{
+	margin-right:10px;
+
+}
+
+
+a:link {
+  color : black;
+    text-decoration: none;
+  
+}
+a:visited {
+  color : black;
+    text-decoration: none;
+  
+}
+a:hover {
+  color : #A782C3;
+  text-decoration: underline;
+  
+}
+a:active {
+  color : #A782C3;
+  text-decoration: none;
+  
+}
+
+
+
 </style>
 </head>
-<!-- ÁÖ¼® ²À ³²°ÜÁÖ¼¼¿ä ³ß -->
+<!-- ì£¼ì„ ê¼­ ë‚¨ê²¨ì£¼ì„¸ìš” ë„¹ -->
 <body>
+
+<hr>
 	<div id="app">
-    <img id="f_img" src="img.png">
-    
+	<!-- ë¡œê³  í´ë¦­ì‹œ mainí™”ë©´ìœ¼ë¡œ ì „í™˜ ë˜ëŠ”, ì œì¼ ìƒë‹¨ìœ¼ë¡œ-->
+	<!-- ì´ë¯¸ì§€ë¥¼ í¬í•¨ ëª¨ë“  ë§í¬ëŠ” href="javascript:;"-->
+	
+	<a href="javascript:;">
+    <img id="f_img" src="../css/image/footer_img.png" >
+    </a>
     <div id="f_part1">
-       <div class="Á¦¸ñ">ÀüÀÚ±İÀ¶°Å·¡ ºĞÀïÃ³¸®</div>
-       <div class="³»¿ë">
-           <div>ÀüÈ­ 1588-XXXX</div>
-           <div><a href="javascript:;">1:1 ¹®ÀÇ ¹Ù·Î°¡±â</a></div>
+       <div class="pt_title"><p id="anesi_info">anesi ê¸°ë³¸ì •ë³´</p></div>
+       <div class="ë‚´ìš©">
+           <div>
+          	<span class="content_bold" >ìƒí˜¸ëª…</span>
+         	<span>ì•„ë„¤ì‹œ(anesi)</span>
+         	
+          	<span class="content_bold" >ëŒ€í‘œìëª…</span>
+         	<span>ì •ì„ ì¼</span>
+           </div>
+           <div>
+          	<span class="content_bold" >ì‚¬ì—…ì¥ ì£¼ì†Œ</span>
+         	<span>ì¸ì²œì‹œ ë¶€í‰êµ¬ ê²½ì›ëŒ€ë¡œ 1366,(ë¶€í‰ë™, ìŠ¤í…Œì´ì…˜íƒ€ì›Œ 7F)</span>
+           </div>
+         	
+           <div>
+          	<span class="content_bold" >ëŒ€í‘œ ì „í™”</span>
+         	<span>1588-8282</span>
+         	
+          	<span class="content_bold" >ì‚¬ì—…ì ë“±ë¡ë²ˆí˜¸</span>
+         	<span>152-85-74445</span>
+         	
+          	<span class="content_bold" >í†µì‹ íŒë§¤ì—… ì‹ ê³ ë²ˆí˜¸</span>
+         	<span>15-45-7822</span>
+           </div>
+           
+           <div>
+           	<span class="content_bold">ê°œì¸ì •ë³´ë³´í˜¸ì±…ì„ì</span>
+         	<span>ìµœì¸ê²½</span>
+           </div>
+           
        </div>
+       
+       
+       <div id="f_part2">
+     	<span class="pt2_content"><a href="javascript:;">íšŒì‚¬ì†Œê°œ</a></span>
+     	<span class="pt2_content"><a href="javascript:;">ì´ìš©ì•½ê´€</a></span>
+     	<span class="pt2_content"><a href="javascript:;">ê°œì¸ì •ë³´ì²˜ë¦¬ë°©ì¹¨</a></span>
+     	<span class="pt2_content"><a href="javascript:;">ì´ìš©ì•ˆë‚´</a></span>
+   		</div>
    </div>
    
-   <div id="f_part1">
-       <div class="Á¦¸ñ">°í°´¼¾ÅÍ</div>
-       <div class="³»¿ë">
-           <div>°­¿øµµ ÃáÃµ½Ã Åğ°è·Î 89 °­¿øÀü¹®°Ç¼³È¸°ü</div>
-           <div>wjsghk 1588-XXXX</div>
-           <div>°áÁ¦µµ¿ë½Å°í 1588-XXXX</div>
-           <div><a href="javascript:;">1:1¹®ÀÇ ¹Ù·Î°¡±â</a></div>
-       </div>
-   </div>
    
-   <div id="f_part1">
-       <div class="Á¦¸ñ"> ³×ÀÌ¹ö¢ß</div>
-       <div class="³»¿ë">
-           <div>»ç¾÷ÀÚµî·Ï¹øÈ£ 220-81-62517</div>
-           <div>Åë½ÅÆÇ¸Å¾÷½Å°í¹øÈ£ 2006-ÀÎÃµ-0692È£</div>
-           <div>´ëÇ¥ÀÌ»ç ÃÖÀÎ°æ</div>
-           <span class="rborder">ÀüÈ­ 1533-XXXX</span>
-           <span>ÀÌ¸ŞÀÏ XXX@naver.com</span>
-       </div>
+   
+	   <div id="f_part3">
+	       <div class="pt_title"> ê³ ê°ì„¼í„°ì£¼ë¬¸ì •ë³´</div>
+	       <div class="ë‚´ìš©">
+	           <div>ìƒë‹´/ì£¼ë¬¸ì „í™” 1588-2222
+	           </div>
+	           
+	           <div>ìƒë‹´ì£¼ë¬¸ì´ë©”ì¼
+	           <span>test@test.com</span>
+	           </div>
+	           <div>CSìš´ì˜ì‹œê°„
+		           <div>Daily 10:00-18:00</div>
+		           <div>Lunch 12:00-13:00</div>
+		           <div>Sat&Sun&Holiday Day Off</div>
+	           </div>
+	       </div>
+	   </div>
+   
+	   <div id="f_part4">
+	       <div class="pt_title"> ê²°ì œì •ë³´</div>
+	       <div class="ë‚´ìš©">
+	          
+	           <div>ë¬´í†µì¥ ê³„ì¢Œì •ë³´
+	           <span>ì‹ í•œì€í–‰ 110-409-609660</span>
+	           </div>
+	           <div>ì˜ˆê¸ˆì£¼ ì •ì„ ì¼</div>
+	       </div>
+	   </div>
+	   
+	   <div id="f_part5">
+	       <div class="pt_title"> SNS</div>
+	       <div class="ë‚´ìš©">
+	          
+	           <div><a href="https://www.instagram.com/">instagram</a></div>
+	           <div><a href="https://www.youtube.com/youtube">youtube</div>
+	           <div><a href="https://ko-kr.facebook.com/">facebook</div>
+	           <div><a href="https://www.kakaocorp.com/">kakao</div>
+	           <div><a href="https://twitter.com/">twitter</div>
+	           <div><a href="http://blog.naver.com/">blog</div>
+	       </div>
+	   </div>
+	   
+	   <div id="f_part6">
+	    <span><a href="https://www.copyright.or.kr/">Copyright Â© ì•„ë„¤ì‹œ. All Rights Reserved. Hosting by Anesi Corp.</a></span>
+	      
+	   </div>
+	   
+	   
+	   
    </div>
 </body>
 </html>
-<script>
-var app = new Vue({
-	el : '#app',
-	data : {
-
-	},// data
-	methods : {
-		
-	}, // methods
-	created : function() {
-		var self = this;
-
-	}// created
-});
-</script>
