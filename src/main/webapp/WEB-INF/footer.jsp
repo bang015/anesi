@@ -19,6 +19,7 @@
 }
 
 #container_footer{
+	font-size : 12px;
 	height: .300px;
 	padding : 30px 20px;
 }

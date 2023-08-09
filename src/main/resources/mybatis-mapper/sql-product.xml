@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.anesi.mapper.ProductMapper">
+	<!-- 로그인 쿼리 -->
+	<select id="selectProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+		SELECT * 
+		FROM T3_TBL_PRODUCT
+		WHERE USER_EMAIL = #{userEmail} AND USER_PWD = #{pwd}
+	</select>
+	
+</mapper>
