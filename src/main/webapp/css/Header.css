@@ -1,0 +1,12 @@
+@charset "EUC-KR";
+.logo{
+	width: 100px;
+}
+.icon{
+	 position: absolute;
+    top: 10%;
+    right: 30px;
+    transform: translate(0, -50%);
+	
+
+}
