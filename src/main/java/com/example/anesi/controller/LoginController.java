@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginController {
+
 		
 	@RequestMapping("/login.do") 
 	public String login(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
@@ -18,4 +19,11 @@ public class LoginController {
 		return "/login";
 		
 	}
+
+	
+	@RequestMapping("/text.do") 
+    public String test(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/test";
+    }
+
 }
