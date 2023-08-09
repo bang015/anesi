@@ -46,7 +46,7 @@
 			<div class="box"><!-- 옵션 추가 -->
 				<div><h3>옵션</h3></div>
 				<button @click="fnOptionAdd" class="btn">옵션 추가</button>
-				<table>
+				<table class="tableStyle">
 					<tr>
 						<th class="tdthsy">옵션명</th>
 						<th class="tdthsy">가격</th>
@@ -67,7 +67,7 @@
 			<div class="box"> <!-- 상품 이미지 등록 -->
 				<div><h3>상품 이미지<span class="guide"> 상품 이미지는 최대 5개 입니다.</span></h3></div>
 				<button @click="fnProductImgAdd" class="btn">이미지 추가</button><span class="err">{{errMsg2}}</span>
-				<table>
+				<table class="tableStyle">
 					<tr>
 						<th class="tdthsy">대표 이미지</th>
 						<th class="tdthsy">이미지 이름</th>
@@ -84,14 +84,14 @@
 						<td class="tdthsy"><button @click="fnProductImgDel(index)">삭제</button></td>
 					</tr>
 				</table>
-				<div>
+				<div class="imgDiv">
 					<span v-for="item in imageList"><img v-if="item" :src="item" alt="Image preview" class="pvImg"></span>
 				</div>
 			</div>
 				<div class="box"> <!-- 상품 상세설명 이미지 등록 -->
 				<div><h3>상품 상세설명 이미지</h3><span class="guide"></span></div> 
 				<button @click="fnContentImgAdd" class="btn">이미지 추가</button>
-				<table>
+				<table class="tableStyle">
 					<tr>
 						<th class="tdthsy">이미지 파일</th>
 						<th class="tdthsy">삭제</th>
@@ -105,7 +105,7 @@
 					</tr>
 				</table>
 			</div>
-			<button @click="fnAddProduct">판매등록</button>
+			<button @click="">판매등록</button>
 		</div>
 	</div>
 </body>
@@ -169,27 +169,12 @@ var app = new Vue({
 		      }
 		},
 		fnGetcategoryList1(){
-			var self = this;
-            var nparmap = {};
-            $.ajax({
-                url : "category1.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {                
-               		if(data.success){                		
-               				alert(data.message);
-                       			                	
-                   	} else {	
-                   		alert(data.message);
-                   	}
-                }                
-            }); 
+
 		}
 	}, // methods
 	created : function() {
 		var self = this;
-		self.fnGetcategoryList1();
+		//self.fnGetcategoryList1();
 	}// created
 });
 </script>
