@@ -5,46 +5,11 @@
 <head>
 <script src="js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link href="../css/mainCss.css" rel="stylesheet">
+<link href="../css/login.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	.content{
-		width: 400px;
-		margin: 0 auto;
-		border: 1px solid;
-		position: relative;
-	}
-	.logo{
-		position: relative;
-		width : 100%;
-		height : 110px;
-		
-	}
-	.logo img{
-		position:absolute;
-		top : 10px;
-		left : 50%;;
-		width: 100px;
-		height: 100px;
-		transform: translate(-50%, 0);
-	}
-	.login-wrap{
-		width: 100%;
-		height: 150px;
-	}
-	.login-title{
-		font-size : 23px;
-		margin-top : 20px;
-		margin-bottom : 20px;
-		text-align: center;
-		border-bottom: 1px solid #e8e8e8;
-	}
-	.login-input{
-		display: inline-block;
-		width: 80%;
-		height: 30px;
-		margin-left: 30px;
-	} 
 	
 </style>
 </head>
@@ -60,27 +25,29 @@
 					<span class="title1">로그인</span>
 				</div>
 				<div class="login-box">
-					<input class="login-input border" v-model="userEmail" placeholder="이메일">
+					<input class="login-input" v-model="userEmail" placeholder="이메일">
 					<input class="login-input" type="password" v-model="pwd" placeholder="패스워드">
 				</div>
 				<div class="login-btn">
-					<button @click="fnLogin">로그인</button>
+					<button class="loginBtn btn" @click="fnLogin">로그인</button>
 				</div>
 			</div>
-			<div class="btn-wrap">
-				<button>아이디 찾기</button>
-				<button>회원가입</button>
+			<div class="a-wrap">
+				<a  class="a a1">아이디찾기</a>
+				<a href="/join.do" class="a a2">회원가입</a>
 			</div>
 			<div class="non-user-wrap">
 				<div class="non-user-title">
-					<span>비회원 주문 조회하기</span>
+					<a href="javascript:;" id="hidden-btn">비회원 주문 조회하기</a>
 				</div>
-				<div class="non-user-box">
-					<input placeholder="주문번호">
-					<input placeholder="이메일">
-				</div>
-				<div class="non-user-btn">
-					<button>주문조회</button>
+				<div id="hidden" v-if="true" class="non-user-hidden">
+					<div class="non-user-box">
+						<input placeholder="주문번호">
+						<input placeholder="이메일">
+					</div>
+					<div class="non-user-btn">
+						<button class="btn">주문조회</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -89,11 +56,17 @@
 </body>
 </html>
 <script>
+$(document).ready(function(){
+    $("#hidden-btn").click(function(){
+        $("#hidden").slideToggle(400)
+    })
+})
 var app = new Vue({
 	el : '#app',
 	data : {
 		userEmail : "",
-		pwd : ""
+		pwd : "",
+		hidden : false
 	},// data
 	methods : {
 		fnLogin : function(){
@@ -114,6 +87,14 @@ var app = new Vue({
                    	}
                 }                
             }); 
+        },
+        fnClick : function(){
+        	if(self.hidden==false){
+        		self.hidden=true;
+        	}else{
+        		self.hidden=false;
+        	}
+        	console.log(self.hidden);
         }
 	}, // methods
 	created : function() {
