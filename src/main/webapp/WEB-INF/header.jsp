@@ -26,7 +26,7 @@
 </head>
 <body>
 	<header>
-		<span> <a><img class="logo"
+		<span> <a href=""><img class="logo"
 				src="../css/image/anesilogo.png" /> </a></span>
 
 		<ul id="header_navi">

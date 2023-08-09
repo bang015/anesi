@@ -18,4 +18,16 @@ public class ProductController {
 		return "/product_add";
 		
 	}
+	@RequestMapping("/product/nullcart.do") 
+	public String nullcart(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		
+		return "/nullCart";
+		
+	}
+	@RequestMapping("/product/cart.do") 
+	public String cart(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		
+		return "/cart";
+		
+	}
 }
