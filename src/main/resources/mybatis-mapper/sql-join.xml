@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.anesi.mapper.UserMapper">
+
+	<update id="userJoin" parameterType="hashmap">
+		INSERT INTO t3_tbl_user(USER_EMAIL, USER_PWD, PHONE, NICK, USER_NAME, BIRTHDAY, GENDER, SMSYN) 
+		VALUES(#{email},#{pw1}, #{phone}, #{nick}, #{userName}, #{bYear}+
+		<if test="10 > bMonth">
+			'0'+#{bMonth}
+		</if>
+		<if test="bMonth > 10">
+			#{bMonth}
+		</if>
+		<if test="10 > bDay">
+			+'0'+#{bDay}
+		</if>
+		<if test="bDay > 10">
+			+#{bDay}
+		</if>
+		, #{gender}, #{smsYn})
+	</update>
+</mapper>

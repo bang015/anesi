@@ -84,19 +84,22 @@
 	}
 	h2{
 		font-weight : 100;
-		margin : 5px 0px;
+		margin : 10px 0px;
 	}
 	i{
 		float : right;
 		margin-top: 10px;
 		margin-right : 5px;
 	}
+	img:hover{
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
 <div id="app">
 	<div id="container">
-	<div><img src="../css/image/footer_img.png" id="logo"></div>
+	<div><img src="../css/image/footer_img.png" id="logo" @click="fnMain"></div>
 	<div><h1>회원가입</h1></div>
 	<hr>
 	<div class="part">
@@ -178,7 +181,7 @@
 	<div><label><input type="checkbox" v-model="clause" value="m14"> 만 14세 이상입니다<span class="clause1">(필수)</span></label></div>
 	<div><label><input type="checkbox" v-model="clause" value="cla"> 이용약관<span class="clause1">(필수)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
 	<div><label><input type="checkbox" v-model="clause" value="cla2"> 개인정보수집 및 이용동의<span class="clause1">(필수)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
-	<div><label><input type="checkbox" v-model="clause" value="sms"> 이벤트, 쿠폰, 특가 알림 메일 및 SMS 등 수신<span class="clause2">(선택)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
+	<div><label><input type="checkbox" v-model="clause" value="sms"> 마케팅 활용 동의와 이벤트, 특가 등 메일 및 SMS 수신<span class="clause2">(선택)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
 	<hr>
 	<div><button @click="fnJoin" class="btn">회원가입</button></div>
 
@@ -195,6 +198,7 @@ var app = new Vue({
 		user : {
 			userEmail1 : "",
 			userEmail2 : "",
+			email : "",
 			pw1 : "",
 			pw2 : "",
 			userName : "",
@@ -203,7 +207,8 @@ var app = new Vue({
 			bYear : "연",
 			bMonth : "월",
 			bDay : "일",
-			gender : "N"
+			gender : "N",
+			smsYn : "N"
 		},
 		list : [],
 		clause : [],
@@ -296,12 +301,17 @@ var app = new Vue({
 				return;
 			}
 		 	var nparmap = self.user;
+		 	if(self.clause.includes('sms')){
+		 		self.smsYn = 'Y'
+		 	}
+		 	self.user.email = self.user.userEmail1 +'@'+ self.user.userEmail2;
             $.ajax({
-                url : "add.dox",
+                url : "join.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
+                	console.log(self.clause);
                 	alert("회원가입이 완료되었습니다.");
                 }
             });
@@ -377,7 +387,7 @@ var app = new Vue({
 		},
 		fnNickCheck : function(){
 			var self = this;
-			var regType2 = /^[a-zA-Z0-9\s]*$/;
+			var regType2 = /^[가-힣ㄱ-ㅎa-zA-Z0-9\s]*$/;
 			if(self.user.nick == ""){
 				self.nickMs = "닉네임을 입력하세요.";
 			}else if(!regType2.test(self.user.nick)){
@@ -406,8 +416,9 @@ var app = new Vue({
         	}else{
         		self.clause = ['m14', 'cla', 'cla2', 'sms'];
         	}
-        	
-        	
+        },
+        fnMain : function(){
+        	location.href="main.do";
         }
 	}, // methods
 	created : function() {

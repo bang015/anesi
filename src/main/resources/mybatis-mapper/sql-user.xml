@@ -2,6 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.anesi.mapper.LoginMapper">
+
+	<update id="userJoin" parameterType="hashmap">
+		INSERT INTO A_TBL_USER(USER_EMAIL, USER_PWD, PHONE, NICK, USER_NAME, BIRTHDAY, GENDER) 
+		VALUES(#{userEmail1}+#{userEmail2},#{pw1}, #{phone}, #{nick}, #{userName}, #{bYear}+
+		<if test="10 > bMonth">
+			'0'+#{bMonth}
+		</if>
+		<if test="bMonth > 10">
+			#{bMonth}
+		</if>
+		<if test="10 > bDay">
+			+'0'+#{bDay}
+		</if>
+		<if test="bDay > 10">
+			+#{bDay}
+		</if>
+		, #{gender}, #{smsYn})
+	</update>
 	<!-- 로그인 쿼리 -->
 	<select id="selectUser" parameterType="hashmap" resultType="com.example.anesi.model.User">
 		SELECT * 

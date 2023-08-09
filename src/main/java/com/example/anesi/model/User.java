@@ -12,7 +12,7 @@ public class User {
 	private String userName;
 	private String status;
 	private int cnt;
-	private String borthday;
+	private String birthday;
 	private String gender;
 	private String cDateTime;
 	private String uDateTime;
