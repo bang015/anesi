@@ -23,8 +23,20 @@ public class UserController {
 	// 회원가입 페이지
 	@RequestMapping("/join.do") 
     public String test(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-        session.invalidate();
+		
 		return "/join";
+    }
+	
+	@RequestMapping("/usepolicy.do") 
+    public String usepolicy(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/usepolicy";
+    }
+	
+	@RequestMapping("/privacy.do") 
+    public String privacy(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/privacy";
     }
 
 	// 회원가입
