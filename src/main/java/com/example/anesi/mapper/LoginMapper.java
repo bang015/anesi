@@ -17,4 +17,6 @@ public interface LoginMapper {
 	int updateCnt(HashMap<String, Object> map);
 	// 로그인 실패 횟수 초기화
 	int reSetCnt(HashMap<String, Object> map);	
+	// 이메일 확인
+	int selectUserEmail(HashMap<String, Object> map);
 }

@@ -70,4 +70,13 @@ public class LoginController {
 		};
 		return new Gson().toJson(resultMap);
 	}
+	// 아이디 찾기
+		@RequestMapping(value = "/emailSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String search(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			int email = loginService.searchUserEmail(map);
+			resultMap.put("emailCheck", email);
+			return new Gson().toJson(resultMap);
+		}
 }

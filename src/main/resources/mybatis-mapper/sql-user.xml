@@ -28,4 +28,10 @@
 		cnt = 0
 		where USER_EMAIL = #{userEmail}
 	</update>	
+	<!-- 이메일 확인 -->
+	<select id="selectUserEmail" parameterType="hashmap" resultType="int">
+		SELECT count(*) 
+		FROM t3_tbl_user
+		WHERE USER_EMAIL = #{userEmail}
+	</select>
 </mapper>

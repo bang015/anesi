@@ -24,18 +24,26 @@
 					</span>
 				</div>
 				<div class="email-input">
-					<input v-midel="email" placeholder="이메일">
+					<input @Click="reset" v-model="userEmail" placeholder="이메일">
 					<button class="btn" @click="emailCheck">확인</button>
 				</div>
+				<div v-if="email == '0'">
+					<span>등록된 이메일 주소가 아닙니다.</span>
+				</div>
+				
+					
+				
 				<div class="select-email">
 					<a>가입한 이메일 찾기</a>
 				</div>
-				<div class="user-input">
-					<input placeholder="이름">
-					<input placeholder="전화번호">
-				</div>
-				<div class="select-btn">
-					<button class="btn">패스워드 찾기</button>
+				<div  v-if="email == '1'">
+					<div class="user-input">
+						<input v-model="userName"  placeholder="이름">
+						<input v-model="userPhone" placeholder="전화번호">
+					</div>
+					<div class="select-btn">
+						<button class="btn">패스워드 찾기</button>
+					</div>
 				</div>
 				<div class="text-box">
 					<span class="text1">회원가입 시 입력한 정보가 기억나지 않는다면?</span>
@@ -48,13 +56,40 @@
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>
+$(document).ready(function(){
+    $("#hidden-btn").click(function(){
+        $("#hidden").slideToggle(400)
+    })
+})
 var app = new Vue({
 	el : '#app',
 	data : {
-
+		userEmail : "",
+		userName : "",
+		userPhone : "",
+		email : ""
 	},// data
 	methods : {
-		
+		emailCheck : function(){
+			 var self = this;
+	            var nparmap = {userEmail : self.userEmail};
+	            
+	            $.ajax({
+	                url : "emailSearch.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.email = data.emailCheck;
+	               		console.log(self.email);
+	                }                
+	            }); 
+		},
+		reset : function(){
+			var self=this
+			self.email="";
+			console.log(self.email);
+		}
 	}, // methods
 	created : function() {
 		var self = this;

@@ -48,5 +48,13 @@ public class LoginServiceImpl implements LoginService{
 		}
 		return resultMap;
 	}
+	//아이디 찾기
+		@Override
+		public int searchUserEmail(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+			return loginMapper.selectUserEmail(map);
+		}
 
 }
