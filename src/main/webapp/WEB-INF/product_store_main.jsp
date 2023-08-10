@@ -18,6 +18,7 @@ body{
 	font-size: 14px;
 	font-family: 'Pretendard-Regular';
 }
+
 .product-main-category__image{
 	width:100px;
 	height:100px;
@@ -32,11 +33,14 @@ body{
 .product-main-category__name{
 	font-size : 15px;
 }
+.won_icon,.production-item-price__orginal2{
+	text-decoration: line-through;
+}
 
 .production-item__content{
 	width:200px;
 	height:338px;
-	  float : left;
+  	float : left;
 	  margin : 50px;
 }
 
@@ -45,17 +49,55 @@ body{
         position: relative;
         top: 10px;
       }
-      #product-main-category__total > li > a {
-        display:block; position:relative; padding-bottom:19px;
-        margin: 40px;
-      }
-      #product-main-category__total > li > a > img {
-        width:100px; height:100px;
-      }
-      #product-main-category__total > li > a > span {
-        position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0)
-      }
+#product-main-category__total > li > a {
+  display:block; position:relative; padding-bottom:19px;
+  margin: 40px;
+}
+#product-main-category__total > li > a > img {
+  width:100px; height:100px;
+}
+#product-main-category__total > li > a > span {
+  position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0)
+}
+      
+.category-order_toggle{
+	background-color:#A782C3;
+	border: #fff;
+	text-align: center;
+	border-radius:10px; 
+	padding:8px;
+	height:35px; 
+	width: 100px;
+	font-family: 'Pretendard-Regular';
+	color :  #fff;
+	
+  }
+.category-order_toggle:hover {
+    background-color:rgb(235, 236, 237);
+    transition: 0.7s;
+   	color :  black;
+    
+}  
 
+
+.category-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-list li {
+  /* 카테고리 스타일링 */
+  padding: .5em;
+  border-bottom: 1px solid #ccc;
+}
+.category-list-container {
+background :  #fff;
+    position: absolute;
+   	width: 100px;
+    
+
+}
 
 </style>
 </head>
@@ -74,19 +116,23 @@ body{
 		
 	</ul>
 	
+<button class="category-order_toggle">
+  <span>카테고리 <i class="fa-solid fa-chevron-down"></i></span>
+</button>
+<div class="category-list-container" style="display:none;">
+  <ul class="category-list" v-model="categoryOrderBar">
+    <li value=""><a>전체</a></li>
+    <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">가격낮은순</a></li>
+    <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">가격높은순</a></li>
+    <li value="NewArrival"><a @click="fnOrderBy('NewArrival')">최신순</a></li>
+    <li><a>--아직못함↓--</a></li>
+    <li value="HighestPurchase"><a @click="fnOrderBy('HighestPurchase')">구매높은순</a></li>
+    <li value="HighestScrap"><a @click="fnOrderBy('HighestScrap')">스크랩많은순</a></li>
+    <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">리뷰많은순</a></li>
+  </ul>
+</div>
 
-	<select class="category-filter-bar-order-button" v-model="categoryOrderBar" @click="fnGetList">
-           <option value="">전체</option>
-           <option value="LowestPrice">가격낮은순</option>
-           <option value="HighestPrice">가격높은순</option>
-           <option value="NewArrival">최신순</option>
-           
-           <!-- DB완성이 안돼서 아직 구현 못함 -->
-           <option value="">--아직못함↓--</option>
-           <option value="HighestPurchase">구매높은순</option>
-           <option value="HighestScrap">스크랩많은순</option>
-           <option value="ManyReview">리뷰많은순</option>
-    </select>
+  
 	<div><h1>인기상품</h1></div>
 	
 		<div class="production-item__content" v-for="item in list">
@@ -134,6 +180,21 @@ body{
 </body>
 </html>
 <script>
+
+$(document).ready(function() {
+    // 버튼 클릭 이벤트 추가
+    $('.category-order_toggle').click(function() {
+       $('.category-list-container').slideToggle('fast');
+    });
+    
+    // 서브 카테고리 토글 이벤트 추가
+    $('.category-list > li > a').click(function(event) {
+      event.preventDefault();
+      $(this).siblings('.subcategory-list').slideToggle('fast');
+    });
+});
+
+
 var app = new Vue({
 	el : '#app',
 	data : {
@@ -155,7 +216,15 @@ var app = new Vue({
                 	self.list = data.list;
                 }
             }); 
-		}
+		},
+		
+		
+		
+	    fnOrderBy: function (orderBy) {
+            var self = this;
+            self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정
+            self.fnGetList(); // AJAX 요청 보내기
+	      }
      }, // methods
 	created : function() {
 		var self = this;
