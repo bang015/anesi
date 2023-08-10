@@ -8,7 +8,7 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/login.css" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>login</title>
 <style>
 	
 </style>
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 			<div class="a-wrap"> <!-- 기타등등 -->
-				<a  class="a a1">아이디찾기</a>
+				<a href="/selectEmail.do" class="a a1">아이디찾기</a>
 				<a href="/join.do" class="a a2">회원가입</a>
 			</div>
 			<div class="non-user-wrap"> <!-- 비회원 주문 조회 -->

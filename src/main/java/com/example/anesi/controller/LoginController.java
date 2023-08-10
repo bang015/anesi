@@ -44,6 +44,11 @@ public class LoginController {
 		return "/jusoPopup";
     }
 	
+	@RequestMapping("/selectEmail.do") 
+    public String selectEmail(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception{
+		
+		return "/searchId";
+    }
 	// 헤더
 	@RequestMapping("/header.do") 
 	public String header(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{

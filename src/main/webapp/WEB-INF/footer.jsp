@@ -20,7 +20,7 @@
 
 #container_footer{
 	font-size : 12px;
-	height: .300px;
+	height: 100px;
 	padding : 30px 20px;
 }
 
@@ -56,9 +56,7 @@
 
 }
 #f_part6 {
-    position: absolute;
-    top : 180px;
-    width: 100%;
+    width: 1300px;
     text-align: center;
     padding: 10px ;
 }
@@ -179,13 +177,14 @@
 	       </div>
 	   </div>
 	   
-	   <div id="f_part6">
-	    <span><a href="https://www.copyright.or.kr/">Copyright © 아네시. All Rights Reserved. Hosting by Anesi Corp.</a></span>
-	      
-	   </div>
+	  
 	   
 	   
 	   
    </div>
+    <div id="f_part6">
+	    <span><a href="https://www.copyright.or.kr/">Copyright © 아네시. All Rights Reserved. Hosting by Anesi Corp.</a></span>
+	      
+	   </div>
 </body>
 </html>
