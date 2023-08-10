@@ -50,7 +50,12 @@ public class UserController {
 
 		return "/mypage";
     }
+	// 스크랩북
+	@RequestMapping("/scrapbook.do") 
+    public String scrapbook(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 
+		return "/scrapbook";
+    }
 	// 회원가입
 	@RequestMapping(value = "/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
