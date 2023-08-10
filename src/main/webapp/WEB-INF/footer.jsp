@@ -134,8 +134,8 @@
        
        <div id="f_part2">
      	<span class="pt2_content"><a href="javascript:;">회사소개</a></span>
-     	<span class="pt2_content"><a href="javascript:;">이용약관</a></span>
-     	<span class="pt2_content"><a href="javascript:;">개인정보처리방침</a></span>
+     	<span class="pt2_content"><a href="../usepolicy.do" target="blank">이용약관</a></span>
+     	<span class="pt2_content"><a href="../privacy.do" target="blank">개인정보처리방침</a></span>
      	<span class="pt2_content"><a href="javascript:;">이용안내</a></span>
    		</div>
    </div>
@@ -174,12 +174,12 @@
 	       <div class="pt_title"> SNS</div>
 	       <div class="내용">
 	          
-	           <div><a href="https://www.instagram.com/">instagram</a></div>
-	           <div><a href="https://www.youtube.com/youtube">youtube</a></div>
-	           <div><a href="https://ko-kr.facebook.com/">facebook</a></div>
-	           <div><a href="https://www.kakaocorp.com/">kakao</a></div>
-	           <div><a href="https://twitter.com/">twitter</a></div>
-	           <div><a href="http://blog.naver.com/">blog</a></div>
+	           <div><a href="https://www.instagram.com/" target="blank">instagram</a></div>
+	           <div><a href="https://www.youtube.com/youtube" target="blank">youtube</a></div>
+	           <div><a href="https://ko-kr.facebook.com/" target="blank">facebook</a></div>
+	           <div><a href="https://www.kakaocorp.com/" target="blank">kakao</a></div>
+	           <div><a href="https://twitter.com/" target="blank">twitter</a></div>
+	           <div><a href="http://blog.naver.com/" target="blank">blog</a></div>
 	       </div>
 	   </div>
 	   
