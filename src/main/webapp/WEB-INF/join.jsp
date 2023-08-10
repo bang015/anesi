@@ -98,9 +98,11 @@
 <body>
 <div id="app">
 	<div id="container">
+	<!-- 로고 -->
 	<div><img src="../css/image/footer_img.png" id="logo" @click="fnMain"></div>
 	<div><h1>회원가입</h1></div>
 	<hr>
+	<!-- 이메일 입력 -->
 	<div class="part">
 	<div><h2>이메일<span class="clause1"> *</span></h2></div>
 	<div><input class="email" ref="emailInput" type="text" v-model="user.userEmail1" @click="fnCheck" @keyup="fnCheck" placeholder="이메일"> @ 
@@ -117,63 +119,69 @@
 	</div>
 	<div><span class="red">{{emailMs}}</span></div>
 	</div>
-	
+	<!-- 비밀번호 입력 -->
 	<div class="part">
 	<div><h2>비밀번호<span class="clause1"> *</span></h2></div>
 	<div><input class="put" ref="pw1Input" type="password" v-model="user.pw1" placeholder="비밀번호" @click="fnPwdCheck" @keyup="fnPwdCheck"></div>
 	<div><span class="red">{{pw1Ms}}</span></div>
 	</div>
+	<!-- 비밀번호 확인 입력 -->
 	<div class="part">
 	<div><h2>비밀번호 확인<span class="clause1"> *</span></h2></div>
 	<div><input class="put" ref="pw2Input" type="password" v-model="user.pw2" placeholder="비밀번호 확인" @click="fnPwd2Check" @keyup="fnPwd2Check"></div>
 	<div><span class="red">{{pw2Ms}}</span></div>
 	</div>
+	<!-- 이름 입력 -->
 	<div class="part">
 	<div><h2>이름<span class="clause1"> *</span></h2></div>
 	<div><input class="put" ref="nameInput" type="text" v-model="user.userName" placeholder="이름" @click="fnNameCheck" @keyup="fnNameCheck"></div>
 	<div><span class="red">{{nameMs}}</span></div>
 	</div>
+	<!-- 닉네임 입력 -->
 	<div class="part">
 	<div><h2>닉네임<span class="clause1"> *</span></h2></div>
 	<div><input class="put" ref="nickInput" type="text" v-model="user.nick" placeholder="닉네임 특수문자 제외 사용 가능" @click="fnNickOverlap" @keyup="fnNickOverlap"></div>
 	<div><span class="red">{{nickMs}}</span></div>
 	</div>
+	<!-- 휴대폰 번호 -->
 	<div class="part">
 	<div><h2>휴대폰 번호<span class="clause1"> *</span></h2></div>
 	<div><input class="put" ref="phoneInput" type="text" v-model="user.phone" placeholder="휴대폰 번호 '-'제외 숫자만 입력해주세요." @click="fnPhoneOverlap" @keyup="fnPhoneOverlap"></div>
 	<div><span class="red">{{phoneMs}}</span></div>
 	</div>
+	<!-- 생년월일 -->
 	<div class="part">
 	<div><h2>생년월일</h2></div>
-	<div>
-		<select v-model="user.bYear" class="select">
-			<option>연</option>
-			<% for(int i=2009; i>=1950; i--){%>
-				<option value="<%= i %>"><%= i %></option>
-			<%}%>
-		</select> 
-		<select v-model="user.bMonth" class="select">
-			<option>월</option>
-			<% for(int i=1; i<=12; i++){
-				if(i<10){%>
-					<option value="0<%= i %>"><%= i %></option>
-				<%}else{%> 
-				<option value="<%= i %>"><%= i %></option>
-				<%}%> 
-			<%}%>
-		</select> 
-		<select v-model="user.bDay" class="select">
-			<option>일</option>
-			<% for(int i=1; i<=31; i++){
-				if(i<10){%>
-					<option value="0<%= i %>"><%= i %></option>
-				<%}else{%> 
-				<option value="<%= i %>"><%= i %></option>
-				<%}%> 
-			<%}%>
-		</select>
+		<div>
+			<select v-model="user.bYear" class="select">
+				<option>연</option>
+				<% for(int i=2009; i>=1950; i--){%>
+					<option value="<%= i %>"><%= i %></option>
+				<%}%>
+			</select> 
+			<select v-model="user.bMonth" class="select">
+				<option>월</option>
+				<% for(int i=1; i<=12; i++){
+					if(i<10){%>
+						<option value="0<%= i %>"><%= i %></option>
+					<%}else{%> 
+					<option value="<%= i %>"><%= i %></option>
+					<%}%> 
+				<%}%>
+			</select> 
+			<select v-model="user.bDay" class="select">
+				<option>일</option>
+				<% for(int i=1; i<=31; i++){
+					if(i<10){%>
+						<option value="0<%= i %>"><%= i %></option>
+					<%}else{%> 
+					<option value="<%= i %>"><%= i %></option>
+					<%}%> 
+				<%}%>
+			</select>
+		</div>
 	</div>
-	</div>
+	<!-- 성별 -->
 	<div class="part">
 	<div><h2>성별</h2></div> 
 	<div>
@@ -181,6 +189,7 @@
 		여성 <input type="radio" v-model="user.gender" value="F">　　　
 		남성 <input type="radio" v-model="user.gender" value="M">
 	</div>
+	<!-- 약관동의 -->
 	</div>
 	<hr>
 	<div><h2>약관동의</h2></div>
@@ -190,10 +199,9 @@
 	<div><label><input type="checkbox" v-model="clause" value="cla2"> 개인정보수집 및 이용동의<span class="clause1">(필수)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
 	<div><label><input type="checkbox" v-model="clause" value="sms"> 마케팅 활용 동의와 이벤트, 특가 등 메일 및 SMS 수신<span class="clause2">(선택)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
 	<hr>
+	<!-- 하단 -->
 	<div><button @click="fnJoin" class="btn">회원가입</button></div>
-
 	<div id="login">이미 아이디가 있으신가요? <a href="login.do">로그인</a></div>
-	
 	</div>
 </div>
 </body>
@@ -235,7 +243,7 @@ var app = new Vue({
 		phoneMs : ""
 	},// data
 	methods : {
-		
+		// 회원가입 버튼
 		fnJoin : function(){
 			var self = this;
 			if(self.user.userEmail1 == ""){
@@ -349,6 +357,7 @@ var app = new Vue({
                 }
             });
 		},
+		// 이메일 중복체크 및 메세지
 		fnCheck : function(){
 			var self = this;
 			self.user.email = self.user.userEmail1 +'@'+ self.user.userEmail2;
@@ -374,6 +383,7 @@ var app = new Vue({
                 }
             });
 		},
+		// 닉네임 중복체크 및 메세지
 		fnNickOverlap : function(){
 			var self = this;
 			var nparmap = {nick : self.user.nick};
@@ -400,6 +410,7 @@ var app = new Vue({
                 }
             });
 		},
+		// 휴대폰 중복체크 및 메세지
 		fnPhoneOverlap : function(){
 			var self = this;
 			var nparmap = {phone : self.user.phone};
@@ -429,6 +440,7 @@ var app = new Vue({
                 }
             });
 		},
+		// 비밀번호 메세지
 		fnPwdCheck : function(){
 			var self = this;
 			if(self.user.pw1 == ""){
@@ -437,6 +449,7 @@ var app = new Vue({
 				self.pw1Ms = "";
 			}
 		},
+		// 비밀번호 확인 메세지
 		fnPwd2Check : function(){
 			var self = this;
 			if(self.user.pw1 == ""){
@@ -445,6 +458,7 @@ var app = new Vue({
 				self.pw2Ms = "";
 			}
 		},
+		// 이름 메세지
 		fnNameCheck : function(){
 			var self = this;
 			var regType3 = /^[가-힣a-zA-Z\s]*$/;
@@ -456,6 +470,7 @@ var app = new Vue({
 				self.nameMs = "";
 			}
 		},
+		// 전체 선택
         fnAll : function(){
         	var self = this;
         	if(self.clause.length > 0){
@@ -464,6 +479,7 @@ var app = new Vue({
         		self.clause = ['m14', 'cla', 'cla2', 'sms'];
         	}
         },
+        // 로고 클릭시 메인 이동
         fnMain : function(){
         	location.href="main.do";
         }

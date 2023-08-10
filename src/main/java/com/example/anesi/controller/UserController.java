@@ -20,13 +20,14 @@ public class UserController {
 	
 	@Autowired 
 	HttpSession session;
-	// 회원가입
+	// 회원가입 페이지
 	@RequestMapping("/join.do") 
     public String test(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
         session.invalidate();
 		return "/join";
     }
 
+	// 회원가입
 	@RequestMapping(value = "/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String join(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -35,6 +36,7 @@ public class UserController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 이메일 중복체크
 	@RequestMapping(value = "/joinCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String joinCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -44,6 +46,7 @@ public class UserController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 닉네임 중복체크
 	@RequestMapping(value = "/nickCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String nickCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -53,6 +56,7 @@ public class UserController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 전화번호 중복체크
 	@RequestMapping(value = "/phoneCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String phoneCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
