@@ -25,6 +25,11 @@
 		FROM t3_tbl_product_category
 		WHERE MOD(CATEGORY_NO, 10) = 0
 	</select>
+	<select id="cartProductList" parameterType="hashmap" resultType="com.example.anesi.model.Category">
+		SELECT *
+		FROM t3_tbl_product_category
+		WHERE MOD(CATEGORY_NO, 10) = 0
+	</select>
 </mapper>
 
 	
