@@ -1,0 +1,133 @@
+@charset "EUC-KR";
+
+input, button{
+	font-size: 14px;
+	font-family: 'Pretendard-Regular';
+}
+
+#container{
+	width: 1300px;
+	margin: 30px auto;
+	font-size: 18px;
+}
+.tdthsy{
+	width: 170px;
+	text-align: center;
+	padding: 10px;
+}
+.productTitleAdd{
+	margin-bottom: 20px;
+	border-bottom: 1px solid #aaa;
+}
+.pvImg{
+	width: 200px;
+	height: 200px;
+}
+.guide{
+	font-size: 13px;
+	color: #A782C3;
+}
+
+.err{
+	color : #ff9797;
+}
+.box{
+	border: 2px solid #eee;
+	padding: 20px;
+	padding-top: 0px;
+	border-radius: 10px;
+	margin-bottom: 20px;
+}
+
+.btn{
+	width: 10%;
+	padding: 5px 10px;
+	height : 30px;
+	margin-left: 40px;
+	margin-top: 10px;
+	background: #A782C3;
+	border: 0;
+	border-radius: 5px;
+	color: #fff;
+}
+.tableStyle{
+	margin : 0px auto;
+}
+.imgDiv{
+	height: 210px;
+}
+.delBtn{
+	width: 50%;
+	padding: 5px 10px;
+	height : 30px;
+	background: #A782C3;
+	border: 0;
+	border-radius: 5px;
+	color: #fff;
+}
+.addBtn{
+	width: 20%;
+	padding: 5px 10px;
+	height : 50px;
+	margin-left: 40px;
+	background: #A782C3;
+	border: 0;
+	border-radius: 5px;
+	color: #fff;
+}
+.fileBtn{
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+.fileBox{
+	display: inline-block;
+	width: 65px;
+	padding: 5px 10px;
+	height : 20px;
+	background: #A782C3;
+	border: 0;
+	border-radius: 5px;
+	color: #fff;
+	text-align: center;
+	font-size: 14px;
+	display: flex;
+	justify-content: center;
+  	align-items: center;
+  	margin: 0 auto;
+}
+.categoryAllBox {
+  border: 1px solid #ccc;
+   display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.categoryBox {
+  height: 40px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 20px;
+}
+.categoryBox > span > i {
+  margin-right: 20px;
+}
+.categoryBox:hover
+{
+	text-decoration: none;
+	background-color: #fff;
+}
+.category2, .category1 {
+  border-right: 1px solid #ccc;
+  }
+  .categoryNo{
+	  color: #A782C3;
+  }
+  
+.content{
+	text-align: center;
+}

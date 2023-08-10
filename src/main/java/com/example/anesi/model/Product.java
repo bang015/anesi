@@ -19,8 +19,25 @@ public class Product {
 	    private int productStock;
 	    private int optionPrice;
 	    private int productCnt;
-	    
-	 	public int getOptionNo() {
+	    private String optionName;
+	    private int csatAvg; // 상품 평점
+	 	public int getCsatAvg() {
+			return csatAvg;
+		}
+
+		public void setCsatAvg(int csatAvg) {
+			this.csatAvg = csatAvg;
+		}
+
+		public String getOptionName() {
+			return optionName;
+		}
+
+		public void setOptionName(String optionName) {
+			this.optionName = optionName;
+		}
+
+		public int getOptionNo() {
 			return optionNo;
 		}
 

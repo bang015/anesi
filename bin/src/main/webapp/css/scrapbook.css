@@ -1,0 +1,21 @@
+@charset "EUC-KR";
+
+#container{
+	margin: 30px 50px;
+}
+.nickStyle{
+	margin-bottom: 50px;
+}
+.pfSytle{
+	width: 86px;
+	height: 86px;
+}
+#inner {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	 align-items: center; /* 추가: 요소들을 수평 가운데로 정렬 */
+}
+#inner > div{
+	display: inline-block;
+}

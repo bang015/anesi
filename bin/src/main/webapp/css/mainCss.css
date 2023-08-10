@@ -1,0 +1,46 @@
+@charset "UTF-8";
+/* css파일 변경시 팀원에게 말하기 */
+
+@font-face {
+	 font-family: 'Pretendard-Regular';
+	 src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+	 font-weight: 200; font-style: normal; 
+}
+
+html,
+body {
+    height: 100%;
+ }
+
+body{
+	width: 1300px;
+	margin: 0px auto;
+	font-size: 14px;
+	font-family: 'Pretendard-Regular';
+	color: #424242;
+	display: flex;
+   	flex-direction: column;
+}
+
+/* 링크, 기방문 스타일 */
+a:link,
+a:visited {
+  color: black;
+  text-decoration: none;
+  transition: color 0.3s, background 0.3s;
+}
+
+/* 호버 스타일 */
+a:hover {
+  color: #A782C3;
+}
+
+hr{
+	border: none; 
+	border-top: 1px solid #c3c3c3;
+}
+
+/* 버튼 호버 스타일 */
+.btn:hover{
+	background-color: #7c6191;
+}

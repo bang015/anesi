@@ -1,0 +1,27 @@
+@charset "EUC-KR";
+
+.nullCartBtn {
+  position: fixed;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color:#A782C3;
+  text-align: center;
+  color: #fff;
+  border:none; 
+  border-radius:10px; 
+  padding:15px;
+  min-height:15px; 
+  min-width: 50px;
+}
+
+  .nullCartBtn:hover {
+      background-color:rgb(164, 80, 239);
+      transition: 0.7s;
+  }
+  .nullCart{
+	   position: fixed;
+  top: 23%;
+  left: 39.5%;
+  width: 400px;
+  }
