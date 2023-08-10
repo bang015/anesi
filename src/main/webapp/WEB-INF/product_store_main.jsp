@@ -6,7 +6,7 @@
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
 <title>상품메인페이지</title>
@@ -117,12 +117,54 @@
 	<div><h1>카테고리</h1></div>
 	<ul id ="product-main-category__total">
 	
-		<li><a href="javascript:;"><img src="../css/image/productMain/productMain_category1.png"><span>가구</span></a></li>
-		<li><a href="javascript:;"><img src="../css/image/productMain/productMain_category1.png"><span>조명</span></a></li>
-		<li><a href="javascript:;"><img src="../css/image/productMain/productMain_category1.png"><span>패브릭</span></a></li>
-		<li><a href="javascript:;"><img src="../css/image/productMain/productMain_category1.png"><span>가전</span></a></li>
-		<li><a href="javascript:;"><img src="../css/image/productMain/productMain_category1.png"><span>데코/식물</span></a></li>
-		<li><a href="javascript:;"><img src="../css/image/productMain/productMain_category1.png"><span>반려동물</span></a></li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>가구</span>
+	    	</a>
+    	</li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>조명</span>
+	    	</a>
+    	</li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>패브릭</span>
+	    	</a>
+    	</li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>가전</span>
+	    	</a>
+    	</li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>데코/식물</span>
+	    	</a>
+    	</li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>반려동물</span>
+	    	</a>
+    	</li>
 		
 	</ul>
 	
@@ -151,7 +193,9 @@
 	
 		<div class="production-item__content" v-for="item in list">
 			<a href="javascript:;" class="production-item-thumnail">
-			    <img class="production-item-thumnail__image" src="../css/image/productMain/productMain_category1.png" >
+			    <img class="production-item-thumnail__image animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation"
+			    src="../css/image/productMain/productMain_category1.png" >
 		    </a>
 		    <div class="production-item-header" >
 			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
@@ -236,7 +280,16 @@ var app = new Vue({
             var self = this;
             self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정
             self.fnGetList(); // AJAX 요청 보내기
-	      }
+	      },
+	      
+	      
+	      
+	      addPulseAnimation: function(event) {
+	            event.currentTarget.classList.add('animate__animated', 'animate__pulse');
+	        },
+	        removePulseAnimation: function(event) {
+	            event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
+	        }
      }, // methods
 	created : function() {
 		var self = this;

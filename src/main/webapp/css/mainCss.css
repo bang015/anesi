@@ -33,15 +33,9 @@ a:visited {
 /* 호버 스타일 */
 a:hover {
   color: #A782C3;
-  background: #f5f5f5;
   text-decoration: underline;
 }
 
-/* 활성 스타일 */
-a:active {
-  color: #A782C3;
-  text-decoration: none;
-}
 
 /* 버튼 호버 스타일 */
 .btn:hover{
