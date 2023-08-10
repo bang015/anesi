@@ -99,3 +99,23 @@ input, button{
   	align-items: center;
   	margin: 0 auto;
 }
+.categoryAllBox {
+  border: 1px solid #ccc;
+}
+.categoryBox {
+  height: 40px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 20px;
+  border-right: 1px solid #ccc;
+}
+.categoryBox > span > i {
+  margin-right: 20px;
+}
+.categoryBox:hover
+{
+	text-decoration: none;
+	background-color: #fff;
+}

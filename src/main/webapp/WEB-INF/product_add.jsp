@@ -5,6 +5,7 @@
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/product_add.css" rel="stylesheet">
 <meta charset="EUC-KR">
@@ -18,9 +19,12 @@
 		<div id="container">
 			<div class="productTitleAdd"><h1>상품 등록</h1></div> 
 			<div class="box"><!-- 카테고리 영역 -->
-				<div>카테고리</div>
-				<div>
-					<div></div>
+				<div><h3>카테고리</h3></div>
+				<div class="categoryAllBox">
+					<a v-for="item in categoryList1" class="categoryBox" @click="fnGetcategoryList2(item.categoryNo)">
+						<span>{{item.categoryName}}</span>
+						<span><i class="fa-solid fa-greater-than fa-2xs icon1" style="color: #ccc"></i></span>
+					</a>
 					<div v-if=""></div>
 				</div>
 			</div>
@@ -174,6 +178,20 @@ var app = new Vue({
 			var nparmap = {};
             $.ajax({
                 url : "category.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	self.categoryList1 = data.list;
+                	console.log(self.categoryList1)
+                }
+            });
+		},
+		fnGetcategoryList2(no){
+			var self = this;
+			var nparmap = {};
+            $.ajax({
+                url : "category2.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
