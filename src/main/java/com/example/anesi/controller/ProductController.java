@@ -18,9 +18,4 @@ public class ProductController {
 		
 	}
 	
-	@RequestMapping("/product/storemain.do") 
-	public String productMain(Model model) throws Exception{
-		return "/product_store_main";
-	}
-	
 }

@@ -10,24 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
 import com.example.anesi.service.StoreService;
 import com.google.gson.Gson;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class StoreController {
 	
 	@Autowired
 	StoreService productService;
-	
-	@RequestMapping("/product/add.do") 
-	public String login(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		return "/product_add";
-		
-	}
 	
 	@RequestMapping("/product/storemain.do") 
 	public String productMain(Model model) throws Exception{
