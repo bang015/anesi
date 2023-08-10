@@ -13,10 +13,14 @@
 <body>
     <div id="app">
         <h2>장바구니</h2>
+
         <div class="firstbox">
-            <input type="checkbox" v-model="allChecked" @change="toggleAllChecked">
-            <label>전체 삭제</label>
-            <table>
+            <label class="custom-checkbox" :class="{ 'checked': allChecked }">
+                <input type="checkbox" v-model="allChecked" @change="toggleAllChecked">
+            </label>
+            <label class="all">전체 삭제</label>
+            <table calss="cartTable">
+            <br>
                 <thead>
                     <tr>
                         <th>썸네일</th>
@@ -42,13 +46,19 @@
                     </tr>
                 </tbody>
             </table>
-            <button @click="removeCheckedItems">선택 삭제</button>
+    <button @click="removeCheckedItems" class="cartbtn">선택 삭제</button>
+    <button @click="changeOption" class="cartbtn">옵션 변경</button>
         </div>
-        <div class="firstbox2">
-            <button @click="changeOption">옵션 변경</button>
-            <button @click="directPurchase">바로 구매</button>
-        </div>
+        
+   
+  
+<div class="price-summary">
+    <h4>총합 계산</h4>
+    <p>총 가격: {{ totalPrice }}원</p>
+</div>
+      <button @click="directPurchase" class="cartbtn2">바로 구매</button>
     </div>
+ 
     <script>
     var app = new Vue({
         el: '#app',
@@ -64,20 +74,22 @@
                 alert('바로 구매');
             },
             updateCartItemList: function() {
-                // 수량 변경에 대한 로직 처리
-                // ex) 쿠키, 로컬스토리지, 서버 API 호출 등
-                // ...
+
             },
             toggleChecked: function() {
                 this.allChecked = this.cartItemList.every(item => item.checked);
             },
             toggleAllChecked: function() {
-                this.cartItemList.forEach(item => item.checked = this.allChecked);
+                if (this.cartItemList) {
+                    this.cartItemList.forEach(item => item.checked = this.allChecked);
+                } else {
+                    console.log('Cart item list is not loaded yet');
+                }
             },
             removeCheckedItems: function() {
                 this.cartItemList = this.cartItemList.filter(item => !item.checked);
                 this.allChecked = false;
-            }
+            },
         },
         created: function() {
             // jQuery를 사용하여 서버에서 장바구니 내역을 가져옴
@@ -92,6 +104,17 @@
                     console.error('Error: ' + textStatus, errorThrown);
                 }
             });
+        },
+        computed: {
+            totalPrice: function() {
+                if (this.cartItemList) {
+                    return this.cartItemList.reduce((accumulator, item) => {
+                        return accumulator + (item.productPrice * item.quantity);
+                    }, 0);
+                } else {
+                    return 0;
+                }
+            }
         }
     });
     </script>
