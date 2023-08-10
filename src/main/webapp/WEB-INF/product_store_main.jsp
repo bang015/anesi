@@ -106,6 +106,28 @@
 }
 
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 불투명한 검은색 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+
+
 </style>
 </head>
 <!-- 주석 꼭 남겨주세요 -->
@@ -210,15 +232,15 @@
 		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
 			    정가
 			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__orginal2" >{{item.productPrice}}</span>
+				<span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
 			   </span>
 			    
 			    
 			    <!-- production-item-price__sell  : 파는 가격 -->
 		       <div class="production-item-price__sell">
 			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{item.discountPrice}}</span>
-			    <span class="production-item-price__sell2" v-else>{{item.productPrice}}</span>
+			    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
+			    <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
 			    </div>
 	        </span>
 	        
@@ -229,12 +251,34 @@
 			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
 			    <span class="production-item-rating__score">4.5</span>
 			   </div>
-				<a><i class="fa fa-shopping-cart "></i></a>
+				<a><i class="fa fa-shopping-cart modal-toggle-button" @click="openCartModal"></i></a>
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-		    	<a><i class="fa-regular fa-bookmark"></i></a>
+		    	<a><i class="fa-regular fa-bookmark modal-toggle-button" @click="openScrapModal"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
+	    
+	    
+	    
+    	<div class="modal" v-if="showCartModal">
+		  <div class="modal-card">
+		    <h2>장바구니에 추가</h2>
+		    <p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
+		    <button @click="closeModal">쇼핑계속하기</button>
+		    <button @click="fnMoveCart" >장바구니로 이동하기</button>
+		  </div>
+		</div>
 		
-	</div>
+    	<div class="modal" v-if="showScrapModal">
+		  <div class="modal-card">
+		    <h2>스크랩북에 등록</h2>
+		    <p>상품이 스크랩되었습니다.</p>
+		    <button @click="closeModal">쇼핑계속하기</button>
+		    <button @click="fnMoveMyPage">마이페이지로 이동하기</button>
+		  </div>
+		</div>
+	
+	    
+    </div>
+
 
 	
 	
@@ -257,7 +301,9 @@ var app = new Vue({
 	data : {
 		list : [],
 		item : "",
-		//상품 정렬하는 셀렉트 태그 v-model 이름
+		showCartModal: false,
+		showScrapModal: false
+
 	},// data
 	methods : {
 		fnGetList : function(){
@@ -276,20 +322,51 @@ var app = new Vue({
 		
 
 
-	    fnOrderBy: function (orderBy) {
+	     fnOrderBy: function (orderBy) {
             var self = this;
             self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정
             self.fnGetList(); // AJAX 요청 보내기
-	      },
+	     },
 	      
 	      
-	      
-	      addPulseAnimation: function(event) {
-	            event.currentTarget.classList.add('animate__animated', 'animate__pulse');
-	        },
-	        removePulseAnimation: function(event) {
-	            event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
-	        }
+	    //이미지 마우스 오버했을때 pulse 애니메이션
+        addPulseAnimation: function(event) {
+            event.currentTarget.classList.add('animate__animated', 'animate__pulse');
+        },
+        removePulseAnimation: function(event) {
+            event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
+        },
+        
+        formatPrice: function(price) {
+            // 천 단위마다 쉼표(,)를 추가하는 정규식 처리
+            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
+        
+        
+        
+        // 모달 열기
+	    openCartModal: function() {
+          var self = this;
+          self.showCartModal = true;
+	    },
+	    openScrapModal: function() {
+          var self = this;
+          self.showScrapModal = true;
+	    },
+	    // 모달 닫기
+	    closeModal: function() {
+	      this.showCartModal = false;
+	      this.showScrapModal = false;
+	    },
+	    
+	    fnMoveCart : function() {
+        	location.href = "/product/cart.do";
+	    },
+	    fnMoveMyPage : function() {
+        	location.href = "/product/login.do";
+	    }
+	        
+	        
      }, // methods
 	created : function() {
 		var self = this;
