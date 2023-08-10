@@ -38,6 +38,12 @@ public class UserController {
 
 		return "/privacy";
     }
+	
+	@RequestMapping("/privacyMarketing.do") 
+    public String privacyMarketing(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/privacyMarketing";
+    }
 
 	// 회원가입
 	@RequestMapping(value = "/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

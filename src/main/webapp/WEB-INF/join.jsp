@@ -196,9 +196,9 @@
 	<div><h2>약관동의</h2></div>
 	<div><label><input type="checkbox" @click="fnAll" v-model="clause"> 전체동의</label></div>
 	<div><label><input type="checkbox" v-model="clause" value="m14"> 만 14세 이상입니다<span class="clause1">(필수)</span></label></div>
-	<div><label><input type="checkbox" v-model="clause" value="cla"> 이용약관<span class="clause1">(필수)</span></label><a href="usepolicy.do"><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
-	<div><label><input type="checkbox" v-model="clause" value="cla2"> 개인정보수집 및 이용동의<span class="clause1">(필수)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
-	<div><label><input type="checkbox" v-model="clause" value="sms"> 마케팅 활용 동의와 이벤트, 특가 등 메일 및 SMS 수신<span class="clause2">(선택)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
+	<div><label><input type="checkbox" v-model="clause" value="cla"> 이용약관<span class="clause1">(필수)</span></label><a href="usepolicy.do" target="blank"><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
+	<div><label><input type="checkbox" v-model="clause" value="cla2"> 개인정보수집 및 이용동의<span class="clause1">(필수)</span></label><a href="privacy.do" target="blank"><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
+	<div><label><input type="checkbox" v-model="clause" value="sms"> 마케팅 활용 동의와 이벤트, 특가 등 메일 및 SMS 수신<span class="clause2">(선택)</span></label><a href="privacyMarketing.do" target="blank"><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
 	<hr>
 	<!-- 하단 -->
 	<div><button @click="fnJoin" class="btn">회원가입</button></div>
