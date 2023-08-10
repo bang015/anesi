@@ -34,6 +34,8 @@ body{
 }
 
 .production-item__content{
+	width:200px;
+	height:338px;
 	  float : left;
 	  margin : 50px;
 }
@@ -72,6 +74,19 @@ body{
 		
 	</ul>
 	
+
+	<select class="category-filter-bar-order-button" v-model="categoryOrderBar" @click="fnGetList">
+           <option value="">전체</option>
+           <option value="LowestPrice">가격낮은순</option>
+           <option value="HighestPrice">가격높은순</option>
+           <option value="NewArrival">최신순</option>
+           
+           <!-- DB완성이 안돼서 아직 구현 못함 -->
+           <option value="">--아직못함↓--</option>
+           <option value="HighestPurchase">구매높은순</option>
+           <option value="HighestScrap">스크랩많은순</option>
+           <option value="ManyReview">리뷰많은순</option>
+    </select>
 	<div><h1>인기상품</h1></div>
 	
 		<div class="production-item__content" v-for="item in list">
@@ -111,7 +126,8 @@ body{
 			    <span class="production-item-rating__score">4.5</span>
 			   </div>
 				<a><i class="fa fa-shopping-cart "></i></a>
-		    
+		    	<a><i class="fa-solid fa-share-nodes"></i></a>
+		    	<a><i class="fa-regular fa-bookmark"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 		
 	</div>
@@ -122,19 +138,20 @@ var app = new Vue({
 	el : '#app',
 	data : {
 		list : [],
-		item : ""
+		item : "",
+		//상품 정렬하는 셀렉트 태그 v-model 이름
+		categoryOrderBar : ""
 	},// data
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {};
+            var nparmap = {categoryOrderBar : self.categoryOrderBar};
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	console.log(data);
                 	self.list = data.list;
                 }
             }); 
