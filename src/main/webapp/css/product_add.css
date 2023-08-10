@@ -101,6 +101,9 @@ input, button{
 }
 .categoryAllBox {
   border: 1px solid #ccc;
+   display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
 }
 .categoryBox {
   height: 40px;
@@ -109,7 +112,6 @@ input, button{
   align-items: center;
   justify-content: space-between;
   margin: 0 20px;
-  border-right: 1px solid #ccc;
 }
 .categoryBox > span > i {
   margin-right: 20px;
@@ -118,4 +120,14 @@ input, button{
 {
 	text-decoration: none;
 	background-color: #fff;
+}
+.category2, .category1 {
+  border-right: 1px solid #ccc;
+  }
+  .categoryNo{
+	  color: #A782C3;
+  }
+  
+.content{
+	text-align: center;
 }
