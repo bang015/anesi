@@ -28,6 +28,10 @@
 	<header>
 		<span> <a href=""><img class="logo"
 				src="../css/image/anesilogo.png" /> </a></span>
+				
+				<span><a class="aaa">스토어</a></span>
+				<span><a class="bbb">커뮤니티</a></span>
+				<span><a class="ccc">중고</a></span>
 
 		<ul id="header_navi">
 			<li><a><i class="fa fa-shopping-cart "></i></a></li>
