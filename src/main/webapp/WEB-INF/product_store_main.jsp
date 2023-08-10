@@ -12,12 +12,8 @@
 <title>상품메인페이지</title>
 <style>
 
-body{
-	width: 1300px;
-	margin: 0px  auto;
-	font-size: 14px;
-	font-family: 'Pretendard-Regular';
-}
+
+
 
 .product-main-category__image{
 	width:100px;
@@ -26,7 +22,7 @@ body{
 
 
 .production-item-thumnail__image{
-	width:200px;
+	width:250px;
 	height:250px;
 }
 
@@ -38,7 +34,7 @@ body{
 }
 
 .production-item__content{
-	width:200px;
+	width:220px;
 	height:338px;
   	float : left;
 	  margin : 50px;
@@ -61,6 +57,8 @@ body{
 }
       
 .category-order_toggle{
+	float : right;
+	margin-right : 100px;
 	background-color:#A782C3;
 	border: #fff;
 	text-align: center;
@@ -71,39 +69,51 @@ body{
 	font-family: 'Pretendard-Regular';
 	color :  #fff;
 	
+	
+	
   }
 .category-order_toggle:hover {
     background-color:rgb(235, 236, 237);
     transition: 0.7s;
-   	color :  black;
     
 }  
+.category-order-list {
 
-
-.category-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.category-list li {
+.category-order-list li {
+
   /* 카테고리 스타일링 */
   padding: .5em;
   border-bottom: 1px solid #ccc;
 }
-.category-list-container {
-background :  #fff;
-    position: absolute;
+.category-order-list-container {
+	background :  #fff;
    	width: 100px;
+   	float : right;
     
 
 }
+
+.aaa {
+  color: #A782C3; /* 원하는 색상 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
+  font-size: 18px; /* 원하는 크기 */
+  /* 다른 스타일 속성도 추가 가능 */
+}
+
 
 </style>
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
-	<div id="app">
+<jsp:include page="header.jsp"></jsp:include>
+
+
+	<div id="store_main">
 	<div><h1>카테고리</h1></div>
 	<ul id ="product-main-category__total">
 	
@@ -116,11 +126,15 @@ background :  #fff;
 		
 	</ul>
 	
+<!-- 상품 정렬하는 버튼-->	
 <button class="category-order_toggle">
-  <span>카테고리 <i class="fa-solid fa-chevron-down"></i></span>
+	  정렬<i class="fa-solid fa-chevron-down"></i>
 </button>
-<div class="category-list-container" style="display:none;">
-  <ul class="category-list" v-model="categoryOrderBar">
+<div class="category-order-list-container" style="display:none;">
+
+
+	
+  <ul class="category-order-list" >
     <li value=""><a>전체</a></li>
     <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">가격낮은순</a></li>
     <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">가격높은순</a></li>
@@ -177,31 +191,29 @@ background :  #fff;
 	    </div> <!-- class="production-item__content" 끝-->
 		
 	</div>
+
+	
+	
+	<jsp:include page="footer.jsp"></jsp:include>
+	
 </body>
 </html>
 <script>
 
 $(document).ready(function() {
-    // 버튼 클릭 이벤트 추가
+    // 상품정렬 버튼 클릭 이벤트 추가
     $('.category-order_toggle').click(function() {
-       $('.category-list-container').slideToggle('fast');
-    });
-    
-    // 서브 카테고리 토글 이벤트 추가
-    $('.category-list > li > a').click(function(event) {
-      event.preventDefault();
-      $(this).siblings('.subcategory-list').slideToggle('fast');
+       $('.category-order-list-container').slideToggle('fast');
     });
 });
 
 
 var app = new Vue({
-	el : '#app',
+	el : '#store_main',
 	data : {
 		list : [],
 		item : "",
 		//상품 정렬하는 셀렉트 태그 v-model 이름
-		categoryOrderBar : ""
 	},// data
 	methods : {
 		fnGetList : function(){
@@ -218,8 +230,8 @@ var app = new Vue({
             }); 
 		},
 		
-		
-		
+
+
 	    fnOrderBy: function (orderBy) {
             var self = this;
             self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정

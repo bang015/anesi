@@ -15,8 +15,10 @@
 
 
 #f_img{
-	width : 100px;
-	height : 100px;
+	margin-left : 70px;
+	margin-right : 30px;
+	width : 130px;
+	height : 130px;
   	float : left;
 }
 
@@ -24,6 +26,7 @@
 	font-size : 12px;
 	height: 100px;
 	padding : 30px 20px;
+	
 }
 
 #anesi_info{
@@ -54,13 +57,14 @@
 }
 #f_part5 {
     float : left;
-    width :10%;
+    width :5%;
 
 }
 #f_part6 {
-    width: 1300px;
     text-align: center;
     padding: 10px ;
+    margin-top : 150px;
+    
 }
 .content_bold{
 	font-weight : bold;
@@ -171,22 +175,23 @@
 	       <div class="내용">
 	          
 	           <div><a href="https://www.instagram.com/">instagram</a></div>
-	           <div><a href="https://www.youtube.com/youtube">youtube</div>
-	           <div><a href="https://ko-kr.facebook.com/">facebook</div>
-	           <div><a href="https://www.kakaocorp.com/">kakao</div>
-	           <div><a href="https://twitter.com/">twitter</div>
-	           <div><a href="http://blog.naver.com/">blog</div>
+	           <div><a href="https://www.youtube.com/youtube">youtube</a></div>
+	           <div><a href="https://ko-kr.facebook.com/">facebook</a></div>
+	           <div><a href="https://www.kakaocorp.com/">kakao</a></div>
+	           <div><a href="https://twitter.com/">twitter</a></div>
+	           <div><a href="http://blog.naver.com/">blog</a></div>
 	       </div>
 	   </div>
 	   
-	  
-	   
+	 <div id="f_part6">
+	 
+	    <span>Copyright <i class="fa-regular fa-copyright"></i> 아네시. All Rights Reserved. Hosting by Anesi Corp.</span>
+	      
+	   </div>
+	    
 	   
 	   
    </div>
-    <div id="f_part6">
-	    <span><a href="https://www.copyright.or.kr/">Copyright <i class="fa-regular fa-copyright"></i> 아네시. All Rights Reserved. Hosting by Anesi Corp.</a></span>
-	      
-	   </div>
+    
 </body>
 </html>
