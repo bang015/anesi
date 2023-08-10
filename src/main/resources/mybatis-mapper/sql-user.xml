@@ -34,4 +34,10 @@
 		FROM t3_tbl_user
 		WHERE USER_EMAIL = #{userEmail}
 	</select>
+	<!-- 비밀번호 찾기 -->
+	<select id="selectUserPwd" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT * 
+		FROM t3_tbl_user
+		WHERE USER_EMAIL = #{userEmail} and USER_NAME = #{userName} and PHONE = #{userPhone}
+	</select>
 </mapper>

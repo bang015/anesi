@@ -56,5 +56,18 @@ public class LoginServiceImpl implements LoginService{
 		
 			return loginMapper.selectUserEmail(map);
 		}
+		@Override
+		public HashMap<String, Object> searchUserPwd(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			User user=loginMapper.selectUserPwd(map);
+			if(user != null) {
+				resultMap.put("selectPwd", user);
+				resultMap.put("message",user.getUserName()+"님의 패스워드는 " + user.getUserPwd()+" 입니다.");
+			}else {
+				resultMap.put("message", "이름 또는 휴대폰 번호를 확인해주세요.");
+			}
+			return resultMap;
+		}
 
 }

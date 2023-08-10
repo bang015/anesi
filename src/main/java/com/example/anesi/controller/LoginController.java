@@ -64,19 +64,26 @@ public class LoginController {
 		if(resultMap.containsKey("user")) {
 			User user = (User)resultMap.get("user");
 			session.setAttribute("sessionId", user.getUserEmail());
-			session.setAttribute("sessionName", user.getUserName());
+			session.setAttribute("sessionNo", user.getUserNo());
 			session.setAttribute("sessionNick", user.getNick());
 			session.setAttribute("sessionStatus", user.getStatus());
 		};
 		return new Gson().toJson(resultMap);
 	}
 	// 아이디 찾기
-		@RequestMapping(value = "/emailSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		@ResponseBody
-		public String search(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-			HashMap<String, Object> resultMap = new HashMap<String, Object>();
-			int email = loginService.searchUserEmail(map);
-			resultMap.put("emailCheck", email);
-			return new Gson().toJson(resultMap);
+	@RequestMapping(value = "/emailSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String search(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	int email = loginService.searchUserEmail(map);
+	resultMap.put("emailCheck", email);
+	return new Gson().toJson(resultMap);
 		}
+	// 아이디 찾기
+	@RequestMapping(value = "/pwdSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchPwd(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	resultMap=loginService.searchUserPwd(map);	
+	return new Gson().toJson(resultMap);
+	}
+		
 }

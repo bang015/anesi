@@ -25,24 +25,21 @@
 				</div>
 				<div class="email-input">
 					<input @Click="reset" v-model="userEmail" placeholder="이메일">
-					<button class="btn" @click="emailCheck">확인</button>
+					<button id="hidden-btn" class="btn" @click="emailCheck">확인</button>
 				</div>
 				<div v-if="email == '0'">
 					<span>등록된 이메일 주소가 아닙니다.</span>
-				</div>
-				
-					
-				
+				</div>								
 				<div class="select-email">
 					<a>가입한 이메일 찾기</a>
 				</div>
-				<div  v-if="email == '1'">
+				<div id="hidden" v-if="email == '1'">
 					<div class="user-input">
 						<input v-model="userName"  placeholder="이름">
 						<input v-model="userPhone" placeholder="전화번호">
 					</div>
 					<div class="select-btn">
-						<button class="btn">패스워드 찾기</button>
+						<button class="btn" @click="searchPwd">패스워드 찾기</button>
 					</div>
 				</div>
 				<div class="text-box">
@@ -58,7 +55,10 @@
 <script>
 $(document).ready(function(){
     $("#hidden-btn").click(function(){
-        $("#hidden").slideToggle(400)
+    	
+    		$("#hidden").slideToggle(400)
+    	
+        
     })
 })
 var app = new Vue({
@@ -72,8 +72,7 @@ var app = new Vue({
 	methods : {
 		emailCheck : function(){
 			 var self = this;
-	            var nparmap = {userEmail : self.userEmail};
-	            
+	            var nparmap = {userEmail : self.userEmail};	            
 	            $.ajax({
 	                url : "emailSearch.dox",
 	                dataType:"json",	
@@ -89,6 +88,19 @@ var app = new Vue({
 			var self=this
 			self.email="";
 			console.log(self.email);
+		},
+		searchPwd : function(){
+			var self = this;
+            var nparmap = {userEmail : self.userEmail, userName : self.userName, userPhone : self.userPhone};           
+            $.ajax({
+                url : "pwdSearch.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {                
+               		alert(data.message);
+                }                
+            }); 
 		}
 	}, // methods
 	created : function() {

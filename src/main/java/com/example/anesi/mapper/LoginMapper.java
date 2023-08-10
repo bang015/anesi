@@ -19,4 +19,6 @@ public interface LoginMapper {
 	int reSetCnt(HashMap<String, Object> map);	
 	// 이메일 확인
 	int selectUserEmail(HashMap<String, Object> map);
+	
+	User selectUserPwd(HashMap<String, Object> map);
 }
