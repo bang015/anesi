@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.anesi.mapper.UserMapper">
+
+   <update id="userJoin" parameterType="hashmap">
+      INSERT INTO t3_tbl_user(USER_EMAIL, USER_PWD, PHONE, NICK, USER_NAME, BIRTHDAY, GENDER, SMSYN) 
+      VALUES(#{email}, #{pw1}, #{phone}, #{nick}, #{userName}, #{birth}, #{gender}, #{smsYn})
+   </update>
+   
+   	<select id="userCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM t3_tbl_user
+		WHERE USER_EMAIL = #{email}
+	</select>
+</mapper>

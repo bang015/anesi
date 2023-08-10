@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ANESI 회원가입😎</title>
 <style>
 	#container {
 		margin : 10px auto;
@@ -17,8 +17,7 @@
 	}
 	#logo{
 		width : 200px;
-		margin : 10px auto;
-		margin-left : 100px;
+		margin: 20px 0px 0px 100px;
 	}
 	.put{
 	    border-radius: 4px;
@@ -84,25 +83,28 @@
 	}
 	h2{
 		font-weight : 100;
-		margin : 5px 0px;
+		margin : 10px 0px;
 	}
 	i{
 		float : right;
 		margin-top: 10px;
 		margin-right : 5px;
 	}
+	img:hover{
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
 <div id="app">
 	<div id="container">
-	<div><img src="../css/image/footer_img.png" id="logo"></div>
+	<div><img src="../css/image/footer_img.png" id="logo" @click="fnMain"></div>
 	<div><h1>회원가입</h1></div>
 	<hr>
 	<div class="part">
 	<div><h2>이메일<span class="clause1"> *</span></h2></div>
-	<div><input class="email" ref="emailInput" type="text" v-model="user.userEmail1" @click="fnMailCheck" @keyup="fnMailCheck" placeholder="이메일"> @ 
-	<select v-model="user.userEmail2" class="email2" ref="emailInput2">
+	<div><input class="email" ref="emailInput" type="text" v-model="user.userEmail1" @click="fnMailCheck" @keyup="fnCheck" @keyup="fnCheck" placeholder="이메일"> @ 
+	<select v-model="user.userEmail2" class="email2" ref="emailInput2" @click="fnCheck">
 		<option value="">선택해주세요.</option>
 		<option value="naver.com">naver.com</option>
 		<option value="hanmail.net">hanmail.net</option>
@@ -127,7 +129,7 @@
 	<div><span class="red">{{pw2Ms}}</span></div>
 	</div>
 	<div class="part">
-	<div><h2>이름</h2></div>
+	<div><h2>이름<span class="clause1"> *</span></h2></div>
 	<div><input class="put" ref="nameInput" type="text" v-model="user.userName" placeholder="이름" @click="fnNameCheck" @keyup="fnNameCheck"></div>
 	<div><span class="red">{{nameMs}}</span></div>
 	</div>
@@ -152,14 +154,22 @@
 		</select> 
 		<select v-model="user.bMonth" class="select">
 			<option>월</option>
-			<% for(int i=1; i<=12; i++){%> 
+			<% for(int i=1; i<=12; i++){
+				if(i<10){%>
+					<option value="0<%= i %>"><%= i %></option>
+				<%}else{%> 
 				<option value="<%= i %>"><%= i %></option>
+				<%}%> 
 			<%}%>
 		</select> 
 		<select v-model="user.bDay" class="select">
 			<option>일</option>
-			<% for(int i=1; i<=31; i++){%> 
+			<% for(int i=1; i<=31; i++){
+				if(i<10){%>
+					<option value="0<%= i %>"><%= i %></option>
+				<%}else{%> 
 				<option value="<%= i %>"><%= i %></option>
+				<%}%> 
 			<%}%>
 		</select>
 	</div>
@@ -178,7 +188,7 @@
 	<div><label><input type="checkbox" v-model="clause" value="m14"> 만 14세 이상입니다<span class="clause1">(필수)</span></label></div>
 	<div><label><input type="checkbox" v-model="clause" value="cla"> 이용약관<span class="clause1">(필수)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
 	<div><label><input type="checkbox" v-model="clause" value="cla2"> 개인정보수집 및 이용동의<span class="clause1">(필수)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
-	<div><label><input type="checkbox" v-model="clause" value="sms"> 이벤트, 쿠폰, 특가 알림 메일 및 SMS 등 수신<span class="clause2">(선택)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
+	<div><label><input type="checkbox" v-model="clause" value="sms"> 마케팅 활용 동의와 이벤트, 특가 등 메일 및 SMS 수신<span class="clause2">(선택)</span></label><a href=""><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
 	<hr>
 	<div><button @click="fnJoin" class="btn">회원가입</button></div>
 
@@ -195,6 +205,7 @@ var app = new Vue({
 		user : {
 			userEmail1 : "",
 			userEmail2 : "",
+			email : "",
 			pw1 : "",
 			pw2 : "",
 			userName : "",
@@ -204,7 +215,7 @@ var app = new Vue({
 			bMonth : "월",
 			bDay : "일",
 			gender : "N",
-			birth : ""
+			smsYn : "N"
 		},
 		list : [],
 		clause : [],
@@ -254,6 +265,13 @@ var app = new Vue({
 		        });
 				return;
 			}
+			if(self.user.userName == ""){
+				alert("이름을 입력해주세요.");
+				self.$nextTick(function() {
+		            self.$refs.nameInput.focus();
+		        });
+				return;
+			}
 			var regType3 = /^[가-힣a-zA-Z\s]*$/;
 			if(!regType3.test(self.user.userName)){
 				alert("이름은 영문, 한글만 가능합니다.");
@@ -296,9 +314,15 @@ var app = new Vue({
 				alert("필수 약관에 동의해주세요.");
 				return;
 			}
+		 	if(self.clause.includes('sms')){
+		 		self.user.smsYn = 'Y';
+		 	}
 		 	var nparmap = self.user;
+		 	self.user.email = self.user.userEmail1 +'@'+ self.user.userEmail2;
+		 	self.user.birth = self.user.bYear + self.user.bMonth + self.user.bDay;
+		 	console.log(self.clause);
             $.ajax({
-                url : "add.dox",
+                url : "join.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
@@ -309,17 +333,21 @@ var app = new Vue({
 		},
 		fnCheck : function(){
 			var self = this;
-			var nparmap = {userId : self.user.userEmail};
+			self.user.email = self.user.userEmail1 +'@'+ self.user.userEmail2;
+			console.log(self.user.email);
+			var nparmap = {email : self.user.email};
             $.ajax({
-                url : "check.dox",
+                url : "joinCheck.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
+                	console.log(data);
                 	if(data.cnt > 0){
-                		self.message = "중복된 이메일입니다.";
+                		self.emailMs = "중복된 이메일입니다.";
+                		self.emailFlg = false;
                 	} else {
-                		self.message = "사용 가능한 이메일입니다.";
+                		self.emailMs = "사용 가능한 이메일입니다.";
                 		self.emailFlg = true;
                 	}
                 }
@@ -370,7 +398,9 @@ var app = new Vue({
 		fnNameCheck : function(){
 			var self = this;
 			var regType3 = /^[가-힣a-zA-Z\s]*$/;
-			if(!regType3.test(self.user.userName)){
+			if(self.user.userName == ""){
+				self.nameMs = "이름을 입력하세요.";
+			}else if(!regType3.test(self.user.userName)){
 				self.nameMs = "이름은 영문, 한글만 가능합니다.";
 			}else{
 				self.nameMs = "";
@@ -378,7 +408,7 @@ var app = new Vue({
 		},
 		fnNickCheck : function(){
 			var self = this;
-			var regType2 = /^[a-zA-Z0-9\s]*$/;
+			var regType2 = /^[가-힣ㄱ-ㅎa-zA-Z0-9\s]*$/;
 			if(self.user.nick == ""){
 				self.nickMs = "닉네임을 입력하세요.";
 			}else if(!regType2.test(self.user.nick)){
@@ -407,8 +437,9 @@ var app = new Vue({
         	}else{
         		self.clause = ['m14', 'cla', 'cla2', 'sms'];
         	}
-        	
-        	
+        },
+        fnMain : function(){
+        	location.href="main.do";
         }
 	}, // methods
 	created : function() {
