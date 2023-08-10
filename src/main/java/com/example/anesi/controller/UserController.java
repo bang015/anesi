@@ -26,23 +26,29 @@ public class UserController {
 		
 		return "/join";
     }
-	
+	// 이용약관 페이지
 	@RequestMapping("/usepolicy.do") 
     public String usepolicy(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 
 		return "/usepolicy";
     }
-	
+	// 개인정보 페이지
 	@RequestMapping("/privacy.do") 
     public String privacy(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 
 		return "/privacy";
     }
-	
+	// 개인정보마케팅 페이지
 	@RequestMapping("/privacyMarketing.do") 
     public String privacyMarketing(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 
 		return "/privacyMarketing";
+    }
+	// 마이페이지
+	@RequestMapping("/mypage.do") 
+    public String mypage(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/mypage";
     }
 
 	// 회원가입
