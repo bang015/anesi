@@ -1,8 +1,6 @@
 package com.example.anesi.model;
 
 
-
-
 public class User {
 	private int userNo;
 	private String userEmail;
@@ -17,6 +15,7 @@ public class User {
 	private String cDateTime;
 	private String uDateTime;
 	private String deleteYn;
+	private String smsYn;
 	
 	public int getUserNo() {
 		return userNo;
@@ -95,6 +94,12 @@ public class User {
 	}
 	public void setDeleteYn(String deleteYn) {
 		this.deleteYn = deleteYn;
+	}
+	public String getSmsYn() {
+		return smsYn;
+	}
+	public void setSmsYn(String smsYn) {
+		this.smsYn = smsYn;
 	}
 	
 
