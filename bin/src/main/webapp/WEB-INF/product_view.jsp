@@ -29,21 +29,21 @@
 						
 					</div>
 					<div class="main-box">
-						<div class="main-title" >
-							{{product.productName}}
+						<div class="main-title">
+							{{list[0].productName}}
 						</div>
 						<div class="main-csat">
 						
 						</div>
 						<div class="main-discount">
-							{{product.discount}}%
+							
 						</div>
 						<div class="main-price">
-							{{product.productPrice}}
+							{{list[0].productPrice}}
 						</div>
 						<div class="main-option">
 							<select >
-								<!-- <option v-for="item in list">{{item.optionName}}+({{item.optionPrice}}¿ø)</option> -->
+								<option v-for="item in list">{{item.optionNo}}</option>
 							</select>
 						</div>
 						<div class="main-btn-wrap">
@@ -70,7 +70,7 @@ var app = new Vue({
 	el : '#app',
 	data : {
 		productNo : 3,
-		product : {}
+		list : []
 	},// data
 	methods : {
 		fnGetList : function(){
@@ -82,8 +82,8 @@ var app = new Vue({
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) {                
-	               		self.product = data.product;
-	               		console.log(self.product);
+	               		self.list = data.list;
+	               		console.log(self.list);
 	                }                
 	            }); 
 		},

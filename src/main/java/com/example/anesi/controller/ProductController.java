@@ -70,9 +70,9 @@ public class ProductController {
 	   @ResponseBody
 	   public String product(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
 	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
-	       List<Product> list = productService.searchProductList(map);
+	       Product product = productService.searchProductList(map);
 
-	       resultMap.put("list", list);
+	       resultMap.put("product", product);
 	       return new Gson().toJson(resultMap);
 	   }
 	

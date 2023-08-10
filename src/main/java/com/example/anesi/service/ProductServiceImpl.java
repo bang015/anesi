@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.selectCategoryList2(map);
 	}
 	@Override
-	public List<Product> searchProductList(HashMap<String, Object> map) {
+	public Product searchProductList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return productMapper.selectProductList(map);
 	}
