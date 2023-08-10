@@ -33,9 +33,12 @@ a:visited {
 /* 호버 스타일 */
 a:hover {
   color: #A782C3;
-  text-decoration: underline;
 }
 
+hr{
+	border: none; 
+	border-top: 1px solid #c3c3c3;
+}
 
 /* 버튼 호버 스타일 */
 .btn:hover{

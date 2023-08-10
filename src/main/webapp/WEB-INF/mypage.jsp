@@ -22,17 +22,33 @@
 .my_li2 {
 	font-size: 15px;
 }
-.my_a:hover {
-	text-decoration : none;
-	cursor : pointer;
-	border-bottom: 3px solid #A782C3; /* 언더라인의 굵기를 늘림 */
-	margin-bottom: -10px; /* 언더라인의 위치를 아래로 내림 */
+.my_a {
+	text-decoration: none;
+	position: relative; /* 상대 위치 설정 */
+}
+.my_a:before { /* 가상 요소를 이용하여 언더라인 만들기 */
+	text-decoration: none;
+	content: "";
+	position: absolute;
+	bottom: -18px; 
+	left: 0;
+	width: 100%;
+	height: 4px;
+	background-color: #A782C3;
+	visibility: hidden; 
+	opacity: 0; 
+	transition: opacity 0.3s, visibility 0.3s;
+	
+}
+.my_a:hover:before { 
+	visibility: visible;
+	text-decoration: none;
+	opacity: 1;
 }
 .hrr {
 	margin : 4px 0px;
-	color : #eee;
-	border: none; /* 기본 border 제거 */
-	border-top: 1px solid gray; /* 윗쪽에 border 추가 */
+	border: none; 
+	border-top: 1px solid #eee; 
 }
 fieldset {
 	border : 1px solid gray;
@@ -57,9 +73,6 @@ fieldset {
 		<li class="my_li2"><a class="my_a">스크랩북</a></li>
 	</ul>
 <hr class="hrr">
-<fieldset>
-	<div>프로필 사진</div>
-</fieldset>
 </body>
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
