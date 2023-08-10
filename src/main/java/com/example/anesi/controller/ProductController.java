@@ -34,6 +34,12 @@ public class ProductController {
 		return "/cart";
 		
 	}
+	//상품 상세 페이지
+	@RequestMapping("/product/view.do") 
+	public String view(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/product_view";
+		
+	}
 	
 	@RequestMapping(value = "/product/category.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -57,6 +63,15 @@ public class ProductController {
 	   public String cartList(Model model) throws Exception {
 	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
 	       List<Product> list = ProductService.selectCartProductList();
+	       resultMap.put("list", list);
+	       return new Gson().toJson(resultMap);
+	   }
+	  @RequestMapping(value = "/productSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	   @ResponseBody
+	   public String product(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	       List<Product> list = productService.searchProductList(map);
+
 	       resultMap.put("list", list);
 	       return new Gson().toJson(resultMap);
 	   }

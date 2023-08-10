@@ -8,7 +8,7 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/searchId.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>패스워드 찾기</title>
 <style>
 </style>
 <jsp:include page="header.jsp"></jsp:include>

@@ -17,4 +17,7 @@ public interface ProductService {
 	
 	//카테고리 소분류 검색
 	List<Category> searchCategoryList2(HashMap<String, Object> map);
+	
+	// 상품 상세 정보 검색
+	List<Product> searchProductList(HashMap<String, Object> map);
 }

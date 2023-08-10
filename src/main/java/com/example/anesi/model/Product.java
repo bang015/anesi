@@ -15,8 +15,44 @@ public class Product {
 	    private String pContent;
 	    private String country;
 	    private int discountPrice;
+	    private int optionNo;
+	    private int productStock;
+	    private int optionPrice;
+	    private int productCnt;
 	    
-	 	//product_category 테이블
+	 	public int getOptionNo() {
+			return optionNo;
+		}
+
+		public void setOptionNo(int optionNo) {
+			this.optionNo = optionNo;
+		}
+
+		public int getProductStock() {
+			return productStock;
+		}
+
+		public void setProductStock(int productStock) {
+			this.productStock = productStock;
+		}
+
+		public int getOptionPrice() {
+			return optionPrice;
+		}
+
+		public void setOptionPrice(int optionPrice) {
+			this.optionPrice = optionPrice;
+		}
+
+		public int getProductCnt() {
+			return productCnt;
+		}
+
+		public void setProductCnt(int productCnt) {
+			this.productCnt = productCnt;
+		}
+
+		//product_category 테이블
 	    private String categoryName;
 
 		public String getProductNo() {
