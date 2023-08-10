@@ -5,7 +5,7 @@
 	<!-- 로그인 쿼리 -->
 	<select id="selectUser" parameterType="hashmap" resultType="com.example.anesi.model.User">
 		SELECT * 
-		FROM t3_TBL_USER
+		FROM t3_tbl_user
 		WHERE USER_EMAIL = #{userEmail} AND USER_PWD = #{pwd}
 	</select>
 	<!-- 로그인 아이디 확인 -->
