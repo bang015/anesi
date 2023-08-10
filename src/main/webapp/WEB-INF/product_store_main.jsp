@@ -363,7 +363,7 @@ var app = new Vue({
         	location.href = "/product/cart.do";
 	    },
 	    fnMoveMyPage : function() {
-        	location.href = "/product/login.do";
+        	location.href = "/mypage.do";
 	    }
 	        
 	        
