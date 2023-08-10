@@ -5,7 +5,8 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="js/typeahead.bundle.min.js"></script> <!-- 수정 완료 -->
+  <!--자동검색기능  -->
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 
@@ -22,7 +23,11 @@
 	rel="stylesheet">
 <link href="../css/Header.css" rel="stylesheet">
 <link href="../css/mainCss.css" rel="stylesheet">
-
+	
+ <style>
+/* 드롭다운 메뉴를 오른쪽 정렬 */
+	
+    </style>
 </head>
 <body>
 	<header>
@@ -47,7 +52,7 @@
             <a class="href">추천 </a> <a class="href">랭킹</a> <a class="href">특가</a> <a class="href">기획전</a> <a class="href">브랜드관</a>
         </span>
       <span>
-        <input type="text" class="headertextbox">
+         <input class="typeahead" type="text" placeholder="Search">
          <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" class="glasses">
          </span>
     </span>
@@ -129,4 +134,37 @@
 	      $(this).siblings('.subcategory-list').slideToggle('fast');
 	    });
 	});
+ $(document).ready(function() {
+	  const countries = ["Apple", "Banana", "Cherry", "Date", "Elderberry"];
+
+	  $('.typeahead').typeahead({
+	    hint: true,
+	    highlight: true,
+	    minLength: 1
+	  },
+	  {
+	    name: 'countries',
+	    source: substringMatcher(countries)
+	  });
+	});
+
+ 
+	function substringMatcher(strs) {
+	  return function findMatches(q, cb) {
+	    let matches, substringRegex;
+
+	    matches = [];
+
+	    substrRegex = new RegExp(q, 'i');
+
+	    $.each(strs, function(i, str) {
+	      if (substrRegex.test(str)) {
+	        matches.push(str);
+	      }
+	    });
+
+	    cb(matches);
+	  };
+	}
+	$('.twitter-typeahead, .typeahead').attr('style',''); 
 </script>
