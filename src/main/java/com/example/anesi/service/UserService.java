@@ -9,6 +9,10 @@ public interface UserService {
 
 	int userJoin(HashMap<String, Object> map);
 	
-	int userCnt(HashMap<String, Object> map);
+	int joinCnt(HashMap<String, Object> map);
+	
+	int nickCnt(HashMap<String, Object> map);
+	
+	int phoneCnt(HashMap<String, Object> map);
 	
 }

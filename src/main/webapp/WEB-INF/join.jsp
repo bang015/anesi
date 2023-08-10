@@ -103,7 +103,7 @@
 	<hr>
 	<div class="part">
 	<div><h2>이메일<span class="clause1"> *</span></h2></div>
-	<div><input class="email" ref="emailInput" type="text" v-model="user.userEmail1" @click="fnMailCheck" @keyup="fnCheck" @keyup="fnCheck" placeholder="이메일"> @ 
+	<div><input class="email" ref="emailInput" type="text" v-model="user.userEmail1" @click="fnCheck" @keyup="fnCheck" placeholder="이메일"> @ 
 	<select v-model="user.userEmail2" class="email2" ref="emailInput2" @click="fnCheck">
 		<option value="">선택해주세요.</option>
 		<option value="naver.com">naver.com</option>
@@ -135,12 +135,12 @@
 	</div>
 	<div class="part">
 	<div><h2>닉네임<span class="clause1"> *</span></h2></div>
-	<div><input class="put" ref="nickInput" type="text" v-model="user.nick" placeholder="닉네임" @click="fnNickCheck" @keyup="fnNickCheck"></div>
+	<div><input class="put" ref="nickInput" type="text" v-model="user.nick" placeholder="닉네임 특수문자 제외 사용 가능" @click="fnNickOverlap" @keyup="fnNickOverlap"></div>
 	<div><span class="red">{{nickMs}}</span></div>
 	</div>
 	<div class="part">
 	<div><h2>휴대폰 번호<span class="clause1"> *</span></h2></div>
-	<div><input class="put" ref="phoneInput" type="text" v-model="user.phone" placeholder="휴대폰 번호 '-'제외 숫자만 입력해주세요." @click="fnPhoneCheck" @keyup="fnPhoneCheck"></div>
+	<div><input class="put" ref="phoneInput" type="text" v-model="user.phone" placeholder="휴대폰 번호 '-'제외 숫자만 입력해주세요." @click="fnPhoneOverlap" @keyup="fnPhoneOverlap"></div>
 	<div><span class="red">{{phoneMs}}</span></div>
 	</div>
 	<div class="part">
@@ -221,6 +221,7 @@ var app = new Vue({
 		clause : [],
 		emailFlg : false,
 		nickFlg : false,
+		phoneFlg : false,
 		message : "",
 		emailMs : "",
 		m14 : "",
@@ -248,6 +249,13 @@ var app = new Vue({
 				alert("이메일을 선택해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.emailInput2.focus();
+		        });
+				return;
+			}
+			if(!self.emailFlg){
+				alert("이미 가입된 이메일입니다.");
+				self.$nextTick(function() {
+		            self.$refs.emailInput.focus();
 		        });
 				return;
 			}
@@ -287,6 +295,21 @@ var app = new Vue({
 		        });
 				return;
 			}
+			if(!self.nickFlg){
+				alert("중복된 닉네임입니다.");
+				self.$nextTick(function() {
+		            self.$refs.nickInput.focus();
+		        });
+				return;
+			}
+			var regType2 = /^[가-힣ㄱ-ㅎa-zA-Z0-9\s]*$/;
+			if(!regType2.test(self.user.nick)){
+				alert("닉네임에 특수문자를 제외하여 입력해주세요.");
+				self.$nextTick(function() {
+		            self.$refs.nickInput.focus();
+		        });
+				return;
+			}
 			if(self.user.phone == "" || self.user.phone.length < 11){
 				alert("휴대폰 번호를 정확히 입력해주세요.");
 				self.$nextTick(function() {
@@ -302,14 +325,6 @@ var app = new Vue({
 		        });
 				return;
 			}
-			var regType2 = /^[가-힣ㄱ-ㅎa-zA-Z0-9\s]*$/;
-			if(!regType2.test(self.user.nick)){
-				alert("닉네임에 특수문자를 제외하여 입력해주세요.");
-				self.$nextTick(function() {
-		            self.$refs.nickInput.focus();
-		        });
-				return;
-			}
 			if(!self.clause.includes('m14') || !self.clause.includes('cla') || !self.clause.includes('cla2')){
 				alert("필수 약관에 동의해주세요.");
 				return;
@@ -320,6 +335,9 @@ var app = new Vue({
 		 	var nparmap = self.user;
 		 	self.user.email = self.user.userEmail1 +'@'+ self.user.userEmail2;
 		 	self.user.birth = self.user.bYear + self.user.bMonth + self.user.bDay;
+		 	if(self.user.bYear=="연" || self.user.bMonth=="월" || self.user.bDay=="일"){
+		 		self.user.birth = "";
+		 	}
 		 	console.log(self.clause);
             $.ajax({
                 url : "join.dox",
@@ -334,7 +352,6 @@ var app = new Vue({
 		fnCheck : function(){
 			var self = this;
 			self.user.email = self.user.userEmail1 +'@'+ self.user.userEmail2;
-			console.log(self.user.email);
 			var nparmap = {email : self.user.email};
             $.ajax({
                 url : "joinCheck.dox",
@@ -342,42 +359,75 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	console.log(data);
-                	if(data.cnt > 0){
-                		self.emailMs = "중복된 이메일입니다.";
+        			if(self.user.userEmail1 == ""){
+        				self.emailMs = "이메일을 입력하세요.";
+        				self.emailFlg = false;
+        			}else if(data.cnt > 0){
+                		self.emailMs = "이미 가입된 이메일입니다.";
                 		self.emailFlg = false;
-                	} else {
+                	}else if(self.user.userEmail2==""){
+                		self.emailMs = "메일 주소를 선택해주세요.";
+                	}else{
                 		self.emailMs = "사용 가능한 이메일입니다.";
                 		self.emailFlg = true;
                 	}
                 }
             });
 		},
-		fnNickCheck : function(){
+		fnNickOverlap : function(){
 			var self = this;
-			var nparmap = {userId : self.user.nick};
+			var nparmap = {nick : self.user.nick};
             $.ajax({
                 url : "nickCheck.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	if(data.cnt > 0){
-                		self.message = "중복된 닉네임입니다.";
+                	var regType2 = /^[가-힣ㄱ-ㅎa-zA-Z0-9\s]*$/;
+        			if(self.user.nick == ""){
+        				self.nickMs = "닉네임을 입력하세요.";
+        				self.nickFlg = false;
+        			}else if(!regType2.test(self.user.nick)){
+        				self.nickMs = "닉네임은 특수문자 제외하고 사용가능합니다."
+        				self.nickFlg = false;
+        			}else if(data.cnt > 0){
+                		self.nickMs = "중복된 닉네임입니다.";
+                		self.nickFlg = false;
                 	} else {
-                		self.message = "사용 가능한 닉네임입니다.";
-                		self.emailFlg = true;
+                		self.nickMs = "사용 가능한 닉네임입니다.";
+                		self.nickFlg = true;
                 	}
                 }
             });
 		},
-		fnMailCheck : function(){
+		fnPhoneOverlap : function(){
 			var self = this;
-			if(self.user.userEmail1 == ""){
-				self.emailMs = "이메일을 입력하세요.";
-			}else{
-				self.emailMs = "";
-			}
+			var nparmap = {phone : self.user.phone};
+            $.ajax({
+                url : "phoneCheck.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+        			var regType1 = /^[0-9]+$/;
+        			if(self.user.phone == ""){
+        				self.phoneMs = "휴대폰 번호를 입력하세요.";
+        				self.phoneFlg = false;
+        			}else if(!regType1.test(self.user.phone)){
+        				self.phoneMs = "숫자만 입력해주세요.";
+        				self.phoneFlg = false;
+        			}else if(self.user.phone.length < 10 || self.user.phone.length>12){
+        				self.phoneMs = "휴대폰 번호를 정확히 입력해주세요.(10~12자리)";
+        				self.phoneFlg = false;
+        			}else if(data.cnt > 0){
+                		self.phoneMs = "이미 가입된 번호입니다.";
+                		self.phoneFlg = false;
+                	} else {
+                		self.phoneMs = "사용 가능한 번호입니다.";
+                		self.phoneFlg = true;
+                	}
+                }
+            });
 		},
 		fnPwdCheck : function(){
 			var self = this;
@@ -404,30 +454,6 @@ var app = new Vue({
 				self.nameMs = "이름은 영문, 한글만 가능합니다.";
 			}else{
 				self.nameMs = "";
-			}
-		},
-		fnNickCheck : function(){
-			var self = this;
-			var regType2 = /^[가-힣ㄱ-ㅎa-zA-Z0-9\s]*$/;
-			if(self.user.nick == ""){
-				self.nickMs = "닉네임을 입력하세요.";
-			}else if(!regType2.test(self.user.nick)){
-				self.nickMs = "닉네임은 특수문자 제외하고 사용가능합니다."
-			}else{
-				self.nickMs = "";
-			}
-		},
-		fnPhoneCheck : function(){
-			var self = this;
-			var regType1 = /^[0-9]+$/;
-			if(self.user.phone == ""){
-				self.phoneMs = "휴대폰 번호를 입력하세요.";
-			}else if(!regType1.test(self.user.phone)){
-				self.phoneMs = "숫자만 입력해주세요.";
-			}else if(self.user.phone.length < 10){
-				self.phoneMs = "휴대폰 번호를 정확히 입력해주세요.(10자리 이상)";
-			}else{
-				self.phoneMs = "";
 			}
 		},
         fnAll : function(){

@@ -8,9 +8,21 @@
       VALUES(#{email}, #{pw1}, #{phone}, #{nick}, #{userName}, #{birth}, #{gender}, #{smsYn})
    </update>
    
-   	<select id="userCnt" parameterType="hashmap" resultType="int">
+   	<select id="joinCnt" parameterType="hashmap" resultType="int">
 		SELECT COUNT(*) AS CNT
 		FROM t3_tbl_user
 		WHERE USER_EMAIL = #{email}
+	</select>
+	
+	<select id="nickCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM t3_tbl_user
+		WHERE NICK = #{nick}
+	</select>
+	
+	<select id="phoneCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM t3_tbl_user
+		WHERE PHONE = #{phone}
 	</select>
 </mapper>

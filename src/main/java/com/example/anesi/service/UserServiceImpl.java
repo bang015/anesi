@@ -23,9 +23,21 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int userCnt(HashMap<String, Object> map) {
+	public int joinCnt(HashMap<String, Object> map) {
 		System.out.println(map);
-		return userMapper.userCnt(map);
+		return userMapper.joinCnt(map);
+	}
+
+	@Override
+	public int nickCnt(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.nickCnt(map);
+	}
+
+	@Override
+	public int phoneCnt(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.phoneCnt(map);
 	}
 
 }

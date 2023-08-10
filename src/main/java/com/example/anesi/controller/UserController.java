@@ -39,8 +39,27 @@ public class UserController {
 	@ResponseBody
 	public String joinCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		int cnt = userService.userCnt(map);
+		int cnt = userService.joinCnt(map);
 		resultMap.put("cnt", cnt);
 		return new Gson().toJson(resultMap);
 	}
+	
+	@RequestMapping(value = "/nickCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String nickCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int cnt = userService.nickCnt(map);
+		resultMap.put("cnt", cnt);
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/phoneCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String phoneCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int cnt = userService.phoneCnt(map);
+		resultMap.put("cnt", cnt);
+		return new Gson().toJson(resultMap);
+	}
+	
 }
