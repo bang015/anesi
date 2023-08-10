@@ -61,7 +61,7 @@ header {
   }
   .headerfont{
 	  font-size: 17px;
-	  margin-left: 20px;
+	  margin-left: 100px;
   }
   .v-line {
   border-left : thin  solid #000;
@@ -82,5 +82,29 @@ header {
     position: absolute;
     width: 20%;
 }
-  
+
+.href{
+	margin-left: 20px;
+	
+}
+.headertextbox{
+	margin-left: 50px;
+	width: 500px;
+}
+  .headertextbox{
+	   border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 16px;
+  padding-left: 40px;
+  }
+  .glasses {
+  position : absolute;
+  width: 18px;
+  top: 130px;
+  right: 725px;
+  margin: 0;
+    opacity: 0.5;
+}
+
   

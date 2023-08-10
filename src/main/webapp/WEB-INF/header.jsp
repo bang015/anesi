@@ -28,10 +28,6 @@
 	<header>
 		<span> <a href=""><img class="logo"
 				src="../css/image/anesilogo.png" /> </a></span>
-				
-				<span><a class="aaa">스토어</a></span>
-				<span><a class="bbb">커뮤니티</a></span>
-				<span><a class="ccc">중고</a></span>
 
 		<ul id="header_navi">
 			<li><a><i class="fa fa-shopping-cart "></i></a></li>
@@ -48,13 +44,18 @@
 		   <span>
         <button class="category-toggle"> <span> <i class="fa-solid fa-grip-lines"></i>카테고리</button>
         <span class = "headerfont">
-            <a>추천 </a> <a>랭킹</a> <a>특가</a> <a>기획전</a> <a>브랜드관</a>
+            <a class="href">추천 </a> <a class="href">랭킹</a> <a class="href">특가</a> <a class="href">기획전</a> <a class="href">브랜드관</a>
         </span>
+      <span>
+        <input type="text" class="headertextbox">
+         <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" class="glasses">
+         </span>
     </span>
 		<hr>
 		 </header>
 	 <div class="category-list-container" style="display:none;">
     <ul class="category-list">
+      
         <li>
             <a>가구</a>
             <ul class="subcategory-list" style="display:none;">
