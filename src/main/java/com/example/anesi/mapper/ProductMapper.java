@@ -20,4 +20,7 @@ public interface ProductMapper {
 	// 카테고리 검색
 	List<Category> selectCategoryList();
 	List<Product> selectCartProductList(HashMap<String, Object> map);
+	
+	// 카테고리 소분류 검색
+	List<Category> selectCategoryList2(HashMap<String, Object> map);
 }

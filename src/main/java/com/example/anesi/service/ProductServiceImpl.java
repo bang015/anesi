@@ -26,6 +26,12 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return productMapper.selectCartProductList(map);
 	}
+	@Override
+	public List<Category> searchCategoryList2(HashMap<String, Object> map) {
+		String str = (String)map.get("no");
+		map.put("no", str.subSequence(0, 1));
+		return productMapper.selectCategoryList2(map);
+	}
 
 
 }

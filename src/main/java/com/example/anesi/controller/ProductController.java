@@ -48,7 +48,7 @@ public class ProductController {
 	@ResponseBody
 	public String category2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Category> list = productService.searchCategoryList();
+		List<Category> list = productService.searchCategoryList2(map);
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}

@@ -14,4 +14,7 @@ public interface ProductService {
 		return null;
 	}
 	List<Product> selectCartProductList(HashMap<String, Object> map);
+	
+	//카테고리 소분류 검색
+	List<Category> searchCategoryList2(HashMap<String, Object> map);
 }

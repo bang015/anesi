@@ -52,7 +52,7 @@
 	<select id="selectCategoryList2" parameterType="hashmap" resultType="com.example.anesi.model.Category">
 		SELECT *
 		FROM t3_tbl_product_category
-		WHERE MOD(CATEGORY_NO, 10) = 0
+		WHERE CATEGORY_NO LIKE CONCAT(#{no}, '%') AND CATEGORY_NO NOT LIKE'%0'
 	</select>
 </mapper>
 

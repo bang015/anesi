@@ -46,10 +46,14 @@
 					<div>상품 가격</div>
 					<input v-model="product.productPrice">
 				</div>
+				<div>
+					<div>할인율</div>
+					<input v-model="product.duscount">
+				</div>
 			</div>
 			<div class="box"><!-- 옵션 추가 -->
-				<div><h3>옵션</h3></div>
-				<button @click="fnOptionAdd" class="btn">옵션 추가</button>
+				<div><h3>옵션<span class="guide"> 상품 옵션은 최대 5개 입니다.</span></h3></div>
+				<button @click="fnOptionAdd" class="btn">옵션 추가</button><span class="err">{{errMsg3}}</span>
 				<table class="tableStyle">
 					<tr>
 						<th class="tdthsy">옵션명</th>
@@ -118,27 +122,33 @@
 var app = new Vue({
 	el : '#app',
 	data : {
-		errMsg1 : "", // 에러메시지1
-		errMsg2 : "", // 에러메시지1
+		errMsg1 : "", // 상품 정보 에러메세지
+		errMsg2 : "", // 상품 이미지 에러 메세지
+		errMsg3 : "", // 상품 옵션 에러 메세지
 		product : {	//상품 맵
 			productName : "",
 			productPrices : "",
 			manufacturer : "",
-			country : ""
+			country : "",
+			duscount : ""
 		},
 		optionList : [], // 옵션 리스트
 		productImgList : [], // 상품 이미지 리스트
 		contentImgList : [], // 상품 상세이미지 리스트
 		imageList : [], // 상품 이미지리스트
-		categoryList1 : [],
-		categoryList2 : []
+		categoryList1 : [], //카테고리 대분류
+		categoryList2 : [] //카테고리 대분류
 	},// data
 	methods : {
 		fnOptionAdd(){ //옵션 추가 메서드
 			var self = this;
-			self.optionList.push({optionName : "", productStock : "", optionPrice : "",});
+			if(self.optionList.length < 5){
+				self.optionList.push({optionName : "", productStock : "", optionPrice : "",});
+			} else{
+				self.errMsg3 = '상품 옵션은 최대 5개까지 입니다.';
+			}
 		},
-		fnOptionDelete(index){
+		fnOptionDelete(index){ //옵션 삭제
 			var self = this;
 			self.optionList.splice(index,1);
 		},
@@ -183,21 +193,20 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	self.categoryList1 = data.list;
-                	console.log(self.categoryList1)
                 }
             });
 		},
 		fnGetcategoryList2(no){
 			var self = this;
-			var nparmap = {};
+			var nparmap = {no};
             $.ajax({
                 url : "category2.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	self.categoryList1 = data.list;
-                	console.log(self.categoryList1)
+                	self.categoryList2 = data.list;
+                	console.log(self.categoryList2)
                 }
             });
 		}
