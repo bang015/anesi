@@ -6,6 +6,8 @@
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link href="../css/mainCss.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <meta charset="UTF-8">
 <title>Footer</title>
 <style>
@@ -183,7 +185,7 @@
 	   
    </div>
     <div id="f_part6">
-	    <span><a href="https://www.copyright.or.kr/">Copyright © 아네시. All Rights Reserved. Hosting by Anesi Corp.</a></span>
+	    <span><a href="https://www.copyright.or.kr/">Copyright <i class="fa-regular fa-copyright"></i> 아네시. All Rights Reserved. Hosting by Anesi Corp.</a></span>
 	      
 	   </div>
 </body>
