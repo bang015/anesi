@@ -10,7 +10,7 @@ public class User {
 	private String userName;
 	private String status;
 	private int cnt;
-	private String borthday;
+	private String birthday;
 	private String gender;
 	private String cDateTime;
 	private String uDateTime;
@@ -66,10 +66,10 @@ public class User {
 		this.cnt = cnt;
 	}
 	public String getBorthday() {
-		return borthday;
+		return birthday;
 	}
 	public void setBorthday(String borthday) {
-		this.borthday = borthday;
+		this.birthday = borthday;
 	}
 	public String getGender() {
 		return gender;

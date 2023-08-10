@@ -203,7 +203,8 @@ var app = new Vue({
 			bYear : "연",
 			bMonth : "월",
 			bDay : "일",
-			gender : "N"
+			gender : "N",
+			birth : ""
 		},
 		list : [],
 		clause : [],
