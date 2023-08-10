@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
 <mapper namespace="com.example.anesi.mapper.ProductMapper">
+	
 	<!-- 상품데이터 가져오는 쿼리 -->
 	<select id="selectProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
 		SELECT * 
+
 		FROM t3_tbl_product AS P
 		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
 		
@@ -14,11 +17,17 @@
 			WHERE DISCOUNT_YN = 'Y')
 			
 		AS D ON P.PRODUCT_NO = D.PRODUCT_NO
+
 	</select>
 	
+	<select id="selectCategoryList" parameterType="hashmap" resultType="com.example.anesi.model.Category">
+		SELECT *
+		FROM t3_tbl_product_category
+		WHERE MOD(CATEGORY_NO, 10) = 0
+	</select>
+</mapper>
 
 	
 	
 	
 	
-</mapper>
