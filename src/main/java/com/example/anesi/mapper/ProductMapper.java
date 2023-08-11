@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.anesi.model.Product;
-
 import com.example.anesi.model.Category;
+import com.example.anesi.model.Product;
+import com.example.anesi.model.Scrapbook;
 
 
 
@@ -30,4 +30,8 @@ public interface ProductMapper {
 	Product selectCsatAvg(HashMap<String, Object> map);
 	// 상품 옵션 검색
 	List<Product> selectOption(HashMap<String, Object> map);
+	// 상품 썸네일 이미지
+	List<Scrapbook> selectThumbnailImg(HashMap<String, Object> map);
+	// 상품 컨텐츠 이미지
+	List<Scrapbook>selectcontentImg(HashMap<String, Object> map);
 }

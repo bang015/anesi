@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Scrapbook;
 
 public interface ProductService {
 	//카테고리 대분류 검색
@@ -24,4 +25,8 @@ public interface ProductService {
 	Product searchCsatAvg(HashMap<String, Object> map);
 	// 상품 옵션 검색
 	List<Product> searchOption(HashMap<String, Object> map);
+	// 상품 썸네일 이미지 
+	List<Scrapbook> searchThumbnailImg(HashMap<String, Object> map);
+	// 상품 콘텐츠 이미지 
+	List<Scrapbook>searchProductImg(HashMap<String, Object> map);
 }

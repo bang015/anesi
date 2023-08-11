@@ -74,7 +74,18 @@
 		INNER JOIN t3_tbl_product_option o ON p.PRODUCT_NO = o.PRODUCT_NO		
 		WHERE p.PRODUCT_NO = #{productNo}
 	</select>
-	
+	<!-- 상품 썸네일 이미지 -->
+	<select id="selectThumbnailImg" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
+		SELECT *
+		FROM t3_tbl_product_image
+		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'Y'
+	</select>
+	<!-- 상품 컨텐츠 이미지 -->
+	<select id="selectcontentImg" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
+		SELECT *
+		FROM t3_tbl_product_image
+		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'N'
+	</select>
 </mapper>
 
 	

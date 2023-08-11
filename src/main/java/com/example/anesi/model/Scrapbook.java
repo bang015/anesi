@@ -6,7 +6,35 @@ public class Scrapbook {
 	private int productNo;
 	private String imgName;
 	private String imgPath;
+	private String imgOrgName;
 	
+	public String getImgName() {
+		return imgName;
+	}
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
+	}
+	public String getImgPath() {
+		return imgPath;
+	}
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+	public String getImgOrgName() {
+		return imgOrgName;
+	}
+	public void setImgOrgName(String imgOrgName) {
+		this.imgOrgName = imgOrgName;
+	}
+	public void setScrapbookNo(int scrapbookNo) {
+		this.scrapbookNo = scrapbookNo;
+	}
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
+	}
 	public int getScrapbookNo() {
 		return scrapbookNo;
 	}

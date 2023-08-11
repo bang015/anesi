@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Scrapbook;
 import com.example.anesi.service.ProductService;
 import com.google.gson.Gson;
 
@@ -96,5 +97,24 @@ public class ProductController {
 	       resultMap.put("option", option);
 	       return new Gson().toJson(resultMap);
 	   }
-	
+	  // 상품 썸네일 이미지
+	  @RequestMapping(value = "/imgThumbnailSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	   @ResponseBody
+	   public String img1(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	       List<Scrapbook> img = productService.searchThumbnailImg(map);
+
+	       resultMap.put("img", img);
+	       return new Gson().toJson(resultMap);
+	   }
+	  // 상품 콘텐츠 이미지
+	  @RequestMapping(value = "/imgSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	   @ResponseBody
+	   public String img(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	       List<Scrapbook> imgList = productService.searchProductImg(map);
+
+	       resultMap.put("imgList", imgList);
+	       return new Gson().toJson(resultMap);
+	   }
 }
