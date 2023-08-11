@@ -29,4 +29,6 @@ public interface ProductService {
 	List<Scrapbook> searchThumbnailImg(HashMap<String, Object> map);
 	// 상품 콘텐츠 이미지 
 	List<Scrapbook>searchProductImg(HashMap<String, Object> map);
+	//상품 검색창 
+		List<Product> searchProduct(HashMap<String, Object> map);
 }

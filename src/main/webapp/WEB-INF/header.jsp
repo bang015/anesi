@@ -52,9 +52,13 @@
             <a class="href">추천 </a> <a class="href">랭킹</a> <a class="href">특가</a> <a class="href">기획전</a> <a class="href">브랜드관</a>
         </span>
       <span>
-       <!-- 검색창 -->
+<div class="search-container">
+  <input type="text" id="search-bar" placeholder="검색어를 입력하세요.">
+  <div id="search-result"></div>
+</div>
          </span>
     </span>
+    
 		<hr>
 		
 	 <div class="category-list-container" style="display:none;">
@@ -120,51 +124,123 @@
     </ul>
 </div>
    </header>
- <script>
- 
- $(document).ready(function() {
-	    // 버튼 클릭 이벤트 추가
-	    $('.category-toggle').click(function() {
-	       $('.category-list-container').slideToggle('fast');
-	    });
-	    
-	    // 서브 카테고리 토글 이벤트 추가
-	    $('.category-list > li > a').click(function(event) {
-	      event.preventDefault();
-	      $(this).siblings('.subcategory-list').slideToggle('fast');
-	    });
-	});
- $(document).ready(function() {
-	  const countries = ["Apple", "Banana", "Cherry", "Date", "Elderberry"];
+  <script>
+  // 카테고리 토글
+  $('.category-toggle').click(function() {
+    $('.category-list-container').slideToggle('fast');
+  });
 
-	  $('.typeahead').typeahead({
-	    hint: true,
-	    highlight: true,
-	    minLength: 1
-	  },
-	  {
-	    name: 'countries',
-	    source: substringMatcher(countries)
+  // 서브 카테고리 토글 이벤트
+  $('.category-list > li > a').click(function(event) {
+    event.preventDefault();
+    $(this).siblings('.subcategory-list').slideToggle('fast');
+  });
+  function searchProducts(keyword) {
+	  var url = '/searchBarProduct.dox';
+	  var params = { keyword: keyword };
+
+	  // Ajax 요청으로 서버에 검색 요청
+	  $.ajax({
+	    url: url,
+	    data: params,
+	    type: 'POST',
+	    dataType: 'json',
+	    success: function(response) {
+	      var productList = response.list;
+	      // 검색 결과를 화면에 표시하는 로직 추가
+	      // ...
+	    },
+	    error: function(error) {
+	      // 검색 실패 처리 로직 추가
+	      console.log('Search failed:', error);
+	    }
+	  });
+	}
+
+	$(document).ready(function() {
+	  $('#search-bar').on('keydown', function(event) {
+	    if (event.keyCode === 13) {
+	      var keyword = $(this).val().trim();
+	      if (keyword.length > 0) {
+	        searchProducts(keyword);
+	      }
+	    }
 	  });
 	});
+	function showSearchResult(results) {
+		  var html = '';
+		  results.forEach(function(result) {
+		    html += '<div class="search-item">' + result.name + '</div>';
+		  });
+		  $('#search-result').html(html);
+		}
 
- 
-	function substringMatcher(strs) {
-	  return function findMatches(q, cb) {
-	    let matches, substringRegex;
+		$('#search-bar').on('keyup', function(event) {
+		  var keyword = $(this).val().trim();
+		  if (keyword.length > 0) {
+		    var url = '/searchBarProduct.dox';
+		    var params = { keyword: keyword };
+		  
+		    $.ajax({
+		      url: url,
+		      data: params,
+		      type: 'POST',
+		      dataType: 'json',
+		      success: function(response) {
+		        var results = response.list;
+		        showSearchResult(results);
+		        console.log(response);
+		      },
+		      error: function(error) {
+		        console.log('Search failed:', error);
+		      }
+		    });
+		  } else {
+		    $('#search-result').html('');
+		  }
+		});
 
-	    matches = [];
+		$('#search-result').on('click', '.search-item', function() {
+		  var productName = $(this).text();
+		  searchProducts(productName);
+		});
+		function showSearchResult(results) {
+			  var list = results.filter(function(result) {
+			    return result.name && result.name.trim().length > 0;
+			  });
+			  var html = '';
+			  list.forEach(function(result) {
+			    html += '<div class="search-item">' + result.name + '</div>';
+			  });
+			  $('#search-result').html(html);
+			}
+			$('#search-bar').on('keyup', function(event) {
+			  var keyword = $(this).val().trim();
+			  if (keyword.length > 0) {
+			    var url = '/searchBarProduct.dox';
+			    var params = { keyword: keyword };
 
-	    substrRegex = new RegExp(q, 'i');
+			    $.ajax({
+			      url: url,
+			      data: params,
+			      type: 'POST',
+			      dataType: 'json',
+			      success: function(response) {
+			        var results = response.list;
+			        showSearchResult(results);
+			        console.log(response);
+			      },
+			      error: function(error) {
+			        console.log('Search failed:', error);
+			      }
+			    });
+			  } else {
+			    $('#search-result').html('');
+			  }
+			});
 
-	    $.each(strs, function(i, str) {
-	      if (substrRegex.test(str)) {
-	        matches.push(str);
-	      }
-	    });
-
-	    cb(matches);
-	  };
-	}
-	$('.twitter-typeahead, .typeahead').attr('style',''); 
+			$('#search-result').on('click', '.search-item', function() {
+			  var productName = $(this).text();
+			  searchProducts(productName);
+			});	
 </script>

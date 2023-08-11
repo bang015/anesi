@@ -117,4 +117,14 @@ public class ProductController {
 	       resultMap.put("imgList", imgList);
 	       return new Gson().toJson(resultMap);
 	   }
+	  //상품 검색창 검색
+	  @RequestMapping(value = "/searchBarProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	   @ResponseBody
+	   public String searchBar(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	       List<Product> list = productService.searchProduct(map);
+	       resultMap.put("list", list);
+	       return new Gson().toJson(resultMap);
+	   }
+	  
 }
