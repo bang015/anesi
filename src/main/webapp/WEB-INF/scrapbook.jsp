@@ -5,6 +5,7 @@
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/scrapbook.css" rel="stylesheet">
 <meta charset="EUC-KR">
@@ -26,8 +27,8 @@
 				</div>
 				<div class="editText" @click="editSb" v-if="!flg">편집</div>
 				<div class="editText" v-if="flg">
-					<span :class="checkSb.length == 0 ? 'delText' : 'delText2'" @click="delScrapbook">삭제</span>
-					<span @click="editSb">취소</span>
+						<span :class="checkSb.length == 0 ? 'delText' : 'delText2'" @click="delScrapbook">삭제</span>
+						<span @click="editSb">취소</span>
 				</div>
 				
 				<div v-if="list.length == '0'" class="nonList">
@@ -38,8 +39,16 @@
 				
 				<div v-else class="imgBox">
 					<div v-for="item in list" class="chStandard" @click="imgClick(item)">
-						<img alt="" :src="item.imgPath+'/'+item.imgName"  class="sbImg">
-						<input type="checkbox" class="sbCheckBox" v-model="checkSb" :value="item.scrapbookNo" v-if="flg">
+						<div class="imgWrapper">
+							<img alt="" :src="item.imgPath+'/'+item.imgName"  class="sbImg">
+							<div class="overlay" :class="{ 'selected': checkSb.includes(item.scrapbookNo) }" v-if="flg"></div>
+							<div class="custom-checkbox" :class="{ 'checked': checkSb.includes(item.scrapbookNo) }" @click="toggleCheckbox(item)" v-if="flg">
+					            <div class="checkbox-icon" v-if="checkSb.includes(item.scrapbookNo)">
+					              	<i class="fa-solid fa-check fa-2xs" style="color: #ffffff;"></i>
+					            </div>
+							</div>
+	    				</div>				
+						<input type="checkbox" class="sbCheckBox" v-model="checkSb" :value="item.scrapbookNo" v-if="flg" @click="fnTest">
 					</div>
 				</div>
 			</div>
@@ -112,6 +121,9 @@ var app = new Vue({
                 	self.getSbList();
                 }
             });
+		},
+		fnTest(){
+			console.log("집에가고 싶다");
 		}
 	}, // methods
 	created : function() {
