@@ -43,7 +43,7 @@
 						</div>
 						<div class="main-option">
 							<select >
-								<!-- <option v-for="item in list">{{item.optionName}}+({{item.optionPrice}}¿ø)</option> -->
+								<option v-for="item in option">{{item.optionName}}+({{item.optionPrice}}¿ø)</option>
 							</select>
 						</div>
 						<div class="main-btn-wrap">
@@ -70,7 +70,9 @@ var app = new Vue({
 	el : '#app',
 	data : {
 		productNo : 3,
-		product : {}
+		product : {},
+		csat : {},
+		option : []
 	},// data
 	methods : {
 		fnGetList : function(){
@@ -87,10 +89,40 @@ var app = new Vue({
 	                }                
 	            }); 
 		},
+		fnAvg : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo};	            
+	            $.ajax({
+	                url : "/csatSearch.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.csat = data.csat;
+	               		console.log(self.csat);
+	                }                
+	            }); 
+		},
+		fnOption : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo};	            
+	            $.ajax({
+	                url : "/optionSearch.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.option = data.option;
+	               		console.log(self.option);
+	                }                
+	            }); 
+		},
 	}, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
+		self.fnAvg();
+		self.fnOption();
 	}// created
 });
 </script>

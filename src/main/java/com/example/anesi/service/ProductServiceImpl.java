@@ -38,5 +38,17 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.selectProductList(map);
 	}
 	
+	@Override
+	public Product searchCsatAvg(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return productMapper.selectCsatAvg(map);
+	}
+	
+	@Override
+	public List<Product> searchOption(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return productMapper.selectOption(map);
+	}
+	
 	
 }

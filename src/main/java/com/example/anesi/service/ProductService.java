@@ -20,4 +20,8 @@ public interface ProductService {
 	
 	// 상품 상세 정보 검색
 	Product searchProductList(HashMap<String, Object> map);
+	// 상품 별점 검색
+	Product searchCsatAvg(HashMap<String, Object> map);
+	// 상품 옵션 검색
+	List<Product> searchOption(HashMap<String, Object> map);
 }

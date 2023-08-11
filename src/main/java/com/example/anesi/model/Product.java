@@ -21,7 +21,16 @@ public class Product {
 	    private int productCnt;
 	    private String optionName;
 	    private int csatAvg; // 상품 평점
-	 	public int getCsatAvg() {
+	    private int csatCnt; // 상품 별점 개수
+	 	public int getCsatCnt() {
+			return csatCnt;
+		}
+
+		public void setCsatCnt(int csatCnt) {
+			this.csatCnt = csatCnt;
+		}
+
+		public int getCsatAvg() {
 			return csatAvg;
 		}
 

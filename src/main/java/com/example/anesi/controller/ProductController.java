@@ -66,6 +66,7 @@ public class ProductController {
 	       resultMap.put("list", list);
 	       return new Gson().toJson(resultMap);
 	   }
+	  // 상품 상세 정보
 	  @RequestMapping(value = "/productSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	   @ResponseBody
 	   public String product(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
@@ -73,6 +74,26 @@ public class ProductController {
 	       Product product = productService.searchProductList(map);
 
 	       resultMap.put("product", product);
+	       return new Gson().toJson(resultMap);
+	   }
+	  // 상품 별점 검색
+	  @RequestMapping(value = "/csatSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	   @ResponseBody
+	   public String avg(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	       Product csat = productService.searchCsatAvg(map);
+
+	       resultMap.put("csat", csat);
+	       return new Gson().toJson(resultMap);
+	   }
+	  // 상품 옵션 검색
+	  @RequestMapping(value = "/optionSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	   @ResponseBody
+	   public String option(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	       List<Product> option = productService.searchOption(map);
+
+	       resultMap.put("option", option);
 	       return new Gson().toJson(resultMap);
 	   }
 	

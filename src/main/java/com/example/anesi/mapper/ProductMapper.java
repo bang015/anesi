@@ -26,8 +26,8 @@ public interface ProductMapper {
 	
 	// 상품 상세 정보 검색
 	Product selectProductList(HashMap<String, Object> map);
-	
-	int selectCsatAvg(HashMap<String, Object> map);
-	
-	Product selectOption(HashMap<String, Object> map);
+	// 상품 별점 검색
+	Product selectCsatAvg(HashMap<String, Object> map);
+	// 상품 옵션 검색
+	List<Product> selectOption(HashMap<String, Object> map);
 }
