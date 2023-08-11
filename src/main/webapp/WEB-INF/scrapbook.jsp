@@ -24,7 +24,8 @@
 				<div class="allTextBox">
 					<div class="allText">상품({{list.length}})</div>
 				</div>
-				<div class="editText">편집</div>
+				<div class="editText" @click="editSb" v-if="!flg">편집</div>
+				<div class="editText" @click="editSb" v-if="flg"><span class="delText">삭제</span><span @click="editSb">취소</span></div>
 				
 				<div v-if="list.length == '0'" class="nonList">
 					<div>아직 스크랩한</div>
@@ -33,7 +34,10 @@
 				</div>
 				
 				<div v-else class="imgBox">
-					<div v-for="item in list"><img alt="" :src="item.imgPath+'/'+item.imgName"  class="sbImg"></div>
+					<div v-for="item in list" class="chStandard" @click>
+						<img alt="" :src="item.imgPath+'/'+item.imgName"  class="sbImg">
+						<input type="checkbox" class="sbCheckBox" v-model="checkSb" :value="item.scrapbookNo" v-if="flg">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -48,7 +52,9 @@ var app = new Vue({
 		userNo : '${sessionNo}',
 		userId : '${sessionId}',
 		userNick : '${sessionNick}',
-		list : []
+		list : [],
+		checkSb : [],
+		flg : false,
 	},// data
 	methods : {
 		getSbList(){
@@ -64,6 +70,10 @@ var app = new Vue({
                 	console.log(self.list);
                 }
             });
+		},
+		editSb(){
+			var self = this;
+			self.flg = !self.flg;
 		}
 	}, // methods
 	created : function() {

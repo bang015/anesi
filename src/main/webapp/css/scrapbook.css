@@ -64,6 +64,7 @@
 	font-weight: bold;
 	text-align: right;
 	color: #A782C3;
+	cursor: pointer;
 }
 .nonList{
 	margin-top: 100px;
@@ -78,11 +79,27 @@
 .sbImg{
 	width: 245px;
 	height: 245px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 .imgBox{
 	display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     margin: 0px auto;
     width: 100%;
     margin-top: 30px;
+}
+.sbCheckBox{
+	position: absolute;
+	left: 15px;
+	top: 15px;
+}
+.chStandard{
+	position:relative;
+	margin-bottom: 20px;
+}
+.delText{
+	color: #c2c8cc;
+	margin-right: 10px;
 }
