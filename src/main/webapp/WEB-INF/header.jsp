@@ -5,7 +5,7 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="js/typeahead.bundle.min.js"></script> <!-- 수정 완료 -->
+
   <!--자동검색기능  -->
 <meta charset="EUC-KR">
 <title>Insert title here</title>
@@ -36,7 +36,7 @@
 
 		<ul id="header_navi">
 			<li><a><i class="fa fa-shopping-cart "></i></a></li>
-			<li><a href="../login.do"><i class="fa-solid fa-door-open "></i></a><span class="fon">로그인</span></li>
+		<li><a href="../login.do"><i class="fa-solid fa-door-open "></i></a><span class="fon">로그인</span></li>
 			<li><a href="../join.do"><i class="fa-solid fa-user-plus "></i></a><span class="fon">회원가입</span></li>
 			<li><a href="../mypage.do"><i class="fa-solid fa-user "></i></a><span class="fon">마이페이지</span></li>
 			<li><a><i class="fa-solid fa-bookmark "></i></a><span></span></li>
@@ -52,12 +52,11 @@
             <a class="href">추천 </a> <a class="href">랭킹</a> <a class="href">특가</a> <a class="href">기획전</a> <a class="href">브랜드관</a>
         </span>
       <span>
-         <input class="typeahead" type="text" placeholder="Search">
-         <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" class="glasses">
+       <!-- 검색창 -->
          </span>
     </span>
 		<hr>
-		 </header>
+		
 	 <div class="category-list-container" style="display:none;">
     <ul class="category-list">
       
@@ -120,8 +119,9 @@
         </li>
     </ul>
 </div>
-  
+   </header>
  <script>
+ 
  $(document).ready(function() {
 	    // 버튼 클릭 이벤트 추가
 	    $('.category-toggle').click(function() {

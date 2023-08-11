@@ -57,15 +57,22 @@
 	<!-- 상품 상세 정보 -->
 	<select id="selectProductList" parameterType="hashmap" resultType="com.example.anesi.model.Product">
 		SELECT * 
-		FROM t3_tbl_product p
-		INNER JOIN t3_tbl_product_option o ON p.PRODUCT_NO = o.PRODUCT_NO
-		INNER JOIN t3_tbl_product_image i ON p.PRODUCT_NO = i.PRODUCT_NO
+		FROM t3_tbl_product 
+		WHERE PRODUCT_NO= #{productNo}
 	</select>
 	<!-- 상품 리뷰 평점 -->
 	<select id="selectCsatAvg" parameterType="hashmap" resultType="com.example.anesi.model.Product">
-		SELECT AVG(r.CSAT) AS csatAvg 
+		SELECT AVG(r.CSAT) AS csatAvg , COUNT(*) AS csatCnt
 		FROM t3_tbl_product p
 		INNER JOIN t3_tbl_user_review r ON p.PRODUCT_NO = r.PRODUCT_NO
+		WHERE p.PRODUCT_NO= #{productNo}
+	</select>
+	<!-- 상품 옵션 정보 -->
+	<select id="selectOption" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+		SELECT o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO
+		FROM t3_tbl_product p
+		INNER JOIN t3_tbl_product_option o ON p.PRODUCT_NO = o.PRODUCT_NO		
+		WHERE p.PRODUCT_NO = #{productNo}
 	</select>
 	
 </mapper>

@@ -29,21 +29,21 @@
 						
 					</div>
 					<div class="main-box">
-						<div class="main-title">
-							{{list[0].productName}}
+						<div class="main-title" >
+							{{product.productName}}
 						</div>
 						<div class="main-csat">
 						
 						</div>
 						<div class="main-discount">
-							
+							{{product.discount}}%
 						</div>
 						<div class="main-price">
-							{{list[0].productPrice}}
+							{{product.productPrice}}
 						</div>
 						<div class="main-option">
 							<select >
-								<option v-for="item in list">{{item.optionNo}}</option>
+								<option v-for="item in option">{{item.optionName}}+({{item.optionPrice}}¿ø)</option>
 							</select>
 						</div>
 						<div class="main-btn-wrap">
@@ -70,7 +70,9 @@ var app = new Vue({
 	el : '#app',
 	data : {
 		productNo : 3,
-		list : []
+		product : {},
+		csat : {},
+		option : []
 	},// data
 	methods : {
 		fnGetList : function(){
@@ -82,8 +84,36 @@ var app = new Vue({
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) {                
-	               		self.list = data.list;
-	               		console.log(self.list);
+	               		self.product = data.product;
+	               		console.log(self.product);
+	                }                
+	            }); 
+		},
+		fnAvg : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo};	            
+	            $.ajax({
+	                url : "/csatSearch.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.csat = data.csat;
+	               		console.log(self.csat);
+	                }                
+	            }); 
+		},
+		fnOption : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo};	            
+	            $.ajax({
+	                url : "/optionSearch.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.option = data.option;
+	               		console.log(self.option);
 	                }                
 	            }); 
 		},
@@ -91,6 +121,8 @@ var app = new Vue({
 	created : function() {
 		var self = this;
 		self.fnGetList();
+		self.fnAvg();
+		self.fnOption();
 	}// created
 });
 </script>
