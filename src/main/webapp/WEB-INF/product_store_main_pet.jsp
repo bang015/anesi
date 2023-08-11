@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>스토어메인</title>
+<title>반려동물메인페이지</title>
 <style>
 
 
@@ -37,7 +37,7 @@
 	width:220px;
 	height:338px;
   	float : left;
-	margin : 50px;
+	  margin : 50px;
 }
 
 #product-main-category__total > li {
@@ -106,26 +106,6 @@
 }
 
 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 불투명한 검은색 배경 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-    z-index:1000;
-  
-}
-
-.modal-card {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
 
 
 
@@ -138,10 +118,9 @@
 <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
 
 
-	<div id="store_main">
+	<div id="store_main_furniture">
 	
 	
-
 <!-- 상품 정렬하는 버튼-->	
 <button class="category-order_toggle">
 	  정렬<i class="fa-solid fa-chevron-down"></i>
@@ -161,8 +140,9 @@
     <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">리뷰많은순</a></li>
   </ul>
 </div>
+
   
-	<div><h1>전체상품</h1></div>
+	<div><h1>반려동물</h1></div>
 	
 		<div class="production-item__content" v-for="item in list">
 			<a href="javascript:;" class="production-item-thumnail">
@@ -248,7 +228,7 @@ $(document).ready(function() {
 
 
 var app = new Vue({
-	el : '#store_main',
+	el : '#store_main_furniture',
 	data : {
 		list : [],
 		item : "",

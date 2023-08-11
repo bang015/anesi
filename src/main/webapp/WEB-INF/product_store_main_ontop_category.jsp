@@ -9,36 +9,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>상품메인페이지</title>
+<title>스토어메인카테고리</title>
 <style>
 
 
+#store-main-ontop-category__container{
+	margin-top: 160px;
 
+}
 
 .product-main-category__image{
 	width:100px;
 	height:100px;
 }
 
-
-.production-item-thumnail__image{
-	width:250px;
-	height:250px;
-}
-
-.product-main-category__name{
-	font-size : 15px;
-}
-.won_icon,.production-item-price__orginal2{
-	text-decoration: line-through;
-}
-
-.production-item__content{
-	width:220px;
-	height:338px;
-  	float : left;
-	  margin : 50px;
-}
 
 #product-main-category__total > li {
         display: inline-block;
@@ -55,77 +39,37 @@
 #product-main-category__total > li > a > span {
   position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0)
 }
-      
-.category-order_toggle{
-	float : right;
-	margin-right : 100px;
-	background-color:#A782C3;
-	border: #fff;
-	text-align: center;
-	border-radius:10px; 
-	padding:8px;
-	height:35px; 
-	width: 100px;
-	font-family: 'Pretendard-Regular';
-	color :  #fff;
-	
-	
-	
-  }
-.category-order_toggle:hover {
-    background-color:rgb(235, 236, 237);
-    transition: 0.7s;
-    
-}  
-.category-order-list {
 
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.category-order-list li {
-
-  /* 카테고리 스타일링 */
-  padding: .5em;
-  border-bottom: 1px solid #ccc;
-}
-.category-order-list-container {
-	background :  #fff;
-   	width: 100px;
-   	float : right;
-    
-
-}
 
 .aaa {
-  color: #A782C3; /* 원하는 색상 */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-  font-size: 18px; /* 원하는 크기 */
-  /* 다른 스타일 속성도 추가 가능 */
+  color: #A782C3; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
+  font-size: 18px; 
 }
 
 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 불투명한 검은색 배경 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.category_container{
+	width:100px;
+	height:130px;
 }
 
-.modal-card {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+.category_name{
+
+    font-size: 20px;
+    font-weight: bold;
+    color: #A782C3; /* 원하는 색상 */
 }
+#c_name1:hover,
+#c_name2:hover,
+#c_name3:hover,
+#c_name4:hover,
+#c_name5:hover,
+#c_name6:hover{
 
+  color: #A782C3;
+  
 
+}
 
 
 </style>
@@ -133,61 +77,62 @@
 <!-- 주석 꼭 남겨주세요 -->
 <body>
 
+<div id="store-main-ontop-category__container">
 	<div><h1>카테고리</h1></div>
 	<ul id ="product-main-category__total">
 	
-		<li>
-			<a href="javascript:;">
+		<li >
+			<a href="storemain_furniture.do" class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>가구</span>
+			    <span class="category_name" id="c_name1">가구</span>
 	    	</a>
     	</li>
 		<li>
-			<a href="javascript:;">
+			<a href="storemain_light.do" class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>조명</span>
+			    <span class="category_name" id="c_name2">조명</span>
 	    	</a>
     	</li>
 		<li>
-			<a href="javascript:;">
+			<a href="storemain_fabric.do" class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>패브릭</span>
+			    <span class="category_name" id="c_name3">패브릭</span>
 	    	</a>
     	</li>
 		<li>
-			<a href="javascript:;">
+			<a href="storemain_electronic.do" class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>가전</span>
+			    <span class="category_name" id="c_name6">가전</span>
 	    	</a>
     	</li>
 		<li>
-			<a href="javascript:;">
+			<a href="storemain_deco_plant.do" class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>데코/식물</span>
+			    <span class="category_name" id="c_name5">데코/식물</span>
 	    	</a>
     	</li>
 		<li>
-			<a href="javascript:;">
+			<a href="storemain_pet.do" class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>반려동물</span>
+			    <span class="category_name" id="c_name6">반려동물</span>
 	    	</a>
     	</li>
 		
 	</ul>
 	
-
+</div>
 </body>
 </html>
 <script>
@@ -201,7 +146,7 @@ $(document).ready(function() {
 
 
 var app = new Vue({
-	el : '#store_main',
+	el : '#store-main-ontop-category__container',
 	data : {
 		list : [],
 		item : "",

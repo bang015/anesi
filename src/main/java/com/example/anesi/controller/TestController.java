@@ -10,6 +10,10 @@ public class TestController {
 	public String footer(Model model) throws Exception{
         return "/footer";
     }
+	@RequestMapping("modal.do") 
+	public String modal(Model model) throws Exception{
+		return "/modaltest";
+	}
 
 
 }
