@@ -34,4 +34,6 @@ public interface ProductMapper {
 	List<Scrapbook> selectThumbnailImg(HashMap<String, Object> map);
 	// 상품 컨텐츠 이미지
 	List<Scrapbook>selectcontentImg(HashMap<String, Object> map);
+	//상품 검색창 검색
+		List<Product> selectProductListByKeyword(HashMap<String, Object> map);
 }
