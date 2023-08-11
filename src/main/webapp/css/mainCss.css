@@ -41,6 +41,18 @@ hr{
 	border-top: 1px solid #c3c3c3;
 }
 
+/* 버튼 스타일 */
+.btn{
+    border: none;
+    color: white;
+    background-color: #A782C3;
+    border-radius: 7px;
+    padding: 0px 9px;
+    margin: 10px 0px;
+	transition: background 0.3s;
+	cursor: pointer;
+}
+
 /* 버튼 호버 스타일 */
 .btn:hover{
 	background-color: #7c6191;
