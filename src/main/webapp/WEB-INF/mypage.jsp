@@ -11,7 +11,7 @@
 <title>마이페이지😏</title>
 <style>
 #app{
-	margin-top : 160px;
+	margin-top : 180px;
 }
 #container{
 	margin : 30px auto;
@@ -111,21 +111,39 @@ li{
 	border-right: 1px solid #eee;
 }
 .profile_right{
-	padding : 20px 50px;
+	padding : 10px 50px 50px;
 	float : left;
 }
 .icon{
-	width: 42px;
+	width: 56px;
     margin: 0px 22px 10px 3px;
 }
-.icon:hover{
-	
-}
-.comment{
-	text-align : center;
+.comment:hover{
+	color : #424242;
 }
 .profile_list{
 	display : flex;
+}
+.btn1{
+	border : 1px solid #A782C3;
+    border-radius: 7px;
+    padding: 13px 9px;
+    margin: 10px 0px;
+    background-color : white;
+    transition: background 0.3s;
+    cursor: pointer;
+    margin: 30px 10px;
+    width: 236px;
+}
+.btn1:hover{
+	background-color : #A782C3;
+	color : white;
+}
+.icon_label{
+	transition: opacity 0.3s, visibility 0.3s;
+}
+.icon_label:hover{
+	opacity: 0.7; 
 }
 </style>
 <jsp:include page="header.jsp"></jsp:include>
@@ -145,7 +163,7 @@ li{
 		<li class="my_li2"><a class="my_a2_ch">모두 보기</a></li>
 		<li class="my_li2"><a class="my_a2">나의 문의</a></li>
 		<li class="my_li2"><a class="my_a2">나의 게시글</a></li>
-		<li class="my_li2"><a class="my_a2">스크랩북</a></li>
+		<li class="my_li2"><a href="scrapbook.do" class="my_a2">스크랩북</a></li>
 	</ul>
 <hr class="hrr">
 <div id="container">
@@ -154,14 +172,15 @@ li{
 			<div><img src="../css/image/profile.png" class="profile_img"></div>
 			<div class="nickName">닉네임</div>
 		</div>
-		<div class="profile_right">
+		<div class="profile_right">	
 		<ul class="profile_list">
-			<li><label><a href=""><img src="../css/image/bookmark.png" class="icon"><br><span class="comment">스크랩북</span></a></label></li>
-			<li><label><a href=""><img src="../css/image/coupon.png" class="icon" style="width : 50px; margin: 0px 3px 10px 9px;"><br><span class="comment">내 쿠폰</span></a></label></li>
-			<li><label><a href=""><img src="../css/image/qna.png" class="icon" style="width : 50px; margin: 0px 3px 10px 9px;"><br><span class="comment">내 문의</span></a></label></li>
-			<li><label><a href=""><img src="../css/image/post.png" class="icon" style="width : 50px; margin: 0px 3px 10px 9px;"><br><span class="comment">내 게시글</span></a></label></li>
+			<li><label class="icon_label"><a href="scrapbook.do"><img src="../css/image/bookmark.png" class="icon" style="margin: 0px 65px 10px 10px; width: 52px;"><br><span class="comment" style="margin-left: 13px;">스크랩북</span></a></label></li>
+			<li><label class="icon_label"><a href=""><img src="../css/image/coupon.png" class="icon" style="margin : 6px 65px 18px 10px; width: 50px;"><br><span class="comment" style="margin-left:15px;">내 쿠폰</span></a></label></li>
+			<li><label class="icon_label"><a href=""><img src="../css/image/qna.png" class="icon" style="margin: 0px 65px 9px 10px; width: 52px;"><br><span class="comment" style="margin-left: 16px;">내 문의</span></a></label></li>
+			<li><label class="icon_label"><a href=""><img src="../css/image/post.png" class="icon" style="margin: 0px 10px 10px 10px; width: 50px;"><br><span class="comment" style="margin-left: 7px;">내 게시글</span></a></label></li>
 		</ul>
-			<button class="btn">회원정보수정</button>
+			<button class="btn1">회원정보수정</button>
+			<button class="btn1">로그아웃</button>
 		</div>
 		<div>
 			
