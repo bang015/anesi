@@ -98,7 +98,8 @@
 		SELECT *
 		FROM t3_tbl_product_image
 		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'D'
-	</select>
+	</select> 
+	
 </mapper>
 
 	

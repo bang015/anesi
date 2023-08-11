@@ -236,14 +236,15 @@
 					</div>
 					<div class="content-review">
 						<div class="review-title" id="review">
-							¸®ºä <span>{{csat.csatCnt}}</span>
+							<span>¸®ºä{{csat.csatCnt}}</span>
 						</div>
 						<div class="csat-box">
 							<div class="csat1">
-								
+								<i class="fa-solid fa-star" style="color: #A782C3;"></i>
+								<span>{{csat.csatAvg}}</span>
 							</div>
 							<div class="csat2">
-							
+								
 							</div>
 						</div>
 					</div>
@@ -253,8 +254,11 @@
 </body>
 </html>
 <script>
+
+
 var app = new Vue({
 	el : '#app',
+	
 	data : {
 		productNo : 4,
 		product : {},
@@ -262,9 +266,11 @@ var app = new Vue({
 		option : [],
 		imgList : [],
 		img : [],
-		imgList2 : []
+		imgList2 : [],
+		
 	},// data
 	methods : {
+		
 		fnGetList : function(){
 			 var self = this;
 	            var nparmap = {productNo : self.productNo};	            
@@ -348,7 +354,7 @@ var app = new Vue({
 	               		console.log(self.imgList2);
 	                }                
 	            }); 
-		},
+		}
 	}, // methods
 	created : function() {
 		var self = this;
