@@ -14,7 +14,7 @@
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
-
+<jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
 		<div id="container">
 			<h2>스크랩북</h2>
@@ -30,6 +30,10 @@
 					<div>아직 스크랩한</div>
 					<div>상품이 없습니다.</div>
 					<div class="nonListText">마음에 드는 상품을 발견하면 스크랩해보세요.</div>
+				</div>
+				
+				<div v-else class="imgBox">
+					<div v-for="item in list"><img alt="" :src="item.imgPath+'/'+item.imgName"  class="sbImg"></div>
 				</div>
 			</div>
 		</div>
@@ -57,6 +61,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	self.list = data.list;
+                	console.log(self.list);
                 }
             });
 		}
