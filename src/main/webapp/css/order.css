@@ -1,0 +1,73 @@
+@charset "EUC-KR";
+
+#container{
+	margin: 30px 50px;
+	margin-top: 200px;
+	position: relative;
+    min-height: 1px;
+}
+.orTitle{
+	font-size: 24px;
+	display: inline-block;
+}
+.payment{
+	width: 100%;
+	height: 520px;
+	border: 1px solid rgb(204, 204, 204);
+	border-radius: 4px;
+
+}
+.test{
+	height: 2000px;
+}
+.amount{
+	position: sticky;
+	top: 209px;
+	float: right;
+	width: 366px;
+	height: 600px;
+}
+.orBtuStyle{
+	width: 100%;
+	height: 52px;
+	background-color: #A782C3;
+	color: #fff;
+	border: 0px;
+	border-radius: 4px;
+	margin-top: 30px;
+	font-weight: bold;
+	font-size: 17px;
+	cursor: pointer;
+}
+.amountBox{
+	padding: 30px;
+	height: 40%;
+}
+.moneyText{
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+.allMoneyText{
+	float: right;
+	color: black;
+}
+.orNameText{
+	font-size:15px ;
+	color: #828c94;
+	margin-bottom: 10px;
+}
+.FinalPaymentAmount{
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid rgb(234, 235, 239);
+}
+.FinalPaymentAmount > .allMoneyText > span{
+	color: #A782C3;
+}
+.orTerms{
+	border-top: 1px solid rgb(234, 235, 239);
+	padding: 10px 20px;
+	font-size: 16px;
+}
