@@ -27,8 +27,10 @@
 	</select>
 	<!-- 스크랩북 리스트 -->
 	<select id="selectScrapbookList" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
-		SELECT * 
-		FROM t3_tbl_user_scrapbook
-		WHERE USER_NO = #{userNo}
+		SELECT SCRAPBOOK_NO, s.PRODUCT_NO, IMG_NAME, IMG_PATH
+		FROM t3_tbl_user_scrapbook s
+		INNER JOIN t3_tbl_product_image i
+			ON s.PRODUCT_NO = i.PRODUCT_NO
+		WHERE USER_NO = #{userNo} AND i.THUMBNAIL_YN ='Y'
 	</select>
 </mapper>

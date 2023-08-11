@@ -22,11 +22,15 @@
 				<div><img alt="프로필" src="../css/image/pfimgG2.png" class="pfSytle"></div>
 				<div class="nickStyle">{{userNick}}</div>
 				<div class="allTextBox">
-					<div class="allText">상품(0)</div>
+					<div class="allText">상품({{list.length}})</div>
 				</div>
 				<div class="editText">편집</div>
 				
-				<div></div>
+				<div v-if="list.length == '0'" class="nonList">
+					<div>아직 스크랩한</div>
+					<div>상품이 없습니다.</div>
+					<div class="nonListText">마음에 드는 상품을 발견하면 스크랩해보세요.</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -39,7 +43,8 @@ var app = new Vue({
 	data : {
 		userNo : '${sessionNo}',
 		userId : '${sessionId}',
-		userNick : '${sessionNick}'
+		userNick : '${sessionNick}',
+		list : []
 	},// data
 	methods : {
 		getSbList(){
@@ -51,7 +56,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	console.log(data.list);
+                	self.list = data.list;
                 }
             });
 		}
