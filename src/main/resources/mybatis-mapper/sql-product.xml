@@ -14,8 +14,18 @@
 		    FROM t3_tbl_product
 		    WHERE DISCOUNT_YN = 'Y'
 		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
-	
 		
+		
+		
+	
+		    WHERE 1=1
+		    <if test="categoryNo != '' and categoryNo != null">
+		       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
+		    </if>
+		
+		   
+	
+	
 		<if test="categoryOrderBar!='' and categoryOrderBar !=null">
 			<!-- 가격낮은순정렬-->
 			<if test='categoryOrderBar=="LowestPrice"'>
@@ -29,14 +39,11 @@
 			<if test='categoryOrderBar=="NewArrival"'>
 				ORDER BY P.CDATETIME DESC			
 			</if>
-			
 		</if>
 		
-		
-		
-		
-
 	</select>
+	
+	
 	
 	<select id="selectCategoryList" parameterType="hashmap" resultType="com.example.anesi.model.Category">
 		SELECT *
@@ -74,37 +81,6 @@
 		INNER JOIN t3_tbl_product_option o ON p.PRODUCT_NO = o.PRODUCT_NO		
 		WHERE p.PRODUCT_NO = #{productNo}
 	</select>
-	<!-- 상품 썸네일 이미지 -->
-	<select id="selectThumbnailImg" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
-		SELECT *
-		FROM t3_tbl_product_image
-		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'Y'
-	</select>
-	<!-- 상품 컨텐츠 이미지 -->
-	<select id="selectcontentImg" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
-		SELECT *
-		FROM t3_tbl_product_image
-		WHERE PRODUCT_NO = #{productNo} AND (THUMBNAIL_YN = 'N' OR THUMBNAIL_YN = 'Y')
-	</select>
-	<!-- 상품 상세 이미지 -->
-	<select id="selectcontentImg2" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
-		SELECT *
-		FROM t3_tbl_product_image
-		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'D'
-	</select>
-	
-		<!-- 상품 검색 기능 -->
-	<!-- 검색어를 기반으로 상품 목록 조회 -->
-<select id="selectProductListByKeyword" parameterType="hashmap" resultType="com.example.anesi.model.Product">
-  SELECT 
-    PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, DISCOUNT,  DISCOUNT_YN,  CATEGORY_NO, MANUFACTURER,  COUNTRY,  CDATETIME, UDATETIME
-  FROM 
-    t3_tbl_product
-  WHERE 
-    PRODUCT_NAME LIKE CONCAT('%', #{keyword}, '%')
-  ORDER BY 
-    PRODUCT_NO DESC
-</select>
 	
 </mapper>
 

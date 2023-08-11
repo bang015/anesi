@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>반려동물메인페이지</title>
+<title>가구메인페이지</title>
 <style>
 
 
@@ -142,16 +142,21 @@
 </div>
 
   
-	<div><h1>반려동물</h1></div>
+
+		<h1 >{{categoryNo}}</h1>
 	
-		<div class="production-item__content" v-for="item in list">
+	
+		<div class="production-item__content" v-for="item in list" >
+		
+		
+		
 			<a href="javascript:;" class="production-item-thumnail">
 		    <img class="production-item-thumnail__image animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation"
 			    src="../css/image/productMain/productMain_category1.png" >
 		    </a>
-		    <div class="production-item-header" >
-			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
+		    <div class="production-item-header"  >
+			    <span class="production-item-header__brand">{{item.manufacturer}}</span>
 			    <span class="production-item-header__name">{{item.productName}}</span>
 			    <div class="production-item-header__kind">{{item.categoryName}} 
 			    <span class="production-item-header__country">{{item.country}}</span>
@@ -219,38 +224,41 @@
 </html>
 <script>
 
-$(document).ready(function() {
-    // 상품정렬 버튼 클릭 이벤트 추가
-    $('.category-order_toggle').click(function() {
-       $('.category-order-list-container').slideToggle('fast');
-    });
-});
 
 
 var app = new Vue({
 	el : '#store_main_furniture',
 	data : {
 		list : [],
+		list2 : [],
 		item : "",
+		item2 : "",
 		showCartModal: false,
 		showScrapModal: false,
 		userId : '${sessionId}',
-		userNick : '${sessionNick}'
+		userNick : '${sessionNick}',
+		categoryNo : '${map.no}',
+		categoryName : ""
 		
 		
-
+		
+	
 	},// data
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar};
+            var nparmap = {categoryOrderBar : self.categoryOrderBar, categoryNo : self.categoryNo, categoryName : self.categoryName};
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
+				
                 	self.list = data.list;
+                	self.list2 = data.list2;
+                	console.log(self.list2.categoryNo);
+             
                 }
             }); 
 		},
@@ -301,6 +309,15 @@ var app = new Vue({
 	    fnMoveMyPage : function() {
         	location.href = "/mypage.do";
 	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	        
 	        
      }, // methods
@@ -310,4 +327,13 @@ var app = new Vue({
 
 	}// created
 });
+
+
+$(document).ready(function() {
+    // 상품정렬 버튼 클릭 이벤트 추가
+    $('.category-order_toggle').click(function() {
+       $('.category-order-list-container').slideToggle('fast');
+    });
+});
+
 </script>

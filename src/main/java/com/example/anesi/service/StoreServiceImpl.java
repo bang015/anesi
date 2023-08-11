@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.ProductMapper;
+import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
 
 
@@ -20,7 +21,16 @@ public class StoreServiceImpl implements StoreService{
 
 	@Override
 	public List<Product> searchProduct(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
 		return productMapper.selectProduct(map);
+	
+	}
+
+
+	@Override
+	public List<Category> searchCategoryList() {
+		return productMapper.selectCategoryList();
 	}
 
 }

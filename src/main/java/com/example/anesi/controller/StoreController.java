@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.User;
 import com.example.anesi.service.StoreService;
 import com.google.gson.Gson;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class StoreController {
@@ -31,48 +34,24 @@ public class StoreController {
 		return "/product_store_main";
 	}
 	//가구페이지로
-	@RequestMapping("/product/storemain_furniture.do") 
-	public String storemain_furniture(Model model) throws Exception{
-		return "/product_store_main_furniture";
+	@RequestMapping("/product/storemain_byCategory.do") 
+	public String storemain_furniture(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
+		return "/product_store_main_byCategory";
 	}
-	
-	//조명페이지로
-	@RequestMapping("/product/storemain_light.do") 
-	public String storemain_light(Model model) throws Exception{
-		return "/product_store_main_light";
-	}
-	
-	//가전페이지로
-	@RequestMapping("/product/storemain_electronic.do") 
-	public String storemain_electronic(Model model) throws Exception{
-		return "/product_store_main_electronic";
-	}
-	//패브릭페이지로
-	@RequestMapping("/product/storemain_fabric.do") 
-	public String storemain_fabric(Model model) throws Exception{
-		return "/product_store_main_fabric";
-	}
-	
-	//데코/식물페이지로
-	@RequestMapping("/product/storemain_deco_plant.do") 
-	public String storemain_deco_plant(Model model) throws Exception{
-		return "/product_store_main_deco_plant";
-	}
-	
-	//반려동물페이지로
-	@RequestMapping("/product/storemain_pet.do") 
-	public String storemain_pet(Model model) throws Exception{
-		return "/product_store_main_pet";
-	}
-	
+
 
 	@RequestMapping(value = "/product/store_main.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String storeMain(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<Product> list = storeService.searchProduct(map);
 		resultMap.put("list", list);
+		List<Category> list2 = storeService.searchCategoryList();
+		resultMap.put("list2", list2);
 		return new Gson().toJson(resultMap);
 	}
+	
 	
 }

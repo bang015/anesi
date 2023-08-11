@@ -162,7 +162,8 @@
   </ul>
 </div>
   
-	<div><h1>전체상품</h1></div>
+	<div ><h1>전체상품</h1></div>
+	
 	
 		<div class="production-item__content" v-for="item in list">
 			<a href="javascript:;" class="production-item-thumnail">
@@ -177,7 +178,7 @@
 			    <span class="production-item-header__country">{{item.country}}</span>
 			    </div>
 		    </div>
-			 
+
 		    <span class="production-item-price">
 		    
 		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
@@ -209,7 +210,7 @@
 	    
 	    
 	    
-    	<div class="modal" v-if="showCartModal">
+    	<div class="modal" v-if="showCartModal" style="display: none;">
 		  <div class="modal-card">
 		    <h2>장바구니에 추가</h2>
 		    <p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
@@ -251,11 +252,14 @@ var app = new Vue({
 	el : '#store_main',
 	data : {
 		list : [],
+		list2 : [],
+		
 		item : "",
 		showCartModal: false,
 		showScrapModal: false,
 		userId : '${sessionId}',
 		userNick : '${sessionNick}'
+	
 		
 		
 
@@ -270,7 +274,11 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
+                	
                 	self.list = data.list;
+                	self.list2=data.list2;
+                	console.log(data.list2);
+                	
                 }
             }); 
 		},
@@ -321,6 +329,7 @@ var app = new Vue({
 	    fnMoveMyPage : function() {
         	location.href = "/mypage.do";
 	    }
+
 	        
 	        
      }, // methods

@@ -14,7 +14,7 @@
 
 
 #store-main-ontop-category__container{
-	margin-top: 160px;
+	margin-top: 200px;
 
 }
 
@@ -81,48 +81,48 @@
 	<div><h1>카테고리</h1></div>
 	<ul id ="product-main-category__total">
 	
-		<li >
-			<a href="storemain_furniture.do" class="category_container">
+		<li @click= "fnMoveaa('10')">
+			<a class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
 			    <span class="category_name" id="c_name1">가구</span>
 	    	</a>
     	</li>
-		<li>
-			<a href="storemain_light.do" class="category_container">
+		<li @click="fnMoveaa('20')">
+			<a class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
 			    <span class="category_name" id="c_name2">조명</span>
 	    	</a>
     	</li>
-		<li>
-			<a href="storemain_fabric.do" class="category_container">
+		<li @click="fnMoveaa('30')">
+			<a class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
 			    <span class="category_name" id="c_name3">패브릭</span>
 	    	</a>
     	</li>
-		<li>
-			<a href="storemain_electronic.do" class="category_container">
+		<li @click="fnMoveaa('40')">
+			<a  class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
 			    <span class="category_name" id="c_name6">가전</span>
 	    	</a>
     	</li>
-		<li>
-			<a href="storemain_deco_plant.do" class="category_container">
+		<li @click="fnMoveaa('50')">
+			<a  class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
 			    <span class="category_name" id="c_name5">데코/식물</span>
 	    	</a>
     	</li>
-		<li>
-			<a href="storemain_pet.do" class="category_container">
+		<li @click="fnMoveaa('60')">
+			<a class="category_container">
 				<img src="../css/image/productMain/productMain_category1.png"
 				class="animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
@@ -168,6 +168,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
+                	console.log(data);
                 	self.list = data.list;
                 }
             }); 
@@ -190,12 +191,6 @@ var app = new Vue({
             event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
         },
         
-
-        formatPrice: function(price) {
-            // 천 단위마다 쉼표(,)를 추가하는 정규식 처리
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        },
-        
         
         
         // 모달 열기
@@ -212,14 +207,17 @@ var app = new Vue({
 	      this.showCartModal = false;
 	      this.showScrapModal = false;
 	    },
+
+	    //category 눌렀을때 메뉴별로 배열해줌
+	      fnMoveaa : function(item){
+	            var self = this;
+	         $.pageChange("storemain_byCategory.do",{no : item});//보낼필요없을때 파라미터 빈값으로{}
+	      }
+	
 	    
-	    fnMoveCart : function() {
-        	location.href = "/product/cart.do";
-	    },
-	    fnMoveMyPage : function() {
-        	location.href = "/mypage.do";
-	    }
+	 
 	        
+	    
 	        
      }, // methods
 	created : function() {
