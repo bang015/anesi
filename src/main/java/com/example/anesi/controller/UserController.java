@@ -55,6 +55,11 @@ public class UserController {
 
 		return "/mypage";
     }
+	@RequestMapping("/mypage/user_edit.do") 
+    public String user_edit(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/user_edit";
+    }
 	// 스크랩북
 	@RequestMapping("/scrapbook.do") 
     public String scrapbook(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{

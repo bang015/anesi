@@ -14,6 +14,11 @@ public class TestController {
 	public String modal(Model model) throws Exception{
 		return "/modaltest";
 	}
+	
+	@RequestMapping("main.do") 
+	public String main(Model model) throws Exception{
+		return "/main";
+	}
 
 
 }

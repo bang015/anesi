@@ -155,7 +155,7 @@ li{
 		<li class="my_li1"><a class="my_a1_ch">프로필</a></li>
 		<li class="my_li1"><a class="my_a1">나의 쇼핑</a></li>
 		<li class="my_li1"><a class="my_a1">나의 리뷰</a></li>
-		<li class="my_li1"><a class="my_a1">설정 </a></li>
+		<li class="my_li1"><a href="mypage/user_edit.do" class="my_a1">설정 </a></li>
 	</ul>
 </div>
 <hr class="hrr">
@@ -170,7 +170,7 @@ li{
 	<div class="profile">
 		<div class="profile_left">
 			<div><img src="../css/image/profile.png" class="profile_img"></div>
-			<div class="nickName">닉네임</div>
+			<div class="nickName">{{sessionNick}}</div>
 		</div>
 		<div class="profile_right">	
 		<ul class="profile_list">
@@ -179,7 +179,7 @@ li{
 			<li><label class="icon_label"><a href=""><img src="../css/image/qna.png" class="icon" style="margin: 0px 65px 9px 10px; width: 52px;"><br><span class="comment" style="margin-left: 16px;">내 문의</span></a></label></li>
 			<li><label class="icon_label"><a href=""><img src="../css/image/post.png" class="icon" style="margin: 0px 10px 10px 10px; width: 50px;"><br><span class="comment" style="margin-left: 7px;">내 게시글</span></a></label></li>
 		</ul>
-			<button class="btn1">회원정보수정</button>
+			<button class="btn1" @click="fnEdit">회원정보수정</button>
 			<button class="btn1">로그아웃</button>
 		</div>
 		<div>
@@ -195,13 +195,16 @@ li{
 var app = new Vue({
 	el : '#app',
 	data : {
-
+		sessionNick : "${sessionNick}"
 	},// data
 	methods : {
-		
+		fnEdit : function(){
+			location.href="/mypage/user_edit.do"
+		}
 	}, // methods
 	created : function() {
-		
+		var self = this;
+		console.log(self.sessionNick);
 	}// created
 });
 </script>
