@@ -25,4 +25,10 @@
 		FROM t3_tbl_user
 		WHERE PHONE = #{phone}
 	</select>
+	<!-- 스크랩북 리스트 -->
+	<select id="selectScrapbookList" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
+		SELECT * 
+		FROM t3_tbl_user_scrapbook
+		WHERE USER_NO = #{userNo}
+	</select>
 </mapper>

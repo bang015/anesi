@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.anesi.model.Scrapbook;
+
 
 @Mapper
 public interface UserMapper {
@@ -16,5 +18,6 @@ public interface UserMapper {
 	int nickCnt(HashMap<String, Object> map);
 	//전화번호 중복체크
 	int phoneCnt(HashMap<String, Object> map);
-	
+	//스크랩북 리스트
+	List<Scrapbook> selectScrapbookList(HashMap<String, Object> map);
 }

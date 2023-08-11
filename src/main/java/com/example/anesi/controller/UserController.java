@@ -1,5 +1,7 @@
 package com.example.anesi.controller;
 import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.anesi.model.Scrapbook;
 import com.example.anesi.service.UserService;
 import com.google.gson.Gson;
 
@@ -95,4 +98,13 @@ public class UserController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	//스크랩북 검색
+	@RequestMapping(value = "scrapbook/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String scrapbookList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Scrapbook> list = userService.searchScrapbookList(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
 }
