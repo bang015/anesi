@@ -23,4 +23,10 @@ public interface UserService {
 	int removeScrapbook(HashMap<String, Object> map);
 	//유저 정보
 	User selectUserNickname(HashMap<String, Object> map);
+	//유저정보수정 닉네임 중복체크
+	int EditNickCnt(HashMap<String, Object> map);
+	//유저정보수정 번호 중복체크
+	int EditPhoneCnt(HashMap<String, Object> map);
+	//유저정보수정
+	int editUser(HashMap<String, Object> map);
 }

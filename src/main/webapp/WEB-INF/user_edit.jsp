@@ -178,34 +178,35 @@ img:hover{
 			<div class="part">
 				<div class="edit_title">이메일<span class="clause1"> *</span></div>
 					<div>
-						<div><input readonly class="put" ref="emailInput" type="text" v-model="user.userEmail1" placeholder="이메일"></div>
+						<div><input readonly class="put" ref="emailInput" type="text" v-model="info.userEmail" ></div>
 						<div>이메일을 변경하려면 운영자에게 이메일을 보내주세요.</div>
 					</div>
 			</div>
 			<div class="part">
 				<div class="edit_title">이름<span class="clause1"> *</span></div>
-				<div><input readonly class="put" ref="nameInput" type="text" v-model="user.userName" placeholder="이름" @click="fnNameCheck" @keyup="fnNameCheck"></div>
+				<div><input readonly class="put" ref="nameInput" type="text" v-model="info.userName"></div>
 				<div>이름을 변경하려면 운영자에게 이메일을 보내주세요.</div>
 			</div>
 			<div class="part">
 				<div class="edit_title">닉네임<span class="clause1"> *</span></div>
-				<div><input class="put" ref="nickInput" type="text" v-model="user.nick" placeholder="닉네임 특수문자 제외 사용 가능" @click="fnNickOverlap" @keyup="fnNickOverlap"></div>
+				<div><input class="put" ref="nickInput" type="text" v-model="info.nick" placeholder="닉네임 특수문자 제외 사용 가능" @click="fnNickOverlap" @keyup="fnNickOverlap"></div>
+				<div><span class="red">{{nickMs}}</span></div>
 			</div>
 			<div class="part">
 				<div class="edit_title">휴대폰 번호<span class="clause1"> *</span></div>
-				<div><input class="put" ref="phoneInput" type="text" v-model="user.phone" placeholder="휴대폰 번호 '-'제외 숫자만 입력해주세요." @click="fnPhoneOverlap" @keyup="fnPhoneOverlap"></div>
+				<div><input class="put" ref="phoneInput" type="text" v-model="info.phone" placeholder="휴대폰 번호 '-'제외 숫자만 입력해주세요." @click="fnPhoneOverlap" @keyup="fnPhoneOverlap"></div>
 			<div><span class="red">{{phoneMs}}</span></div>
 			</div>
 			<div class="part">
 			<div class="edit_title">생년월일</div>
 				<div>
-					<select v-model="user.bYear" class="select">
+					<select v-model="bYear" class="select">
 						<option>연</option>
 						<% for(int i=2009; i>=1950; i--){%>
 							<option value="<%= i %>"><%= i %></option>
 						<%}%>
 					</select> 
-					<select v-model="user.bMonth" class="select">
+					<select v-model="bMonth" class="select">
 						<option>월</option>
 						<% for(int i=1; i<=12; i++){
 							if(i<10){%>
@@ -215,7 +216,7 @@ img:hover{
 							<%}%> 
 						<%}%>
 					</select> 
-					<select v-model="user.bDay" class="select">
+					<select v-model="bDay" class="select">
 						<option>일</option>
 						<% for(int i=1; i<=31; i++){
 							if(i<10){%>
@@ -230,9 +231,9 @@ img:hover{
 			<div class="part">
 				<div class="edit_title">성별</div> 
 					<div>
-						선택 안 함 <input type="radio" v-model="user.gender" value="N" name="gender">　　　
-						여성 <input type="radio" v-model="user.gender" value="F" name="gender">　　　
-						남성 <input type="radio" v-model="user.gender" value="M" name="gender">
+						선택 안 함 <input type="radio" v-model="info.gender" value="N" name="gender">　　　
+						여성 <input type="radio" v-model="info.gender" value="F" name="gender">　　　
+						남성 <input type="radio" v-model="info.gender" value="M" name="gender">
 					</div>
 			<div class="part">
 				<div class="edit_title">프로필 이미지</div>
@@ -250,33 +251,20 @@ img:hover{
 var app = new Vue({
 	el : '#app',
 	data : {
-		user : {
-			email : "",
-			userName : "",
-			phone : "",
-			nick : "",
-			bYear : "연",
-			bMonth : "월",
-			bDay : "일",
-			gender : "N",
-			smsYn : "N"
-		},
-		list : [],
-		clause : [],
-		emailFlg : false,
-		nickFlg : false,
-		phoneFlg : false,
+		nickFlg : true,
+		phoneFlg : true,
 		message : "",
 		emailMs : "",
 		m14 : "",
 		sms : "",
-		cla : "",
-		cla2 : "",
 		pw1Ms : "",
 		pw2Ms : "",
 		nameMs : "",
 		nickMs : "",
 		phoneMs : "",
+		bYear : "",
+		bMonth : "",
+		bDay : "",
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
 		info : {}
@@ -285,45 +273,23 @@ var app = new Vue({
 		fnGetInfo : function(){
 			var self = this;
 			var nparmap = {no : self.sessionNo};
-			console.log(self.sessionNick);
-			console.log(self.sessionNo);
 			$.ajax({
-                url : "mypage/user_info.dox.dox",
+                url : "user_info.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	console.log(data);
-                	console.log(self.sessionNo);
+                	self.bYear = self.info.birthday.substring(0, 4);
+                	self.bMonth = self.info.birthday.substring(4, 6);
+                	self.bDay = self.info.birthday.substring(6, 8);
                 }
             });
 		},
-		// 회원가입 버튼
+		// 수정버튼
 		fnEdit : function(){
 			var self = this;
-			if(self.user.userName == ""){
-				alert("이름을 입력해주세요.");
-				self.$nextTick(function() {
-		            self.$refs.nameInput.focus();
-		        });
-				return;
-			}
 			var regType3 = /^[가-힣a-zA-Z\s]*$/;
-			if(!regType3.test(self.user.userName)){
-				alert("이름은 영문, 한글만 가능합니다.");
-				self.$nextTick(function() {
-		            self.$refs.nameInput.focus();
-		        });
-				return;
-			}
-			if(self.user.nick == ""){
-				alert("닉네임을 입력해주세요.");
-				self.$nextTick(function() {
-		            self.$refs.nickInput.focus();
-		        });
-				return;
-			}
 			if(!self.nickFlg){
 				alert("중복된 닉네임입니다.");
 				self.$nextTick(function() {
@@ -332,14 +298,14 @@ var app = new Vue({
 				return;
 			}
 			var regType2 = /^[가-힣ㄱ-ㅎa-zA-Z0-9\s]*$/;
-			if(!regType2.test(self.user.nick)){
+			if(!regType2.test(self.info.nick)){
 				alert("닉네임에 특수문자를 제외하여 입력해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.nickInput.focus();
 		        });
 				return;
 			}
-			if(self.user.phone == "" || self.user.phone.length < 11){
+			if(self.info.phone == "" || self.info.phone.length < 11 || self.info.phone.length > 12){
 				alert("휴대폰 번호를 정확히 입력해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.phoneInput.focus();
@@ -347,47 +313,49 @@ var app = new Vue({
 				return;
 			}
 			var regType1 = /^[0-9]+$/;
-			if(!regType1.test(self.user.phone)){
+			if(!regType1.test(self.info.phone)){
 				alert("휴대폰 번호 숫자만 입력해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.phoneInput.focus();
 		        });
 				return;
 			}
-		 	var nparmap = self.user;
-		 	self.user.birth = self.user.bYear + self.user.bMonth + self.user.bDay;
-		 	if(self.user.bYear=="연" || self.user.bMonth=="월" || self.user.bDay=="일"){
-		 		self.user.birth = "";
+		 	self.info.birthday = self.bYear + self.bMonth + self.bDay;
+		 	if(self.bYear=="연" || self.bMonth=="월" || self.bDay=="일"){
+		 		self.info.birthday = "";
 		 	}
-		 	console.log(self.clause);
+		 	console.log("1");
+		 	var nparmap = {nick : self.info.nick, phone : self.info.phone, birthday : self.info.birthday, gender : self.info.gender, no:self.sessionNo}
             $.ajax({
-                url : "user_edit.dox",
+                url : "userEdit.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
                 	alert("회원정보수정이 완료되었습니다.");
+                	self.fnGetInfo();
                 }
             });
 		},
 		// 닉네임 중복체크 및 메세지
 		fnNickOverlap : function(){
 			var self = this;
-			var nparmap = {nick : self.user.nick};
+			var nparmap = {nick : self.info.nick, no : self.sessionNo};
             $.ajax({
-                url : "nickCheck.dox",
+                url : "/EditNickCheck.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
                 	var regType2 = /^[가-힣ㄱ-ㅎa-zA-Z0-9\s]*$/;
-        			if(self.user.nick == ""){
+        			if(self.info.nick == ""){
         				self.nickMs = "닉네임을 입력하세요.";
         				self.nickFlg = false;
-        			}else if(!regType2.test(self.user.nick)){
+        			}else if(!regType2.test(self.info.nick)){
         				self.nickMs = "닉네임은 특수문자 제외하고 사용가능합니다."
         				self.nickFlg = false;
         			}else if(data.cnt > 0){
+        				console.log(self.info.nick);
                 		self.nickMs = "중복된 닉네임입니다.";
                 		self.nickFlg = false;
                 	} else {
@@ -400,21 +368,21 @@ var app = new Vue({
 		// 휴대폰 중복체크 및 메세지
 		fnPhoneOverlap : function(){
 			var self = this;
-			var nparmap = {phone : self.user.phone};
+			var nparmap = {phone : self.info.phone};
             $.ajax({
-                url : "phoneCheck.dox",
+                url : "/EditPhoneCheck.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
         			var regType1 = /^[0-9]+$/;
-        			if(self.user.phone == ""){
+        			if(self.info.phone == ""){
         				self.phoneMs = "휴대폰 번호를 입력하세요.";
         				self.phoneFlg = false;
-        			}else if(!regType1.test(self.user.phone)){
+        			}else if(!regType1.test(self.info.phone)){
         				self.phoneMs = "숫자만 입력해주세요.";
         				self.phoneFlg = false;
-        			}else if(self.user.phone.length < 10 || self.user.phone.length>12){
+        			}else if(self.info.phone.length < 10 || self.info.phone.length>12){
         				self.phoneMs = "휴대폰 번호를 정확히 입력해주세요.(10~12자리)";
         				self.phoneFlg = false;
         			}else if(data.cnt > 0){
@@ -426,36 +394,6 @@ var app = new Vue({
                 	}
                 }
             });
-		},
-		// 비밀번호 메세지
-		fnPwdCheck : function(){
-			var self = this;
-			if(self.user.pw1 == ""){
-				self.pw1Ms = "비밀번호를 입력하세요.";
-			}else{
-				self.pw1Ms = "";
-			}
-		},
-		// 비밀번호 확인 메세지
-		fnPwd2Check : function(){
-			var self = this;
-			if(self.user.pw1 == ""){
-				self.pw2Ms = "비밀번호 확인을 입력하세요.";
-			}else{
-				self.pw2Ms = "";
-			}
-		},
-		// 이름 메세지
-		fnNameCheck : function(){
-			var self = this;
-			var regType3 = /^[가-힣a-zA-Z\s]*$/;
-			if(self.user.userName == ""){
-				self.nameMs = "이름을 입력하세요.";
-			}else if(!regType3.test(self.user.userName)){
-				self.nameMs = "이름은 영문, 한글만 가능합니다.";
-			}else{
-				self.nameMs = "";
-			}
 		}
 	}, // methods
 	created : function() {

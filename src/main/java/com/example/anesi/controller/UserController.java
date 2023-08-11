@@ -133,8 +133,33 @@ public class UserController {
 	public String user_info(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		User info = userService.selectUserNickname(map);
-		map.put("info", info);
+		resultMap.put("info", info);
 		return new Gson().toJson(resultMap);
 	}
-	
+	//유저정보수정 닉네임 중복체크
+	@RequestMapping(value = "/EditNickCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String EditNickCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int cnt = userService.EditNickCnt(map);
+		resultMap.put("cnt", cnt);
+		return new Gson().toJson(resultMap);
+	}
+	//유저정보수정 번호 중복체크
+	@RequestMapping(value = "/EditPhoneCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String EditPhoneCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int cnt = userService.EditPhoneCnt(map);
+		resultMap.put("cnt", cnt);
+		return new Gson().toJson(resultMap);
+	}
+	//유저 정보 수정
+	@RequestMapping(value = "mypage/userEdit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String userEdit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		userService.editUser(map);
+		return new Gson().toJson(resultMap);
+	}
 }

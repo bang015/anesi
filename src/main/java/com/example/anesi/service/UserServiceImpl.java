@@ -58,5 +58,21 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userMapper.selectUserNickname(map);
 	}
+	@Override
+	public int EditNickCnt(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.EditNickCnt(map);
+	}
+	@Override
+	public int EditPhoneCnt(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.EditPhoneCnt(map);
+	}
+	@Override
+	public int editUser(HashMap<String, Object> map) {
+		System.out.println(map);
+		// TODO Auto-generated method stub
+		return userMapper.editUser(map);
+	}
 
 }
