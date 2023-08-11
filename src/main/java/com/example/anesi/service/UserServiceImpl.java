@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.anesi.mapper.LoginMapper;
 import com.example.anesi.mapper.UserMapper;
 import com.example.anesi.model.Scrapbook;
+import com.example.anesi.model.User;
 
 
 
@@ -51,6 +52,11 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		System.out.println(map);
 		return userMapper.deleteScrapbook(map);
+	}
+	@Override
+	public User selectUserNickname(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.selectUserNickname(map);
 	}
 
 }

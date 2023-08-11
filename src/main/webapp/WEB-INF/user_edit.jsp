@@ -17,9 +17,6 @@
 	margin : 30px auto;
 	width: 1000px;
 }
-li{
-	list-style : none;
-}
 .my_menu1 {
 	list-style : none;
 	display : flex;
@@ -104,80 +101,56 @@ li{
 	line-height: 50px;
     font-size: 16px;
 }
-	.put{
-	    border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 380px;
-	    height: 30px;
-	    padding: 10px;
-	}
-	.email{
-		border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 167px;
-	    height: 30px;
-	    padding: 10px;
-	}
-	.email2{
-		border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 190px;
-	    height: 52px;
-	    padding: 8px;
-	}
-	#login{
-		text-align: center;
-		margin-bottom : 80px;
-	}
-	hr{
-		margin : 30px 0px;
-	}
-	.btn{
-	    border: none;
-	    color: white;
-	    background-color: #A782C3;
-	    border-radius: 7px;
-	    padding: 0px 9px;
-	    width: 400px;
-	    height: 50px;
-	    font-size: 20px;
-	    margin: 10px 0px;
-  		transition: background 0.3s;
-  		cursor: pointer;
-	}
-	.btn:hover{
-		background-color: #7c6191;
-	}
-	.clause1{
-		color : #A782C3;
-	}
-	.clause2{
-		color : #999;
-	}
-	.select{
-		border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 130px;
-	    height: 50px;
-	    padding: 8px;
-	}
-	.part{
-		margin : 20px 0px;
-	}
-	.red{
-		color : #ff9797;
-	}
-	h2{
-		font-weight : 100;
-		margin : 10px 0px;
-	}
-	img:hover{
-		cursor: pointer;
-	}
-	.edit_title{
-		font-size:18px;
-		margin : 10px 0px;
-	}
+.put{
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 380px;
+    height: 30px;
+    padding: 10px;
+}
+.btn{
+    border: none;
+    color: white;
+    background-color: #A782C3;
+    border-radius: 7px;
+    padding: 0px 9px;
+    width: 400px;
+    height: 50px;
+    font-size: 20px;
+    margin: 10px 0px;
+	transition: background 0.3s;
+	cursor: pointer;
+}
+.btn:hover{
+	background-color: #7c6191;
+}
+.select{
+	border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 130px;
+    height: 50px;
+    padding: 8px;
+}
+.part{
+	margin : 20px 0px;
+}
+.red{
+	color : #ff9797;
+}
+h2{
+	font-weight : 100;
+	margin : 10px 0px;
+}
+img:hover{
+	cursor: pointer;
+}
+.edit_title{
+	font-size:18px;
+	margin : 10px 0px;
+}
+.clause1{
+	color : #A782C3;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -202,72 +175,72 @@ li{
 	<div class="edit">
 		<div id="title"><h3>회원정보수정</h3></div>
 		<hr>
-				<div class="part">
-					<div class="edit_title">이메일<span class="clause1"> *</span></div>
-						<div>
-							<div><input readonly class="put" ref="emailInput" type="text" v-model="user.userEmail1" @click="fnCheck" @keyup="fnCheck" placeholder="이메일"></div>
-							<div>이메일을 변경하려면 운영자에게 이메일을 보내주세요.</div>
-						</div>
-				</div>
-				<div class="part">
-					<div class="edit_title">이름<span class="clause1"> *</span></div>
-					<div><input class="put" ref="nameInput" type="text" v-model="user.userName" placeholder="이름" @click="fnNameCheck" @keyup="fnNameCheck"></div>
-				</div>
-				<div class="part">
-					<div class="edit_title">닉네임<span class="clause1"> *</span></div>
-					<div><input class="put" ref="nickInput" type="text" v-model="user.nick" placeholder="닉네임 특수문자 제외 사용 가능" @click="fnNickOverlap" @keyup="fnNickOverlap"></div>
-				</div>
-				<div class="part">
-					<div class="edit_title">휴대폰 번호<span class="clause1"> *</span></div>
-					<div><input class="put" ref="phoneInput" type="text" v-model="user.phone" placeholder="휴대폰 번호 '-'제외 숫자만 입력해주세요." @click="fnPhoneOverlap" @keyup="fnPhoneOverlap"></div>
-					<div><span class="red">{{phoneMs}}</span></div>
-				</div>
-				<div class="part">
-				<div class="edit_title">생년월일</div>
+			<div class="part">
+				<div class="edit_title">이메일<span class="clause1"> *</span></div>
 					<div>
-						<select v-model="user.bYear" class="select">
-							<option>연</option>
-							<% for(int i=2009; i>=1950; i--){%>
-								<option value="<%= i %>"><%= i %></option>
-							<%}%>
-						</select> 
-						<select v-model="user.bMonth" class="select">
-							<option>월</option>
-							<% for(int i=1; i<=12; i++){
-								if(i<10){%>
-									<option value="0<%= i %>"><%= i %></option>
-								<%}else{%> 
-								<option value="<%= i %>"><%= i %></option>
-								<%}%> 
-							<%}%>
-						</select> 
-						<select v-model="user.bDay" class="select">
-							<option>일</option>
-							<% for(int i=1; i<=31; i++){
-								if(i<10){%>
-									<option value="0<%= i %>"><%= i %></option>
-								<%}else{%> 
-								<option value="<%= i %>"><%= i %></option>
-								<%}%> 
-							<%}%>
-						</select>
+						<div><input readonly class="put" ref="emailInput" type="text" v-model="user.userEmail1" placeholder="이메일"></div>
+						<div>이메일을 변경하려면 운영자에게 이메일을 보내주세요.</div>
 					</div>
+			</div>
+			<div class="part">
+				<div class="edit_title">이름<span class="clause1"> *</span></div>
+				<div><input readonly class="put" ref="nameInput" type="text" v-model="user.userName" placeholder="이름" @click="fnNameCheck" @keyup="fnNameCheck"></div>
+				<div>이름을 변경하려면 운영자에게 이메일을 보내주세요.</div>
+			</div>
+			<div class="part">
+				<div class="edit_title">닉네임<span class="clause1"> *</span></div>
+				<div><input class="put" ref="nickInput" type="text" v-model="user.nick" placeholder="닉네임 특수문자 제외 사용 가능" @click="fnNickOverlap" @keyup="fnNickOverlap"></div>
+			</div>
+			<div class="part">
+				<div class="edit_title">휴대폰 번호<span class="clause1"> *</span></div>
+				<div><input class="put" ref="phoneInput" type="text" v-model="user.phone" placeholder="휴대폰 번호 '-'제외 숫자만 입력해주세요." @click="fnPhoneOverlap" @keyup="fnPhoneOverlap"></div>
+			<div><span class="red">{{phoneMs}}</span></div>
+			</div>
+			<div class="part">
+			<div class="edit_title">생년월일</div>
+				<div>
+					<select v-model="user.bYear" class="select">
+						<option>연</option>
+						<% for(int i=2009; i>=1950; i--){%>
+							<option value="<%= i %>"><%= i %></option>
+						<%}%>
+					</select> 
+					<select v-model="user.bMonth" class="select">
+						<option>월</option>
+						<% for(int i=1; i<=12; i++){
+							if(i<10){%>
+								<option value="0<%= i %>"><%= i %></option>
+							<%}else{%> 
+							<option value="<%= i %>"><%= i %></option>
+							<%}%> 
+						<%}%>
+					</select> 
+					<select v-model="user.bDay" class="select">
+						<option>일</option>
+						<% for(int i=1; i<=31; i++){
+							if(i<10){%>
+								<option value="0<%= i %>"><%= i %></option>
+							<%}else{%> 
+							<option value="<%= i %>"><%= i %></option>
+							<%}%> 
+						<%}%>
+					</select>
 				</div>
-				<div class="part">
-					<div class="edit_title">성별</div> 
+			</div>
+			<div class="part">
+				<div class="edit_title">성별</div> 
 					<div>
-						선택 안 함 <input type="radio" v-model="user.gender" value="N">　　　
-						여성 <input type="radio" v-model="user.gender" value="F">　　　
-						남성 <input type="radio" v-model="user.gender" value="M">
+						선택 안 함 <input type="radio" v-model="user.gender" value="N" name="gender">　　　
+						여성 <input type="radio" v-model="user.gender" value="F" name="gender">　　　
+						남성 <input type="radio" v-model="user.gender" value="M" name="gender">
 					</div>
-				<div class="part">
-					<div class="edit_title">프로필 이미지</div>
-					<div style="width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">프로필사진</div>
-				</div>				
-		</div>
-		<button class="btn">회원정보수정</button>
+			<div class="part">
+				<div class="edit_title">프로필 이미지</div>
+				<div style="width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">프로필사진</div>
+			</div>				
 	</div>
-	
+	<button class="btn" @click="fnEdit">회원정보수정</button>
+</div>
 </div>
 </div>
 </body>
@@ -303,47 +276,32 @@ var app = new Vue({
 		pw2Ms : "",
 		nameMs : "",
 		nickMs : "",
-		phoneMs : ""
+		phoneMs : "",
+		sessionNick : "${sessionNick}",
+		sessionNo : "${sessionNo}",
+		info : {}
 	},// data
 	methods : {
-		// 회원가입 버튼
-		fnJoin : function(){
+		fnGetInfo : function(){
 			var self = this;
-			if(self.user.userEmail1 == ""){
-				alert("이메일을 입력하세요.");
-				self.$nextTick(function() {
-		            self.$refs.emailInput.focus();
-		        });
-				return;
-			}
-			if(self.user.userEmail2 == ""){
-				alert("이메일을 선택해주세요.");
-				self.$nextTick(function() {
-		            self.$refs.emailInput2.focus();
-		        });
-				return;
-			}
-			if(!self.emailFlg){
-				alert("이미 가입된 이메일입니다.");
-				self.$nextTick(function() {
-		            self.$refs.emailInput.focus();
-		        });
-				return;
-			}
-			if(self.user.pw1 == ""){
-				alert("비밀번호를 입력하세요.");
-				self.$nextTick(function() {
-		            self.$refs.pw1Input.focus();
-		        });
-				return;
-			}
-			if(self.user.pw1 != self.user.pw2){
-				alert("비밀번호가 일치하지 않습니다.");
-				self.$nextTick(function() {
-		            self.$refs.pw2Input.focus();
-		        });
-				return;
-			}
+			var nparmap = {no : self.sessionNo};
+			console.log(self.sessionNick);
+			console.log(self.sessionNo);
+			$.ajax({
+                url : "mypage/user_info.dox.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.info = data.info;
+                	console.log(data);
+                	console.log(self.sessionNo);
+                }
+            });
+		},
+		// 회원가입 버튼
+		fnEdit : function(){
+			var self = this;
 			if(self.user.userName == ""){
 				alert("이름을 입력해주세요.");
 				self.$nextTick(function() {
@@ -396,53 +354,19 @@ var app = new Vue({
 		        });
 				return;
 			}
-			if(!self.clause.includes('m14') || !self.clause.includes('cla') || !self.clause.includes('cla2')){
-				alert("필수 약관에 동의해주세요.");
-				return;
-			}
-		 	if(self.clause.includes('sms')){
-		 		self.user.smsYn = 'Y';
-		 	}
 		 	var nparmap = self.user;
-		 	self.user.email = self.user.userEmail1 +'@'+ self.user.userEmail2;
 		 	self.user.birth = self.user.bYear + self.user.bMonth + self.user.bDay;
 		 	if(self.user.bYear=="연" || self.user.bMonth=="월" || self.user.bDay=="일"){
 		 		self.user.birth = "";
 		 	}
 		 	console.log(self.clause);
             $.ajax({
-                url : "join.dox",
+                url : "user_edit.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	alert("회원가입이 완료되었습니다.");
-                }
-            });
-		},
-		// 이메일 중복체크 및 메세지
-		fnCheck : function(){
-			var self = this;
-			self.user.email = self.user.userEmail1 +'@'+ self.user.userEmail2;
-			var nparmap = {email : self.user.email};
-            $.ajax({
-                url : "joinCheck.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-        			if(self.user.userEmail1 == ""){
-        				self.emailMs = "이메일을 입력하세요.";
-        				self.emailFlg = false;
-        			}else if(data.cnt > 0){
-                		self.emailMs = "이미 가입된 이메일입니다.";
-                		self.emailFlg = false;
-                	}else if(self.user.userEmail2==""){
-                		self.emailMs = "메일 주소를 선택해주세요.";
-                	}else{
-                		self.emailMs = "사용 가능한 이메일입니다.";
-                		self.emailFlg = true;
-                	}
+                	alert("회원정보수정이 완료되었습니다.");
                 }
             });
 		},
@@ -532,23 +456,11 @@ var app = new Vue({
 			}else{
 				self.nameMs = "";
 			}
-		},
-		// 전체 선택
-        fnAll : function(){
-        	var self = this;
-        	if(self.clause.length > 0){
-        		self.clause = [];
-        	}else{
-        		self.clause = ['m14', 'cla', 'cla2', 'sms'];
-        	}
-        },
-        // 로고 클릭시 메인 이동
-        fnMain : function(){
-        	location.href="main.do";
-        }
+		}
 	}, // methods
 	created : function() {
 		var self = this;
+		self.fnGetInfo();
 	}// created
 });
 </script>

@@ -42,4 +42,10 @@
 			#{item}
 		</foreach>
 	</delete>
+	<!-- 유저 정보 -->
+	<select id="selectUserNickname" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT * 
+		FROM t3_tbl_user
+		WHERE no = #{no}
+	</select>
 </mapper>

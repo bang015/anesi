@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.anesi.model.Scrapbook;
+import com.example.anesi.model.User;
 
 
 @Mapper
@@ -22,4 +23,6 @@ public interface UserMapper {
 	List<Scrapbook> selectScrapbookList(HashMap<String, Object> map);
 	//스크랩북 삭제
 	int deleteScrapbook(HashMap<String, Object> map);
+	//유저 정보
+	User selectUserNickname(HashMap<String, Object> map);
 }

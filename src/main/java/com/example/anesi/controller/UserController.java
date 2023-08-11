@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Scrapbook;
+import com.example.anesi.model.User;
 import com.example.anesi.service.UserService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -115,16 +116,25 @@ public class UserController {
 		return new Gson().toJson(resultMap);
 	}
 	//스크랩북 삭제
-		@RequestMapping(value = "scrapbook/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		@ResponseBody
-		public String scrapbookremove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-			HashMap<String, Object> resultMap = new HashMap<String, Object>();
-			String json = map.get("checkSb").toString();
-			ObjectMapper mapper = new ObjectMapper();
-			List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
-			map.put("list", list);
-			userService.removeScrapbook(map);
-			return new Gson().toJson(resultMap);
-		}
+	@RequestMapping(value = "scrapbook/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String scrapbookremove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		String json = map.get("checkSb").toString();
+		ObjectMapper mapper = new ObjectMapper();
+		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+		map.put("list", list);
+		userService.removeScrapbook(map);
+		return new Gson().toJson(resultMap);
+	}
+	//유저 정보
+	@RequestMapping(value = "mypage/user_info.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String user_info(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		User info = userService.selectUserNickname(map);
+		map.put("info", info);
+		return new Gson().toJson(resultMap);
+	}
 	
 }

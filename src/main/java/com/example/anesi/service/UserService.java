@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.anesi.model.Scrapbook;
+import com.example.anesi.model.User;
 
 
 
@@ -20,4 +21,6 @@ public interface UserService {
 	List<Scrapbook> searchScrapbookList(HashMap<String, Object> map);
 	//스크랩북 삭제
 	int removeScrapbook(HashMap<String, Object> map);
+	//유저 정보
+	User selectUserNickname(HashMap<String, Object> map);
 }
