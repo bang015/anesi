@@ -12,6 +12,8 @@ public interface StoreService {
 	
 	List<Product> searchProduct (HashMap<String, Object> map);
 	List<Category> searchCategoryList();
+	//회원 상품 장바구니에 추가
+	int searchAddCartUser(HashMap<String, Object> map);
 
 	
 }

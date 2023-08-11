@@ -38,4 +38,7 @@ public interface ProductMapper {
 	List<Product> selectProductListByKeyword(HashMap<String, Object> map);
 	// 상품 상세 이미지
 	List<Scrapbook> selectcontentImg2(HashMap<String, Object> map);
+	
+	//회원 상품 장바구니에 추가
+	int insertCartUser (HashMap<String, Object> map);
 }

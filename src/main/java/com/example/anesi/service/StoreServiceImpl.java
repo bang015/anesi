@@ -33,4 +33,10 @@ public class StoreServiceImpl implements StoreService{
 		return productMapper.selectCategoryList();
 	}
 
+
+	@Override
+	public int searchAddCartUser(HashMap<String, Object> map) {
+		return productMapper.insertCartUser(map);
+	}
+
 }

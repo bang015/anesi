@@ -53,5 +53,15 @@ public class StoreController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	//유저 장바구니에 상품담기
+	@RequestMapping(value = "/product/insertCart.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String insertCart(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		storeService.searchAddCartUser(map);
+		resultMap.put("success", "장바구니등록완료");
+		return new Gson().toJson(resultMap);
+	}
+	
 	
 }

@@ -203,7 +203,7 @@
 			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
 			    <span class="production-item-rating__score">4.5</span>
 			   </div>
-				<a><i class="fa fa-shopping-cart modal-toggle-button" @click="openCartModal"></i></a>
+				<a ><i @click="fnInsertCart(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" @click="openCartModal"></i></a>
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
 		    	<a><i class="fa-regular fa-bookmark modal-toggle-button" @click="openScrapModal"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
@@ -258,7 +258,9 @@ var app = new Vue({
 		showCartModal: false,
 		showScrapModal: false,
 		userId : '${sessionId}',
-		userNick : '${sessionNick}'
+		userNick : '${sessionNick}',
+		userNo : '${sessionNo}',
+		productNo : ""
 	
 		
 		
@@ -328,7 +330,23 @@ var app = new Vue({
 	    },
 	    fnMoveMyPage : function() {
         	location.href = "/mypage.do";
-	    }
+	    },
+	    
+	    fnInsertCart : function(productNo) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: productNo};
+            $.ajax({
+                url : "/product/insertCart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	alert("등록완");
+                    console.log(self.userNo);
+
+                }
+            }); 
+		}
 
 	        
 	        

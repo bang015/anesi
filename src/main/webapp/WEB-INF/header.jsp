@@ -65,7 +65,7 @@
     <ul class="category-list">
       
         <li>
-            <a>가구</a>
+            <a onclick="fnMoveaa('10')">가구</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>침대</a></li>
                 <li><a>소파</a></li>
@@ -75,7 +75,7 @@
             </ul>
         </li>
         <li>
-            <a>조명</a>
+            <a onclick="fnMoveaa('20')">조명</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>장스텐드</a></li>
                 <li><a>단스탠드</a></li>
@@ -84,7 +84,7 @@
             </ul>
         </li>
         <li>
-            <a>패브릭</a>
+            <a onclick="fnMoveaa('30')">패브릭</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>침구</a></li>
                 <li><a>커튼</a></li>
@@ -92,7 +92,7 @@
             </ul>
         </li>
         <li>
-            <a>가전</a>
+            <a onclick="fnMoveaa('40')">가전</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>냉장고</a></li>
                 <li><a>tv</a></li>
@@ -102,7 +102,7 @@
             </ul>
         </li>
         <li>
-            <a>데코/식물</a>
+            <a onclick="fnMoveaa('50')">데코/식물</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>조화</a></li>
                 <li><a>꽃다발</a></li>
@@ -112,7 +112,7 @@
             </ul>
         </li>
         <li>
-            <a>반려동물</a>
+            <a onclick="fnMoveaa('60')">반려동물</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>하우스/방석</a></li>
                 <li><a>캣타워/스크래쳐</a></li>
@@ -243,4 +243,15 @@
 			  var productName = $(this).text();
 			  searchProducts(productName);
 			});	
+			
+			
+			
+/* //category 눌렀을때 메뉴별로 배열해줌
+function fnMoveaa (item){
+      var self = this;
+   $.pageChange("storemain_byCategory.do",{no : item});//보낼필요없을때 파라미터 빈값으로{}
+}
+ */
+		    
+		    
 </script>
