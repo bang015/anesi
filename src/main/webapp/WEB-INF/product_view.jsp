@@ -160,32 +160,6 @@
 		font-weight: bold;
 		font-size: 30px;
 	}
-	.star-ratings {
-  color: #aaa9a9; 
-  position: relative;
-  unicode-bidi: bidi-override;
-  width: max-content;
-  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-  -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: #2b2a29;
-}
- 
-.star-ratings-fill {
-  color: #fff58c;
-  padding: 0;
-  position: absolute;
-  z-index: 1;
-  display: flex;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  -webkit-text-fill-color: gold;
-}
- 
-.star-ratings-base {
-  z-index: 0;
-  padding: 0;
-}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -246,8 +220,8 @@
 							<div class="inquiry-a"><a>문의</a></div>
 						</div>
 					</div>
-					<div class="content-view" id="product">
-						<div class="content-title" >
+					<div class="content-view">
+						<div class="content-title" id="product">
 							상품 정보
 							<div class="content-text-box">
 								<div class="text1">판매자 직거래 주의 안내</div>
@@ -266,15 +240,7 @@
 						</div>
 						<div class="csat-box">
 							<div class="csat1">
-								<div 
-								    class="star-ratings-fill space-x-2 text-lg"
-								    :style="{ width: fnStar + '%' }"
-									>
-										<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-									</div>
-									<div class="star-ratings-base space-x-2 text-lg">
-										<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-									</div>
+								
 							</div>
 							<div class="csat2">
 							
@@ -383,10 +349,6 @@ var app = new Vue({
 	                }                
 	            }); 
 		},
-		fnStar : function(){
-			 const score = +this.csat.csatAvg * 20;
-		      return score + 1.5;
-		}
 	}, // methods
 	created : function() {
 		var self = this;
