@@ -65,6 +65,11 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return productMapper.selectProductListByKeyword(map);
 	}
+	@Override
+	public List<Scrapbook> searchcontentImg2(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return productMapper.selectcontentImg2(map);
+	}
 	
 	
 }

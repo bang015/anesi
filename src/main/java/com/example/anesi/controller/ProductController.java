@@ -126,5 +126,15 @@ public class ProductController {
 	       resultMap.put("list", list);
 	       return new Gson().toJson(resultMap);
 	   }
+	// 상품 콘텐츠 이미지
+		  @RequestMapping(value = "/imgSearch2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		   @ResponseBody
+		   public String img2(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		       List<Scrapbook> imgList2 = productService.searchcontentImg2(map);
+
+		       resultMap.put("imgList2", imgList2);
+		       return new Gson().toJson(resultMap);
+		   }
 	  
 }

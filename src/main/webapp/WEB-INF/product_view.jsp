@@ -123,6 +123,12 @@
 		font-size: 17px;
 		background-color: #fafafa;
 	}
+	.content-img{
+		margin-left: 50px;
+	}
+	.content-img img{
+		
+	}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -182,7 +188,9 @@
 						<button @click="">문의</button>
 					</div>
 					<div class="content-view">
-						
+						<div class="content-img" v-for="item in imgList2">
+							<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
+						</div>
 					</div>
 				
 			</div>
@@ -199,7 +207,8 @@ var app = new Vue({
 		csat : {},
 		option : [],
 		imgList : [],
-		img : []
+		img : [],
+		imgList2 : []
 	},// data
 	methods : {
 		fnGetList : function(){
@@ -272,6 +281,20 @@ var app = new Vue({
 	                }                
 	            }); 
 		},
+		fnContentImg : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo};	            
+	            $.ajax({
+	                url : "/imgSearch2.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.imgList2 = data.imgList2;
+	               		console.log(self.imgList2);
+	                }                
+	            }); 
+		},
 	}, // methods
 	created : function() {
 		var self = this;
@@ -280,6 +303,7 @@ var app = new Vue({
 		self.fnOption();
 		self.fnImg();
 		self.fnThumbnailImg();
+		self.fnContentImg();
 	}// created
 });
 </script>
