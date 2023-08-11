@@ -10,8 +10,9 @@
 <title>상품 상세 페이지</title>
 <style>
 	.content{
-		position : relative;
-		width: 1300px;	
+		position: relative;
+    	min-height: 1px;
+		width: 1300px;
 		margin: 0 auto;
 		margin-top : 170px;
 	}
@@ -110,25 +111,81 @@
 		color: #fff;
 		background-color: #A782C3;
 	}
-	.nav-wrap{
-		height: 50px;
-		background-color: #fafafa;
-		border-bottom: #ededed;
-		border-top: #ededed;
+	.nav-box{
+		overflow: auto;
+		position: sticky;
+		top: 185px;
 	}
-	.nav-wrap button{
-		width: 430px;
+	.nav-wrap{
+    	
 		height: 50px;
-		border: 0;
-		font-size: 17px;
 		background-color: #fafafa;
+		border-bottom: 1px solid #ededed;
+		border-top: 1px solid #ededed;
+	}
+	.nav-wrap div{
+		font-size : 16px;
+		font-weight : bold;
+		line-height : 50px;
+		text-align : center;
+		width: 430px;
+		height : 50px;
+		display: inline-block;
 	}
 	.content-img{
-		margin-left: 50px;
+		margin-left: 30px;
 	}
 	.content-img img{
+		width: 800px;
+	}
+	.content-title{
+		font-size: 20px;
+		font-weight: bold;
+		margin-left: 30px;
+		margin-top: 20px;
 		
 	}
+	.content-text-box{
+		background-color: #FDF4F5;
+		text-align: center;
+		width: 800px;
+		height : 200px;
+		font-size: 20px;
+		margin-top: 20px;
+		margin-bottom: 50px;
+	}
+	.text1{
+		color: #F54644;
+		line-height: 80px;
+		font-weight: bold;
+		font-size: 30px;
+	}
+	.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+}
+ 
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -182,17 +239,48 @@
 							</div>
 						</div>
 					</div>
-					<div class="nav-wrap">
-						<button @click="">상품정보</button>
-						<button @click="">리뷰{{csat.csatCnt}}</button>
-						<button @click="">문의</button>
+					<div class="nav-box">
+						<div class="nav-wrap">
+							<div class="product-a"><a href="#product">상품정보</a></div>
+							<div class="reeview-a"><a href="#review">리뷰{{csat.csatCnt}}</a></div>
+							<div class="inquiry-a"><a>문의</a></div>
+						</div>
 					</div>
-					<div class="content-view">
+					<div class="content-view" id="product">
+						<div class="content-title" >
+							상품 정보
+							<div class="content-text-box">
+								<div class="text1">판매자 직거래 주의 안내</div>
+								<div>판매자를 사칭하여 현금 입금 유도하는 소비자 피해 사례가 늘고 있습니다.</div>
+								<div>판매자와 문자/카톡으로 소통하실 때, 고객분들의 주의를 부탁드리며,</div>
+								<div>의심되는 경우 아네시 고객센터로 신고해 주시기 바랍니다.</div>
+							</div>
+						</div>
 						<div class="content-img" v-for="item in imgList2">
 							<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
 						</div>
 					</div>
-				
+					<div class="content-review">
+						<div class="review-title" id="review">
+							리뷰 <span>{{csat.csatCnt}}</span>
+						</div>
+						<div class="csat-box">
+							<div class="csat1">
+								<div 
+								    class="star-ratings-fill space-x-2 text-lg"
+								    :style="{ width: fnStar + '%' }"
+									>
+										<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+									</div>
+									<div class="star-ratings-base space-x-2 text-lg">
+										<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+									</div>
+							</div>
+							<div class="csat2">
+							
+							</div>
+						</div>
+					</div>
 			</div>
 		</div>
 	</div>
@@ -295,6 +383,10 @@ var app = new Vue({
 	                }                
 	            }); 
 		},
+		fnStar : function(){
+			 const score = +this.csat.csatAvg * 20;
+		      return score + 1.5;
+		}
 	}, // methods
 	created : function() {
 		var self = this;
