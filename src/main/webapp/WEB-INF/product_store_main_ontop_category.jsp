@@ -132,92 +132,62 @@
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
-<jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
 
-
-	<div id="store_main">
+	<div><h1>카테고리</h1></div>
+	<ul id ="product-main-category__total">
 	
-	
-<!-- 상품 정렬하는 버튼-->	
-<button class="category-order_toggle">
-	  정렬<i class="fa-solid fa-chevron-down"></i>
-</button>
-
-  
-	<div><h1>인기상품</h1></div>
-	
-		<div class="production-item__content" v-for="item in list">
-			<a href="javascript:;" class="production-item-thumnail">
-		    <img class="production-item-thumnail__image animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation"
-			    src="../css/image/productMain/productMain_category1.png" >
-		    </a>
-		    <div class="production-item-header" >
-			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
-			    <span class="production-item-header__name">{{item.productName}}</span>
-			    <div class="production-item-header__kind">{{item.categoryName}} 
-			    <span class="production-item-header__country">{{item.country}}</span>
-			    </div>
-		    </div>
-			 
-		    <span class="production-item-price">
-		    
-		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
-			    정가
-			    <span class="won_icon">￦</span>
-				<span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
-			   </span>
-			    
-			    
-			    <!-- production-item-price__sell  : 파는 가격 -->
-		       <div class="production-item-price__sell">
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
-			    <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
-			    </div>
-	        </span>
-	        
-	        
-			    <!--  production-item-rating : 별점-->
-		       <div class="production-item-rating">
-		       	<!-- 별모양-->
-			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
-			    <span class="production-item-rating__score">4.5</span>
-			   </div>
-				<a><i class="fa fa-shopping-cart modal-toggle-button" @click="openCartModal"></i></a>
-		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-		    	<a><i class="fa-regular fa-bookmark modal-toggle-button" @click="openScrapModal"></i></a>
-	    </div> <!-- class="production-item__content" 끝-->
-	    
-	    
-	    
-    	<div class="modal" v-if="showCartModal">
-		  <div class="modal-card">
-		    <h2>장바구니에 추가</h2>
-		    <p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveCart" >장바구니로 이동하기</button>
-		  </div>
-		</div>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>가구</span>
+	    	</a>
+    	</li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>조명</span>
+	    	</a>
+    	</li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>패브릭</span>
+	    	</a>
+    	</li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>가전</span>
+	    	</a>
+    	</li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>데코/식물</span>
+	    	</a>
+    	</li>
+		<li>
+			<a href="javascript:;">
+				<img src="../css/image/productMain/productMain_category1.png"
+				class="animate__animated animate__pulse" 
+			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
+			    <span>반려동물</span>
+	    	</a>
+    	</li>
 		
-    	<div class="modal" v-if="showScrapModal">
-		  <div class="modal-card">
-		    <h2>스크랩북에 등록</h2>
-		    <p>상품이 스크랩되었습니다.</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">마이페이지로 이동하기</button>
-		  </div>
-		</div>
+	</ul>
 	
-	    
-    </div>
 
-
-	
-	
-	<jsp:include page="footer.jsp"></jsp:include>
-	
 </body>
 </html>
 <script>

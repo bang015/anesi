@@ -19,7 +19,12 @@ import com.google.gson.Gson;
 public class StoreController {
 	
 	@Autowired
-	StoreService productService;
+	StoreService storeService;
+	
+	@RequestMapping("/product/ontop_category.do") 
+	public String productMain_ontop(Model model) throws Exception{
+		return "/product_store_main_ontop_category";
+	}
 	
 	@RequestMapping("/product/storemain.do") 
 	public String productMain(Model model) throws Exception{
@@ -31,7 +36,7 @@ public class StoreController {
 	@ResponseBody
 	public String storeMain(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Product> list = productService.searchProduct(map);
+		List<Product> list = storeService.searchProduct(map);
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}

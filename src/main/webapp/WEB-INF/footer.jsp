@@ -13,6 +13,10 @@
 <style>
 
 
+#footer_hr{
+	margin-bottom : 30px;
+}
+
 
 #f_img{
 	margin-left : 70px;
@@ -24,7 +28,7 @@
 
 #container_footer{
 	font-size : 12px;
-	height: 100px;
+	height: 150px;
 	padding : 30px 20px;
 	
 }
@@ -90,11 +94,12 @@
 <!-- 주석 꼭 남겨주세요 넹 -->
 <body>
 
-<hr>
+
 	<div id="container_footer">
 	<!-- 로고 클릭시 main화면으로 전환 또는, 제일 상단으로-->
 	<!-- 이미지를 포함 모든 링크는 href="javascript:;"-->
 	
+	<hr id="footer_hr">
 	<a href="javascript:;">
     <img id="f_img" src="../css/image/anesilogo.png" >
     </a>
