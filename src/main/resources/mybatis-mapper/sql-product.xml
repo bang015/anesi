@@ -84,7 +84,7 @@
 	<select id="selectcontentImg" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
 		SELECT *
 		FROM t3_tbl_product_image
-		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'N'
+		WHERE PRODUCT_NO = #{productNo}
 	</select>
 </mapper>
 

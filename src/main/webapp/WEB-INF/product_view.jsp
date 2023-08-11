@@ -14,7 +14,6 @@
 		width: 1300px;	
 		margin: 0 auto;
 		margin-top : 170px;
-		border: 1px solid;
 	}
 	.content-box{
 		height: 700px;
@@ -45,24 +44,25 @@
 	.main-li{
 		margin-bottom: 5px;
 		margin-top: 0px;
-	}
-	.main-li img{
-		border : 1px solid;
-		width: 100px;
-		height: 100px;
 		
 	}
+	.main-li img{
+		width: 100px;
+		height: 100px;
+		border-radius: 10px;
+	}
 	.main-img{
-		border : 1px solid;
 		position : absolute;
 		left : 110px;
 		top : 51px;
 		width: 600px;
 		height: 600px;
+		
 	}
 	.main-img img{
 		width: 600px;
-		height: 600px;	
+		height: 600px;
+		border-radius: 10px;	
 	}
 	.main-title{
 		font-size: 40px;
@@ -141,7 +141,7 @@
 								<ul class="main-ul">
 									<li class="main-li" v-for="item in imgList">
 										<a href="javascript:;">
-											<img alt="ÄÜÅÙÃ÷ ÀÌ¹ÌÁö" src="">
+											<img alt="ÄÜÅÙÃ÷ ÀÌ¹ÌÁö" :src="item.imgPath+'/'+item.imgName">
 										</a>
 									</li>
 								</ul>
