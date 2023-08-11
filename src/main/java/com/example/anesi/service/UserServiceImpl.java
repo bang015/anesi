@@ -46,5 +46,11 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userMapper.selectScrapbookList(map);
 	}
+	@Override
+	public int removeScrapbook(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		System.out.println(map);
+		return userMapper.deleteScrapbook(map);
+	}
 
 }

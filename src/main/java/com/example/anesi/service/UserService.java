@@ -18,4 +18,6 @@ public interface UserService {
 	int phoneCnt(HashMap<String, Object> map);
 	//스크랩북 리스트
 	List<Scrapbook> searchScrapbookList(HashMap<String, Object> map);
+	//스크랩북 삭제
+	int removeScrapbook(HashMap<String, Object> map);
 }

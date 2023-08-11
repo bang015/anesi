@@ -20,4 +20,6 @@ public interface UserMapper {
 	int phoneCnt(HashMap<String, Object> map);
 	//스크랩북 리스트
 	List<Scrapbook> selectScrapbookList(HashMap<String, Object> map);
+	//스크랩북 삭제
+	int deleteScrapbook(HashMap<String, Object> map);
 }
