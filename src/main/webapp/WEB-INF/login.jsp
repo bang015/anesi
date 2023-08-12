@@ -26,8 +26,8 @@
 					<span class="title1">로그인</span>
 				</div>
 				<div class="login-box"> <!-- 로그인 입력 박스 -->
-					<input class="login-input" v-model="userEmail" placeholder="이메일">
-					<input class="login-input" type="password" v-model="pwd" placeholder="패스워드">
+					<input class="login-input" v-model="userEmail" placeholder="이메일" @keyup.enter="fnLogin">
+					<input class="login-input" type="password" v-model="pwd" placeholder="패스워드" @keyup.enter="fnLogin">
 				</div>
 				<div class="login-btn">
 					<button class="loginBtn btn" @click="fnLogin">로그인</button>

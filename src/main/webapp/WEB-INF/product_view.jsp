@@ -9,6 +9,9 @@
 <meta charset="EUC-KR">
 <title>상품 상세 페이지</title>
 <style>
+	/* html { 스크롤 스무스
+  		scroll-behavior: smooth;
+	} */
 	.content{
 		position: relative;
     	min-height: 1px;
@@ -117,11 +120,11 @@
 		top: 185px;
 	}
 	.nav-wrap{
-    	
-		height: 50px;
-		background-color: #fafafa;
-		border-bottom: 1px solid #ededed;
+    	border-bottom: 1px solid #ededed;
 		border-top: 1px solid #ededed;
+		height: 53px;
+		background-color: #fafafa;
+		
 	}
 	.nav-wrap div{
 		font-size : 16px;
@@ -131,6 +134,16 @@
 		width: 430px;
 		height : 50px;
 		display: inline-block;
+		
+	}
+	.nav-wrap div:hover{
+		border-bottom: 2px solid #A782C3;
+		color: #A782C3;
+	}
+	.nav-wrap a{
+		font-family: 'Pretendard-Regular';
+		font-size: 17px;
+		padding: 17px 170px 17px 170px;
 	}
 	.content-img{
 		margin-left: 30px;
@@ -159,6 +172,39 @@
 		line-height: 80px;
 		font-weight: bold;
 		font-size: 30px;
+	}
+	.content-review{
+		margin-left: 30px;
+		
+	}
+	.review-span{
+		color : rgba(0,0,0,.4);
+		font-weight: bold;
+		font-size: 17px;
+	}
+	.review-title{
+		font-size: 18px;
+		font-weight: bold;
+		display: inline-block;
+		width: 800px;
+	}
+	.review-text2{
+		color:#A782C3; 
+	}
+	.review-btn{
+		float: right;
+		background-color: #fff;
+		border : 0;
+		color : #A782C3;
+		font-size: 15px;
+		font-weight: bold;
+		font-family: 'Pretendard-Regular';
+	}
+	.csat-box{
+		background-color: #f7f8fa;
+		width: 800px;
+		height : 100px;
+		border-radius: 8px;
 	}
 </style>
 </head>
@@ -216,7 +262,7 @@
 					<div class="nav-box">
 						<div class="nav-wrap">
 							<div class="product-a"><a href="#product">상품정보</a></div>
-							<div class="reeview-a"><a href="#review">리뷰{{csat.csatCnt}}</a></div>
+							<div class="review-a"><a href="#review">리뷰  <span class="review-span"> {{csat.csatCnt}}</span></a></div>
 							<div class="inquiry-a"><a>문의</a></div>
 						</div>
 					</div>
@@ -233,18 +279,19 @@
 						<div class="content-img" v-for="item in imgList2">
 							<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
 						</div>
-					</div>
-					<div class="content-review">
-						<div class="review-title" id="review">
-							<span>리뷰{{csat.csatCnt}}</span>
-						</div>
-						<div class="csat-box">
-							<div class="csat1">
-								<i class="fa-solid fa-star" style="color: #A782C3;"></i>
-								<span>{{csat.csatAvg}}</span>
+						<div class="content-review">
+							<div class="review-title" id="review">
+								<span class="review-text1">리뷰 </span><span class="review-text2"> {{csat.csatCnt}}</span>
+								<button class="review-btn">리뷰쓰기</button>
 							</div>
-							<div class="csat2">
-								
+							<div class="csat-box">
+								<div class="csat1">
+									<i  class="fa-solid fa-star fa-3x" style="color: #A782C3;"></i>
+									<span>{{csat.csatAvg}}</span>
+								</div>
+								<div class="csat2">
+									그래프 
+								</div>
 							</div>
 						</div>
 					</div>
