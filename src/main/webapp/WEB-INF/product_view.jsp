@@ -15,7 +15,7 @@
 	.content{
 		position: relative;
     	min-height: 1px;
-		width: 1300px;
+		width: 1200px;
 		margin: 0 auto;
 		margin-top : 170px;
 	}
@@ -32,7 +32,7 @@
 		top : 50px;
 		width: 400px;
 		display: inline-block;
-		margin-top: 0;
+		margin-left: 30px;
 	}
 	.category-wrap{
 		margin-top: 20px;
@@ -83,7 +83,7 @@
 	}
 	.main-price{
 		height : 50px;
-		border-bottom: 1px solid;
+		border-bottom: 1px solid #ededed;
 		font-size: 30px;
 	}
 	.main-option{
@@ -122,7 +122,8 @@
 	.nav-wrap{
     	border-bottom: 1px solid #ededed;
 		border-top: 1px solid #ededed;
-		height: 53px;
+		width : 100%;
+		height: 52px;
 		background-color: #fafafa;
 		
 	}
@@ -131,7 +132,7 @@
 		font-weight : bold;
 		line-height : 50px;
 		text-align : center;
-		width: 430px;
+		width: 395.5px;
 		height : 50px;
 		display: inline-block;
 		
@@ -143,25 +144,28 @@
 	.nav-wrap a{
 		font-family: 'Pretendard-Regular';
 		font-size: 17px;
-		padding: 17px 170px 17px 170px;
+		padding: 17px 165px 17px 168px;
 	}
 	.content-img{
-		margin-left: 30px;
+		margin-left: 40px;
+		width: 700px;
+		display: inline-block;
 	}
 	.content-img img{
-		width: 800px;
+		width: 700px;
 	}
 	.content-title{
 		font-size: 20px;
 		font-weight: bold;
-		margin-left: 30px;
+		margin-left: 40px;
 		margin-top: 20px;
-		
+		width: 700px;
+		display: inline-block;
 	}
 	.content-text-box{
 		background-color: #FDF4F5;
 		text-align: center;
-		width: 800px;
+		width: 700px;
 		height : 200px;
 		font-size: 20px;
 		margin-top: 20px;
@@ -174,8 +178,9 @@
 		font-size: 30px;
 	}
 	.content-review{
-		margin-left: 30px;
-		
+		margin-left: 40px;
+		width: 700px;
+		display: inline-block;
 	}
 	.review-span{
 		color : rgba(0,0,0,.4);
@@ -186,7 +191,7 @@
 		font-size: 18px;
 		font-weight: bold;
 		display: inline-block;
-		width: 800px;
+		width: 700px;
 	}
 	.review-text2{
 		color:#A782C3; 
@@ -202,9 +207,33 @@
 	}
 	.csat-box{
 		background-color: #f7f8fa;
-		width: 800px;
+		width: 700px;
 		height : 100px;
 		border-radius: 8px;
+		margin-top: 30px;
+	}
+	.csat1{
+		display : inline-block;
+		width: 300px;
+		height: 60px;
+		border: 1px solid;
+		margin-top: 10px; 
+	}
+	.csat2{
+		display: inline-block;
+	}
+	.recently-viewed{
+		border: 1px solid;
+		width: 400px;
+		height: 525px;
+		position: sticky;
+		top: 240px;
+	}
+	.content-box2{
+		display: flex;
+	}
+	.content-view{
+		width: 800px;
 	}
 </style>
 </head>
@@ -222,6 +251,11 @@
 						<div class="main-view">
 							<div class="main-img-table">
 								<ul class="main-ul">
+									<li class="main-li" v-for="item in img">
+										<a href="javascript:;">
+											<img alt="콘텐츠 이미지" :src="item.imgPath+'/'+item.imgName">
+										</a>	
+									</li>
 									<li class="main-li" v-for="item in imgList">
 										<a href="javascript:;">
 											<img alt="콘텐츠 이미지" :src="item.imgPath+'/'+item.imgName">
@@ -235,7 +269,9 @@
 						</div>
 					</div>
 						<div class="main-box">
-							
+							<div class="manufacturer">
+								{{product.manufacturer}}
+							</div>
 							<div class="main-title" >
 								{{product.productName}}
 							</div>
@@ -266,33 +302,41 @@
 							<div class="inquiry-a"><a>문의</a></div>
 						</div>
 					</div>
-					<div class="content-view">
-						<div class="content-title" id="product">
-							상품 정보
-							<div class="content-text-box">
-								<div class="text1">판매자 직거래 주의 안내</div>
-								<div>판매자를 사칭하여 현금 입금 유도하는 소비자 피해 사례가 늘고 있습니다.</div>
-								<div>판매자와 문자/카톡으로 소통하실 때, 고객분들의 주의를 부탁드리며,</div>
-								<div>의심되는 경우 아네시 고객센터로 신고해 주시기 바랍니다.</div>
-							</div>
-						</div>
-						<div class="content-img" v-for="item in imgList2">
-							<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
-						</div>
-						<div class="content-review">
-							<div class="review-title" id="review">
-								<span class="review-text1">리뷰 </span><span class="review-text2"> {{csat.csatCnt}}</span>
-								<button class="review-btn">리뷰쓰기</button>
-							</div>
-							<div class="csat-box">
-								<div class="csat1">
-									<i  class="fa-solid fa-star fa-3x" style="color: #A782C3;"></i>
-									<span>{{csat.csatAvg}}</span>
-								</div>
-								<div class="csat2">
-									그래프 
+					<div class="content-box2">
+						<div class="content-view">
+							<div class="content-title" id="product">
+								상품 정보
+								<div class="content-text-box">
+									<div class="text1">판매자 직거래 주의 안내</div>
+									<div>판매자를 사칭하여 현금 입금 유도하는 소비자 피해 사례가 늘고 있습니다.</div>
+									<div>판매자와 문자/카톡으로 소통하실 때, 고객분들의 주의를 부탁드리며,</div>
+									<div>의심되는 경우 아네시 고객센터로 신고해 주시기 바랍니다.</div>
 								</div>
 							</div>
+							<div class="content-img" v-for="item in imgList2">
+								<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
+							</div>
+							<div class="content-review">
+								<div class="review-title" id="review">
+									<span class="review-text1">리뷰 </span><span class="review-text2"> {{csat.csatCnt}}</span>
+									<button class="review-btn">리뷰쓰기</button>
+								</div>
+								<div class="csat-box">
+									<div class="csat1">
+										<i  class="fa-solid fa-star fa-3x" style="color: #A782C3;"></i>
+										<span>{{csat.csatAvg}}</span>
+									</div>
+									<div class="csat2">
+										그래프 
+									</div>
+								</div>
+								<div class="review-box">
+									
+								</div>
+							</div>
+						</div>
+						<div class="recently-viewed">
+								최근본상품
 						</div>
 					</div>
 			</div>

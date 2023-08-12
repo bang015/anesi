@@ -96,7 +96,7 @@
 	<select id="selectcontentImg" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
 		SELECT *
 		FROM t3_tbl_product_image
-		WHERE PRODUCT_NO = #{productNo} AND (THUMBNAIL_YN = 'N' OR THUMBNAIL_YN = 'Y')
+		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'N'
 	</select>
 	<!-- 상품 상세 이미지 -->
 	<select id="selectcontentImg2" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
