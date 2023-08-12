@@ -22,6 +22,14 @@ public class Product {
 	    private String optionName;
 	    private int csatAvg; // 상품 평점
 	    private int csatCnt; // 상품 별점 개수
+	    
+		private String imgName;
+		private String imgPath;
+		private String imgOrgName;
+		
+	    
+	    
+	    
 	 	public int getCsatCnt() {
 			return csatCnt;
 		}
@@ -191,6 +199,30 @@ public class Product {
 
 		public void setCategoryName(String categoryName) {
 			this.categoryName = categoryName;
+		}
+
+		public String getImgName() {
+			return imgName;
+		}
+
+		public void setImgName(String imgName) {
+			this.imgName = imgName;
+		}
+
+		public String getImgPath() {
+			return imgPath;
+		}
+
+		public void setImgPath(String imgPath) {
+			this.imgPath = imgPath;
+		}
+
+		public String getImgOrgName() {
+			return imgOrgName;
+		}
+
+		public void setImgOrgName(String imgOrgName) {
+			this.imgOrgName = imgOrgName;
 		}
 
 	

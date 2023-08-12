@@ -25,4 +25,49 @@
 		FROM t3_tbl_user
 		WHERE PHONE = #{phone}
 	</select>
+	
+	<!-- 스크랩북 리스트 -->
+	<select id="selectScrapbookList" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
+		SELECT SCRAPBOOK_NO, s.PRODUCT_NO, IMG_NAME, IMG_PATH
+		FROM t3_tbl_user_scrapbook s
+		INNER JOIN t3_tbl_product_image i
+			ON s.PRODUCT_NO = i.PRODUCT_NO
+		WHERE USER_NO = #{userNo} AND i.THUMBNAIL_YN ='Y'
+	</select>
+	<!-- 스크랩북 삭제 -->
+	<delete id="deleteScrapbook" parameterType="hashmap">
+		DELETE
+		FROM t3_tbl_user_scrapbook
+		WHERE SCRAPBOOK_NO IN
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 유저 정보 -->
+	<select id="selectUserNickname" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT * 
+		FROM t3_tbl_user
+		WHERE USER_NO = #{no}
+	</select>
+	<!-- 유저 정보 수정 닉네임 중복체크 -->
+	<select id="EditNickCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM t3_tbl_user
+		WHERE NICK = #{nick} AND USER_NO != #{no}
+	</select>
+	<!-- 유저 정보 수정 번호 중복체크 -->
+	<select id="EditPhoneCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM t3_tbl_user
+		WHERE PHONE = #{phone} AND USER_NO != #{no}
+	</select>
+	<update id="editUser" parameterType="hashmap">
+		UPDATE t3_tbl_user
+		SET
+			NICK = #{nick},
+			PHONE = #{phone},
+			GENDER = #{gender},
+			BIRTHDAY = #{birthday}
+		WHERE USER_NO = #{no}
+	</update>
 </mapper>

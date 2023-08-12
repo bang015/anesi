@@ -6,7 +6,8 @@
 	
 	<!-- 상품데이터 가져오는 쿼리 -->
 	<select id="selectProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
-		SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE
+		<!-- SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE -->
+		SELECT *
 		FROM t3_tbl_product AS P
 		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
 		LEFT JOIN (
@@ -14,8 +15,22 @@
 		    FROM t3_tbl_product
 		    WHERE DISCOUNT_YN = 'Y'
 		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
+		
+		INNER JOIN t3_tbl_product_image i
+			ON P.PRODUCT_NO = i.PRODUCT_NO
+		WHERE  i.THUMBNAIL_YN ='Y'
+		
+		
+		
 	
 		
+		    <if test="categoryNo != '' and categoryNo != null">
+		       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
+		    </if>
+		
+		   
+	
+	
 		<if test="categoryOrderBar!='' and categoryOrderBar !=null">
 			<!-- 가격낮은순정렬-->
 			<if test='categoryOrderBar=="LowestPrice"'>
@@ -29,14 +44,11 @@
 			<if test='categoryOrderBar=="NewArrival"'>
 				ORDER BY P.CDATETIME DESC			
 			</if>
-			
 		</if>
 		
-		
-		
-		
-
 	</select>
+	
+	
 	
 	<select id="selectCategoryList" parameterType="hashmap" resultType="com.example.anesi.model.Category">
 		SELECT *
@@ -74,6 +86,49 @@
 		INNER JOIN t3_tbl_product_option o ON p.PRODUCT_NO = o.PRODUCT_NO		
 		WHERE p.PRODUCT_NO = #{productNo}
 	</select>
+	<!-- 상품 썸네일 이미지 -->
+	<select id="selectThumbnailImg" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
+		SELECT *
+		FROM t3_tbl_product_image
+		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'Y'
+	</select>
+	<!-- 상품 컨텐츠 이미지 -->
+	<select id="selectcontentImg" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
+		SELECT *
+		FROM t3_tbl_product_image
+		WHERE PRODUCT_NO = #{productNo} AND (THUMBNAIL_YN = 'N' OR THUMBNAIL_YN = 'Y')
+	</select>
+	<!-- 상품 상세 이미지 -->
+	<select id="selectcontentImg2" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
+		SELECT *
+		FROM t3_tbl_product_image
+		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'D'
+	</select> 
+	
+	
+	<!-- 장바구니 등록 -->
+	<insert id="insertCartUser" parameterType="hashmap">
+		INSERT INTO t3_tbl_user_cart 
+		(USER_NO, PRODUCT_NO, CNT)
+		VALUES (#{userNo}, #{productNo}, 0)
+	</insert>
+	<!-- 장바구니 카운트 -->
+	
+	
+	<!-- 스크랩북 등록 -->
+	<insert id="insertScrapbook" parameterType="hashmap">
+		INSERT INTO t3_tbl_user_scrapbook 
+		(USER_NO, PRODUCT_NO, CNT)
+		VALUES (#{userNo}, #{productNo}, 1)
+	</insert>
+	
+	<select id="selectScrapbookCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM t3_tbl_user_scrapbook 
+		WHERE USER_NO = #{userNo} AND PRODUCT_NO=#{productNo}
+	</select>
+	
+
 	
 </mapper>
 

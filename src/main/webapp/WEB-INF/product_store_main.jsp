@@ -168,16 +168,12 @@
 		<div class="production-item__content" v-for="item in list">
 			<a href="javascript:;" class="production-item-thumnail">
 			
-				<div  v-for="item in img">
-					<img alt="썸네일" :src="item.imgPath+'/'+item.imgName">
-				</div>
+			
+			    <img class="production-item-thumnail__image animate__animated animate__pulse"
+			         alt="썸네일" :src="item.imgPath + '/' + item.imgName">
 			
 			
 			
-			<!-- 
-		    <img class="production-item-thumnail__image animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation"
-			    src="../css/image/productMain/productMain_category1.png" > -->
 		    </a>
 		    <div class="production-item-header" >
 			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
@@ -212,7 +208,7 @@
 			    <span class="production-item-rating__score">4.5</span>
 			   </div>
 			   <!-- 장바구니버튼-->
-				<a ><i @click="fnInsertCart(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i></a>
+				<a ><i @click="fnInsertCart(item)" class="fa fa-shopping-cart modal-toggle-button" ></i></a>
 		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
 		    	<!-- 스크랩버튼-->
@@ -281,9 +277,8 @@ var app = new Vue({
 		userId : '${sessionId}',
 		userNick : '${sessionNick}',
 		userNo : '${sessionNo}',
-		productNo : "",
+		productNo : ""
 
-		img : []
 
 	
 		
@@ -293,7 +288,7 @@ var app = new Vue({
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar};
+            var nparmap = {categoryOrderBar : self.categoryOrderBar, productNo : self.productNo};
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
@@ -303,8 +298,8 @@ var app = new Vue({
                 	
                 	self.list = data.list;
                 	self.list2=data.list2;
-                	console.log(data.list2);
-                	
+/*                 	console.log(self.list);
+ */                	
                 }
             }); 
 		},
@@ -357,9 +352,9 @@ var app = new Vue({
         	location.href = "/mypage.do";
 	    },
 	    
-	    fnInsertCart : function(productNo) {
+	    fnInsertCart : function(item) {
 	    	var self = this;
-            var nparmap = { userNo: self.userNo, productNo: productNo};
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
             console.log(self.showCartModal);
 
             $.ajax({
@@ -369,7 +364,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	/* alert("등록완"); */
-                    console.log(self.userNo);
+                   /*  console.log(self.userNo); */
 
                 }
             }); 
@@ -382,6 +377,8 @@ var app = new Vue({
 	    fnInsertScrapbook : function(productNo) {
 	    	var self = this;
             var nparmap = { userNo : self.userNo, productNo: productNo};
+            
+            
             console.log(self.showScrapModal);
 
             $.ajax({
@@ -393,8 +390,8 @@ var app = new Vue({
                 	
                 	self.fnCheckScrapCnt();
                 	alert("등록완");
-                    console.log(data);
-
+/*                     console.log(data);
+ */
                 }
             }); 
             self.openScrapModal();
@@ -418,30 +415,17 @@ var app = new Vue({
                 }
             }); 
             
-		},
-		
-		
-		fnThumbnailImg : function(){
-			 var self = this;
-	            var nparmap = {productNo : self.productNo};	            
-	            $.ajax({
-	                url : "../imgThumbnailSearch_1.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap,
-	                success : function(data) {                
-	               		self.img = data.img;
-	               		console.log(self.img);
-	                }                
-	            }); 
 		}
+		
+		
+		
 
      }, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
 	
-		self.fnThumbnailImg();
+	
 
 	}// created
 });

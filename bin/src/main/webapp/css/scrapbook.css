@@ -2,9 +2,12 @@
 
 #container{
 	margin: 30px 50px;
+	margin-top: 200px;
 }
 .nickStyle{
 	margin-bottom: 50px;
+	font-weight: bold;
+	font-size: 20px;
 }
 .pfSytle{
 	width: 86px;
@@ -16,6 +19,139 @@
 	flex-direction: column;
 	 align-items: center; /* 추가: 요소들을 수평 가운데로 정렬 */
 }
-#inner > div{
+.allText{
+	font-weight: bold;
+	color: #A782C3;
+	position: relative;
 	display: inline-block;
+}
+
+.allText:before {
+	content: "";
+	position: absolute;
+	bottom: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	height: 2px;
+	background-color: #A782C3;
+	visibility: visible; /* 변경된 부분: 기본적으로 보이도록 변경 */
+	opacity: 1; /* 변경된 부분: 기본적으로 불투명도를 1로 설정 */
+	transition: opacity 0.3s, visibility 0.3s;
+}
+.allTextBox{
+	position: relative;
+	width: 100%;
+	text-align: center;
+}
+.allTextBox:before{
+	content: "";
+	position: absolute;
+	bottom: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	height: 1px;
+	background-color: #ccc;
+	visibility: visible; /* 변경된 부분: 기본적으로 보이도록 변경 */
+	opacity: 1; /* 변경된 부분: 기본적으로 불투명도를 1로 설정 */
+	transition: opacity 0.3s, visibility 0.3s;
+}
+
+.editText{
+	margin-top: 25px;
+	width: 99%;
+	font-weight: bold;
+	text-align: right;
+	color: #A782C3;
+	cursor: pointer;
+}
+.nonList{
+	margin-top: 100px;
+	text-align: center;
+	font-size: 20px;
+}
+.nonListText{
+	font-size: 14px;
+	color: #aaa;
+	margin-top: 20px;
+}
+.sbImg{
+	width: 100%;
+  	height: 100%;
+ 	object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.imgBox{
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 100%;
+    margin-top: 30px;
+}
+.sbCheckBox{
+	position: absolute;
+	left: 15px;
+	top: 15px;
+  	display: none;
+
+}
+.chStandard{
+	position:relative;
+	margin-bottom: 20px;
+}
+.delText{
+	color: #c2c8cc;
+	margin-right: 10px;
+}
+.delText2{
+	margin-right: 10px;
+}
+.imgWrapper {
+  position: relative;
+  width: 245px; /* 이미지의 크기에 맞게 조정 */
+  height: 245px; /* 이미지의 크기에 맞게 조정 */
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  pointer-events: none; /* 오버레이를 클릭해도 체크박스가 동작하도록 함 */
+}
+.overlay.selected{
+  background-color: rgba(0, 0, 0, 0.5); /* 투명한 검은 배경, 0.7은 불투명도 조절 */
+  transition: background-color 0.3s; /* 배경색 변경 시 부드럽게 전환 */
+}
+
+/* 체크박스 컨테이너를 만들고 사용자 지정 스타일 적용 */
+.custom-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ccc; /* 기본 체크박스 테두리 스타일 */
+  border-radius: 4px;
+  background-color: white; /* 기본 배경색 */
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s; /* 전환 효과 */
+	position: absolute;
+	left: 15px;
+	top: 15px;
+
+  /* 체크되었을 때 배경색과 테두리 색 변경 */
+  &.checked {
+    background-color: #A782C3; /* 체크박스 선택 배경색 */
+    border-color: #A782C3; /* 체크박스 선택 테두리 색 */
+  }
+}
+
+.checkbox-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }

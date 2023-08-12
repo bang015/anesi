@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>상품메인페이지</title>
+<title>스토어메인</title>
 <style>
 
 
@@ -37,7 +37,7 @@
 	width:220px;
 	height:338px;
   	float : left;
-	  margin : 50px;
+	margin : 50px;
 }
 
 #product-main-category__total > li {
@@ -116,6 +116,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+    z-index:1000;
+  
 }
 
 .modal-card {
@@ -133,63 +135,13 @@
 <!-- 주석 꼭 남겨주세요 -->
 <body>
 <jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
 
 
 	<div id="store_main">
-	<div><h1>카테고리</h1></div>
-	<ul id ="product-main-category__total">
 	
-		<li>
-			<a href="javascript:;">
-				<img src="../css/image/productMain/productMain_category1.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>가구</span>
-	    	</a>
-    	</li>
-		<li>
-			<a href="javascript:;">
-				<img src="../css/image/productMain/productMain_category1.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>조명</span>
-	    	</a>
-    	</li>
-		<li>
-			<a href="javascript:;">
-				<img src="../css/image/productMain/productMain_category1.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>패브릭</span>
-	    	</a>
-    	</li>
-		<li>
-			<a href="javascript:;">
-				<img src="../css/image/productMain/productMain_category1.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>가전</span>
-	    	</a>
-    	</li>
-		<li>
-			<a href="javascript:;">
-				<img src="../css/image/productMain/productMain_category1.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>데코/식물</span>
-	    	</a>
-    	</li>
-		<li>
-			<a href="javascript:;">
-				<img src="../css/image/productMain/productMain_category1.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span>반려동물</span>
-	    	</a>
-    	</li>
-		
-	</ul>
 	
+
 <!-- 상품 정렬하는 버튼-->	
 <button class="category-order_toggle">
 	  정렬<i class="fa-solid fa-chevron-down"></i>
@@ -209,15 +161,23 @@
     <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">리뷰많은순</a></li>
   </ul>
 </div>
-
   
-	<div><h1>인기상품</h1></div>
+	<div ><h1>전체상품</h1></div>
+	
 	
 		<div class="production-item__content" v-for="item in list">
 			<a href="javascript:;" class="production-item-thumnail">
-			    <img class="production-item-thumnail__image animate__animated animate__pulse" 
+			
+				<div  v-for="item in img">
+					<img alt="썸네일" :src="item.imgPath+'/'+item.imgName">
+				</div>
+			
+			
+			
+			<!-- 
+		    <img class="production-item-thumnail__image animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation"
-			    src="../css/image/productMain/productMain_category1.png" >
+			    src="../css/image/productMain/productMain_category1.png" > -->
 		    </a>
 		    <div class="production-item-header" >
 			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
@@ -226,7 +186,7 @@
 			    <span class="production-item-header__country">{{item.country}}</span>
 			    </div>
 		    </div>
-			 
+
 		    <span class="production-item-price">
 		    
 		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
@@ -251,14 +211,17 @@
 			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
 			    <span class="production-item-rating__score">4.5</span>
 			   </div>
-				<a><i class="fa fa-shopping-cart modal-toggle-button" @click="openCartModal"></i></a>
+			   <!-- 장바구니버튼-->
+				<a ><i @click="fnInsertCart(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i></a>
+		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-		    	<a><i class="fa-regular fa-bookmark modal-toggle-button" @click="openScrapModal"></i></a>
+		    	<!-- 스크랩버튼-->
+		    	<a><i @click="fnInsertScrapbook(item.productNo), fnCheckScrapCnt(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 	    
 	    
 	    
-    	<div class="modal" v-if="showCartModal">
+    	<div class="modal" v-if="showCartModal" >
 		  <div class="modal-card">
 		    <h2>장바구니에 추가</h2>
 		    <p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
@@ -272,7 +235,16 @@
 		    <h2>스크랩북에 등록</h2>
 		    <p>상품이 스크랩되었습니다.</p>
 		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">마이페이지로 이동하기</button>
+		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
+		  </div>
+		</div>
+	
+    	<div class="modal" v-if="showScrapModalBan">
+		  <div class="modal-card">
+		    <h2>이미 담긴상품입니다.</h2>
+		    <p>스크랩북을 확인해주세요</p>
+		    <button @click="closeModal">쇼핑계속하기</button>
+		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
 		  </div>
 		</div>
 	
@@ -300,9 +272,22 @@ var app = new Vue({
 	el : '#store_main',
 	data : {
 		list : [],
+		list2 : [],
+		
 		item : "",
 		showCartModal: false,
-		showScrapModal: false
+		showScrapModal: false,
+		showScrapModalBan: false,
+		userId : '${sessionId}',
+		userNick : '${sessionNick}',
+		userNo : '${sessionNo}',
+		productNo : "",
+
+		img : []
+
+	
+		
+		
 
 	},// data
 	methods : {
@@ -315,7 +300,11 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
+                	
                 	self.list = data.list;
+                	self.list2=data.list2;
+                	console.log(data.list2);
+                	
                 }
             }); 
 		},
@@ -337,6 +326,7 @@ var app = new Vue({
             event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
         },
         
+
         formatPrice: function(price) {
             // 천 단위마다 쉼표(,)를 추가하는 정규식 처리
             return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -353,6 +343,7 @@ var app = new Vue({
           var self = this;
           self.showScrapModal = true;
 	    },
+	
 	    // 모달 닫기
 	    closeModal: function() {
 	      this.showCartModal = false;
@@ -364,13 +355,93 @@ var app = new Vue({
 	    },
 	    fnMoveMyPage : function() {
         	location.href = "/mypage.do";
-	    }
-	        
-	        
+	    },
+	    
+	    fnInsertCart : function(productNo) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: productNo};
+            console.log(self.showCartModal);
+
+            $.ajax({
+                url : "/product/insertCart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	/* alert("등록완"); */
+                    console.log(self.userNo);
+
+                }
+            }); 
+            
+            self.openCartModal();
+            console.log(self.showCartModal);
+
+		},
+		
+	    fnInsertScrapbook : function(productNo) {
+	    	var self = this;
+            var nparmap = { userNo : self.userNo, productNo: productNo};
+            console.log(self.showScrapModal);
+
+            $.ajax({
+                url : "/product/insertScrap.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	
+                	self.fnCheckScrapCnt();
+                	alert("등록완");
+                    console.log(data);
+
+                }
+            }); 
+            self.openScrapModal();
+            console.log(self.showScrapModal);
+		},
+		
+		fnCheckScrapCnt : function(productNo) {
+	    	var self = this;
+            var nparmap = { userNo : self.userNo, productNo: productNo};
+
+            $.ajax({
+                url : "/product/selectScrapCnt.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	 if(data.cnt>=1){
+                		 alert("이미담긴상품");
+                		 return;
+                	 }
+                }
+            }); 
+            
+		},
+		
+		
+		fnThumbnailImg : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo};	            
+	            $.ajax({
+	                url : "../imgThumbnailSearch_1.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.img = data.img;
+	               		console.log(self.img);
+	                }                
+	            }); 
+		}
+
      }, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
+	
+		self.fnThumbnailImg();
 
 	}// created
 });

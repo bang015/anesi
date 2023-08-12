@@ -5,7 +5,7 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="js/typeahead.bundle.min.js"></script> <!-- 수정 완료 -->
+
   <!--자동검색기능  -->
 <meta charset="EUC-KR">
 <title>Insert title here</title>
@@ -31,12 +31,12 @@
 </head>
 <body>
 	<header>
-		<span> <a href=""><img class="logo"
+		<span> <a href="/main.do"><img class="logo"
 				src="../css/image/anesilogo.png" /> </a></span>
 
 		<ul id="header_navi">
 			<li><a><i class="fa fa-shopping-cart "></i></a></li>
-			<li><a href="../login.do"><i class="fa-solid fa-door-open "></i></a><span class="fon">로그인</span></li>
+		<li><a href="../login.do"><i class="fa-solid fa-door-open "></i></a><span class="fon">로그인</span></li>
 			<li><a href="../join.do"><i class="fa-solid fa-user-plus "></i></a><span class="fon">회원가입</span></li>
 			<li><a href="../mypage.do"><i class="fa-solid fa-user "></i></a><span class="fon">마이페이지</span></li>
 			<li><a><i class="fa-solid fa-bookmark "></i></a><span></span></li>
@@ -52,17 +52,20 @@
             <a class="href">추천 </a> <a class="href">랭킹</a> <a class="href">특가</a> <a class="href">기획전</a> <a class="href">브랜드관</a>
         </span>
       <span>
-         <input class="typeahead" type="text" placeholder="Search">
-         <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" class="glasses">
+<div class="search-container">
+  <input type="text" id="search-bar" placeholder="검색어를 입력하세요.">
+  <div id="search-result"></div>
+</div>
          </span>
     </span>
+    
 		<hr>
-		 </header>
+		
 	 <div class="category-list-container" style="display:none;">
     <ul class="category-list">
       
         <li>
-            <a>가구</a>
+            <a onclick="fnMoveaa('10')">가구</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>침대</a></li>
                 <li><a>소파</a></li>
@@ -72,7 +75,7 @@
             </ul>
         </li>
         <li>
-            <a>조명</a>
+            <a onclick="fnMoveaa('20')">조명</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>장스텐드</a></li>
                 <li><a>단스탠드</a></li>
@@ -81,7 +84,7 @@
             </ul>
         </li>
         <li>
-            <a>패브릭</a>
+            <a onclick="fnMoveaa('30')">패브릭</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>침구</a></li>
                 <li><a>커튼</a></li>
@@ -89,7 +92,7 @@
             </ul>
         </li>
         <li>
-            <a>가전</a>
+            <a onclick="fnMoveaa('40')">가전</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>냉장고</a></li>
                 <li><a>tv</a></li>
@@ -99,7 +102,7 @@
             </ul>
         </li>
         <li>
-            <a>데코/식물</a>
+            <a onclick="fnMoveaa('50')">데코/식물</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>조화</a></li>
                 <li><a>꽃다발</a></li>
@@ -109,7 +112,7 @@
             </ul>
         </li>
         <li>
-            <a>반려동물</a>
+            <a onclick="fnMoveaa('60')">반려동물</a>
             <ul class="subcategory-list" style="display:none;">
                 <li><a>하우스/방석</a></li>
                 <li><a>캣타워/스크래쳐</a></li>
@@ -120,51 +123,135 @@
         </li>
     </ul>
 </div>
-  
- <script>
- $(document).ready(function() {
-	    // 버튼 클릭 이벤트 추가
-	    $('.category-toggle').click(function() {
-	       $('.category-list-container').slideToggle('fast');
-	    });
-	    
-	    // 서브 카테고리 토글 이벤트 추가
-	    $('.category-list > li > a').click(function(event) {
-	      event.preventDefault();
-	      $(this).siblings('.subcategory-list').slideToggle('fast');
-	    });
-	});
- $(document).ready(function() {
-	  const countries = ["Apple", "Banana", "Cherry", "Date", "Elderberry"];
+   </header>
+  <script>
+  // 카테고리 토글
+  $('.category-toggle').click(function() {
+    $('.category-list-container').slideToggle('fast');
+  });
 
-	  $('.typeahead').typeahead({
-	    hint: true,
-	    highlight: true,
-	    minLength: 1
-	  },
-	  {
-	    name: 'countries',
-	    source: substringMatcher(countries)
+  // 서브 카테고리 토글 이벤트
+  $('.category-list > li > a').click(function(event) {
+    event.preventDefault();
+    $(this).siblings('.subcategory-list').slideToggle('fast');
+  });
+  function searchProducts(keyword) {
+	  var url = '/searchBarProduct.dox';
+	  var params = { keyword: keyword };
+
+	  // Ajax 요청으로 서버에 검색 요청
+	  $.ajax({
+	    url: url,
+	    data: params,
+	    type: 'POST',
+	    dataType: 'json',
+	    success: function(response) {
+	      var productList = response.list;
+	      // 검색 결과를 화면에 표시하는 로직 추가
+	      // ...
+	    },
+	    error: function(error) {
+	      // 검색 실패 처리 로직 추가
+	      console.log('Search failed:', error);
+	    }
+	  });
+	}
+
+	$(document).ready(function() {
+	  $('#search-bar').on('keydown', function(event) {
+	    if (event.keyCode === 13) {
+	      var keyword = $(this).val().trim();
+	      if (keyword.length > 0) {
+	        searchProducts(keyword);
+	      }
+	    }
 	  });
 	});
+	function showSearchResult(results) {
+		  var html = '';
+		  results.forEach(function(result) {
+		    html += '<div class="search-item">' + result.name + '</div>';
+		  });
+		  $('#search-result').html(html);
+		}
 
- 
-	function substringMatcher(strs) {
-	  return function findMatches(q, cb) {
-	    let matches, substringRegex;
+		$('#search-bar').on('keyup', function(event) {
+		  var keyword = $(this).val().trim();
+		  if (keyword.length > 0) {
+		    var url = '/searchBarProduct.dox';
+		    var params = { keyword: keyword };
+		  
+		    $.ajax({
+		      url: url,
+		      data: params,
+		      type: 'POST',
+		      dataType: 'json',
+		      success: function(response) {
+		        var results = response.list;
+		        showSearchResult(results);
+		        console.log(response);
+		      },
+		      error: function(error) {
+		        console.log('Search failed:', error);
+		      }
+		    });
+		  } else {
+		    $('#search-result').html('');
+		  }
+		});
 
-	    matches = [];
+		$('#search-result').on('click', '.search-item', function() {
+		  var productName = $(this).text();
+		  searchProducts(productName);
+		});
+		function showSearchResult(results) {
+			  var list = results.filter(function(result) {
+			    return result.name && result.name.trim().length > 0;
+			  });
+			  var html = '';
+			  list.forEach(function(result) {
+			    html += '<div class="search-item">' + result.name + '</div>';
+			  });
+			  $('#search-result').html(html);
+			}
+			$('#search-bar').on('keyup', function(event) {
+			  var keyword = $(this).val().trim();
+			  if (keyword.length > 0) {
+			    var url = '/searchBarProduct.dox';
+			    var params = { keyword: keyword };
 
-	    substrRegex = new RegExp(q, 'i');
+			    $.ajax({
+			      url: url,
+			      data: params,
+			      type: 'POST',
+			      dataType: 'json',
+			      success: function(response) {
+			        var results = response.list;
+			        showSearchResult(results);
+			        console.log(response);
+			      },
+			      error: function(error) {
+			        console.log('Search failed:', error);
+			      }
+			    });
+			  } else {
+			    $('#search-result').html('');
+			  }
+			});
 
-	    $.each(strs, function(i, str) {
-	      if (substrRegex.test(str)) {
-	        matches.push(str);
-	      }
-	    });
-
-	    cb(matches);
-	  };
-	}
-	$('.twitter-typeahead, .typeahead').attr('style',''); 
+			$('#search-result').on('click', '.search-item', function() {
+			  var productName = $(this).text();
+			  searchProducts(productName);
+			});	
+			
+			
+			
+/* //category 눌렀을때 메뉴별로 배열해줌
+function fnMoveaa (item){
+      var self = this;
+   $.pageChange("storemain_byCategory.do",{no : item});//보낼필요없을때 파라미터 빈값으로{}
+}
+ */
+		    
+		    
 </script>

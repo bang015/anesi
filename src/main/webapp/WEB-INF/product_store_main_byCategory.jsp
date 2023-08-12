@@ -151,9 +151,10 @@
 		
 		
 			<a href="javascript:;" class="production-item-thumnail">
-		    <img class="production-item-thumnail__image animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation"
-			    src="../css/image/productMain/productMain_category1.png" >
+		   
+			
+			    <img class="production-item-thumnail__image animate__animated animate__pulse"
+			         alt="½æ³×ÀÏ" :src="item.imgPath + '/' + item.imgName">
 		    </a>
 		    <div class="production-item-header"  >
 			    <span class="production-item-header__brand">{{item.manufacturer}}</span>
@@ -238,7 +239,9 @@ var app = new Vue({
 		userId : '${sessionId}',
 		userNick : '${sessionNick}',
 		categoryNo : '${map.no}',
-		categoryName : ""
+		categoryName : "",
+		productNo : ""
+		
 		
 		
 		
@@ -247,7 +250,10 @@ var app = new Vue({
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar, categoryNo : self.categoryNo, categoryName : self.categoryName};
+            var nparmap = {categoryOrderBar : self.categoryOrderBar, 
+		            		categoryNo : self.categoryNo, 
+		            		categoryName : self.categoryName,
+		            		productNo : self.productNo};
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
