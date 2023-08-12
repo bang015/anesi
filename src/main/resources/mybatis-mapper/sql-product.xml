@@ -105,7 +105,7 @@
 		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'D'
 	</select> 
 	
-	
+
 	<!-- 장바구니 등록 -->
 	<insert id="insertCartUser" parameterType="hashmap">
 		INSERT INTO t3_tbl_user_cart 
