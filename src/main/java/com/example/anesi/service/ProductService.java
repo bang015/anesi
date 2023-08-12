@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 
 public interface ProductService {
@@ -35,7 +36,8 @@ public interface ProductService {
 	List<Product> searchProduct(HashMap<String, Object> map);
 	// 상품 상세 이미지
 	List<Scrapbook>searchcontentImg2(HashMap<String, Object> map);
-	
+	// 리뷰
+	List<Review>searchReview(HashMap<String, Object> map);
 
 }
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.service.ProductService;
 import com.google.gson.Gson;
@@ -136,5 +137,14 @@ public class ProductController {
 		       resultMap.put("imgList2", imgList2);
 		       return new Gson().toJson(resultMap);
 		   }
-	  
+		// 리뷰
+		  @RequestMapping(value = "/reviewSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		   @ResponseBody
+		   public String review(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		       List<Review> reviewList = productService.searchReview(map);
+
+		       resultMap.put("reviewList", reviewList);
+		       return new Gson().toJson(resultMap);
+		   }
 }

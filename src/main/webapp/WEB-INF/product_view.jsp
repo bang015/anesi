@@ -323,15 +323,30 @@
 								</div>
 								<div class="csat-box">
 									<div class="csat1">
-										<i  class="fa-solid fa-star fa-3x" style="color: #A782C3;"></i>
+										<span v-for="index in Math.floor(csat.csatAvg)"><i class="fa-solid fa-star fa-2x" style="color: #A782C3;"></i></span>
+										<span v-for="(numder,index) in Math.floor(5 - csat.csatAvg)"><i class="fa-solid fa-star fa-2x" style="color: #9097a2;"></i></i></span>
 										<span>{{csat.csatAvg}}</span>
 									</div>
 									<div class="csat2">
 										그래프 
 									</div>
 								</div>
-								<div class="review-box">
-									
+								<div class="review-wrap">
+									<div class="review-box" v-for="item in reviewList">
+										<div class="review-user">
+											<div class="user-nick">{{item.nick}}</div>
+										</div>
+										<span></span>
+										<div class="review-img">
+										
+										</div>
+										<div class="review-content">
+										
+										</div>
+										<div class="review-help">
+											<button>도움이 돼요</button> <span>{{}}</span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -345,11 +360,8 @@
 </body>
 </html>
 <script>
-
-
 var app = new Vue({
 	el : '#app',
-	
 	data : {
 		productNo : 4,
 		product : {},
@@ -358,7 +370,7 @@ var app = new Vue({
 		imgList : [],
 		img : [],
 		imgList2 : [],
-		
+		reviewList : []
 	},// data
 	methods : {
 		
@@ -372,7 +384,6 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.product = data.product;
-	               		console.log(self.product);
 	                }                
 	            }); 
 		},
@@ -386,7 +397,7 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.csat = data.csat;
-	               		console.log(self.csat);
+	               		console.log(self.csat.csatAvg);
 	                }                
 	            }); 
 		},
@@ -400,7 +411,6 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.option = data.option;
-	               		console.log(self.option);
 	                }                
 	            }); 
 		},
@@ -414,7 +424,6 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.imgList = data.imgList;
-	               		console.log(self.imgList);
 	                }                
 	            }); 
 		},
@@ -428,7 +437,6 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.img = data.img;
-	               		console.log(self.img);
 	                }                
 	            }); 
 		},
@@ -442,9 +450,22 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.imgList2 = data.imgList2;
-	               		console.log(self.imgList2);
 	                }                
 	            }); 
+		},
+		fnReview : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo};	            
+	            $.ajax({
+	                url : "/reviewSearch.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.reviewList = data.reviewList;
+	               		console.log(self.reviewList);
+	                }                
+	            })
 		}
 	}, // methods
 	created : function() {
@@ -455,6 +476,7 @@ var app = new Vue({
 		self.fnImg();
 		self.fnThumbnailImg();
 		self.fnContentImg();
+		self.fnReview();
 	}// created
 });
 </script>

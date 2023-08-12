@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 
 
@@ -38,6 +39,8 @@ public interface ProductMapper {
 	List<Product> selectProductListByKeyword(HashMap<String, Object> map);
 	// 상품 상세 이미지
 	List<Scrapbook> selectcontentImg2(HashMap<String, Object> map);
+	// 리뷰
+	List<Review>selectReview(HashMap<String, Object> map);
 	
 	//회원 상품 장바구니에 추가
 	int insertCartUser (HashMap<String, Object> map);
