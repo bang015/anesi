@@ -79,7 +79,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	self.list = data.list;
-                	console.log(self.list);
                 }
             });
 		},
@@ -122,9 +121,6 @@ var app = new Vue({
                 }
             });
 		},
-		fnTest(){
-			console.log("집에가고 싶다");
-		}
 	}, // methods
 	created : function() {
 		var self = this;

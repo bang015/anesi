@@ -9,6 +9,7 @@
 .orTitle{
 	font-size: 24px;
 	display: inline-block;
+	margin-bottom: 20px;
 }
 .payment{
 	width: 100%;
@@ -18,7 +19,7 @@
 }
 .test{
 	height: 2000px;
-}
+	}
 .amount{
 	position: sticky;
 	top: 209px;
@@ -138,4 +139,190 @@
     background-color: #A782C3; /* 체크박스 선택 배경색 */
     border-color: #A782C3; /* 체크박스 선택 테두리 색 */
   }
+}
+.subheading{
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 20px
+	}
+.orRed {
+    color: #ff7777;
+      border-color: #ff7777 !important; 
+}
+.orderer{
+	
+}
+
+.orderer > label {
+	display: flex;
+	align-items: center;
+	color: #757575;
+}
+.orderer > label > span {
+	font-size: 15px;
+	width: 72px;
+}
+.orInputBox{
+	display: flex;
+	width: 270px;
+	height: 40px;
+	max-width: 270px;
+    margin: 8px 0;
+    line-height: 40px;
+    transition: background-color 0.3s;
+}
+.orInputBox > input, select{
+	padding: 8px 15px 9px;
+	border-radius: 4px;
+	border: 1px solid;
+	transition : border-color 0.3s;
+	border-color: #dbdbdb;
+    width: 100%;
+    font-weight: bold;
+}
+.orSelectBox{
+	display: flex;
+	width: 76px;
+	height: 40px;
+	max-width: 270px;
+    margin: 8px 0;
+    line-height: 40px;
+    margin-right: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    font-family: 'Pretendard-Regular';
+}
+.orInputBox > input:hover,
+.orInputBox > select:hover,
+.orSelectBox > select:hover {
+    background-color: #fafafa;
+}
+.orderer{
+	padding-top: 20px;
+	border-top: 1px #dbdbdb solid;
+	margin-bottom: 50px;
+}
+.orInformation{
+	width: 730px;
+}
+.sameButton{
+	cursor: pointer;
+	color: #A782C3;
+	font-size: 15px;
+}
+.address{
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px #dbdbdb solid;
+}
+.addr > label {
+	display: flex;
+	align-items: center;
+	color: #757575;
+}
+.addr > label > span {
+	font-size: 15px;
+	width: 72px;
+}
+.addrButton{
+	color: #A782C3;
+	background: #fff;
+	border: 1px solid #A782C3;
+	padding: 10px;
+	border-radius: 4px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-right: 10px;
+}
+.inpRead {
+	background-color: #f5f5f5;
+}
+.addr2{
+	margin-left: 70px;
+	width: 550px;
+	max-width: 550px;
+}
+.defaultAddrText{
+	margin-left: 30px;
+	
+}
+
+.addr3{
+	margin-left: 70px;
+	display: flex;
+	height: 18px;
+    justify-content: space-between;
+    align-items: center;
+}
+.orSelectBox2{
+	margin-left: 70px;
+	display: flex;
+	width: 620px;
+	height: 40px;
+    margin: 8px 0;
+    line-height: 40px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+	font-size: 15px;
+	font-family: 'Pretendard-Regular';
+}
+.sectionSelect{
+	margin-top: 20px;
+}
+.sectionSelect > input {
+	font-size: 15px;
+	border: 1px solid;
+	transition : border-color 0.3s;
+	border-color: #dbdbdb;
+	border-radius: 4px;
+	display: flex;
+	width: 615px;
+}
+.subheading > .text{
+	margin: 5px;
+	font-size: 15px;
+	font-weight: normal;
+}
+.orProductList{
+	margin-top: 50px;
+}
+.orProductList > .subheading {
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	border-bottom: 1px #dbdbdb solid;
+}
+.orProduct {
+	border: 1px #dbdbdb solid;
+	border-radius: 4px;
+	padding: 16px;
+	box-sizing: border-box;
+	width: 100%;
+	height: 105px;
+	display: flex;
+}
+.orProduct > img{
+	border-radius: 4px;
+	border-bottom: 1px #dbdbdb solid;
+}
+.orProduct > div {
+	margin-left: 10px;
+}
+.orProduct > div > div{
+	margin-bottom: 13px;
+}
+.prProductName {
+	font-size: 14px;
+}
+.prProductOption{
+	font-size: 14px;
+	color: #828c94;
+}
+.prProductPrice{
+	font-size: 16px;
+}
+.prProductPrice > span{
+	font-size: 12px;
+	color: #828c94;
 }
