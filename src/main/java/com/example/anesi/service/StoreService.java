@@ -13,7 +13,10 @@ public interface StoreService {
 	List<Product> searchProduct (HashMap<String, Object> map);
 	List<Category> searchCategoryList();
 	//회원 상품 장바구니에 추가
-	int searchAddCartUser(HashMap<String, Object> map);
+	int addCartUser(HashMap<String, Object> map);
+	
+	//회원 상품 스크랩북에 추가
+	int addScrapbook (HashMap<String, Object> map);
 
 	
 }

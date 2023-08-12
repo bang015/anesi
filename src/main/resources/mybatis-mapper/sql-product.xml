@@ -99,4 +99,27 @@
 		FROM t3_tbl_product_image
 		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'D'
 	</select> 
+	
+	
+	<!-- 장바구니 등록 -->
+	<insert id="insertCartUser" parameterType="hashmap">
+		INSERT INTO t3_tbl_user_cart 
+		(USER_NO, PRODUCT_NO, CNT)
+		VALUES (#{userNo}, #{productNo}, 0)
+	</insert>
+	<!-- 장바구니 카운트 -->
+	
+	
+	<!-- 스크랩북 등록 -->
+	<insert id="insertScrapbook" parameterType="hashmap">
+		INSERT INTO t3_tbl_user_scrapbook 
+		(USER_NO, PRODUCT_NO)
+		VALUES (#{userNo}, #{productNo})
+	</insert>
+	
 </mapper>
+
+	
+	
+	
+	

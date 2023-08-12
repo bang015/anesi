@@ -35,4 +35,7 @@ public interface ProductService {
 	List<Product> searchProduct(HashMap<String, Object> map);
 	// 상품 상세 이미지
 	List<Scrapbook>searchcontentImg2(HashMap<String, Object> map);
+	
+
 }
+

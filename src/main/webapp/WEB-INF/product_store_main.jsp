@@ -203,14 +203,17 @@
 			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
 			    <span class="production-item-rating__score">4.5</span>
 			   </div>
-				<a ><i @click="fnInsertCart(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" @click="openCartModal"></i></a>
+			   <!-- 장바구니버튼-->
+				<a ><i @click="fnInsertCart(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i></a>
+		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-		    	<a><i class="fa-regular fa-bookmark modal-toggle-button" @click="openScrapModal"></i></a>
+		    	<!-- 스크랩버튼-->
+		    	<a><i @click="fnInsertScrapbook(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 	    
 	    
 	    
-    	<div class="modal" v-if="showCartModal" style="display: none;">
+    	<div class="modal" v-if="showCartModal" >
 		  <div class="modal-card">
 		    <h2>장바구니에 추가</h2>
 		    <p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
@@ -335,8 +338,32 @@ var app = new Vue({
 	    fnInsertCart : function(productNo) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: productNo};
+            console.log(self.showCartModal);
+
             $.ajax({
                 url : "/product/insertCart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	/* alert("등록완"); */
+                    console.log(self.userNo);
+
+                }
+            }); 
+            
+            self.openCartModal();
+            console.log(self.showCartModal);
+
+		},
+		
+	    fnInsertScrapbook : function(productNo) {
+	    	var self = this;
+            var nparmap = { userNo : self.userNo, productNo: productNo};
+            console.log(self.showScrapModal);
+
+            $.ajax({
+                url : "/product/insertScrap.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
@@ -346,10 +373,10 @@ var app = new Vue({
 
                 }
             }); 
+            self.openScrapModal();
+            console.log(self.showScrapModal);
 		}
 
-	        
-	        
      }, // methods
 	created : function() {
 		var self = this;

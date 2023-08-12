@@ -35,8 +35,15 @@ public class StoreServiceImpl implements StoreService{
 
 
 	@Override
-	public int searchAddCartUser(HashMap<String, Object> map) {
+	public int addCartUser(HashMap<String, Object> map) {
 		return productMapper.insertCartUser(map);
 	}
+	
+	@Override
+	public int addScrapbook(HashMap<String, Object> map) {
+		return productMapper.insertScrapbook(map);
+	}
+	
+	
 
 }
