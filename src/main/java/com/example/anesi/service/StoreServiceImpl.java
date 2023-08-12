@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.anesi.mapper.ProductMapper;
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Scrapbook;
 
 
 
@@ -43,6 +44,21 @@ public class StoreServiceImpl implements StoreService{
 	public int addScrapbook(HashMap<String, Object> map) {
 		return productMapper.insertScrapbook(map);
 	}
+
+
+	@Override
+	public int searchScrapbookCnt(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return productMapper.selectScrapbookCnt(map);
+	}
+	
+	@Override
+	public List<Scrapbook> searchThumbnailImg(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return productMapper.selectThumbnailImg(map);
+	}
+
+
 	
 	
 

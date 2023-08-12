@@ -6,7 +6,8 @@
 	
 	<!-- 상품데이터 가져오는 쿼리 -->
 	<select id="selectProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
-		SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE
+		<!-- SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE -->
+		SELECT *
 		FROM t3_tbl_product AS P
 		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
 		LEFT JOIN (
@@ -15,10 +16,14 @@
 		    WHERE DISCOUNT_YN = 'Y'
 		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
 		
+		INNER JOIN t3_tbl_product_image i
+			ON P.PRODUCT_NO = i.PRODUCT_NO
+		WHERE  i.THUMBNAIL_YN ='Y'
+		
 		
 		
 	
-		    WHERE 1=1
+		
 		    <if test="categoryNo != '' and categoryNo != null">
 		       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
 		    </if>
@@ -113,9 +118,17 @@
 	<!-- 스크랩북 등록 -->
 	<insert id="insertScrapbook" parameterType="hashmap">
 		INSERT INTO t3_tbl_user_scrapbook 
-		(USER_NO, PRODUCT_NO)
-		VALUES (#{userNo}, #{productNo})
+		(USER_NO, PRODUCT_NO, CNT)
+		VALUES (#{userNo}, #{productNo}, 1)
 	</insert>
+	
+	<select id="selectScrapbookCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM t3_tbl_user_scrapbook 
+		WHERE USER_NO = #{userNo} AND PRODUCT_NO=#{productNo}
+	</select>
+	
+
 	
 </mapper>
 

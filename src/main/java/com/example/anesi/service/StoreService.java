@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Scrapbook;
 
 
 
@@ -17,6 +18,12 @@ public interface StoreService {
 	
 	//회원 상품 스크랩북에 추가
 	int addScrapbook (HashMap<String, Object> map);
+	
+	//회원 상품 스크랩북 수량체크
+	int searchScrapbookCnt (HashMap<String, Object> map);
+	
+	// 상품 썸네일 이미지 
+	List<Scrapbook> searchThumbnailImg(HashMap<String, Object> map);
 
 	
 }

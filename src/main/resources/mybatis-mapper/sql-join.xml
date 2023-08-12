@@ -25,6 +25,7 @@
 		FROM t3_tbl_user
 		WHERE PHONE = #{phone}
 	</select>
+	
 	<!-- 스크랩북 리스트 -->
 	<select id="selectScrapbookList" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
 		SELECT SCRAPBOOK_NO, s.PRODUCT_NO, IMG_NAME, IMG_PATH

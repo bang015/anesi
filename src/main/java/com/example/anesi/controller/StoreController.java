@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
-import com.example.anesi.model.User;
+import com.example.anesi.model.Scrapbook;
+import com.example.anesi.service.ProductService;
 import com.example.anesi.service.StoreService;
 import com.google.gson.Gson;
 
@@ -23,6 +24,9 @@ public class StoreController {
 	
 	@Autowired
 	StoreService storeService;
+	
+	@Autowired
+	ProductService productService;
 	
 	@RequestMapping("/product/ontop_category.do") 
 	public String productMain_ontop(Model model) throws Exception{
@@ -63,7 +67,7 @@ public class StoreController {
 		return new Gson().toJson(resultMap);
 	}
 	
-	//유저 장바구니에 상품담기
+	//스크랩북에 상품담기
 	@RequestMapping(value = "/product/insertScrap.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String insertScrap(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -72,6 +76,18 @@ public class StoreController {
 		resultMap.put("success", "스크랩북등록완료");
 		return new Gson().toJson(resultMap);
 	}
+
 	
+	  // 상품 썸네일 이미지
+	  @RequestMapping(value = "/imgThumbnailSearch_1.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	   @ResponseBody
+	   public String storeimage(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	       List<Scrapbook> img = productService.searchThumbnailImg(map);
+
+	       resultMap.put("img", img);
+	       return new Gson().toJson(resultMap);
+	   }
+
 	
 }

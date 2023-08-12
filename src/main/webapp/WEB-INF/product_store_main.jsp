@@ -167,9 +167,17 @@
 	
 		<div class="production-item__content" v-for="item in list">
 			<a href="javascript:;" class="production-item-thumnail">
+			
+				<div  v-for="item in img">
+					<img alt="썸네일" :src="item.imgPath+'/'+item.imgName">
+				</div>
+			
+			
+			
+			<!-- 
 		    <img class="production-item-thumnail__image animate__animated animate__pulse" 
 			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation"
-			    src="../css/image/productMain/productMain_category1.png" >
+			    src="../css/image/productMain/productMain_category1.png" > -->
 		    </a>
 		    <div class="production-item-header" >
 			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
@@ -208,7 +216,7 @@
 		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
 		    	<!-- 스크랩버튼-->
-		    	<a><i @click="fnInsertScrapbook(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
+		    	<a><i @click="fnInsertScrapbook(item.productNo), fnCheckScrapCnt(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 	    
 	    
@@ -227,7 +235,16 @@
 		    <h2>스크랩북에 등록</h2>
 		    <p>상품이 스크랩되었습니다.</p>
 		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">마이페이지로 이동하기</button>
+		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
+		  </div>
+		</div>
+	
+    	<div class="modal" v-if="showScrapModalBan">
+		  <div class="modal-card">
+		    <h2>이미 담긴상품입니다.</h2>
+		    <p>스크랩북을 확인해주세요</p>
+		    <button @click="closeModal">쇼핑계속하기</button>
+		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
 		  </div>
 		</div>
 	
@@ -260,10 +277,14 @@ var app = new Vue({
 		item : "",
 		showCartModal: false,
 		showScrapModal: false,
+		showScrapModalBan: false,
 		userId : '${sessionId}',
 		userNick : '${sessionNick}',
 		userNo : '${sessionNo}',
-		productNo : ""
+		productNo : "",
+
+		img : []
+
 	
 		
 		
@@ -322,6 +343,7 @@ var app = new Vue({
           var self = this;
           self.showScrapModal = true;
 	    },
+	
 	    // 모달 닫기
 	    closeModal: function() {
 	      this.showCartModal = false;
@@ -368,19 +390,58 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
+                	
+                	self.fnCheckScrapCnt();
                 	alert("등록완");
-                    console.log(self.userNo);
+                    console.log(data);
 
                 }
             }); 
             self.openScrapModal();
             console.log(self.showScrapModal);
+		},
+		
+		fnCheckScrapCnt : function(productNo) {
+	    	var self = this;
+            var nparmap = { userNo : self.userNo, productNo: productNo};
+
+            $.ajax({
+                url : "/product/selectScrapCnt.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	 if(data.cnt>=1){
+                		 alert("이미담긴상품");
+                		 return;
+                	 }
+                }
+            }); 
+            
+		},
+		
+		
+		fnThumbnailImg : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo};	            
+	            $.ajax({
+	                url : "../imgThumbnailSearch_1.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.img = data.img;
+	               		console.log(self.img);
+	                }                
+	            }); 
 		}
 
      }, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
+	
+		self.fnThumbnailImg();
 
 	}// created
 });

@@ -4,6 +4,7 @@ public class Scrapbook {
 	private int scrapbookNo;
 	private int userNo;
 	private int productNo;
+	private int cnt;
 	private String imgName;
 	private String imgPath;
 	private String imgOrgName;
@@ -43,5 +44,11 @@ public class Scrapbook {
 	}
 	public int getProductNo() {
 		return productNo;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}	
 }
