@@ -48,7 +48,7 @@
 					            </div>
 							</div>
 	    				</div>				
-						<input type="checkbox" class="sbCheckBox" v-model="checkSb" :value="item.scrapbookNo" v-if="flg" @click="fnTest">
+						<input type="checkbox" class="sbCheckBox" v-model="checkSb" :value="item.scrapbookNo" v-if="flg">
 					</div>
 				</div>
 			</div>
