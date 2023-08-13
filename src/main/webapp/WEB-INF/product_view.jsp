@@ -276,6 +276,7 @@
 								{{product.productName}}
 							</div>
 							<div class="main-csat">
+								<span v-for="index in csat.csatAvg"><i class="fa-solid fa-star" style="color: #A782C3;"></i></span><span  v-for="index in 5 - csat.csatAvg"><i class="fa-solid fa-star" style="color: #9097a2;"></i></span>
 								{{csat.csatAvg}}({{csat.csatCnt}})
 							</div>
 							<div class="main-discount">
@@ -323,8 +324,7 @@
 								</div>
 								<div class="csat-box">
 									<div class="csat1">
-										<span v-for="index in Math.floor(csat.csatAvg)"><i class="fa-solid fa-star fa-2x" style="color: #A782C3;"></i></span>
-										<span v-for="(numder,index) in Math.floor(5 - csat.csatAvg)"><i class="fa-solid fa-star fa-2x" style="color: #9097a2;"></i></i></span>
+										<span v-for="index in Math.floor(csat.csatAvg)"><i class="fa-solid fa-star fa-2x" style="color: #A782C3;"></i></span><span  v-for="(numder,index) in Math.floor(5 - csat.csatAvg)"><i class="fa-solid fa-star fa-2x" style="color: #9097a2;"></i></span>
 										<span>{{csat.csatAvg}}</span>
 									</div>
 									<div class="csat2">
@@ -344,7 +344,7 @@
 										
 										</div>
 										<div class="review-help">
-											<button>µµøÚ¿Ã µ≈ø‰</button> <span>{{}}</span>
+											<button>µµøÚ¿Ã µ≈ø‰</button> <span></span>
 										</div>
 									</div>
 								</div>
@@ -463,7 +463,7 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.reviewList = data.reviewList;
-	               		console.log(self.reviewList);
+	               		console.log(self.reviewList.);
 	                }                
 	            })
 		}
