@@ -84,9 +84,8 @@
     cursor: pointer;
 }
 .imgBox{
-	display: flex;
+	display: -webkit-inline-box;
     flex-wrap: wrap;
-    justify-content: space-between;
     margin: 0px auto;
     width: 100%;
     margin-top: 30px;
@@ -101,6 +100,9 @@
 .chStandard{
 	position:relative;
 	margin-bottom: 20px;
+	width: 25%;
+	display: flex;
+	justify-content: center;
 }
 .delText{
 	color: #c2c8cc;
