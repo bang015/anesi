@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.anesi.model.Order;
+import com.example.anesi.model.UserAddress;
 
 public interface OrderService {
 	//쿠폰 리스트
@@ -11,5 +12,5 @@ public interface OrderService {
 	//주소 입력
 	int addAddr(HashMap<String, Object> map);
 	//주소 검색
-	List<Order> searchAddrList(HashMap<String, Object> map);
+	List<UserAddress> searchAddrList(HashMap<String, Object> map);
 }

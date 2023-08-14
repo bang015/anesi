@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.OrderMapper;
 import com.example.anesi.model.Order;
+import com.example.anesi.model.UserAddress;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -28,7 +29,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 	// 주소 검색
 	@Override
-	public List<Order> searchAddrList(HashMap<String, Object> map) {
+	public List<UserAddress> searchAddrList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return orderMapper.selectAddrList(map);
 	}

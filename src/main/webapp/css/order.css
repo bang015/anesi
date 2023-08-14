@@ -356,3 +356,11 @@
 .err{
 	color : #ff9797;
 }
+.orInputBox3{
+	display: flex;
+    width: 100%;
+    height: 40px;
+    margin: 8px 0;
+    line-height: 40px;
+    transition: background-color 0.3s;
+}
