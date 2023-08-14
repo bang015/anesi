@@ -116,7 +116,7 @@
     <img id="f_img" src="../css/image/anesilogo.png" >
     </a>
     <div id="f_part1">
-       <div class="pt_title"><p id="anesi_info">anesi 기본정보</p></div>
+       <div class="pt_title"><p id="anesi_info">ANESI 기본정보</p></div>
        <div class="내용">
            <div>
           	<span class="content_bold" >상호명</span>

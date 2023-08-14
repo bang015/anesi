@@ -29,7 +29,7 @@
 
     body {
       font-size: 14px;
-      color: #000;
+      color: #black;
       margin: 0;
       padding: 0;
     }
@@ -68,12 +68,7 @@
   <!-- wrapper 추가 필수 -->
   <div class="swiper-wrapper">
     <!-- 실제 이미지나 컨텐츠가 들어갈 slide들 -->
-    <div class="swiper-slide">
-	   <img src="../css\image\Main\banner1.png">
-    </div>
-    <div class="swiper-slide">
-   	   <img src="../css\image\Main\banner2.png">
-    </div>
+    
     <div class="swiper-slide">
    	   <img src="../css\image\Main\banner4.png">
     
@@ -86,6 +81,13 @@
    	   <img src="../css\image\Main\banner6.png">
     
     </div>
+    <div class="swiper-slide">
+	   <img src="../css\image\Main\banner1.png">
+    </div>
+    <div class="swiper-slide">
+   	   <img src="../css\image\Main\banner2.png">
+    </div>
+    
    
     ...
   </div>
