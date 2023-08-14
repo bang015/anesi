@@ -95,5 +95,10 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userMapper.editPassword(map);
 	}
+	@Override
+	public int withdrawal(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.withdrawal(map);
+	}
 
 }

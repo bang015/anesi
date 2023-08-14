@@ -24,7 +24,7 @@ li{
 	list-style : none;
 	display : flex;
 	justify-content: center;
-	padding: 0px 0px 0px 0px;
+	padding: 5px 0px 0px 0px;
 }
 .my_li1 {
 	margin: 0px 30px 0px 30px;

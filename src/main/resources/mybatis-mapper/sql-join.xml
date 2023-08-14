@@ -96,4 +96,11 @@
 			USER_PWD = #{pwd}
 		WHERE USER_NO = #{no}
 	</update>
+	<!-- 회원탈퇴 -->
+	<update id="withdrawal" parameterType="hashmap">
+		UPDATE t3_tbl_user
+		SET
+			DELETE_YN = 'Y'
+		WHERE USER_NO = #{no}
+	</update>
 </mapper>

@@ -80,6 +80,12 @@ public class UserController {
 
 		return "/scrapbook";
     }
+	// 회원탈퇴
+	@RequestMapping("mypage/withdrawal.do") 
+    public String withdrawal(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/withdrawal";
+    }
 	// 회원가입
 	@RequestMapping(value = "/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -189,6 +195,14 @@ public class UserController {
 	public String edit_password(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		userService.editPassword(map);
+		return new Gson().toJson(resultMap);
+	}
+	//회원탈퇴
+	@RequestMapping(value = "/mypage/withdrawal.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String withdrawal(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		userService.withdrawal(map);
 		return new Gson().toJson(resultMap);
 	}
 }

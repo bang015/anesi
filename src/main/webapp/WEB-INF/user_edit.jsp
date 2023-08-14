@@ -21,7 +21,7 @@
 	list-style : none;
 	display : flex;
 	justify-content: center;
-	padding: 0px 0px 0px 0px;
+	padding: 5px 0px 0px 0px;
 }
 .my_li1 {
 	margin: 0px 30px 0px 30px;
@@ -94,6 +94,7 @@
     padding: 30px 40px;
     box-shadow: 0px 2px 11px -3px #dddbdb;
     height:1200px;
+	position: relative;
 }
 #title {
 	font-size:22px;
@@ -157,6 +158,11 @@ img:hover{
 	color : #A782C3;
 	font-size: 12px;
 }
+.withdrawal{
+    position: absolute;
+    top: 8%;
+    right: 5%;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -180,6 +186,7 @@ img:hover{
 <div id="container">
 	<div class="edit">
 		<div id="title"><h3>회원정보수정</h3></div>
+		<div class="withdrawal"><label><a href="withdrawal.do" style="color : #ff9797; text-decoration:underline;">탈퇴하기</a></label></div>
 		<hr>
 			<div class="part">
 				<div class="edit_title">이메일<span class="clause1"> *</span></div>

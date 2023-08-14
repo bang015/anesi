@@ -39,4 +39,6 @@ public interface UserMapper {
 	int insertProfile(HashMap<String, Object> map);
 	//비밀번호변경
 	int editPassword(HashMap<String, Object> map);
+	//회원탈퇴
+	int withdrawal(HashMap<String, Object> map);
 }
