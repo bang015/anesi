@@ -25,4 +25,10 @@
 		FROM t3_tbl_user_address
 		WHERE USER_NO = #{userNo} AND ZIPCODE = #{zip} AND ADDR_KIND = #{addrName}
 	</select>
+	
+	<select id="selectOptionInfo" parameterType="hashmap" resultType="com.example.anesi.model.ProductOption">
+		SELECT *
+		FROM t3_tbl_product_option
+		WHERE OPTION_NO = #{optionNo}
+	</select>
 </mapper>

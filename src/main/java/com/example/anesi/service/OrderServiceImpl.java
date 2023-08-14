@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.OrderMapper;
 import com.example.anesi.model.Order;
+import com.example.anesi.model.ProductOption;
 import com.example.anesi.model.UserAddress;
 
 @Service
@@ -38,6 +39,11 @@ public class OrderServiceImpl implements OrderService{
 	public UserAddress searchAddr(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return orderMapper.selectAddr(map);
+	}
+	@Override
+	public ProductOption searchOptionInfo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderMapper.selectOptionInfo(map);
 	}
 	
 	

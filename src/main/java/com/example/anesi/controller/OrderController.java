@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Order;
+import com.example.anesi.model.ProductOption;
 import com.example.anesi.model.UserAddress;
 import com.example.anesi.service.OrderService;
 import com.google.gson.Gson;
@@ -68,4 +69,14 @@ public class OrderController {
 		resultMap.put("info", info);
 		return new Gson().toJson(resultMap);
 	}
+	
+	//옵션 상세 검색
+		@RequestMapping(value = "/order/optionSearchInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String optionSearchInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			ProductOption info = orderService.searchOptionInfo(map);
+			resultMap.put("info", info);
+			return new Gson().toJson(resultMap);
+		}
 }

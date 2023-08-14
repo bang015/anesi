@@ -25,11 +25,11 @@
 					<div class="amountBox">
 						<h2 class="moneyText">결제 금액</h2>
 						<div>
-							<div class="orNameText">총 상품 금액<span class="allMoneyText">0000원</span></div>
+							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{productInfo.productPrice+optionInfo.optionPrice}}</span></div>
 							<div class="orNameText">배송비<span class="allMoneyText">3000원</span></div>
 							<div class="orNameText">쿠폰 사용<span class="allMoneyText">0000원</span></div>
 						</div>
-						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>0000</span> 원</span></div>
+						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{productInfo.productPrice+optionInfo.optionPrice+3000}}</span> 원</span></div>
 					</div>
 					<div class="orTerms">
 						<div class="allTerms">
@@ -194,9 +194,9 @@
 						<div class="orProduct">
 							<img alt="" src="../css/image/product/singlebed.png">
 							<div>
-								<div class="prProductName">상품이름</div>
-								<div class="prProductOption">상품 옵션</div>
-								<div class="prProductPrice">가격 <span>| 1개</span></div>
+								<div class="prProductName">{{productInfo.productName}}</div>
+								<div class="prProductOption">{{optionInfo.optionName}}</div>
+								<div class="prProductPrice">{{productInfo.productPrice+optionInfo.optionPrice}} <span>| 1개</span></div>
 							</div>
 						</div>
 					</div>
@@ -236,7 +236,10 @@
 var app = new Vue({
 	el : '#app',
 	data : {
-		
+		productNo : '${map.productNo}',
+		optionNo : '${map.optionNo}',
+		productInfo : {},
+		optionInfo : {},
 		order : {
 			name : "",
 			email1 : "",
@@ -499,12 +502,39 @@ var app = new Vue({
 				self.addr.zip= selectedItem.zipcode;
 				self.order.addrNo = selectedItem.addrNo;
 				self.addrAdd = false;
+		    },
+		    fnGetProduct(){
+		    	var self = this;
+				var nparmap = {productNo : self.productNo};
+	            $.ajax({
+	                url : "../productSearch.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {
+						self.productInfo = data.product;
+						console.log(self.productInfo);
+	                }
+	            });
+		    	var self = this;
+				var nparmap = {optionNo : self.optionNo};
+	            $.ajax({
+	                url : "../order/optionSearchInfo.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {
+	                	self.optionInfo = data.info;
+	                	console.log(self.optionInfo);
+	                }
+	            });
 		    }
 	}, // methods
 	created : function() {
 		var self = this;
 		self.fnGetCoupon();
 		self.fnGetAddrList();
+		self.fnGetProduct();
 		window.jusoCallBack = self.handleAddressCallback;
 	}// created
 });
