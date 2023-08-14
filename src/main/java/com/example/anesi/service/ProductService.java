@@ -42,7 +42,10 @@ public interface ProductService {
 	HashMap<String, Object>searchReviewCnt(HashMap<String, Object> map);
 	//상품 장바구니
 		List<Product>selectCartList(HashMap<String, Object> map);
- 
+	// 상품등록
+	int addProduct(HashMap<String, Object> map);
+	// 상품등록후 검색
+	Product insertSearchProduct(HashMap<String, Object> map);
 	
 }
 

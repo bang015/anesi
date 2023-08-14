@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.anesi.mapper.ImageMapper">
+	<insert id="insertPorductImage" parameterType="hashmap">
+		INSERT INTO t3_tbl_product_image(PRODUCT_NO, IMG_ORG_NAME, IMG_NAME, IMG_PATH, IMG_SIZE, THUMBNAIL_YN)
+		VALUES(#{productNo}, #{imgOrgName}, #{imgName}, #{imgPath}, #{imgSize}, #{thumbnailYn})
+	</insert>
+</mapper>

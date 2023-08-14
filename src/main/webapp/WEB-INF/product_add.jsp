@@ -57,7 +57,7 @@
 				</div>
 				<div>
 					<div>할인율</div>
-					<input v-model="product.duscount">
+					<input v-model="product.discount">
 				</div>
 			</div>	
 			<div class="box"><!-- 옵션 추가 -->
@@ -98,7 +98,7 @@
 					<tr v-for="(item, index) in productImgList">
 						<td class="tdthsy"><input type="radio" v-model="item.thumbnail" value="Y" name="thumbnail"></td>
 						<td class="tdthsy"><input v-model="item.orgName"></td>
-						<td class="tdthsy"><label class="fileBox">파일선택<input type="file" @change="fnOnFileChange($event, index)" class="fileBtn"></label></td>
+						<td class="tdthsy"><label class="fileBox">파일선택<input type="file" @change="fnOnFileChange($event, index)" class="fileBtn" name="file1"></label></td>
 						<td class="tdthsy"><button @click="fnProductImgDel(index)" class="delBtn">삭제</button></td>
 						<td class="imgDiv"><img v-if="imageList[index]" :src="imageList[index]" alt="Image preview" class="pvImg"></td>
 					</tr>
@@ -126,7 +126,7 @@
 					</template>
 				</table>
 			</div>
-			<button @click="fnProductAdd" class="addBtn">판매등록</button>
+			<button @click="fnAdd" class="addBtn">판매등록</button>
 		</div>
 	</div>
 </body>
@@ -145,8 +145,9 @@ var app = new Vue({
 			productPrices : "",
 			manufacturer : "",
 			country : "",
-			duscount : "",
-			category : ""
+			discount : "",
+			category : "",
+			discountYn  : ""
 		},
 		optionList : [], // 옵션 리스트
 		productImgList : [], // 상품 이미지 리스트
@@ -158,6 +159,9 @@ var app = new Vue({
 		category1Name : "",
 		category2Name : "",
 		category1No : "",
+		fileList : [],
+		fileList2 : [],
+		productInfo : {},
 	},// data
 	methods : {
 		fnTest(){
@@ -177,6 +181,7 @@ var app = new Vue({
 		},
 		fnProductImgDel(index){
 			var self = this;
+			self.fileList.splice(index,1);
 			self.productImgList.splice(index,1);
 			self.imageList.splice(index,1);
 			self.errMsg2 = "";
@@ -189,8 +194,6 @@ var app = new Vue({
 		},
 		fnProductImgAdd(){
 			var self = this;
-			console.log(self.imageList);
-			console.log(self.productImgList);
 			if(self.productImgList.length < 5){
 				self.productImgList.push({orgName : "", thumbnail : "N"});
 			} else {
@@ -214,8 +217,9 @@ var app = new Vue({
 			self.errMsg2 = "";
 		    const file = event.target.files[0];	
 		    if (file) {
+	    	  self.fileList.splice(index,1);
+		      self.fileList.splice(index,0,file);
 		      self.imageList.splice(index,1);
-		      console.log(index);
 		      self.imageList.splice(index,0,URL.createObjectURL(file));
 		    }
 		},
@@ -237,7 +241,6 @@ var app = new Vue({
 			var nparmap = {no : item.categoryNo};
 			self.category1Name = item.categoryName;
 			self.category1No = item.categoryNo;
-			console.log(self.category1No);
             $.ajax({
                 url : "category2.dox",
                 dataType:"json",	
@@ -258,6 +261,8 @@ var app = new Vue({
 			self.errMsg2 = "";
 		    const file = event.target.files[0];	
 		    if (file) {
+	    	  self.fileList2.splice(index,1);
+		      self.fileList2.splice(index,0,file);
 		      self.imageList2.splice(index,1)
 		      self.imageList2.splice(index,0,URL.createObjectURL(file));
 		    }
@@ -273,7 +278,7 @@ var app = new Vue({
 				return;
 			}
 			self.errMsg5 = '';
-			if(self.product.productName == '' || self.product.productPrices == '' || self.product.manufacturer == '' || self.product.country == '' || self.product.duscount == ''){
+			if(self.product.productName == '' || self.product.productPrices == '' || self.product.manufacturer == '' || self.product.country == '' || self.product.discount == ''){
 				self.errMsg1 = '모든 정보를 입력해주세요';
 				var box = document.querySelector(".box");
 				var top = box.offsetTop;
@@ -293,8 +298,79 @@ var app = new Vue({
 				self.errMsg4 = '상세 이미지를 최소 1개 추가해주세요'
 					return;
 			}
-  
-		}
+  			console.log(self.fileList);
+		},
+		fnAdd() {
+			var self = this;
+			if(self.product.productName == ""){
+				
+			}
+			if(self.product.productPrices == ""){
+				
+			}
+			if(self.product.manufacturer == ""){
+				
+			}
+			if(self.product.country == ""){
+							
+			}
+			if(self.product.discount  == ""){
+				
+			}
+			if(self.product.category == ""){
+				
+			}
+			if(self.product.discountYn  == ""){
+				
+			}
+			self.product.discountYn = self.product.discount == 0 ? 'N' : 'Y';
+			var nparmap = self.product
+	    	$.ajax({
+	    		url : "/addProduct.dox",
+                dataType:"json",	
+                type : "POST",
+		      	data: nparmap,
+		      	success: function (response) {
+		      		$.ajax({
+			    		url : "../insertSearchProduct.dox",
+		                dataType:"json",	
+		                type : "POST",
+				      	data: nparmap,
+				      	success: function (response) {
+				      		self.productInfo = response.info;
+				      		console.log(self.fileList);
+				      		console.log(self.fileList2);
+				      		for(let i=0; i<self.productImgList.length; i++){
+				      			var form = new FormData();
+						    	form.append("file1",self.fileList[i]);
+						    	form.append("productNo",self.productInfo.productNo);
+						    	form.append("thumbnailYn",self.productImgList[i].thumbnail);
+						    	self.upload(form);
+				      			}
+				      		for(let i=0; i<self.contentImgList.length; i++){
+				      			var form = new FormData();
+						    	form.append("file1",self.fileList2[i]);
+						    	form.append("productNo",self.productInfo.productNo);
+						    	form.append("thumbnailYn",self.contentImgList[i].thumbnail);
+						    	self.upload(form);
+				      		}
+				      		}
+		      			});
+	      			},
+	    	});
+	    },
+	    upload(form) {
+	    	var self = this;
+	    	$.ajax({
+		      	url: "../fileUpload.dox",
+		      	type: "POST",
+		      	processData: false,
+		      	contentType: false,
+		      	data: form,
+		      	success: function (response) {
+		      	},
+	    	});
+	    },
 	}, // methods
 	created : function() {
 		var self = this;

@@ -171,4 +171,23 @@ public class ProductController {
 			    resultMap.put("list", list);
 			    return new Gson().toJson(resultMap);
 		  }
+		  
+		// 상품등록
+		  @RequestMapping(value = "/addProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		   @ResponseBody
+		   public String addProduct(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		       productService.addProduct(map);
+		       return new Gson().toJson(resultMap);
+		   }
+		  
+		// 상품 등록후 검색
+		  @RequestMapping(value = "/insertSearchProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		   @ResponseBody
+		   public String insertSearchProduct(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		       Product info = productService.insertSearchProduct(map);
+		       resultMap.put("info", info);
+		       return new Gson().toJson(resultMap);
+		   }
 }
