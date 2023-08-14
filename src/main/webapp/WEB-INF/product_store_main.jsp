@@ -237,7 +237,7 @@
 		    <h2>로그인후 사용 가능합니다.</h2>
 		    <p>로그인하시겠습니까?</p>
 		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">로그인페이지로 이동하기</button>
+		    <button @click="fnMoveLoginPage">로그인페이지로 이동하기</button>
 		  </div>
 		</div>
 	
@@ -356,6 +356,9 @@ var app = new Vue({
 	    },
 	    fnMoveMyPage : function() {
         	location.href = "/mypage.do";
+	    },
+	    fnMoveLoginPage : function() {
+        	location.href = "/login.do";
 	    },
 	    
 	    fnInsertCart : function(item) {

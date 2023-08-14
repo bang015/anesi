@@ -50,7 +50,7 @@
 
     .swiper-slide img {
       display: block;
-      width: 1200px;
+      width: 1300px;
       height: 600px;
       object-fit: cover;
     }
@@ -75,17 +75,26 @@
    	   <img src="../css\image\Main\banner2.png">
     </div>
     <div class="swiper-slide">
-   	   <img src="../css\image\Main\standbear.jpg">
+   	   <img src="../css\image\Main\banner4.png">
     
     </div>
+    <div class="swiper-slide">
+   	   <img src="../css\image\Main\banner5.png">
+    
+    </div>
+    <div class="swiper-slide">
+   	   <img src="../css\image\Main\banner6.png">
+    
+    </div>
+   
     ...
   </div>
   <!-- pagination 필요할 경우 추가 -->
   <div class="swiper-pagination"></div>
 
   <!-- navigation buttons 필요할 경우 추가 -->
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+<!--   <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div> -->
 </div>
  
  
@@ -104,10 +113,10 @@ var swiper = new Swiper(".mySwiper", {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
     },
+    spaceBetween: 30,
     pagination: {
       el: ".swiper-pagination",
-      type: "progressbar",
-
+      clickable: true,
     },
     spaceBetween: 30,
     centeredSlides: true,
