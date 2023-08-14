@@ -87,8 +87,20 @@
 	margin-right:10px;
 
 }
-
-
+.btn_gotop {
+	display:none;
+	position:fixed;
+	bottom:30px;
+	right:30px;
+	z-index:999;
+	cursor:pointer;
+	padding:15px 20px;
+	border-radius:100%;
+}
+#topbutton{
+	width : 50px;
+	opacity: 0.7;
+}
 </style>
 </head>
 <!-- 주석 꼭 남겨주세요 넹 -->
@@ -197,6 +209,20 @@
 	   
 	   
    </div>
-    
+<a class="btn_gotop">
+	<img id="topbutton" src="../css/image/Main/topbutton.png">
+</a>
 </body>
 </html>
+<script>
+$(window).scroll(function(){
+	if ($(this).scrollTop() > 200){
+		$('.btn_gotop').show();
+	} else{
+		$('.btn_gotop').hide();
+	}
+});
+$('.btn_gotop').click(function(){
+	$('html, body').animate({scrollTop:0},400);
+});
+</script>
