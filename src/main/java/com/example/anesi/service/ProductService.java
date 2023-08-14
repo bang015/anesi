@@ -47,5 +47,8 @@ public interface ProductService {
 	// 상품등록후 검색
 	Product insertSearchProduct(HashMap<String, Object> map);
 	
+	// 옵션등록
+	int addOption(HashMap<String, Object> map);
+	
 }
 

@@ -66,7 +66,7 @@
 				<table class="tableStyle">
 					<tr>
 						<th class="tdthsy">옵션명</th>
-						<th class="tdthsy">가격</th>
+						<th class="tdthsy">가격증가량</th>
 						<th class="tdthsy">재고량</th>
 						<th class="tdthsy">삭제</th>
 					</tr>
@@ -76,18 +76,17 @@
 					<tr v-for="(item, index) in optionList">
 						
 						<td class="tdthsy"><input v-model="optionList[index].optionName"></td>
-						<td class="tdthsy"><input v-model="optionList[index].productStock"></td>
 						<td class="tdthsy"><input v-model="optionList[index].optionPrice"></td>
+						<td class="tdthsy"><input v-model="optionList[index].productStock"></td>
 						<td class="tdthsy"><button @click="fnOptionDelete(index)" class="delBtn">삭제</button></td>
 				</table>
 			</div>
 			<div class="box"> <!-- 상품 이미지 등록 -->
-				<div><h3>상품 이미지<span class="guide"> 상품 이미지는 최대 5개 입니다.</span></h3></div>
+				<div id="productImgT"><h3>상품 이미지<span class="guide"> 상품 이미지는 최대 5개 입니다.</span></h3></div>
 				<button @click="fnProductImgAdd" class="btn">이미지 추가</button><span class="err">{{errMsg2}}</span>
 				<table class="tableStyle productImg">
 					<tr>
 						<th class="tdthsy">대표 이미지</th>
-						<th class="tdthsy">이미지 이름</th>
 						<th class="tdthsy">이미지 파일</th>
 						<th class="tdthsy">삭제</th>
 						<th class="tdthsy">이미지</th>
@@ -97,7 +96,6 @@
 					</tr>
 					<tr v-for="(item, index) in productImgList">
 						<td class="tdthsy"><input type="radio" v-model="item.thumbnail" value="Y" name="thumbnail"></td>
-						<td class="tdthsy"><input v-model="item.orgName"></td>
 						<td class="tdthsy"><label class="fileBox">파일선택<input type="file" @change="fnOnFileChange($event, index)" class="fileBtn" name="file1"></label></td>
 						<td class="tdthsy"><button @click="fnProductImgDel(index)" class="delBtn">삭제</button></td>
 						<td class="imgDiv"><img v-if="imageList[index]" :src="imageList[index]" alt="Image preview" class="pvImg"></td>
@@ -111,6 +109,7 @@
 					<tr>
 						<th class="tdthsy">이미지 파일</th>
 						<th class="tdthsy">삭제</th>
+						<th class="tdthsy">이미지</th>
 					</tr>
 					<tr v-if="contentImgList.length == 0">
 						<td colspan="4" class="tdthsy">이미지를 추가해 주세요</td>
@@ -119,14 +118,12 @@
 						<tr>
 							<td class="tdthsy"><label class="fileBox">파일선택<input type="file" @change="fnOnFileChange2($event, index)" class="fileBtn"></label></td>
 							<td class="tdthsy"><button @click="fnProductImgDel2(index)" class="delBtn">삭제</button></td>
-						</tr>
-						<tr>
 							<td class="imgDiv content"><img v-if="imageList2[index]" :src="imageList2[index]" alt="Image preview" class="pvImg" ref="image" required></td>
 						</tr>
 					</template>
 				</table>
 			</div>
-			<button @click="fnAdd" class="addBtn">판매등록</button>
+			<button @click="fnProductAdd" class="addBtn">판매등록</button>
 		</div>
 	</div>
 </body>
@@ -283,7 +280,7 @@ var app = new Vue({
 				var box = document.querySelector(".box");
 				var top = box.offsetTop;
 			  	window.scrollTo({
-			    	top: 0,
+			    	top: 200,
 			        behavior: 'smooth',
 			      });
 				return;
@@ -294,80 +291,120 @@ var app = new Vue({
 					return;
 			}
 			self.errMsg2 = '';
-			if(self.imageList.length == 0){
+			if(self.imageList2.length == 0){
 				self.errMsg4 = '상세 이미지를 최소 1개 추가해주세요'
 					return;
 			}
-  			console.log(self.fileList);
+			self.errMsg4 = '';
+			if(self.productImgList.length != self.fileList.length){
+				self.errMsg2 = '이미지를 채워주세요.';
+				return;
+		    }
+			self.errMsg2 = '';
+			if(self.contentImgList.length != self.fileList2.length){
+				self.errMsg4 = '상세 이미지를 채워주세요.';
+				return;
+			}
+			self.errMsg4 = '';
+			self.fnAdd();
 		},
-		fnAdd() {
-			var self = this;
-			if(self.product.productName == ""){
+		addProductAsync() {
+			return new Promise((resolve, reject) => {
+				var self = this;
+				self.product.discountYn = self.product.discount == 0 ? 'N' : 'Y';
+				var nparmap = self.product;
 				
-			}
-			if(self.product.productPrices == ""){
+				$.ajax({
+		    		url : "/addProduct.dox",
+	                dataType:"json",	
+	                type : "POST",
+			      	data: nparmap,
+			      	success: function (response) {
+			      		resolve(response);
+			      	},
+			      	error: function (error) {
+			      		reject(error);
+			      	}
+		    	});
+			});
+		},
+		insertSearchProductAsync() {
+			return new Promise((resolve, reject) => {
+				var self = this;
+				var nparmap = self.product;
 				
-			}
-			if(self.product.manufacturer == ""){
-				
-			}
-			if(self.product.country == ""){
-							
-			}
-			if(self.product.discount  == ""){
-				
-			}
-			if(self.product.category == ""){
-				
-			}
-			if(self.product.discountYn  == ""){
-				
-			}
-			self.product.discountYn = self.product.discount == 0 ? 'N' : 'Y';
-			var nparmap = self.product
-	    	$.ajax({
-	    		url : "/addProduct.dox",
-                dataType:"json",	
-                type : "POST",
-		      	data: nparmap,
-		      	success: function (response) {
-		      		$.ajax({
+				$.ajax({
 			    		url : "../insertSearchProduct.dox",
 		                dataType:"json",	
 		                type : "POST",
 				      	data: nparmap,
 				      	success: function (response) {
-				      		self.productInfo = response.info;
-				      		console.log(self.fileList);
-				      		console.log(self.fileList2);
-				      		for(let i=0; i<self.productImgList.length; i++){
-				      			var form = new FormData();
-						    	form.append("file1",self.fileList[i]);
-						    	form.append("productNo",self.productInfo.productNo);
-						    	form.append("thumbnailYn",self.productImgList[i].thumbnail);
-						    	self.upload(form);
-				      			}
-				      		for(let i=0; i<self.contentImgList.length; i++){
-				      			var form = new FormData();
-						    	form.append("file1",self.fileList2[i]);
-						    	form.append("productNo",self.productInfo.productNo);
-						    	form.append("thumbnailYn",self.contentImgList[i].thumbnail);
-						    	self.upload(form);
-				      		}
-				      		}
-		      			});
-	      			},
-	    	});
-	    },
-	    upload(form) {
+				      		resolve(response);
+				      	},
+				      	error: function (error) {
+				      		reject(error);
+				      	}
+		      	});
+			});
+		},
+		async fnAdd() {
+			try {
+				var addProductResponse = await this.addProductAsync();
+				var insertSearchResponse = await this.insertSearchProductAsync();
+				
+				this.productInfo = insertSearchResponse.info;
+				
+				for(let i=0; i<this.optionList.length; i++){
+					this.fnAddOption(this.productInfo.productNo, this.optionList[i]);
+				}
+				
+				for(let i=0; i<this.productImgList.length; i++){
+					var form = new FormData();
+					form.append("file1", this.fileList[i]);
+					form.append("productNo", this.productInfo.productNo);
+					form.append("thumbnailYn", this.productImgList[i].thumbnail);
+					await this.upload(form);
+				}
+				
+				for(let i=0; i<this.contentImgList.length; i++){
+					var form = new FormData();
+					form.append("file1", this.fileList2[i]);
+					form.append("productNo", this.productInfo.productNo);
+					form.append("thumbnailYn", this.contentImgList[i].thumbnail);
+					await this.upload(form);
+				}
+				
+				// 모든 작업이 완료되었을 때의 처리
+			} catch (error) {
+				// 에러 처리
+			}
+		},
+		upload(form) {
+			return new Promise((resolve, reject) => {
+				$.ajax({
+			      	url: "../fileUpload.dox",
+			      	type: "POST",
+			      	processData: false,
+			      	contentType: false,
+			      	data: form,
+			      	success: function (response) {
+			      		resolve(response);
+			      	},
+			      	error: function (error) {
+			      		reject(error);
+			      	}
+		    	});
+			});
+		},
+	    fnAddOption(productNo, info){
 	    	var self = this;
+	    	var nparmap = {productNo, productStock : info.productStock, optionPrice : info.optionPrice, optionName : info.optionName}
 	    	$.ajax({
-		      	url: "../fileUpload.dox",
-		      	type: "POST",
-		      	processData: false,
-		      	contentType: false,
-		      	data: form,
-		      	success: function (response) {
+		       url: "../addOption.dox",
+		       dataType: "json",
+		       type: "POST",
+		       data: nparmap,
+		       success: function (response) {
 		      	},
 	    	});
 	    },

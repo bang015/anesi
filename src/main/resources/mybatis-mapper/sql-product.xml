@@ -201,7 +201,11 @@
 	 	FROM t3_tbl_product
 	 	WHERE CATEGORY_NO = #{category} AND PRODUCT_NAME = #{productName} AND MANUFACTURER = #{manufacturer} AND PRODUCT_PRICE = #{productPrices}
 	 </select>
-	
+	 
+	 <insert id="insertOption" parameterType="hashmap">
+	 	INSERT INTO t3_tbl_product_option(PRODUCT_NO, PRODUCT_STOCK, OPTION_PRICE, OPTION_NAME)
+	 	VALUES(#{productNo}, #{productStock}, #{optionPrice}, #{optionName})
+	 </insert>
 </mapper>
 
 	

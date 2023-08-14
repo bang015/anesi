@@ -190,4 +190,12 @@ public class ProductController {
 		       resultMap.put("info", info);
 		       return new Gson().toJson(resultMap);
 		   }
+		  // 옵션 등록
+		  @RequestMapping(value = "/addOption.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		   @ResponseBody
+		   public String addOption(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		       productService.addOption(map);
+		       return new Gson().toJson(resultMap);
+		   }
 }

@@ -70,5 +70,8 @@ public interface ProductMapper {
 	
 	//상품 등록후 검색
 	Product insertSelectPorduct(HashMap<String, Object> map);
+	
+	//옵션 등록
+	int insertOption(HashMap<String, Object> map);
 		
 }
