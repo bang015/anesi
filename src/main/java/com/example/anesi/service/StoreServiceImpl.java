@@ -47,7 +47,7 @@ public class StoreServiceImpl implements StoreService{
 
 
 	@Override
-	public int searchScrapbookCnt(HashMap<String, Object> map) {
+	public List<Scrapbook> searchScrapbookCnt(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return productMapper.selectScrapbookCnt(map);
 	}

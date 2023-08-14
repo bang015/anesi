@@ -82,9 +82,9 @@ public class StoreController {
 	public String selectScrapCnt(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		int cnt = storeService.searchScrapbookCnt(map);
+		List<Scrapbook> list = storeService.searchScrapbookCnt(map);
 		resultMap.put("success", "스크랩북개수확인");
-		resultMap.put("cnt", cnt);
+		resultMap.put("list", list);
 	
 		
 		return new Gson().toJson(resultMap);

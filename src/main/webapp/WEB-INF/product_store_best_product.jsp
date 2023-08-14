@@ -242,11 +242,8 @@
 		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
 		  </div>
 		</div>
-	
 	    
     </div>
-
-
 	
 	
 	

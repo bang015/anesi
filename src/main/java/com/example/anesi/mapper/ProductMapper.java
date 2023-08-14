@@ -49,5 +49,5 @@ public interface ProductMapper {
 	int insertScrapbook (HashMap<String, Object> map);
 	
 	//회원 상품 스크랩북 수량 체크
-	int selectScrapbookCnt (HashMap<String, Object> map);
+	List<Scrapbook> selectScrapbookCnt (HashMap<String, Object> map);
 }

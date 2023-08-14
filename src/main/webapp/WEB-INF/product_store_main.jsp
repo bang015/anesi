@@ -211,7 +211,7 @@
 		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
 		    	<!-- 스크랩버튼-->
-		    	<a v-if="userId!=''"><i @click="fnInsertScrapbook(item), fnCheckScrapCnt(item)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
+		    	<a v-if="userId!='' ||"><i @click="fnInsertScrapbook(item)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 		    	<a v-else><i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 	    
@@ -283,7 +283,9 @@ var app = new Vue({
 		userId : '${sessionId}',
 		userNick : '${sessionNick}',
 		userNo : '${sessionNo}',
-		productNo : ""
+		productNo : "",
+		scrapbookList : []
+	
 
 
 	
@@ -388,7 +390,8 @@ var app = new Vue({
 		
 		fnCheckScrapCnt : function(item) {
 	    	var self = this;
-            var nparmap = {userNo: self.userNo, productNo: item.productNo};
+            var nparmap = {userNo: self.userNo};
+           
           
             $.ajax({
                 url : "/product/selectScrapCnt.dox",
@@ -396,7 +399,10 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                    console.log(data.cnt);
+                    console.log(data.list);
+                    
+                    self.scrapbookList = data.list;
+
                 }
             }); 
             
@@ -405,8 +411,11 @@ var app = new Vue({
 	    fnInsertScrapbook : function(item) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
-			
-
+            self.fnCheckScrapCnt(item)
+            if(data.cnt >= 1){
+            	alert("이미담긴상품");
+            	return;
+            }
             $.ajax({
                 url : "/product/insertScrap.dox",
                 dataType:"json",	
@@ -437,6 +446,7 @@ var app = new Vue({
 	created : function() {
 		var self = this;
 		self.fnGetList();
+		self.fnCheckScrapCnt();
 	
 	
 
