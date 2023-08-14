@@ -41,7 +41,7 @@ public interface ProductMapper {
 	List<Scrapbook> selectcontentImg2(HashMap<String, Object> map);
 	// 리뷰
 	List<Review>selectReview(HashMap<String, Object> map);
-	// 리뷰
+	// 리뷰 개수 검색
 	List<Review>selectReviewCnt(HashMap<String, Object> map);
 	//회원 상품 장바구니에 추가
 	int insertCartUser (HashMap<String, Object> map);
