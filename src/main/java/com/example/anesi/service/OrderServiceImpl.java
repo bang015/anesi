@@ -45,6 +45,12 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return orderMapper.selectOptionInfo(map);
 	}
+	//주문 입력
+	@Override
+	public int addOrder(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderMapper.insertOrder(map);
+	}
 	
 	
 	

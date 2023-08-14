@@ -18,4 +18,6 @@ public interface OrderService {
 	UserAddress searchAddr(HashMap<String, Object> map);
 	// 옵션 상세 검색
 	ProductOption searchOptionInfo(HashMap<String, Object> map);
+	//주문 입력
+	int addOrder(HashMap<String, Object> map);
 }

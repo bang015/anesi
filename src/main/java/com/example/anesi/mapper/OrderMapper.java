@@ -21,4 +21,6 @@ public interface OrderMapper {
 	UserAddress selectAddr(HashMap<String, Object> map);
 	// 옵션 상세 검색
 	ProductOption selectOptionInfo(HashMap<String, Object> map);
+	// 주문 입력
+	int insertOrder(HashMap<String, Object> map);
 }

@@ -25,11 +25,11 @@
 					<div class="amountBox">
 						<h2 class="moneyText">결제 금액</h2>
 						<div>
-							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{productInfo.productPrice+optionInfo.optionPrice}}</span></div>
+							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{totalProductAmount}}원</span></div>
 							<div class="orNameText">배송비<span class="allMoneyText">3000원</span></div>
-							<div class="orNameText">쿠폰 사용<span class="allMoneyText">0000원</span></div>
+							<div class="orNameText">쿠폰 사용<span class="allMoneyText">{{discount}}원</span></div>
 						</div>
-						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{productInfo.productPrice+optionInfo.optionPrice+3000}}</span> 원</span></div>
+						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{finalAmount}}</span> 원</span></div>
 					</div>
 					<div class="orTerms">
 						<div class="allTerms">
@@ -65,7 +65,7 @@
 						</div>
 					</div>
 				</div>
-				<button class="orBtuStyle" @click="fnOrder">00,000원 결제하기</button>
+				<button class="orBtuStyle" @click="fnOrder">{{finalAmount}}원 결제하기</button>
 			</div>
 			<div class="orInformation">
 				<div class="subheading">주문자</div>
@@ -207,7 +207,7 @@
 					</div>
 					<div>
 						<div v-for="item in couponList" class="orCoupon el-radio">
-							<input type="radio" v-model="order.couponNo" name="coupon" :value="item.couponNo" :id="item.couponNo">
+							<input type="radio" v-model="order.couponNo" name="coupon" :value="item.couponNo" :id="item.couponNo" @change="fnCouponApply">
 							<label class="el-radio-style" :for="item.couponNo"></label>
 							<div>
 								<div class="coupon1">
@@ -218,7 +218,7 @@
 							</div>
 						</div>
 						<div class="orCoupon  el-radio" v-if="couponList.length != 0">
-							<input type="radio" v-model="order.couponNo" name="coupon" value="" id="nonCoupon">
+							<input type="radio" v-model="order.couponNo" name="coupon" value="" id="nonCoupon" @change="fnCouponApply">
 							<label class="el-radio-style" for="nonCoupon"></label>
 							<div class="coupon1">
 								<span>적용 안 함</span>
@@ -240,6 +240,8 @@ var app = new Vue({
 		optionNo : '${map.optionNo}',
 		productInfo : {},
 		optionInfo : {},
+		totalProductAmount : "",
+		finalAmount : "",
 		order : {
 			name : "",
 			email1 : "",
@@ -277,7 +279,8 @@ var app = new Vue({
 		errMsg : "",
 		addrList : [],
 		addrAdd : false,
-		defaule : 'Y'
+		defaule : 'Y',
+		discount : '0'
 	},// data
 	methods : {
 		fnAllCheck(){
@@ -453,12 +456,32 @@ var app = new Vue({
 		 		                data : nparmap,
 		 		                success : function(data) {
 		 							self.order.addrNo = data.info.addrNo;
+		 							self.fnOrrder2();
 		 		                }
 		 		            });
 		                }
 		            });
 		           
+		    	} else{
+		    		self.fnOrrder2();
 		    	}
+		    	
+		    	
+		    },
+		    fnOrrder2(){
+		    	var self = this;
+		    	var orderEmail = self.order.email1 +'@'+ self.order.email2
+		    	var orderPhone = self.order.phone1 + self.order.phone2;
+		    	var receiptPhone = self.addr.phone1 + self.addr.phone2;
+		    	var nparmap = {productNo : self.productNo, optionNo : self.optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.addr.customDeliveryRq, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : '1'};
+		    	 $.ajax({
+		                url : "../order/order.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+		                }
+		    	 });
 		    },
 		    fnGetAddrList(){
 		    	var self = this;
@@ -513,21 +536,39 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {
 						self.productInfo = data.product;
-						console.log(self.productInfo);
+						var nparmap = {optionNo : self.optionNo};
+			            $.ajax({
+			                url : "../order/optionSearchInfo.dox",
+			                dataType:"json",	
+			                type : "POST", 
+			                data : nparmap,
+			                success : function(data) {
+			                	self.optionInfo = data.info;
+			                	 self.totalProductAmount = self.productInfo.productPrice + self.optionInfo.optionPrice;
+			     	            self.finalAmount = self.productInfo.productPrice + self.optionInfo.optionPrice+3000;
+			                }
+			            });
 	                }
 	            });
-		    	var self = this;
-				var nparmap = {optionNo : self.optionNo};
-	            $.ajax({
-	                url : "../order/optionSearchInfo.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap,
-	                success : function(data) {
-	                	self.optionInfo = data.info;
-	                	console.log(self.optionInfo);
-	                }
-	            });
+		    },
+		    fnCouponApply(){
+		    	var self = this
+		    	for(let i=0;i<self.couponList.length;i++){
+		    		if(self.order.couponNo == ''){
+	     	            self.finalAmount = self.productInfo.productPrice + self.optionInfo.optionPrice+3000;
+	     	           self.discount = 0;
+	     	            return;
+		    		}
+		    		if(self.couponList[i].couponNo == self.order.couponNo){
+		    			if(self.couponList[i].disFlg == 'A'){
+	     	            	self.finalAmount = (self.productInfo.productPrice + self.optionInfo.optionPrice+3000) - self.couponList[i].discount;
+	     	            	self.discount = self.couponList[i].discount;
+		    			} else{
+		    				self.finalAmount = (self.productInfo.productPrice + self.optionInfo.optionPrice+3000) * ((100 - self.couponList[i].discount)/100);
+		    				self.discount = (self.productInfo.productPrice + self.optionInfo.optionPrice+3000) - self.finalAmount;
+		    			}
+		    		}
+		    	}
 		    }
 	}, // methods
 	created : function() {
