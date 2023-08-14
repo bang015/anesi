@@ -37,7 +37,7 @@ public interface ProductService {
 	// 상품 상세 이미지
 	List<Scrapbook>searchcontentImg2(HashMap<String, Object> map);
 	// 리뷰
-	List<Review>searchReview(HashMap<String, Object> map);
+	HashMap<String, Object>searchReview(HashMap<String, Object> map);
 	// 리뷰 별점 개수
 	HashMap<String, Object>searchReviewCnt(HashMap<String, Object> map);
 	//상품 장바구니

@@ -6,6 +6,8 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
+<script src="https://unpkg.com/vuejs-paginate@latest"></script>
+<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
 <title>상품 상세 페이지</title>
@@ -303,6 +305,37 @@
 		height: 200px;
 		border-radius: 5px;
 	}
+	.pagination {
+        margin:24px;
+        display: inline-flex;
+        
+    }
+    ul {
+    }
+	.pagination li {
+	    min-width:32px;
+	    padding:2px 6px;
+	    text-align:center;
+	    margin:0 3px;
+	    border-radius: 6px;
+	    border:1px solid #eee;
+	    color:#666;
+	    display : inline;
+	}
+	.pagination li:hover {
+	    background: #E4DBD6;
+	}
+	.page-item a {
+	    color:#666;
+	    text-decoration: none;
+	}
+	.pagination li.active {
+	    background-color : #E7AA8D;
+	    color:#fff;
+	}
+	.pagination li.active a {
+	    color:#fff;
+	}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -428,10 +461,18 @@
 										</div>
 										 
 									</div>
-									<div class="pagination">
-									     <button @click="prevPage" :disabled="currentPage == 1">이전</button>
-									     <button @click="nextPage" :disabled="currentPage == totalPages">다음</button>
-									</div>
+									<template>
+									  <paginate
+									    :page-count="pageCount"
+									    :page-range="3"
+									    :margin-pages="2"
+									    :click-handler="fnSearch"
+									    :prev-text="'<'"
+									    :next-text="'>'"
+									    :container-class="'pagination'"
+									    :page-class="'page-item'">
+									  </paginate>
+									</template>
 								</div> <!-- review-wrap end -->
 							</div><!-- content-review end -->
 							<div class="inquiry-wrap">
@@ -451,6 +492,7 @@
 </html>
 <script src="../js/jquery.js"></script>
 <script>
+Vue.component('paginate', VuejsPaginate)
 var app = new Vue({
 	el : '#app',
 	components: {
@@ -469,8 +511,9 @@ var app = new Vue({
 		num : 0 ,
 		mainImg : "",
 		csatCnt : [],
-		itemsPerPage: 5,
-		currentPage: 1,
+		selectPage: 1,
+		pageCount: 1,
+		cnt : 0,
 		/* 그래프 시작 */
 		series: [{
             data : []
@@ -605,16 +648,40 @@ var app = new Vue({
 		},
 		fnReview : function(){
 			 var self = this;
-	            var nparmap = {productNo : self.productNo};	            
+			 	var startNum = ((self.selectPage-1) * 5);
+	    		var lastNum = 5;
+	            var nparmap = {productNo : self.productNo,startNum : startNum, lastNum : lastNum};	            
 	            $.ajax({
 	                url : "/reviewSearch.dox",
 	                dataType:"json",	
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) {                
-	               		self.reviewList = data.reviewList;	
+	               		self.reviewList = data.reviewList;
+	               		self.cnt = data.cnt;
+		                self.pageCount = Math.ceil(self.cnt / 5);
+		                console.log(self.cnt)
+		                console.log(self.pageCount)
 	                }                
 	            })
+		},
+		 fnSearch : function(pageNum){
+			var self = this;
+			self.selectPage = pageNum;
+			var startNum = ((pageNum-1) * 5);
+			var lastNum = 5;
+			var nparmap = {productNo : self.productNo,startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/reviewSearch.dox",
+				dataType : "json",
+				type : "POST",
+				data : nparmap,
+				success : function(data) {
+					self.reviewList = data.reviewList;
+					self.cnt = data.cnt;
+					self.pageCount = Math.ceil(self.cnt / 5);
+				}
+			});
 		},
 		fnReviewCnt : function(){
 			 var self = this;

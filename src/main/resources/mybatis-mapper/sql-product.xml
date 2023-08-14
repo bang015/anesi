@@ -105,7 +105,12 @@
 		LEFT JOIN t3_tbl_profile_image p ON p.USER_NO = u.USER_NO
 		WHERE r.PRODUCT_NO = #{productNo}
 		ORDER BY r.CREATEDATE desc
-	</select> 
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	<!-- 리뷰 페이지 카운트 --> 
+	<select id="selectCnt" resultType="int">
+		SELECT COUNT(*) FROM t3_tbl_user_review
+	</select>
 	<!-- 리뷰 별점 개수-->
 	<select id="selectReviewCnt" parameterType="hashmap" resultType="com.example.anesi.model.Review">
 		SELECT COUNT(*) AS csatCnt, csat
