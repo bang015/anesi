@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.example.anesi.model.Cart;
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.Scrapbook;
@@ -66,6 +68,15 @@ public class StoreController {
 		resultMap.put("success", "장바구니등록완료");
 		return new Gson().toJson(resultMap);
 	}
+	//유저 장바구니에 상품수량 올리기
+	@RequestMapping(value = "/product/addCartCnt.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String addCartCnt(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		storeService.updateCartCnt(map);
+		resultMap.put("success", "장바구니수량증가");
+		return new Gson().toJson(resultMap);
+	}
 	
 	//스크랩북에 상품담기
 	@RequestMapping(value = "/product/insertScrap.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -77,7 +88,7 @@ public class StoreController {
 		return new Gson().toJson(resultMap);
 	}
 	
-	//스크랩북에 상품담기
+	//스크랩북에 상품지우기
 	@RequestMapping(value = "/product/deleteScrap.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String deleteScrap(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -87,16 +98,26 @@ public class StoreController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	//스크랩북리스트
 	@RequestMapping(value = "/product/selectScrapList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String selectScrapCnt(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<Scrapbook> list = storeService.searchScrapbookList(map);
-		resultMap.put("success", "스크랩북개수확인");
+		resultMap.put("success", "스크랩북리스트확인");
 		resultMap.put("list", list);
-	
+		return new Gson().toJson(resultMap);
+	}
+	//장바구니 리스트
+	@RequestMapping(value = "/product/selectCartList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String selectCartList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Cart> list = storeService.userCartList(map);
+		resultMap.put("success", "카트리스트확인");
+		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
 

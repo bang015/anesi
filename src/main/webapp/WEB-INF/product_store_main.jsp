@@ -41,7 +41,7 @@ border : 1px solid black;
 .production-item__content{
 	width:220px;
 	height:338px;
-  	float : left;
+	float : left;
 	margin : 50px;
 }
 
@@ -71,12 +71,9 @@ border : 1px solid black;
 	width: 100px;
 	font-family: 'Pretendard-Regular';
 	color :  #fff;
-	  position:relative;
-	  flex : 0 0 5;
-	
-	
-	
-  }
+ 	 position:relative;
+  	flex : 0 0 5;
+ }
 .category-order_toggle:hover {
     background-color:rgb(235, 236, 237);
     transition: 0.7s;
@@ -169,7 +166,9 @@ border : 1px solid black;
 	
 	
 		<div class="production-item__content" v-for="item in list">
+		
 			<a @click="fnProductView(item.productNo)" class="production-item-thumnail">
+		
 			    <img class="production-item-thumnail__image animate__animated animate__pulse"
 			         alt="썸네일" :src="item.imgPath + '/' + item.imgName">
 		    </a>
@@ -202,13 +201,17 @@ border : 1px solid black;
 			    <span class="production-item-rating__score">4.5</span>
 			   </div>
 			   <!-- 장바구니버튼-->
-				<a ><i @click="fnInsertCart(item)" class="fa fa-shopping-cart modal-toggle-button" ></i></a>
+			   <a v-if="userId!=''">
+					<i @click="fnInsertCart(item)" v-if="!(cartList.includes(item.productNo))"class="fa fa-shopping-cart modal-toggle-button" ></i>
+					<i @click="fnUpdateCart(item)" v-if="cartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
+				</a>
+				
 		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
 		    	<!-- 스크랩버튼-->
 		    	<a v-if="userId!=''">
 		    		<i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button"></i>
-		    		<i @click="fnDeleteScrapbook(item)" v-else class="fa-regular fa-solid fa-bookmark"></i>
+		    		<i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark"></i>
 	    		</a>
 		    	<a v-else><i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
@@ -229,8 +232,9 @@ border : 1px solid black;
 		    <h2>스크랩북에 등록</h2>
 		    <p>상품이 스크랩되었습니다.</p>
 		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
+		    <button @click="fnMoveScrapbook">스크랩북으로 이동하기</button>
 		  </div>
+		  
 		  <div class="modal-card"  v-else>
 		    <h2>로그인후 사용 가능합니다.</h2>
 		    <p>로그인하시겠습니까?</p>
@@ -245,7 +249,7 @@ border : 1px solid black;
 		  <div class="modal-card">
 		    <h2>스크랩북에서 삭제되었습니다.</h2>
 		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
+		    <button @click="fnMoveScrapbook">스크랩북으로 이동하기</button>
 		  </div>
 		  
 		</div>
@@ -305,7 +309,8 @@ var app = new Vue({
 		userNick : '${sessionNick}',
 		userNo : '${sessionNo}',
 		productNo : "",
-		scrapbookList : []
+		scrapbookList : [],
+		cartList : []
 	
 	},// data
 	methods : {
@@ -371,26 +376,63 @@ var app = new Vue({
 	      this.showScrapModal = false;
 	      this.showScrapModalBan = false;
 	      this.showScrapDeleteModal = false;
+      
+	      location.reload();
+
+
 	    },
 	    
 	    fnMoveCart : function() {
         	location.href = "/product/cart.do";
 	    },
-	    fnMoveMyPage : function() {
-        	location.href = "/mypage.do";
+	    fnMoveScrapbook : function() {
+        	location.href = "/scrapbook.do";
 	    },
 	    fnMoveLoginPage : function() {
         	location.href = "/login.do";
 	    },
 	    
+	    fnCheckCart : function(item) {
+	    	var self = this;
+            var nparmap = {userNo: self.userNo};
+           
+          
+            $.ajax({
+                url : "/product/selectCartList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	for(let i=0; i<data.list.length;i++){
+                        self.cartList.push(data.list[i].productNo.toString());
+                     }
+                }
+            }); 
+            
+		},
+	    
+	    fnUpdateCart : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+ 
+            $.ajax({
+                url : "/product/addCartCnt.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+
+                }
+            }); 
+            
+            self.openCartModal();
+            console.log(self.showCartModal);
+
+		}, 
 	    fnInsertCart : function(item) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
-            console.log(self.userNo);
-            console.log(item.productNo);
-            
-           
-
+ 
             $.ajax({
                 url : "/product/insertCart.dox",
                 dataType:"json",	
@@ -422,7 +464,6 @@ var app = new Vue({
                 	for(let i=0; i<data.list.length;i++){
                         self.scrapbookList.push(data.list[i].productNo.toString());
                      }
-
                 }
             }); 
             
@@ -476,6 +517,7 @@ var app = new Vue({
 	created : function() {
 		var self = this;
 		self.fnGetList();
+		self.fnCheckCart();
 		self.fnCheckScrap();
 	
 	

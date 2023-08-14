@@ -1,11 +1,11 @@
 package com.example.anesi.model;
 
-public class Scrapbook {
-	private int scrapbookNo;
+public class Cart {
+
+	private int cartNo;
 	private int userNo;
 	private int productNo;
 	private int cnt;
-	
 	private String imgName;
 	private String imgPath;
 	private String imgOrgName;
@@ -28,18 +28,14 @@ public class Scrapbook {
 	public void setImgOrgName(String imgOrgName) {
 		this.imgOrgName = imgOrgName;
 	}
-	public void setScrapbookNo(int scrapbookNo) {
-		this.scrapbookNo = scrapbookNo;
-	}
+	
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
 	public void setProductNo(int productNo) {
 		this.productNo = productNo;
 	}
-	public int getScrapbookNo() {
-		return scrapbookNo;
-	}
+	
 	public int getUserNo() {
 		return userNo;
 	}
@@ -51,5 +47,11 @@ public class Scrapbook {
 	}
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
+	}
+	public int getCartNo() {
+		return cartNo;
+	}
+	public void setCartNo(int cartNo) {
+		this.cartNo = cartNo;
 	}	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.anesi.model.Cart;
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.Review;
@@ -46,13 +47,20 @@ public interface ProductMapper {
 	//회원 상품 장바구니에 추가
 	int insertCartUser (HashMap<String, Object> map);
 	
+	//회원 상품 장바구니 수량증가
+	int updateCartCnt (HashMap<String, Object> map);
+	
 	//회원 상품 스크랩북 추가
 	int insertScrapbook (HashMap<String, Object> map);
 	//회원 상품 스크랩북 삭제
 	int deleteScrapbook (HashMap<String, Object> map);
 	//상품 장바구니
-		List<Product>selectCartList(HashMap<String, Object> map);
+	List<Product>selectCartList(HashMap<String, Object> map);
  
 	//회원 상품 스크랩북 리스트 체크
 	List<Scrapbook> selectScrapbookList (HashMap<String, Object> map);
+	
+	//회원 상품 카트 리스트 체크
+	List<Cart> userCartList (HashMap<String, Object> map);
+		
 }
