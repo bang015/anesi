@@ -639,7 +639,7 @@ var app = new Vue({
 		},
 		fnPay : function(){
 			 var self = this;
-	           $.pageChange("../order/main.do", {productNo : self.productNo, optionNo : self.option})
+	           $.pageChange("../order/main.do", {productNo : self.productNo, optionNo : self.option1})
 		},
 		clickImg : function(imgPath,imgName){
 			var self = this
