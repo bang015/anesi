@@ -74,5 +74,10 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userMapper.editUser(map);
 	}
+	@Override
+	public int smsYnEdit(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.smsYnEdit(map);
+	}
 
 }

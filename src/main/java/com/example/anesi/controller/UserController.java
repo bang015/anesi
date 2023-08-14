@@ -56,10 +56,17 @@ public class UserController {
 
 		return "/mypage";
     }
+	// 회원정보수정
 	@RequestMapping("/mypage/user_edit.do") 
     public String user_edit(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 
 		return "/user_edit";
+    }
+	// 알림설정
+	@RequestMapping("/mypage/push_setting.do") 
+    public String smsYn(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/push_setting";
     }
 	// 스크랩북
 	@RequestMapping("/scrapbook.do") 
@@ -160,6 +167,14 @@ public class UserController {
 	public String userEdit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		userService.editUser(map);
+		return new Gson().toJson(resultMap);
+	}
+	//유저 정보 수정
+	@RequestMapping(value = "mypage/smsYn_edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String smsEdit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		userService.smsYnEdit(map);
 		return new Gson().toJson(resultMap);
 	}
 }

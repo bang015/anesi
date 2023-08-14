@@ -91,7 +91,7 @@
     border-radius: 5px;
     padding: 30px 40px;
     box-shadow: 0px 2px 11px -3px #dddbdb;
-    height:1100px;
+    height:1200px;
 }
 #title {
 	font-size:22px;
@@ -132,7 +132,7 @@
     padding: 8px;
 }
 .part{
-	margin : 20px 0px;
+	margin : 30px 0px;
 }
 .red{
 	color : #ff9797;
@@ -151,6 +151,10 @@ img:hover{
 .clause1{
 	color : #A782C3;
 }
+.span1{
+	color : #A782C3;
+	font-size: 12px;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -166,8 +170,8 @@ img:hover{
 </div>
 <hr class="hrr">
 	<ul class="my_menu1">
-		<li class="my_li2"><a class="my_a2_ch">회원정보수정</a></li>
-		<li class="my_li2"><a class="my_a2">알림 설정</a></li>
+		<li class="my_li2"><a href="/mypage/user_edit.do" class="my_a2_ch">회원정보수정</a></li>
+		<li class="my_li2"><a href="/mypage/push_setting.do" class="my_a2">알림 설정</a></li>
 		<li class="my_li2"><a class="my_a2">비밀번호 변경</a></li>
 	</ul>
 <hr class="hrr">
@@ -179,13 +183,13 @@ img:hover{
 				<div class="edit_title">이메일<span class="clause1"> *</span></div>
 					<div>
 						<div><input readonly class="put" ref="emailInput" type="text" v-model="info.userEmail" ></div>
-						<div>이메일을 변경하려면 운영자에게 이메일을 보내주세요.</div>
+						<div><span class="span1"> 이메일을 변경하려면 운영자에게 이메일을 보내주세요.</span></div>
 					</div>
 			</div>
 			<div class="part">
 				<div class="edit_title">이름<span class="clause1"> *</span></div>
 				<div><input readonly class="put" ref="nameInput" type="text" v-model="info.userName"></div>
-				<div>이름을 변경하려면 운영자에게 이메일을 보내주세요.</div>
+				<div><span class="span1"> 이름을 변경하려면 운영자에게 이메일을 보내주세요.</span></div>
 			</div>
 			<div class="part">
 				<div class="edit_title">닉네임<span class="clause1"> *</span></div>
@@ -237,7 +241,7 @@ img:hover{
 					</div>
 			<div class="part">
 				<div class="edit_title">프로필 이미지</div>
-				<div style="width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">프로필사진</div>
+				<img src="../css/image/profile.png" @click="fnProfileChange" style="width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">
 			</div>				
 	</div>
 	<button class="btn" @click="fnEdit">회원정보수정</button>
@@ -394,6 +398,9 @@ var app = new Vue({
                 	}
                 }
             });
+		},
+		fnProfileChange : function(){
+			
 		}
 	}, // methods
 	created : function() {

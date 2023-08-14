@@ -61,6 +61,7 @@
 		FROM t3_tbl_user
 		WHERE PHONE = #{phone} AND USER_NO != #{no}
 	</select>
+	<!-- 유저 정보 수정 -->
 	<update id="editUser" parameterType="hashmap">
 		UPDATE t3_tbl_user
 		SET
@@ -68,6 +69,13 @@
 			PHONE = #{phone},
 			GENDER = #{gender},
 			BIRTHDAY = #{birthday}
+		WHERE USER_NO = #{no}
+	</update>
+	<!-- 알림설정 -->
+	<update id="smsYnEdit" parameterType="hashmap">
+		UPDATE t3_tbl_user
+		SET
+			SMSYN = #{smsYn}
 		WHERE USER_NO = #{no}
 	</update>
 </mapper>

@@ -31,4 +31,6 @@ public interface UserMapper {
 	int EditPhoneCnt(HashMap<String, Object> map);
 	//유저정보수정
 	int editUser(HashMap<String, Object> map);
+	//알림설정수정
+	int smsYnEdit(HashMap<String, Object> map);
 }
