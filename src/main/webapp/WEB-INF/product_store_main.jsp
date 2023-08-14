@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>스토어메인</title>
+<title>카테고리별메인페이지</title>
 <style>
 
 
