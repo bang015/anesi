@@ -10,8 +10,14 @@ public class Review {
 	private String rImgPath;
 	private String uImgPath;
 	private String uImgName;
-	
+	private int csatCnt;
 
+	public int getCsatCnt() {
+		return csatCnt;
+	}
+	public void setCsatCnt(int csatCnt) {
+		this.csatCnt = csatCnt;
+	}
 	public String getuImgPath() {
 		return uImgPath;
 	}

@@ -104,7 +104,15 @@
 		LEFT JOIN t3_tbl_review_image ri ON ri.R_NO = r.R_NO
 		LEFT JOIN t3_tbl_profile_image p ON p.USER_NO = u.USER_NO
 		WHERE r.PRODUCT_NO = #{productNo}
+		ORDER BY r.CREATEDATE desc
 	</select> 
+	<!-- 리뷰 별점 개수-->
+	<select id="selectReviewCnt" parameterType="hashmap" resultType="com.example.anesi.model.Review">
+		SELECT COUNT(*) AS csatCnt, csat
+		FROM t3_tbl_user_review
+		GROUP BY csat
+		ORDER BY csat desc
+	</select>
 	<!-- 장바구니 등록 -->
 	<insert id="insertCartUser" parameterType="hashmap">
 		INSERT INTO t3_tbl_user_cart 

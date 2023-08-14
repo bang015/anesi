@@ -403,7 +403,7 @@
         									<apexchart type="bar" height="150" :options="chartOptions" :series="series"></apexchart>
      									</div>
 									</div>
-								</div>
+								</div> <!-- csat-box end -->
 								<div class="review-wrap">
 									<div class="review-box" v-for="item in reviewList">
 										<div class="user-profile">
@@ -428,6 +428,11 @@
 											<button class="help-btn">도움이 돼요</button> <span v-if="item.help > 0">{{item.help}}명에게 도움이 되었습니다.</span>
 										</div>
 									</div>
+								</div> <!-- review-wrap end -->
+							</div><!-- content-review end -->
+							<div class="inquiry-wrap">
+								<div class="">
+								
 								</div>
 							</div>
 						</div>
@@ -457,9 +462,10 @@ var app = new Vue({
 		reviewList : [],
 		num : 0 ,
 		mainImg : "",
+		csatCnt : [],
 		/* 그래프 시작 */
 		series: [{
-            data: [1, 2, 3, 4, 5]
+            data : []
           }],
           chartOptions: {
             chart: {
@@ -468,7 +474,9 @@ var app = new Vue({
               toolbar : {show : false},
               
             },
-            maxBarThickness: 1,
+            tooltip:{
+            	 enabled : false
+            },
             plotOptions: {
               bar: {
                 borderRadius: 4,
@@ -476,7 +484,7 @@ var app = new Vue({
               }
             },
             dataLabels: {
-              enabled: false
+             
             },
             fill: {
             	colors: ['#A782C3']
@@ -582,7 +590,27 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.reviewList = data.reviewList;	
-	               		console.log(self.reviewList)
+	                }                
+	            })
+		},
+		fnReviewCnt : function(){
+			 var self = this;
+	            var nparmap = {};	            
+	            $.ajax({
+	                url : "/reviewCntSearch.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {
+	                	var csat1 = data.csat1
+	                	var csat2 = data.csat2
+	                	var csat3 = data.csat3
+	                	var csat4 = data.csat4
+	                	var csat5 = data.csat5
+	               		self.csatCnt = [csat5, csat4, csat3, csat2, csat1];
+	               		self.series = [{
+	                        data: self.csatCnt
+	                      }]
 	                }                
 	            })
 		},
@@ -600,6 +628,7 @@ var app = new Vue({
 		self.fnThumbnailImg();
 		self.fnContentImg();
 		self.fnReview();
+		self.fnReviewCnt();
 	}// created
 });
 </script>

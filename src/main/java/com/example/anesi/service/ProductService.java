@@ -38,6 +38,7 @@ public interface ProductService {
 	List<Scrapbook>searchcontentImg2(HashMap<String, Object> map);
 	// 리뷰
 	List<Review>searchReview(HashMap<String, Object> map);
-
+	// 리뷰 별점 개수
+	HashMap<String, Object>searchReviewCnt(HashMap<String, Object> map);
 }
 

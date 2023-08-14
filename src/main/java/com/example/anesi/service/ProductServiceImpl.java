@@ -76,6 +76,29 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return productMapper.selectReview(map);
 	}
+	@Override
+	public HashMap<String, Object> searchReviewCnt(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object>resultMap = new HashMap<String, Object>();
+		List<Review> reviewCntList=productMapper.selectReviewCnt(map);
+		 // 별점 1점부터 5점까지의 개수를 담을 배열
+	    int[] ratingCounts = new int[5]; // 인덱스 0부터 4까지 사용
+
+	    // 각 별점의 개수를 세어 배열에 저장
+	    for (Review review : reviewCntList) {
+	        int csat = review.getCsat();
+	        if (csat >= 1 && csat <= 5) {
+	            ratingCounts[csat - 1]++; // 별점은 1부터 시작하므로 인덱스 조정
+	        }
+	    }
+
+	    // 결과를 resultMap에 저장
+	    for (int i = 0; i < 5; i++) {
+	        resultMap.put("csat" + (i + 1), ratingCounts[i]);
+	    }
+
+	    return resultMap;
+	}
 	
 	
 }

@@ -148,4 +148,12 @@ public class ProductController {
 		       resultMap.put("reviewList", reviewList);
 		       return new Gson().toJson(resultMap);
 		   }
+		// 리뷰
+		  @RequestMapping(value = "/reviewCntSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		   @ResponseBody
+		   public String reviewCnt(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		       resultMap = productService.searchReviewCnt(map);
+		       return new Gson().toJson(resultMap);
+		   }
 }
