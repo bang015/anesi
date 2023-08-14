@@ -35,4 +35,6 @@ public interface UserService {
 	User searchNick(HashMap<String, Object> map);
 	//기본프로필입력
 	int insertProfile(HashMap<String, Object> map);
+	//비밀번호변경
+	int editPassword(HashMap<String, Object> map);
 }

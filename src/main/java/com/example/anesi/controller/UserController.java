@@ -68,6 +68,12 @@ public class UserController {
 
 		return "/push_setting";
     }
+	// 비밀번호변경
+	@RequestMapping("/mypage/edit_password.do") 
+    public String edit_password(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/edit_password";
+    }
 	// 스크랩북
 	@RequestMapping("/scrapbook.do") 
     public String scrapbook(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
@@ -170,11 +176,19 @@ public class UserController {
 		return new Gson().toJson(resultMap);
 	}
 	//유저 정보 수정
-	@RequestMapping(value = "mypage/smsYn_edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/mypage/smsYn_edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String smsEdit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		userService.smsYnEdit(map);
+		return new Gson().toJson(resultMap);
+	}
+	//비밀번호변경
+	@RequestMapping(value = "/mypage/edit_password.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String edit_password(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		userService.editPassword(map);
 		return new Gson().toJson(resultMap);
 	}
 }

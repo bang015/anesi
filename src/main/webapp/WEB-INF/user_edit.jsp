@@ -61,6 +61,7 @@
 	visibility: visible;
 	text-decoration: none;
 	opacity: 1;
+	color : #A782C3;
 }
 .my_a2_ch {
     position: relative;
@@ -80,6 +81,7 @@
 	background-color: #A782C3;
 	visibility: visible; 
 	opacity: 1; 
+	color : #A782C3;
 }
 .hrr {
 	margin : 4px 0px;
@@ -170,9 +172,9 @@ img:hover{
 </div>
 <hr class="hrr">
 	<ul class="my_menu1">
-		<li class="my_li2"><a href="/mypage/user_edit.do" class="my_a2_ch">회원정보수정</a></li>
+		<li class="my_li2"><a href="/mypage/user_edit.do" class="my_a2_ch" style="color : #A782C3;">회원정보수정</a></li>
 		<li class="my_li2"><a href="/mypage/push_setting.do" class="my_a2">알림 설정</a></li>
-		<li class="my_li2"><a class="my_a2">비밀번호 변경</a></li>
+		<li class="my_li2"><a href="/mypage/edit_password.do" class="my_a2">비밀번호 변경</a></li>
 	</ul>
 <hr class="hrr">
 <div id="container">
@@ -338,6 +340,7 @@ var app = new Vue({
                 success : function(data) { 
                 	alert("회원정보수정이 완료되었습니다.");
                 	self.fnGetInfo();
+                	location.reload();
                 }
             });
 		},

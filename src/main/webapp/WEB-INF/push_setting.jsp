@@ -65,10 +65,10 @@
 	opacity: 1;
 }
 .my_a2_ch {
+	color : #A782C3;
     position: relative;
     text-align: center;
     cursor: pointer;
-    color : #A782C3;
 }
 .my_a2_ch:before {
     text-decoration: none;
@@ -140,8 +140,8 @@
 	<hr class="hrr">
 		<ul class="my_menu1">
 			<li class="my_li2"><a href="/mypage/user_edit.do" class="my_a2">회원정보수정</a></li>
-			<li class="my_li2"><a href="/mypage/push_setting.do" class="my_a2_ch">알림 설정</a></li>
-			<li class="my_li2"><a class="my_a2">비밀번호 변경</a></li>
+			<li class="my_li2"><a href="/mypage/push_setting.do" class="my_a2_ch" style="color : #A782C3;">알림 설정</a></li>
+			<li class="my_li2"><a href="/mypage/edit_password.do" class="my_a2">비밀번호 변경</a></li>
 		</ul>	
 	<hr class="hrr">
 	<div id="container">
@@ -181,6 +181,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
+                	if(self.info.smsYn == 'N'){
+                		self.info.smsYn = ''
+                	}
                 	console.log(self.info);
                 	console.log(self.info.smsYn);
                 }
@@ -188,14 +191,20 @@ var app = new Vue({
 		},
 		fnSmsYn : function(){
 			var self = this;
-			var nparmap = {no : self.sessionNo, smsYn : self.info.smsYn};
+			if(self.info.smsYn){
+				self.info.smsYn = '';
+			} else{
+				self.info.smsYn = 'Y';
+			}
+			var nparmap = {no : self.sessionNo, smsYn : self.info.smsYn == '' ? 'N' : 'Y'};
+			console.log(self.info.smsYn);
 			$.ajax({
-                url : "mypage/smsYn_edit.dox",
+                url : "/mypage/smsYn_edit.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	
+        				
                 }
             });
 		}

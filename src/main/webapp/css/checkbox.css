@@ -44,7 +44,7 @@ label.el-checkbox {
   width: 1.4em;
   height: 1.4em;
   content: '';
-  border: 1px solid #C0CCDA;
+  border: 1px solid #d7d7d7;
 }
 .el-radio > input[type="radio"] + .el-radio-style:after,
 .el-checkbox > input[type="checkbox"] + .el-checkbox-style:after {
@@ -55,7 +55,7 @@ label.el-checkbox {
 .el-radio > input[type="radio"][disabled] + .el-radio-style,
 .el-checkbox > input[type="checkbox"][disabled] + .el-checkbox-style {
   cursor: not-allowed;
-  color: #D3DCE6;
+  color: #d7d7d7;
 }
 .el-radio > input[type="radio"][disabled] + .el-radio-style:hover,
 .el-radio > input[type="radio"][disabled] + .el-radio-style:before,
@@ -67,12 +67,12 @@ label.el-checkbox {
 }
 .el-radio > input[type="radio"][disabled] + .el-radio-style:hover:before,
 .el-checkbox > input[type="checkbox"][disabled] + .el-checkbox-style:hover:before {
-  border: 1px solid #D3DCE6;
+  border: 1px solid #d7d7d7;
   animation-name: none;
 }
 .el-radio > input[type="radio"][disabled] + .el-radio-style:before,
 .el-checkbox > input[type="checkbox"][disabled] + .el-checkbox-style:before {
-  border-color: #D3DCE6;
+  border-color: #d7d7d7;
 }
 .el-radio > input[type="radio"]:checked + .el-radio-style:before,
 .el-checkbox > input[type="checkbox"]:checked + .el-checkbox-style:before {
@@ -136,7 +136,7 @@ label.el-checkbox {
 }
 .el-radio.el-radio-blue > input[type="radio"][disabled] + label:hover:before,
 .el-checkbox.el-checkbox-blue > input[type="checkbox"][disabled] + label:hover:before {
-  border-color: #D3DCE6;
+  border-color: #d7d7d7;
 }
 .el-checkbox.el-checkbox-blue > input[type="checkbox"]:checked[disabled] + label:before,
 .el-radio.el-radio-blue > input[type="radio"]:checked[disabled] + label:before {
@@ -205,7 +205,7 @@ label.el-checkbox {
 }
 .el-radio.el-radio-yellow > input[type="radio"][disabled] + label:hover:before,
 .el-checkbox.el-checkbox-yellow > input[type="checkbox"][disabled] + label:hover:before {
-  border-color: #D3DCE6;
+  border-color: #d7d7d7;
 }
 .el-checkbox.el-checkbox-yellow > input[type="checkbox"]:checked[disabled] + label:before,
 .el-radio.el-radio-yellow > input[type="radio"]:checked[disabled] + label:before {
@@ -232,7 +232,7 @@ label.el-checkbox {
 .el-switch .el-switch-style {
   height: 1.6em;
   left: 0;
-  background: #C0CCDA;
+  background: #d7d7d7;
   -webkit-border-radius: 0.8em;
   border-radius: 0.8em;
   display: inline-block;
@@ -262,7 +262,7 @@ label.el-checkbox {
 }
 .el-switch > input[type="checkbox"][disabled] + .el-switch-style {
   cursor: not-allowed;
-  background-color: #D3DCE6;
+  background-color: #d7d7d7;
 }
 .el-switch > input[type="checkbox"]:checked + .el-switch-style {
   background-color: #A782C3;

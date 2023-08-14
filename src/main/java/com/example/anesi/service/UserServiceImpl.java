@@ -12,7 +12,6 @@ import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
 
 
-
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -90,6 +89,11 @@ public class UserServiceImpl implements UserService{
 	public User searchNick(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return userMapper.searchNick(map);
+	}
+	@Override
+	public int editPassword(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.editPassword(map);
 	}
 
 }
