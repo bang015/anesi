@@ -363,7 +363,7 @@
 var app = new Vue({
 	el : '#app',
 	data : {
-		productNo : 4,
+		productNo : '${map.no}',
 		product : {},
 		csat : {},
 		option : [],

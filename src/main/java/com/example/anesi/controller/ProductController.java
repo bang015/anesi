@@ -39,6 +39,7 @@ public class ProductController {
 	//상품 상세 페이지
 	@RequestMapping("/product/view.do") 
 	public String view(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
 		return "/product_view";
 		
 	}
