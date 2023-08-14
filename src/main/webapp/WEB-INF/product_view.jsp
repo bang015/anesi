@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
@@ -355,13 +354,13 @@
 								{{product.productPrice}}원
 							</div>
 							<div class="main-option">
-								<select class="option-box">
-									<option v-for="item in option">{{item.optionName}}+({{item.optionPrice}}원)</option>
+								<select class="option-box" v-model="option1">
+									<option v-for="item in option" :value="item.optionNo">{{item.optionName}}(+{{item.optionPrice}}원)</option>
 								</select>
 							</div>
 							<div class="main-btn-wrap">
 								<button class="btn1">장바구니</button>
-								<button class="btn2">바로구매</button>
+								<button class="btn2" @click="fnPay">바로구매</button>
 							</div>
 						</div>
 					</div>
@@ -427,6 +426,11 @@
 										<div class="review-help">
 											<button class="help-btn">도움이 돼요</button> <span v-if="item.help > 0">{{item.help}}명에게 도움이 되었습니다.</span>
 										</div>
+										 
+									</div>
+									<div class="pagination">
+									     <button @click="prevPage" :disabled="currentPage == 1">이전</button>
+									     <button @click="nextPage" :disabled="currentPage == totalPages">다음</button>
 									</div>
 								</div> <!-- review-wrap end -->
 							</div><!-- content-review end -->
@@ -445,6 +449,7 @@
 	</div>
 </body>
 </html>
+<script src="../js/jquery.js"></script>
 <script>
 var app = new Vue({
 	el : '#app',
@@ -452,6 +457,7 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		option1 : "",
 		productNo : '${map.no}',
 		product : {},
 		csat : {},
@@ -463,6 +469,8 @@ var app = new Vue({
 		num : 0 ,
 		mainImg : "",
 		csatCnt : [],
+		itemsPerPage: 5,
+		currentPage: 1,
 		/* 그래프 시작 */
 		series: [{
             data : []
@@ -498,6 +506,20 @@ var app = new Vue({
             }
           }, /* 그래프 끝 */
 	},// data
+	computed: {
+	    // 현재 페이지에 해당하는 데이터 아이템들을 계산된 속성으로 반환
+	    paginatedReviewList() {
+	      var self=this;
+	      const startIndex = (self.currentPage - 1) * self.itemsPerPage;
+	      const endIndex = startIndex + self.itemsPerPage;
+	      return self.reviewList.slice(startIndex, endIndex);
+	    },
+	    // 전체 페이지 수를 계산된 속성으로 반환
+	    totalPages() {
+	    	var self = this;
+	      return Math.ceil(self.reviewList.length / self.itemsPerPage);
+	    }
+	  },
 	methods : {
 		
 		fnGetList : function(){
@@ -537,6 +559,7 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.option = data.option;
+	               		console.log(self.option);
 	                }                
 	            }); 
 		},
@@ -614,9 +637,19 @@ var app = new Vue({
 	                }                
 	            })
 		},
+		fnPay : function(){
+			 var self = this;
+	           $.pageChange("../order/main.do", {productNo : self.productNo, optionNo : self.option})
+		},
 		clickImg : function(imgPath,imgName){
 			var self = this
 			self.mainImg = imgPath+"/"+imgName;
+		},
+		prevPage() {
+		    this.currentPage--;
+		},
+		nextPage() {
+		    this.currentPage++;
 		}
 	}, // methods
 	created : function() {
