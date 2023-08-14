@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/order.css" rel="stylesheet">
+<link href="../css/checkbox.css" rel="stylesheet">
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <style>
@@ -38,6 +39,7 @@
 					            </div>
 							</div>
 							<span>아래 내용에 모두 동의합니다.(필수)</span>
+							<div class="err">{{errMsg}}</div>
 						</div>
 						<div class="orAgreement">
 							<div class="agreementBox">
@@ -63,24 +65,24 @@
 						</div>
 					</div>
 				</div>
-				<button class="orBtuStyle">00,000원 결제하기</button>
+				<button class="orBtuStyle" @click="fnOrder">00,000원 결제하기</button>
 			</div>
 			<div class="orInformation">
 				<div class="subheading">주문자</div>
 				<div class="orderer">
 					<label>
-					    <span :class="flgName ? '' : 'orRed'">이름</span>
+					    <span :class="!flgName ? '' : 'orRed'">이름</span>
 					    <div class="orInputBox">
-					        <input v-model="order.name" @keyup="fnCheck('name')" :class="flgName ? '' : 'orRed'">
+					        <input v-model="order.name" @input="fnCheck('name')" :class="!flgName ? '' : 'orRed'">
 					    </div>
 					</label>
 					<label>
-					    <span :class="flgEmail1 ? '' : 'orRed'">이메일</span>
+					    <span :class="!flgEmail1 ? '' : 'orRed'">이메일</span>
 					    <div class="orInputBox">
-					        <input v-model="order.email1" placeholder="이메일" @keyup="fnCheck('email1')" :class="flgEmail1 ? '' : 'orRed'"> @
+					        <input v-model="order.email1" placeholder="이메일" @input="fnCheck('email1')" :class="!flgEmail1 ? '' : 'orRed'"> @
 					    </div>
 					    <div class="orInputBox">
-					        <select v-model="order.email2" class="email2" ref="emailInput2" @chang="fnCheck('email2')" :class="flgEmail2 ? '' : 'orRed'">
+					        <select v-model="order.email2" class="email2" ref="emailInput2" @change="fnCheck('email2')" :class="!flgEmail2 ? '' : 'orRed'">
 					            <option value="">선택해주세요.</option>
 					            <option value="naver.com">naver.com</option>
 					            <option value="hanmail.net">hanmail.net</option>
@@ -93,7 +95,7 @@
 					    </div>
 					</label>
 					<label>
-					    <span :class="flgPhone ? '' : 'orRed'">휴대전화</span>
+					    <span :class="!flgPhone ? '' : 'orRed'">휴대전화</span>
 					    <div class="orSelectBox">
 					        <select v-model="order.phone1">
 					            <option value="010">010</option>
@@ -105,26 +107,26 @@
 					        </select>
 					    </div>
 					    <div class="orInputBox">
-					        <input v-model="order.phone2" placeholder="입력해주세요" @keyup="fnCheck('phone')" :class="flgPhone ? '' : 'orRed'">
+					        <input v-model="order.phone2" placeholder="입력해주세요" @input="fnCheck('phone')" :class="!flgPhone ? '' : 'orRed'">
 					    </div>
 					</label>
 				</div>
 				<div class="subheading address">배송지<span class="sameButton" @click="fnSameVal">위와 동일하게 채우기</span></div>
 				<div class="addr">
 					<label>
-					    <span :class="flgAddrName ? '' : 'orRed'">배송지명</span>
+					    <span :class="!flgAddrName ? '' : 'orRed'">배송지명</span>
 					    <div class="orInputBox">
-					        <input v-model="addr.addrName" @keyup="fnCheck('addrName')" :class="flgAddrName ? '' : 'orRed'">
+					        <input v-model="addr.addrName" @input="fnCheck('addrName')" :class="!flgAddrName ? '' : 'orRed'">
 					    </div>
 					</label>
 					<label>
-					    <span :class="flgAdName ? '' : 'orRed'">받는 사람</span>
+					    <span :class="!flgAdName ? '' : 'orRed'">받는 사람</span>
 					    <div class="orInputBox">
-					        <input v-model="addr.name" @keyup="fnCheck('adName')" :class="flgAdName ? '' : 'orRed'">
+					        <input v-model="addr.name" @input="fnCheck('adName')" :class="!flgAdName ? '' : 'orRed'">
 					    </div>
 					</label>
 					<label>
-					    <span :class="flgAdPhone ? '' : 'orRed'">휴대전화</span>
+					    <span :class="!flgAdPhone ? '' : 'orRed'">휴대전화</span>
 					    <div class="orSelectBox">
 					        <select v-model="addr.phone1">
 					            <option value="010">010</option>
@@ -136,24 +138,24 @@
 					        </select>
 					    </div>
 					    <div class="orInputBox">
-					        <input v-model="addr.phone2" placeholder="입력해주세요" @keyup="fnCheck('adPhone')" :class="flgAdPhone ? '' : 'orRed'">
+					        <input v-model="addr.phone2" placeholder="입력해주세요" @input="fnCheck('adPhone')" :class="!flgAdPhone ? '' : 'orRed'">
 					    </div>
 					</label>
 					<label>
-						<span :class="flgAddr ? '' : 'orRed'">주소</span>
+						<span :class="!flgAddr ? '' : 'orRed'">주소</span>
 						<button class="addrButton" @click="openAddressSearch">주소찾기</button>
 						<div class="orInputBox">
-					        <input v-model="addr.zip" readonly class="inpRead" :class="flgAddr ? '' : 'orRed'">
+					        <input v-model="addr.zip" readonly class="inpRead" :class="!flgAddr ? '' : 'orRed'">
 					    </div>
 					</label>
 					<label>
 						<div class="orInputBox addr2">
-					        <input v-model="addr.addr1" readonly class="inpRead" :class="flgAddr ? '' : 'orRed'">
+					        <input v-model="addr.addr1" readonly class="inpRead" :class="!flgAddr ? '' : 'orRed'">
 					    </div>
 					</label>
 					<label>
 						<div class="orInputBox addr2">
-					        <input v-model="addr.addr2" placeholder="상세주소 입력" :class="flgAddr ? '' : 'orRed'">
+					        <input v-model="addr.addr2" placeholder="상세주소 입력" :class="!flgAddr ? '' : 'orRed'">
 					    </div>
 					</label>
 					<div class='addr3'>
@@ -191,6 +193,31 @@
 						</div>
 					</div>
 				</div>
+				<div>
+					<div class="subheading address">장바구니 쿠폰
+						<span class="text2" v-if="couponList.length == 0">사용 가능한 쿠폰이 없습니다.</span>
+					</div>
+					<div>
+						<div v-for="item in couponList" class="orCoupon el-radio">
+							<input type="radio" v-model="order.couponNo" name="coupon" :value="item.couponNo" :id="item.couponNo">
+							<label class="el-radio-style" :for="item.couponNo"></label>
+							<div>
+								<div class="coupon1">
+									<span v-if="item.disFlg=='A'">{{item.discount}}원 할인</span>
+									<span v-else>{{item.discount}}% 할인</span>
+								</div>
+								<div>{{item.couponName}}<span v-if="item.maxDi != '0'" class="coupon2">(최대 {{item.maxDi}}원 할인)</span></div>
+							</div>
+						</div>
+						<div class="orCoupon  el-radio" v-if="couponList.length != 0">
+							<input type="radio" v-model="order.couponNo" name="coupon" value="" id="nonCoupon">
+							<label class="el-radio-style" for="nonCoupon"></label>
+							<div class="coupon1">
+								<span>적용 안 함</span>
+							</div>
+						</div>
+					</div>	
+				</div>
 			</div>
 		</div>
 	</div>
@@ -207,8 +234,10 @@ var app = new Vue({
 			email2 : "",
 			phone1 : "010",
 			phone2 : "",
+			couponNo : "" 
 		},
 		addr : {
+			userNo : '${sessionNo}',
 			name : "",
 			addrName : "",
 			phone1 : "010",
@@ -220,16 +249,20 @@ var app = new Vue({
 			deliveryRq : "0",
 			customDeliveryRq : ""
 		},
-		flgName: true,
-		flgEmail1: true,	
-		flgEmail2: true,
-		flgPhone: true,
-		flgAddrName: true,
-		flgAdName: true,
-		flgAdPhone : true,
-		flgAddr : true,
+		flgName: '',
+		flgEmail1: '',	
+		flgEmail2: '',
+		flgPhone: '',
+		flgAddrName: '',
+		flgAdName: '',
+		flgAdPhone : '',
+		flgAddr : '',
 		checkAm : [],
-		flg : false
+		flg : false,
+		userNo : '${sessionNo}',
+		couponList : [],
+		errMsg : "",
+		addrList : []
 	},// data
 	methods : {
 		fnAllCheck(){
@@ -261,58 +294,58 @@ var app = new Vue({
 		    var self = this;
 		    if (text === 'name') {
 		        if (self.order[text].trim() === '' || self.order[text] !== self.order[text].trim()) {
-		            self.flgName = false;
-		        } else {
 		            self.flgName = true;
+		        } else {
+		            self.flgName = false;
 		        }
 		    }
 		    if (text === 'email1') {
 		        if (self.order.email1.trim() === '' || self.order.email1 !== self.order.email1.trim()) {
-		            self.flgEmail1 = false;
-		        } else {
 		            self.flgEmail1 = true;
+		        } else {
+		            self.flgEmail1 = false;
 		        }
 		    }
 		    if (text === 'email2') {
 		        if (self.order[text].trim() === '' || self.order[text] !== self.order[text].trim()) {
-		            self.flgEmail2 = false;
-		        } else {
 		            self.flgEmail2 = true;
+		        } else {
+		            self.flgEmail2 = false;
 		        }
 		    }
 		    if (text === 'phone') {
 		        if (self.order.phone2.trim() === '' || self.order.phone2 !== self.order.phone2.trim()) {
-		            self.flgPhone = false;
-		        } else {
 		            self.flgPhone = true;
+		        } else {
+		            self.flgPhone = false;
 		        }
 		    }
 		    if (text === 'addrName') {
 		        if (self.addr.addrName.trim() === '' || self.addr.addrName !== self.addr.addrName.trim()) {
-		            self.flgAddrName = false;
-		        } else {
 		            self.flgAddrName = true;
+		        } else {
+		            self.flgAddrName = false;
 		        }
 		    }
 		    if (text === 'adName') {
 		        if (self.addr.name.trim() === '' || self.addr.name !== self.addr.name.trim()) {
-		            self.flgAdName = false;
-		        } else {
 		            self.flgAdName = true;
+		        } else {
+		            self.flgAdName = false;
 		        }
 		    }
 		    if (text === 'adPhone') {
 		        if (self.addr.phone2.trim() === '' || self.addr.phone2 !== self.addr.phone2.trim()) {
-		            self.flgAdPhone = false;
-		        } else {
 		            self.flgAdPhone = true;
+		        } else {
+		            self.flgAdPhone = false;
 		        }
 		    }
 		    if (text === 'addr') {
 		        if (self.addr.zip.trim() === '') {
-		            self.flgAddr = false;
-		        } else {
 		            self.flgAddr = true;
+		        } else {
+		            self.flgAddr = false;
 		        }
 		    }
 		},
@@ -346,10 +379,81 @@ var app = new Vue({
 		    	if(self.addr.deliveryRq == '5'){
 		    		
 		    	}
+		    },
+		    fnGetCoupon(){
+		    	var self = this;
+				var nparmap = {userNo : self.userNo};
+	            $.ajax({
+	                url : "../order/getCoupon.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {
+						self.couponList = data.list;
+						console.log(self.couponList);
+	                }
+	            });
+		    },
+		    fnOrder(){
+		    	var self = this;
+		    	self.fnCheck('name');
+		    	self.fnCheck('email1');
+		    	self.fnCheck('email2');
+		    	self.fnCheck('phone');
+		    	if(self.flgName || self.flgEmail1 || self.flgEmail2 || self.flgPhone){
+		    		window.scrollTo({
+		    	        top: 0,
+		    	        behavior: "smooth"
+		    	      });
+		    		return;
+		    	}
+		    	self.fnCheck('addrName');
+		    	self.fnCheck('adName');
+		    	self.fnCheck('adPhone');
+		    	self.fnCheck('addr');
+		    	if(self.flgAddrName || self.flgAdName || self.flgAdPhone || self.flgAddr){
+		    		window.scrollTo({
+		    	        top: 300,
+		    	        behavior: "smooth"
+		    	      });
+		    		return;
+		    	}
+		    	if(self.checkAm.length != 2){
+		    		self.errMsg = "결제 진행 필수사항을 동의해주세요";
+		    		return;
+		    	}
+		    	self.errMsg = '';
+		    	
+		    	var nparmap = self.addr;
+	            $.ajax({
+	                url : "../order/addAddr.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {
+						
+	                }
+	            });
+		    },
+		    fnGetAddrList(){
+		    	var self = this;
+		    	var nparmap = {userNo : self.userNo};
+	            $.ajax({
+	                url : "../order/searchAddr.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {
+						self.addrList = data.list;
+						console.log(self.addrList);
+	                }
+	            });
 		    }
 	}, // methods
 	created : function() {
 		var self = this;
+		self.fnGetCoupon();
+		self.fnGetAddrList();
 		window.jusoCallBack = self.handleAddressCallback;
 	}// created
 });

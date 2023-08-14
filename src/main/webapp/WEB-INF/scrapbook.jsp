@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="../js/jquery.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
@@ -39,7 +39,7 @@
 				
 				<div v-else class="imgBox">
 					<div v-for="item in list" class="chStandard" @click="imgClick(item)">
-						<div class="imgWrapper">
+						<div class="imgWrapper" @click="fnViewMove(item.productNo)">
 							<img alt="" :src="item.imgPath+'/'+item.imgName"  class="sbImg">
 							<div class="overlay" :class="{ 'selected': checkSb.includes(item.scrapbookNo) }" v-if="flg"></div>
 							<div class="custom-checkbox" :class="{ 'checked': checkSb.includes(item.scrapbookNo) }" @click="toggleCheckbox(item)" v-if="flg">
@@ -57,6 +57,7 @@
 
 </body>
 </html>
+<script src="../js/jquery.js"></script>
 <script>
 var app = new Vue({
 	el : '#app',
@@ -121,6 +122,10 @@ var app = new Vue({
                 }
             });
 		},
+		fnViewMove(productNo){
+			
+			$.pageChange("/product/view.do", {no : productNo} );
+		}
 	}, // methods
 	created : function() {
 		var self = this;

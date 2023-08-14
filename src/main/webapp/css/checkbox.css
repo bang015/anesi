@@ -86,8 +86,8 @@ label.el-checkbox {
   border-radius: 50%;
 }
 .el-radio > input[type="radio"] + .el-radio-style:after {
-  top: 0.4em;
-  left: 0.4em;
+  top: 6.7px;
+  left: 6.7px;
   width: 0.6em;
   height: 0.6em;
   border-radius: 50%;
