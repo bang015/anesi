@@ -168,5 +168,5 @@ public class ProductController {
 
 			    resultMap.put("list", list);
 			    return new Gson().toJson(resultMap);
-
+		  }
 }

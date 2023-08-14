@@ -52,7 +52,7 @@ public interface ProductMapper {
 	int deleteScrapbook (HashMap<String, Object> map);
 	//상품 장바구니
 		List<Product>selectCartList(HashMap<String, Object> map);
-
+ 
 	//회원 상품 스크랩북 리스트 체크
 	List<Scrapbook> selectScrapbookList (HashMap<String, Object> map);
 }
