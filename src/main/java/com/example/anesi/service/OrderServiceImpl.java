@@ -33,5 +33,14 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return orderMapper.selectAddrList(map);
 	}
-
+	// 입력 주소 검색
+	@Override
+	public UserAddress searchAddr(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderMapper.selectAddr(map);
+	}
+	
+	
+	
+	
 }

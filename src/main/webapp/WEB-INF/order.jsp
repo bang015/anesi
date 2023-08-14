@@ -115,8 +115,9 @@
 				<div class="addr">
 					<label>
 					    <div class="orInputBox3">
-					        <select @change="fnAddrChange">
-					        	<option v-for="item in addrList" >{{item.addrKind}} : {{item.addr}}</option>
+					        <select @change="fnAddrChange" v-model="defaule">
+					        	<option v-for="item in addrList" :value="item.defaultYn">{{item.addrKind}} : {{item.addr}}</option>
+					        	<option> 직접입력 </option>
 					        </select>
 					    </div>
 					</label>
@@ -235,13 +236,15 @@
 var app = new Vue({
 	el : '#app',
 	data : {
+		
 		order : {
 			name : "",
 			email1 : "",
 			email2 : "",
 			phone1 : "010",
 			phone2 : "",
-			couponNo : "" 
+			couponNo : "", 
+			addrNo : ""
 		},
 		addr : {
 			userNo : '${sessionNo}',
@@ -252,7 +255,7 @@ var app = new Vue({
 			addr1 : "",
 			addr2 : "",
 			zip : "",
-			addrDefault : "N",
+			addrDefault : 'N',
 			deliveryRq : "0",
 			customDeliveryRq : ""
 		},
@@ -270,7 +273,8 @@ var app = new Vue({
 		couponList : [],
 		errMsg : "",
 		addrList : [],
-		addrAdd : false
+		addrAdd : false,
+		defaule : 'Y'
 	},// data
 	methods : {
 		fnAllCheck(){
@@ -431,7 +435,7 @@ var app = new Vue({
 		    		return;
 		    	}
 		    	self.errMsg = '';
-		    	if(addrAdd){
+		    	if(self.addrAdd){
 			    	var nparmap = self.addr;
 		            $.ajax({
 		                url : "../order/addAddr.dox",
@@ -439,9 +443,18 @@ var app = new Vue({
 		                type : "POST", 
 		                data : nparmap,
 		                success : function(data) {
-							
+		                	 $.ajax({
+		 		                url : "../order/searchAddrInfo.dox",
+		 		                dataType:"json",	
+		 		                type : "POST", 
+		 		                data : nparmap,
+		 		                success : function(data) {
+		 							self.order.addrNo = data.info.addrNo;
+		 		                }
+		 		            });
 		                }
 		            });
+		           
 		    	}
 		    },
 		    fnGetAddrList(){
@@ -454,12 +467,14 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {
 						self.addrList = data.list;
+						console.log(self.addrList);
 						for(let i = 0; i < self.addrList.length; i++){
 							if(self.addrList[i].defaultYn == 'Y'){
 								self.addr.addrName= self.addrList[i].addrKind;
 								self.addr.addr1= self.addrList[i].addr;
 								self.addr.addr2= self.addrList[i].addr2;
 								self.addr.zip= self.addrList[i].zipcode;
+								self.order.addrNo = self.addrList[i].addrNo;
 							}
 						}
 	                }
@@ -469,10 +484,20 @@ var app = new Vue({
 		    	var self = this;
 		    	 const selectedIndex = event.target.selectedIndex;
 		    	 const selectedItem = self.addrList[selectedIndex];
+		    	 if(selectedItem == undefined){
+		    		 	self.addr.addrName= '';
+						self.addr.addr1= '';
+						self.addr.addr2= '';
+						self.addr.zip= '';
+						self.order.addrNo = '';
+						self.addrAdd = true;
+						return;
+		    	 }
 	    	 	self.addr.addrName= selectedItem.addrKind;
 				self.addr.addr1= selectedItem.addr;
 				self.addr.addr2= selectedItem.addr2;
 				self.addr.zip= selectedItem.zipcode;
+				self.order.addrNo = selectedItem.addrNo;
 				self.addrAdd = false;
 		    }
 	}, // methods

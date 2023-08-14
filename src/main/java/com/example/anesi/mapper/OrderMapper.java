@@ -16,4 +16,6 @@ public interface OrderMapper {
 	int insertAddr(HashMap<String, Object> map);
 	// 주소 검색
 	List<UserAddress> selectAddrList(HashMap<String, Object> map);
+	// 주소 한개 검색
+	UserAddress selectAddr(HashMap<String, Object> map);
 }

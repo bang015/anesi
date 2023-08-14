@@ -26,6 +26,7 @@ public class OrderController {
 	
 	@RequestMapping("/order/main.do") 
     public String order(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
         return "/order";
     }
 	
@@ -55,6 +56,16 @@ public class OrderController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<UserAddress> list = orderService.searchAddrList(map);
 		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//입력 주소 검색
+	@RequestMapping(value = "/order/searchAddrInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchAddr1(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		UserAddress info = orderService.searchAddr(map);
+		resultMap.put("info", info);
 		return new Gson().toJson(resultMap);
 	}
 }
