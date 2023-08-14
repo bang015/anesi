@@ -101,7 +101,6 @@
 .aaa {
   color: #A782C3; /* 원하는 색상 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-  font-size: 18px; /* 원하는 크기 */
   /* 다른 스타일 속성도 추가 가능 */
 }
 
@@ -216,7 +215,7 @@
 		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
 		    	<!-- 스크랩버튼-->
-		    	<a><i @click="fnInsertScrapbook(item.productNo), fnCheckScrapCnt(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
+		    	<a><i @click="fnInsertScrapbook(item.productNo), fnCheckScrap(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 	    
 	    
@@ -391,7 +390,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	
-                	self.fnCheckScrapCnt();
+                	self.fnCheckScrap();
                 	alert("등록완");
                     console.log(data);
 
@@ -401,7 +400,25 @@ var app = new Vue({
             console.log(self.showScrapModal);
 		},
 		
-		fnCheckScrapCnt : function(productNo) {
+		fnCheckScrap : function(productNo) {
+	    	var self = this;
+            var nparmap = { userNo : self.userNo, productNo: productNo};
+
+            $.ajax({
+                url : "/product/selectScrapCnt.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	 if(data.cnt>=1){
+                		 alert("이미담긴상품");
+                		 return;
+                	 }
+                }
+            }); 
+            
+		},
+		fnDeleteScrapbook : function(productNo) {
 	    	var self = this;
             var nparmap = { userNo : self.userNo, productNo: productNo};
 

@@ -44,12 +44,17 @@ public class StoreServiceImpl implements StoreService{
 	public int addScrapbook(HashMap<String, Object> map) {
 		return productMapper.insertScrapbook(map);
 	}
+	
+	@Override
+	public int removeScrapbook(HashMap<String, Object> map) {
+		return productMapper.deleteScrapbook(map);
+	}
 
 
 	@Override
-	public List<Scrapbook> searchScrapbookCnt(HashMap<String, Object> map) {
+	public List<Scrapbook> searchScrapbookList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return productMapper.selectScrapbookCnt(map);
+		return productMapper.selectScrapbookList(map);
 	}
 	
 	@Override

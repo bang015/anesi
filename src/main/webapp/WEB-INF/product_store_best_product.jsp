@@ -205,7 +205,7 @@
 		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
 		    	<!-- 스크랩버튼-->
-		    	<a v-if="userId!=''"><i @click="fnInsertScrapbook(item.productNo), fnCheckScrapCnt(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
+		    	<a v-if="userId!=''"><i @click="fnInsertScrapbook(item.productNo), fnCheckScrap(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 		    	<a v-else><i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 	    
@@ -387,7 +387,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	
-                	self.fnCheckScrapCnt();
+                	self.fnCheckScrap();
                 	alert("등록완");
 /*                     console.log(data);
  */
@@ -397,7 +397,7 @@ var app = new Vue({
             console.log(self.showScrapModal);
 		},
 		
-		fnCheckScrapCnt : function(productNo) {
+		fnCheckScrap : function(productNo) {
 	    	var self = this;
             var nparmap = { userNo : self.userNo, productNo: productNo};
 
