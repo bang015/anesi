@@ -8,20 +8,21 @@ public class Review {
 	private String content;
 	private String rImgName;
 	private String rImgPath;
-	private String pImgPath;
-	private String pImgName;
+	private String uImgPath;
+	private String uImgName;
 	
-	public String getpImgPath() {
-		return pImgPath;
+
+	public String getuImgPath() {
+		return uImgPath;
 	}
-	public void setpImgPath(String pImgPath) {
-		this.pImgPath = pImgPath;
+	public void setuImgPath(String uImgPath) {
+		this.uImgPath = uImgPath;
 	}
-	public String getpImgName() {
-		return pImgName;
+	public String getuImgName() {
+		return uImgName;
 	}
-	public void setpImgName(String pImgName) {
-		this.pImgName = pImgName;
+	public void setuImgName(String uImgName) {
+		this.uImgName = uImgName;
 	}
 	public String getCreateDate() {
 		return createDate;

@@ -5,13 +5,15 @@
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
 <title>상품 상세 페이지</title>
 <style>
-	html { 
+	/* html { 
   		scroll-behavior: smooth;
-	}
+	} */
 	.content{
 		position: relative;
     	min-height: 1px;
@@ -208,16 +210,28 @@
 	.csat-box{
 		background-color: #f7f8fa;
 		width: 700px;
-		height : 100px;
+		height : 150px;
 		border-radius: 8px;
 		margin-top: 30px;
+		display: flex;
 	}
 	.csat1{
 		display : inline-block;
 		width: 300px;
-		height: 60px;
-		border: 1px solid;
-		margin-top: 10px; 
+		height: 120px;
+		border-right: 2px solid #ededed;
+		margin-top: 20px;
+		margin-left: 30px;
+		 
+	}
+	.csat-box1{
+		margin-top : 45px;
+		margin-left: 55px;
+	}
+	.csatAvg{
+		margin-left: 10px;
+		font-size: 25px;
+		font-weight: bold;
 	}
 	.csat2{
 		display: inline-block;
@@ -234,6 +248,61 @@
 	}
 	.content-view{
 		width: 800px;
+	}
+	.user-profile{
+		display: inline-block;
+		width: 25px;
+		height: 25px;
+		margin-right: 5px;
+	}
+	.user-profileImg{
+		width: 25px;
+		height: 25px;
+		border-radius: 100px;
+		
+	}
+	.review-user{
+		display: inline-block;
+	}
+	.user-nick{
+		margin-left: 2px;
+		font-size: 14px;
+		color: #424242;
+		margin-bottom: 1px;
+	}
+	.review-user-box{
+		display: inline-block;
+		margin-top: 20px;
+	}
+	.review-box{
+		border-top: 1px solid #ededed;
+		margin-top: 10px;
+	}
+	.review-wrap{
+		margin-top: 30px;
+	}
+	.review-content{
+		margin-top : 20px;
+		margin-bottom : 20px;
+		font-size: 17px;
+	}
+	.help-btn{
+		height: 30px;
+		border: 1px solid #A782C3;
+		background-color: #fff;
+		color: #A782C3;
+		border-radius: 5px;
+		font-weight: bold;
+	}
+	.review-img-box{
+		width: 200px;
+		height: 200px;
+		margin-top: 20px;
+	}
+	.review-img{
+		width: 200px;
+		height: 200px;
+		border-radius: 5px;
 	}
 </style>
 </head>
@@ -253,18 +322,18 @@
 								<ul class="main-ul">
 									<li class="main-li" v-for="item in img">
 										<a href="javascript:;">
-											<img alt="콘텐츠 이미지" :src="item.imgPath+'/'+item.imgName">
+											<img alt="콘텐츠 이미지" :src="item.imgPath+'/'+item.imgName" @click="clickImg(item.imgPath, item.imgName)">
 										</a>	
 									</li>
 									<li class="main-li" v-for="item in imgList">
 										<a href="javascript:;">
-											<img alt="콘텐츠 이미지" :src="item.imgPath+'/'+item.imgName">
+											<img alt="콘텐츠 이미지" :src="item.imgPath+'/'+item.imgName" @click="clickImg(item.imgPath, item.imgName)">
 										</a>
 									</li>
 								</ul>
 							</div>
-							<div class="main-img" v-for="item in img">
-								<img alt="썸네일" :src="item.imgPath+'/'+item.imgName">
+							<div class="main-img">
+								<img alt="썸네일" :src="mainImg">
 							</div>
 						</div>
 					</div>
@@ -324,27 +393,39 @@
 								</div>
 								<div class="csat-box">
 									<div class="csat1">
-										<span v-for="index in csat.csatAvg"><i class="fa-solid fa-star fa-2x" style="color: #A782C3;"></i></span><span  v-for="index in num"><i class="fa-solid fa-star fa-2x" style="color: #9097a2;"></i></span>
-										<span>{{csat.csatAvg}}</span>
+										<div class="csat-box1">
+											<span v-for="index in csat.csatAvg"><i class="fa-solid fa-star fa-2x" style="color: #A782C3;"></i></span><span  v-for="index in num"><i class="fa-solid fa-star fa-2x" style="color: #9097a2;"></i></span>
+											<span class="csatAvg">{{csat.csatAvg}}</span>
+										</div>
 									</div>
 									<div class="csat2">
-										그래프 
+										<div id="chart">
+        									<apexchart type="bar" height="150" :options="chartOptions" :series="series"></apexchart>
+     									</div>
 									</div>
 								</div>
 								<div class="review-wrap">
 									<div class="review-box" v-for="item in reviewList">
-										<div class="review-user">
-											<div class="user-nick">{{item.nick}}</div>
+										<div class="user-profile">
+												<img class="user-profileImg" alt="프로필이미지" :src="item.uImgPath+'/'+item.uImgName">
 										</div>
-										<span></span>
-										<div class="review-img">
+										<div class="review-user">
+											
+											<div class="review-user-box">
+												<div class="user-nick">{{item.nick}}</div>
+												<span v-for="index in item.csat"><i class="fa-solid fa-star" style="color: #A782C3;"></i></span><span v-for="index in 5-item.csat"><i class="fa-solid fa-star" style="color: #9097a2;"></i></span>
+												<span>{{item.createDate}}</span>
+											</div>
+										</div>
 										
+										<div class="review-img-box" v-if="item.rImgName !=undefined">
+											<img class="review-img" alt="리뷰이미지" :src="item.rImgPath+'/'+item.rImgName">
 										</div>
 										<div class="review-content">
-										
+											{{item.content}}
 										</div>
 										<div class="review-help">
-											<button>도움이 돼요</button> <span></span>
+											<button class="help-btn">도움이 돼요</button> <span v-if="item.help > 0">{{item.help}}명에게 도움이 되었습니다.</span>
 										</div>
 									</div>
 								</div>
@@ -362,6 +443,9 @@
 <script>
 var app = new Vue({
 	el : '#app',
+	components: {
+        apexchart: VueApexCharts,
+      },
 	data : {
 		productNo : '${map.no}',
 		product : {},
@@ -371,7 +455,40 @@ var app = new Vue({
 		img : [],
 		imgList2 : [],
 		reviewList : [],
-		num : 0
+		num : 0 ,
+		mainImg : "",
+		/* 그래프 시작 */
+		series: [{
+            data: [1, 2, 3, 4, 5]
+          }],
+          chartOptions: {
+            chart: {
+              type: 'bar',
+              height: 50,
+              toolbar : {show : false},
+              
+            },
+            maxBarThickness: 1,
+            plotOptions: {
+              bar: {
+                borderRadius: 4,
+                horizontal: true,
+              }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            fill: {
+            	colors: ['#A782C3']
+              },
+            xaxis: {
+            	labels : {show : false},
+              categories: ['5점', '4점', '3점', '2점', '1점'
+              ],
+              axisTicks: { show: false },
+              axisBorder: { show: false },
+            }
+          }, /* 그래프 끝 */
 	},// data
 	methods : {
 		
@@ -384,7 +501,7 @@ var app = new Vue({
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) {                
-	               		self.product = data.product;
+	               		self.product = data.product;	               		
 	                }                
 	            }); 
 		},
@@ -438,6 +555,7 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.img = data.img;
+	               		self.mainImg = self.img[0].imgPath+"/"+self.img[0].imgName
 	                }                
 	            }); 
 		},
@@ -463,9 +581,14 @@ var app = new Vue({
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) {                
-	               		self.reviewList = data.reviewList;
+	               		self.reviewList = data.reviewList;	
+	               		console.log(self.reviewList)
 	                }                
 	            })
+		},
+		clickImg : function(imgPath,imgName){
+			var self = this
+			self.mainImg = imgPath+"/"+imgName;
 		}
 	}, // methods
 	created : function() {

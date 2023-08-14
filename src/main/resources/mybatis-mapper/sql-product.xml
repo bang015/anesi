@@ -98,7 +98,7 @@
 	</select> 
 	<!-- 리뷰 -->
 	<select id="selectReview" parameterType="hashmap" resultType="com.example.anesi.model.Review">
-		SELECT u.NICK, r.CREATEDATE, r.CSAT , r.`HELP`,r.CONTENT, p.U_IMG_NAME, p.U_IMG_PATH, ri.R_IMG_NAME, ri.R_IMG_PATH 
+		SELECT u.NICK, SUBSTR(r.CREATEDATE,1,11) as CREATEDATE, r.CSAT , r.`HELP`,r.CONTENT, p.U_IMG_NAME, p.U_IMG_PATH, ri.R_IMG_NAME, ri.R_IMG_PATH 
 		FROM t3_tbl_user_review r
 		INNER JOIN t3_tbl_user u ON r.USER_NO = u.USER_NO
 		LEFT JOIN t3_tbl_review_image ri ON ri.R_NO = r.R_NO

@@ -347,6 +347,7 @@ var app = new Vue({
 		 	if(self.user.bYear=="연" || self.user.bMonth=="월" || self.user.bDay=="일"){
 		 		self.user.birth = "";
 		 	}
+		 	console.log(self.clause);
             $.ajax({
                 url : "join.dox",
                 dataType:"json",	
@@ -356,6 +357,7 @@ var app = new Vue({
                 	alert("회원가입이 완료되었습니다.");
                 }
             });
+            
 		},
 		// 이메일 중복체크 및 메세지
 		fnCheck : function(){
