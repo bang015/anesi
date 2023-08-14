@@ -6,9 +6,41 @@ public class Review {
 	private int csat;
 	private int help;
 	private String content;
-	private String imgName;
-	private String imgPath;
+	private String rImgName;
+	private String rImgPath;
+	private String pImgPath;
+	private String pImgName;
 	
+	public String getpImgPath() {
+		return pImgPath;
+	}
+	public void setpImgPath(String pImgPath) {
+		this.pImgPath = pImgPath;
+	}
+	public String getpImgName() {
+		return pImgName;
+	}
+	public void setpImgName(String pImgName) {
+		this.pImgName = pImgName;
+	}
+	public String getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+	public String getrImgName() {
+		return rImgName;
+	}
+	public void setrImgName(String rImgName) {
+		this.rImgName = rImgName;
+	}
+	public String getrImgPath() {
+		return rImgPath;
+	}
+	public void setrImgPath(String rImgPath) {
+		this.rImgPath = rImgPath;
+	}
 	public String getNick() {
 		return nick;
 	}
@@ -39,16 +71,5 @@ public class Review {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getImgName() {
-		return imgName;
-	}
-	public void setImgName(String imgName) {
-		this.imgName = imgName;
-	}
-	public String getImgPath() {
-		return imgPath;
-	}
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
-	}
+	
 }

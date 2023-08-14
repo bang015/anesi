@@ -463,7 +463,6 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.reviewList = data.reviewList;
-	               		console.log(self.reviewList.);
 	                }                
 	            })
 		}
