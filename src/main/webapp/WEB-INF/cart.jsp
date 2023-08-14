@@ -18,7 +18,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
 		<div id="container">
-	<button class="btn">구매하기</button>
+	<button class="btn" @click="goToPurchasePage">구매하기</button>
 			<h2>장바구니</h2>
 			<span><button class="non">선택 삭제</button></span>
 			<div id="cart-app" class="container">
@@ -105,6 +105,16 @@ new Vue({
 	        alert('사용자 번호가 없습니다. 로그인 후 이용해주세요.');
 	      }
 	    }
-	  }
+	  },
+	  goToPurchasePage() {
+		    if (this.cartItems.length > 0) {
+		      sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+		      window.location.href = "../order/main.do"; // 실제 구매 페이지의 URL로 변경해주세요.
+		    } else {
+		      alert('장바구니에 상품이 없습니다. 상품을 추가한 후 다시 시도해주세요.');
+		      /* const cartItems = JSON.parse(sessionStorage.getItem('cartItems')); 구매페이지에서 리스트 불러오기 */
+
+		    }
+		  }
 	});
 </script>
