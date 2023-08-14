@@ -9,9 +9,9 @@
 <meta charset="EUC-KR">
 <title>상품 상세 페이지</title>
 <style>
-	/* html { 스크롤 스무스
+	html { 
   		scroll-behavior: smooth;
-	} */
+	}
 	.content{
 		position: relative;
     	min-height: 1px;
@@ -276,7 +276,7 @@
 								{{product.productName}}
 							</div>
 							<div class="main-csat">
-								<span v-for="index in csat.csatAvg"><i class="fa-solid fa-star" style="color: #A782C3;"></i></span><span  v-for="index in 5 - csat.csatAvg"><i class="fa-solid fa-star" style="color: #9097a2;"></i></span>
+								<span v-for="index in csat.csatAvg"><i class="fa-solid fa-star" style="color: #A782C3;"></i></span><span v-for="index in num"><i class="fa-solid fa-star" style="color: #9097a2;"></i></span>
 								{{csat.csatAvg}}({{csat.csatCnt}})
 							</div>
 							<div class="main-discount">
@@ -324,7 +324,7 @@
 								</div>
 								<div class="csat-box">
 									<div class="csat1">
-										<span v-for="index in Math.floor(csat.csatAvg)"><i class="fa-solid fa-star fa-2x" style="color: #A782C3;"></i></span><span  v-for="(numder,index) in Math.floor(5 - csat.csatAvg)"><i class="fa-solid fa-star fa-2x" style="color: #9097a2;"></i></span>
+										<span v-for="index in csat.csatAvg"><i class="fa-solid fa-star fa-2x" style="color: #A782C3;"></i></span><span  v-for="index in num"><i class="fa-solid fa-star fa-2x" style="color: #9097a2;"></i></span>
 										<span>{{csat.csatAvg}}</span>
 									</div>
 									<div class="csat2">
@@ -370,7 +370,8 @@ var app = new Vue({
 		imgList : [],
 		img : [],
 		imgList2 : [],
-		reviewList : []
+		reviewList : [],
+		num : 0
 	},// data
 	methods : {
 		
@@ -397,7 +398,7 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.csat = data.csat;
-	               		console.log(self.csat.csatAvg);
+	               		self.num = 5 - self.csat.csatAvg;
 	                }                
 	            }); 
 		},
