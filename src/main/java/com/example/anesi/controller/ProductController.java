@@ -156,4 +156,17 @@ public class ProductController {
 		       resultMap = productService.searchReviewCnt(map);
 		       return new Gson().toJson(resultMap);
 		   }
+		  
+		  @RequestMapping(value = "/product/viewCartList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			public String userCartList(Model model, @RequestParam("userNo") int userNo) throws Exception {
+			    HashMap<String, Object> map = new HashMap<String, Object>();
+			    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			    
+			    map.put("userNo", userNo); // userNo를 int 형으로 받아서 HashMap에 담아 전달합니다.
+			    List<Product> list = productService.selectCartList(map);
+
+			    resultMap.put("list", list);
+			    return new Gson().toJson(resultMap);
+
 }
