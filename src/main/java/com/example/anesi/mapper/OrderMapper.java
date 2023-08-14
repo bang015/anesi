@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.anesi.model.Order;
+import com.example.anesi.model.UserAddress;
 
 @Mapper
 public interface OrderMapper {
@@ -14,5 +15,5 @@ public interface OrderMapper {
 	// 주소 입력
 	int insertAddr(HashMap<String, Object> map);
 	// 주소 검색
-	List<Order> selectAddrList(HashMap<String, Object> map);
+	List<UserAddress> selectAddrList(HashMap<String, Object> map);
 }

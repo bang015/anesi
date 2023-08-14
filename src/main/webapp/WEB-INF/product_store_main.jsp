@@ -12,9 +12,14 @@
 <title>스토어메인페이지</title>
 <style>
 
-
-
-
+/* 
+*{
+border : 1px solid black;
+} */
+.main-category__title{
+ 	 font-size : 25px;
+ 	 font-weight : bold;
+}
 .product-main-category__image{
 	width:100px;
 	height:100px;
@@ -57,8 +62,6 @@
 }
       
 .category-order_toggle{
-	float : right;
-	margin-right : 100px;
 	background-color:#A782C3;
 	border: #fff;
 	text-align: center;
@@ -68,6 +71,8 @@
 	width: 100px;
 	font-family: 'Pretendard-Regular';
 	color :  #fff;
+	  position:relative;
+	  flex : 0 0 5;
 	
 	
 	
@@ -82,6 +87,7 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  position:absolute;
 }
 
 .category-order-list li {
@@ -93,7 +99,6 @@
 .category-order-list-container {
 	background :  #fff;
    	width: 100px;
-   	float : right;
     
 
 }
@@ -101,7 +106,6 @@
 .aaa {
   color: #A782C3; /* 원하는 색상 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-  /* 다른 스타일 속성도 추가 가능 */
 }
 
 
@@ -141,14 +145,15 @@
 	
 	
 
-<!-- 상품 정렬하는 버튼-->	
-<button class="category-order_toggle">
+<span class="main-category__title">전체상품</span>
+<div><button class="category-order_toggle">
 	  정렬<i class="fa-solid fa-chevron-down"></i>
-</button>
+</button></div>
+<!-- 상품 정렬하는 버튼-->
+
 <div class="category-order-list-container" style="display:none;">
 
 
-	
   <ul class="category-order-list" >
     <li value=""><a>전체</a></li>
     <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">가격낮은순</a></li>
@@ -161,18 +166,12 @@
   </ul>
 </div>
   
-	<div ><h1>전체상품</h1></div>
 	
 	
 		<div class="production-item__content" v-for="item in list">
 			<a @click="fnProductView(item.productNo)" class="production-item-thumnail">
-			
-			
 			    <img class="production-item-thumnail__image animate__animated animate__pulse"
 			         alt="썸네일" :src="item.imgPath + '/' + item.imgName">
-			
-			
-			
 		    </a>
 		    <div class="production-item-header" >
 			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
@@ -183,14 +182,11 @@
 		    </div>
 
 		    <span class="production-item-price">
-		    
 		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
 			    정가
 			    <span class="won_icon">￦</span>
 				<span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
 			   </span>
-			    
-			    
 			    <!-- production-item-price__sell  : 파는 가격 -->
 		       <div class="production-item-price__sell">
 			    <span class="won_icon">￦</span>
@@ -198,7 +194,6 @@
 			    <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
 			    </div>
 	        </span>
-	        
 	        
 			    <!--  production-item-rating : 별점-->
 		       <div class="production-item-rating">
@@ -211,7 +206,10 @@
 		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
 		    	<!-- 스크랩버튼-->
-		    	<a v-if="userId!='' ||"><i @click="fnInsertScrapbook(item)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
+		    	<a v-if="userId!=''">
+		    		<i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button"></i>
+		    		<i @click="fnDeleteScrapbook(item)" v-else class="fa-regular fa-solid fa-bookmark"></i>
+	    		</a>
 		    	<a v-else><i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 	    
@@ -240,7 +238,17 @@
 		    <button @click="fnMoveLoginPage">로그인페이지로 이동하기</button>
 		  </div>
 		</div>
+		
+		
 	
+    	<div class="modal" v-if="showScrapDeleteModal">
+		  <div class="modal-card">
+		    <h2>스크랩북에서 삭제되었습니다.</h2>
+		    <button @click="closeModal">쇼핑계속하기</button>
+		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
+		  </div>
+		  
+		</div>
     	<div class="modal" v-if="showScrapModalBan">
 		  <div class="modal-card">
 		    <h2>이미 담긴상품입니다.</h2>
@@ -264,8 +272,20 @@
 
 $(document).ready(function() {
     // 상품정렬 버튼 클릭 이벤트 추가
+    var isListOpen = false; // Flag to track the state of the list container
+
     $('.category-order_toggle').click(function() {
-       $('.category-order-list-container').slideToggle('fast');
+        if (!isListOpen) { // 현재 목록이 닫혀있는 경우에만 열기
+            $('.category-order-list-container').slideDown('slow');
+            isListOpen = true;
+        }
+    });
+
+    // 목록 항목 클릭 이벤트 추가
+    $('.category-order-list a').click(function() {
+        // 목록 항목을 클릭하면 목록을 닫습니다.
+        $('.category-order-list-container').slideUp('slow');
+        isListOpen = false;
     });
 });
 
@@ -280,18 +300,13 @@ var app = new Vue({
 		showCartModal: false,
 		showScrapModal: false,
 		showScrapModalBan: false,
+		showScrapDeleteModal: false,
 		userId : '${sessionId}',
 		userNick : '${sessionNick}',
 		userNo : '${sessionNo}',
 		productNo : "",
 		scrapbookList : []
 	
-
-
-	
-		
-		
-
 	},// data
 	methods : {
 		fnGetList : function(){
@@ -306,8 +321,7 @@ var app = new Vue({
                 	
                 	self.list = data.list;
                 	self.list2=data.list2;
-/*                 	console.log(self.list);
- */                	
+                	
                 }
             }); 
 		},
@@ -346,11 +360,17 @@ var app = new Vue({
           var self = this;
           self.showScrapModal = true;
 	    },
+	    openScrapDeleteModal: function() {
+          var self = this;
+          self.showScrapDeleteModal = true;
+	    },
 	
 	    // 모달 닫기
 	    closeModal: function() {
 	      this.showCartModal = false;
 	      this.showScrapModal = false;
+	      this.showScrapModalBan = false;
+	      this.showScrapDeleteModal = false;
 	    },
 	    
 	    fnMoveCart : function() {
@@ -388,20 +408,20 @@ var app = new Vue({
 
 		}, 
 		
-		fnCheckScrapCnt : function(item) {
+		fnCheckScrap : function(item) {
 	    	var self = this;
             var nparmap = {userNo: self.userNo};
            
           
             $.ajax({
-                url : "/product/selectScrapCnt.dox",
+                url : "/product/selectScrapList.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                    console.log(data.list);
-                    
-                    self.scrapbookList = data.list;
+                	for(let i=0; i<data.list.length;i++){
+                        self.scrapbookList.push(data.list[i].productNo.toString());
+                     }
 
                 }
             }); 
@@ -411,11 +431,7 @@ var app = new Vue({
 	    fnInsertScrapbook : function(item) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
-            self.fnCheckScrapCnt(item)
-            if(data.cnt >= 1){
-            	alert("이미담긴상품");
-            	return;
-            }
+           
             $.ajax({
                 url : "/product/insertScrap.dox",
                 dataType:"json",	
@@ -423,11 +439,25 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	
-                	
-                	alert("등록완");
                 }
             }); 
             self.openScrapModal();
+            console.log(self.showScrapModal);
+		},
+	    fnDeleteScrapbook : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+           
+            $.ajax({
+                url : "/product/deleteScrap.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	console.log("삭제완")
+                }
+            }); 
+            self.openScrapDeleteModal();
             console.log(self.showScrapModal);
 		},
 		
@@ -446,7 +476,7 @@ var app = new Vue({
 	created : function() {
 		var self = this;
 		self.fnGetList();
-		self.fnCheckScrapCnt();
+		self.fnCheckScrap();
 	
 	
 

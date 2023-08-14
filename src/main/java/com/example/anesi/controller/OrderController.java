@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Order;
+import com.example.anesi.model.UserAddress;
 import com.example.anesi.service.OrderService;
 import com.google.gson.Gson;
 
@@ -52,7 +53,7 @@ public class OrderController {
 	@ResponseBody
 	public String searchAddr(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Order> list = orderService.searchAddrList(map);
+		List<UserAddress> list = orderService.searchAddrList(map);
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}

@@ -123,8 +123,10 @@ var app = new Vue({
             });
 		},
 		fnViewMove(productNo){
-			
-			$.pageChange("/product/view.do", {no : productNo} );
+			var self = this;
+			if(!self.flg){
+				$.pageChange("/product/view.do", {no : productNo} );
+			}
 		}
 	}, // methods
 	created : function() {

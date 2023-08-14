@@ -101,7 +101,6 @@
 .aaa {
   color: #A782C3; /* 원하는 색상 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-  font-size: 18px; /* 원하는 크기 */
   /* 다른 스타일 속성도 추가 가능 */
 }
 

@@ -19,8 +19,11 @@ public interface StoreService {
 	//회원 상품 스크랩북에 추가
 	int addScrapbook (HashMap<String, Object> map);
 	
+	//회원 상품 스크랩북에 추가
+	int removeScrapbook (HashMap<String, Object> map);
+	
 	//회원 상품 스크랩북 수량체크
-	List<Scrapbook> searchScrapbookCnt (HashMap<String, Object> map);
+	List<Scrapbook> searchScrapbookList (HashMap<String, Object> map);
 	
 	// 상품 썸네일 이미지 
 	List<Scrapbook> searchThumbnailImg(HashMap<String, Object> map);

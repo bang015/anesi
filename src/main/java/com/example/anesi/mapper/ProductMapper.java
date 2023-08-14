@@ -48,7 +48,9 @@ public interface ProductMapper {
 	
 	//회원 상품 스크랩북 추가
 	int insertScrapbook (HashMap<String, Object> map);
+	//회원 상품 스크랩북 삭제
+	int deleteScrapbook (HashMap<String, Object> map);
 	
-	//회원 상품 스크랩북 수량 체크
-	List<Scrapbook> selectScrapbookCnt (HashMap<String, Object> map);
+	//회원 상품 스크랩북 리스트 체크
+	List<Scrapbook> selectScrapbookList (HashMap<String, Object> map);
 }

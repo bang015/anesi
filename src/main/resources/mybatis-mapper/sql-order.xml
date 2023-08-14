@@ -14,9 +14,14 @@
 		VALUES(#{userNo}, #{zip}, #{addr1}, #{addr2}, #{addrName}, #{addrDefault})
 	</insert>
 	
-	<select id="selectAddrList" parameterType="hashmap" resultType="com.example.anesi.model.Order">
+	<select id="selectAddrList" parameterType="hashmap" resultType="com.example.anesi.model.UserAddress">
 		SELECT *
 		FROM t3_tbl_user_address
 		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="selectAddr" parameterType="hashmap" resultType="com.example.anesi.model.UserAddress">
+		SELECT *
+		FROM t3_tbl_user_address
 	</select>
 </mapper>

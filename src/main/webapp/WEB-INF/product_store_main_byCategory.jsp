@@ -101,7 +101,6 @@
 .aaa {
   color: #A782C3; /* 원하는 색상 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-  font-size: 18px; /* 원하는 크기 */
   /* 다른 스타일 속성도 추가 가능 */
 }
 
@@ -190,7 +189,7 @@
 			   </div>
 				<a><i class="fa fa-shopping-cart modal-toggle-button" @click="openCartModal"></i></a>
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-				<a v-if="userId!=''"><i @click="fnInsertScrapbook(item.productNo), fnCheckScrapCnt(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
+				<a v-if="userId!=''"><i @click="fnInsertScrapbook(item.productNo), fnCheckScrap(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 		    	<a v-else><i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i></a>	
     	    </div> <!-- class="production-item__content" 끝-->
 	    

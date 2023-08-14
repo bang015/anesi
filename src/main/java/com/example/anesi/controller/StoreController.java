@@ -77,12 +77,22 @@ public class StoreController {
 		return new Gson().toJson(resultMap);
 	}
 	
-	@RequestMapping(value = "/product/selectScrapCnt.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	//스크랩북에 상품담기
+	@RequestMapping(value = "/product/deleteScrap.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String deleteScrap(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		storeService.removeScrapbook(map);
+		resultMap.put("success", "스크랩북삭제완료");
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/product/selectScrapList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String selectScrapCnt(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Scrapbook> list = storeService.searchScrapbookCnt(map);
+		List<Scrapbook> list = storeService.searchScrapbookList(map);
 		resultMap.put("success", "스크랩북개수확인");
 		resultMap.put("list", list);
 	
