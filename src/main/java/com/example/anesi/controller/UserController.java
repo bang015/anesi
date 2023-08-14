@@ -179,6 +179,9 @@ public class UserController {
 	public String userEdit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		userService.editUser(map);
+		User info = userService.selectUserNickname(map);
+		resultMap.put("info", info);
+		session.setAttribute("sessionNick", info.getNick());
 		return new Gson().toJson(resultMap);
 	}
 	//유저 정보 수정
