@@ -78,4 +78,13 @@
 			SMSYN = #{smsYn}
 		WHERE USER_NO = #{no}
 	</update>
+	<select id="searchNick" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT *
+		FROM t3_tbl_user
+		WHERE NICK = #{nick}
+	</select>
+	<insert id="insertProfile">
+		INSERT INTO t3_tbl_profile_image(USER_NO, U_IMG_ORG_NAME) 
+     	VALUES(#{userNo}, #{profile})
+	</insert>
 </mapper>

@@ -22,12 +22,16 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int userJoin(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return userMapper.userJoin(map);
+		userMapper.userJoin(map);
+		User user = userMapper.searchNick(map);
+		map.put("userNo", user.getUserNo());
+		map.put("profile", user.getUserName());
+		userMapper.insertProfile(map);
+		return 1;
 	}
 	//이메일 중복체크
 	@Override
 	public int joinCnt(HashMap<String, Object> map) {
-		System.out.println(map);
 		return userMapper.joinCnt(map);
 	}
 	//닉네임 중복체크
@@ -50,7 +54,6 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int removeScrapbook(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		System.out.println(map);
 		return userMapper.deleteScrapbook(map);
 	}
 	@Override
@@ -70,7 +73,6 @@ public class UserServiceImpl implements UserService{
 	}
 	@Override
 	public int editUser(HashMap<String, Object> map) {
-		System.out.println(map);
 		// TODO Auto-generated method stub
 		return userMapper.editUser(map);
 	}
@@ -78,6 +80,16 @@ public class UserServiceImpl implements UserService{
 	public int smsYnEdit(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return userMapper.smsYnEdit(map);
+	}
+	@Override
+	public int insertProfile(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.insertProfile(map);
+	}
+	@Override
+	public User searchNick(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.searchNick(map);
 	}
 
 }

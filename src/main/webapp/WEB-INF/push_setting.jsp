@@ -151,7 +151,7 @@
 		<span class="text3">이메일, 문자 메시지 알림 수신</span>
 			<span class="switch1">
 			<label class="el-switch">
-  			<input type="checkbox" v-model="info.smsYn" value="true" @click="fnSmsYn">
+  			<input type="checkbox" v-model="info.smsYn" value="Y" @click="fnSmsYn">
  	 		<span class="el-switch-style"></span>
  	 		</label>
  	 		</span>
@@ -172,6 +172,7 @@ var app = new Vue({
 	},// data
 	methods : {
 		fnGetInfo : function(){
+			var self = this;
 			var nparmap = {no : self.sessionNo};
 			$.ajax({
                 url : "user_info.dox",
@@ -180,41 +181,28 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	console.log(self.sessionNo);
+                	console.log(self.info);
+                	console.log(self.info.smsYn);
                 }
             });
 		},
 		fnSmsYn : function(){
 			var self = this;
-			var self = this;
-			if(self.info.smsYn){
-				self.sms="Y";
-			}else if(!self.info.smsYn){
-				self.sms="";
-			}
-			var nparmap = {no : self.sessionNo, smsYn : self.sms};
+			var nparmap = {no : self.sessionNo, smsYn : self.info.smsYn};
 			$.ajax({
-                url : "/mypage/smsYn_edit.dox",
+                url : "mypage/smsYn_edit.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	console.log(self.info.smsYn);
-                	console.log(self.sms);
-					if(self.sms==""){
-						alert("알림 수신 거부되었습니다.");
-					}else if(self.sms=="Y"){
-						alert("알림 수신 동의되었습니다.");
-					}
+                	
                 }
             });
 		}
 	}, // methods
 	created : function() {
 		var self = this;
-    	console.log(self.sessionNick);
     	self.fnGetInfo();
-    	console.log(self.sessionNick);
 	}// created
 });
 </script>

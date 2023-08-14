@@ -31,4 +31,8 @@ public interface UserService {
 	int editUser(HashMap<String, Object> map);
 	//알림설정수정
 	int smsYnEdit(HashMap<String, Object> map);
+	//닉네임검색
+	User searchNick(HashMap<String, Object> map);
+	//기본프로필입력
+	int insertProfile(HashMap<String, Object> map);
 }

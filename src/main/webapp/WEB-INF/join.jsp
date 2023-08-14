@@ -347,7 +347,6 @@ var app = new Vue({
 		 	if(self.user.bYear=="연" || self.user.bMonth=="월" || self.user.bDay=="일"){
 		 		self.user.birth = "";
 		 	}
-		 	console.log(self.clause);
             $.ajax({
                 url : "join.dox",
                 dataType:"json",	
