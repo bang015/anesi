@@ -101,7 +101,6 @@
 .aaa {
   color: #A782C3; /* 원하는 색상 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-  font-size: 18px; /* 원하는 크기 */
   /* 다른 스타일 속성도 추가 가능 */
 }
 
@@ -166,7 +165,7 @@
 	
 	
 		<div class="production-item__content" v-for="item in list">
-			<a href="javascript:;" class="production-item-thumnail">
+			<a @click="fnProductView(item.productNo)" class="production-item-thumnail">
 			
 			
 			    <img class="production-item-thumnail__image animate__animated animate__pulse"
@@ -415,6 +414,12 @@ var app = new Vue({
                 }
             }); 
             
+		},
+		
+		fnProductView : function(productNo){
+	    	var self = this;
+	    	   $.pageChange("/product/view.do",{no : productNo});//보낼필요없을때 파라미터 빈값으로{}
+
 		}
 		
 		

@@ -168,4 +168,12 @@ header {
 	width: 300px;
 }
 
+.aaa,
+.bbb,
+.ccc {
+	font-size: 25px;
+	margin : 20px;
+	
+}
+
   
