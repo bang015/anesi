@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>카테고리별 상품메인페이지</title>
+<title>인기상품</title>
 <style>
 
 
@@ -37,7 +37,7 @@
 	width:220px;
 	height:338px;
   	float : left;
-	  margin : 50px;
+	margin : 50px;
 }
 
 #product-main-category__total > li {
@@ -101,11 +101,30 @@
 .aaa {
   color: #A782C3; /* 원하는 색상 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-  font-size: 18px; /* 원하는 크기 */
   /* 다른 스타일 속성도 추가 가능 */
 }
 
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 불투명한 검은색 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    z-index:1000;
+  
+}
+
+.modal-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
 
 
 
@@ -114,13 +133,13 @@
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
-<jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
 
 
-	<div id="store_main_furniture">
+	<div id="store_main">
 	
 	
+
 <!-- 상품 정렬하는 버튼-->	
 <button class="category-order_toggle">
 	  정렬<i class="fa-solid fa-chevron-down"></i>
@@ -140,30 +159,28 @@
     <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">리뷰많은순</a></li>
   </ul>
 </div>
-
   
-
-		<h1 >{{categoryNo}}</h1>
+	<div ><h1>베스트상품</h1></div>
 	
 	
-		<div class="production-item__content" v-for="item in list" >
-		
-		
-		
-			<a href="javascript:;" class="production-item-thumnail">
-		   
+		<div class="production-item__content" v-for="item in list">
+			<a @click="fnProductView(item.productNo)" class="production-item-thumnail">
+			
 			
 			    <img class="production-item-thumnail__image animate__animated animate__pulse"
 			         alt="썸네일" :src="item.imgPath + '/' + item.imgName">
+			
+			
+			
 		    </a>
-		    <div class="production-item-header"  >
-			    <span class="production-item-header__brand">{{item.manufacturer}}</span>
+		    <div class="production-item-header" >
+			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
 			    <span class="production-item-header__name">{{item.productName}}</span>
 			    <div class="production-item-header__kind">{{item.categoryName}} 
 			    <span class="production-item-header__country">{{item.country}}</span>
 			    </div>
 		    </div>
-			 
+
 		    <span class="production-item-price">
 		    
 		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
@@ -188,14 +205,17 @@
 			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
 			    <span class="production-item-rating__score">4.5</span>
 			   </div>
-				<a><i class="fa fa-shopping-cart modal-toggle-button" @click="openCartModal"></i></a>
+			   <!-- 장바구니버튼-->
+				<a ><i @click="fnInsertCart(item)" class="fa fa-shopping-cart modal-toggle-button" ></i></a>
+		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-		    	<a><i class="fa-regular fa-bookmark modal-toggle-button" @click="openScrapModal"></i></a>
+		    	<!-- 스크랩버튼-->
+		    	<a><i @click="fnInsertScrapbook(item.productNo), fnCheckScrapCnt(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 	    
 	    
 	    
-    	<div class="modal" v-if="showCartModal">
+    	<div class="modal" v-if="showCartModal" >
 		  <div class="modal-card">
 		    <h2>장바구니에 추가</h2>
 		    <p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
@@ -209,7 +229,16 @@
 		    <h2>스크랩북에 등록</h2>
 		    <p>상품이 스크랩되었습니다.</p>
 		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">마이페이지로 이동하기</button>
+		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
+		  </div>
+		</div>
+	
+    	<div class="modal" v-if="showScrapModalBan">
+		  <div class="modal-card">
+		    <h2>이미 담긴상품입니다.</h2>
+		    <p>스크랩북을 확인해주세요</p>
+		    <button @click="closeModal">쇼핑계속하기</button>
+		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
 		  </div>
 		</div>
 	
@@ -219,52 +248,55 @@
 
 	
 	
-	<jsp:include page="footer.jsp"></jsp:include>
 	
 </body>
 </html>
 <script>
 
+$(document).ready(function() {
+    // 상품정렬 버튼 클릭 이벤트 추가
+    $('.category-order_toggle').click(function() {
+       $('.category-order-list-container').slideToggle('fast');
+    });
+});
 
 
 var app = new Vue({
-	el : '#store_main_furniture',
+	el : '#store_main',
 	data : {
 		list : [],
 		list2 : [],
+		
 		item : "",
-		item2 : "",
 		showCartModal: false,
 		showScrapModal: false,
+		showScrapModalBan: false,
 		userId : '${sessionId}',
 		userNick : '${sessionNick}',
-		categoryNo : '${map.no}',
-		categoryName : "",
+		userNo : '${sessionNo}',
 		productNo : ""
-		
-		
-		
-		
+
+
 	
+		
+		
+
 	},// data
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar, 
-		            		categoryNo : self.categoryNo, 
-		            		categoryName : self.categoryName,
-		            		productNo : self.productNo};
+            var nparmap = {categoryOrderBar : self.categoryOrderBar, productNo : self.productNo};
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-				
+                	
                 	self.list = data.list;
-                	self.list2 = data.list2;
-                	console.log(self.list2.categoryNo);
-             
+                	self.list2=data.list2;
+/*                 	console.log(self.list);
+ */                	
                 }
             }); 
 		},
@@ -303,6 +335,7 @@ var app = new Vue({
           var self = this;
           self.showScrapModal = true;
 	    },
+	
 	    // 모달 닫기
 	    closeModal: function() {
 	      this.showCartModal = false;
@@ -314,32 +347,89 @@ var app = new Vue({
 	    },
 	    fnMoveMyPage : function() {
         	location.href = "/mypage.do";
-	    }
+	    },
 	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	        
-	        
+	    fnInsertCart : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+            console.log(self.showCartModal);
+
+            $.ajax({
+                url : "/product/insertCart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	/* alert("등록완"); */
+                   /*  console.log(self.userNo); */
+
+                }
+            }); 
+            
+            self.openCartModal();
+            console.log(self.showCartModal);
+
+		},
+		
+	    fnInsertScrapbook : function(productNo) {
+	    	var self = this;
+            var nparmap = { userNo : self.userNo, productNo: productNo};
+            
+            
+            console.log(self.showScrapModal);
+
+            $.ajax({
+                url : "/product/insertScrap.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	
+                	self.fnCheckScrapCnt();
+                	alert("등록완");
+/*                     console.log(data);
+ */
+                }
+            }); 
+            self.openScrapModal();
+            console.log(self.showScrapModal);
+		},
+		
+		fnCheckScrapCnt : function(productNo) {
+	    	var self = this;
+            var nparmap = { userNo : self.userNo, productNo: productNo};
+
+            $.ajax({
+                url : "/product/selectScrapCnt.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	 if(data.cnt>=1){
+                		 alert("이미담긴상품");
+                		 return;
+                	 }
+                }
+            }); 
+            
+		},
+		
+		fnProductView : function(productNo){
+	    	var self = this;
+	    	   $.pageChange("/product/view.do",{no : productNo});//보낼필요없을때 파라미터 빈값으로{}
+
+		}
+		
+		
+		
+
      }, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
+	
+	
 
 	}// created
 });
-
-
-$(document).ready(function() {
-    // 상품정렬 버튼 클릭 이벤트 추가
-    $('.category-order_toggle').click(function() {
-       $('.category-order-list-container').slideToggle('fast');
-    });
-});
-
 </script>

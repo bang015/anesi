@@ -26,7 +26,8 @@ public class LoginController {
 	//로그인
 	@RequestMapping("/login.do") 
 	public String login(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		
+		session.invalidate();//세션만료하는애
+
 		return "/login";
 		
 	}

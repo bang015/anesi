@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>카테고리별메인페이지</title>
+<title>스토어메인페이지</title>
 <style>
 
 
@@ -211,7 +211,8 @@
 		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
 		    	<!-- 스크랩버튼-->
-		    	<a><i @click="fnInsertScrapbook(item.productNo), fnCheckScrapCnt(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
+		    	<a v-if="userId!=''"><i @click="fnInsertScrapbook(item.productNo), fnCheckScrapCnt(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
+		    	<a v-else><i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 	    
 	    
@@ -226,11 +227,17 @@
 		</div>
 		
     	<div class="modal" v-if="showScrapModal">
-		  <div class="modal-card">
+		  <div class="modal-card"  v-if="userId!=''">
 		    <h2>스크랩북에 등록</h2>
 		    <p>상품이 스크랩되었습니다.</p>
 		    <button @click="closeModal">쇼핑계속하기</button>
 		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
+		  </div>
+		  <div class="modal-card"  v-else>
+		    <h2>로그인후 사용 가능합니다.</h2>
+		    <p>로그인하시겠습니까?</p>
+		    <button @click="closeModal">쇼핑계속하기</button>
+		    <button @click="fnMoveMyPage">로그인페이지로 이동하기</button>
 		  </div>
 		</div>
 	
