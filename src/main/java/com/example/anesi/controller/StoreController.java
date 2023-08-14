@@ -76,6 +76,19 @@ public class StoreController {
 		resultMap.put("success", "스크랩북등록완료");
 		return new Gson().toJson(resultMap);
 	}
+	
+	@RequestMapping(value = "/product/selectScrapCnt.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String selectScrapCnt(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int cnt = storeService.searchScrapbookCnt(map);
+		resultMap.put("success", "스크랩북개수확인");
+		resultMap.put("cnt", cnt);
+	
+		
+		return new Gson().toJson(resultMap);
+	}
 
 	
 	  // 상품 썸네일 이미지

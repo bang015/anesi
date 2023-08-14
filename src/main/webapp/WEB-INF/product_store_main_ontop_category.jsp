@@ -176,12 +176,6 @@ var app = new Vue({
 		
 
 
-	     fnOrderBy: function (orderBy) {
-            var self = this;
-            self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정
-            self.fnGetList(); // AJAX 요청 보내기
-	     },
-	      
 	      
 	    //이미지 마우스 오버했을때 pulse 애니메이션
         addPulseAnimation: function(event) {
@@ -192,22 +186,7 @@ var app = new Vue({
         },
         
         
-        
-        // 모달 열기
-	    openCartModal: function() {
-          var self = this;
-          self.showCartModal = true;
-	    },
-	    openScrapModal: function() {
-          var self = this;
-          self.showScrapModal = true;
-	    },
-	    // 모달 닫기
-	    closeModal: function() {
-	      this.showCartModal = false;
-	      this.showScrapModal = false;
-	    },
-
+      
 	    //category 눌렀을때 메뉴별로 배열해줌
 	      fnMoveaa : function(item){
 	            var self = this;

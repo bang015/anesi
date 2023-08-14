@@ -211,7 +211,7 @@
 		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
 		    	<!-- 스크랩버튼-->
-		    	<a v-if="userId!=''"><i @click="fnInsertScrapbook(item.productNo), fnCheckScrapCnt(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
+		    	<a v-if="userId!=''"><i @click="fnInsertScrapbook(item), fnCheckScrapCnt(item)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 		    	<a v-else><i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
 	    </div> <!-- class="production-item__content" 끝-->
 	    
@@ -364,7 +364,10 @@ var app = new Vue({
 	    fnInsertCart : function(item) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
-            console.log(self.showCartModal);
+            console.log(self.userNo);
+            console.log(item.productNo);
+            
+           
 
             $.ajax({
                 url : "/product/insertCart.dox",
@@ -372,8 +375,8 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	/* alert("등록완"); */
-                   /*  console.log(self.userNo); */
+                	alert("등록완");
+                   console.log(self.userNo);
 
                 }
             }); 
@@ -381,14 +384,28 @@ var app = new Vue({
             self.openCartModal();
             console.log(self.showCartModal);
 
+		}, 
+		
+		fnCheckScrapCnt : function(item) {
+	    	var self = this;
+            var nparmap = {userNo: self.userNo, productNo: item.productNo};
+          
+            $.ajax({
+                url : "/product/selectScrapCnt.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                    console.log(data.cnt);
+                }
+            }); 
+            
 		},
 		
-	    fnInsertScrapbook : function(productNo) {
+	    fnInsertScrapbook : function(item) {
 	    	var self = this;
-            var nparmap = { userNo : self.userNo, productNo: productNo};
-            
-            
-            console.log(self.showScrapModal);
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+			
 
             $.ajax({
                 url : "/product/insertScrap.dox",
@@ -397,34 +414,15 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	
-                	self.fnCheckScrapCnt();
+                	
                 	alert("등록완");
-/*                     console.log(data);
- */
                 }
             }); 
             self.openScrapModal();
             console.log(self.showScrapModal);
 		},
 		
-		fnCheckScrapCnt : function(productNo) {
-	    	var self = this;
-            var nparmap = { userNo : self.userNo, productNo: productNo};
-
-            $.ajax({
-                url : "/product/selectScrapCnt.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	 if(data.cnt>=1){
-                		 alert("이미담긴상품");
-                		 return;
-                	 }
-                }
-            }); 
-            
-		},
+		
 		
 		fnProductView : function(productNo){
 	    	var self = this;

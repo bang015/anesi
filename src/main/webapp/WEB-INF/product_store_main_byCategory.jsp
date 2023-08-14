@@ -190,12 +190,12 @@
 			   </div>
 				<a><i class="fa fa-shopping-cart modal-toggle-button" @click="openCartModal"></i></a>
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-		    	<a><i class="fa-regular fa-bookmark modal-toggle-button" @click="openScrapModal"></i></a>
-	    </div> <!-- class="production-item__content" 끝-->
+				<a v-if="userId!=''"><i @click="fnInsertScrapbook(item.productNo), fnCheckScrapCnt(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
+		    	<a v-else><i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i></a>	
+    	    </div> <!-- class="production-item__content" 끝-->
 	    
 	    
-	    
-    	<div class="modal" v-if="showCartModal">
+	  <div class="modal" v-if="showCartModal" >
 		  <div class="modal-card">
 		    <h2>장바구니에 추가</h2>
 		    <p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
@@ -205,13 +205,29 @@
 		</div>
 		
     	<div class="modal" v-if="showScrapModal">
-		  <div class="modal-card">
+		  <div class="modal-card"  v-if="userId!=''">
 		    <h2>스크랩북에 등록</h2>
 		    <p>상품이 스크랩되었습니다.</p>
 		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">마이페이지로 이동하기</button>
+		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
+		  </div>
+		  <div class="modal-card"  v-else>
+		    <h2>로그인후 사용 가능합니다.</h2>
+		    <p>로그인하시겠습니까?</p>
+		    <button @click="closeModal">쇼핑계속하기</button>
+		    <button @click="fnMoveLoginPage">로그인페이지로 이동하기</button>
 		  </div>
 		</div>
+	
+    	<div class="modal" v-if="showScrapModalBan">
+		  <div class="modal-card">
+		    <h2>이미 담긴상품입니다.</h2>
+		    <p>스크랩북을 확인해주세요</p>
+		    <button @click="closeModal">쇼핑계속하기</button>
+		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
+		  </div>
+		</div>
+	
 	
 	    
     </div>
@@ -314,7 +330,10 @@ var app = new Vue({
 	    },
 	    fnMoveMyPage : function() {
         	location.href = "/mypage.do";
-	    }
+	    },
+	    fnMoveLoginPage : function() {
+        	location.href = "/login.do";
+	    },
 	    
 	    
 	    
