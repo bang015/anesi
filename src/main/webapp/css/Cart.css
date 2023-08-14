@@ -1,11 +1,11 @@
 @charset "EUC-KR";
 
 body{
-	position: absolute;
-	background-color: rgb(231, 231, 231);
+	background-color:white;
 	width: 800px;
 	left: 400px;
-}
+
+	}
 .firstbox{
 background-color: white;
 padding-left: 40px;
@@ -14,4 +14,64 @@ padding-left: 40px;
 .cartImg{
 	width: 60px;
 }
+		#container{
+				font-size: 20px;
+			margin-top: 200px;
+			margin-left: 40px;
+			width: 700px;
+			border: 1px solid whitesmoke;
+			padding: 60px;
 		
+			margin-bottom:100px ;
+			background-color: whitesmoke
+		}
+		
+		
+		input[id="cb1"] + label {
+			position: absolute;
+			left: 470px;
+			top: 220px;
+			size: 20px;
+			
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				border: 2px solid #bcbcbc;
+				cursor: pointer;
+			}
+			input[id="cb1"]:checked + label {
+				background-color: deepskyblue;
+			}
+			input[id="cb1"] {
+				display: none;
+			}
+			.non{
+				background-color: white;
+				border : 0px;
+				position: absolute;
+			right: 420px;
+			top: 200px;
+			}
+			.cal{
+			position: absolute;
+			right: 420px;
+			top: 250px;
+			width: 400px;	
+			border: 1px solid whitesmoke;
+			text-align: center;
+			background-color: whitesmoke;
+			font-size: 18px;
+			}
+			th{
+				padding: 15px;
+			}
+			td{
+				padding-left: 15px;
+			}
+			.btn{
+			position: absolute;
+			right: 470px;
+			top: 440px;
+			width: 300px;
+			height: 40px;
+			}

@@ -9,7 +9,7 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/Cart.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>장바구니</title>
 <style>
 </style>
 </head>
@@ -18,9 +18,13 @@
 <jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
 		<div id="container">
+	<button class="btn">구매하기</button>
 			<h2>장바구니</h2>
+			<span><button class="non">선택 삭제</button></span>
 			<div id="cart-app" class="container">
   <table id="cart-table" class="table table-bordered">
+     <input type="checkbox" id="cb1">
+    <label for="cb1"></label>
     <thead>
       <tr>
         <th>상품 번호</th>
@@ -29,10 +33,9 @@
         <th>제조사</th>
         <th>제조국</th>
         <th>가격</th>
-        <th>사용자 번호</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="fon">
       <tr v-for="item in cartItems">
         <td>{{ item.productNo }}</td>
         <td>{{ item.productName }}</td>
@@ -40,11 +43,17 @@
         <td>{{ item.manufacturer }}</td>
         <td>{{ item.country }}</td>
         <td>{{ item.productPrice }}</td>
-        <td>{{ item.userNo }}</td>
       </tr>
     </tbody>
   </table>
+  <div class="cal">
+  <p>총 가격: {{ totalPrice }}원</p>
+  <p>총 배송비: {{ totalShippingCost }}원</p>
+  <p>총 할인금액: {{ totalDiscount }}원</p>
+  <p>최종 가격: {{ finalPrice }}원</p>
+  </div>
 </div>
+	
 
 </body>
 </html>
@@ -53,6 +62,24 @@ new Vue({
 	  el: '#cart-app',
 	  data: {
 	    cartItems: []
+	  },
+	  computed: {
+	    totalPrice() {
+	      return this.cartItems.reduce((total, item) => {
+	        return total + parseInt(item.productPrice);
+	      }, 0);
+	    },
+	    totalShippingCost() {
+	      // 배송비를 계산하는 로직을 추가하시면 됩니다. 예를 들어, 모든 상품에 대해 배송비가 2,500원이라면:
+	    	return this.totalPrice >= 30000 ? 0 : this.cartItems.length * 2500;
+	    },
+	    totalDiscount() {
+	      // 할인 금액을 계산하는 로직을 추가하시면 됩니다. 예를 들어, 모든 상품에 대해 할인율이 10%라면:
+	      return this.totalPrice * 0.1;
+	    },
+	    finalPrice() {
+	      return this.totalPrice + this.totalShippingCost - this.totalDiscount;
+	    }
 	  },
 	  mounted() {
 	    this.loadCartList();
@@ -77,7 +104,7 @@ new Vue({
 	      } else {
 	        alert('사용자 번호가 없습니다. 로그인 후 이용해주세요.');
 	      }
-	    } 
+	    }
 	  }
 	});
 </script>
