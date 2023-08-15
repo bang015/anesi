@@ -51,6 +51,22 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return orderMapper.insertOrder(map);
 	}
+	@Override
+	public int removeCoupon(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderMapper.deleteCoupon(map);
+	}
+	@Override
+	public int editAddr(HashMap<String, Object> map) {
+		orderMapper.updateAddr1(map);
+		orderMapper.updateAddr2(map);
+		return 1;
+	}
+	// 당일 주문량 조회
+	@Override
+	public int searchOrderCnt(HashMap<String, Object> map) {
+		return orderMapper.selectOrderCnt(map);
+	}
 	
 	
 	

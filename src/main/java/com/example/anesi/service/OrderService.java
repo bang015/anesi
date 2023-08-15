@@ -20,4 +20,10 @@ public interface OrderService {
 	ProductOption searchOptionInfo(HashMap<String, Object> map);
 	//주문 입력
 	int addOrder(HashMap<String, Object> map);
+	//쿠폰 삭제
+	int removeCoupon(HashMap<String, Object> map);
+	//주소 업데이트
+	int editAddr(HashMap<String, Object> map);
+	// 당일 주문량 검색
+	int searchOrderCnt(HashMap<String, Object> map);
 }

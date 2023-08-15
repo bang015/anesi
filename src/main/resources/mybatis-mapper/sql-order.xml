@@ -6,7 +6,7 @@
 	<select id="selectCouponList" parameterType="hashmap" resultType="com.example.anesi.model.Order">
 		SELECT *
 		FROM t3_tbl_user_coupon
-		WHERE USER_NO = #{userNo}
+		WHERE USER_NO = #{userNo} AND USE_YN = 'N'
 	</select>
 	
 	<insert id="insertAddr" parameterType="hashmap" >
@@ -32,15 +32,41 @@
 		WHERE OPTION_NO = #{optionNo}
 	</select>
 	<insert id="insertOrder" parameterType="hashmap">
-    INSERT INTO t3_tbl_user_order (
-        PRODUCT_NO, OPTION_NO, USER_NO, ADDR_NO, DELIVERY_SIT, REQUEST,
-        ORDER_PRICE, ORDER_NAME, ORDER_EMAIL, ORDER_PHONE,
-        RECEIPT_NAME, RECEIPT_PHONE, CNT
-    )
-    VALUES (
-        #{productNo}, #{optionNo}, #{userNo}, #{addrNo}, '1', #{request},
-        #{orderPrice}, #{orderName}, #{orderEmail}, #{orderPhone},
-        #{receiptName}, #{receiptPhone}, #{cnt}
-    )
-</insert>
+	    INSERT INTO t3_tbl_user_order (
+	        PRODUCT_NO, OPTION_NO, USER_NO, ADDR_NO, DELIVERY_SIT, REQUEST,
+	        ORDER_PRICE, ORDER_NAME, ORDER_EMAIL, ORDER_PHONE,
+	        RECEIPT_NAME, RECEIPT_PHONE, CNT
+	    )
+	    VALUES (
+	        #{productNo}, #{optionNo}, #{userNo}, #{addrNo}, '1', #{request},
+	        #{orderPrice}, #{orderName}, #{orderEmail}, #{orderPhone},
+	        #{receiptName}, #{receiptPhone}, #{cnt}
+	    )
+	</insert>
+	<update id="deleteCoupon" parameterType="hashmap">
+		UPDATE t3_tbl_user_coupon
+			SET
+			USE_YN = 'Y'
+		WHERE COUPON_NO = #{couponNo}
+	</update>
+	
+	<update id="updateAddr1" parameterType="hashmap">
+		UPDATE t3_tbl_user_address
+			SET
+			DEFAULT_YN = 'N'
+		WHERE DEFAULT_YN = 'Y' AND USER_NO = #{userNo}
+	</update>
+	
+	<update id="updateAddr2" parameterType="hashmap">
+		UPDATE t3_tbl_user_address
+			SET
+			DEFAULT_YN = 'Y'
+		WHERE ADDR_NO = #{addrNo} AND USER_NO = #{userNo}
+	</update>
+	
+	<select id="selectOrderCnt" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM t3_tbl_user_order
+		WHERE DATE(CREATEDATE) = DATE(NOW());
+	</select>
 </mapper>

@@ -5,6 +5,7 @@
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/order.css" rel="stylesheet">
@@ -280,7 +281,8 @@ var app = new Vue({
 		addrList : [],
 		addrAdd : false,
 		defaule : 'Y',
-		discount : '0'
+		discount : '0',
+		cnt : 0
 	},// data
 	methods : {
 		fnAllCheck(){
@@ -463,6 +465,18 @@ var app = new Vue({
 		            });
 		           
 		    	} else{
+		    		if(self.addr.addrDefault == 'Y'){
+		    			var nparmap = {addrNo : self.order.addrNo, userNo : self.userNo};
+		    			 $.ajax({
+				                url : "../order/editAddr.dox",
+				                dataType:"json",	
+				                type : "POST", 
+				                data : nparmap,
+				                success : function(data) {
+				                	
+				                }
+		    			 });
+			    	}
 		    		self.fnOrrder2();
 		    	}
 		    	
@@ -473,15 +487,68 @@ var app = new Vue({
 		    	var orderEmail = self.order.email1 +'@'+ self.order.email2
 		    	var orderPhone = self.order.phone1 + self.order.phone2;
 		    	var receiptPhone = self.addr.phone1 + self.addr.phone2;
-		    	var nparmap = {productNo : self.productNo, optionNo : self.optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.addr.customDeliveryRq, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : '1'};
-		    	 $.ajax({
-		                url : "../order/order.dox",
-		                dataType:"json",	
-		                type : "POST", 
-		                data : nparmap,
-		                success : function(data) {
-		                }
-		    	 });
+		    	var request = '';
+		    	switch (self.addr.deliveryRq) {
+			        case '1':
+			            request = '부재시 문앞에 놓아주세요';
+			            break;
+			        case '2':
+			            request = '부재시 경비실에 맡겨주세요';
+			            break;
+			        case '3':
+			            request = '부재시 집 앞에 놓아주세요';
+			            break;
+			        case '4':
+			            request = '배송 전에 연락주세요';
+			            break;
+			        case '5':
+			            request = self.addr.customDeliveryRq;
+			            break;
+			        default:
+			            request = '';
+		   		 }
+	              IMP.request_pay({ // param
+	              pg: "kakaopay.TC0ONETIME",
+	              pay_method: "card",
+	              merchant_uid: "ORD"+self.formatDate(new Date())+"-"+self.cnt,
+	              name: self.productInfo.productName,
+	              amount: self.finalAmount,
+	              buyer_email: orderEmail,
+	              buyer_name: self.order.name,
+	              buyer_tel: receiptPhone,
+	              buyer_addr: self.addr.addr1,
+	              buyer_postcode: "01181"
+	            }, rsp => { // callback
+	            	console.log(rsp);
+	              if (rsp.success && rsp.paid_amount == self.finalAmount) {
+	            	  var nparmap = {productNo : self.productNo, optionNo : self.optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : '1'};
+	 		    	 $.ajax({
+	 		                url : "../order/order.dox",
+	 		                dataType:"json",	
+	 		                type : "POST", 
+	 		                data : nparmap,
+	 		                success : function(data) {
+	 		                	if(self.order.couponNo != ''){
+	 		                		var nparmap = {couponNo : self.order.couponNo};
+	 		                		 $.ajax({
+	 		     		                url : "../order/couponRemove.dox",
+	 		     		                dataType:"json",	
+	 		     		                type : "POST", 
+	 		     		                data : nparmap,
+	 		     		                success : function(data) {
+	 		     		                	
+	 		     		                }
+	 		                		 });
+	 		                	}
+	 		                }
+	 		    	 });
+	              } else {
+	               
+	                // 결제 실패 시 로직,
+	               
+	              }
+	            });
+		    	
 		    },
 		    fnGetAddrList(){
 		    	var self = this;
@@ -501,6 +568,7 @@ var app = new Vue({
 								self.addr.addr2= self.addrList[i].addr2;
 								self.addr.zip= self.addrList[i].zipcode;
 								self.order.addrNo = self.addrList[i].addrNo;
+								self.addr.addrDefault = 'Y';
 							}
 						}
 	                }
@@ -508,6 +576,7 @@ var app = new Vue({
 		    },
 		    fnAddrChange(event){
 		    	var self = this;
+		    	self.addr.addrDefault = 'N';
 		    	 const selectedIndex = event.target.selectedIndex;
 		    	 const selectedItem = self.addrList[selectedIndex];
 		    	 if(selectedItem == undefined){
@@ -569,13 +638,36 @@ var app = new Vue({
 		    			}
 		    		}
 		    	}
-		    }
+		    },
+		    formatDate(date) {
+		        const year = date.getFullYear();
+		        const month = String(date.getMonth() + 1).padStart(2, '0');
+		        const day = String(date.getDate()).padStart(2, '0');
+		        
+		        return year+""+month+""+day;
+		      },
+		      fnCntOrder(){
+		    	  var self = this;
+					var nparmap = {productNo : self.productNo};
+		            $.ajax({
+		                url : "../order/cntOrder.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+		                	self.cnt = data.cnt+1;
+		                }
+		            });
+		      }
 	}, // methods
 	created : function() {
 		var self = this;
 		self.fnGetCoupon();
 		self.fnGetAddrList();
 		self.fnGetProduct();
+		self.fnCntOrder();
+		var IMP = window.IMP;
+		IMP.init('imp41836047');
 		window.jusoCallBack = self.handleAddressCallback;
 	}// created
 });

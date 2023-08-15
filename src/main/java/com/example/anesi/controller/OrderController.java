@@ -71,22 +71,49 @@ public class OrderController {
 	}
 	
 	//옵션 상세 검색
-		@RequestMapping(value = "/order/optionSearchInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		@ResponseBody
-		public String optionSearchInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-			HashMap<String, Object> resultMap = new HashMap<String, Object>();
-			ProductOption info = orderService.searchOptionInfo(map);
-			resultMap.put("info", info);
-			return new Gson().toJson(resultMap);
-		}
+	@RequestMapping(value = "/order/optionSearchInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String optionSearchInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		ProductOption info = orderService.searchOptionInfo(map);
+		resultMap.put("info", info);
+		return new Gson().toJson(resultMap);
+	}
 		
 	//주문 입력
-		@RequestMapping(value = "/order/order.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		@ResponseBody
-		public String order(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-			HashMap<String, Object> resultMap = new HashMap<String, Object>();
-			orderService.addOrder(map);
-			return new Gson().toJson(resultMap);
-		}
-		
+	@RequestMapping(value = "/order/order.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String order(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		orderService.addOrder(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//쿠폰 삭제
+	@RequestMapping(value = "/order/couponRemove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String couponRemove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		orderService.removeCoupon(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//주소 수정
+	@RequestMapping(value = "/order/editAddr.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editAddr(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		orderService.editAddr(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 당일 주문량 검색
+	@RequestMapping(value = "/order/cntOrder.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String cntOrder(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int cnt = orderService.searchOrderCnt(map);
+		resultMap.put("cnt", cnt);
+		return new Gson().toJson(resultMap);
+	}
 }

@@ -23,4 +23,12 @@ public interface OrderMapper {
 	ProductOption selectOptionInfo(HashMap<String, Object> map);
 	// 주문 입력
 	int insertOrder(HashMap<String, Object> map);
+	// 쿠폰 업데이트
+	int deleteCoupon(HashMap<String, Object> map);
+	// 주소 업데이트1
+	int updateAddr1(HashMap<String, Object> map);
+	// 주소 업데이트2
+	int updateAddr2(HashMap<String, Object> map);
+	// 오늘 주문량 검색
+	int selectOrderCnt(HashMap<String, Object> map);
 }
