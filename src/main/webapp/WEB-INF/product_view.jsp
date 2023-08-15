@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
 <script src="https://unpkg.com/vuejs-paginate@latest"></script>
 <script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="EUC-KR">
 <title>상품 상세 페이지</title>
@@ -18,12 +19,15 @@
 	.content{
 		position: relative;
     	min-height: 1px;
-		width: 1200px;
+		width: 1300px;
 		margin: 0 auto;
 		margin-top : 170px;
+		
 	}
 	.content-box{
-		height: 700px;
+		height: 750px;
+		width: 1200px;
+		margin: 0 auto;
 	}
 	.main-left{
 		width: 60%;
@@ -72,7 +76,8 @@
 		border-radius: 10px;	
 	}
 	.main-title{
-		font-size: 40px;
+		font-size: 30px;
+		font-weight:bold;
 		margin-top: 0;
 		
 	}
@@ -84,10 +89,19 @@
 		margin-top: 20px;
 		font-size: 20px;
 	}
-	.main-price{
+	.price{
+		text-decoration: line-through;
+	}
+	.discount-price{
 		height : 50px;
 		border-bottom: 1px solid #ededed;
 		font-size: 30px;
+	}
+	.main-price2{
+		height : 50px;
+		border-bottom: 1px solid #ededed;
+		font-size: 30px;
+		margin-top: 20px;
 	}
 	.main-option{
 		margin-top: 30px;
@@ -121,6 +135,7 @@
 		overflow: auto;
 		position: sticky;
 		top: 185px;
+		z-index: 999;
 	}
 	.nav-wrap{
     	border-bottom: 1px solid #ededed;
@@ -184,6 +199,7 @@
 		margin-left: 40px;
 		width: 700px;
 		display: inline-block;
+		margin-top: 30px;
 	}
 	.review-span{
 		color : rgba(0,0,0,.4);
@@ -279,6 +295,12 @@
 		border-top: 1px solid #ededed;
 		margin-top: 10px;
 	}
+	.review-box2{
+		font-size: 16px;
+		margin-top: 10px;
+		margin-left: 250px;
+		margin-bottom: 30px;
+	}
 	.review-wrap{
 		margin-top: 30px;
 	}
@@ -306,9 +328,9 @@
 		border-radius: 5px;
 	}
 	.pagination {
-        margin:24px;
         display: inline-flex;
-        
+        margin-top: 40px;
+        margin-left: 200px;
     }
     ul {
     }
@@ -328,14 +350,20 @@
 	.page-item a {
 	    color:#666;
 	    text-decoration: none;
+	    padding: 4px 12px ;
 	}
 	.pagination li.active {
-	    background-color : #E7AA8D;
+	    background-color : #A782C3;
 	    color:#fff;
 	}
 	.pagination li.active a {
 	    color:#fff;
+	    
 	}
+	.pagination a{
+		padding: 4px 12px ;
+	}
+	
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -377,17 +405,54 @@
 								{{product.productName}}
 							</div>
 							<div class="main-csat">
-								<span v-for="index in csat.csatAvg"><i class="fa-solid fa-star" style="color: #A782C3;"></i></span><span v-for="index in num"><i class="fa-solid fa-star" style="color: #9097a2;"></i></span>
+								<div v-for="(rating, index) in csatAvg" :key="index">
+							      <span v-for="star in 5" :key="star">
+							        <template v-if="rating >= star ">
+							          <i class="fa-solid fa-star" style="color: #A782C3;"></i> <!-- 채워진 별표 -->
+							        </template>
+							        <template v-else-if="rating +0.3 >= star">
+							         <span style="display: inline-block; position: relative;">
+							            <i class="fa-solid fa-star" style="color: #ababab;"></i> <!-- 반채워진 별표 -->
+							            <i class="fa-solid fa-star" style="color: #A782C3; position: absolute; left: 0; top:1.5px; width: 65%; overflow: hidden;"></i>
+							          </span>
+							        </template>
+							        <template v-else-if="rating + 0.5 >= star">
+							         <span style="display: inline-block; position: relative;">
+							            <i class="fa-solid fa-star" style="color: #ababab;"></i> <!-- 반채워진 별표 -->
+							            <i class="fa-solid fa-star" style="color: #A782C3; position: absolute; left: 0; top:1.5px; width: 50%; overflow: hidden;"></i>
+							          </span>
+							        </template>
+							        <template v-else-if="rating +0.8 >= star">
+							         <span style="display: inline-block; position: relative;">
+							            <i class="fa-solid fa-star" style="color: #ababab;"></i> <!-- 반채워진 별표 -->
+							            <i class="fa-solid fa-star" style="color: #A782C3; position: absolute; left: 0; top:1.5px; width: 40%; overflow: hidden;"></i>
+							          </span>
+							        </template>
+							        
+							        <template v-else>
+							         <i class="fa-solid fa-star" style="color: #ababab;"></i> <!-- 빈 별표 -->
+							        </template>
+							      </span>
+							    </div>
 								{{csat.csatAvg}}({{csat.csatCnt}})
+								
 							</div>
-							<div class="main-discount">
-								{{product.discount}}%
+							<div v-if="product.discount > 0">
+								<div class="main-discount">
+									{{product.discount}}% <span class="price">{{product.productPrice}}원</span>
+								</div>
+								<div class="discount-price">
+									{{discountPrice}}원
+								</div>
 							</div>
-							<div class="main-price">
-								{{product.productPrice}}원
+							<div v-else>
+								<div class="main-price2">
+									{{product.productPrice}}원
+								</div>
 							</div>
 							<div class="main-option">
 								<select class="option-box" v-model="option1">
+									<option value="">상품을 선택하세요.</option>
 									<option v-for="item in option" :value="item.optionNo">{{item.optionName}}(+{{item.optionPrice}}원)</option>
 								</select>
 							</div>
@@ -418,15 +483,43 @@
 							<div class="content-img" v-for="item in imgList2">
 								<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
 							</div>
-							<div class="content-review">
-								<div class="review-title" id="review">
+							<div class="content-review" id="review">
+								<div class="review-title" >
 									<span class="review-text1">리뷰 </span><span class="review-text2"> {{csat.csatCnt}}</span>
 									<button class="review-btn">리뷰쓰기</button>
 								</div>
 								<div class="csat-box">
 									<div class="csat1">
 										<div class="csat-box1">
-											<span v-for="index in csat.csatAvg"><i class="fa-solid fa-star fa-2x" style="color: #A782C3;"></i></span><span  v-for="index in num"><i class="fa-solid fa-star fa-2x" style="color: #9097a2;"></i></span>
+											<div style="display: inline-block" v-for="(rating, index) in csatAvg" :key="index">
+										      <span v-for="star in 5" :key="star">
+										        <template v-if="rating >= star ">
+										          <i class="fa-solid fa-star fa-2x" style="color: #A782C3;"></i> <!-- 채워진 별표 -->
+										        </template>
+										        <template v-else-if="rating +0.3 >= star">
+										         <span style="display: inline-block; position: relative;">
+										            <i class="fa-solid fa-star fa-2x" style="color: #ababab;"></i> <!-- 반채워진 별표 -->
+										            <i class="fa-solid fa-star fa-2x" style="color: #A782C3; position: absolute; left: 0; width: 65%; overflow: hidden;"></i>
+										          </span>
+										        </template>
+										        <template v-else-if="rating + 0.5 >= star">
+										         <span style="display: inline-block; position: relative;">
+										           <i class="fa-solid fa-star fa-2x" style="color: #ababab;"></i> <!-- 반채워진 별표 -->
+										            <i class="fa-solid fa-star fa-2x" style="color: #A782C3; position: absolute; left: 0; width: 50%; overflow: hidden;"></i>
+										          </span>
+										        </template>
+										        <template v-else-if="rating +0.8 >= star">
+										         <span style="display: inline-block; position: relative;">
+										            <i class="fa-solid fa-star fa-2x" style="color: #ababab;"></i> <!-- 반채워진 별표 -->
+										            <i class="fa-solid fa-star fa-2x" style="color: #A782C3; position: absolute; left: 0; width: 40%; overflow: hidden;"></i>
+										          </span>
+										        </template>
+										        
+										        <template v-else>
+										          <i class="fa-solid fa-star fa-2x" style="color: #ababab;"></i>
+										        </template>
+										      </span>
+										    </div>
 											<span class="csatAvg">{{csat.csatAvg}}</span>
 										</div>
 									</div>
@@ -437,7 +530,7 @@
 									</div>
 								</div> <!-- csat-box end -->
 								<div class="review-wrap">
-									<div class="review-box" v-for="item in reviewList">
+									<div class="review-box" v-if="reviewList.length > 0" v-for="item in reviewList">
 										<div class="user-profile">
 												<img class="user-profileImg" alt="프로필이미지" :src="item.uImgPath+'/'+item.uImgName">
 										</div>
@@ -445,8 +538,9 @@
 											
 											<div class="review-user-box">
 												<div class="user-nick">{{item.nick}}</div>
-												<span v-for="index in item.csat"><i class="fa-solid fa-star" style="color: #A782C3;"></i></span><span v-for="index in 5-item.csat"><i class="fa-solid fa-star" style="color: #9097a2;"></i></span>
+												<span v-for="index in item.csat"><i class="fa-solid fa-star" style="color: #A782C3;"></i></span><span v-for="index in 5-item.csat"><i class="fa-solid fa-star" style="color: #ababab;"></i></span>
 												<span>{{item.createDate}}</span>
+												
 											</div>
 										</div>
 										
@@ -461,10 +555,13 @@
 										</div>
 										 
 									</div>
-									<template>
+									<div class="review-box2" v-if="reviewList.length == 0">
+										첫 리뷰를 남겨주세요!
+									</div>
+									<template v-if="cnt > 0">
 									  <paginate
 									    :page-count="pageCount"
-									    :page-range="3"
+									    :page-range="5"
 									    :margin-pages="2"
 									    :click-handler="fnSearch"
 									    :prev-text="'<'"
@@ -476,13 +573,14 @@
 								</div> <!-- review-wrap end -->
 							</div><!-- content-review end -->
 							<div class="inquiry-wrap">
-								<div class="">
-								
+								<div class="review-title" >
+									<span class="review-text1">문의 </span><span class="review-text2"> {{csat.csatCnt}}</span>
+									<button class="review-btn">문의하기</button>
 								</div>
 							</div>
 						</div>
 						<div class="recently-viewed">
-								최근본상품
+      						최근본 상품
 						</div>
 					</div>
 			</div>
@@ -499,10 +597,12 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		discountPrice : "",
 		option1 : "",
 		productNo : '${map.no}',
 		product : {},
 		csat : {},
+		csatAvg : [],
 		option : [],
 		imgList : [],
 		img : [],
@@ -574,7 +674,8 @@ var app = new Vue({
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) {                
-	               		self.product = data.product;	               		
+	               		self.product = data.product;
+	               		self.discountPrice =self.product.productPrice - self.product.productPrice / self.product.discount;
 	                }                
 	            }); 
 		},
@@ -589,6 +690,8 @@ var app = new Vue({
 	                success : function(data) {                
 	               		self.csat = data.csat;
 	               		self.num = 5 - self.csat.csatAvg;
+	               		self.csatAvg = [self.csat.csatAvg];
+	               		console.log(self.csatAvg);
 	                }                
 	            }); 
 		},
@@ -662,6 +765,7 @@ var app = new Vue({
 		                self.pageCount = Math.ceil(self.cnt / 5);
 		                console.log(self.cnt)
 		                console.log(self.pageCount)
+		                console.log(self.reviewList)
 	                }                
 	            })
 		},
@@ -685,7 +789,7 @@ var app = new Vue({
 		},
 		fnReviewCnt : function(){
 			 var self = this;
-	            var nparmap = {};	            
+	            var nparmap = {productNo : self.productNo};	            
 	            $.ajax({
 	                url : "/reviewCntSearch.dox",
 	                dataType:"json",	
@@ -706,7 +810,12 @@ var app = new Vue({
 		},
 		fnPay : function(){
 			 var self = this;
-	           $.pageChange("../order/main.do", {productNo : self.productNo, optionNo : self.option1})
+			 if(self.option1==""){
+				 alert("상품을 선택해주세요.");
+				 return;
+			 }else{
+				 $.pageChange("../order/main.do", {productNo : self.productNo, optionNo : self.option1})
+			 }
 		},
 		clickImg : function(imgPath,imgName){
 			var self = this

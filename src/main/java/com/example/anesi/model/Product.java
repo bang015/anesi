@@ -20,7 +20,7 @@ public class Product {
 	    private int optionPrice;
 	    private int productCnt;
 	    private String optionName;
-	    private int csatAvg; // 상품 평점
+	    private double csatAvg; // 상품 평점
 	    private int csatCnt; // 상품 별점 개수
 	    
 		private String imgName;
@@ -38,11 +38,11 @@ public class Product {
 			this.csatCnt = csatCnt;
 		}
 
-		public int getCsatAvg() {
+		public double getCsatAvg() {
 			return csatAvg;
 		}
 
-		public void setCsatAvg(int csatAvg) {
+		public void setCsatAvg(double csatAvg) {
 			this.csatAvg = csatAvg;
 		}
 
