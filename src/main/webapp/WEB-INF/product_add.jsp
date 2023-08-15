@@ -61,7 +61,7 @@
 				</div>
 			</div>	
 			<div class="box"><!-- 옵션 추가 -->
-				<div><h3>옵션<span class="guide"> 상품 옵션은 최대 5개 입니다.</span></h3></div>
+				<div id="productOption"><h3>옵션<span class="guide"> 상품 옵션은 최대 5개 입니다.</span></h3></div>
 				<button @click="fnOptionAdd" class="btn">옵션 추가</button><span class="err">{{errMsg3}}</span>
 				<table class="tableStyle">
 					<tr>
@@ -103,7 +103,7 @@
 				</table>
 			</div>
 				<div class="box"> <!-- 상품 상세설명 이미지 등록 -->
-				<div><h3>상품 상세설명 이미지<span class="guide"> 상품 상세 이미지는 최대 5개 입니다.</span></h3><span class="guide"></span></div> 
+				<div id="productImgC"><h3>상품 상세설명 이미지<span class="guide"> 상품 상세 이미지는 최대 5개 입니다.</span></h3><span class="guide"></span></div> 
 				<button @click="fnContentImgAdd" class="btn">이미지 추가</button><span class="err">{{errMsg4}}</span>
 				<table class="tableStyle">
 					<tr>
@@ -152,7 +152,7 @@ var app = new Vue({
 		imageList : [], // 상품 이미지리스트
 		imageList2 : [], // 상품 상세 이미지 리스트
 		categoryList1 : [], //카테고리 대분류
-		categoryList2 : [], //카테고리 대분류
+		categoryList2 : [], //카테고리 소분류
 		category1Name : "",
 		category2Name : "",
 		category1No : "",
@@ -245,6 +245,8 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	self.categoryList2 = data.list;
+                	self.product.category = '';
+                	self.category2Name = '';
                 }
             });
 		},
@@ -286,26 +288,86 @@ var app = new Vue({
 				return;
 			}
 			self.errMsg1 = '';
+			const numericRegex = /^\d+$/;
+			if(!numericRegex.test(self.product.productPrices) || !numericRegex.test(self.product.discount)){
+				self.errMsg1 = '상품 가격과 할인율은 숫자만 입력해주세요';
+				var box = document.querySelector(".box");
+				var top = box.offsetTop;
+			  	window.scrollTo({
+			    	top: 200,
+			        behavior: 'smooth',
+			      });
+				return;
+			}
+			self.errMsg1 = '';
+			
+			if (self.optionList.length > 0) {
+			    let foundInvalidOption = false;
+
+			    for (let i = 0; i < self.optionList.length; i++) {
+			        if (self.optionList[i].optionName == '' || self.optionList[i].productStock == '' || self.optionList[i].optionPrice == '') {
+			        	 self.errMsg3 = '옵션을 채워주세요';
+			            foundInvalidOption = true;
+			            break;
+			        } else if (!numericRegex.test(self.optionList[i].productStock) || !numericRegex.test(self.optionList[i].optionPrice)) {
+			            foundInvalidOption = true;
+			            self.errMsg3 = '가격과 재고는 숫자만 입력해주세요';
+			            break;
+			        }
+			    }
+
+			    if (foundInvalidOption) {
+			        const element = document.getElementById('productOption');
+			        element.scrollIntoView({ behavior: 'smooth' });
+			        return;
+			    }
+			}
+			self.errMsg3 = '';
 			if(self.imageList.length == 0){
 				self.errMsg2 = '이미지를 최소 1개 추가해주세요'
-					return;
+				const element = document.getElementById('productImgT');
+				element.scrollIntoView({ behavior: 'smooth' });
+				return;
+			}
+			self.errMsg2 = '';
+			if(self.productImgList.length != self.fileList.length){
+				self.errMsg2 = '이미지를 채워주세요.';
+				const element = document.getElementById('productImgT');
+				element.scrollIntoView({ behavior: 'smooth' });
+				return;
+		    }
+			self.errMsg2 = '';
+			let thumbnailYFound = false;
+
+			for (let i = 0; i < self.productImgList.length; i++) {
+			    if (self.productImgList[i].thumbnail == 'Y') {
+			        thumbnailYFound = true;
+			        break;
+			    }
+			}
+
+			if (!thumbnailYFound) {
+				self.errMsg2 = '대표이미지를 선택해주세요';
+				const element = document.getElementById('productImgT');
+				element.scrollIntoView({ behavior: 'smooth' });
+				return;
 			}
 			self.errMsg2 = '';
 			if(self.imageList2.length == 0){
 				self.errMsg4 = '상세 이미지를 최소 1개 추가해주세요'
-					return;
+				const element = document.getElementById('productImgC');
+				element.scrollIntoView({ behavior: 'smooth' });
+				return;
 			}
 			self.errMsg4 = '';
-			if(self.productImgList.length != self.fileList.length){
-				self.errMsg2 = '이미지를 채워주세요.';
-				return;
-		    }
-			self.errMsg2 = '';
 			if(self.contentImgList.length != self.fileList2.length){
 				self.errMsg4 = '상세 이미지를 채워주세요.';
+				const element = document.getElementById('productImgC');
+				element.scrollIntoView({ behavior: 'smooth' });
 				return;
 			}
 			self.errMsg4 = '';
+			
 			self.fnAdd();
 		},
 		addProductAsync() {
@@ -375,6 +437,7 @@ var app = new Vue({
 				}
 				
 				// 모든 작업이 완료되었을 때의 처리
+				alert("등록완료!");
 			} catch (error) {
 				// 에러 처리
 			}
