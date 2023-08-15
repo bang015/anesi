@@ -675,7 +675,10 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.product = data.product;
-	               		self.discountPrice =self.product.productPrice - self.product.productPrice / self.product.discount;
+	               		self.discountPrice = Math.round(self.product.productPrice * (self.product.discount/100));
+	               		console.log(self.product.productPrice)
+	               		console.log(self.product.discount)
+	               		console.log(self.discountPrice)
 	                }                
 	            }); 
 		},
