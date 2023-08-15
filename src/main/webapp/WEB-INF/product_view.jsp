@@ -25,9 +25,10 @@
 		
 	}
 	.content-box{
-		height: 750px;
+		display : flex;
 		width: 1200px;
 		margin: 0 auto;
+		margin-bottom: 30px;
 	}
 	.main-left{
 		width: 60%;
@@ -35,11 +36,10 @@
 		position: relative;
 	}
 	.main-box{
-		position : absolute;
-		top : 50px;
-		width: 400px;
+		width : 400px;
 		display: inline-block;
 		margin-left: 30px;
+		margin-top: 50px;
 	}
 	.category-wrap{
 		margin-top: 20px;
@@ -363,7 +363,60 @@
 	.pagination a{
 		padding: 4px 12px ;
 	}
-	
+	.quantity-box {
+	  display: flex;
+	  align-items: center;
+	}
+	.choice-option ul{
+		padding: 0;
+	}
+	.choice-option li{
+		list-style: none;
+		background-color:#ededed; 
+		border-radius: 5px;
+	}
+	.choice-option li span{
+		font-size: 17px;
+		margin-top: 30px;
+		margin-left: 8px;
+	}
+	.choice-option li .del-btn{
+		border: 0;
+		background-color: #ededed;
+		float: right;
+		margin-top: 5px;
+		
+	}
+	.option-stock{
+		display: flex;
+		align-items: flex-end;
+		margin-right: 0;
+	}
+	.quantity-box{
+	    border-radius: 4px;
+		border: 1px solid rgb(218, 221, 224);
+		background: rgb(255, 255, 255);
+		width: 77px;
+		margin-top: 12px;
+		margin-left: 8px;
+		margin-bottom: 8px;
+	}
+	.quantity-box input{
+		border: 0;
+		width: 25px;
+		height: 30px;
+		text-align: center;
+	}
+	.minus-btn, .plus-btn{
+		background-color: #fff;
+		border: 0;
+	}
+	.option-stock-price{
+		margin-bottom : 13px;
+		font-size: 18px;
+		font-weight: bold;
+		margin-left: 220px;
+	}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -451,10 +504,37 @@
 								</div>
 							</div>
 							<div class="main-option">
-								<select class="option-box" v-model="option1">
+								<select class="option-box" v-model="option1" @change="addToSelectedOptions">
 									<option value="">상품을 선택하세요.</option>
-									<option v-for="item in option" :value="item.optionNo">{{item.optionName}}(+{{item.optionPrice}}원)</option>
+									<option v-for="item in option" :key="item.optionNo + '-' + item.optionName" :value="item.optionNo">
+										{{item.optionName}}(+{{item.optionPrice}}원)
+									</option>
 								</select>
+							</div>
+							<div class="choice-option">
+								<ul>
+							       <li v-for="(selectedOption, index) in selectedOptions" :key="index">
+							        <span>{{ selectedOption.optionName }}</span>
+							        <button class="del-btn"  @click="removeSelectedOption(index)">
+							        	<i class="fa-solid fa-x" style="color: #6e86af;"></i>
+							        </button> 
+							        <div class="option-stock">
+							        	 <div class="quantity-box">
+										   <button class="minus-btn" @click="decreaseQuantity(selectedOption)">
+										   		<i class="fa-solid fa-minus" style="color: #4c6794;"></i>
+										   </button>
+							               <input v-model ="selectedOption.quantity" min="1">
+							               <button class="plus-btn" @click="increaseQuantity(selectedOption)">
+							               		<i class="fa-solid fa-plus" style="color: #4b638b;"></i>
+							               </button>
+										 </div>
+										 <div class="option-stock-price">
+										 	{{ calculateTotalPrice(selectedOption) }}원
+										 </div>
+							        </div>
+							        
+							       </li>
+							    </ul>
 							</div>
 							<div class="main-btn-wrap">
 								<button class="btn1">장바구니</button>
@@ -597,6 +677,8 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		optionPrice : "",
+		selectedOptions : [],
 		discountPrice : "",
 		option1 : "",
 		productNo : '${map.no}',
@@ -649,20 +731,7 @@ var app = new Vue({
             }
           }, /* 그래프 끝 */
 	},// data
-	computed: {
-	    // 현재 페이지에 해당하는 데이터 아이템들을 계산된 속성으로 반환
-	    paginatedReviewList() {
-	      var self=this;
-	      const startIndex = (self.currentPage - 1) * self.itemsPerPage;
-	      const endIndex = startIndex + self.itemsPerPage;
-	      return self.reviewList.slice(startIndex, endIndex);
-	    },
-	    // 전체 페이지 수를 계산된 속성으로 반환
-	    totalPages() {
-	    	var self = this;
-	      return Math.ceil(self.reviewList.length / self.itemsPerPage);
-	    }
-	  },
+	
 	methods : {
 		
 		fnGetList : function(){
@@ -675,10 +744,8 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.product = data.product;
-	               		self.discountPrice = Math.round(self.product.productPrice * (self.product.discount/100));
-	               		console.log(self.product.productPrice)
-	               		console.log(self.product.discount)
-	               		console.log(self.discountPrice)
+	               		 var price = self.product.productPrice - Math.round(self.product.productPrice * (self.product.discount/100));
+	               		self.discountPrice =  Math.floor(price / 100) * 100;
 	                }                
 	            }); 
 		},
@@ -693,8 +760,7 @@ var app = new Vue({
 	                success : function(data) {                
 	               		self.csat = data.csat;
 	               		self.num = 5 - self.csat.csatAvg;
-	               		self.csatAvg = [self.csat.csatAvg];
-	               		console.log(self.csatAvg);
+	               		self.csatAvg = [self.csat.csatAvg];	         
 	                }                
 	            }); 
 		},
@@ -766,9 +832,6 @@ var app = new Vue({
 	               		self.reviewList = data.reviewList;
 	               		self.cnt = data.cnt;
 		                self.pageCount = Math.ceil(self.cnt / 5);
-		                console.log(self.cnt)
-		                console.log(self.pageCount)
-		                console.log(self.reviewList)
 	                }                
 	            })
 		},
@@ -811,6 +874,39 @@ var app = new Vue({
 	                }                
 	            })
 		},
+		addToSelectedOptions() {
+		      const selectedItem = this.option.find(item => item.optionNo === this.option1);
+		      if (selectedItem) {
+		    	const existingOption = this.selectedOptions.find(opt => opt.optionNo === selectedItem.optionNo);
+		    	if (existingOption) {
+		            existingOption.quantity++; // 이미 있는 상품의 수량 증가
+		          }else{
+		        	  this.selectedOptions.push({
+				          optionNo: selectedItem.optionNo,
+				          optionName: selectedItem.optionName,
+				          quantity : 1
+				        }); 
+		          }
+		        this.option1="";
+		      }
+		      console.log(this.selectedOptions);
+		    },
+		removeSelectedOption(index) {
+		        this.selectedOptions.splice(index, 1);
+		      },
+		decreaseQuantity(selectedOption) {
+		        if (selectedOption.quantity > 1) {
+		          selectedOption.quantity--;
+		        }
+		      },
+		increaseQuantity(selectedOption) {
+		    	  selectedOption.quantity = selectedOption.quantity + 1;
+		        
+		      },
+		calculateTotalPrice(selectedOption) {
+		        const item = this.option.find(opt => opt.optionNo === selectedOption.optionNo);
+		        return item ? item.optionPrice * selectedOption.quantity : 0;
+		      },
 		fnPay : function(){
 			 var self = this;
 			 if(self.option1==""){
@@ -819,17 +915,18 @@ var app = new Vue({
 			 }else{
 				 $.pageChange("../order/main.do", {productNo : self.productNo, optionNo : self.option1})
 			 }
-		},
+			},
 		clickImg : function(imgPath,imgName){
 			var self = this
 			self.mainImg = imgPath+"/"+imgName;
-		},
+			},
 		prevPage() {
-		    this.currentPage--;
-		},
+			this.currentPage--;
+			},
 		nextPage() {
-		    this.currentPage++;
-		}
+			this.currentPage++;
+			},
+			  
 	}, // methods
 	created : function() {
 		var self = this;
