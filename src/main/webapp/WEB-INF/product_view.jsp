@@ -115,7 +115,7 @@
 		border: 1px solid #ededed;
 	}
 	.main-btn-wrap{
-		margin-top: 50px;
+		margin-top: 30px;
 	}
 	.main-btn-wrap button{
 		width: 198px;
@@ -392,7 +392,7 @@
 	}
 	.option-stock{
 		display: flex;
-  align-items: center;
+  		align-items: center;
 	}
 	.quantity-box{
 	    border-radius: 4px;
@@ -419,6 +419,21 @@
 		flex: 1 1 0%;
     	text-align: right;
     	margin-top: 25px;
+	}
+	.total-price{
+		margin-top: 30px;
+		display: flex;
+		align-items: center;
+	}
+	.total-title{
+		font-size: 18px;
+		font-weight: bold;
+	}
+	.total-price1{
+		flex: 1 1 0%;
+	}
+	.total-price2{
+		float: right;
 	}
 </style>
 </head>
@@ -495,10 +510,10 @@
 							</div>
 							<div v-if="product.discount > 0">
 								<div class="main-discount">
-									{{product.discount}}% <span class="price">{{product.productPrice}}원</span>
+									{{product.discount}}% <span class="price">{{product.productPrice | formatPrice}}원</span>
 								</div>
 								<div class="discount-price">
-									{{discountPrice}}원
+									{{discountPrice | formatPrice}}원
 								</div>
 							</div>
 							<div v-else>
@@ -534,10 +549,16 @@
 										 <div class="option-stock-price">
 										 	{{ calculateTotalPrice(selectedOption) | formatPrice}}원
 										 </div>
-							        </div>
-							        
+							        </div>							        
 							       </li>
 							    </ul>
+							    
+							</div>
+							<div class="total-price">
+							    <div class="total-title">주문금액</div>
+							    <div class="total-price1">
+							    	<span class="total-price2">{{totalPrice | formatPrice}}원</span>
+							    </div>
 							</div>
 							<div class="main-btn-wrap">
 								<button class="btn1">장바구니</button>
@@ -548,7 +569,7 @@
 					<div class="nav-box">
 						<div class="nav-wrap">
 							<div class="product-a"><a href="#product">상품정보</a></div>
-							<div class="review-a"><a href="#review">리뷰  <span class="review-span"> {{csat.csatCnt}}</span></a></div>
+							<div class="review-a"><a href="#review">리뷰  <span class="review-span" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span></a></div>
 							<div class="inquiry-a"><a>문의</a></div>
 						</div>
 					</div>
@@ -568,7 +589,7 @@
 							</div>
 							<div class="content-review" id="review">
 								<div class="review-title" >
-									<span class="review-text1">리뷰 </span><span class="review-text2"> {{csat.csatCnt}}</span>
+									<span class="review-text1">리뷰 </span><span class="review-text2" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span>
 									<button class="review-btn">리뷰쓰기</button>
 								</div>
 								<div class="csat-box">
@@ -670,6 +691,7 @@
 		</div>
 	</div>
 </body>
+<jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script src="../js/jquery.js"></script>
 <script>
@@ -680,9 +702,10 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		totalPrice : 0,
 		optionPrice : "",
 		selectedOptions : [],
-		discountPrice : "",
+		discountPrice : 0,
 		option1 : "",
 		productNo : '${map.no}',
 		product : {},
@@ -753,8 +776,8 @@ var app = new Vue({
 	               		self.product = data.product;
 	               		var price = self.product.productPrice - Math.round(self.product.productPrice * (self.product.discount/100));
 	               		var price2 = Math.floor(price / 100) * 100;
-	               		self.discountPrice =price2.toLocaleString('ko-KR');
-	               		self.product.productPrice = self.product.productPrice.toLocaleString('ko-KR'); 
+	               		self.discountPrice =price2
+	               		self.product.productPrice = self.product.productPrice
 	                }                
 	            }); 
 		},
@@ -896,6 +919,7 @@ var app = new Vue({
 				          optionName: selectedItem.optionName,
 				          quantity : 1
 				        }); 
+		        	  this.calculateOrderTotal();
 		          }
 		        this.option1="";
 		      }
@@ -903,19 +927,36 @@ var app = new Vue({
 		    },
 		removeSelectedOption(index) {
 		        this.selectedOptions.splice(index, 1);
+		        this.calculateOrderTotal();
 		      },
 		decreaseQuantity(selectedOption) {
 		        if (selectedOption.quantity > 1) {
 		          selectedOption.quantity--;
+		          this.calculateOrderTotal();
 		        }
 		      },
 		increaseQuantity(selectedOption) {
 		    	  selectedOption.quantity = selectedOption.quantity + 1;
+		    	  this.calculateOrderTotal();
 		        
 		      },
 		calculateTotalPrice(selectedOption) {
 		        const item = this.option.find(opt => opt.optionNo === selectedOption.optionNo);
+		        this.totalPrice = item.optionPrice * selectedOption.quantity+this.discountPrice
 		        return item ? item.optionPrice * selectedOption.quantity : 0;
+		        
+		      },
+		   // totalPrice 계산 메서드
+		calculateTotalPrice(selectedOption) {
+		        const item = this.option.find(opt => opt.optionNo === selectedOption.optionNo);
+		        return item ? (item.optionPrice+this.discountPrice) * selectedOption.quantity : 0;
+		      },
+
+		      // 총 주문금액 계산 메서드
+		calculateOrderTotal() {
+		        this.totalPrice = this.selectedOptions.reduce((total, option) => {
+		          return total + this.calculateTotalPrice(option);
+		        }, 0);
 		      },
 		fnPay : function(){
 			 var self = this;
