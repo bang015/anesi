@@ -778,12 +778,7 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.option = data.option;
-	               		/* for(var i=0; i<option.size(); i++){
-	               			self.option.get(i).optionPrice = self.option.get(i).optionPrice.toLocaleString('ko-KR');
-	               		} */
-	               		
-
-	               		console.log(self.option.optionPrice);
+	              
 	                }                
 	            }); 
 		},
