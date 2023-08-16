@@ -78,4 +78,6 @@ public interface ProductMapper {
 	
 	
 	int cartInsert();
+	//상품 검색창 검색
+		List<Product> searchProduct (HashMap<String, Object> map);
 }

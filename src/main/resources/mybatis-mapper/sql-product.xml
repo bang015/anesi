@@ -209,6 +209,23 @@
 
 	</insert>
  
+ <select id="searchProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+    SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE, i.*
+    FROM t3_tbl_product AS P
+    JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
+    LEFT JOIN (
+        SELECT PRODUCT_NO, PRODUCT_PRICE * (100 - DISCOUNT) / 100 AS DISCOUNT_PRICE
+        FROM t3_tbl_product
+        WHERE DISCOUNT_YN = 'Y'
+    ) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
+    INNER JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
+    <where>
+        <if test="productName != null and productName != ''">
+            AND P.PRODUCT_NAME LIKE CONCAT('%', #{productName}, '%')
+        </if>
+    </where>
+		
+	</select>
  
 	
 </mapper>

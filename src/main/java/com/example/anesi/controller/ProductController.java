@@ -19,6 +19,7 @@ import com.example.anesi.service.ProductService;
 import com.google.gson.Gson;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ProductController {
@@ -207,4 +208,28 @@ public class ProductController {
 				resultMap.put("success", "삭제완료");
 				return new Gson().toJson(resultMap);
 			}
+		  @RequestMapping(value = "/product/searchProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		  @ResponseBody
+		  public String searchProduct(Model model,  @RequestParam HashMap<String, Object> map, HttpSession session) throws Exception {
+		      HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+		      // 세션에서 productNo 및 productName에 대한 값을 가져옵니다.
+		      String sessionProductNo = (String) session.getAttribute("productNo");
+		      String sessionProductName = (String) session.getAttribute("productName");
+		    
+		      // 세션 값이 있는 경우 map에 추가합니다.
+		      if (sessionProductNo != null) {
+		          map.put("productNo", sessionProductNo);
+		      }
+		      if (sessionProductName != null) {
+		          map.put("productName", sessionProductName);
+		      }
+		      
+		      // 상품 검색 서비스 호출
+		      List<Product> productList = productService.searchProduct(map);
+		      resultMap.put("productList", productList);
+		        
+		      return new Gson().toJson(resultMap);
+		  }
+
 }
