@@ -157,7 +157,7 @@
 		VALUES (#{userNo}, #{productNo}, 1)
 		</if>
 	</insert>
-		<select id="selectScrapbookList" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
+	<select id="selectScrapbookList" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
 		SELECT *
 		FROM t3_tbl_user_scrapbook 
 		WHERE USER_NO = #{userNo}
@@ -194,26 +194,11 @@
 
 	
 	<!-- 비회원 장바구니 등록 -->
-	<insert id="cartInsert">
+	<insert id="nonUserCartInsert" parameterType="hashmap" >
 		INSERT INTO t3_tbl_user_cart 
-		(PRODUCT_NO,
-		, CART_CKLIMIT , OPTION_NO, 
-		<if test="userNo == 0">
-		NONUSER_NO 
-		</if>
-		<if test="userNo != 0">
-		USER_NO
-		</if>
-		)VALUES(
-		 #{productNo} ,NOW() , 1,
-		<if test="userNo == 0">
-		 #{nonuserNo}
-		</if>
-		<if test="userNo != 0">
-		${userNo}
-		</if>
-		)
-
+		(PRODUCT_NO,  OPTION_NO, NONUSER_NO)
+		VALUES
+		(#{productNo} , 1, #{nonuserNo})
 	</insert>
  
  <select id="searchProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">

@@ -1,5 +1,6 @@
 package com.example.anesi.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,8 @@ public class LoginController {
 	public String login(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		String status=(String)session.getAttribute("sessionStatus");
+		Date currentDate = new Date();
+
 		resultMap = loginService.searchUser(map);
 		if(resultMap.containsKey("user")) {
 			User user = (User)resultMap.get("user");
@@ -68,6 +71,9 @@ public class LoginController {
 			session.setAttribute("sessionNo", user.getUserNo());
 			session.setAttribute("sessionNick", user.getNick());
 			session.setAttribute("sessionStatus", user.getStatus());
+			
+			
+			session.setAttribute("sessionDate", currentDate);
 		};
 		return new Gson().toJson(resultMap);
 	}
