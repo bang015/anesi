@@ -136,10 +136,9 @@ border : 1px solid black;
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
-
+<div id="session-data" data-session-product-name="<%=session.getAttribute("sessionProductName") %>"></div>
 
 	<div id="store_main">
-	
 	
 
 <span class="main-category__title">전체상품</span>
@@ -151,7 +150,17 @@ border : 1px solid black;
 <div class="category-order-list-container" style="display:none;">
 
 
-  
+  <ul class="category-order-list" >
+    <li value=""><a>전체</a></li>
+    <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">가격낮은순</a></li>
+    <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">가격높은순</a></li>
+    <li value="NewArrival"><a @click="fnOrderBy('NewArrival')">최신순</a></li>
+    <li><a>--아직못함↓--</a></li>
+    <li value="HighestPurchase"><a @click="fnOrderBy('HighestPurchase')">구매높은순</a></li>
+    <li value="HighestScrap"><a @click="fnOrderBy('HighestScrap')">스크랩많은순</a></li>
+    <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">리뷰많은순</a></li>
+  </ul>
+</div>
   
 	
 	
@@ -254,11 +263,9 @@ border : 1px solid black;
 	
 	    
     </div>
+<div id="app" data-session-product-name="<%=session.getAttribute("sessionProductName") %>"></div>
 
-<div id="app" v-cloak 
-    :data-session-product-no="${ProductNo}"
-    :data-session-product-name="${sessionProductName}">
-</div>
+	
 	
 	<jsp:include page="footer.jsp"></jsp:include>
 	
@@ -267,7 +274,17 @@ border : 1px solid black;
 <script>
 
 $(document).ready(function() {
-    // 상품정렬 버튼 클릭 이벤트 추가
+	  try {
+	        const sessionDataDiv = document.getElementById('session-data');
+	        const sessionProductName = sessionDataDiv.dataset.sessionProductName;
+	        console.log('Session Product Name:', sessionProductName);
+	        // 이 부분에 원하는 로직을 추가합니다.
+	    } catch (e) {
+	        console.error('Error while reading session data:', e);
+	    }
+	});
+	
+	// 상품정렬 버튼 클릭 이벤트 추가
     var isListOpen = false; // Flag to track the state of the list container
 
     $('.category-order_toggle').click(function() {
@@ -283,271 +300,238 @@ $(document).ready(function() {
         $('.category-order-list-container').slideUp('slow');
         isListOpen = false;
     });
-});
 
 
-var app = new Vue({
-	  el: "#store_main",
-	  data: {
-		    list: [],
-		    list2: [],
-		    item: "",
-		    showCartModal: true,
-		    showScrapModal false,
-		    userId: "${ sessionId }",
-		    userNo: "${ sessionNo }",
-		    productNo: Number(document.getElementById("app").dataset.sessionProductNo),
-		    productName: document.getElementById("app").dataset.sessionProductName,
-		    scrapbookList: [],
-		    cartList: []
-		},
-	  computed: {
-	    filteredList() {
-	      if (!this.productNo && !this.productName) {
-	        return this.list;
-	      }
+    var app = new Vue({
+        el: '#store_main',
+        data: {
+            list: [],
+            list2: [],
+            item: "",
+            showCartModal: false,
+            showScrapModal: false,
+            showScrapModalBan: false,
+            showScrapDeleteModal: false,
+            userId: '${sessionId}',
+            userNick: '${sessionNick}',
+            userNo: '${sessionNo}',
+            productNo: "",
+            productName: '${searchKeyword}',
+            scrapbookList: [],
+            cartList: [],
+        },
+        methods: {
+            fnGetList: function() {
+                var self = this;
+                var params = {
+                    productName: self.productName
+                };
+                $.ajax({
+                    url: "/product/searchBarProduct.dox",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    data: params,
+                    success: function(data) {
+                        self.list = data.products;
+                    }
+                });
+            },
+            fnOrderBy: function(orderBy) {
+                var self = this;
+                self.categoryOrderBar = orderBy;
+                self.fnGetList();
+            },
 
-	      return this.list.filter(
-	        (product) =>
-	          (!this.productNo || product.productNo === this.productNo) &&
-	          (!this.productName || product.productName === this.productName)
-	      );
-	    }
-	  },
-	  methods: {
-		  fnGetList: function {
-			    var self = this;
-			    var nparmap = {
-			        keyword: self.keyword,
-			        categoryOrderBar: self.categoryOrderBar,
-			        productNo: self.productNo,
-			        productName: self.productName
-			    };
-			    $.ajax({
-			        url: "/product/searchProduct.dox",
-			        dataType: "json",
-			        type: "POST",
-			        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			        data: nparmap,
-			        success: function (data) {
-			            self.list = data.productList;
-			        }
-			    });
-			},
+    		//이미지 마우스 오버했을때 pulse 애니메이션
+    		addPulseAnimation: function(event) {
+    			event.currentTarget.classList.add('animate__animated', 'animate__pulse');
+    		},
+    		removePulseAnimation: function(event) {
+    			event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
+    		},
 
+    		formatPrice: function(price) {
+    			// 천 단위마다 쉼표(,)를 추가하는 정규식 처리
+    			return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    		},
 
-	     fnOrderBy: function (orderBy) {
+    		// 모달 열기
+    		openCartModal: function() {
+    			var self = this;
+    			self.showCartModal = true;
+    		},
+    		openScrapModal: function() {
+    			var self = this;
+    			self.showScrapModal = true;
+    		},
+    		openScrapDeleteModal: function() {
+    			var self = this;
+    			self.showScrapDeleteModal = true;
+    		},
+
+    		// 모달 닫기
+    		closeModal: function() {
+    			this.showCartModal = false;
+    			this.showScrapModal = false;
+    			this.showScrapModalBan = false;
+    			this.showScrapDeleteModal = false;
+
+    			location.reload();
+    		},
+
+    		fnMoveCart : function() {
+    			location.href = "/product/cart.do";
+    		},
+    		fnMoveScrapbook : function() {
+    			location.href = "/scrapbook.do";
+    		},
+    		fnMoveLoginPage : function() {
+    			location.href = "/login.do";
+    		},
+
+    		fnCheckCart : function(item) {
+    			var self = this;
+    			var nparmap = {userNo: self.userNo};
+
+    			$.ajax({
+    				url : "/product/selectCartList.dox",
+    				dataType:"json",
+    				type : "POST",
+    				data : nparmap,
+    				success : function(data) {
+    					for(let i=0; i<data.list.length;i++){
+    						self.cartList.push(data.list[i].productNo.toString());
+    					}
+    				}
+    			});
+    		},
+
+    		fnAddNonUserCart : function(item) {
+    			var self = this;
+    			var nparmap = { userNo: self.userNo, productNo: item.productNo};
+
+    			$.ajax({
+    				url : "/product/insertCart.dox",
+    				dataType:"json",
+    				type : "POST",
+    				data : nparmap,
+    				success : function(data) {
+    					/* alert("등록완"); */
+    					console.log(self.userNo);
+    				}
+    			});
+
+    			self.openCartModal();
+    			console.log(self.showCartModal);
+    		},
+
+    		fnUpdateUserCart : function(item) {
+    			var self = this;
+    			var nparmap = { userNo: self.userNo, productNo: item.productNo};
+
+    			$.ajax({
+    				url : "/product/addCartCnt.dox",
+    				dataType:"json",
+    				type : "POST",
+    				data : nparmap,
+    				success : function(data) {
+    				}
+    			});
+
+    			self.openCartModal();
+    			console.log(self.showCartModal);
+    		},
+    		fnInsertUserCart : function(item) {
+    			var self = this;
+    			var nparmap = { userNo: self.userNo, productNo: item.productNo};
+
+    			$.ajax({
+    				url : "/product/insertCart.dox",
+    				dataType:"json",
+    				type : "POST",
+    				data : nparmap,
+    				success : function(data) {
+    					/* alert("등록완"); */
+    					console.log(self.userNo);
+
+    				}
+    			});
+
+    			self.openCartModal();
+    			console.log(self.showCartModal);
+    		},
+
+    		fnCheckScrap : function(item) {
+    			var self = this;
+    			var nparmap = {userNo: self.userNo};
+
+    			$.ajax({
+    				url : "/product/selectScrapList.dox",
+    				dataType:"json",
+    				type : "POST",
+    				data : nparmap,
+    				success : function(data) {
+    					for(let i=0; i<data.list.length;i++){
+    						self.scrapbookList.push(data.list[i].productNo.toString());
+    					}
+    				}
+    			});
+    		},
+
+    		fnInsertScrapbook : function(item) {
+    			var self = this;
+    			var nparmap = { userNo: self.userNo, productNo: item.productNo};
+
+    			$.ajax({
+    				url : "/product/insertScrap.dox",
+    				dataType:"json",
+    				type : "POST",
+    				data : nparmap,
+    				success : function(data) {
+
+    				}
+    			});
+
+    			self.openScrapModal();
+    			console.log(self.showScrapModal);
+    		},
+    		  
+    		
+    		fnDeleteScrapbook : function(item) {
+    			var self = this;
+    			var nparmap = { userNo: self.userNo, productNo: item.productNo};
+
+    			$.ajax({
+    				url : "/product/deleteScrap.dox",
+    				dataType:"json",
+    				type : "POST",
+    				data : nparmap,
+    				success : function(data) {
+    					console.log("삭제완")
+    				}
+    			});
+
+    			self.openScrapDeleteModal();
+    			console.log(self.showScrapModal);
+    		},
+			
+    		fnProductView : function(productNo){
+    			var self = this;
+    			$.pageChange("/product/view.do",{no : productNo});//보낼필요없을때 파라미터 빈값으로{}
+    		},
+    		
+    		
+    
+    	},// methods
+    	mounted: function() {
+            this.fnGetList(); // Vue 앱이 생성된 직후 상품 목록을 가져옵니다.
+        },
+        created : function() {
             var self = this;
-            self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정
-            self.fnGetList(); // AJAX 요청 보내기
-	     },
-	      
-	      
-	    //이미지 마우스 오버했을때 pulse 애니메이션
-        addPulseAnimation: function(event) {
-            event.currentTarget.classList.add('animate__animated', 'animate__pulse');
-        },
-        removePulseAnimation: function(event) {
-            event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
-        },
-        
-
-        formatPrice: function(price) {
-            // 천 단위마다 쉼표(,)를 추가하는 정규식 처리
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        },
-        
-        
-        
-        // 모달 열기
-	    openCartModal: function() {
-          var self = this;
-          self.showCartModal = true;
-	    },
-	    openScrapModal: function() {
-          var self = this;
-          self.showScrapModal = true;
-	    },
-	    openScrapDeleteModal: function() {
-          var self = this;
-          self.showScrapDeleteModal = true;
-	    },
-	
-	    // 모달 닫기
-	    closeModal: function() {
-	      this.showCartModal = false;
-	      this.showScrapModal = false;
-	      this.showScrapModalBan = false;
-	      this.showScrapDeleteModal = false;
-      
-	      location.reload();
-
-
-	    },
-	    
-	    fnMoveCart : function() {
-        	location.href = "/product/cart.do";
-	    },
-	    fnMoveScrapbook : function() {
-        	location.href = "/scrapbook.do";
-	    },
-	    fnMoveLoginPage : function() {
-        	location.href = "/login.do";
-	    },
-	    
-	    fnCheckCart : function(item) {
-	    	var self = this;
-            var nparmap = {userNo: self.userNo};
-           
-          
-            $.ajax({
-                url : "/product/selectCartList.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	for(let i=0; i<data.list.length;i++){
-                        self.cartList.push(data.list[i].productNo.toString());
-                     }
-                }
-            }); 
-            
-		},
-		
-		fnAddNonUserCart : function(item) {
-	    	var self = this;
-            var nparmap = { userNo: self.userNo, productNo: item.productNo};
- 
-            $.ajax({
-                url : "/product/insertCart.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	/* alert("등록완"); */
-                   console.log(self.userNo);
-
-                }
-            }); 
-            
-            self.openCartModal();
-            console.log(self.showCartModal);
-
-		}, 
-		
-		
-	    
-	    fnUpdateUserCart : function(item) {
-	    	var self = this;
-            var nparmap = { userNo: self.userNo, productNo: item.productNo};
- 
-            $.ajax({
-                url : "/product/addCartCnt.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-
-                }
-            }); 
-            
-            self.openCartModal();
-            console.log(self.showCartModal);
-
-		}, 
-	    fnInsertUserCart : function(item) {
-	    	var self = this;
-            var nparmap = { userNo: self.userNo, productNo: item.productNo};
- 
-            $.ajax({
-                url : "/product/insertCart.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	/* alert("등록완"); */
-                   console.log(self.userNo);
-
-                }
-            }); 
-            
-            self.openCartModal();
-            console.log(self.showCartModal);
-
-		}, 
-		
-		fnCheckScrap : function(item) {
-	    	var self = this;
-            var nparmap = {userNo: self.userNo};
-           
-          
-            $.ajax({
-                url : "/product/selectScrapList.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	for(let i=0; i<data.list.length;i++){
-                        self.scrapbookList.push(data.list[i].productNo.toString());
-                     }
-                }
-            }); 
-            
-		},
-		
-	    fnInsertScrapbook : function(item) {
-	    	var self = this;
-            var nparmap = { userNo: self.userNo, productNo: item.productNo};
-           
-            $.ajax({
-                url : "/product/insertScrap.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	
-                }
-            }); 
-            self.openScrapModal();
-            console.log(self.showScrapModal);
-		},
-	    fnDeleteScrapbook : function(item) {
-	    	var self = this;
-            var nparmap = { userNo: self.userNo, productNo: item.productNo};
-           
-            $.ajax({
-                url : "/product/deleteScrap.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	console.log("삭제완")
-                }
-            }); 
-            self.openScrapDeleteModal();
-            console.log(self.showScrapModal);
-		},
-		
-		
-		
-		fnProductView : function(productNo){
-	    	var self = this;
-	    	   $.pageChange("/product/view.do",{no : productNo});//보낼필요없을때 파라미터 빈값으로{}
-
-		}
-		
-		
-		
-
-     }, // methods
-	created : function() {
-		var self = this;
-		self.fnGetList();
-		self.fnCheckCart();
-		self.fnCheckScrap();
-	
-	
-
-	}// created
-});
+            self.fnGetList();
+            self.fnCheckCart();
+            self.fnCheckScrap();
+        }
+    });
 </script>

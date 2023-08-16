@@ -126,6 +126,7 @@
 		</div>
 	</header>
 	<script>
+	
 		// 카테고리 토글
 		$('.category-toggle').click(function() {
 			$('.category-list-container').slideToggle('fast');
@@ -136,77 +137,36 @@
 			event.preventDefault();
 			$(this).siblings('.subcategory-list').slideToggle('fast');
 		});
-		function searchProducts(keyword) {
-			var url = '/searchBarProduct.dox';
-			var params = {
-				keyword : keyword
-			};
-
-			// Ajax 요청으로 서버에 검색 요청
-			$.ajax({
-				url : url,
-				data : params,
-				type : 'POST',
-				dataType : 'json',
-				success : function(response) {
-					var productList = response.list;
-					  
-					// ...
-				},
-				error : function(error) {
-					// 검색 실패 처리 로직 추가
-					console.log('Search failed:', error);
-				}
-			});
-		}
-
-		
 		function searchProduct(productName) {
-			$.ajax({
-				url: "/product/searchProduct.dox",
-				method: "GET",
-				data: {
-					productName: productName,
-					
-				}
-			}).done(function(response) {
-			    console.log(response);
-			    window.location.href = '/test.do';
-			    var productList = response.productList;
-			    var resultHtml = "";
+		    $.ajax({
+		        url: "/product/searchProduct.dox",
+		        method: "POST",
+		        data: {
+		            productName: productName,
+		        },
+		    }).done(function(response) {
+		        console.log(response);
 
-			    // 중복 제거를 위한 Set 객체 생성
-			    var uniqueProductIdSet = new Set();
+		        // 세션 정보와 검색어를 함께 저장합니다.
+		        sessionStorage.setItem("searchResult", JSON.stringify(response));
+		        sessionStorage.setItem("searchKeyword", productName);
 
-			    for (var i = 0; i < productList.length; i++) {
-			        var product = productList[i];
-
-			        // 이미 처리한 productNo인 경우 continue
-			        if (uniqueProductIdSet.has(product.productNo)) {
-			            continue;
-			        }
-
-			        resultHtml += "<li>" + product.productName + "</li>";
-
-			        // 처리한 productNo를 Set에 추가
-			        uniqueProductIdSet.add(product.productNo);
-			    }
-
-			    $("#product_list").html(resultHtml);
-			})
+		        // searchProduct.jsp로 이동합니다.
+		        window.location.href = "/searchProduct.do";
+		    });
+		    
 		}
-
 		$("#search_input").on("keypress", function(e) {
-			if (e.keyCode === 13) {
-				var productName = $(this).val();
-				
+		    if (e.keyCode === 13) {
+		        var productName = $(this).val();
 
-				console.log("productName:", productName);
-				
+		        console.log("productName:", productName);
 
-				searchProduct(productName);
-			}
+		        searchProduct(productName);
+		    }
 		});
+
+	
 
 
 

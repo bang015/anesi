@@ -65,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> searchProduct(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return productMapper.selectProductListByKeyword(map);
+		return productMapper.searchProduct(map);
 	}
 	@Override
 	public List<Scrapbook> searchcontentImg2(HashMap<String, Object> map) {
@@ -153,6 +153,11 @@ public class ProductServiceImpl implements ProductService {
 		public List<Order> searchReviewUser(HashMap<String, Object> map) {
 			// TODO Auto-generated method stub
 			return productMapper.selectReviewUser(map);
+		}
+		@Override
+		public List<Product> searchBarProductList(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			return productMapper.searchBarProductList(map);
 		}
 	
 	

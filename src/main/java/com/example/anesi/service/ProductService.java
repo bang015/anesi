@@ -55,6 +55,8 @@ public interface ProductService {
 	// 회원 장바구니 삭제
 	int deleteCartlist (HashMap<String, Object> map);
 	
+	List<Product> searchBarProductList (HashMap<String, Object> map);
+	
 	
 }
 

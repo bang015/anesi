@@ -83,4 +83,5 @@ public interface ProductMapper {
 	int nonUserCartInsert(HashMap<String, Object> map);
 	//상품 검색창 검색
 		List<Product> searchProduct (HashMap<String, Object> map);
+		List<Product> searchBarProductList (HashMap<String, Object> map);
 }

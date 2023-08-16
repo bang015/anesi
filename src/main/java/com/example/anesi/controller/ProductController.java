@@ -32,6 +32,11 @@ public class ProductController {
 		return "/product_add";
 		
 	}
+	@RequestMapping("/searchProduct.do") 
+	public String searchProduct(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/searchProduct";
+		
+	}
 	@RequestMapping("/product/cart.do") 
 	public String cart(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		return "/cart";
@@ -218,27 +223,47 @@ public class ProductController {
 				return new Gson().toJson(resultMap);
 			}
 		  @RequestMapping(value = "/product/searchProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		  @ResponseBody
-		  public String searchProduct(Model model,  @RequestParam HashMap<String, Object> map, HttpSession session) throws Exception {
-		      HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			public @ResponseBody List<Product> searchProduct(Model model,  @RequestParam HashMap<String, Object> map, HttpSession session) throws Exception {
+			    // 요청 매개변수로부터 productName을 가져옵니다.
+			    String productName = (String) map.get("productName");
 
-		      // 세션에서 productNo 및 productName에 대한 값을 가져옵니다.
-		      String sessionProductNo = (String) session.getAttribute("productNo");
-		      String sessionProductName = (String) session.getAttribute("productName");
-		    
-		      // 세션 값이 있는 경우 map에 추가합니다.
-		      if (sessionProductNo != null) {
-		          map.put("productNo", sessionProductNo);
-		      }
-		      if (sessionProductName != null) {
-		          map.put("productName", sessionProductName);
-		      }
-		      
-		      // 상품 검색 서비스 호출
-		      List<Product> productList = productService.searchProduct(map);
-		      resultMap.put("productList", productList);
-		        
-		      return new Gson().toJson(resultMap);
-		  }
+			    // productName 값이 있는 경우 map 및 session에 추가합니다.
+			    if (productName != null) {
+			        map.put("productName", productName);
+			        session.setAttribute("searchKeyword", productName);
+			    }
+
+			    // 콘솔에 세션 값 출력
+			    
+
+			    // 상품 검색 서비스 호출
+			    List<Product> productList = productService.searchProduct(map);
+			    return productList;
+			}
+
+			@RequestMapping(value = "/product/searchBarProduct.dox", produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			public String searchProductList(@RequestParam HashMap<String, Object> map, HttpSession session) throws Exception {
+			    String productName = (String) map.get("productName");
+
+			    // 세션에 저장된 productName 얻기
+			    String sessionProductName = (String) session.getAttribute("productName");
+
+			    // productName이 null이면 세션에서 가져온 값을 사용
+			    if (productName == null && sessionProductName != null) {
+			        productName = sessionProductName;
+			    }
+
+			    HashMap<String, Object> params = new HashMap<>();
+			    params.put("productName", productName);
+
+			    List<Product> productList = productService.searchBarProductList(params);
+
+			    HashMap<String, Object> resultMap = new HashMap<>();
+			    resultMap.put("products", productList);
+			    System.out.println("세션에서 가져온 검색어: " + session.getAttribute("searchKeyword"));
+			    return new Gson().toJson(resultMap);
+			}
+
 
 }
