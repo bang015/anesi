@@ -304,6 +304,13 @@
 		margin-left: 250px;
 		margin-bottom: 30px;
 	}
+	.review-optionName{
+		margin-top: 10px;
+		border-left: 3px solid #ededed;
+	}
+	.review-optionName1{
+		margin-left: 5px;
+	}
 	.review-wrap{
 		margin-top: 30px;
 	}
@@ -798,7 +805,9 @@
 												
 											</div>
 										</div>
-										
+										<div v-if="item.optionName != undefined" class="review-optionName">
+											<span class="review-optionName1">{{item.optionName}}</span>
+										</div>
 										<div class="review-img-box" v-if="item.rImgName !=undefined">
 											<img class="review-img" alt="¸®ºäÀÌ¹ÌÁö" :src="item.rImgPath+'/'+item.rImgName">
 										</div>
@@ -1025,6 +1034,7 @@ var app = new Vue({
 	               		self.reviewList = data.reviewList;
 	               		self.cnt = data.cnt;
 		                self.pageCount = Math.ceil(self.cnt / 5);
+		                console.log(self.reviewList);
 	                }                
 	            })
 		},

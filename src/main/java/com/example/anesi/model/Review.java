@@ -11,7 +11,14 @@ public class Review {
 	private String uImgPath;
 	private String uImgName;
 	private int csatCnt;
+	private String optionName;
 
+	public String getOptionName() {
+		return optionName;
+	}
+	public void setOptionName(String optionName) {
+		this.optionName = optionName;
+	}
 	public int getCsatCnt() {
 		return csatCnt;
 	}
