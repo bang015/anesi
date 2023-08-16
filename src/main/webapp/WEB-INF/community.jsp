@@ -23,6 +23,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     text-align : center;
+    position: relative;
 }
 .board1{
     position: relative;
@@ -53,7 +54,7 @@
 }
 .nick{
 	margin-bottom : 10px;
-	font-size : 12px;
+	font-size : 13px;
 }
 .view{
 	margin-bottom : 10px;
@@ -69,7 +70,6 @@ img{
 img:hover{
 	opacity: 0.7;
 	visibility: visible;
-	text-decoration: none;
 	cursor : pointer;
 }
 .hrr {
@@ -83,6 +83,23 @@ img:hover{
     color: #9b9b9b;
     margin-left: 3px;
 }
+#board-body-head{
+	display: inline-block;
+}
+.searchbar{
+	float:right;
+	margin-top: 21px;
+}
+.search-input{
+    border: 1px solid #c5c5c5;
+    border-radius: 5px;
+    padding: 5px 9px;
+    font-size: 14px;
+}
+.glass{
+    width: 18px;
+    float: right;
+	margin: 3px 10px 0px 5px;
 }
 </style>
 </head>
@@ -106,15 +123,21 @@ img:hover{
 	    	</div>
 		</div>
 		<hr class="hrr">
-		<div><h2>전체글 <span class="text1">{{list.length}}</span></h2></div>
+		<div id="board-body">
+			<div id="board-body-head"><h2>전체글<span class="text1">{{list.length}}</span></h2></div>
+			<div class="searchbar">
+				<button class="btn" @click="fnWrite">글쓰기(임시)</button>
+				<input type="text" class="search-input"><img class="glass" src="../css/image/community/m-glass.png">
+			</div>
+		</div>
 		<div class="part">
 			<div v-for="(item, index) in list">
 		        <div class="board1">
 		            <div class="board1_item">
 		                <div class="photo1">
-		                    <img class="photo2" src="../css/image/community/commu_test.jpg">
+		                   <a @click="fnView(item.boardNo)"><img class="photo2" src="../css/image/community/commu_test.jpg"></a>
 		                </div>
-		                <a class="title_a"><div class="title">{{item.title}}</div></a>
+		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
 		                <div class="nick">{{item.nick}}</div>
 		                <div class="view">조회 {{item.view}} · 댓글 5</div>
 		            </div>
@@ -163,6 +186,9 @@ var app = new Vue({
         			console.log(self.bList);
                 }
             });
+		},
+		fnWrite : function(){
+			location.href="/community/write.do";
 		},
 		fnView : function(boardNo){
 			var self = this;

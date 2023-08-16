@@ -40,6 +40,13 @@ public class BoardController {
 		return "/community_view";
     }
 	
+	// 게시글 쓰기 페이지
+	@RequestMapping("/community/write.do") 
+    public String boardwrite(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/community_write";
+    }
+	
 	// 게시글 리스트
 	@RequestMapping(value = "/community/boardList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
