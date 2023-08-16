@@ -75,6 +75,13 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 
+	@Override
+	public int cartInsert() {
+
+		return productMapper.cartInsert();
+	}
+
+
 	
 	
 

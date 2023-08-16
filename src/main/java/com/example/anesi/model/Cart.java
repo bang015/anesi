@@ -6,6 +6,14 @@ public class Cart {
 	private int userNo;
 	private int productNo;
 	private int cnt;
+	private int nonuserNo;
+	private int optionNo;
+	
+	
+	private String cart_cklimit; //쿠키제한시간(삭제용)
+	private String cart_ckid; //쿠키value값
+	
+	
 	private String imgName;
 	private String imgPath;
 	private String imgOrgName;
@@ -53,5 +61,29 @@ public class Cart {
 	}
 	public void setCartNo(int cartNo) {
 		this.cartNo = cartNo;
+	}
+	public int getNonuserNo() {
+		return nonuserNo;
+	}
+	public void setNonuserNo(int nonuserNo) {
+		this.nonuserNo = nonuserNo;
+	}
+	public int getOptionNo() {
+		return optionNo;
+	}
+	public void setOptionNo(int optionNo) {
+		this.optionNo = optionNo;
+	}
+	public String getCart_cklimit() {
+		return cart_cklimit;
+	}
+	public void setCart_cklimit(String cart_cklimit) {
+		this.cart_cklimit = cart_cklimit;
+	}
+	public String getCart_ckid() {
+		return cart_ckid;
+	}
+	public void setCart_ckid(String cart_ckid) {
+		this.cart_ckid = cart_ckid;
 	}	
 }
