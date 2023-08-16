@@ -1,0 +1,118 @@
+@charset "UTF-8";
+.main-category__title{
+ 	 font-size : 25px;
+ 	 font-weight : bold;
+ 	margin-right : 1000px;
+ 	 
+}
+.product-main-category__image{
+	width:100px;
+	height:100px;
+}
+
+
+.production-item-thumnail__image{
+	width:250px;
+	height:250px;
+}
+
+.product-main-category__name{
+	font-size : 15px;
+}
+.won_icon,.production-item-price__orginal2{
+	text-decoration: line-through;
+}
+
+.production-item__content{
+	width:220px;
+	height:338px;
+	float : left;
+	margin : 50px;
+}
+
+#product-main-category__total > li {
+        display: inline-block;
+        position: relative;
+        top: 10px;
+}
+#product-main-category__total > li > a {
+  display:block; position:relative; padding-bottom:19px;
+  margin: 40px;
+}
+#product-main-category__total > li > a > img {
+  width:100px; height:100px;
+}
+#product-main-category__total > li > a > span {
+  position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0)
+}
+      
+.category-order_toggle{
+	background-color:#A782C3;
+	border: #fff;
+	text-align: center;
+	border-radius:10px; 
+	padding:8px;
+	height:35px; 
+	width: 100px;
+	font-family: 'Pretendard-Regular';
+	color :  #fff;
+ 	position:relative;
+ }
+.category-order_toggle:hover {
+    background-color:rgb(235, 236, 237);
+    transition: 0.7s;
+    
+}  
+.category-order-list {
+
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position:absolute;
+  z-index : 999;
+  background:white;
+  border-radius : 0px 0px 10px 10px;
+  
+}
+
+.category-order-list li {
+
+  /* 카테고리 스타일링 */
+  padding: .5em;
+  border-bottom: 1px solid #ccc;
+  
+  
+}
+.category-order-list-container {
+	background :  #fff;
+   	width: 100px;
+    
+
+}
+
+.aaa {
+  color: #A782C3; /* 원하는 색상 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
+}
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 불투명한 검은색 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index:1000;
+  
+}
+
+.modal-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}

@@ -1,234 +1,86 @@
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+Copy code
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<script src="../js/jquery.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-<link href="../css/mainCss.css" rel="stylesheet">
-<meta charset="UTF-8">
-<title>스토어메인페이지</title>
-<style>
-
-/* 
-*{
-border : 1px solid black;
-} */
-.main-category__title{
- 	 font-size : 25px;
- 	 font-weight : bold;
- 	margin-right : 1000px;
- 	 
-}
-.product-main-category__image{
-	width:100px;
-	height:100px;
-}
-
-
-.production-item-thumnail__image{
-	width:250px;
-	height:250px;
-}
-
-.product-main-category__name{
-	font-size : 15px;
-}
-.won_icon,.production-item-price__orginal2{
-	text-decoration: line-through;
-}
-
-.production-item__content{
-	width:220px;
-	height:338px;
-	float : left;
-	margin : 50px;
-}
-
-#product-main-category__total > li {
-        display: inline-block;
-        position: relative;
-        top: 10px;
-}
-#product-main-category__total > li > a {
-  display:block; position:relative; padding-bottom:19px;
-  margin: 40px;
-}
-#product-main-category__total > li > a > img {
-  width:100px; height:100px;
-}
-#product-main-category__total > li > a > span {
-  position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0)
-}
-      
-.category-order_toggle{
-	background-color:#A782C3;
-	border: #fff;
-	text-align: center;
-	border-radius:10px; 
-	padding:8px;
-	height:35px; 
-	width: 100px;
-	font-family: 'Pretendard-Regular';
-	color :  #fff;
- 	position:relative;
- }
-.category-order_toggle:hover {
-    background-color:rgb(235, 236, 237);
-    transition: 0.7s;
-    
-}  
-.category-order-list {
-
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  position:absolute;
-  z-index : 999;
-  background:white;
-  border-radius : 0px 0px 10px 10px;
-  
-}
-
-.category-order-list li {
-
-  /* 카테고리 스타일링 */
-  padding: .5em;
-  border-bottom: 1px solid #ccc;
-  
-  
-}
-.category-order-list-container {
-	background :  #fff;
-   	width: 100px;
-    
-
-}
-
-.aaa {
-  color: #A782C3; /* 원하는 색상 */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-}
-
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 불투명한 검은색 배경 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index:1000;
-  
-}
-
-.modal-card {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-
-
-
-</style>
+    <script src="../js/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="../css/mainCss.css" rel="stylesheet">
+    <link href="../css/store_main.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>스토어메인페이지</title>
 </head>
-<!-- 주석 꼭 남겨주세요 -->
 <body>
-<jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
-
-
-	<div id="store_main">
-	
-	
-
-<span class="main-category__title">전체상품</span>
-
-<span><button class="category-order_toggle">
-	  정렬<i class="fa-solid fa-chevron-down"></i>
-</button></span>
-<!-- 상품 정렬하는 버튼-->
-
-<div class="category-order-list-container" style="display:none;">
-
-
-  <ul class="category-order-list" >
-    <li value=""><a>전체</a></li>
-    <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">가격낮은순</a></li>
-    <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">가격높은순</a></li>
-    <li value="NewArrival"><a @click="fnOrderBy('NewArrival')">최신순</a></li>
-    <li><a>--아직못함↓--</a></li>
-    <li value="HighestPurchase"><a @click="fnOrderBy('HighestPurchase')">구매높은순</a></li>
-    <li value="HighestScrap"><a @click="fnOrderBy('HighestScrap')">스크랩많은순</a></li>
-    <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">리뷰많은순</a></li>
-  </ul>
-</div>
-  
-	
-	
-		<div class="production-item__content" v-for="item in list">
-		
-			<a @click="fnProductView(item.productNo)" class="production-item-thumnail">
-		
-			    <img class="production-item-thumnail__image animate__animated animate__pulse"
-			         alt="썸네일" :src="item.imgPath + '/' + item.imgName">
-		    </a>
-		    <div class="production-item-header" >
-			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
-			    <span class="production-item-header__name">{{item.productName}}</span>
-			    <div class="production-item-header__kind">{{item.categoryName}} 
-			    <span class="production-item-header__country">{{item.country}}</span>
-			    </div>
-		    </div>
-
-		    <span class="production-item-price">
-		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
-			    정가
-			    <span class="won_icon">￦</span>
-				<span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
-			   </span>
-			    <!-- production-item-price__sell  : 파는 가격 -->
-		       <div class="production-item-price__sell">
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
-			    <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
-			    </div>
-	        </span>
-	        
-			    <!--  production-item-rating : 별점-->
-		       <div class="production-item-rating">
-		       	<!-- 별모양-->
-			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
-			    <span class="production-item-rating__score">4.5</span>
-			   </div>
-			   <!-- 장바구니버튼-->
-			   <a v-if="userId!=''">
-					<i @click="fnInsertUserCart(item)" v-if="!(cartList.includes(item.productNo))"class="fa fa-shopping-cart modal-toggle-button" ></i>
-					<i @click="fnUpdateUserCart(item)" v-if="cartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
-				</a>
-				<!-- 유저번호가 없을떄, 로그인화면으로 전환-->
-				<a v-else>
-					<i @click="fnAddNonUserCart(item)" v-if="!(nonuserCartList.includes(item.productNo))" class="fa fa-shopping-cart modal-toggle-button" ></i>
-					<i @click="fnUpdateUserCart(item)" v-if="nonuserCartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
-				</a>
-		    	<!-- 공유하기버튼-->
-		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-		    	<!-- 스크랩버튼-->
-		    	<a v-if="userId!=''">
-		    		<i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button"></i>
-		    		<i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark"></i>
-	    		</a>
-		    	<a v-else><i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
-	    </div> <!-- class="production-item__content" 끝-->
-	    
+    <jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
+    <div id="store_main">
+        <span class="main-category__title">전체상품</span>
+        <span><button class="category-order_toggle">정렬<i class="fa-solid fa-chevron-down"></i></button></span>
+        <!-- 상품 정렬하는 버튼-->
+        <div class="category-order-list-container" style="display:none;">
+            <ul class="category-order-list">
+                <li value=""><a>전체</a></li>
+                <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">가격낮은순</a></li>
+                <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">가격높은순</a></li>
+                <li value="NewArrival"><a @click="fnOrderBy('NewArrival')">최신순</a></li>
+                <li><a>--아직못함↓--</a></li>
+                <li value="HighestPurchase"><a @click="fnOrderBy('HighestPurchase')">구매높은순</a></li>
+                <li value="HighestScrap"><a @click="fnOrderBy('HighestScrap')">스크랩많은순</a></li>
+                <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">리뷰많은순</a></li>
+            </ul>
+        </div>
+        <div class="production-item__content" v-for="item in list">
+            <a @click="fnProductView(item.productNo)" class="production-item-thumnail">
+                <img class="production-item-thumnail__image animate__animated animate__pulse" alt="썸네일" :src="item.imgPath + '/' + item.imgName">
+            </a>
+            <div class="production-item-header">
+                <span class="production-item-header__brand">{{item.manufacturer}}</span>
+                <span class="production-item-header__name">{{item.productName}}</span>
+                <div class="production-item-header__kind">{{item.categoryName}}
+                    <span class="production-item-header__country">{{item.country}}</span>
+                </div>
+            </div>
+            <span class="production-item-price">
+                <span class="production-item-price__orginal" v-if="item.discountPrice!=''">정가
+                    <span class="won_icon">￦</span>
+                    <span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
+                </span>
+                <!-- production-item-price__sell  : 파는 가격 -->
+                <div class="production-item-price__sell">
+                    <span class="won_icon">￦</span>
+                    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
+                    <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
+                </div>
+            </span>
+            <!--  production-item-rating : 별점-->
+            <div class="production-item-rating">
+                <!-- 별모양-->
+                <i class="fa-solid fa-star" style="color: #A782C3;"></i>
+                <span class="production-item-rating__score">4.5</span>
+            </div>
+            <!-- 장바구니버튼-->
+            <a v-if="userId!=''">
+                <i @click="fnInsertUserCart(item)" v-if="!(cartList.includes(item.productNo))" class="fa fa-shopping-cart modal-toggle-button" ></i>
+                <i @click="fnUpdateUserCart(item)" v-if="cartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
+            </a>
+            <!-- 유저번호가 없을때, 로그인화면으로 전환-->
+            <a v-else>
+                <i @click="fnAddNonUserCart(item)" v-if="!(nonuserCartList.includes(item.productNo))" class="fa fa-shopping-cart modal-toggle-button" ></i>
+                <i @click="fnUpdateUserCart(item)" v-if="nonuserCartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
+            </a>
+            <!-- 공유하기버튼-->
+            <a><i class="fa-solid fa-share-nodes"></i></a>
+            <!-- 스크랩버튼-->
+            <a v-if="userId!=''">
+                <i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button"></i>
+                <i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark"></i>
+            </a>
+            <a v-else>
+                <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i>
+            </a>
+        </div> <!-- class="production-item__content" 끝-->
 	    
 	    
     	<div class="modal" v-if="showCartModal" >
@@ -239,6 +91,7 @@ border : 1px solid black;
 		    <button @click="fnMoveCart" >장바구니로 이동하기</button>
 		  </div>
 		</div>
+    	
 		
     	<div class="modal" v-if="showScrapModal">
 		  <div class="modal-card"  v-if="userId!=''">
@@ -256,8 +109,6 @@ border : 1px solid black;
 		  </div>
 		</div>
 		
-		
-	
     	<div class="modal" v-if="showScrapDeleteModal">
 		  <div class="modal-card">
 		    <h2>스크랩북에서 삭제되었습니다.</h2>
@@ -342,14 +193,9 @@ var app = new Vue({
                 	self.list = data.list;
                 	self.list2=data.list2;
                     console.log(self.nonuserNo);
-
-                	
                 }
             }); 
 		},
-		
-
-
 	     fnOrderBy: function (orderBy) {
             var self = this;
             self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정
@@ -367,10 +213,12 @@ var app = new Vue({
         
 
         formatPrice: function(price) {
-            // 천 단위마다 쉼표(,)를 추가하는 정규식 처리
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            // 100의 자리까지 내림하여 표시하며 천 단위마다 쉼표(,)를 추가합니다.
+            const truncatedPrice = Math.floor(price / 100) * 100;
+            return truncatedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
-        
+
+
         
         
         // 모달 열기
@@ -572,8 +420,7 @@ var app = new Vue({
 		self.fnGetList();
 		self.fnCheckCart();
 		self.fnCheckScrap();
-		if('${sessionNo}' == '')
-			self.fnaaa();
+		self.fnaaa();
 
 	}// created
 });
