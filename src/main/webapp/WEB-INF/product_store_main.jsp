@@ -115,8 +115,8 @@ Copy code
 		    <button @click="closeModal">쇼핑계속하기</button>
 		    <button @click="fnMoveScrapbook">스크랩북으로 이동하기</button>
 		  </div>
-		  
 		</div>
+		
     	<div class="modal" v-if="showScrapModalBan">
 		  <div class="modal-card">
 		    <h2>이미 담긴상품입니다.</h2>
@@ -125,13 +125,8 @@ Copy code
 		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
 		  </div>
 		</div>
-	
-	    
-    </div>
-
-
-	
-	
+		
+    </div><!--storeMain 끝-->
 	<jsp:include page="footer.jsp"></jsp:include>
 	
 </body>
@@ -163,7 +158,6 @@ var app = new Vue({
 	data : {
 		list : [],
 		list2 : [],
-		
 		item : "",
 		showCartModal: false,
 		showScrapModal: false,
@@ -218,9 +212,6 @@ var app = new Vue({
             return truncatedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
 
-
-        
-        
         // 모달 열기
 	    openCartModal: function() {
           var self = this;
