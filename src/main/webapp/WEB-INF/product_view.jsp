@@ -29,6 +29,7 @@
 		width: 1200px;
 		margin: 0 auto;
 		margin-bottom: 30px;
+		min-height: 700px;
 	}
 	.main-left{
 		width: 60%;
@@ -114,7 +115,7 @@
 		border: 1px solid #ededed;
 	}
 	.main-btn-wrap{
-		margin-top: 298px;
+		margin-top: 50px;
 	}
 	.main-btn-wrap button{
 		width: 198px;
@@ -376,6 +377,7 @@
 		list-style: none;
 		background-color:#ededed; 
 		border-radius: 5px;
+		padding: 10px;
 	}
 	.choice-option li span{
 		font-size: 17px;
@@ -386,13 +388,11 @@
 		border: 0;
 		background-color: #ededed;
 		float: right;
-		margin-top: 5px;
 		
 	}
 	.option-stock{
 		display: flex;
-		align-items: flex-end;
-		margin-right: 0;
+  align-items: center;
 	}
 	.quantity-box{
 	    border-radius: 4px;
@@ -401,7 +401,6 @@
 		width: 77px;
 		margin-top: 12px;
 		margin-left: 8px;
-		margin-bottom: 8px;
 	}
 	.quantity-box input{
 		border: 0;
@@ -414,10 +413,12 @@
 		border: 0;
 	}
 	.option-stock-price{
-		margin-bottom : 13px;
+		overflow: auto;
 		font-size: 18px;
 		font-weight: bold;
-		margin-left: 220px;
+		flex: 1 1 0%;
+    	text-align: right;
+    	margin-top: 25px;
 	}
 </style>
 </head>
@@ -509,7 +510,7 @@
 								<select class="option-box" v-model="option1" @change="addToSelectedOptions">
 									<option value="">상품을 선택하세요.</option>
 									<option v-for="item in option" :key="item.optionNo + '-' + item.optionName" :value="item.optionNo">
-										{{item.optionName}}(+{{item.optionPrice}}원)
+										{{item.optionName}}(+{{item.optionPrice | formatPrice}}원)
 									</option>
 								</select>
 							</div>
@@ -531,7 +532,7 @@
 							               </button>
 										 </div>
 										 <div class="option-stock-price">
-										 	{{ calculateTotalPrice(selectedOption) }}원
+										 	{{ calculateTotalPrice(selectedOption) | formatPrice}}원
 										 </div>
 							        </div>
 							        
@@ -733,7 +734,11 @@ var app = new Vue({
             }
           }, /* 그래프 끝 */
 	},// data
-	
+	filters: {
+	    formatPrice(price) {
+	      return price.toLocaleString('ko-KR');
+	    },
+	  },
 	methods : {
 		
 		fnGetList : function(){
