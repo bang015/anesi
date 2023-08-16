@@ -108,8 +108,10 @@
 	}
 	.option-box{
 		width: 100%;
-		height: 40px;
+		height: 50px;
 		font-size: 18px;
+		border-radius: 5px;
+		border: 1px solid #ededed;
 	}
 	.main-btn-wrap{
 		margin-top: 298px;
@@ -744,8 +746,10 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.product = data.product;
-	               		 var price = self.product.productPrice - Math.round(self.product.productPrice * (self.product.discount/100));
-	               		self.discountPrice =  Math.floor(price / 100) * 100;
+	               		var price = self.product.productPrice - Math.round(self.product.productPrice * (self.product.discount/100));
+	               		var price2 = Math.floor(price / 100) * 100;
+	               		self.discountPrice =price2.toLocaleString('ko-KR');
+	               		self.product.productPrice = self.product.productPrice.toLocaleString('ko-KR'); 
 	                }                
 	            }); 
 		},
@@ -774,6 +778,8 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.option = data.option;
+	               		self.optiono,ptionPrice
+
 	               		console.log(self.option);
 	                }                
 	            }); 
@@ -909,11 +915,11 @@ var app = new Vue({
 		      },
 		fnPay : function(){
 			 var self = this;
-			 if(self.option1==""){
+			 if(self.selectedOptions.length == 0){
 				 alert("상품을 선택해주세요.");
 				 return;
 			 }else{
-				 $.pageChange("../order/main.do", {productNo : self.productNo, optionNo : self.option1})
+				 $.pageChange("../order/main.do", self.selectedOptions)
 			 }
 			},
 		clickImg : function(imgPath,imgName){
