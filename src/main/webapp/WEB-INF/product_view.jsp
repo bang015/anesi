@@ -517,6 +517,28 @@
 		background-color: #fff;
 		border: 0;
 	}
+	.star-rating {
+	  position: relative;
+	  display: inline-block;
+	  font-size: 0; /* To remove white space between inline-block elements */
+	}
+	
+	.fa-star {
+	  font-size: 2rem;
+	}
+	
+	.fa-star.half {
+	  width: 50%;
+	  overflow: hidden;
+	}
+	
+	.fa-star.filled {
+	  color: #A782C3;
+	}
+	
+	.fa-star.empty {
+	  color: #ababab;
+	}	
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -693,7 +715,16 @@
 								        			<span class="review-add-price">{{reviewPrice | formatPrice}}원</span>
 									        	</div>
 									        	<div class="review-product-csat">
-									        		<span class="review-add-csat">리뷰 {{csat.csatCnt}}</span> <span class="review-add-csatAvg">평점 {{csat.csatAvg}}</span>
+									        		<div>
+													    <div class="star-rating">
+													      <i v-for="(star, index) in stars" :key="index"
+													         :class="starClass(index)"
+													          @mouseover="hover(index + 1)"
+														      @click="rate(index + 1)"
+														      @mouseout="clearHover"></i>
+													    </div>
+													    <p>선택한 별점: {{ selectedRating }}</p>
+													</div>
 									        	</div>
 									        	<div class="review-img-btn-wrap">
 									        		<input type="file" id="file1" name="file1" style="display: none;" @change="handleFileChange">
@@ -704,7 +735,7 @@
 									        	</div>	
 									        	<p class="fileName" v-if="selectedFile">파일 이름: {{ selectedFile.name }}</p>
 									        	<div class="review-add-textarea">
-									        		<textarea class="review-add-text" rows="10" cols="53.9"></textarea>
+									        		<textarea class="review-add-text" rows="10" cols="53.9" v-model="reviewText"></textarea>
 									        	</div>
 									        	<div class="review-add-btn-wrap"> 
 									        		<button @click="fnReviewAdd" class="review-add-btn">리뷰 등록</button>
@@ -824,6 +855,11 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		optionName : "",
+		stars: Array(5).fill('empty'),
+	    selectedRating: 0,
+	    hoveringRating: 0,
+		reviewText : "",
 		selectedFile: null,
 		reviewPrice : 0,
 		reviewUser : [],
@@ -1043,11 +1079,18 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {
 	                	self.reviewUser = data.user	
-	                	for(var i=0; i<self.reviewUser.length; i++){
-	                		self.reviewPrice += self.reviewUser[i].orderPrice;
-	                	}
+	                	
+	                	for (var i = 0; i < self.reviewUser.length; i++) {
+	                		  self.reviewPrice += self.reviewUser[i].orderPrice;
+	                		  self.optionName += self.reviewUser[i].optionName + ' + '; // 각 옵션 이름 누적
+	                		}
+
+	                		// 누적된 문자열 마지막에 있는 '+' 기호 제거
+	                		if (self.optionName.endsWith(' + ')) {
+	                		  self.optionName = self.optionName.slice(0, -3);
+	                		}
 	                	console.log(self.reviewUser);
-	                	console.log(self.reviewPrice);
+	                	console.log(self.optionName);
 	                }                
 	            })
 		},
@@ -1056,7 +1099,35 @@ var app = new Vue({
 		      this.selectedFile = event.target.files[0];
 		    },
 		fnReviewAdd : function(){
-			
+			var self = this;
+            var nparmap = {userNo : self.userNo, reviewText : self.reviewText, productNo : self.productNo, csat : self.selectedRating, optionName : self.optionName};
+            $.ajax({
+                url:"/reviewAdd.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	console.log(data.idx);
+	           		var form = new FormData();
+	       	        form.append( "file1",  $("#file1")[0].files[0] );
+	       	     	form.append( "idx",  data.idx); // pk
+	           		self.upload(form); 
+                	
+                }
+            });
+		},
+		, upload : function(form){
+	    	var self = this;
+	         $.ajax({
+	             url : "/fileUpload.dox"
+	           , type : "POST"
+	           , processData : false
+	           , contentType : false
+	           , data : form
+	           , success:function(response) { 
+	        	   
+	           }	           
+	       });
 		},
 		addToSelectedOptions() {
 		      const selectedItem = this.option.find(item => item.optionNo === this.option1);
@@ -1136,7 +1207,30 @@ var app = new Vue({
 		closeScrapModal: function() {
 			var self = this;
 			self.showScrapModal = false;
+			self.selectedFile = null;
 			},
+			starClass(index) {
+			      const rating = this.hoveringRating || this.selectedRating;
+			      if (rating >= index + 1) {
+			        return 'fa-solid fa-star filled';
+			      } else if (rating >= index + 0.5) {
+			        return 'fa-solid fa-star half';
+			      } else {
+			        return 'fa-solid fa-star empty';
+			      }
+			    },
+			    hover(rating) {
+			      this.hoveringRating = rating;
+			    },
+			    rate(rating) {
+			      this.selectedRating = rating;
+			      this.hoveringRating = 0; // 클릭했을 때 호버 상태 제거
+			    },
+			    clearHover() {
+			      if (this.selectedRating === 0) {
+			        this.hoveringRating = 0;
+			      }
+			    }
 			  
 	}, // methods
 	created : function() {
