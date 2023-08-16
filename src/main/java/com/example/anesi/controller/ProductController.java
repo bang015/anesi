@@ -198,4 +198,13 @@ public class ProductController {
 		       productService.addOption(map);
 		       return new Gson().toJson(resultMap);
 		   }
+	
+		  @RequestMapping(value = "/product/deleteCartlist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			public String deleteCart(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+				HashMap<String, Object> resultMap = new HashMap<String, Object>();
+				productService.deleteCartlist(map);
+				resultMap.put("success", "삭제완료");
+				return new Gson().toJson(resultMap);
+			}
 }

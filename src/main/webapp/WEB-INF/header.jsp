@@ -21,6 +21,7 @@
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
 	rel="stylesheet">
+	
 <link href="../css/Header.css" rel="stylesheet">
 <link href="../css/mainCss.css" rel="stylesheet">
 	
@@ -45,7 +46,7 @@
 			<li><a href="../mypage.do"><i class="fa-solid fa-user "></i></a><span class="fon">마이페이지</span></li>
 			<li><a><i class="fa-solid fa-bookmark "></i></a><span></span></li>
 			<li><a><i class="fa-solid fa-bell "></i></a><span></span></li>
-			<li><a><i class="fa fa-shopping-cart "></i></a><span></span></li>
+			<li><a href="../product/cart.do"><i class="fa fa-shopping-cart "></i></a><span></span></li>
 			<li><a href="" class="headerbtn" title="Button fade blue/green"
 				class="button btnFade btnBlueGreen">Fade</a></li>
 		</ul>
