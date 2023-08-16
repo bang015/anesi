@@ -130,16 +130,22 @@
 	<select id="userCartList" parameterType="hashmap" resultType="com.example.anesi.model.Cart">
 		SELECT *
 		FROM t3_tbl_user_cart 
-		WHERE USER_NO = #{userNo}
+		WHERE 1=1 
+		 <if test="userNo != '' and userNo != null">AND USER_NO = #{userNo}</if>
+       	 <if test="nonuserNo != '' and nonuserNo != null">AND NONUSER_NO = #{nonuserNo}</if>
 	</select>
 	
 	<!-- 장바구니 수량추가-->
-	<update id="updateCartCnt" parameterType="hashmap" >
-		UPDATE t3_tbl_user_cart
-		SET 
-			CNT = CNT+1
-		WHERE USER_NO = #{userNo} AND PRODUCT_NO = #{productNo}
-	</update>	
+	<update id="updateCartCnt" parameterType="hashmap">
+	    UPDATE t3_tbl_user_cart
+	    SET
+	        CNT = CNT + 1
+	    WHERE PRODUCT_NO = #{productNo}
+	        <if test="userNo != '' and userNo != null">AND USER_NO = #{userNo}</if>
+	        <if test="nonuserNo != '' and nonuserNo != null">AND NONUSER_NO = #{nonuserNo}</if>
+	</update>
+
+
 	
 	<!-- 스크랩북 등록 -->
 	<insert id="insertScrapbook" parameterType="hashmap">
@@ -165,33 +171,33 @@
 
 	<!--장바구니 삭제-->
 	<delete id="deleteCartlist" parameterType="hashmap">
-  DELETE FROM t3_tbl_user_cart
-  WHERE PRODUCT_NO = #{productNo} AND USER_NO = #{userNo}
-</delete>
+		 DELETE FROM t3_tbl_user_cart
+		 WHERE PRODUCT_NO = #{productNo} AND USER_NO = #{userNo}
+	</delete>
 
 	<select id="selectCartList" parameterType="int" resultType="com.example.anesi.model.Product">
-    SELECT
-        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
-        user.USER_NO
-    FROM
-        t3_tbl_product product
-    INNER JOIN
-        t3_tbl_product_image image ON product.PRODUCT_NO = image.PRODUCT_NO
-    INNER JOIN 
-        t3_tbl_user_cart cart ON cart.PRODUCT_NO = product.PRODUCT_NO
-    INNER JOIN
-        t3_tbl_user user ON user.USER_NO = cart.USER_NO
-    WHERE
-        user.USER_NO = #{userNo} AND image.THUMBNAIL_YN = 'Y'
-</select>
+	    SELECT
+	        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
+	        user.USER_NO
+	    FROM
+	        t3_tbl_product product
+	    INNER JOIN
+	        t3_tbl_product_image image ON product.PRODUCT_NO = image.PRODUCT_NO
+	    INNER JOIN 
+	        t3_tbl_user_cart cart ON cart.PRODUCT_NO = product.PRODUCT_NO
+	    INNER JOIN
+	        t3_tbl_user user ON user.USER_NO = cart.USER_NO
+	    WHERE
+	        user.USER_NO = #{userNo} AND image.THUMBNAIL_YN = 'Y'
+	</select>
 
 	
 	<!-- 비회원 장바구니 등록 -->
 	<insert id="nonUserCartInsert" parameterType="hashmap" >
 		INSERT INTO t3_tbl_user_cart 
-		(PRODUCT_NO,  OPTION_NO, NONUSER_NO)
+		(PRODUCT_NO,  OPTION_NO, NONUSER_NO, CNT)
 		VALUES
-		(#{productNo} , 1, #{nonuserNo})
+		(#{productNo} , 1, #{nonuserNo}, 1)
 	</insert>
  
  <select id="searchProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">

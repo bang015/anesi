@@ -20,7 +20,7 @@ border : 1px solid black;
 .main-category__title{
  	 font-size : 25px;
  	 font-weight : bold;
- 	 	margin-right : 1000px;
+ 	margin-right : 1000px;
  	 
 }
 .product-main-category__image{
@@ -52,7 +52,7 @@ border : 1px solid black;
         display: inline-block;
         position: relative;
         top: 10px;
-      }
+}
 #product-main-category__total > li > a {
   display:block; position:relative; padding-bottom:19px;
   margin: 40px;
@@ -74,8 +74,7 @@ border : 1px solid black;
 	width: 100px;
 	font-family: 'Pretendard-Regular';
 	color :  #fff;
- 	 position:relative;
-  	flex : 0 0 5;
+ 	position:relative;
  }
 .category-order_toggle:hover {
     background-color:rgb(235, 236, 237);
@@ -91,6 +90,7 @@ border : 1px solid black;
   z-index : 999;
   background:white;
   border-radius : 0px 0px 10px 10px;
+  
 }
 
 .category-order-list li {
@@ -98,6 +98,7 @@ border : 1px solid black;
   /* 카테고리 스타일링 */
   padding: .5em;
   border-bottom: 1px solid #ccc;
+  
   
 }
 .category-order-list-container {
@@ -123,7 +124,7 @@ border : 1px solid black;
   display: flex;
   align-items: center;
   justify-content: center;
-    z-index:1000;
+  z-index:1000;
   
 }
 
@@ -151,7 +152,7 @@ border : 1px solid black;
 
 <span class="main-category__title">전체상품</span>
 
-<span></span><button class="category-order_toggle">
+<span><button class="category-order_toggle">
 	  정렬<i class="fa-solid fa-chevron-down"></i>
 </button></span>
 <!-- 상품 정렬하는 버튼-->
@@ -215,8 +216,8 @@ border : 1px solid black;
 				</a>
 				<!-- 유저번호가 없을떄, 로그인화면으로 전환-->
 				<a v-else>
-					<!-- <i @click="fnMoveLoginPage" class="fa fa-shopping-cart modal-toggle-button" ></i> -->
-					<i @click="fnAddNonUserCart(item)" class="fa fa-shopping-cart modal-toggle-button" ></i>
+					<i @click="fnAddNonUserCart(item)" v-if="!(nonuserCartList.includes(item.productNo))" class="fa fa-shopping-cart modal-toggle-button" ></i>
+					<i @click="fnUpdateUserCart(item)" v-if="nonuserCartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
 				</a>
 		    	<!-- 공유하기버튼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
@@ -324,6 +325,7 @@ var app = new Vue({
 		productNo : "",
 		scrapbookList : [],
 		cartList : [],
+		nonuserCartList : []
 	
 	},// data
 	methods : {
@@ -339,7 +341,8 @@ var app = new Vue({
                 	
                 	self.list = data.list;
                 	self.list2=data.list2;
-                	
+                    console.log(self.nonuserNo);
+
                 	
                 }
             }); 
@@ -408,8 +411,7 @@ var app = new Vue({
 	    
 	    fnCheckCart : function(item) {
 	    	var self = this;
-            var nparmap = {userNo: self.userNo};
-           
+            var nparmap = {userNo: self.userNo};           
           
             $.ajax({
                 url : "/product/selectCartList.dox",
@@ -418,17 +420,16 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	for(let i=0; i<data.list.length;i++){
-                        self.cartList.push(data.list[i].productNo.toString());
+	                	if(self.userNo != '' && self.userNo != null) {
+	                        self.cartList.push(data.list[i].productNo.toString());
+	                	}else{
+	                        self.nonuserCartList.push(data.list[i].productNo.toString());
+	                	}
                      }
-                }
+                   }
+                
             }); 
-            
 		},
-		
-	
-		
-		
-	    
 	    fnUpdateUserCart : function(item) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
@@ -541,10 +542,10 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) { 
 	                	self.nonuserNo = data.value;
-	                	
+	                    console.log(self.nonuserNo);
+
 	                }
 	            }); 
-			
 		},
 		
 		fnAddNonUserCart : function(item) {
