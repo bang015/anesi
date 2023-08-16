@@ -120,6 +120,13 @@
 		GROUP BY csat
 		ORDER BY csat desc 
 	</select>
+	<!-- 상품 구매 고객 확인(리뷰)-->
+	<select id="selectReviewUser" parameterType="hashmap" resultType="com.example.anesi.model.Order">
+		SELECT *
+		FROM t3_tbl_user_order o
+		INNER JOIN t3_tbl_product_option p ON o.OPTION_NO = p.OPTION_NO
+		WHERE o.PRODUCT_NO = #{productNo} AND o.USER_NO = #{userNo}
+	</select>
 	<!-- 장바구니 등록 -->
 	<insert id="insertCartUser" parameterType="hashmap">
 		INSERT INTO t3_tbl_user_cart 

@@ -14,7 +14,42 @@ public class Order {
     private int maxDi;
     private String mutiYn;
     private String couponName;
-    public String getCouponName() {
+    private int productNo;
+    private int optionNo;
+    private int orderPrice;
+    private int cnt;
+    private String optionName;
+    public String getOptionName() {
+		return optionName;
+	}
+	public void setOptionName(String optionName) {
+		this.optionName = optionName;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	public int getProductNo() {
+		return productNo;
+	}
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
+	}
+	public int getOptionNo() {
+		return optionNo;
+	}
+	public void setOptionNo(int optionNo) {
+		this.optionNo = optionNo;
+	}
+	public int getOrderPrice() {
+		return orderPrice;
+	}
+	public void setOrderPrice(int orderPrice) {
+		this.orderPrice = orderPrice;
+	}
+	public String getCouponName() {
 		return couponName;
 	}
 	public int getCouponNo() {

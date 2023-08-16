@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Category;
+import com.example.anesi.model.Order;
 import com.example.anesi.model.Product;
-import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.service.ProductService;
 import com.google.gson.Gson;
@@ -157,6 +157,15 @@ public class ProductController {
 		   public String reviewCnt(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
 		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		       resultMap = productService.searchReviewCnt(map);
+		       return new Gson().toJson(resultMap);
+		   }
+		// 상품 구매 확인(리뷰)
+		  @RequestMapping(value = "/reviewUserSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		   @ResponseBody
+		   public String reviewUser(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		       List<Order> user = productService.searchReviewUser(map);
+		       resultMap.put("user", user);			   
 		       return new Gson().toJson(resultMap);
 		   }
 		  

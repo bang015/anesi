@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.anesi.model.Category;
+import com.example.anesi.model.Order;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
@@ -40,8 +41,10 @@ public interface ProductService {
 	HashMap<String, Object>searchReview(HashMap<String, Object> map);
 	// 리뷰 별점 개수
 	HashMap<String, Object>searchReviewCnt(HashMap<String, Object> map);
+	// 상품 구매 확인(리뷰)
+	List<Order> searchReviewUser(HashMap<String, Object> map);
 	//상품 장바구니
-		List<Product>selectCartList(HashMap<String, Object> map);
+	List<Product>selectCartList(HashMap<String, Object> map);
 	// 상품등록
 	int addProduct(HashMap<String, Object> map);
 	// 상품등록후 검색

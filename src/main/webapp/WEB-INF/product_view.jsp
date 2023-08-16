@@ -435,6 +435,84 @@
 	.total-price2{
 		float: right;
 	}
+	.review-add{
+		background-color: #fff;
+		width: 700px;
+		border-radius: 5px;
+	}
+	.review-product-name{
+		margin-top: 20px;
+	}
+	.review-add-name{
+		font-size: 20px;
+		display: inline-block;
+		margin-right: 5px;
+	}
+	.review-add-option{
+		font-size: 17px;
+	}
+	.review-add-box{
+		width: 400px;
+		margin: 0 auto;
+		
+	}
+	.review-product-price{
+		font-size: 16px;
+		margin-bottom: 10px;
+	}
+	.review-product-csat{
+		margin-bottom: 20px;
+		border-bottom: 1px solid #ededed;
+		padding-bottom: 10px;
+	}
+	.review-img-btn{
+		width: 400px;
+		height: 40px;
+		border-radius: 5px;
+		border: 1px solid #A782C3;
+		background-color: #fff;
+		color: #A782C3;
+		font-size: 16px;
+		font-weight: bold;
+		display: flex;
+		
+	}
+	.img-icon{
+		margin-left: 140px;
+		margin-top: 2px;
+	}
+	.img-btn-text{
+		margin-top : 8px;
+		margin-left: 10px;
+	}
+	.review-img-btn-wrap{
+		margin-bottom: 30px;
+	}
+	.review-add-text{
+		width: 394px;
+		border-radius: 5px;
+	}
+	.review-add-btn{
+		margin-top : 20px;
+		width: 400px;
+		height: 40px;
+		border-radius: 5px;
+		border: 1px solid #A782C3;
+		background-color: #fff;
+		margin-bottom: 20px;
+		color: #A782C3;
+		font-size: 16px;
+		font-weight: bold;
+	}
+	.review-back{
+		float: right;
+		margin-top: 10px;
+		margin-right: 10px;
+	}
+	.review-back button{
+		background-color: #fff;
+		border: 0;
+	}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -590,7 +668,45 @@
 							<div class="content-review" id="review">
 								<div class="review-title" >
 									<span class="review-text1">리뷰 </span><span class="review-text2" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span>
-									<button class="review-btn">리뷰쓰기</button>
+									<button class="review-btn" @click="openScrapModal" v-if="reviewUser !=undefined">리뷰쓰기</button>
+								</div>
+								<div class="modal" v-if="showScrapModal">
+									
+							        <div class="review-add">
+							        <div class="review-back">
+										<button @click="closeScrapModal()"><i  class="fa-solid fa-x fa-2x" style="color: #410349;"></i></button>
+									</div>
+							        	<div class="review-add-box">
+								        	<div class="review-add-product">
+								        		<div class="review-product-name">
+								        			<div class="review-add-name">{{product.productName}}</div>
+								        			<span class="review-add-option" v-for="(item, index) in reviewUser">
+								        				{{item.optionName}}
+								        				<span v-if="index !== reviewUser.length - 1">+</span>	
+								        			</span>
+								        		</div>
+								        		<div class="review-product-price">
+								        			<span class="review-add-price">{{reviewPrice | formatPrice}}원</span>
+									        	</div>
+									        	<div class="review-product-csat">
+									        		<span class="review-add-csat">리뷰 {{csat.csatCnt}}</span> <span class="review-add-csatAvg">평점 {{csat.csatAvg}}</span>
+									        	</div>
+									        	<div class="review-img-btn-wrap">
+									        		<button class="review-img-btn">
+									        			<div class="img-icon"><i class="fa-regular fa-image fa-2x" style="color: #A782C3;"></i></div>
+									        			<div class="img-btn-text">사진 추가</div>
+									        		</button>
+									        	</div>	
+									        	<div class="review-add-textarea">
+									        		<textarea class="review-add-text" rows="10" cols="53.9"></textarea>
+									        	</div>
+									        	<div class="review-add-btn-wrap"> 
+									        		<button class="review-add-btn">리뷰 등록</button>
+									        	</div>
+								        	</div>
+							        	</div>
+							        	
+							        </div>
 								</div>
 								<div class="csat-box">
 									<div class="csat1">
@@ -702,6 +818,9 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		reviewPrice : 0,
+		reviewUser : [],
+		userNo : '${sessionNo}',
 		totalPrice : 0,
 		optionPrice : "",
 		selectedOptions : [],
@@ -722,6 +841,7 @@ var app = new Vue({
 		selectPage: 1,
 		pageCount: 1,
 		cnt : 0,
+		showScrapModal : false,
 		/* 그래프 시작 */
 		series: [{
             data : []
@@ -906,6 +1026,24 @@ var app = new Vue({
 	                }                
 	            })
 		},
+		fnReviewUser : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo, userNo : self.userNo};	            
+	            $.ajax({
+	                url : "/reviewUserSearch.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {
+	                	self.reviewUser = data.user	
+	                	for(var i=0; i<self.reviewUser.length; i++){
+	                		self.reviewPrice += self.reviewUser[i].orderPrice;
+	                	}
+	                	console.log(self.reviewUser);
+	                	console.log(self.reviewPrice);
+	                }                
+	            })
+		},
 		addToSelectedOptions() {
 		      const selectedItem = this.option.find(item => item.optionNo === this.option1);
 		      if (selectedItem) {
@@ -977,6 +1115,14 @@ var app = new Vue({
 		nextPage() {
 			this.currentPage++;
 			},
+		openScrapModal: function() {
+		    var self = this;
+		    self.showScrapModal = true;
+		    },
+		closeScrapModal: function() {
+			var self = this;
+			self.showScrapModal = false;
+			},
 			  
 	}, // methods
 	created : function() {
@@ -989,6 +1135,7 @@ var app = new Vue({
 		self.fnContentImg();
 		self.fnReview();
 		self.fnReviewCnt();
+		self.fnReviewUser();
 	}// created
 });
 </script>

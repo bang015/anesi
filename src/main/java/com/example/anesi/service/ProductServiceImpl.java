@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.ProductMapper;
 import com.example.anesi.model.Category;
+import com.example.anesi.model.Order;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
@@ -147,6 +148,11 @@ public class ProductServiceImpl implements ProductService {
 		public int deleteCartlist(HashMap<String, Object> map) {
 			// TODO Auto-generated method stub
 			return productMapper.deleteCartlist(map);
+		}
+		@Override
+		public List<Order> searchReviewUser(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			return productMapper.selectReviewUser(map);
 		}
 	
 	
