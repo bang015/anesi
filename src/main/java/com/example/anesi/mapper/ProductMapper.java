@@ -64,7 +64,7 @@ public interface ProductMapper {
  
 	//회원 상품 스크랩북 리스트 체크
 	List<Scrapbook> selectScrapbookList (HashMap<String, Object> map);
-	
+	 
 	//회원 상품 카트 리스트 체크
 	List<Cart> userCartList (HashMap<String, Object> map);
 	

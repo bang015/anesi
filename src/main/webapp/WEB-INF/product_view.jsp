@@ -465,7 +465,7 @@
 		border-bottom: 1px solid #ededed;
 		padding-bottom: 10px;
 	}
-	.review-img-btn{
+	.file-upload-label{
 		width: 400px;
 		height: 40px;
 		border-radius: 5px;
@@ -486,9 +486,13 @@
 		margin-left: 10px;
 	}
 	.review-img-btn-wrap{
-		margin-bottom: 30px;
+		margin-bottom: 10px;
+	}
+	.fileName{
+		margin: 0;
 	}
 	.review-add-text{
+		margin-top : 20px;
 		width: 394px;
 		border-radius: 5px;
 	}
@@ -502,7 +506,7 @@
 		margin-bottom: 20px;
 		color: #A782C3;
 		font-size: 16px;
-		font-weight: bold;
+		font-weight: 900;
 	}
 	.review-back{
 		float: right;
@@ -668,7 +672,7 @@
 							<div class="content-review" id="review">
 								<div class="review-title" >
 									<span class="review-text1">리뷰 </span><span class="review-text2" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span>
-									<button class="review-btn" @click="openScrapModal" v-if="reviewUser !=undefined">리뷰쓰기</button>
+									<button class="review-btn" @click="openScrapModal" v-if="reviewUser.length != 0">리뷰쓰기</button>
 								</div>
 								<div class="modal" v-if="showScrapModal">
 									
@@ -692,16 +696,18 @@
 									        		<span class="review-add-csat">리뷰 {{csat.csatCnt}}</span> <span class="review-add-csatAvg">평점 {{csat.csatAvg}}</span>
 									        	</div>
 									        	<div class="review-img-btn-wrap">
-									        		<button class="review-img-btn">
-									        			<div class="img-icon"><i class="fa-regular fa-image fa-2x" style="color: #A782C3;"></i></div>
-									        			<div class="img-btn-text">사진 추가</div>
-									        		</button>
+									        		<input type="file" id="file1" name="file1" style="display: none;" @change="handleFileChange">
+												    <label for="file1" class="file-upload-label">
+												      <div class="img-icon"><i class="fa-regular fa-image fa-2x" style="color: #A782C3;"></i></div>
+												      <div class="img-btn-text">사진 추가</div>
+												    </label>
 									        	</div>	
+									        	<p class="fileName" v-if="selectedFile">파일 이름: {{ selectedFile.name }}</p>
 									        	<div class="review-add-textarea">
 									        		<textarea class="review-add-text" rows="10" cols="53.9"></textarea>
 									        	</div>
 									        	<div class="review-add-btn-wrap"> 
-									        		<button class="review-add-btn">리뷰 등록</button>
+									        		<button @click="fnReviewAdd" class="review-add-btn">리뷰 등록</button>
 									        	</div>
 								        	</div>
 							        	</div>
@@ -818,6 +824,7 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		selectedFile: null,
 		reviewPrice : 0,
 		reviewUser : [],
 		userNo : '${sessionNo}',
@@ -1043,6 +1050,13 @@ var app = new Vue({
 	                	console.log(self.reviewPrice);
 	                }                
 	            })
+		},
+		handleFileChange(event) {
+		     
+		      this.selectedFile = event.target.files[0];
+		    },
+		fnReviewAdd : function(){
+			
 		},
 		addToSelectedOptions() {
 		      const selectedItem = this.option.find(item => item.optionNo === this.option1);
