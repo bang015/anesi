@@ -49,6 +49,8 @@ public interface ProductService {
 	
 	// 옵션등록
 	int addOption(HashMap<String, Object> map);
+	// 회원 장바구니 삭제
+	int deleteCartlist (HashMap<String, Object> map);
 	
 }
 

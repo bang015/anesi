@@ -143,6 +143,11 @@ public class ProductServiceImpl implements ProductService {
 			// TODO Auto-generated method stub
 			return productMapper.insertOption(map);
 		}
+		@Override
+		public int deleteCartlist(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			return productMapper.deleteCartlist(map);
+		}
 	
 	
 }
