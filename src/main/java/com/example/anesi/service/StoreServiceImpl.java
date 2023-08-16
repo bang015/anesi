@@ -23,10 +23,7 @@ public class StoreServiceImpl implements StoreService{
 
 	@Override
 	public List<Product> searchProduct(HashMap<String, Object> map) {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-
 		return productMapper.selectProduct(map);
-	
 	}
 
 
@@ -76,10 +73,10 @@ public class StoreServiceImpl implements StoreService{
 
 
 	@Override
-	public int cartInsert() {
-
-		return productMapper.cartInsert();
+	public int nonUserCartInsert(HashMap<String, Object> map) {
+		return productMapper.nonUserCartInsert(map);
 	}
+
 
 
 	

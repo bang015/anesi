@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +9,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="../css/mainCss.css" rel="stylesheet">
-<meta charset="EUC-KR">
-<title>½ºÅä¾î¸ŞÀÎÆäÀÌÁö</title>
+<meta charset="UTF-8">
+<title>ìŠ¤í† ì–´ë©”ì¸í˜ì´ì§€</title>
 <style>
 
 /* 
@@ -19,6 +20,8 @@ border : 1px solid black;
 .main-category__title{
  	 font-size : 25px;
  	 font-weight : bold;
+ 	 	margin-right : 1000px;
+ 	 
 }
 .product-main-category__image{
 	width:100px;
@@ -85,13 +88,17 @@ border : 1px solid black;
   padding: 0;
   margin: 0;
   position:absolute;
+  z-index : 999;
+  background:white;
+  border-radius : 0px 0px 10px 10px;
 }
 
 .category-order-list li {
 
-  /* Ä«Å×°í¸® ½ºÅ¸ÀÏ¸µ */
+  /* ì¹´í…Œê³ ë¦¬ ìŠ¤íƒ€ì¼ë§ */
   padding: .5em;
   border-bottom: 1px solid #ccc;
+  
 }
 .category-order-list-container {
 	background :  #fff;
@@ -101,8 +108,8 @@ border : 1px solid black;
 }
 
 .aaa {
-  color: #A782C3; /* ¿øÇÏ´Â »ö»ó */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* ±×¸²ÀÚ Ãß°¡ */
+  color: #A782C3; /* ì›í•˜ëŠ” ìƒ‰ìƒ */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* ê·¸ë¦¼ì ì¶”ê°€ */
 }
 
 
@@ -112,7 +119,7 @@ border : 1px solid black;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* ºÒÅõ¸íÇÑ °ËÀº»ö ¹è°æ */
+  background-color: rgba(0, 0, 0, 0.5); /* ë¶ˆíˆ¬ëª…í•œ ê²€ì€ìƒ‰ ë°°ê²½ */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,7 +139,7 @@ border : 1px solid black;
 
 </style>
 </head>
-<!-- ÁÖ¼® ²À ³²°ÜÁÖ¼¼¿ä -->
+<!-- ì£¼ì„ ê¼­ ë‚¨ê²¨ì£¼ì„¸ìš” -->
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
@@ -142,24 +149,25 @@ border : 1px solid black;
 	
 	
 
-<span class="main-category__title">ÀüÃ¼»óÇ°</span>
-<div><button class="category-order_toggle">
-	  Á¤·Ä<i class="fa-solid fa-chevron-down"></i>
-</button></div>
-<!-- »óÇ° Á¤·ÄÇÏ´Â ¹öÆ°-->
+<span class="main-category__title">ì „ì²´ìƒí’ˆ</span>
+
+<span></span><button class="category-order_toggle">
+	  ì •ë ¬<i class="fa-solid fa-chevron-down"></i>
+</button></span>
+<!-- ìƒí’ˆ ì •ë ¬í•˜ëŠ” ë²„íŠ¼-->
 
 <div class="category-order-list-container" style="display:none;">
 
 
   <ul class="category-order-list" >
-    <li value=""><a>ÀüÃ¼</a></li>
-    <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">°¡°İ³·Àº¼ø</a></li>
-    <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">°¡°İ³ôÀº¼ø</a></li>
-    <li value="NewArrival"><a @click="fnOrderBy('NewArrival')">ÃÖ½Å¼ø</a></li>
-    <li><a>--¾ÆÁ÷¸øÇÔ¡é--</a></li>
-    <li value="HighestPurchase"><a @click="fnOrderBy('HighestPurchase')">±¸¸Å³ôÀº¼ø</a></li>
-    <li value="HighestScrap"><a @click="fnOrderBy('HighestScrap')">½ºÅ©·¦¸¹Àº¼ø</a></li>
-    <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">¸®ºä¸¹Àº¼ø</a></li>
+    <li value=""><a>ì „ì²´</a></li>
+    <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">ê°€ê²©ë‚®ì€ìˆœ</a></li>
+    <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">ê°€ê²©ë†’ì€ìˆœ</a></li>
+    <li value="NewArrival"><a @click="fnOrderBy('NewArrival')">ìµœì‹ ìˆœ</a></li>
+    <li><a>--ì•„ì§ëª»í•¨â†“--</a></li>
+    <li value="HighestPurchase"><a @click="fnOrderBy('HighestPurchase')">êµ¬ë§¤ë†’ì€ìˆœ</a></li>
+    <li value="HighestScrap"><a @click="fnOrderBy('HighestScrap')">ìŠ¤í¬ë©ë§ì€ìˆœ</a></li>
+    <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">ë¦¬ë·°ë§ì€ìˆœ</a></li>
   </ul>
 </div>
   
@@ -170,7 +178,7 @@ border : 1px solid black;
 			<a @click="fnProductView(item.productNo)" class="production-item-thumnail">
 		
 			    <img class="production-item-thumnail__image animate__animated animate__pulse"
-			         alt="½æ³×ÀÏ" :src="item.imgPath + '/' + item.imgName">
+			         alt="ì¸ë„¤ì¼" :src="item.imgPath + '/' + item.imgName">
 		    </a>
 		    <div class="production-item-header" >
 			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
@@ -182,64 +190,68 @@ border : 1px solid black;
 
 		    <span class="production-item-price">
 		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
-			    Á¤°¡
-			    <span class="won_icon">£Ü</span>
+			    ì •ê°€
+			    <span class="won_icon">ï¿¦</span>
 				<span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
 			   </span>
-			    <!-- production-item-price__sell  : ÆÄ´Â °¡°İ -->
+			    <!-- production-item-price__sell  : íŒŒëŠ” ê°€ê²© -->
 		       <div class="production-item-price__sell">
-			    <span class="won_icon">£Ü</span>
+			    <span class="won_icon">ï¿¦</span>
 			    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
 			    <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
 			    </div>
 	        </span>
 	        
-			    <!--  production-item-rating : º°Á¡-->
+			    <!--  production-item-rating : ë³„ì -->
 		       <div class="production-item-rating">
-		       	<!-- º°¸ğ¾ç-->
+		       	<!-- ë³„ëª¨ì–‘-->
 			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
 			    <span class="production-item-rating__score">4.5</span>
 			   </div>
-			   <!-- Àå¹Ù±¸´Ï¹öÆ°-->
+			   <!-- ì¥ë°”êµ¬ë‹ˆë²„íŠ¼-->
 			   <a v-if="userId!=''">
 					<i @click="fnInsertUserCart(item)" v-if="!(cartList.includes(item.productNo))"class="fa fa-shopping-cart modal-toggle-button" ></i>
 					<i @click="fnUpdateUserCart(item)" v-if="cartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
 				</a>
-				
-		    	<!-- °øÀ¯ÇÏ±â¹öÆ°-->
+				<!-- ìœ ì €ë²ˆí˜¸ê°€ ì—†ì„ë–„, ë¡œê·¸ì¸í™”ë©´ìœ¼ë¡œ ì „í™˜-->
+				<a v-else>
+					<!-- <i @click="fnMoveLoginPage" class="fa fa-shopping-cart modal-toggle-button" ></i> -->
+					<i @click="fnAddNonUserCart(item)" class="fa fa-shopping-cart modal-toggle-button" ></i>
+				</a>
+		    	<!-- ê³µìœ í•˜ê¸°ë²„íŠ¼-->
 		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-		    	<!-- ½ºÅ©·¦¹öÆ°-->
+		    	<!-- ìŠ¤í¬ë©ë²„íŠ¼-->
 		    	<a v-if="userId!=''">
 		    		<i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button"></i>
 		    		<i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark"></i>
 	    		</a>
 		    	<a v-else><i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
-	    </div> <!-- class="production-item__content" ³¡-->
+	    </div> <!-- class="production-item__content" ë-->
 	    
 	    
 	    
     	<div class="modal" v-if="showCartModal" >
 		  <div class="modal-card">
-		    <h2>Àå¹Ù±¸´Ï¿¡ Ãß°¡</h2>
-		    <p>»óÇ°À» Àå¹Ù±¸´Ï¿¡ ´ã¾Ò½À´Ï´Ù.Àå¹Ù±¸´Ï·Î ÀÌµ¿ÇÏ½Ã°Ú½À´Ï±î?</p>
-		    <button @click="closeModal">¼îÇÎ°è¼ÓÇÏ±â</button>
-		    <button @click="fnMoveCart" >Àå¹Ù±¸´Ï·Î ÀÌµ¿ÇÏ±â</button>
+		    <h2>ì¥ë°”êµ¬ë‹ˆì— ì¶”ê°€</h2>
+		    <p>ìƒí’ˆì„ ì¥ë°”êµ¬ë‹ˆì— ë‹´ì•˜ìŠµë‹ˆë‹¤.ì¥ë°”êµ¬ë‹ˆë¡œ ì´ë™í•˜ì‹œê² ìŠµë‹ˆê¹Œ?</p>
+		    <button @click="closeModal">ì‡¼í•‘ê³„ì†í•˜ê¸°</button>
+		    <button @click="fnMoveCart" >ì¥ë°”êµ¬ë‹ˆë¡œ ì´ë™í•˜ê¸°</button>
 		  </div>
 		</div>
 		
     	<div class="modal" v-if="showScrapModal">
 		  <div class="modal-card"  v-if="userId!=''">
-		    <h2>½ºÅ©·¦ºÏ¿¡ µî·Ï</h2>
-		    <p>»óÇ°ÀÌ ½ºÅ©·¦µÇ¾ú½À´Ï´Ù.</p>
-		    <button @click="closeModal">¼îÇÎ°è¼ÓÇÏ±â</button>
-		    <button @click="fnMoveScrapbook">½ºÅ©·¦ºÏÀ¸·Î ÀÌµ¿ÇÏ±â</button>
+		    <h2>ìŠ¤í¬ë©ë¶ì— ë“±ë¡</h2>
+		    <p>ìƒí’ˆì´ ìŠ¤í¬ë©ë˜ì—ˆìŠµë‹ˆë‹¤.</p>
+		    <button @click="closeModal">ì‡¼í•‘ê³„ì†í•˜ê¸°</button>
+		    <button @click="fnMoveScrapbook">ìŠ¤í¬ë©ë¶ìœ¼ë¡œ ì´ë™í•˜ê¸°</button>
 		  </div>
 		  
 		  <div class="modal-card"  v-else>
-		    <h2>·Î±×ÀÎÈÄ »ç¿ë °¡´ÉÇÕ´Ï´Ù.</h2>
-		    <p>·Î±×ÀÎÇÏ½Ã°Ú½À´Ï±î?</p>
-		    <button @click="closeModal">¼îÇÎ°è¼ÓÇÏ±â</button>
-		    <button @click="fnMoveLoginPage">·Î±×ÀÎÆäÀÌÁö·Î ÀÌµ¿ÇÏ±â</button>
+		    <h2>ë¡œê·¸ì¸í›„ ì‚¬ìš© ê°€ëŠ¥í•©ë‹ˆë‹¤.</h2>
+		    <p>ë¡œê·¸ì¸í•˜ì‹œê² ìŠµë‹ˆê¹Œ?</p>
+		    <button @click="closeModal">ì‡¼í•‘ê³„ì†í•˜ê¸°</button>
+		    <button @click="fnMoveLoginPage">ë¡œê·¸ì¸í˜ì´ì§€ë¡œ ì´ë™í•˜ê¸°</button>
 		  </div>
 		</div>
 		
@@ -247,18 +259,18 @@ border : 1px solid black;
 	
     	<div class="modal" v-if="showScrapDeleteModal">
 		  <div class="modal-card">
-		    <h2>½ºÅ©·¦ºÏ¿¡¼­ »èÁ¦µÇ¾ú½À´Ï´Ù.</h2>
-		    <button @click="closeModal">¼îÇÎ°è¼ÓÇÏ±â</button>
-		    <button @click="fnMoveScrapbook">½ºÅ©·¦ºÏÀ¸·Î ÀÌµ¿ÇÏ±â</button>
+		    <h2>ìŠ¤í¬ë©ë¶ì—ì„œ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.</h2>
+		    <button @click="closeModal">ì‡¼í•‘ê³„ì†í•˜ê¸°</button>
+		    <button @click="fnMoveScrapbook">ìŠ¤í¬ë©ë¶ìœ¼ë¡œ ì´ë™í•˜ê¸°</button>
 		  </div>
 		  
 		</div>
     	<div class="modal" v-if="showScrapModalBan">
 		  <div class="modal-card">
-		    <h2>ÀÌ¹Ì ´ã±ä»óÇ°ÀÔ´Ï´Ù.</h2>
-		    <p>½ºÅ©·¦ºÏÀ» È®ÀÎÇØÁÖ¼¼¿ä</p>
-		    <button @click="closeModal">¼îÇÎ°è¼ÓÇÏ±â</button>
-		    <button @click="fnMoveMyPage">½ºÅ©·¦ºÏÀ¸·Î ÀÌµ¿ÇÏ±â</button>
+		    <h2>ì´ë¯¸ ë‹´ê¸´ìƒí’ˆì…ë‹ˆë‹¤.</h2>
+		    <p>ìŠ¤í¬ë©ë¶ì„ í™•ì¸í•´ì£¼ì„¸ìš”</p>
+		    <button @click="closeModal">ì‡¼í•‘ê³„ì†í•˜ê¸°</button>
+		    <button @click="fnMoveMyPage">ìŠ¤í¬ë©ë¶ìœ¼ë¡œ ì´ë™í•˜ê¸°</button>
 		  </div>
 		</div>
 	
@@ -275,19 +287,19 @@ border : 1px solid black;
 <script>
 
 $(document).ready(function() {
-    // »óÇ°Á¤·Ä ¹öÆ° Å¬¸¯ ÀÌº¥Æ® Ãß°¡
+    // ìƒí’ˆì •ë ¬ ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸ ì¶”ê°€
     var isListOpen = false; // Flag to track the state of the list container
 
     $('.category-order_toggle').click(function() {
-        if (!isListOpen) { // ÇöÀç ¸ñ·ÏÀÌ ´İÇôÀÖ´Â °æ¿ì¿¡¸¸ ¿­±â
+        if (!isListOpen) { // í˜„ì¬ ëª©ë¡ì´ ë‹«í˜€ìˆëŠ” ê²½ìš°ì—ë§Œ ì—´ê¸°
             $('.category-order-list-container').slideDown('slow');
             isListOpen = true;
         }
     });
 
-    // ¸ñ·Ï Ç×¸ñ Å¬¸¯ ÀÌº¥Æ® Ãß°¡
+    // ëª©ë¡ í•­ëª© í´ë¦­ ì´ë²¤íŠ¸ ì¶”ê°€
     $('.category-order-list a').click(function() {
-        // ¸ñ·Ï Ç×¸ñÀ» Å¬¸¯ÇÏ¸é ¸ñ·ÏÀ» ´İ½À´Ï´Ù.
+        // ëª©ë¡ í•­ëª©ì„ í´ë¦­í•˜ë©´ ëª©ë¡ì„ ë‹«ìŠµë‹ˆë‹¤.
         $('.category-order-list-container').slideUp('slow');
         isListOpen = false;
     });
@@ -308,9 +320,10 @@ var app = new Vue({
 		userId : '${sessionId}',
 		userNick : '${sessionNick}',
 		userNo : '${sessionNo}',
+		nonuserNo : '${nonuserNo}',
 		productNo : "",
 		scrapbookList : [],
-		cartList : []
+		cartList : [],
 	
 	},// data
 	methods : {
@@ -327,6 +340,7 @@ var app = new Vue({
                 	self.list = data.list;
                 	self.list2=data.list2;
                 	
+                	
                 }
             }); 
 		},
@@ -335,12 +349,12 @@ var app = new Vue({
 
 	     fnOrderBy: function (orderBy) {
             var self = this;
-            self.categoryOrderBar = orderBy; // Ä«Å×°í¸® Á¤·Ä°ª ¼³Á¤
-            self.fnGetList(); // AJAX ¿äÃ» º¸³»±â
+            self.categoryOrderBar = orderBy; // ì¹´í…Œê³ ë¦¬ ì •ë ¬ê°’ ì„¤ì •
+            self.fnGetList(); // AJAX ìš”ì²­ ë³´ë‚´ê¸°
 	     },
 	      
 	      
-	    //ÀÌ¹ÌÁö ¸¶¿ì½º ¿À¹öÇßÀ»¶§ pulse ¾Ö´Ï¸ŞÀÌ¼Ç
+	    //ì´ë¯¸ì§€ ë§ˆìš°ìŠ¤ ì˜¤ë²„í–ˆì„ë•Œ pulse ì• ë‹ˆë©”ì´ì…˜
         addPulseAnimation: function(event) {
             event.currentTarget.classList.add('animate__animated', 'animate__pulse');
         },
@@ -350,13 +364,13 @@ var app = new Vue({
         
 
         formatPrice: function(price) {
-            // Ãµ ´ÜÀ§¸¶´Ù ½°Ç¥(,)¸¦ Ãß°¡ÇÏ´Â Á¤±Ô½Ä Ã³¸®
+            // ì²œ ë‹¨ìœ„ë§ˆë‹¤ ì‰¼í‘œ(,)ë¥¼ ì¶”ê°€í•˜ëŠ” ì •ê·œì‹ ì²˜ë¦¬
             return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         
         
         
-        // ¸ğ´Ş ¿­±â
+        // ëª¨ë‹¬ ì—´ê¸°
 	    openCartModal: function() {
           var self = this;
           self.showCartModal = true;
@@ -370,7 +384,7 @@ var app = new Vue({
           self.showScrapDeleteModal = true;
 	    },
 	
-	    // ¸ğ´Ş ´İ±â
+	    // ëª¨ë‹¬ ë‹«ê¸°
 	    closeModal: function() {
 	      this.showCartModal = false;
 	      this.showScrapModal = false;
@@ -411,26 +425,7 @@ var app = new Vue({
             
 		},
 		
-		fnAddNonUserCart : function(item) {
-	    	var self = this;
-            var nparmap = { userNo: self.userNo, productNo: item.productNo};
- 
-            $.ajax({
-                url : "/product/insertCart.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	/* alert("µî·Ï¿Ï"); */
-                   console.log(self.userNo);
-
-                }
-            }); 
-            
-            self.openCartModal();
-            console.log(self.showCartModal);
-
-		}, 
+	
 		
 		
 	    
@@ -454,6 +449,7 @@ var app = new Vue({
 		}, 
 	    fnInsertUserCart : function(item) {
 	    	var self = this;
+
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
  
             $.ajax({
@@ -462,7 +458,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	/* alert("µî·Ï¿Ï"); */
+                	/* alert("ë“±ë¡ì™„"); */
                    console.log(self.userNo);
 
                 }
@@ -518,7 +514,6 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	console.log("»èÁ¦¿Ï")
                 }
             }); 
             self.openScrapDeleteModal();
@@ -529,12 +524,46 @@ var app = new Vue({
 		
 		fnProductView : function(productNo){
 	    	var self = this;
-	    	   $.pageChange("/product/view.do",{no : productNo});//º¸³¾ÇÊ¿ä¾øÀ»¶§ ÆÄ¶ó¹ÌÅÍ ºó°ªÀ¸·Î{}
+	    	   $.pageChange("/product/view.do",{no : productNo});//ë³´ë‚¼í•„ìš”ì—†ì„ë•Œ íŒŒë¼ë¯¸í„° ë¹ˆê°’ìœ¼ë¡œ{}
 
-		}
+		},
 		
+		//ë¹„íšŒì› ë²ˆí˜¸ ì¿ í‚¤ë¶ˆëŸ¬ì˜¤ëŠ” ì•  
+		fnaaa : function(item){
+			var self = this;
+            var nparmap = '';
+            //{ nonuserNo: self.nonuserNo, productNo: item.productNo};
+            
+			 $.ajax({
+	                url : "/nonUserCookie.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	self.nonuserNo = data.value;
+	                	
+	                }
+	            }); 
+			
+		},
 		
-		
+		fnAddNonUserCart : function(item) {
+	    	var self = this;
+            var nparmap = 
+            	{nonuserNo: self.nonuserNo, productNo: item.productNo}
+            console.log(self.nonuserNo);
+            $.ajax({
+                url : "/product/addNonUserCart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                }
+            }); 
+            
+            self.openCartModal();
+            console.log(self.showCartModal);
+		}, 
 
      }, // methods
 	created : function() {
@@ -542,9 +571,10 @@ var app = new Vue({
 		self.fnGetList();
 		self.fnCheckCart();
 		self.fnCheckScrap();
-	
-	
+		if('${sessionNo}' == '')
+			self.fnaaa();
 
 	}// created
 });
 </script>
+	

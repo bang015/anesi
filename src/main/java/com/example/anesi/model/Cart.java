@@ -6,7 +6,7 @@ public class Cart {
 	private int userNo;
 	private int productNo;
 	private int cnt;
-	private int nonuserNo;
+	private String nonuserNo;
 	private int optionNo;
 	
 	
@@ -62,10 +62,10 @@ public class Cart {
 	public void setCartNo(int cartNo) {
 		this.cartNo = cartNo;
 	}
-	public int getNonuserNo() {
+	public String getNonuserNo() {
 		return nonuserNo;
 	}
-	public void setNonuserNo(int nonuserNo) {
+	public void setNonuserNo(String nonuserNo) {
 		this.nonuserNo = nonuserNo;
 	}
 	public int getOptionNo() {

@@ -26,6 +26,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.lang3.RandomStringUtils;
 
 
 @Controller
@@ -42,6 +43,7 @@ public class StoreController {
 	
 	@RequestMapping("/product/ontop_category.do") 
 	public String productMain_ontop(Model model) throws Exception{
+		
 		return "/product_store_main_ontop_category";
 	}
 	
@@ -66,6 +68,14 @@ public class StoreController {
 		resultMap.put("list", list);
 		List<Category> list2 = storeService.searchCategoryList();
 		resultMap.put("list2", list2);
+		
+		
+		
+		
+		
+		
+		
+		
 		return new Gson().toJson(resultMap);
 	}
 	
@@ -146,50 +156,48 @@ public class StoreController {
 	  
 	  private static final Logger logger = LoggerFactory.getLogger(StoreController.class);  
 	  
-	//장바구니 
-//	  @ResponseBody
-//	  @RequestMapping(value = {"/cart"}, method = {RequestMethod.POST})
-//	  public int cart(HttpSession session, HttpServletRequest request, HttpServletResponse response, Cart cart) throws Exception {
-//	    logger.info("itemno=" + cart.getProductNo());
-//	    Cookie cookie = WebUtils.getCookie(request, "cartCookie");
-//	    
+	//화면불러올때 쿠키부여
+	  @ResponseBody
+	  @RequestMapping(value = "/nonUserCookie.dox", method = {RequestMethod.POST})
+	  public Cookie cart(HttpSession session, HttpServletRequest request, HttpServletResponse response, Cart cart) throws Exception {
+	    Cookie cookie = WebUtils.getCookie(request, "cartCookie");
+	    
 	    //비회원장바구니 첫 클릭시 쿠키생성
-//	    if (cookie == null && session.getAttribute("sessionNo") == null) {
-//	      String nonuserNo = RandomStringUtils.random(6, true, true);
-//	      Cookie cartCookie = new Cookie("cartCookie", nonuserNo);
-//	      cartCookie.setPath("/");
-//	      cartCookie.setMaxAge(60 * 60 * 24 * 1);
-//	      response.addCookie(cartCookie);
-//	      cart.setCart_ckid(nonuserNo);
-//	      this.storeService.cartInsert();
-//	      
-//	     //비회원 장바구니 쿠키생성 후 상품추가
-//	    } else if (cookie != null && session.getAttribute("member") == null) {
-//	    	
-//	      String ckValue = cookie.getValue();
-//	      cartVO.setCart_ckid(ckValue);
-//	      //장바구니 중복제한
-//	      if(mainService.cartCheck(cartVO) != 0) {
-//	    	  return 2;
-//	      }
-//	      //쿠키 시간 재설정해주기
-//	      cookie.setPath("/");
-//	      cookie.setMaxAge(60 * 60 * 24 * 1);
-//	      response.addCookie(cookie);
-//	      
-//	      mainService.cartInsert(cartVO);
-//	      
-//	     //회원 장바구니 상품추가
-//	    } else if(session.getAttribute("member") != null){
-//	      MemberVO memberVO = (MemberVO) session.getAttribute("member");
-//	      cartVO.setCart_mem_no(memberVO.getMEM_NO());
-//	      if(mainService.cartMemCheck(cartVO) != 0) {
-//	    	  return 2;
-//	      }
-//	      mainService.cartInsert(cartVO);
-//	    } 
-//	    return 1;
-//	  }
+	    if (cookie == null && session.getAttribute("sessionNo") == null) {
+	      String nonuserNo = RandomStringUtils.random(8, true, true);
+	      Cookie cartCookie = new Cookie("cartCookie", nonuserNo);
+	      cartCookie.setPath("/");
+	      cartCookie.setMaxAge(60 * 60 * 24 * 1);
+	      response.addCookie(cartCookie);
+	      cart.setCart_ckid(nonuserNo);
+	      return cartCookie;
+	     //비회원 장바구니 쿠키생성 후 상품추가
+	    } else if (cookie != null ) {
+	    	
+	      String ckValue = cookie.getValue();
+	      cart.setNonuserNo(ckValue);
+	     
+	      //쿠키 시간 재설정해주기
+	      cookie.setPath("/");
+	      cookie.setMaxAge(60 * 60 * 24 * 1);
+	      response.addCookie(cookie);
+
+	    }
+		return cookie; 
+	  }
+	  
+	  
+	//비회원 장바구니에 상품담기
+		@RequestMapping(value = "/product/addNonUserCart.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String addNonUserCart(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			storeService.nonUserCartInsert(map);
+			resultMap.put("success", "비회원장바구니등록완료");
+			return new Gson().toJson(resultMap);
+		}
+	  
 
 	
 }

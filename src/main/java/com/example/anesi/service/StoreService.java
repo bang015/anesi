@@ -34,6 +34,5 @@ public interface StoreService {
 	
 	// 상품 썸네일 이미지 
 	List<Scrapbook> searchThumbnailImg(HashMap<String, Object> map);
-
-	int cartInsert();
-}
+	//비회원 장바구니 등록
+	int nonUserCartInsert(HashMap<String, Object> map);}
