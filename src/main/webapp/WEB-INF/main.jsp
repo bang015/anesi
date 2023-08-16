@@ -29,7 +29,7 @@
 
     body {
       font-size: 14px;
-      color: #black;
+      color: #000;
       margin: 0;
       padding: 0;
     }

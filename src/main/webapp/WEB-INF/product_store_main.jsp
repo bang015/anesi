@@ -202,8 +202,8 @@ border : 1px solid black;
 			   </div>
 			   <!-- 장바구니버튼-->
 			   <a v-if="userId!=''">
-					<i @click="fnInsertCart(item)" v-if="!(cartList.includes(item.productNo))"class="fa fa-shopping-cart modal-toggle-button" ></i>
-					<i @click="fnUpdateCart(item)" v-if="cartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
+					<i @click="fnInsertUserCart(item)" v-if="!(cartList.includes(item.productNo))"class="fa fa-shopping-cart modal-toggle-button" ></i>
+					<i @click="fnUpdateUserCart(item)" v-if="cartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
 				</a>
 				
 		    	<!-- 공유하기버튼-->
@@ -410,8 +410,31 @@ var app = new Vue({
             }); 
             
 		},
+		
+		fnAddNonUserCart : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+ 
+            $.ajax({
+                url : "/product/insertCart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	/* alert("등록완"); */
+                   console.log(self.userNo);
+
+                }
+            }); 
+            
+            self.openCartModal();
+            console.log(self.showCartModal);
+
+		}, 
+		
+		
 	    
-	    fnUpdateCart : function(item) {
+	    fnUpdateUserCart : function(item) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
  
@@ -429,7 +452,7 @@ var app = new Vue({
             console.log(self.showCartModal);
 
 		}, 
-	    fnInsertCart : function(item) {
+	    fnInsertUserCart : function(item) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
  
@@ -439,7 +462,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	alert("등록완");
+                	/* alert("등록완"); */
                    console.log(self.userNo);
 
                 }
