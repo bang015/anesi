@@ -71,4 +71,16 @@
 		FROM t3_tbl_user_order
 		WHERE DATE(CREATEDATE) = DATE(NOW());
 	</select>
+	
+	<select id="selectOrderList" parameterType="hashmap" resultType="com.example.anesi.model.UserOrder">
+		SELECT o.*, i.IMG_NAME, i.IMG_PATH, p.PRODUCT_NAME, p.PRODUCT_PRICE, p.DISCOUNT, p.DISCOUNT_YN, ot.OPTION_NAME, ot.OPTION_PRICE
+		FROM t3_tbl_user_order o
+		INNER JOIN t3_tbl_product_image i
+			ON o.PRODUCT_NO = i.PRODUCT_NO
+		INNER JOIN t3_tbl_product p
+			ON o.PRODUCT_NO = p.PRODUCT_NO
+		INNER JOIN t3_tbl_product_option ot
+			ON o.OPTION_NO = ot.OPTION_NO
+		WHERE USER_NO = #{userNo} AND i.THUMBNAIL_YN = 'Y'
+	</select>
 </mapper>

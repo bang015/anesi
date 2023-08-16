@@ -86,6 +86,14 @@ public class UserController {
 
 		return "/withdrawal";
     }
+	
+	// 나의 쇼핑
+	@RequestMapping("mypage/myShopping.do") 
+    public String myShopping(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/myShopping";
+    }
+	
 	// 회원가입
 	@RequestMapping(value = "/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody

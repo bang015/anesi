@@ -40,23 +40,23 @@
 			</div>
 			<div class="box"><!-- 상품 내용 -->
 				<div><h3>상품 정보</h3> <span class="err"> {{errMsg1}}</span></div>
-				<div>
+				<div class="addInputBox">
 					<div>상품 이름</div>
 					<input v-model="product.productName">
 				</div>
-				<div>
+				<div class="addInputBox">
 					<div>제조사</div>
 					<input v-model="product.manufacturer">
 				</div>
-				<div>
+				<div  class="addInputBox">
 					<div>제조국</div>
 					<input v-model="product.country">
 				</div>
-				<div>
+				<div class="addInputBox">
 					<div>상품 가격</div>
 					<input v-model="product.productPrices">
 				</div>
-				<div>
+				<div class="addInputBox">
 					<div>할인율</div>
 					<input v-model="product.discount">
 				</div>

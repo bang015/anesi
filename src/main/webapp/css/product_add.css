@@ -135,3 +135,22 @@ input, button{
     top: 8.5px !important;
     left: 8.1px !important;
     }
+.addInputBox{
+	width: 50%;
+}
+.addInputBox > input, select{
+	padding: 8px 15px 9px;
+	border-radius: 4px;
+	border: 1px solid;
+	transition : border-color 0.3s;
+	border-color: #dbdbdb;
+    width: 100%;
+}
+.tdthsy > input{
+	padding: 8px 15px 9px;
+	border-radius: 4px;
+	border: 1px solid;
+	transition : border-color 0.3s;
+	border-color: #dbdbdb;
+    width: 300px;
+}

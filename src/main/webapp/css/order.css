@@ -17,9 +17,6 @@
 	border-radius: 4px;
 
 }
-.test{
-	height: 2000px;
-	}
 .amount{
 	position: sticky;
 	top: 209px;
@@ -395,3 +392,57 @@
 	background-color: #f5e8ff;
 }
 .onpayment_right{border-left: 1px #A782C3 solid;}
+.modalStyle1{
+	text-align: center;
+	font-size: 24px;
+	padding-bottom: 30px;
+	border-bottom: 1px #ccc solid;
+}
+.modalStyle2{
+	margin-top: 10px;
+	display: flex;
+	font-size: 18px;
+	padding-bottom: 30px;
+	border-bottom: 1px #ccc solid;
+	text-align: center;
+}
+.modalStyle3{
+	text-align: left;
+}
+.modalStyle4{
+	width: 150px;
+	text-align: left;
+}
+.modal-card {
+	width: 700px;
+}
+.modalButBox{
+	text-align: center;
+	margin-bottom: 20px;
+}
+.modalBut{
+	width: 176px;
+	height: 52px;
+	background-color: #fff;
+	color: #2f3438;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	margin-top: 30px;
+	font-weight: bold;
+	font-size: 17px;
+	cursor: pointer;
+	
+}
+.modalBut2{
+	width: 176px;
+	height: 52px;
+	background-color: #A782C3;
+	color: #fff;
+	border-radius: 4px;
+	border: 0px;
+	margin-top: 30px;
+	font-weight: bold;
+	font-size: 17px;
+	cursor: pointer;
+	
+}

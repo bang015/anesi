@@ -250,6 +250,44 @@
 						</button>
 					</div>
 				</div>
+				<div class="modal" v-if="showScrapModal">
+		        <div class="modal-card">
+		        	<div class="modalStyle1">주문완료</div>
+		        	<div class="modalStyle2">
+		        		<div class="modalStyle4">결제정보</div>
+		        		<div class="modalStyle3">
+		        			<div>상품이름 : {{productList[0].productName}}</div>
+		        			<div>결제금액 : {{finalAmount}}원</div>
+		        		</div>
+		        	</div>
+		        	<div class="modalStyle2">
+		        		<div class="modalStyle4">주문번호</div>
+		        	</div>
+		        	<div class="modalStyle2">
+		        		<div class="modalStyle4">배송지</div>
+		        		<div class="modalStyle3">
+		        			<div>{{addr.name}}</div>
+		        			<div>{{addr.phone1 +addr.phone2}}</div>
+		        			<div>{{addr.addr1}}</div>
+		        			<div>{{addr.addr2}}</div>
+		        			<div>({{addr.zip}})</div>
+		        		</div>
+		        	</div>
+		        	<div class="modalStyle2">
+		        		<div class="modalStyle4">배송 방법</div>
+		        		<div class="modalStyle3">택배</div>
+		        	</div>
+		        	<div class="modalStyle2">
+		        		<div>배송 요청사항</div>
+		        		<div class="modalStyle3">{{request}}</div>
+		        	</div>
+		        	<div class="modalButBox">
+		        		<button class="modalBut" onclick="location.href='../main.do'">메인페이지</button>
+		        		<button class="modalBut2">나의 쇼핑</button>
+		        	</div>
+		        </div>
+		        
+		      </div>
 			</div>
 		</div>
 	</div>
@@ -305,7 +343,9 @@ var app = new Vue({
 		discount : 0,
 		cnt : 0,
 		deliveryfee : 3000,
-		payment : ''
+		payment : '',
+		showScrapModal : false,
+		request : ''
 	},// data
 	methods : {
 		fnAllCheck(){
@@ -516,7 +556,7 @@ var app = new Vue({
 		    	var orderEmail = self.order.email1 +'@'+ self.order.email2
 		    	var orderPhone = self.order.phone1 + self.order.phone2;
 		    	var receiptPhone = self.addr.phone1 + self.addr.phone2;
-		    	var request = '';
+		    	self.request = '';
 		    	switch (self.addr.deliveryRq) {
 			        case '1':
 			            request = '부재시 문앞에 놓아주세요';
@@ -555,17 +595,17 @@ var app = new Vue({
 	              buyer_addr: self.addr.addr1,
 	              buyer_postcode: "01181"
 	            }, rsp => { // callback
-	            	console.log(rsp);
 	              if (rsp.success && rsp.paid_amount == self.finalAmount) {
 	            	  
 	            	  for(let i=0;i < self.productNoList.length;i++){
-	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity};
+	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity};
 		 		    	 $.ajax({
 		 		                url : "../order/order.dox",
 		 		                dataType:"json",	
 		 		                type : "POST", 
 		 		                data : nparmap,
 		 		                success : function(data) {
+		 		                	
 		 		                	if(self.order.couponNo != ''){
 		 		                		var nparmap = {couponNo : self.order.couponNo};
 		 		                		 $.ajax({
@@ -574,13 +614,13 @@ var app = new Vue({
 		 		     		                type : "POST", 
 		 		     		                data : nparmap,
 		 		     		                success : function(data) {
-		 		     		                	
 		 		     		                }
 		 		                		 });
 		 		                	}
 		 		                }
 		 		    	 });
 	            	  }
+	            	  self.openScrapModal();
 	              } else {
 	               
 	                // 결제 실패 시 로직,
@@ -721,7 +761,24 @@ var app = new Vue({
 		    	  } else if(type == 'toss'){
 		    		  self.payment = 'tosspay';
 		    	  }
-		      }
+		      },
+		   // 모달열기
+	      openScrapModal: function() {
+	               var self = this;
+	               self.showScrapModal = true;
+	            },
+
+	      // 모달 닫기
+	            closeModal: function() {
+	              this.showCartModal = false;
+	              this.showScrapModal = false;
+	              this.showScrapModalBan = false;
+	              this.showScrapDeleteModal = false;
+	           
+	              location.reload();
+
+	            },
+
 	}, // methods
 	created : function() {
 		var self = this;
