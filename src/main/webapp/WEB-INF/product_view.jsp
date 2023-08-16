@@ -778,7 +778,7 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.option = data.option;
-	               		self.optiono,ptionPrice
+	               		/* self.option.optionPrice = self.option.optionPrice.toLocaleString('ko-KR'); */
 
 	               		console.log(self.option);
 	                }                
@@ -888,11 +888,13 @@ var app = new Vue({
 		            existingOption.quantity++; // 이미 있는 상품의 수량 증가
 		          }else{
 		        	  this.selectedOptions.push({
+		        		  productNo : this.productNo,
 				          optionNo: selectedItem.optionNo,
 				          optionName: selectedItem.optionName,
 				          quantity : 1
 				        }); 
 		          }
+		    	console.log(this.selectedOptions);
 		        this.option1="";
 		      }
 		      console.log(this.selectedOptions);
