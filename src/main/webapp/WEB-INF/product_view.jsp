@@ -918,7 +918,7 @@ var app = new Vue({
 				 alert("상품을 선택해주세요.");
 				 return;
 			 }else{
-				 $.pageChange("../order/main.do", {product : self.selectedOptions})
+				 $.pageChange("../order/main.do" , {product : self.selectedOptions});
 			 }
 			},
 		clickImg : function(imgPath,imgName){

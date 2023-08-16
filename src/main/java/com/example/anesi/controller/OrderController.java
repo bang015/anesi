@@ -15,6 +15,8 @@ import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
 import com.example.anesi.model.UserAddress;
 import com.example.anesi.service.OrderService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +30,7 @@ public class OrderController {
 	@RequestMapping("/order/main.do") 
     public String order(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("map", map);
+//		System.out.println(map.get("product"));
         return "/order";
     }
 	
