@@ -237,8 +237,6 @@
 var app = new Vue({
 	el : '#app',
 	data : {
-		productNo : '${map.productNo}',
-		optionNo : '${map.optionNo}',
 		productInfo : {},
 		optionInfo : {},
 		totalProductAmount : "",
@@ -508,7 +506,7 @@ var app = new Vue({
 			            request = '';
 		   		 }
 	              IMP.request_pay({ // param
-	              pg: "kakaopay.TC0ONETIME",
+	              pg: "html5_inicis", //kakaopay.TC0ONETIME
 	              pay_method: "card",
 	              merchant_uid: "ORD"+self.formatDate(new Date())+"-"+self.cnt,
 	              name: self.productInfo.productName,
@@ -658,6 +656,9 @@ var app = new Vue({
 		                	self.cnt = data.cnt+1;
 		                }
 		            });
+		      },
+		      fnProductNoList(list){
+		    	  console.log(list);
 		      }
 	}, // methods
 	created : function() {
@@ -666,6 +667,7 @@ var app = new Vue({
 		self.fnGetAddrList();
 		self.fnGetProduct();
 		self.fnCntOrder();
+		self.fnProductNoList(${map.product});
 		var IMP = window.IMP;
 		IMP.init('imp41836047');
 		window.jusoCallBack = self.handleAddressCallback;

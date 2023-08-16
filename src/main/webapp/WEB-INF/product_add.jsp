@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/product_add.css" rel="stylesheet">
+<link href="../css/checkbox.css" rel="stylesheet">
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <style>
@@ -95,7 +96,7 @@
 						<td colspan="4" class="tdthsy">이미지를 추가해 주세요</td>
 					</tr>
 					<tr v-for="(item, index) in productImgList">
-						<td class="tdthsy"><input type="radio" v-model="item.thumbnail" value="Y" name="thumbnail"></td>
+						<td class="tdthsy el-radio"><input type="radio" v-model="item.thumbnail" value="Y" name="thumbnail" :id="index"><label class="el-radio-style" :for="index"></label></td>
 						<td class="tdthsy"><label class="fileBox">파일선택<input type="file" @change="fnOnFileChange($event, index)" class="fileBtn" name="file1"></label></td>
 						<td class="tdthsy"><button @click="fnProductImgDel(index)" class="delBtn">삭제</button></td>
 						<td class="imgDiv"><img v-if="imageList[index]" :src="imageList[index]" alt="Image preview" class="pvImg"></td>

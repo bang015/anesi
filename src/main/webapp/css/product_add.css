@@ -131,3 +131,7 @@ input, button{
 .content{
 	text-align: center;
 }
+.el-radio > input[type="radio"] + .el-radio-style:after {
+    top: 8.5px !important;
+    left: 8.1px !important;
+    }
