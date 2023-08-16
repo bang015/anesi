@@ -778,9 +778,12 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.option = data.option;
-	               		/* self.option.optionPrice = self.option.optionPrice.toLocaleString('ko-KR'); */
+	               		/* for(var i=0; i<option.size(); i++){
+	               			self.option.get(i).optionPrice = self.option.get(i).optionPrice.toLocaleString('ko-KR');
+	               		} */
+	               		
 
-	               		console.log(self.option);
+	               		console.log(self.option.optionPrice);
 	                }                
 	            }); 
 		},
@@ -894,7 +897,6 @@ var app = new Vue({
 				          quantity : 1
 				        }); 
 		          }
-		    	console.log(this.selectedOptions);
 		        this.option1="";
 		      }
 		      console.log(this.selectedOptions);
@@ -921,7 +923,7 @@ var app = new Vue({
 				 alert("상품을 선택해주세요.");
 				 return;
 			 }else{
-				 $.pageChange("../order/main.do", self.selectedOptions)
+				 $.pageChange("../order/main.do", {product : self.selectedOptions})
 			 }
 			},
 		clickImg : function(imgPath,imgName){
