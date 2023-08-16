@@ -30,7 +30,7 @@
 							<div class="orNameText">배송비<span class="allMoneyText">3000원</span></div>
 							<div class="orNameText">쿠폰 사용<span class="allMoneyText">{{discount}}원</span></div>
 						</div>
-						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{finalAmount}}</span> 원</span></div>
+						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{finalAmount+deliveryfee+discount}}</span> 원</span></div>
 					</div>
 					<div class="orTerms">
 						<div class="allTerms">
@@ -192,12 +192,12 @@
 				<div class="orProductList">
 					<div class="subheading">주문상품 <span class="text">1건</span></div>
 					<div>
-						<div class="orProduct">
-							<img alt="" src="../css/image/product/singlebed.png">
+						<div class="orProduct" v-for="item in productList">
+							<img alt="" :src="item.path+'/'+item.imgName">
 							<div>
-								<div class="prProductName">{{productInfo.productName}}</div>
-								<div class="prProductOption">{{optionInfo.optionName}}</div>
-								<div class="prProductPrice">{{productInfo.productPrice+optionInfo.optionPrice}} <span>| 1개</span></div>
+								<div class="prProductName">{{item.productName}}</div>
+								<div class="prProductOption">{{item.optionName}}</div>
+								<div class="prProductPrice">{{item.productPrice}}원 <span>| {{item.cnt}}개</span></div>
 							</div>
 						</div>
 					</div>
@@ -227,6 +227,29 @@
 						</div>
 					</div>	
 				</div>
+				<div>
+					<div class="subheading address">결제 수단</div>
+					<div class="paymentS">
+						<button @click="fnChangepayment('card')" class="orBtn cardBtn" :class="{onpayment : payment == 'html5_inicis'}">
+							<div>
+								<div class="card">카드</div>
+								<div><i class="fa-regular fa-credit-card fa-2xl"></i></div>
+							</div>
+						</button>
+						<button @click="fnChangepayment('kakao')" class="orBtn" :class="{onpayment_right : payment == 'html5_inicis', onpayment : payment == 'kakaopay.TC0ONETIME'}"> 
+							<div>
+								<div>카카오페이</div>
+								<div><img alt="" src="https://image.ohou.se/i/bucketplace-v2-development/pg/img_kakaopay.png?w=144&h=144&c=c" class="btnImg"></div>
+							</div>
+						</button>
+						<button @click="fnChangepayment('toss')" class="orBtn" :class="{onpayment_right : payment == 'kakaopay.TC0ONETIME', onpayment : payment == 'tosspay'}">
+							<div>
+								<div>카카오페이</div>
+								<div><img alt="" src="https://image.ohou.se/i/bucketplace-v2-development/pg/img_toss_v2.png?w=144&h=144&c=c" class="btnImg"></div>
+							</div>
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -237,10 +260,10 @@
 var app = new Vue({
 	el : '#app',
 	data : {
-		productInfo : {},
-		optionInfo : {},
-		totalProductAmount : "",
-		finalAmount : "",
+		totalProductAmount : 0,
+		finalAmount : 0,
+		productNoList : ${map.product},
+		productList : [],
 		order : {
 			name : "",
 			email1 : "",
@@ -279,8 +302,10 @@ var app = new Vue({
 		addrList : [],
 		addrAdd : false,
 		defaule : 'Y',
-		discount : '0',
-		cnt : 0
+		discount : 0,
+		cnt : 0,
+		deliveryfee : 3000,
+		payment : ''
 	},// data
 	methods : {
 		fnAllCheck(){
@@ -317,9 +342,12 @@ var app = new Vue({
 		            self.flgName = false;
 		        }
 		    }
+		    const regex = /^[a-z0-9]+$/;
 		    if (text === 'email1') {
 		        if (self.order.email1.trim() === '' || self.order.email1 !== self.order.email1.trim()) {
 		            self.flgEmail1 = true;
+		        } else if(!regex.test(self.order.email1)){
+		        	 self.flgEmail1 = true;
 		        } else {
 		            self.flgEmail1 = false;
 		        }
@@ -331,9 +359,12 @@ var app = new Vue({
 		            self.flgEmail2 = false;
 		        }
 		    }
+		    const regex1 = /^[0-9]+$/;
 		    if (text === 'phone') {
 		        if (self.order.phone2.trim() === '' || self.order.phone2 !== self.order.phone2.trim()) {
 		            self.flgPhone = true;
+		        }else if(!regex1.test(self.order.phone2)){
+		        	 self.flgPhone = true;
 		        } else {
 		            self.flgPhone = false;
 		        }
@@ -505,11 +536,18 @@ var app = new Vue({
 			        default:
 			            request = '';
 		   		 }
+		    	self.finalAmount = self.finalAmount+self.deliveryfee+self.discount
+		    	var productName = '';
+		    	if(self.productNoList.length > 1){
+		    		productName = self.productList[0].productName+"등 "+self.productNoList.length+"개";
+		    	} else{
+		    		productName = self.productList[0].productName;
+		    	}
 	              IMP.request_pay({ // param
-	              pg: "html5_inicis", //kakaopay.TC0ONETIME
+	              pg: self.payment, //kakaopay.TC0ONETIME
 	              pay_method: "card",
 	              merchant_uid: "ORD"+self.formatDate(new Date())+"-"+self.cnt,
-	              name: self.productInfo.productName,
+	              name: productName,
 	              amount: self.finalAmount,
 	              buyer_email: orderEmail,
 	              buyer_name: self.order.name,
@@ -519,31 +557,34 @@ var app = new Vue({
 	            }, rsp => { // callback
 	            	console.log(rsp);
 	              if (rsp.success && rsp.paid_amount == self.finalAmount) {
-	            	  var nparmap = {productNo : self.productNo, optionNo : self.optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : '1'};
-	 		    	 $.ajax({
-	 		                url : "../order/order.dox",
-	 		                dataType:"json",	
-	 		                type : "POST", 
-	 		                data : nparmap,
-	 		                success : function(data) {
-	 		                	if(self.order.couponNo != ''){
-	 		                		var nparmap = {couponNo : self.order.couponNo};
-	 		                		 $.ajax({
-	 		     		                url : "../order/couponRemove.dox",
-	 		     		                dataType:"json",	
-	 		     		                type : "POST", 
-	 		     		                data : nparmap,
-	 		     		                success : function(data) {
-	 		     		                	
-	 		     		                }
-	 		                		 });
-	 		                	}
-	 		                }
-	 		    	 });
+	            	  
+	            	  for(let i=0;i < self.productNoList.length;i++){
+	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity};
+		 		    	 $.ajax({
+		 		                url : "../order/order.dox",
+		 		                dataType:"json",	
+		 		                type : "POST", 
+		 		                data : nparmap,
+		 		                success : function(data) {
+		 		                	if(self.order.couponNo != ''){
+		 		                		var nparmap = {couponNo : self.order.couponNo};
+		 		                		 $.ajax({
+		 		     		                url : "../order/couponRemove.dox",
+		 		     		                dataType:"json",	
+		 		     		                type : "POST", 
+		 		     		                data : nparmap,
+		 		     		                success : function(data) {
+		 		     		                	
+		 		     		                }
+		 		                		 });
+		 		                	}
+		 		                }
+		 		    	 });
+	            	  }
 	              } else {
 	               
 	                // 결제 실패 시 로직,
-	               
+	            	  self.finalAmount = self.finalAmount-self.deliveryfee-self.discount;
 	              }
 	            });
 		    	
@@ -595,44 +636,58 @@ var app = new Vue({
 		    },
 		    fnGetProduct(){
 		    	var self = this;
-				var nparmap = {productNo : self.productNo};
-	            $.ajax({
-	                url : "../productSearch.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap,
-	                success : function(data) {
-						self.productInfo = data.product;
-						var nparmap = {optionNo : self.optionNo};
-			            $.ajax({
-			                url : "../order/optionSearchInfo.dox",
-			                dataType:"json",	
-			                type : "POST", 
-			                data : nparmap,
-			                success : function(data) {
-			                	self.optionInfo = data.info;
-			                	 self.totalProductAmount = self.productInfo.productPrice + self.optionInfo.optionPrice;
-			     	            self.finalAmount = self.productInfo.productPrice + self.optionInfo.optionPrice+3000;
-			                }
-			            });
-	                }
-	            });
+		    	for(let i = 0; i < self.productNoList.length; i++){
+					var nparmap = {productNo : self.productNoList[i].productNo};
+		            $.ajax({
+		                url : "../productSearch.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+		                	
+		                	let productName1 = data.product.productName;
+		                	let productPrice1 = data.product.productPrice;
+		                	let optionName1 = '';
+		                	
+		                	if(data.product.discountYn == 'Y'){
+		                		productPrice1 = productPrice1 - (productPrice1/data.product.discount)
+		                	}
+		                	
+							var nparmap = {optionNo : self.productNoList[i].optionNo};
+				            $.ajax({
+				                url : "../order/optionSearchInfo.dox",
+				                dataType:"json",	
+				                type : "POST", 
+				                data : nparmap,
+				                success : function(data) {
+				                	productPrice1 = productPrice1 + data.info.optionPrice;
+				                	optionName1 = data.info.optionName;
+						            self.productList.push({productName : productName1, productPrice : (productPrice1*self.productNoList[i].quantity), optionName : optionName1, cnt : self.productNoList[i].quantity, path : data.info.imgPath, imgName : data.info.imgName});
+						            self.finalAmount = self.finalAmount + (productPrice1*self.productNoList[i].quantity);
+						            self.totalProductAmount = self.totalProductAmount + (productPrice1*self.productNoList[i].quantity);
+				                }
+				            });
+				            
+		                }
+		            
+		            });
+		    	}
+		    	
 		    },
 		    fnCouponApply(){
 		    	var self = this
 		    	for(let i=0;i<self.couponList.length;i++){
 		    		if(self.order.couponNo == ''){
-	     	            self.finalAmount = self.productInfo.productPrice + self.optionInfo.optionPrice+3000;
 	     	           self.discount = 0;
 	     	            return;
 		    		}
 		    		if(self.couponList[i].couponNo == self.order.couponNo){
 		    			if(self.couponList[i].disFlg == 'A'){
-	     	            	self.finalAmount = (self.productInfo.productPrice + self.optionInfo.optionPrice+3000) - self.couponList[i].discount;
-	     	            	self.discount = self.couponList[i].discount;
+		    				self.discount = -self.couponList[i].discount;
 		    			} else{
-		    				self.finalAmount = (self.productInfo.productPrice + self.optionInfo.optionPrice+3000) * ((100 - self.couponList[i].discount)/100);
-		    				self.discount = (self.productInfo.productPrice + self.optionInfo.optionPrice+3000) - self.finalAmount;
+		    				
+		    				self.discount = -(self.totalProductAmount * (self.couponList[i].discount/100));
+		    				self.discount = Math.floor(self.discount / 10) * 10
 		    			}
 		    		}
 		    	}
@@ -657,8 +712,15 @@ var app = new Vue({
 		                }
 		            });
 		      },
-		      fnProductNoList(list){
-		    	  console.log(list);
+		      fnChangepayment(type){
+		    	  var self = this;
+		    	  if(type == 'card'){
+		    		  self.payment = 'html5_inicis';
+		    	  } else if(type == 'kakao'){
+		    		  self.payment = 'kakaopay.TC0ONETIME';
+		    	  } else if(type == 'toss'){
+		    		  self.payment = 'tosspay';
+		    	  }
 		      }
 	}, // methods
 	created : function() {
@@ -667,7 +729,6 @@ var app = new Vue({
 		self.fnGetAddrList();
 		self.fnGetProduct();
 		self.fnCntOrder();
-		self.fnProductNoList(${map.product});
 		var IMP = window.IMP;
 		IMP.init('imp41836047');
 		window.jusoCallBack = self.handleAddressCallback;

@@ -27,9 +27,11 @@
 	</select>
 	
 	<select id="selectOptionInfo" parameterType="hashmap" resultType="com.example.anesi.model.ProductOption">
-		SELECT *
-		FROM t3_tbl_product_option
-		WHERE OPTION_NO = #{optionNo}
+		SELECT OPTION_PRICE, OPTION_NAME, IMG_NAME, IMG_PATH
+		FROM t3_tbl_product_option o
+		INNER JOIN t3_tbl_product_image i
+			ON o.PRODUCT_NO = i.PRODUCT_NO
+		WHERE OPTION_NO = #{optionNo} AND i.THUMBNAIL_YN = 'Y'
 	</select>
 	<insert id="insertOrder" parameterType="hashmap">
 	    INSERT INTO t3_tbl_user_order (

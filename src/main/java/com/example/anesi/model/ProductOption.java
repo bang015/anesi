@@ -6,6 +6,9 @@ public class ProductOption {
     private int productStock;
     private int optionPrice;
     private String optionName;
+    private	String imgName;
+    private	String imgPath;
+    
 	public int getOptionNo() {
 		return optionNo;
 	}
@@ -20,5 +23,11 @@ public class ProductOption {
 	}
 	public String getOptionName() {
 		return optionName;
+	}
+	public String getImgName() {
+		return imgName;
+	}
+	public String getImgPath() {
+		return imgPath;
 	}
 }
