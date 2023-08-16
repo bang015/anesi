@@ -42,12 +42,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public Product searchCsatAvg(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return productMapper.selectCsatAvg(map);
-	}
-	
-	@Override
 	public List<Product> searchOption(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return productMapper.selectOption(map);
@@ -72,58 +66,7 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return productMapper.selectcontentImg2(map);
 	}
-	@Override
-	public HashMap<String, Object> searchReview(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("reviewList", productMapper.selectReview(map));
-		resultMap.put("cnt", productMapper.selectCnt(map));
-		return resultMap;
-	}
-	@Override
-	public HashMap<String, Object> searchReviewCnt(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		HashMap<String, Object>resultMap = new HashMap<String, Object>();
-		List<Review> reviewCntList=productMapper.selectReviewCnt(map);
-	    int[] ratingCounts = new int[5]; 
-	    for (Review review : reviewCntList) {
-	        int csat = review.getCsat();
-	        int csatCnt = review.getCsatCnt();
-	        if (csat==5 && csatCnt > 0) {
-	            ratingCounts[4]=csatCnt; 
-	        }else if(csat==5 && csatCnt <0) {
-	        	 ratingCounts[4]=0;
-	        }
-	        if (csat==4 && csatCnt > 0) {
-	            ratingCounts[3]=csatCnt; 
-	        }else if(csat==4 && csatCnt <0) {
-	        	 ratingCounts[3]=0;
-	        }
-	        if (csat==3 && csatCnt > 0) {
-	            ratingCounts[2]=csatCnt; 
-	        }else if(csat==3 && csatCnt <0) {
-	        	 ratingCounts[2]=0;
-	        }
-	        if (csat==2 && csatCnt > 0) {
-	            ratingCounts[1]=csatCnt; 
-	        }else if(csat==2 && csatCnt <0) {
-	        	 ratingCounts[1]=0;
-	        }
-	        if (csat==1 && csatCnt > 0) {
-	            ratingCounts[0]=csatCnt; 
-	        }else if(csat==1 && csatCnt <0) {
-	        	 ratingCounts[0]=0;
-	        }
-	    }
-	    for (int i = 0; i < 5; i++) {
-	        resultMap.put("csat" + (i + 1), ratingCounts[i]);
-	    }
-
-	    return resultMap;
-	}
-	
-	 
-
+ 
 		@Override
 			public List<Product> selectCartList(HashMap<String, Object> map) {
 				// TODO Auto-generated method stub
@@ -148,11 +91,6 @@ public class ProductServiceImpl implements ProductService {
 		public int deleteCartlist(HashMap<String, Object> map) {
 			// TODO Auto-generated method stub
 			return productMapper.deleteCartlist(map);
-		}
-		@Override
-		public List<Order> searchReviewUser(HashMap<String, Object> map) {
-			// TODO Auto-generated method stub
-			return productMapper.selectReviewUser(map);
 		}
 		@Override
 		public List<Product> searchBarProductList(HashMap<String, Object> map) {

@@ -85,16 +85,6 @@ public class ProductController {
 	       resultMap.put("product", product);
 	       return new Gson().toJson(resultMap);
 	   }
-	  // 상품 별점 검색
-	  @RequestMapping(value = "/csatSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	   @ResponseBody
-	   public String avg(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
-	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
-	       Product csat = productService.searchCsatAvg(map);
-
-	       resultMap.put("csat", csat);
-	       return new Gson().toJson(resultMap);
-	   }
 	  // 상품 옵션 검색
 	  @RequestMapping(value = "/optionSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	   @ResponseBody
@@ -142,35 +132,6 @@ public class ProductController {
 		       List<Scrapbook> imgList2 = productService.searchcontentImg2(map);
 
 		       resultMap.put("imgList2", imgList2);
-		       return new Gson().toJson(resultMap);
-		   }
-		// 리뷰
-		  @RequestMapping(value = "/reviewSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		   @ResponseBody
-		   public String review(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
-		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		       int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
-		       int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
-		       map.put("startNum", startNum);
-		       map.put("lastNum", lastNum);
-		       resultMap=productService.searchReview(map);
-		       return new Gson().toJson(resultMap);
-		   }
-		// 리뷰
-		  @RequestMapping(value = "/reviewCntSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		   @ResponseBody
-		   public String reviewCnt(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
-		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		       resultMap = productService.searchReviewCnt(map);
-		       return new Gson().toJson(resultMap);
-		   }
-		// 상품 구매 확인(리뷰)
-		  @RequestMapping(value = "/reviewUserSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		   @ResponseBody
-		   public String reviewUser(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
-		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		       List<Order> user = productService.searchReviewUser(map);
-		       resultMap.put("user", user);			   
 		       return new Gson().toJson(resultMap);
 		   }
 		  

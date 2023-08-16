@@ -24,9 +24,7 @@ public interface ProductService {
 	List<Category> searchCategoryList2(HashMap<String, Object> map);
 	
 	// 상품 상세 정보 검색
-	Product searchProductList(HashMap<String, Object> map);
-	// 상품 별점 검색
-	Product searchCsatAvg(HashMap<String, Object> map);
+	Product searchProductList(HashMap<String, Object> map);;
 	// 상품 옵션 검색
 	List<Product> searchOption(HashMap<String, Object> map);
 	// 상품 썸네일 이미지 
@@ -37,12 +35,6 @@ public interface ProductService {
 	List<Product> searchProduct(HashMap<String, Object> map);
 	// 상품 상세 이미지
 	List<Scrapbook>searchcontentImg2(HashMap<String, Object> map);
-	// 리뷰
-	HashMap<String, Object>searchReview(HashMap<String, Object> map);
-	// 리뷰 별점 개수
-	HashMap<String, Object>searchReviewCnt(HashMap<String, Object> map);
-	// 상품 구매 확인(리뷰)
-	List<Order> searchReviewUser(HashMap<String, Object> map);
 	//상품 장바구니
 	List<Product>selectCartList(HashMap<String, Object> map);
 	// 상품등록

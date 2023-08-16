@@ -29,8 +29,6 @@ public interface ProductMapper {
 	
 	// 상품 상세 정보 검색
 	Product selectProductList(HashMap<String, Object> map);
-	// 상품 별점 검색
-	Product selectCsatAvg(HashMap<String, Object> map);
 	// 상품 옵션 검색
 	List<Product> selectOption(HashMap<String, Object> map);
 	// 상품 썸네일 이미지
@@ -41,14 +39,6 @@ public interface ProductMapper {
 	List<Product> selectProductListByKeyword(HashMap<String, Object> map);
 	// 상품 상세 이미지
 	List<Scrapbook> selectcontentImg2(HashMap<String, Object> map);
-	// 리뷰
-	List<Review>selectReview(HashMap<String, Object> map);
-	// 리뷰 페이지 카운트
-	int selectCnt(HashMap<String, Object> map);
-	// 리뷰 개수 검색
-	List<Review>selectReviewCnt(HashMap<String, Object> map);
-	// 상품 구매 확인(리뷰)
-	List<Order> selectReviewUser(HashMap<String, Object> map);
 	//회원 상품 장바구니에 추가
 	int insertCartUser (HashMap<String, Object> map);
 	

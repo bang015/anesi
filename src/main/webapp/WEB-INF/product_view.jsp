@@ -521,12 +521,7 @@
 	  position: relative;
 	  display: inline-block;
 	  font-size: 0; /* To remove white space between inline-block elements */
-	}
-	
-	.fa-star {
-	  font-size: 2rem;
-	}
-	
+	}	
 	.fa-star.half {
 	  width: 50%;
 	  overflow: hidden;
@@ -538,6 +533,9 @@
 	
 	.fa-star.empty {
 	  color: #ababab;
+	}
+	.custom-star {
+  	  font-size: 2rem;
 	}	
 </style>
 </head>
@@ -1116,7 +1114,7 @@ var app = new Vue({
                 }
             });
 		},
-		, upload : function(form){
+		 upload : function(form){
 	    	var self = this;
 	         $.ajax({
 	             url : "/fileUpload.dox"
@@ -1212,11 +1210,11 @@ var app = new Vue({
 			starClass(index) {
 			      const rating = this.hoveringRating || this.selectedRating;
 			      if (rating >= index + 1) {
-			        return 'fa-solid fa-star filled';
+			        return 'fa-solid fa-star custom-star filled';
 			      } else if (rating >= index + 0.5) {
-			        return 'fa-solid fa-star half';
+			        return 'fa-solid fa-star custom-star half';
 			      } else {
-			        return 'fa-solid fa-star empty';
+			        return 'fa-solid fa-star custom-star empty';
 			      }
 			    },
 			    hover(rating) {
