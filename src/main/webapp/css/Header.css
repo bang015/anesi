@@ -51,7 +51,7 @@ header {
        top:0px;
   }
   .headerbtn:hover {
-      background-color:rgb(164, 80, 239);
+      background-color:#7c6191;
       transition: 0.7s;
   }
   .category-toggle{

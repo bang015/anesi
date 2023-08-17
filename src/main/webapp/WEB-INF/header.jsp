@@ -127,7 +127,8 @@
 
 		  // 검색어 기록을 가져옵니다.
 		  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-
+		  
+		  
 		  // 동일한 검색어가 있는지 확인하고, 있다면 제거합니다.
 		  var index = recentSearches.indexOf(search);
 		  if (index > -1) recentSearches.splice(index, 1);
@@ -150,7 +151,12 @@
 
 		  // 최근 검색어 목록을 비웁니다.
 		  $('#recent_search').empty();
-
+			
+		  if (recentSearches.length === 0) {
+			    // 최근 검색어가 없다면 메시지를 출력합니다.
+			    var message = $('<li>').text('최근 검색어가 없습니다.');
+			    $('#recent_search').append(message);
+			  } else {
 		  // 목록을 순회하며 화면에 최근 검색어를 추가합니다.
 		  for (var i = 0; i < recentSearches.length; i++) {
 		    var search = recentSearches[i];
@@ -159,6 +165,7 @@
 		    li.append(deleteIcon);
 		    $('#recent_search').append(li);
 		  }
+			  }
 		}
 		$('#search_input').focus(function() {
 			  $('#recent_search').show();
