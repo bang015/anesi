@@ -33,17 +33,17 @@
 		       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
 		    </if>
 		
-		<if test="categoryOrderBar!='' and categoryOrderBar !=null">
+		<if test="optionList!='' and optionList !=null">
 			<!-- 가격낮은순정렬-->
-			<if test='categoryOrderBar=="LowestPrice"'>
+			<if test='optionList=="LowestPrice"'>
 				ORDER BY P.PRODUCT_PRICE ASC
 			</if>
 			<!-- 가격높은순정렬-->
-			<if test='categoryOrderBar=="HighestPrice"'>
+			<if test='optionList=="HighestPrice"'>
 				ORDER BY P.PRODUCT_PRICE DESC
 			</if>
 			<!-- 최신순정렬-->
-			<if test='categoryOrderBar=="NewArrival"'>
+			<if test='optionList=="NewArrival"'>
 				ORDER BY P.CDATETIME DESC			
 			</if>
 		</if>

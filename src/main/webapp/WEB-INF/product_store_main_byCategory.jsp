@@ -19,23 +19,30 @@
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
 
+  <div class="flex-container">
+      <span class="main-category__title"></span>
+    
+     <div class="selectBox2 ">
+		  <button class="label">정렬</button>
+		  <ul class="optionList">
+		    <li value="LowestPrice"class="optionItem" >가격낮은순</li>
+		    <li value="HighestPrice" class="optionItem">가격높은순</li>
+		    <li value="NewArrival" class="optionItem">최신순</li>
+		    
+		    <li class="optionItem">--아직못함↓--</li>
+            <li value="HighestPurchase" class="optionItem">구매높은순</li>
+            <li value="HighestScrap" class="optionItem">스크랩많은순</li>
+            <li value="ManyReview" class="optionItem" >리뷰많은순</li>
+		  </ul>
+		</div>
+	 </div>
+	   
+
+
+
 	<div id="store_main_byCategory">
 	
-<!-- 상품 정렬하는 버튼-->	
-<span class="main-category__title">{{categoryNo}}</span>
-<span><button class="category-order_toggle">정렬<i class="fa-solid fa-chevron-down"></i></button></span>
-<div class="category-order-list-container" style="display:none;">
-  <ul class="category-order-list" >
-    <li value=""><a>전체</a></li>
-    <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">가격낮은순</a></li>
-    <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">가격높은순</a></li>
-    <li value="NewArrival"><a @click="fnOrderBy('NewArrival')">최신순</a></li>
-    <li><a>--아직못함↓--</a></li>
-    <li value="HighestPurchase"><a @click="fnOrderBy('HighestPurchase')">구매높은순</a></li>
-    <li value="HighestScrap"><a @click="fnOrderBy('HighestScrap')">스크랩많은순</a></li>
-    <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">리뷰많은순</a></li>
-  </ul>
-</div>
+
 		<div class="production-item__content" v-for="item in list" >
             <a @click="fnProductView(item.productNo)" class="production-item-thumnail">
                 <div class="production-item-thumnail__overlay"></div>

@@ -5,64 +5,120 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+
+<style>
+.selectBox2 * { box-sizing: border-box; }
+.selectBox2 {
+  position: relative;
+  width: 150px;
+  height: 35px;
+  border-radius: 4px;
+  border: 2px solid lightcoral;
+  background-size: 20px;
+  cursor: pointer;
+}
+
+.selectBox2::after {
+  content: '';
+  display: block; 
+  width: 2px;
+  height: 100%; 
+  position: absolute; 
+  top: 0; 
+  right: 35px;
+  background: lightcoral;
+}
+
+.selectBox2 .label {
+  display: flex;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+  border: 0 none;
+  outline: 0 none;
+  padding-left: 15px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.selectBox2 .optionList {
+  position: absolute; 
+  top: 28px;
+  left: 0;
+  width: 100%;
+  background: lightcoral;
+  color: #fff;
+  list-style-type: none;
+  padding: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  max-height: 0;
+  transition: .3s ease-in;
+}
+
+.selectBox2.active .optionList {
+  max-height: 500px;
+}
+
+.selectBox2 .optionItem {
+  border-bottom: 1px dashed rgb(170, 72, 72);
+  padding: 5px 15px 5px;
+  transition: .1s;
+}
+
+.selectBox2 .optionItem:hover {
+  background: rgb(175, 93, 93);
+}
+
+.selectBox2 .optionItem:last-child {
+  border-bottom: 0 none;
+}
+
+
+.selectBox2 .optionList::-webkit-scrollbar {width: 6px;}
+.selectBox2 .optionList::-webkit-scrollbar-track {background: transparent; }
+.selectBox2 .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
+.selectBox2 .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}
+
+</style>
 </head>
 <body>
-	<button onclick="setCookie()">
-	ADD TO CART
-	
-	</button>
+	   
+	    <div class="selectBox2 ">
+		  <button class="label">fruits</button>
+		  <ul class="optionList">
+		    <li class="optionItem">apple</li>
+		    <li class="optionItem">orange</li>
+		    <li class="optionItem">grape</li>
+		    <li class="optionItem">melon</li>
+		  </ul>
+		</div>
 </body>
 </html>
 
 <script>
-//쿠키 저장하는 함수
-function setCookie(key, value, unixTime) {
-    var todayDate = new Date();
-    todayDate.setTime(todayDate.getTime() + unixTime);
-    document.cookie = key + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+/* 화살표 함수 */
+const label = document.querySelector('.label');
+const options = document.querySelectorAll('.optionItem');
+
+// 클릭한 옵션의 텍스트를 라벨 안에 넣음
+const handleSelect = (item) => {
+  label.parentNode.classList.remove('active');
+  label.innerHTML = item.textContent;
 }
+// 옵션 클릭시 클릭한 옵션을 넘김
+options.forEach(option => {
+	option.addEventListener('click', () => handleSelect(option))
+})
 
-//쿠키 값 가져오는 함수
-function getCookie(key) {
-    var result = null;
-    var cookie = document.cookie.split(';');
-    cookie.some(function (item) {
-        // 공백을 제거
-        item = item.replace(' ', '');
- 
-        var dic = item.split('=');
- 
-        if (key === dic[0]) {
-            result = dic[1];
-            return true;    // break;
-        }
-    });
-    return result;
-}
-
-//쿠키 삭제하는 함수
-function delete_cookie(name) {
-    document.cookie = encodeURIComponent(name) + '=; expires=Thu, 01 JAN 1999 00:00:10 GMT';
-}
-
-
-
-//팝업을 실행해주는 페이지 (parent)
-var popup = getCookie("eventpopup");
-if (popup != "false") {
-    // 팝업 실행
-}
- 
-// 팝업 페이지
-function closeWindow() {
-    var check = document.getElementById("check");
-    if (check.checked) {
-        setCookie("eventpopup", "false", 1);
-    }
-    self.close();
-}
-
-
+// 라벨을 클릭시 옵션 목록이 열림/닫힘
+label.addEventListener('click', () => {
+  if(label.parentNode.classList.contains('active')) {
+  	label.parentNode.classList.remove('active');
+  } else {
+  	label.parentNode.classList.add('active');
+  }
+})
 
 
 </script>

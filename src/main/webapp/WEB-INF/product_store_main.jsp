@@ -11,26 +11,35 @@ Copy code
     <link href="../css/store_main.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>스토어메인페이지</title>
+    
+    <style>
+    
+    </style>
 </head>
 <body>
+
     <jsp:include page="header.jsp"></jsp:include>
     <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
+    
+    <div class="flex-container">
+      <span class="main-category__title">전체상품</span>
+    
+     <div class="selectBox2 ">
+		  <button class="label">정렬</button>
+		  <ul class="optionList">
+		    <li value="LowestPrice"class="optionItem" >가격낮은순</li>
+		    <li value="HighestPrice" class="optionItem">가격높은순</li>
+		    <li value="NewArrival" class="optionItem">최신순</li>
+		    
+		    <li class="optionItem">--아직못함↓--</li>
+            <li value="HighestPurchase" class="optionItem">구매높은순</li>
+            <li value="HighestScrap" class="optionItem">스크랩많은순</li>
+            <li value="ManyReview" class="optionItem" >리뷰많은순</li>
+		  </ul>
+		</div>
+	 </div>
+	   
     <div id="store_main">
-        <span class="main-category__title">전체상품</span>
-        <span><button class="category-order_toggle">정렬<i class="fa-solid fa-chevron-down"></i></button></span>
-        <!-- 상품 정렬하는 버튼-->
-        <div class="category-order-list-container" style="display:none;">
-            <ul class="category-order-list">
-                <li value=""><a>전체</a></li>
-                <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">가격낮은순</a></li>
-                <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">가격높은순</a></li>
-                <li value="NewArrival"><a @click="fnOrderBy('NewArrival')">최신순</a></li>
-                <li><a>--아직못함↓--</a></li>
-                <li value="HighestPurchase"><a @click="fnOrderBy('HighestPurchase')">구매높은순</a></li>
-                <li value="HighestScrap"><a @click="fnOrderBy('HighestScrap')">스크랩많은순</a></li>
-                <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">리뷰많은순</a></li>
-            </ul>
-        </div>
         <div class="production-item__content" v-for="item in list">
             <a @click="fnProductView(item.productNo)" class="production-item-thumnail">
                 <div class="production-item-thumnail__overlay"></div>
@@ -133,6 +142,29 @@ Copy code
 </html>
 <script>
 
+/* 화살표 함수 */
+const label = document.querySelector('.label');
+const options = document.querySelectorAll('.optionItem');
+
+// 클릭한 옵션의 텍스트를 라벨 안에 넣음
+const handleSelect = (item) => {
+  label.parentNode.classList.remove('active');
+  label.innerHTML = item.textContent;
+}
+// 옵션 클릭시 클릭한 옵션을 넘김
+options.forEach(option => {
+	option.addEventListener('click', () => handleSelect(option))
+})
+
+// 라벨을 클릭시 옵션 목록이 열림/닫힘
+label.addEventListener('click', () => {
+  if(label.parentNode.classList.contains('active')) {
+  	label.parentNode.classList.remove('active');
+  } else {
+  	label.parentNode.classList.add('active');
+  }
+})
+
 
 
 var app = new Vue({
@@ -153,12 +185,13 @@ var app = new Vue({
 		scrapbookList : [],
 		cartList : [],
 		nonuserCartList : []
-	
+     
+
 	},// data
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar, productNo : self.productNo};
+            var nparmap = {optionList : self.optionList, productNo : self.productNo};
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
@@ -170,11 +203,15 @@ var app = new Vue({
                 }
             }); 
 		},
-	     fnOrderBy: function (orderBy) {
-            var self = this;
-            self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정
-            self.fnGetList(); // AJAX 요청 보내기
+		
+		
+		
+		 fnOrderBy: function (orderBy) {
+	            var self = this;
+	            self.optionList = orderBy; // 카테고리 정렬값 설정
+	            self.fnGetList(); // AJAX 요청 보내기
 	     },
+	    
         formatPrice: function(price) {
             // 100의 자리까지 내림하여 표시하며 천 단위마다 쉼표(,)를 추가합니다.
             const truncatedPrice = Math.floor(price / 100) * 100;
