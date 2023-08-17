@@ -136,7 +136,7 @@
 		  recentSearches.unshift(search);
 		  
 		  // 최근 검색어 목록을 최대 10개로 유지합니다.
-		  recentSearches = recentSearches.slice(0, 10);
+		  recentSearches = recentSearches.slice(0, 6);
 
 		  // 변경된 검색어 기록을 저장합니다.
 		  localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
@@ -144,20 +144,22 @@
 		  // 화면에 변경된 검색어 기록을 표시합니다.
 		  showRecentSearches();
 		}
-		function showRecentSearches() {
-			  // localStorage에서 최근 검색어를 가져옵니다.
-			  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+	function showRecentSearches() {
+		  // localStorage에서 최근 검색어를 가져옵니다.
+		  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
-			  // 최근 검색어 목록을 비웁니다.
-			  $('#recent_search').empty();
+		  // 최근 검색어 목록을 비웁니다.
+		  $('#recent_search').empty();
 
-			  // 목록을 순회하며 화면에 최근 검색어를 추가합니다.
-			  for (var i = 0; i < recentSearches.length; i++) {
-			    var search = recentSearches[i];
-			    var li = $('<li class="recent-search-item"></li>').text(search);
-			    $('#recent_search').append(li);
-			  }
-			}
+		  // 목록을 순회하며 화면에 최근 검색어를 추가합니다.
+		  for (var i = 0; i < recentSearches.length; i++) {
+		    var search = recentSearches[i];
+		    var li = $('<li class="recent-search-item"></li>').text(search);
+		    var deleteIcon = $('<i class="fa-solid fa-xmark"></i>');
+		    li.append(deleteIcon);
+		    $('#recent_search').append(li);
+		  }
+		}
 		$('#search_input').focus(function() {
 			  $('#recent_search').show();
 			});
@@ -175,6 +177,20 @@
 			  var search = $(this).text();
 			  $('#search_input').val(search);
 			  searchProduct(search);
+			});
+		$('body').on('click', '.recent-search-item .fa-xmark', function() {
+			  var search = $(this).parent().text();
+
+			  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+			  var index = recentSearches.indexOf(search);
+			  if (index > -1) {
+			    recentSearches.splice(index, 1);
+			    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+			    showRecentSearches();
+			  }
+
+			  // 이벤트 버블링 상위 요소에 영향을 주지 않도록 합니다.
+			  return false;
 			});
 		
 	

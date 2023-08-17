@@ -141,11 +141,7 @@ border : 1px solid black;
 	<div id="store_main">
 	
 
-<span class="main-category__title">전체상품</span>
-<div><button class="category-order_toggle">
-	  정렬<i class="fa-solid fa-chevron-down"></i>
-</button></div>
-<!-- 상품 정렬하는 버튼-->
+
 
 <div class="category-order-list-container" style="display:none;">
 
