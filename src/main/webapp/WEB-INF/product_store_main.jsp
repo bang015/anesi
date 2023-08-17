@@ -11,9 +11,7 @@ Copy code
     <link href="../css/store_main.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>스토어메인페이지</title>
-    
     <style>
-    
     </style>
 </head>
 <body>
@@ -41,53 +39,60 @@ Copy code
 	   
     <div id="store_main">
         <div class="production-item__content" v-for="item in list">
-            <a @click="fnProductView(item.productNo)" class="production-item-thumnail">
-                <div class="production-item-thumnail__overlay"></div>
-                <img class="production-item-thumnail__image " alt="썸네일" :src="item.imgPath + '/' + item.imgName">
-            </a>
-            <div class="production-item-header">
-                <span class="production-item-header__brand">{{item.manufacturer}}</span>
-                <span class="production-item-header__name">{{item.productName}}</span>
-                <div class="production-item-header__kind">{{item.categoryName}}
+            <div class="production-item-header" @click="fnProductView(item.productNo)">
+		             <a class="production-item-thumnail">
+		                <div class="production-item-thumnail__overlay"></div>
+		                <img class="production-item-thumnail__image " alt="썸네일" :src="item.imgPath + '/' + item.imgName">
+		            </a>
+            	<div class="brand_name">
+            		<span class="production-item-header__brand">{{item.manufacturer}}</span>
+                	<span class="production-item-header__name">{{item.productName}}</span>
+            	</div>
+                <div class="category_country">
+                    <span class="production-item-header__kind">{{item.categoryName}},</span>
                     <span class="production-item-header__country">{{item.country}}</span>
                 </div>
             </div>
-            <span class="production-item-price">
-                <span class="production-item-price__orginal" v-if="item.discountPrice!=''">정가
+            
+            <div class="production-item-price">
+                <div class="production-item-price__orginal" v-if="item.discountPrice!=''">정가
                     <span class="won_icon">￦</span>
                     <span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
-                </span>
+                    <span class="production-item-price__percent">{{ item.discount }}%</span>
+                </div>
                 <!-- production-item-price__sell  : 파는 가격 -->
                 <div class="production-item-price__sell">
                     <span class="won_icon">￦</span>
                     <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
                     <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
                 </div>
-            </span>
+            </div>
+            
             <!--  production-item-rating : 별점-->
             <div class="production-item-rating">
                 <!-- 별모양-->
                 <i class="fa-solid fa-star" style="color: #A782C3;"></i>
-                <span class="production-item-rating__score">{{item.csatAvg}}리뷰데이터 쌓이면 쿼리실행</span>
+                <span class="production-item-rating__score ">{{item.csatAvg}}.5</span>
             </div>
             <!-- 장바구니버튼-->
-            <a v-if="userId!=''">
-                <i @click="fnInsertUserCart(item)" v-if="!(cartList.includes(item.productNo))" class="fa fa-shopping-cart modal-toggle-button" ></i>
-                <i @click="fnUpdateUserCart(item)" v-if="cartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
+            <a  v-if="userId!=''" class="cart_button">
+                <i @click="fnInsertUserCart(item)" v-if="!(cartList.includes(item.productNo))" class="fa-solid fa-cart-shopping fa-xl " ></i>
+                <i @click="fnUpdateUserCart(item)" v-if="cartList.includes(item.productNo)" class="fa-solid fa-cart-shopping fa-xl" ></i>
             </a>
+            
             <!-- 유저번호가 없을때, 로그인화면으로 전환-->
-            <a v-else>
-                <i @click="fnAddNonUserCart(item)" v-if="!(nonuserCartList.includes(item.productNo))" class="fa fa-shopping-cart modal-toggle-button" ></i>
-                <i @click="fnUpdateUserCart(item)" v-if="nonuserCartList.includes(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i>
+            <a v-else class="cart_button">
+                <i @click="fnAddNonUserCart(item)" v-if="!(nonuserCartList.includes(item.productNo))" class="fa-solid fa-cart-shopping fa-xl" ></i>
+                <i @click="fnUpdateUserCart(item)" v-if="nonuserCartList.includes(item.productNo)" class="fa-solid fa-cart-shopping fa-xl"  ></i>
             </a>
             <!-- 공유하기버튼-->
-            <a><i class="fa-solid fa-share-nodes"></i></a>
+            <a class="share_button"><i class="fa-solid fa-share-nodes fa-xl"></i></a>
             <!-- 스크랩버튼-->
-            <a v-if="userId!=''">
-                <i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button"></i>
-                <i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark"></i>
+            <a v-if="userId!=''" class="scrap_button">
+                <i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button  fa-xl"></i>
+                <i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark  fa-xl " style="color:#A782C3;"></i>
             </a>
-            <a v-else>
+            <a v-else class="scrap_button">
                 <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i>
             </a>
         </div> <!-- class="production-item__content" 끝-->
@@ -97,8 +102,8 @@ Copy code
 		  <div class="modal-card">
 		    <h2>장바구니에 추가</h2>
 		    <p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveCart" >장바구니로 이동하기</button>
+		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
+		    <button @click="fnMoveCart" class="right_button">장바구니로 이동하기</button>
 		  </div>
 		</div>
 		
@@ -106,23 +111,23 @@ Copy code
 		  <div class="modal-card"  v-if="userId!=''">
 		    <h2>스크랩북에 등록</h2>
 		    <p>상품이 스크랩되었습니다.</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveScrapbook">스크랩북으로 이동하기</button>
+		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
+		    <button @click="fnMoveScrapbook" class="right_button">스크랩북으로 이동하기</button>
 		  </div>
 		  
 		  <div class="modal-card"  v-else>
 		    <h2>로그인후 사용 가능합니다.</h2>
 		    <p>로그인하시겠습니까?</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveLoginPage">로그인페이지로 이동하기</button>
+		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
+		    <button @click="fnMoveLoginPage" class="right_button">로그인페이지로 이동하기</button>
 		  </div>
 		</div>
 		
     	<div class="modal" v-if="showScrapDeleteModal">
 		  <div class="modal-card">
 		    <h2>스크랩북에서 삭제되었습니다.</h2>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveScrapbook">스크랩북으로 이동하기</button>
+		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
+		    <button @click="fnMoveScrapbook" class="right_button">스크랩북으로 이동하기</button>
 		  </div>
 		</div>
 		
@@ -130,8 +135,8 @@ Copy code
 		  <div class="modal-card">
 		    <h2>이미 담긴상품입니다.</h2>
 		    <p>스크랩북을 확인해주세요</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
+		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
+		    <button @click="fnMoveMyPage" class="right_button">스크랩북으로 이동하기</button>
 		  </div>
 		</div>
 		
@@ -184,7 +189,7 @@ var app = new Vue({
 		productNo : "",
 		scrapbookList : [],
 		cartList : [],
-		nonuserCartList : []
+		nonuserCartList : [],
      
 
 	},// data
@@ -203,8 +208,6 @@ var app = new Vue({
                 }
             }); 
 		},
-		
-		
 		
 		 fnOrderBy: function (orderBy) {
 	            var self = this;
