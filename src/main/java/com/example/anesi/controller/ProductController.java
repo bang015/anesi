@@ -183,6 +183,15 @@ public class ProductController {
 				resultMap.put("success", "삭제완료");
 				return new Gson().toJson(resultMap);
 			}
+		  @RequestMapping(value = "/product/deleteAllCartItems.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		  @ResponseBody
+		  public String deleteAllCart(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		    System.out.println("전달 된 매개 변수: " + map); // 파라미터를 확인
+		    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		    productService.deleteAllCartItems(map);
+		    resultMap.put("success", "삭제완료");
+		    return new Gson().toJson(resultMap);
+		  }
 		  @RequestMapping(value = "/product/searchProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 			public @ResponseBody List<Product> searchProduct(Model model,  @RequestParam HashMap<String, Object> map, HttpSession session) throws Exception {
 			    // 요청 매개변수로부터 productName을 가져옵니다.

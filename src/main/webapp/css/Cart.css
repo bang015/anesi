@@ -41,27 +41,28 @@ padding-left: 40px;
 			}
 			input[id="cb1"]:checked + label {
 				background-color: deepskyblue;
+					position: relative;
+				left: 100px;
 			}
 			input[id="cb1"] {
 				display: none;
 			}
-			.non{
-				background-color: white;
-				border : 0px;
-				position: absolute;
-			right: 420px;
-			top: 200px;
+			#non{
+				position: relative;
+			left: 650px;
+			bottom: 190px;
+			font-size: 15px;
 			}
-			.cal{
-			position: absolute;
-			right: 420px;
-			top: 250px;
-			width: 400px;	
-			border: 1px solid whitesmoke;
-			text-align: center;
-			background-color: whitesmoke;
-			font-size: 18px;
-			}
+			.cal {
+  position: relative;
+  left: 800px;
+  bottom: 250px;
+  width: 400px;
+  border: 1px solid whitesmoke;
+  text-align: center;
+  background-color: whitesmoke;
+  font-size: 18px;
+}
 			th{
 				padding: 15px;
 			}
@@ -69,9 +70,12 @@ padding-left: 40px;
 				padding-left: 15px;
 			}
 			.btn{
-			position: absolute;
-			right: 470px;
-			top: 440px;
+			position: relative;
+			left: 850px;
 			width: 300px;
 			height: 40px;
+			top: 200px;
 			}
+			
+			
+			

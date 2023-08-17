@@ -97,6 +97,11 @@ public class ProductServiceImpl implements ProductService {
 			// TODO Auto-generated method stub
 			return productMapper.searchBarProductList(map);
 		}
+		@Override
+		public int deleteAllCartItems(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			return productMapper.deleteAllCartItems(map);
+		}
 	
 	
 }

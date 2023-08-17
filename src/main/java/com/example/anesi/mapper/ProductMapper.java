@@ -68,6 +68,8 @@ public interface ProductMapper {
 	int insertOption(HashMap<String, Object> map);
 	//회원 장바구니 삭제
 	int deleteCartlist (HashMap<String, Object> map);
+	//회원 장바구니 모두삭제
+	int deleteAllCartItems (HashMap<String, Object> map);
 	
 	//비회원 장바구니 추가
 	int nonUserCartInsert(HashMap<String, Object> map);

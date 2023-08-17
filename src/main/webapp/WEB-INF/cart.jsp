@@ -21,11 +21,11 @@
     <div id="container">
   <button class="btn" @click="goToPurchasePage">구매하기</button>
       <h2>장바구니</h2>
-      <span><button class="non">선택 삭제</button></span>
+  
       <div id="cart-app" class="container">
   <table id="cart-table" class="table table-bordered">
-     <input type="checkbox" id="cb1">
-    <label for="cb1"></label>
+  <!--    <input type="checkbox" id="cb1" class="chbox">
+    <label for="cb1" class="chbox"></label> -->
     <thead>
       <tr>
         <th>상품 번호</th>
@@ -38,13 +38,14 @@
     </thead>
     <tbody class="fon">
       <tr v-for="item in cartItems">
+        <i class="fa-solid fa-xmark" v-on:click="deleteAllCartItems(item)" style="cursor:pointer" id="non">전체삭제</i>
         <td>{{ item.productNo }}</td>
         <td>{{ item.productName }}</td>
         <td><img alt="" :src="item.imgPath+'/'+item.imgName"  class="cartImg" ></td>
         <td>{{ item.manufacturer }}</td>
         <td>{{ item.country }}</td>
         <td>{{ item.productPrice }}</td>
-        <td><i class="fa-solid fa-xmark" v-on:click="deleteItem(item)"></i></td>
+        <td><i class="fa-solid fa-xmark" v-on:click="deleteItem(item)" style="cursor:pointer"></i></td>
       </tr>
     </tbody>
   </table>
@@ -128,6 +129,31 @@ new Vue({
     	        alert("요청 처리 실패");
     	    });
     	},
+    	deleteAllCartItems(item) {
+    	    // userNo를 requestData 객체에 추가
+    	    const requestData = {
+    	        userNo: '${sessionNo}'
+    	    };
+    	    console.log(requestData);
+
+    	    $.ajax({
+    	        url: "/product/deleteAllCartItems.dox",
+    	        method: "POST",
+    	        data: requestData
+    	    })
+    	    .done(function (response) {
+    	        if (response.success) {
+    	            alert(response.success);
+    	            location.reload();
+    	        } else {
+    	            alert("삭제 실패");
+    	        }
+    	    })
+    	    .fail(function () {
+    	        alert("요청 처리 실패");
+    	    });
+    	},
+
 
 
       goToPurchasePage() {
