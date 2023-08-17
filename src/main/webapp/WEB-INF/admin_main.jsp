@@ -29,7 +29,7 @@
   
 }
 .side_menu div{
- font-size : 30px;
+ font-size : 15px;
  margin : 10px 45px ;
 }
 .side_menu div:hover{
@@ -37,13 +37,57 @@
 }
 
 .delivery{
-  display : inline-block;
-  width : 300px;
+  width : 400px;
   height: 200px;
   border-radius : 8px;
   border : 1px solid #424242;
+  padding : 7px;
+}
+.delivery span{
+  font-size : 20px;
+}
+.change{
+  width : 400px;
+  height: 200px;
+  border-radius : 8px;
+  border : 1px solid #424242;
+  padding : 7px;
+}
+.change span{
+  font-size : 20px;
+}
+.review{
+  width : 400px;
+  height: 200px;
+  border-radius : 8px;
+  border : 1px solid #424242;
+  padding : 7px;
+}
+.review span{
+  font-size : 20px;
+}
+.review span span{
+  font-size : 14px;
+}
+.customer{
+  width : 400px;
+  height: 200px;
+  border-radius : 8px;
+  border : 1px solid #424242;
+  padding : 7px;
+}
+.customer span{
+  font-size : 20px;
+}
+.customer span span{
+  font-size : 14px;
 }
 
+.flex-container1,
+.flex-container2{
+   display: flex;
+   
+}
 
 </style>
 </head>
@@ -57,7 +101,9 @@
 			<span>도움말</span>
 			<span>아네시 홈페이지</span>
 		</header>
+	
 		
+    <div class="flex-container1">
 		<div class="side_menu">
 			<div>상품관리</div>
 			<div>판매통계</div>
@@ -69,17 +115,27 @@
 			<div>알림관리</div>
 		</div>
 		
+		
 		<div class="delivery">
 			<span>주문/배송</span>
-			<span>최근</span>
 			<hr>
 		</div>
-		<div class="delivery">
-			<span>주문/배송</span>
+		<div class="change">
+			<span>취소요청/반품/교환</span>
+			<hr>
 		</div>
 		
-	
-	
+		<div class="review">
+			<span>리뷰<span>최근 1주일기준</span></span>
+			<hr>
+		</div>
+		<div class="customer">
+			<span>고객현황<span>최근 1주일기준</span></span>
+			<hr>
+		</div>
+		
+    </div>
+ 
 	</div>
 </body>
 </html>
