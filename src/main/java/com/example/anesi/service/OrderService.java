@@ -26,4 +26,6 @@ public interface OrderService {
 	int editAddr(HashMap<String, Object> map);
 	// 당일 주문량 검색
 	int searchOrderCnt(HashMap<String, Object> map);
+	// 재고 업데이트
+	int editOptionStock(HashMap<String, Object> map);
 }

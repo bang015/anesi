@@ -283,7 +283,7 @@
 		        	</div>
 		        	<div class="modalButBox">
 		        		<button class="modalBut" onclick="location.href='../main.do'">메인페이지</button>
-		        		<button class="modalBut2">나의 쇼핑</button>
+		        		<button class="modalBut2" onclick="location.href='../mypage/myShopping.do'">나의 쇼핑</button>
 		        	</div>
 		        </div>
 		        
@@ -617,6 +617,15 @@ var app = new Vue({
 		 		     		                }
 		 		                		 });
 		 		                	}
+		 		                	var nparmap = {optionNo : self.productNoList[i].optionNo, cnt : self.productNoList[i].quantity};
+	 		                		 $.ajax({
+	 		     		                url : "../order/optionStock.dox",
+	 		     		                dataType:"json",	
+	 		     		                type : "POST", 
+	 		     		                data : nparmap,
+	 		     		                success : function(data) {
+	 		     		                }
+	 		                		 });
 		 		                }
 		 		    	 });
 	            	  }

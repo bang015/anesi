@@ -68,6 +68,13 @@ public class OrderServiceImpl implements OrderService{
 		return orderMapper.selectOrderCnt(map);
 	}
 	
+	// 재고 업데이트
+	@Override
+	public int editOptionStock(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderMapper.updateOptionStock(map);
+	}
+	
 	
 	
 	

@@ -119,4 +119,13 @@ public class OrderController {
 		resultMap.put("cnt", cnt);
 		return new Gson().toJson(resultMap);
 	}
+	
+	// 당일 주문량 검색
+	@RequestMapping(value = "/order/optionStock.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String optionStock(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		orderService.editOptionStock(map);
+		return new Gson().toJson(resultMap);
+	}
 }

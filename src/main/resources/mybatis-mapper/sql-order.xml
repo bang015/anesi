@@ -72,4 +72,10 @@
 		WHERE DATE(CREATEDATE) = DATE(NOW());
 	</select>
 	
+	<update id="updateOptionStock" parameterType="hashmap">
+		UPDATE t3_tbl_product_option
+			SET
+			PRODUCT_STOCK = PRODUCT_STOCK - #{cnt}
+		WHERE OPTION_NO = #{optionNo}			
+	</update>
 </mapper>

@@ -31,4 +31,6 @@ public interface OrderMapper {
 	int updateAddr2(HashMap<String, Object> map);
 	// 오늘 주문량 검색
 	int selectOrderCnt(HashMap<String, Object> map);
+	// 재고 업데이트
+	int updateOptionStock(HashMap<String, Object> map);
 }

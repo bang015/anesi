@@ -23,7 +23,35 @@
 					<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
 					<div class="checkListText">
 						<div>전체</div>
-						<div><span class="numText">{{}}</span>건</div> 
+						<div><span class="numText">{{productList.length}}</span>건</div> 
+					</div>
+				</div>
+				<div class="checkList">
+					<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
+					<div class="checkListText">
+						<div>판매중</div>
+						<div><span class="numText">{{productList.length}}</span>건</div> 
+					</div>
+				</div>
+				<div class="checkList">
+					<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
+					<div class="checkListText">
+						<div>품절</div>
+						<div><span class="numText">{{productList.length}}</span>건</div> 
+					</div>
+				</div>
+				<div class="checkList">
+					<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
+					<div class="checkListText">
+						<div>판매중지</div>
+						<div><span class="numText">{{productList.length}}</span>건</div> 
+					</div>
+				</div>
+				<div class="checkList">
+					<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
+					<div class="checkListText">
+						<div>판매종료</div>
+						<div><span class="numText">{{productList.length}}</span>건</div> 
 					</div>
 				</div>
 			</div>
@@ -35,7 +63,7 @@
 var app = new Vue({
 	el : '#app',
 	data : {
-
+		productList : [],
 	},// data
 	methods : {
 		fnGetProduct(){
@@ -47,7 +75,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-					console.log(data.list);
+					self.productList = data.list;
                 }
             });
 		}
