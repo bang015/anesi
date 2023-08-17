@@ -76,4 +76,6 @@ public interface ProductMapper {
 	//상품 검색창 검색
 		List<Product> searchProduct (HashMap<String, Object> map);
 		List<Product> searchBarProductList (HashMap<String, Object> map);
+		//최근본 상품 출력
+		List<Product> selectLatest (HashMap<String, Object> map);
 }

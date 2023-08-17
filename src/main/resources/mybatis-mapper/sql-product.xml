@@ -256,6 +256,12 @@
 	 	INSERT INTO t3_tbl_product_option(PRODUCT_NO, PRODUCT_STOCK, OPTION_PRICE, OPTION_NAME)
 	 	VALUES(#{productNo}, #{productStock}, #{optionPrice}, #{optionName})
 	 </insert>
+	 
+	 <select id="selectLatest" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
+		SELECT *
+		FROM t3_tbl_product_image 
+		WHERE Product_NO = #{productNo}
+	</select>
 </mapper>
 
 	

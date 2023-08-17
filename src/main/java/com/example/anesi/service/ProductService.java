@@ -50,6 +50,7 @@ public interface ProductService {
 	List<Product> searchBarProductList (HashMap<String, Object> map);
 	//회원 장바구니 모두삭제
 	int deleteAllCartItems (HashMap<String, Object> map);
-	
+	//최근본상품 출력
+	List<Product> selectLatest (HashMap<String, Object> map);
 }
 

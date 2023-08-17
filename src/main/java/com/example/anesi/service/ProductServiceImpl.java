@@ -102,6 +102,11 @@ public class ProductServiceImpl implements ProductService {
 			// TODO Auto-generated method stub
 			return productMapper.deleteAllCartItems(map);
 		}
+		@Override
+		public List<Product> selectLatest(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			return productMapper.selectLatest(map);
+		}
 	
 	
 }

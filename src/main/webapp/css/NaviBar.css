@@ -1,0 +1,10 @@
+@charset "EUC-KR";
+
+#container{
+	width: 150px;
+	height: 400px;
+	background-color: bisque;
+	position: fixed;
+	right: 150px;
+	top: 400px;
+}

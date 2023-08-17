@@ -46,7 +46,15 @@ public class ProductController {
 	@RequestMapping("/product/view.do") 
 	public String view(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("map", map);
+		System.out.println(map);
 		return "/product_view";
+		
+	}
+	//상품 상세 페이지
+	@RequestMapping("/navi.do") 
+	public String navi(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
+		return "/naviBar";
 		
 	}
 	
