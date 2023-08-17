@@ -32,6 +32,14 @@ public class LoginController {
 		return "/login";
 		
 	}
+	//로그아웃
+	@RequestMapping("/logout.do") 
+	public String logout(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		session.invalidate();//세션만료하는애
+		
+		return "/login";
+		
+	}
 	//비회원 주문 조회
 	@RequestMapping("/nOrder.do") 
 	public String nOrder(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{

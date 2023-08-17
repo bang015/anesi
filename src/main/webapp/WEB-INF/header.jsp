@@ -30,6 +30,14 @@
 </style>
 </head>
 <body>
+<% 
+    boolean isLoggedIn = false;
+    Object sessionNo = session.getAttribute("sessionNo");
+    if (sessionNo != null) {
+        isLoggedIn = true;
+    }
+%>
+
 	<header>
 		<span> <a href="/main.do"><img class="logo"
 				src="../css/image/anesilogo.png" /> </a></span> <a class="aaa"
@@ -38,8 +46,8 @@
 
 		<ul id="header_navi">
 			<li><a><i class="fa fa-shopping-cart "></i></a></li>
-			<li><a href="../login.do"><i class="fa-solid fa-door-open "></i></a><span
-				class="fon">로그인</span></li>
+			<li id="login-button"><a href="#" id="login-button-link"><i class="fa-solid fa-door-open"></i></a><span
+				class="fon" id="login-button-text"></span></li>
 			<li><a href="../join.do"><i class="fa-solid fa-user-plus "></i></a><span
 				class="fon">회원가입</span></li>
 			<li><a href="../mypage.do"><i class="fa-solid fa-user "></i></a><span
@@ -122,6 +130,27 @@
 		</div>
 	</header>
 	<script>
+	   var isLoggedIn = <%= isLoggedIn %>;
+	    console.log('isLoggedIn:', isLoggedIn);
+
+	    console.log('sessionNo:', '<%= sessionNo %>');
+
+	    $(document).ready(function(){
+	        // 로그인되어 있지 않은 경우 로그인 버튼 및 아이콘을 조작합니다.
+	        if(!isLoggedIn) {
+	            $('#login-button-link').attr('href', '../login.do'); // 로그인 링크를 설정합니다.
+	            $('#login-button-text').text('로그인'); // 로그인 버튼의 텍스트를 "로그인"으로 설정합니다.
+	            $('.fa-door-open').removeClass('fa-door-open').addClass('fa-door-closed');
+	            // 로그인 아이콘의 클래스를 변경하여 닫힌 문 모양으로 설정합니다.
+	        } else { // 로그인되어 있는 경우 로그아웃 버튼 및 아이콘으로 조작합니다.
+	            $('#login-button-link').attr('href', '../logout.do'); // 로그아웃 링크를 설정합니다.
+	            $('#login-button-text').text('로그아웃'); // 로그인 버튼의 텍스트를 "로그아웃"으로 설정합니다.
+	            $('.fa-door-closed').removeClass('fa-door-closed').addClass('fa-door-open');
+	            // 로그인 아이콘의 클래스를 변경하여 열린 문 모양으로 설정합니다.
+	        }
+	    });
+	
+	
 	function saveRecentSearch(search) {
 		  if (!search) return;
 
@@ -186,16 +215,22 @@
 			  searchProduct(search);
 			});
 		$('body').on('click', '.recent-search-item .fa-xmark', function() {
-			  var search = $(this).parent().text();
+			$(document).ready(function(){
+		        var isLoggedIn = <%= isLoggedIn %>; // 로그인이 되어 있는지 여부를 나타내는 변수입니다.
 
-			  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-			  var index = recentSearches.indexOf(search);
-			  if (index > -1) {
-			    recentSearches.splice(index, 1);
-			    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
-			    showRecentSearches();
-			  }
-
+		        // 로그인되어 있지 않은 경우 로그인 버튼 및 아이콘을 조작합니다.
+		        if(!isLoggedIn) {
+		            $('#login-button-link').attr('href', '../login.do'); // 로그인 링크를 설정합니다.
+		            $('#login-button-text').text('로그인'); // 로그인 버튼의 텍스트를 "로그인"으로 설정합니다.
+		            $('.fa-door-open').removeClass('fa-door-open').addClass('fa-door-closed');
+		            // 로그인 아이콘의 클래스를 변경하여 닫힌 문 모양으로 설정합니다.
+		        } else { // 로그인되어 있는 경우 로그아웃 버튼 및 아이콘으로 조작합니다.
+		            $('#login-button-link').attr('href', '../logout.do'); // 로그아웃 링크를 설정합니다.
+		            $('#login-button-text').text('로그아웃'); // 로그인 버튼의 텍스트를 "로그아웃"으로 설정합니다.
+		            $('.fa-door-closed').removeClass('fa-door-closed').addClass('fa-door-open');
+		            // 로그인 아이콘의 클래스를 변경하여 열린 문 모양으로 설정합니다.
+		        }
+		    });
 			  // 이벤트 버블링 상위 요소에 영향을 주지 않도록 합니다.
 			  return false;
 			});
@@ -251,8 +286,7 @@
 		    }
 		});
 
-	
-
+		
 
 
 		/* //category 눌렀을때 메뉴별로 배열해줌
