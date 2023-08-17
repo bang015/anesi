@@ -168,7 +168,7 @@
 		padding: 17px 165px 17px 168px;
 	}
 	.content-img{
-		margin-left: 40px;
+		margin-left: 70px;
 		width: 700px;
 		display: inline-block;
 	}
@@ -178,7 +178,7 @@
 	.content-title{
 		font-size: 20px;
 		font-weight: bold;
-		margin-left: 40px;
+		margin-left: 70px;
 		margin-top: 20px;
 		width: 700px;
 		display: inline-block;
@@ -199,7 +199,7 @@
 		font-size: 30px;
 	}
 	.content-review{
-		margin-left: 40px;
+		margin-left: 70px;
 		width: 700px;
 		display: inline-block;
 		margin-top: 30px;
@@ -459,21 +459,65 @@
 		font-size: 17px;
 	}
 	.review-add-box{
-		width: 400px;
+		width: 600px;
 		margin: 0 auto;
 		
 	}
-	.review-product-price{
-		font-size: 16px;
-		margin-bottom: 10px;
+	.review-product{
+		margin-top: 30px;
+		margin-left: 10px;
+	}
+	.review-title1{
+		margin-top : 30px;
+		margin-left : 270px;
+		margin-bottom : 20px;
+		font-size: 20px;
+		font-weight: bold;
 	}
 	.review-product-csat{
 		margin-bottom: 20px;
-		border-bottom: 1px solid #ededed;
 		padding-bottom: 10px;
+		margin-top: 20px;
+	}
+	.review-csat{
+		font-size: 16px;
+		font-weight: bold;
+		margin-bottom: 10px;
+		display: inline-block;
+	}
+	.not-check-csat{
+		font-size: 16px;
+		font-weight: bold;
+		margin-bottom: 10px;
+		display: inline-block;
+		color: #f06060;
+	}
+	.review-csat-box{
+		display: flex;
+	}
+	.review-csat1{
+		line-height: 35px;
+		font-size: 16px;
+		margin-right: 10px;
+	}
+	.review-top-wrap{
+		display: flex;
+	}	
+	.img-add{
+		margin-bottom: 10px;
+	}
+	.img-add1{
+		font-size: 17px;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	.review-product-img1{
+		width: 150px;
+		height: 150px;
+		border-radius: 5px;
 	}
 	.file-upload-label{
-		width: 400px;
+		width: 600px;
 		height: 40px;
 		border-radius: 5px;
 		border: 1px solid #A782C3;
@@ -485,13 +529,14 @@
 		
 	}
 	.img-icon{
-		margin-left: 140px;
-		margin-top: 2px;
+		margin-left: 240px;
+		margin-top: 4px;
 	}
 	.img-btn-text{
-		margin-top : 8px;
+		margin-top : 11px;
 		margin-left: 10px;
 	}
+	
 	.review-img-btn-wrap{
 		margin-bottom: 10px;
 	}
@@ -500,12 +545,28 @@
 	}
 	.review-add-text{
 		margin-top : 20px;
-		width: 394px;
+		width: 580px;
 		border-radius: 5px;
+		line-height: 10px;
+		padding: 10px;
+		font-weight: 500;
+		resize: none;
+ 		outline: none;
+	}
+	.not-check-textarea{
+		margin-top : 20px;
+		width: 580px;
+		border-radius: 5px;
+		border-color : #f77;
+		line-height: 10px;
+		padding: 10px;
+		font-weight: 500;
+		resize: none;
+ 		outline: none;
 	}
 	.review-add-btn{
-		margin-top : 20px;
-		width: 400px;
+		margin-top : 40px;
+		width: 600px;
 		height: 40px;
 		border-radius: 5px;
 		border: 1px solid #A782C3;
@@ -514,6 +575,9 @@
 		color: #A782C3;
 		font-size: 16px;
 		font-weight: 900;
+	}
+	.review-add-btn-wrap{
+		margin-bottom: 40px;
 	}
 	.review-back{
 		float: right;
@@ -543,7 +607,25 @@
 	}
 	.custom-star {
   	  font-size: 2rem;
-	}	
+	}
+	.notCheck{
+		color: #f77;
+		font-size: 12px;
+	}
+	.review-title{
+		font-size: 16px;
+		font-weight: bold;
+		margin-top: 10px;
+		display: inline-block;
+		
+	}
+	.not-check-title{
+		font-size: 16px;
+		font-weight: bold;
+		margin-top: 10px;
+		display: inline-block;
+		color: #f06060;
+	}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -627,7 +709,7 @@
 							</div>
 							<div v-else>
 								<div class="main-price2">
-									{{product.productPrice}}원
+									{{defaultPrice | formatPrice}}원
 								</div>
 							</div>
 							<div class="main-option">
@@ -709,38 +791,60 @@
 									</div>
 							        	<div class="review-add-box">
 								        	<div class="review-add-product">
-								        		<div class="review-product-name">
-								        			<div class="review-add-name">{{product.productName}}</div>
-								        			<span class="review-add-option" v-for="(item, index) in reviewUser">
-								        				{{item.optionName}}
-								        				<span v-if="index !== reviewUser.length - 1">+</span>	
-								        			</span>
+								        		<div class="review-title1">리뷰쓰기</div>
+								        		<div class="review-top-wrap">
+									        		<div class="review-product-img">
+									        			<img class="review-product-img1" alt="리뷰상품이미지" :src="mainImg">
+									        		</div>
+									        		<div class="review-product-name">
+									        			<div class="review-product">
+											        		<div class="review-manufacturer">
+																{{product.manufacturer}}
+															</div>
+										        			<div class="review-add-name">{{product.productName}}</div>
+										        			<span class="review-add-option" v-for="(item, index) in reviewUser">
+										        				{{item.optionName}}
+										        				<span v-if="index !== reviewUser.length - 1">+</span>	
+										        			</span>
+									        			</div>
+									        		</div>
 								        		</div>
-								        		<div class="review-product-price">
-								        			<span class="review-add-price">{{reviewPrice | formatPrice}}원</span>
-									        	</div>
+								        		
 									        	<div class="review-product-csat">
-									        		<div>
-													    <div class="star-rating">
-													      <i v-for="(star, index) in stars" :key="index"
-													         :class="starClass(index)"
-													          @mouseover="hover(index + 1)"
-														      @click="rate(index + 1)"
-														      @mouseout="clearHover"></i>
-													    </div>
-													    <p>선택한 별점: {{ selectedRating }}</p>
-													</div>
+									        		<div :class="reviewCsatClass">
+									        			별점 평가
+									        		</div>
+									        		<span class="notCheck" v-if="reviewCsatCheck == true">필수 입력 항목입니다.</span>
+									        		<div class="review-csat-box">
+										        		<div class="review-csat1">만족도</div>									        	
+														<div class="star-rating">
+														  <i v-for="(star, index) in stars" :key="index"
+														      :class="starClass(index)"
+														      @mouseover="hover(index + 1)"
+															  @click="rate(index + 1)"
+															  @mouseout="clearHover"></i>
+														</div>
+													</div>																									
+									        	</div>
+									        	<div class="img-add">
+									        		<div class="img-add1">사진 첨부(선택)</div>
+									        		<div class="img-add2">사진을 첨부해주세요.(최대 1장)</div>
 									        	</div>
 									        	<div class="review-img-btn-wrap">
 									        		<input type="file" id="file1" name="file1" style="display: none;" @change="handleFileChange">
 												    <label for="file1" class="file-upload-label">
 												      <div class="img-icon"><i class="fa-regular fa-image fa-2x" style="color: #A782C3;"></i></div>
-												      <div class="img-btn-text">사진 추가</div>
+												      <div class="img-btn-text">사진 추가하기</div>
 												    </label>
 									        	</div>	
 									        	<p class="fileName" v-if="selectedFile">파일 이름: {{ selectedFile.name }}</p>
+									        	<div :class="reviewTitleClass">
+									        		리뷰 작성
+									        	</div>
+									        	<span class="notCheck" v-if="reviewCheck == true">필수 입력 항목입니다.</span>
 									        	<div class="review-add-textarea">
-									        		<textarea class="review-add-text" rows="10" cols="53.9" v-model="reviewText"></textarea>
+									        		<textarea :class="reviewTextareaClass" @click="reviewTextarea" @input="updateCharacterCount" rows="10" cols="53.9" v-model="reviewText" placeholder="자세하고 솔직한 리뷰는 다른고객에게 큰 도움이 됩니다."></textarea>
+									        		 <div class="character-count">{{ characterCount }} / 500</div>
 									        	</div>
 									        	<div class="review-add-btn-wrap"> 
 									        		<button @click="fnReviewAdd" class="review-add-btn">리뷰 등록</button>
@@ -841,6 +945,7 @@
 									<span class="review-text1">문의 </span><span class="review-text2"> {{csat.csatCnt}}</span>
 									<button class="review-btn">문의하기</button>
 								</div>
+								
 							</div>
 						</div>
 						<div class="recently-viewed">
@@ -862,6 +967,13 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		reviewTitleClass : 'review-title',
+		reviewTextareaClass : 'review-add-text',
+		reviewCsatClass : 'review-csat',
+		reviewCsatCheck : false,
+		reviewCheck : false,
+		characterCount: 0,
+		defaultPrice : 0,
 		optionName : "",
 		stars: Array(5).fill('empty'),
 	    selectedRating: 0,
@@ -948,6 +1060,7 @@ var app = new Vue({
 	               		var price2 = Math.floor(price / 100) * 100;
 	               		self.discountPrice =price2
 	               		self.product.productPrice = self.product.productPrice
+	               		self.defaultPrice = self.product.productPrice;
 	                }                
 	            }); 
 		},
@@ -1109,12 +1222,15 @@ var app = new Vue({
 		fnReviewAdd : function(){
 			var self = this;
 			if(self.reviewText == ""){
-				alert("내용을 입력해주세요.");
-				return;
+				self.reviewCheck = true;
+				self.changeTextareaStyle();
 			}
 			if(self.selectedRating ==0){
-				alert("별점을 입력해주세요.");
-				return;
+				self.reviewCsatCheck = true;
+				self.changeCsatStyle();
+			}
+			if(self.reviewCheck){
+				return;	
 			}
             var nparmap = {userNo : self.userNo, reviewText : self.reviewText, productNo : self.productNo, csat : self.selectedRating, optionName : self.optionName};
             $.ajax({
@@ -1163,6 +1279,26 @@ var app = new Vue({
        	     		self.showScrapModal = false;
 	           }	           
 	       });
+		},
+		changeCsatStyle() {
+		      if (this.reviewCsatCheck) {		    	
+		        this.reviewCsatClass = 'not-check-csat';
+		      } else {
+		        this.reviewCsatClass = 'review-csat';		        
+		      }	
+		},
+		changeTextareaStyle() {
+		      if (this.reviewCheck) {
+		        this.reviewTextareaClass = 'not-check-textarea';
+		        this.reviewTitleClass = 'not-check-title';
+		      } else {
+		        this.reviewTextareaClass = 'review-add-text';
+		        this.reviewTitleClass = 'review-title';
+		      }	
+		},
+		reviewTextarea(){
+			this.reviewCheck=false;
+			this.changeTextareaStyle();
 		},
 		addToSelectedOptions() {
 		      const selectedItem = this.option.find(item => item.optionNo === this.option1);
@@ -1244,28 +1380,33 @@ var app = new Vue({
 			self.showScrapModal = false;
 			self.selectedFile = null;
 			},
-			starClass(index) {
-			      const rating = this.hoveringRating || this.selectedRating;
-			      if (rating >= index + 1) {
-			        return 'fa-solid fa-star custom-star filled';
-			      } else if (rating >= index + 0.5) {
-			        return 'fa-solid fa-star custom-star half';
-			      } else {
-			        return 'fa-solid fa-star custom-star empty';
-			      }
-			    },
-			    hover(rating) {
-			      this.hoveringRating = rating;
-			    },
-			    rate(rating) {
-			      this.selectedRating = rating;
-			      this.hoveringRating = 0; // 클릭했을 때 호버 상태 제거
-			    },
-			    clearHover() {
-			      if (this.selectedRating === 0) {
-			        this.hoveringRating = 0;
-			      }
+		starClass(index) {
+			 const rating = this.hoveringRating || this.selectedRating;
+			 if (rating >= index + 1) {
+			     return 'fa-solid fa-star custom-star filled';
+			  } else if (rating >= index + 0.5) {
+			     return 'fa-solid fa-star custom-star half';
+			  } else {
+			     return 'fa-solid fa-star custom-star empty';
+			   }
+			 },
+		hover(rating) {
+			 this.hoveringRating = rating;
+			 },
+		rate(rating) {
+			 this.selectedRating = rating;
+			 this.hoveringRating = 0; // 클릭했을 때 호버 상태 제거
+			 this.reviewCsatCheck = false;
+			 this.changeCsatStyle();
+			 },
+		clearHover() {
+			 if (this.selectedRating === 0) {
+			   this.hoveringRating = 0;
 			    }
+			 },
+		updateCharacterCount() {
+			 this.characterCount = this.reviewText.length;
+			 }
 			  
 	}, // methods
 	created : function() {
@@ -1279,6 +1420,8 @@ var app = new Vue({
 		self.fnReview();
 		self.fnReviewCnt();
 		self.fnReviewUser();
+		self.changeCsatStyle();
+		self.changeTextareaStyle();
 	}// created
 });
 </script>
