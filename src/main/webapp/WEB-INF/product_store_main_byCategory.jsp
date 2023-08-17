@@ -153,25 +153,28 @@
 </html>
 <script>
 
-$(document).ready(function() {
-    // 상품정렬 버튼 클릭 이벤트 추가
-    var isListOpen = false; // Flag to track the state of the list container
+/* 화살표 함수 */
+const label = document.querySelector('.label');
+const options = document.querySelectorAll('.optionItem');
 
-    $('.category-order_toggle').click(function() {
-        if (!isListOpen) { // 현재 목록이 닫혀있는 경우에만 열기
-            $('.category-order-list-container').slideDown('slow');
-            isListOpen = true;
-        }
-    });
+// 클릭한 옵션의 텍스트를 라벨 안에 넣음
+const handleSelect = (item) => {
+  label.parentNode.classList.remove('active');
+  label.innerHTML = item.textContent;
+}
+// 옵션 클릭시 클릭한 옵션을 넘김
+options.forEach(option => {
+	option.addEventListener('click', () => handleSelect(option))
+})
 
-    // 목록 항목 클릭 이벤트 추가
-    $('.category-order-list a').click(function() {
-        // 목록 항목을 클릭하면 목록을 닫습니다.
-        $('.category-order-list-container').slideUp('slow');
-        isListOpen = false;
-    });
-});
-
+// 라벨을 클릭시 옵션 목록이 열림/닫힘
+label.addEventListener('click', () => {
+  if(label.parentNode.classList.contains('active')) {
+  	label.parentNode.classList.remove('active');
+  } else {
+  	label.parentNode.classList.add('active');
+  }
+})
 var app = new Vue({
 	el : '#store_main_byCategory',
 	data : {
