@@ -188,9 +188,9 @@ var app = new Vue({
 	          this.optionsVisible = false;
 	          var month = '';
 	          switch(value){
-				case '1':  month = '1개원 전'; break;
-				case '3':  month = '3개원 전'; break;
-				case '6':  month = '6개원 전'; break;
+				case '1':  month = '1개월 전'; break;
+				case '3':  month = '3개월 전'; break;
+				case '6':  month = '6개월 전'; break;
 				case '12':  month = '1년 전'; break;
 				case '24':  month = '2년 전'; break;
 				case '36':  month = '3년 전'; break;
