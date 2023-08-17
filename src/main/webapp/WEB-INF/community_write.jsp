@@ -105,7 +105,6 @@ var app = new Vue({
 	 			type : "POST", 
 				data : nparmap,
 				success : function(data) { 
-					alert("게시글이 등록되었습니다.");
 						location.href = "main.do";
 					}
 	            }); 
@@ -127,7 +126,6 @@ var app = new Vue({
 				type : "POST", 
 				data : nparmap,
 				success : function(data) { 
-	            	alert("게시글이 수정되었습니다.");
 		            $.pageChange("view.do", {boardNo : self.bNo});
 		        }
 			});

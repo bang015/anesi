@@ -132,4 +132,14 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 검색 게시글 
+	@RequestMapping(value = "/community/search.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String sList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Board> sList = boardService.searchBoard(map);
+		System.out.println(map);
+		resultMap.put("sList", sList);
+		return new Gson().toJson(resultMap);
+	}
 }

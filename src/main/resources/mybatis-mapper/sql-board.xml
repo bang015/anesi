@@ -86,4 +86,15 @@
 		WHERE COMMENT_NO = #{cNo}
 	</delete>
 	
+	<!-- 게시글 검색 -->
+	<select id="searchBoard" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT *
+		FROM t3_tbl_board
+		WHERE 1=1  
+		<if test="keyword != '' and keyword != null"> 
+			AND (TITLE LIKE CONCAT('%', #{keyword}, '%')
+				OR NICK LIKE CONCAT('%', #{keyword}, '%'))
+		</if>
+		ORDER BY BOARD_NO DESC
+	</select>
 </mapper>

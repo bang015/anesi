@@ -86,13 +86,14 @@
 }
 .searchbar{
 	float:right;
-	margin-top: 21px;
+	margin-top: 12px;
 }
 .search-input{
     border: 1px solid #c5c5c5;
     border-radius: 5px;
     padding: 5px 9px;
     font-size: 14px;
+    margin-right : 7px;
 }
 .glass{
     width: 18px;
@@ -131,10 +132,10 @@
 		</div>
 		<hr class="hrr">
 		<div id="board-body">
-			<div id="board-body-head"><h2>전체글<span class="text1">{{list.length}}</span></h2></div>
+			<div id="board-body-head"><h2>전체글<span class="text1"> {{list.length}}</span></h2></div>
 			<div class="searchbar">
 				<button class="btn" @click="fnWrite">글쓰기(임시)</button>
-				<input type="text" class="search-input"><img class="glass" src="../css/image/community/m-glass.png">
+				<input type="text" class="search-input" @keyup.enter="fnSearch" v-model="keyword"><img class="glass" src="../css/image/community/m-glass.png">
 			</div>
 		</div>
 		<div class="part">
@@ -163,6 +164,7 @@ var app = new Vue({
 	data : {
 		list : [],
 		bList : [],
+		keyword : "",
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}"
 	},// data
@@ -177,7 +179,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
         			self.list = data.list;
-        			console.log(self.list);
                 }
             });
 		},
@@ -191,7 +192,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
         			self.bList = data.bList;
-        			console.log(self.bList);
                 }
             });
 		},
@@ -208,7 +208,20 @@ var app = new Vue({
 			const diffInHours = (currentTime - postTime) / (1000 * 60 * 60);
 			
 			return diffInHours < 24;
-		}
+		},
+        fnSearch : function(){
+            var self = this;
+            var nparmap = {keyword : self.keyword};
+            $.ajax({
+                url : "/community/search.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	self.list = data.sList;
+                }
+            }); 
+        },
 	}, // methods
 	created : function() {
 		var self = this;

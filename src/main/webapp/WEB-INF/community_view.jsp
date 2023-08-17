@@ -148,7 +148,7 @@ h1{
     -webkit-box-align: center;
     align-items: center;
     width: 100%;
-    font-size : 16px;
+    font-size : 17px;
 }
 .cComm{
 	margin: 8px 0px;
@@ -175,6 +175,15 @@ h1{
     font-size: 12px;
 	margin: 10px 0px;
 }
+.guide{
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 20px 10px;
+    margin: 20px 22px 37px;
+    border-color: #d1d1d1;
+    color: gray;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -184,7 +193,7 @@ h1{
 			<div class="stat-out"><img class="stat-icon" src="../css/image/community/joahyo.png"></div>
 			<div class="stat-out"><img class="stat-icon" src="../css/image/community/an-joahyo.png"></div>
 			<div class="stat-out"><img class="stat-icon" src="../css/image/community/comment.png" name="comment" @click="scrollToComment"></div>
-			<div class="stat-out"><img class="stat-icon" src="../css/image/community/share.png"></div>
+			<div class="stat-out" @click="copyAddress"><img class="stat-icon" src="../css/image/community/share.png"></div>
 		</div>
 		<div id="container">
 			<div class="thum1">
@@ -210,20 +219,20 @@ h1{
 			<hr class="hrr">
 			<div style="font-size:19px;">댓글 <span>{{cList.length}}</span></div>
 			<div id="comment-head">
-				<img class="profile2" src="../css/image/profile.png"><input class="comment-input" type="text" v-model="content">
-				<button class="btn1" @click="fnComInsert">입력</button>
+				<div v-if="sessionNo!=''">
+					<img class="profile2" src="../css/image/profile.png"><input class="comment-input" type="text" v-model="content">
+					<button class="btn1" @click="fnComInsert">입력</button>
+				</div>
+				<div v-else class="guide">로그인 후 댓글 입력 가능합니다.</div>
 			</div>
 			<div id="comment-body">
 				<div v-for="(item, index) in cList">
 					<div class="comment-item">
-						
 						<div>
 							<div class="cNick">{{item.cNick}}<img class="c-profile" src="../css/image/profile.png"></div>
-							
 							<div class="cComm">{{item.comm}}</div>
 							<div class="cDate">{{calculateTime(item.cCDateTime)}}<span v-if="sessionNick==item.cNick"><a @click="fnComDelete(item.commentNo)"> · 삭제</a></span></div>
 						</div>
-						
 					</div>
 				</div>
 			</div>
@@ -335,7 +344,22 @@ var app = new Vue({
                 	location.reload();
                 }
             });
-		}
+		},
+		copyAddress() {
+			const info = {
+	                bNo : this.bNo
+	            };
+	            const queryParams = new URLSearchParams(info).toString();
+	            const fullUrl = window.location.href + '?' + queryParams;
+
+	            const dummyTextArea = document.createElement('textarea');
+	            dummyTextArea.value = fullUrl;
+	            document.body.appendChild(dummyTextArea);
+	            dummyTextArea.select();
+	            document.execCommand('copy');
+	            document.body.removeChild(dummyTextArea);
+	            alert('주소가 복사되었습니다.');
+        }
 	}, // methods
 	created : function() {
 		var self = this;

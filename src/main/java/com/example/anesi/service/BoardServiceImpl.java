@@ -76,5 +76,10 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardMapper.deleteComment(map);
 	}
+	@Override
+	public List<Board> searchBoard(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.searchBoard(map);
+	}
 	
 }

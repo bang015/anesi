@@ -30,4 +30,6 @@ public interface BoardMapper {
 	List<Board> selectComment(HashMap<String, Object> map);
 	// 댓글 삭제
 	int deleteComment(HashMap<String, Object> map);
+	// 게시글 검색
+	List<Board> searchBoard(HashMap<String, Object> map);
 }
