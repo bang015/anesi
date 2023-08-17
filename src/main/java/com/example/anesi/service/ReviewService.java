@@ -17,4 +17,6 @@ public interface ReviewService {
 		List<Order> searchReviewUser(HashMap<String, Object> map);
 		// 리뷰 등록
 		HashMap<String, Object> addReview(HashMap<String, Object> map);
+		// 리뷰 이미지 등록
+		int addReviewImg(HashMap<String, Object> map);
 }

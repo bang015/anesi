@@ -23,4 +23,6 @@ public interface ReviewMapper {
 		List<Order> selectReviewUser(HashMap<String, Object> map);
 		// 리뷰 등록
 		int insertReview(HashMap<String, Object> map);
+		// 리뷰 이미지 등록
+		int insertReviewImg(HashMap<String, Object> map);
 }

@@ -87,5 +87,11 @@ public class ReviewServiceImpl implements ReviewService{
 		resultMap.put("idx", map.get("idx"));
 		return resultMap;
 	}
+
+	@Override
+	public int addReviewImg(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return reviewMapper.insertReviewImg(map);
+	}
 	
 }

@@ -1108,6 +1108,7 @@ var app = new Vue({
 		    },
 		fnReviewAdd : function(){
 			var self = this;
+			var scrollPosition = $(window).scrollTop();
             var nparmap = {userNo : self.userNo, reviewText : self.reviewText, productNo : self.productNo, csat : self.selectedRating, optionName : self.optionName};
             $.ajax({
                 url:"/reviewAdd.dox",
@@ -1119,21 +1120,40 @@ var app = new Vue({
 	           		var form = new FormData();
 	       	        form.append( "file1",  $("#file1")[0].files[0] );
 	       	     	form.append( "idx",  data.idx); // pk
-	           		self.upload(form); 
-                	
+	       	     	if(self.selectedFile != null){
+	       	     		self.upload(form); 	       	     		
+	       	     	}else{
+	       	     		self.optionName = "";	       	     		
+	       	     		self.reviewPrice = 0;
+	       	     		self.selectedRating = 0;
+	       	     		self.reviewText = "";
+	       	     		self.showScrapModal = false;
+		       	 		self.fnReview();
+		       			self.fnReviewCnt();
+		       			self.fnReviewUser();
+		       			self.fnAvg();
+	       	     	}
                 }
             });
 		},
 		 upload : function(form){
 	    	var self = this;
 	         $.ajax({
-	             url : "/fileUpload.dox"
+	             url : "/reviewFileUpload.dox"
 	           , type : "POST"
 	           , processData : false
 	           , contentType : false
 	           , data : form
 	           , success:function(response) { 
-	        	   
+	        		self.fnReview();
+	       			self.fnReviewCnt();
+	       			self.fnReviewUser();
+	       			self.fnAvg();
+	       			self.optionName = "";	       	     		
+       	     		self.reviewPrice = 0;
+       	     		self.selectedRating = 0;
+       	     		self.reviewText = "";
+       	     		self.showScrapModal = false;
 	           }	           
 	       });
 		},
