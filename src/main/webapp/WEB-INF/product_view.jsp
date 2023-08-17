@@ -137,7 +137,7 @@
 	.nav-box{
 		overflow: auto;
 		position: sticky;
-		top: 165px;
+		top: 165px; 
 		z-index: 999;
 	}
 	.nav-wrap{
