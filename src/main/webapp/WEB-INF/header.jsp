@@ -61,12 +61,8 @@
 		</span> <span>
 				<div class="search-container">
 		<input type="text" id="search_input" placeholder="제품명을 입력하세요">
-		<select id="category_no">
-			<!-- 카테고리 선택 옵션 추가 -->
-		</select>
-		<select id="category_order_bar">
-			<!-- 카테고리 정렬 옵션 추가 -->
-		</select>
+		<a id="glass" class="glass"><i class="fa-solid fa-magnifying-glass"></i></a>
+	
 		<ul id="product_list"></ul>
 	</div>
 		</span>
@@ -156,6 +152,16 @@
 		    });
 		    
 		}
+		// 검색 아이콘 클릭 시 검색어를 가지고 searchProduct 함수를 실행합니다.
+		$('#glass').click(function() {
+		    var productName = $('#search_input').val();
+
+		    console.log("productName:", productName);
+
+		    searchProduct(productName);
+		});
+
+		
 		$("#search_input").on("keypress", function(e) {
 		    if (e.keyCode === 13) {
 		        var productName = $(this).val();
