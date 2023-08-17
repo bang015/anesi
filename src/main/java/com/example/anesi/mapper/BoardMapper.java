@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.anesi.model.Board;
+import com.example.anesi.model.BoardComment;
 
 @Mapper
 public interface BoardMapper {
@@ -23,4 +24,10 @@ public interface BoardMapper {
 	int deleteBoard(HashMap<String, Object> map);
 	// 게시글 수정
 	int updateBoard(HashMap<String, Object> map);
+	// 댓글 입력
+	int insertComment(HashMap<String, Object> map);
+	// 댓글 리스트
+	List<Board> selectComment(HashMap<String, Object> map);
+	// 댓글 삭제
+	int deleteComment(HashMap<String, Object> map);
 }

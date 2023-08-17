@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Board;
+import com.example.anesi.model.BoardComment;
 import com.example.anesi.service.BoardService;
 import com.google.gson.Gson;
 
@@ -81,9 +82,7 @@ public class BoardController {
 	@ResponseBody
 	public String boardView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		boardService.updateViewCnt(map);
-		Board info = boardService.selectBoardView(map);
-		resultMap.put("info", info);
+		resultMap = boardService.selectBoardView(map);
 		return new Gson().toJson(resultMap);
 	}
 	
@@ -102,6 +101,34 @@ public class BoardController {
 	public String editBoard(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		boardService.updateBoard(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 댓글 입력
+	@RequestMapping(value = "/community/addComment.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String addComment(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.insertComment(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 댓글 삭제
+	@RequestMapping(value = "/community/deleteComm.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String deleteComm(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.deleteComment(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 댓글 리스트
+	@RequestMapping(value = "/community/cList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String cList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Board> cList = boardService.boardAll(map); 
+		resultMap.put("cList", cList);
 		return new Gson().toJson(resultMap);
 	}
 	

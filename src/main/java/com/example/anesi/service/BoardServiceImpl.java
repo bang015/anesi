@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.BoardMapper;
 import com.example.anesi.model.Board;
+import com.example.anesi.model.BoardComment;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -27,10 +28,18 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardMapper.boardBest(map);
 	}
+	// 게시글 보기
 	@Override
-	public Board selectBoardView(HashMap<String, Object> map) {
+	public HashMap<String, Object> selectBoardView(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return boardMapper.selectBoardView(map);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		//조회수 증가
+		boardMapper.updateViewCnt(map);
+		//게시글 상세보기
+		resultMap.put("info", boardMapper.selectBoardView(map));
+		//댓글 목록
+		resultMap.put("cList", boardMapper.selectComment(map));
+		return resultMap;
 	}
 	@Override
 	public int updateViewCnt(HashMap<String, Object> map) {
@@ -52,6 +61,20 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardMapper.updateBoard(map);
 	}
-	
+	@Override
+	public int insertComment(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.insertComment(map);
+	}
+	@Override
+	public List<Board> selectComment(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.selectComment(map);
+	}
+	@Override
+	public int deleteComment(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.deleteComment(map);
+	}
 	
 }

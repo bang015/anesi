@@ -56,7 +56,7 @@
 	margin-top: 5px;
 }
 .nick{
-	font-size: 15px;
+	font-size: 16px;
     line-height: 29px;
     margin-left: 40px;
 }
@@ -64,6 +64,7 @@
 	margin-top: 10px;
     font-size: 13px;
     float:right;
+    color : gray;
 }
 .stat{
 	margin-top : 70px;
@@ -140,6 +141,40 @@
 h1{
 	margin: 30px 0px;
 }
+.cNick{
+	position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    font-size : 16px;
+}
+.cComm{
+	margin: 8px 0px;
+}
+.c-profile{
+	position: absolute;
+    top: 0px;
+    left: -45px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+}
+.comment-item{
+	padding-left: 43px;
+	margin-left: 7px;
+	margin: 20px 0px;
+	width: 580px;
+}
+#comment-body{
+	margin-left : 6px;
+}
+.cDate{
+	color: #9f9f9f;
+    font-size: 12px;
+	margin: 10px 0px;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -162,20 +197,35 @@ h1{
 				<div class="nick">{{info.nick}}</div>
 			</div>
 			<hr class="hrr">
+			<div id="comment"></div>
 			<div style="overflow: auto;">
 			    <pre v-html="info.content"></pre>
 			</div>
-			<div class="stat">좋아요 <span class="stat-detail">2</span> 　댓글 <span class="stat-detail">3</span> 　조회 <span class="stat-detail">{{info.view}}</span>
+			<div class="stat"><!-- 좋아요 <span class="stat-detail">2</span> 　 -->댓글 <span class="stat-detail">{{cList.length}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
 			
-			<button class="btn2" @click="fnBack">돌아가기</button>
+			<button class="btn2" @click="fnBack">목록으로</button>
 			<button class="btn2" @click="fnDelete" v-if="sessionNick==info.nick">삭제</button>
 			<button class="btn2" @click="fnEdit(bNo)" v-if="sessionNick==info.nick">수정</button>
 			</div>
 			<hr class="hrr">
-			<div style="font-size:19px;">댓글</div>
+			<div style="font-size:19px;">댓글 <span>{{cList.length}}</span></div>
 			<div id="comment-head">
-				<img class="profile2" src="../css/image/profile.png"><input class="comment-input" type="text">
-				<button class="btn1">입력</button>
+				<img class="profile2" src="../css/image/profile.png"><input class="comment-input" type="text" v-model="content">
+				<button class="btn1" @click="fnComInsert">입력</button>
+			</div>
+			<div id="comment-body">
+				<div v-for="(item, index) in cList">
+					<div class="comment-item">
+						
+						<div>
+							<div class="cNick">{{item.cNick}}<img class="c-profile" src="../css/image/profile.png"></div>
+							
+							<div class="cComm">{{item.comm}}</div>
+							<div class="cDate">{{calculateTime(item.cCDateTime)}}<span v-if="sessionNick==item.cNick"><a @click="fnComDelete(item.commentNo)"> · 삭제</a></span></div>
+						</div>
+						
+					</div>
+				</div>
 			</div>
 		</div>
 		
@@ -191,7 +241,9 @@ var app = new Vue({
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
 		bNo : "${map.boardNo}",
-		info : {}
+		info : {},
+		content : "",
+		cList : []
 	},// data
 	methods : {
 		fnGetInfo : function(){
@@ -204,7 +256,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-        			console.log(data.info);
+                	self.cList = data.cList;
+                	console.log(self.info);
+                	console.log(self.cList);
                 }
             });
 		},
@@ -226,7 +280,7 @@ var app = new Vue({
             }
         },
         scrollToComment() {
-            const commentSection = document.getElementById('comment-head');
+            const commentSection = document.getElementById('comment');
             if (commentSection) {
               commentSection.scrollIntoView({ behavior: 'smooth' });
             }
@@ -253,6 +307,34 @@ var app = new Vue({
 		},
 		fnEdit : function(bNo){
 			$.pageChange("/community/write.do", {bNo : bNo});
+		},
+		fnComInsert : function(){
+			var self = this;
+			var nparmap = {bNo : self.bNo, nick : self.sessionNick, content: self.content};
+            $.ajax({
+                url : "/community/addComment.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	location.reload();
+                }
+            });
+		},
+		fnComDelete : function(cNo){
+			var self = this;
+			var nparmap = {cNo : cNo};
+			console.log(cNo);
+            $.ajax({
+                url : "/community/deleteComm.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	alert("삭제되었습니다.");
+                	location.reload();
+                }
+            });
 		}
 	}, // methods
 	created : function() {

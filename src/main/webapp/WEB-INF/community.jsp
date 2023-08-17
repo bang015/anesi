@@ -44,17 +44,23 @@
 	width: 300px;
     height: 200px;
     object-fit: cover;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+.photo2:hover{
+	opacity: 0.7;
+	visibility: visible;
+	cursor : pointer;
 }
 .board1_item{
 	width: 300px;
 }
 .title{
 	margin : 14px 0px 10px 0px;
-	font-size: 16px;
+	font-size: 17px;
 }
 .nick{
-	margin-bottom : 10px;
-	font-size : 13px;
+	margin-bottom : 12px;
+	font-size : 14px;
 }
 .view{
 	margin-bottom : 10px;
@@ -63,14 +69,6 @@
 }
 .title_a:hover{
 	color: #424242;
-}
-img{
-	transition: opacity 0.3s, visibility 0.3s;
-}
-img:hover{
-	opacity: 0.7;
-	visibility: visible;
-	cursor : pointer;
 }
 .hrr {
 	margin : 30px 0px;
@@ -101,6 +99,12 @@ img:hover{
     float: right;
 	margin: 3px 10px 0px 5px;
 }
+.new{
+	position: absolute;
+    width: 50px;
+    top: 8px;
+    left: 8px;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -112,12 +116,15 @@ img:hover{
 			<div v-for="(item, index) in bList">
 		        <div class="board1">
 		            <div class="board1_item">
+		           		<div>
 		                <div class="photo1">
 		                    <a @click="fnView(item.boardNo)"><img class="photo2" src="../css/image/community/commu_test.jpg"></a>
+		                <img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
+		                </div>
 		                </div>
 		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
 		                <div class="nick">{{item.nick}}</div>
-		                <div class="view">조회 {{item.view}} · 댓글 5</div>
+		                <div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		            </div>
 		        </div>
 	    	</div>
@@ -135,11 +142,12 @@ img:hover{
 		        <div class="board1">
 		            <div class="board1_item">
 		                <div class="photo1">
-		                   <a @click="fnView(item.boardNo)"><img class="photo2" src="../css/image/community/commu_test.jpg"></a>
+		                    <a @click="fnView(item.boardNo)"><img class="photo2" src="../css/image/community/commu_test.jpg"></a>
+		                <img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
 		                </div>
 		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
 		                <div class="nick">{{item.nick}}</div>
-		                <div class="view">조회 {{item.view}} · 댓글 5</div>
+		                <div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		            </div>
 		        </div>
 			</div>
@@ -193,6 +201,13 @@ var app = new Vue({
 		fnView : function(boardNo){
 			var self = this;
 			$.pageChange("/community/view.do", {boardNo : boardNo});
+		},
+		isNew: function(cDateTime) {
+			const currentTime = new Date();
+			const postTime = new Date(cDateTime);
+			const diffInHours = (currentTime - postTime) / (1000 * 60 * 60);
+			
+			return diffInHours < 24;
 		}
 	}, // methods
 	created : function() {
