@@ -92,7 +92,6 @@ Copy code
 		    <button @click="fnMoveCart" >장바구니로 이동하기</button>
 		  </div>
 		</div>
-    	
 		
     	<div class="modal" v-if="showScrapModal">
 		  <div class="modal-card"  v-if="userId!=''">
@@ -134,24 +133,6 @@ Copy code
 </html>
 <script>
 
-$(document).ready(function() {
-    // 상품정렬 버튼 클릭 이벤트 추가
-    var isListOpen = false; // Flag to track the state of the list container
-
-    $('.category-order_toggle').click(function() {
-        if (!isListOpen) { // 현재 목록이 닫혀있는 경우에만 열기
-            $('.category-order-list-container').slideDown('slow');
-            isListOpen = true;
-        }
-    });
-
-    // 목록 항목 클릭 이벤트 추가
-    $('.category-order-list a').click(function() {
-        // 목록 항목을 클릭하면 목록을 닫습니다.
-        $('.category-order-list-container').slideUp('slow');
-        isListOpen = false;
-    });
-});
 
 
 var app = new Vue({
@@ -196,17 +177,7 @@ var app = new Vue({
             self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정
             self.fnGetList(); // AJAX 요청 보내기
 	     },
-	      
-	      
-	    //이미지 마우스 오버했을때 pulse 애니메이션
-        addPulseAnimation: function(event) {
-            event.currentTarget.classList.add('animate__animated', 'animate__pulse');
-        },
-        removePulseAnimation: function(event) {
-            event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
-        },
-        
-
+	      	  
         formatPrice: function(price) {
             // 100의 자리까지 내림하여 표시하며 천 단위마다 쉼표(,)를 추가합니다.
             const truncatedPrice = Math.floor(price / 100) * 100;
@@ -233,10 +204,7 @@ var app = new Vue({
 	      this.showScrapModal = false;
 	      this.showScrapModalBan = false;
 	      this.showScrapDeleteModal = false;
-      
 	      location.reload();
-
-
 	    },
 	    
 	    fnMoveCart : function() {
@@ -248,11 +216,9 @@ var app = new Vue({
 	    fnMoveLoginPage : function() {
         	location.href = "/login.do";
 	    },
-	    
 	    fnCheckCart : function(item) {
 	    	var self = this;
             var nparmap = {userNo: self.userNo};           
-          
             $.ajax({
                 url : "/product/selectCartList.dox",
                 dataType:"json",	
@@ -267,13 +233,28 @@ var app = new Vue({
 	                	}
                      }
                    }
-                
             }); 
 		},
+		
+	   fnInsertUserCart : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+            $.ajax({
+                url : "/product/insertCart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	/* alert("등록완"); */
+                   console.log(self.userNo);
+                }
+            }); 
+            self.openCartModal();
+            console.log(self.showCartModal);
+		}, 
 	    fnUpdateUserCart : function(item) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
- 
             $.ajax({
                 url : "/product/addCartCnt.dox",
                 dataType:"json",	
@@ -283,38 +264,13 @@ var app = new Vue({
 
                 }
             }); 
-            
             self.openCartModal();
             console.log(self.showCartModal);
 
 		}, 
-	    fnInsertUserCart : function(item) {
-	    	var self = this;
-
-            var nparmap = { userNo: self.userNo, productNo: item.productNo};
- 
-            $.ajax({
-                url : "/product/insertCart.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	/* alert("등록완"); */
-                   console.log(self.userNo);
-
-                }
-            }); 
-            
-            self.openCartModal();
-            console.log(self.showCartModal);
-
-		}, 
-		
 		fnCheckScrap : function(item) {
 	    	var self = this;
             var nparmap = {userNo: self.userNo};
-           
-          
             $.ajax({
                 url : "/product/selectScrapList.dox",
                 dataType:"json",	
@@ -328,7 +284,6 @@ var app = new Vue({
             }); 
             
 		},
-		
 	    fnInsertScrapbook : function(item) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
@@ -360,13 +315,10 @@ var app = new Vue({
             self.openScrapDeleteModal();
             console.log(self.showScrapModal);
 		},
-		
-		
-		
+		//'제품상세보기' 페이지 이동
 		fnProductView : function(productNo){
 	    	var self = this;
 	    	   $.pageChange("/product/view.do",{no : productNo});//보낼필요없을때 파라미터 빈값으로{}
-
 		},
 		
 		//비회원 번호 쿠키불러오는 애 
@@ -374,7 +326,6 @@ var app = new Vue({
 			var self = this;
             var nparmap = '';
             //{ nonuserNo: self.nonuserNo, productNo: item.productNo};
-            
 			 $.ajax({
 	                url : "/nonUserCookie.dox",
 	                dataType:"json",	
@@ -383,11 +334,10 @@ var app = new Vue({
 	                success : function(data) { 
 	                	self.nonuserNo = data.value;
 	                    console.log(self.nonuserNo);
-
 	                }
 	            }); 
 		},
-		
+		//비회원 장바구니 추가
 		fnAddNonUserCart : function(item) {
 	    	var self = this;
             var nparmap = 
@@ -401,10 +351,9 @@ var app = new Vue({
                 success : function(data) { 
                 }
             }); 
-            
             self.openCartModal();
             console.log(self.showCartModal);
-		}, 
+		}
 
      }, // methods
 	created : function() {

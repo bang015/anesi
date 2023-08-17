@@ -5,12 +5,7 @@
  	margin-right : 1000px;
  	 
 }
-.product-main-category__image{
-	width:100px;
-	height:100px;
-}
-
-
+/*섬네일이미지*/
 .production-item-thumnail__image{
 	width:250px;
 	height:250px;
@@ -18,30 +13,23 @@
     position: relative; /* 부모 요소를 기준으로 자식 요소를 배치하기 위함 */
     display: inline-block; /* 인라인 블록 요소로 배치 */
     border-radius:  8px;
-;
-
 }
-
 .production-item-thumnail__image:hover {
     opacity: 0.5; /* 마우스 오버시 불투명도 설정 */
 }
-
 .production-item-thumnail__overlay {
     position: absolute; /* 부모 요소에 대해 절대 위치로 배치 */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    
     opacity: 0; /* 기본적으로 투명한 상태 */
     transition: opacity 0.3s; /* 변경 효과를 부드럽게 적용 */
     pointer-events: none; /* 오버레이 요소를 클릭 가능한 영역 밖으로 배치 */
 }
-
 .production-item-thumnail:hover .production-item-thumnail__overlay {
     opacity: 1; /* 마우스 오버시 불투명도 설정 */
 }
-
 
 
 .product-main-category__name{

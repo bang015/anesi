@@ -70,12 +70,6 @@ public class StoreController {
 		resultMap.put("list2", list2);
 		
 		
-		
-		
-		
-		
-		
-		
 		return new Gson().toJson(resultMap);
 	}
 	
