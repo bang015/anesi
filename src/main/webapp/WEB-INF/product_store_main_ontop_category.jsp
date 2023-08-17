@@ -189,7 +189,7 @@ var app = new Vue({
 	    //category 눌렀을때 메뉴별로 배열해줌
 	      fnMoveaa : function(item){
 	            var self = this;
-	         $.pageChange("storemain_byCategory.do",{no : item});//보낼필요없을때 파라미터 빈값으로{}
+	         $.pageChange("/product/storemain_byCategory.do",{no : item});//보낼필요없을때 파라미터 빈값으로{}
 	      }
 	
 	    

@@ -41,18 +41,18 @@ public class StoreController {
 	@Autowired
 	HttpSession session;
 	
-	@RequestMapping("/product/ontop_category.do") 
+	@RequestMapping("/ontop_category.do") 
 	public String productMain_ontop(Model model) throws Exception{
 		
 		return "/product_store_main_ontop_category";
 	}
 	
-	@RequestMapping("/product/storemain.do") 
+	@RequestMapping("product/storemain.do") 
 	public String productMain(Model model) throws Exception{
 		return "/product_store_main";
 	}
 	//가구페이지로
-	@RequestMapping("/product/storemain_byCategory.do") 
+	@RequestMapping("product/storemain_byCategory.do") 
 	public String storemain_furniture(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("map", map);
 		return "/product_store_main_byCategory";

@@ -33,7 +33,8 @@ Copy code
         </div>
         <div class="production-item__content" v-for="item in list">
             <a @click="fnProductView(item.productNo)" class="production-item-thumnail">
-                <img class="production-item-thumnail__image animate__animated animate__pulse" alt="썸네일" :src="item.imgPath + '/' + item.imgName">
+                <div class="production-item-thumnail__overlay"></div>
+                <img class="production-item-thumnail__image " alt="썸네일" :src="item.imgPath + '/' + item.imgName">
             </a>
             <div class="production-item-header">
                 <span class="production-item-header__brand">{{item.manufacturer}}</span>
