@@ -17,18 +17,24 @@ public class UserOrder {
     private String receiptName;
     private String receiptPhone;
     private int cnt;
-    private Date createDate;
-    private Date updateDateTime;
+    private String createDate;
+    private String updateDateTime;
     private String imgName;
     private String imgPath;
     private String productName;
     private int productPrice;
-    private int discount;
-    private String discountYn;
     private String optionName;
     private int optionPrice;
+    private String manufacturer;
+    private int discount;
     
     
+	public int getDiscount() {
+		return discount;
+	}
+	public String getManufacturer() {
+		return manufacturer;
+	}
 	public Long getOrderNo() {
 		return orderNo;
 	}
@@ -71,10 +77,10 @@ public class UserOrder {
 	public int getCnt() {
 		return cnt;
 	}
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
-	public Date getUpdateDateTime() {
+	public String getUpdateDateTime() {
 		return updateDateTime;
 	}
 	public String getImgName() {
@@ -88,12 +94,6 @@ public class UserOrder {
 	}
 	public int getProductPrice() {
 		return productPrice;
-	}
-	public int getDiscount() {
-		return discount;
-	}
-	public String getDiscountYn() {
-		return discountYn;
 	}
 	public String getOptionName() {
 		return optionName;

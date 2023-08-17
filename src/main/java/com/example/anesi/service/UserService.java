@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
+import com.example.anesi.model.UserOrder;
 
 
 
@@ -39,4 +40,6 @@ public interface UserService {
 	int editPassword(HashMap<String, Object> map);
 	//회원탈퇴
 	int withdrawal(HashMap<String, Object> map);
+	//주문내역조회
+	List<UserOrder> searchOrderList(HashMap<String, Object> map);
 }

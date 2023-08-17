@@ -59,5 +59,48 @@
 	box-shadow: 0 1px 3px 0 #dbdbdb;
 	width: 80%;
 	margin: 50px auto 0 auto;
-	justify-content: center;
+    flex-direction: column;
+}
+.orderBox{
+	height: 100px;
+	margin-bottom: 30px;
+	display: flex;
+	padding: 10px;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	font-size: 16px;
+    align-items: center;
+    text-align: left;
+}
+.imgBox{
+	width: 100px;
+	height: 100px;
+	margin-right: 10px;
+}
+.productName{
+	
+	width: 30%;
+	margin-right: 70px;
+}
+.manufacturer{
+	font-size: 14px;
+}
+.optionName{
+	font-size: 14px;
+}
+.productPrice{
+	font-weight: bold;
+}
+.productPrice > .span1{
+	font-weight: normal;
+	font-size: 12px;
+	color: #ccc;
+}
+.productPrice > .span2{
+	font-weight: normal;
+	font-size: 12px;
+}
+.productName > .name {
+	font-weight: bold;
+	cursor: pointer;
 }

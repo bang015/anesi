@@ -29,28 +29,28 @@
 				<a class="aBox">
 					<div class="textBox">
 						<div>결제완료</div>
-						<div>0</div>
+						<div>{{deliverySit.order}}</div>
 					</div>
 					<i class="fa-solid fa-arrow-left fa-rotate-180 fa-2xl"></i>
 				</a>
 				<a class="aBox">
 					<div class="textBox">
 						<div>배송준비</div>
-						<div>0</div>
+						<div>{{deliverySit.ready}}</div>
 					</div>
 					<i class="fa-solid fa-arrow-left fa-rotate-180 fa-2xl"></i>
 				</a>
 				<a class="aBox">
 					<div class="textBox">
 						<div>배송중</div>
-						<div>0</div>
+						<div>{{deliverySit.shipping}}</div>
 					</div>
 					<i class="fa-solid fa-arrow-left fa-rotate-180 fa-2xl"></i>
 				</a>
 				<a class="aBox">
 					<div class="textBox">
 						<div>배송완료</div>
-						<div>0</div>
+						<div>{{deliverySit.completed}}</div>
 					</div>
 				</a>
 			</div>
@@ -59,9 +59,21 @@
 				
 				</div>
 				<div>
-					<div>
-						
-					</div>
+				    <div v-for="item in orderList" class="orderBox">
+					    <img alt="" :src="item.imgPath+'/'+item.imgName" class="imgBox">
+					    <div class="productName">
+					    	<div class="manufacturer">{{item.manufacturer}}</div>
+					    	<div class="name" @click="fnReviewMove(item.productNo)">{{item.productName}}</div>
+					    </div>
+					    <div class="optionName">
+					    	<div>{{item.optionName}}</div>
+					    	<div class="productPrice">{{item.productPrice}}<span class="span1"> | </span><span class="span2">{{item.cnt}}개</span></div>
+					    </div>
+					    <div class="buttonBox">
+					    	<button @click="fnReOrder">재구매</button>
+					    	<button @click="fnReviewMove(item.productNo)">리뷰작성</button>
+					    </div>
+				    </div>
 				</div>
 			</div>
 		</div>
@@ -73,14 +85,52 @@
 var app = new Vue({
 	el : '#app',
 	data : {
-
+		userNo : '${sessionNo}',
+		orderList : [],
+		deliverySit : {
+			order : 0,
+			ready : 0,
+			shipping : 0,
+			completed : 0
+		}
 	},// data
 	methods : {
-		
+		fnGetOrderList(){
+			var self = this;
+			var nparmap = {userNo : self.userNo};
+            $.ajax({
+                url : "searchOrderList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.orderList = data.list;
+                	for(let i = 0; i < self.orderList.length; i++){
+                		switch(self.orderList[i].deliverySit){
+                			case '1':  self.deliverySit.order++; break;
+                			case '2':  self.deliverySit.ready++; break;
+                			case '3':  self.deliverySit.shipping++; break;
+                			case '4':  self.deliverySit.completed++; break;
+                			default : break;
+                		}
+                		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
+                		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
+                	}
+                	console.log(self.orderList);
+                	console.log(self.orderList[0].productPrice);
+                }
+            });
+		},
+		fnReOrder(){
+			
+		},
+		fnReviewMove(productNo){
+			$.pageChange("/product/view.do", {no : productNo} );
+		}
 	}, // methods
 	created : function() {
 		var self = this;
-
+		self.fnGetOrderList();
 	}// created
 });
 </script>

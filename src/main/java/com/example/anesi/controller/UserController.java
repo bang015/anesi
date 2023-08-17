@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
+import com.example.anesi.model.UserOrder;
 import com.example.anesi.service.UserService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -214,6 +215,16 @@ public class UserController {
 	public String withdrawal(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		userService.withdrawal(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//회원탈퇴
+	@RequestMapping(value = "/mypage/searchOrderList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchOrderList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<UserOrder> list = userService.searchOrderList(map);
+		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
 }

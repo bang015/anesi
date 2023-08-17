@@ -684,13 +684,14 @@ var app = new Vue({
 		                type : "POST", 
 		                data : nparmap,
 		                success : function(data) {
-		                	
+		                	console.log(data.product);
 		                	let productName1 = data.product.productName;
 		                	let productPrice1 = data.product.productPrice;
 		                	let optionName1 = '';
 		                	
 		                	if(data.product.discountYn == 'Y'){
-		                		productPrice1 = productPrice1 - (productPrice1/data.product.discount)
+		                		productPrice1 = Math.floor( (productPrice1*((100-data.product.discount)/100)) / 100) * 100;
+		                		console.log(productPrice1);
 		                	}
 		                	
 							var nparmap = {optionNo : self.productNoList[i].optionNo};
