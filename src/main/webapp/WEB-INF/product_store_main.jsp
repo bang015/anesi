@@ -86,7 +86,7 @@ Copy code
                 <i @click="fnUpdateUserCart(item)" v-if="nonuserCartList.includes(item.productNo)" class="fa-solid fa-cart-shopping fa-xl"  ></i>
             </a>
             <!-- 공유하기버튼-->
-            <a class="share_button"><i class="fa-solid fa-share-nodes fa-xl"></i></a>
+            <a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes fa-xl"></i></a>
             <!-- 스크랩버튼-->
             <a v-if="userId!=''" class="scrap_button">
                 <i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button  fa-xl"></i>
@@ -146,6 +146,8 @@ Copy code
 </body>
 </html>
 <script>
+
+
 
 /* 화살표 함수 */
 const label = document.querySelector('.label');
@@ -208,6 +210,25 @@ var app = new Vue({
                 }
             }); 
 		},
+		
+		  shareSelectedOption() {
+		      // 현재 페이지의 URL을 가져오기
+		      const currentUrl = window.location.href;
+		      
+		      // 텍스트를 클립보드에 복사
+		      const textArea = document.createElement("textarea");
+		      textArea.value = currentUrl;
+		      document.body.appendChild(textArea);
+		      textArea.select();
+		      document.execCommand("copy");
+		      document.body.removeChild(textArea);
+		      
+		      alert("현재 페이지 URL이 복사되었습니다.");
+		    },
+		
+		
+		
+		
 		
 		 fnOrderBy: function (orderBy) {
 	            var self = this;
@@ -386,6 +407,9 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
+                    console.log(self.nonuserNo);
+                    
+
                 }
             }); 
             self.openCartModal();
