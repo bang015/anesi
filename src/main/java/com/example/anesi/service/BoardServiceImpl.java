@@ -32,6 +32,26 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardMapper.selectBoardView(map);
 	}
+	@Override
+	public int updateViewCnt(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.updateViewCnt(map);
+	}
+	@Override
+	public int insertBoard(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.insertBoard(map);
+	}
+	@Override
+	public int deleteBoard(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.deleteBoard(map);
+	}
+	@Override
+	public int updateBoard(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.updateBoard(map);
+	}
 	
 	
 }

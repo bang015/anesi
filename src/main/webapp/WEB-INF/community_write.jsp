@@ -45,16 +45,17 @@ textarea{
 <body>
 <div id="app">
 	<div id="container">
-			<div><input class="title" v-model="info.title" placeholder="제목을 입력하세요."></div>
-		
 		<div>
-			<vue-editor v-model="info.contents"></vue-editor>
-			<!-- 2. 화면 에디터 추가 -->
+			<input class="title" v-model="info.title" placeholder="제목을 입력하세요.">
 		</div>
-		<button @click="fnAdd">등록</button>
+		<div>
+			<vue-editor v-model="info.content"></vue-editor>
+		</div>
+		
+		<button @click="fnAdd" v-if="bNo==''||bNo=='undefined'">등록</button>
 		<button v-else @click="fnEdit">수정</button>
 		<button @click="fnBack">뒤로가기</button>
-		</div>
+	</div>
 </div>
 </body>
 <jsp:include page="footer.jsp"></jsp:include>
@@ -69,16 +70,17 @@ var app = new Vue({
 	data : {
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
+		bNo : "${map.bNo}",
 		info : {
     		title : "",
-			contents : ""
+			content : ""
 		}
 	},// data
 	components: {VueEditor},
 	methods : {
 		fnGetInfo : function(){
 			var self = this;
-			var nparmap = {bNo : self.bNo};
+			var nparmap = {bNo : self.bNo, view : "update"};
             $.ajax({
                 url : "/community/boardView.dox",
                 dataType:"json",	
@@ -86,7 +88,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-        			console.log(data.info);
                 }
             });
 		},
@@ -96,59 +97,47 @@ var app = new Vue({
 				return;
 			}
 			var nparmap = self.info;   // { title : self.info.title, contents : self.info.contents } 
-			nparmap.bUser = self.bUser; // { title : self.info.title, contents : self.info.contents, bUser : self.bUser }    
+			nparmap.nick = self.sessionNick; // { title : self.info.title, contents : self.info.contents, bUser : self.bUser }    
+			console.log(nparmap);
 			$.ajax({
-				url : "add.dox",
+				url : "/community/insert.dox",
 				dataType:"json",   
 	 			type : "POST", 
 				data : nparmap,
 				success : function(data) { 
 					alert("게시글이 등록되었습니다.");
-						location.href = "list.do"; //경로가 board/add.do 이기 때문에 list.do로 이동하면 /board/list.do 로 이동하게 된다.
+						location.href = "main.do";
 					}
 	            }); 
 	        },
-	        fnBack(){
-	           location.href = "main.do";
-	        },
-	        fnGetInfo : function(){
-	            var self = this;
-	            var nparmap = {no : self.no, kind : "UPDATE"}; //kind가 null값일 때 조회수 증가. 아무값이나 입력해서 null 값이 아니게 하면 된다.
-	            $.ajax({
-	                url : "view.dox",
-	                dataType:"json",   
-	                type : "POST", 
-	                data : nparmap,
-	                success : function(data) {
-	                   self.info = data.info;
-	                }
-	            }); 
-	        },
-	        fnEdit(){
-	         var self = this;
-	          
-	          if(!confirm("게시글을 수정하시겠습니까?")){
-	             return;
-	          }
-	          
-	          var nparmap = self.info; 
-	            nparmap.no = self.no;
-	          
-	          $.ajax({
-				url : "edit.dox",
+		fnBack(){
+			location.href = "main.do";
+		},
+	    fnEdit(){
+	    	var self = this;
+	        if(!confirm("게시글을 수정하시겠습니까?")){
+	        	return;
+	        }
+	        var nparmap = self.info; 
+	        nparmap.bNo = self.bNo;
+	        console.log(nparmap);
+	        $.ajax({
+				url : "/community/edit.dox",
 				dataType:"json",
 				type : "POST", 
 				data : nparmap,
 				success : function(data) { 
-	            alert("게시글이 수정되었습니다.");
-	            $.pageChange("view.do", {no : self.no});
-	             }
-	            }); 
-	        }
-		
+	            	alert("게시글이 수정되었습니다.");
+		            $.pageChange("view.do", {boardNo : self.bNo});
+		        }
+			});
+		}		
 	}, // methods
 	created : function() {
 		var self = this;
+		if(self.bNo != ""){
+			self.fnGetInfo();
+		}
 		console.log(self.sessionNick);
 	}// created
 });

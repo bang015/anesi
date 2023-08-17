@@ -66,7 +66,7 @@
     float:right;
 }
 .stat{
-	margin-top : 40px;
+	margin-top : 70px;
 	color : #9b9b9b;
 }
 .stat-detail{
@@ -120,7 +120,7 @@
 	width: 28px;
     margin: 14px 0px 0px 14px;
 }
-.back-btn{
+.btn2{
     width: 73px;
     float: right;
     height: 24px;
@@ -131,10 +131,14 @@
     border-radius: 7px;
     padding: 0px 9px;
     transition: background 0.3s;
-    cursor: pointer
+    cursor: pointer;
+    margin: -5px 2px;
 }
-.back-btn:hover{
+.btn2:hover{
 	background : #efefef;
+}
+h1{
+	margin: 30px 0px;
 }
 </style>
 <jsp:include page="header.jsp"></jsp:include>
@@ -159,10 +163,13 @@
 			</div>
 			<hr class="hrr">
 			<div style="overflow: auto;">
-			    <pre>{{info.content}}</pre>
+			    <pre v-html="info.content"></pre>
 			</div>
 			<div class="stat">좋아요 <span class="stat-detail">2</span> 　댓글 <span class="stat-detail">3</span> 　조회 <span class="stat-detail">{{info.view}}</span>
-			<button class="back-btn">돌아가기</button>
+			
+			<button class="btn2" @click="fnBack">돌아가기</button>
+			<button class="btn2" @click="fnDelete" v-if="sessionNick==info.nick">삭제</button>
+			<button class="btn2" @click="fnEdit(bNo)" v-if="sessionNick==info.nick">수정</button>
 			</div>
 			<hr class="hrr">
 			<div style="font-size:19px;">댓글</div>
@@ -223,7 +230,30 @@ var app = new Vue({
             if (commentSection) {
               commentSection.scrollIntoView({ behavior: 'smooth' });
             }
-          }
+        },
+        fnBack : function(){
+			location.href="main.do";
+		},
+		fnDelete : function(){
+			if(!confirm("게시글을 삭제하시겠습니까?")){
+				return;
+			}
+			var self = this;
+			var nparmap = {bNo : self.bNo};
+            $.ajax({
+                url : "/community/delete.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	alert("게시글이 삭제되었습니다.");
+                	location.href="main.do";
+                }
+            });
+		},
+		fnEdit : function(bNo){
+			$.pageChange("/community/write.do", {bNo : bNo});
+		}
 	}, // methods
 	created : function() {
 		var self = this;

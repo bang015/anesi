@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.anesi.mapper.BoardMapper">
+	<!-- 게시글 작성 -->
+	<insert id="insertBoard" parameterType="hashmap">
+		INSERT INTO t3_tbl_board(TITLE, CONTENT, NICK)
+		VALUES(#{title}, #{content}, #{nick})
+	</insert>
 	<!-- 게시글리스트 -->
 	<select id="boardAll" parameterType="hashmap" resultType="com.example.anesi.model.Board">
 		SELECT *
@@ -21,4 +26,26 @@
 		FROM t3_tbl_board
 		WHERE BOARD_NO = #{bNo}
 	</select>
+	<!-- 조회수 업데이트 -->
+	<update id="updateViewCnt" parameterType="hashmap">
+		UPDATE t3_tbl_board
+		SET
+			VIEW = VIEW+1
+		WHERE BOARD_NO = #{bNo}
+	</update>
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterType="hashmap">
+		DELETE FROM t3_tbl_board
+		WHERE BOARD_NO = #{bNo}
+	</delete>
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="hashmap">
+		UPDATE t3_tbl_board
+		SET
+		    TITLE = #{title},
+		    CONTENT = #{content},
+		    UDATETIME = NOW()
+		WHERE
+		    BOARD_NO = #{bNo}
+	</update>
 </mapper>

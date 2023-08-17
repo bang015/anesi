@@ -43,9 +43,18 @@ public class BoardController {
 	// 게시글 쓰기 페이지
 	@RequestMapping("/community/write.do") 
     public String boardwrite(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-
+		request.setAttribute("map", map);
 		return "/community_write";
     }
+	
+	// 게시글 작성
+	@RequestMapping(value = "/community/insert.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String insertBoard(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.insertBoard(map); 
+		return new Gson().toJson(resultMap);
+	}
 	
 	// 게시글 리스트
 	@RequestMapping(value = "/community/boardList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -56,6 +65,7 @@ public class BoardController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
+	
 	// 인기글 리스트
 	@RequestMapping(value = "/community/bestBoardList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -66,12 +76,32 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 게시글 보기
 	@RequestMapping(value = "/community/boardView.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String boardView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.updateViewCnt(map);
 		Board info = boardService.selectBoardView(map);
 		resultMap.put("info", info);
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 게시글 삭제
+	@RequestMapping(value = "/community/delete.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String deleteBoard(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.deleteBoard(map); 
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 게시글 수정
+	@RequestMapping(value = "/community/edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editBoard(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.updateBoard(map);
 		return new Gson().toJson(resultMap);
 	}
 	
