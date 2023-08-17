@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.example.anesi.mapper.InquiryMapper">	
+	<!-- 문의 리스트 -->
+	<select id="selectInqiryList" parameterType="hashmap" resultType="com.example.anesi.model.Inquiry">
+		SELECT i.CdateTIME, i.CONTENT, i.REPLY, i.OPENYN, i.INQUIRY_CATEGORY, u.NICK,i.PURCHASE_YN
+		FROM t3_tbl_user_inquiry i 
+		INNER JOIN t3_tbl_user u ON i.USER_NO = u.USER_NO
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	<!-- 리뷰 개수 -->
+	<select id="selectInqiryCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) as cnt
+		FROM t3_tbl_user_inquiry 		
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+</mapper>
+
+	
+	
+	

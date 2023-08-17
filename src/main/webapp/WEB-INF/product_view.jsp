@@ -209,8 +209,8 @@
 		font-weight: bold;
 		font-size: 17px;
 	}
-	.review-title{
-		font-size: 18px;
+	.review-title2{
+		font-size: 20px;
 		font-weight: bold;
 		display: inline-block;
 		width: 700px;
@@ -317,7 +317,7 @@
 	.review-content{
 		margin-top : 20px;
 		margin-bottom : 20px;
-		font-size: 17px;
+		font-size: 15px;
 	}
 	.help-btn{
 		height: 30px;
@@ -626,6 +626,22 @@
 		display: inline-block;
 		color: #f06060;
 	}
+	.inquiry-wrap{
+		margin-left: 70px;
+		margin-top: 40px;
+	}
+	.inquiry-content{
+		margin-top: 20px;
+	}
+	.inquiry-category{
+		font-size: 13px;
+	}
+	.inquiry-user{
+		color: #bdbdbd;
+		font-size: 14px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -761,7 +777,7 @@
 						<div class="nav-wrap">
 							<div class="product-a"><a href="#product">상품정보</a></div>
 							<div class="review-a"><a href="#review">리뷰  <span class="review-span" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span></a></div>
-							<div class="inquiry-a"><a>문의</a></div>
+							<div class="inquiry-a"><a href="#inquiry">문의</a></div>
 						</div>
 					</div>
 					<div class="content-box2">
@@ -779,7 +795,7 @@
 								<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
 							</div>
 							<div class="content-review" id="review">
-								<div class="review-title" >
+								<div class="review-title2" >
 									<span class="review-text1">리뷰 </span><span class="review-text2" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span>
 									<button class="review-btn" @click="openScrapModal" v-if="reviewUser.length != 0">리뷰쓰기</button>
 								</div>
@@ -940,12 +956,28 @@
 									</template>
 								</div> <!-- review-wrap end -->
 							</div><!-- content-review end -->
-							<div class="inquiry-wrap">
-								<div class="review-title" >
-									<span class="review-text1">문의 </span><span class="review-text2"> {{csat.csatCnt}}</span>
+							<div class="inquiry-wrap" id="inquiry">
+								<div class="review-title2" >
+									<span class="review-text1">문의 </span><span class="review-text2"> {{inquiryListCnt}}</span>
 									<button class="review-btn">문의하기</button>
 								</div>
-								
+								<div class="inquiry-content" v-for="item in inquiryList">
+									<div class="inquiry-category">
+										{{item.purchaseYn}} / {{item.inquiryCategory}} / <span v-if="item.reply==undefined">답변완료</span><span v-if="item.reply!=undefined">미답변</span>
+									</div>
+									<div class="inquiry-user">
+										{{item.nick}}
+									</div>
+									<div v-if="item.openYn =='Y'" class="inquiry-question">
+										{{item.content}}
+									</div>
+									<div v-if="item.reply!=undefined||item.openYn !='Y'" class="inquiry-answer">
+										{{item.reply}}
+									</div>
+									<div class="private-inquiry" v-if="item.openYn=='N'">
+										비밀글입니다.
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="recently-viewed">
@@ -967,6 +999,8 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		inquiryListCnt : 0,
+		inquiryList : [],
 		reviewTitleClass : 'review-title',
 		reviewTextareaClass : 'review-add-text',
 		reviewCsatClass : 'review-csat',
@@ -1062,6 +1096,42 @@ var app = new Vue({
 	               		self.product.productPrice = self.product.productPrice
 	               		self.defaultPrice = self.product.productPrice;
 	                }                
+	            }); 
+		},
+		fnGetInquiryList : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo};	            
+	            $.ajax({
+	                url : "/selectInquiryList.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.inquiryList = data.inquiryList;
+	               		console.log(self.inquiryList);
+	               		for(var i=0; i<self.inquiryList.length; i++){
+	               			if(self.inquiryList[i].purchaseYn=="Y"){
+	               				self.inquiryList[i].purchaseYn="구매"
+	               			}else{
+	               				self.inquiryList[i].purchaseYn="비구매"
+	               			}	               			
+	               		}
+	                }                
+	            }); 
+		},
+		fnGetInquiryListCnt : function(){
+			 var self = this;
+	            var nparmap = {productNo : self.productNo};	            
+	            $.ajax({
+	                url : "/selectInquiryListCnt.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {                
+	               		self.inquiryListCnt = data.inquiryListCnt;
+						console.log(self.inquiryListCnt);               			         
+	               		}
+	                              
 	            }); 
 		},
 		fnAvg : function(){
@@ -1422,6 +1492,8 @@ var app = new Vue({
 		self.fnReviewUser();
 		self.changeCsatStyle();
 		self.changeTextareaStyle();
+		self.fnGetInquiryList();
+		self.fnGetInquiryListCnt();
 	}// created
 });
 </script>
