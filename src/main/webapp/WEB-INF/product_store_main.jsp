@@ -59,7 +59,7 @@ Copy code
             <div class="production-item-rating">
                 <!-- 별모양-->
                 <i class="fa-solid fa-star" style="color: #A782C3;"></i>
-                <span class="production-item-rating__score">4.5</span>
+                <span class="production-item-rating__score">{{item.csatAvg}}리뷰데이터 쌓이면 쿼리실행</span>
             </div>
             <!-- 장바구니버튼-->
             <a v-if="userId!=''">
@@ -165,10 +165,8 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	
                 	self.list = data.list;
                 	self.list2=data.list2;
-                    console.log(self.nonuserNo);
                 }
             }); 
 		},
@@ -177,7 +175,6 @@ var app = new Vue({
             self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정
             self.fnGetList(); // AJAX 요청 보내기
 	     },
-	      	  
         formatPrice: function(price) {
             // 100의 자리까지 내림하여 표시하며 천 단위마다 쉼표(,)를 추가합니다.
             const truncatedPrice = Math.floor(price / 100) * 100;

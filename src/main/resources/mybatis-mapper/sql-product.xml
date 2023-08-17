@@ -7,6 +7,7 @@
 	<!-- 상품데이터 가져오는 쿼리 -->
 	<select id="selectProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
 		SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE, i.*
+		<!-- , csatAvg -->
 
 		FROM t3_tbl_product AS P
 		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
@@ -16,9 +17,17 @@
 		    WHERE DISCOUNT_YN = 'Y'
 		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
 		
-		INNER JOIN t3_tbl_product_image i
+		
+	<!-- 	JOIN (
+			SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
+			FROM t3_tbl_user_review R
+			JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
+		) AS R2 ON P.PRODUCT_NO = R2.PRODUCT_NO -->
+		
+		JOIN t3_tbl_product_image i
 			ON P.PRODUCT_NO = i.PRODUCT_NO
-		WHERE  i.THUMBNAIL_YN ='Y' 
+			WHERE  i.THUMBNAIL_YN ='Y' 
+		
 		
 		    <if test="categoryNo != '' and categoryNo != null">
 		       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
@@ -114,8 +123,6 @@
 	        <if test="userNo != '' and userNo != null">AND USER_NO = #{userNo}</if>
 	        <if test="nonuserNo != '' and nonuserNo != null">AND NONUSER_NO = #{nonuserNo}</if>
 	</update>
-
-
 	
 	<!-- 스크랩북 등록 -->
 	<insert id="insertScrapbook" parameterType="hashmap">
@@ -130,7 +137,6 @@
 		SELECT *
 		FROM t3_tbl_user_scrapbook 
 		WHERE USER_NO = #{userNo}
-		
 	</select>
 	
 	<!-- 스크랩북 삭제 -->

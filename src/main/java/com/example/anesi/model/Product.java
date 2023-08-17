@@ -20,12 +20,16 @@ public class Product {
 	    private int optionPrice;
 	    private int productCnt;
 	    private String optionName;
+		//리뷰테이블 조인
 	    private double csatAvg; // 상품 평점
 	    private int csatCnt; // 상품 별점 개수
 	    
 		private String imgName;
 		private String imgPath;
 		private String imgOrgName;
+		
+	
+		
 		
 	    
 	    
