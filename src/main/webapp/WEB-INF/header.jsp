@@ -59,12 +59,12 @@
 				class="href">랭킹</a> <a class="href">특가</a> <a class="href">기획전</a> <a
 				class="href">브랜드관</a>
 		</span> <span>
-				<div class="search-container">
-		<input type="text" id="search_input" placeholder="제품명을 입력하세요">
-		<a id="glass" class="glass"><i class="fa-solid fa-magnifying-glass"></i></a>
-	
-		<ul id="product_list"></ul>
-	</div>
+	<div class="search-container">
+  <input type="text" id="search_input" placeholder="제품명을 입력하세요">
+  <a id="glass" class="glass"><i class="fa-solid fa-magnifying-glass"></i></a>
+  <div id="recent_search" class="recent-search-container" style="display: none;"></div>
+</div>
+
 		</span>
 		</span>
 
@@ -122,6 +122,61 @@
 		</div>
 	</header>
 	<script>
+	function saveRecentSearch(search) {
+		  if (!search) return;
+
+		  // 검색어 기록을 가져옵니다.
+		  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+
+		  // 동일한 검색어가 있는지 확인하고, 있다면 제거합니다.
+		  var index = recentSearches.indexOf(search);
+		  if (index > -1) recentSearches.splice(index, 1);
+
+		  // 최근 검색어 기록에 새로운 검색어를 추가합니다.
+		  recentSearches.unshift(search);
+		  
+		  // 최근 검색어 목록을 최대 10개로 유지합니다.
+		  recentSearches = recentSearches.slice(0, 10);
+
+		  // 변경된 검색어 기록을 저장합니다.
+		  localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+		  
+		  // 화면에 변경된 검색어 기록을 표시합니다.
+		  showRecentSearches();
+		}
+		function showRecentSearches() {
+			  // localStorage에서 최근 검색어를 가져옵니다.
+			  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+
+			  // 최근 검색어 목록을 비웁니다.
+			  $('#recent_search').empty();
+
+			  // 목록을 순회하며 화면에 최근 검색어를 추가합니다.
+			  for (var i = 0; i < recentSearches.length; i++) {
+			    var search = recentSearches[i];
+			    var li = $('<li class="recent-search-item"></li>').text(search);
+			    $('#recent_search').append(li);
+			  }
+			}
+		$('#search_input').focus(function() {
+			  $('#recent_search').show();
+			});
+
+			$('#search_input').blur(function() {
+			  setTimeout(function() {
+			    $('#recent_search').hide();
+			  }, 200);
+			});
+		
+		$(document).ready(function() {
+			  showRecentSearches();
+			});
+		$('body').on('click', '.recent-search-item', function() {
+			  var search = $(this).text();
+			  $('#search_input').val(search);
+			  searchProduct(search);
+			});
+		
 	
 		// 카테고리 토글
 		$('.category-toggle').click(function() {
@@ -134,6 +189,7 @@
 			$(this).siblings('.subcategory-list').slideToggle('fast');
 		});
 		function searchProduct(productName) {
+			  if(!productName) return;
 		    $.ajax({
 		        url: "/product/searchProduct.dox",
 		        method: "POST",
@@ -148,16 +204,16 @@
 		        sessionStorage.setItem("searchKeyword", productName);
 
 		        // searchProduct.jsp로 이동합니다.
-		        window.location.href = "/searchProduct.do";
+		        window.location.href = "/searchProduct.do?productName=" + encodeURIComponent(productName);
 		    });
 		    
 		}
 		// 검색 아이콘 클릭 시 검색어를 가지고 searchProduct 함수를 실행합니다.
 		$('#glass').click(function() {
 		    var productName = $('#search_input').val();
-
+			
 		    console.log("productName:", productName);
-
+		    saveRecentSearch(productName);
 		    searchProduct(productName);
 		});
 
@@ -167,7 +223,7 @@
 		        var productName = $(this).val();
 
 		        console.log("productName:", productName);
-
+		        saveRecentSearch(productName);
 		        searchProduct(productName);
 		    }
 		});

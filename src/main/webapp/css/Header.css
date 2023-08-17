@@ -183,7 +183,7 @@ header {
   width: 300px;
   position: absolute;
   left: 500px;
-  top: 122px;
+  top: 118px;
 }
 
 .glass{
@@ -193,6 +193,25 @@ header {
 font-size: 20px;
 opacity : 0.7;
 }
+
+ #recent_search {
+    position: absolute;
+    z-index: 10;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  #recent_search{
+	  list-style: none;
+	  width: 300px;
+	  position: absolute;
+  left: 500px;
+  top: 155px;
+	  
+  }
 
 
   
