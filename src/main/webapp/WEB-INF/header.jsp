@@ -42,7 +42,7 @@
 		<span> <a href="/main.do"><img class="logo"
 				src="../css/image/anesilogo.png" /> </a></span> <a class="aaa"
 			href="/product/storemain.do">스토어</a> <a class="bbb"
-			href="javascript:;">커뮤니티</a> <a class="ccc" href="javascript:;">중고장터</a>
+			href="/community/main.do">커뮤니티</a> <a class="ccc" href="javascript:;">중고장터</a>
 
 		<ul id="header_navi">
 			<li><a><i class="fa fa-shopping-cart "></i></a></li>
