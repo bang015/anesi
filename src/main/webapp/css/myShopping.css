@@ -132,10 +132,91 @@
 	display: flex;
 }
 .optionBox{
-	
+	cursor: pointer;
 	background-color: #A782C3;
 	padding: 10px;
 	border-radius: 50px;
 	color: #fff;
 	font-weight: bold;
 }
+
+.selectBox2 * { box-sizing: border-box; }
+.selectBox2 {
+  position: relative;
+  width: 150px;
+  height: 35px;
+  border-radius: 4px;
+  background: url('../css/image/Main/pngwing.com.png') calc(100% - 7px) center no-repeat;
+  border: 2px solid #A782C3;
+  background-size: 20px;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: auto; /* 변경: 왼쪽 여백을 자동으로 채우기 */
+  margin-right: 10px; /* 추가: 오른쪽 여백 설정 */
+}
+
+.selectBox2::after {
+  content: '';
+  display: block; 
+  width: 2px;
+  height: 100%; 
+  position: absolute; 
+  top: 0; 
+  right: 35px;
+  background: #A782C3;
+}
+
+.selectBox2 .label {
+  display: flex;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+  border: 0 none;
+  outline: 0 none;
+  padding-left: 15px;
+  background: transparent;
+  cursor: pointer;
+   font-family: 'Pretendard-Regular';
+
+}
+
+.selectBox2 .optionList {
+  position: absolute; 
+  top: 28px;
+  left: 0;
+  width: 100%;
+  background: #A782C3;
+  color: #fff;
+  list-style-type: none;
+  padding: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  max-height: 0;
+  transition: .3s ease-in;
+  z-index: 1000;
+
+}
+
+.selectBox2.active .optionList {
+  max-height: 500px;
+}
+
+.selectBox2 .optionItem {
+  border-bottom: 1px dashed rgb(170, 72, 72);
+  padding: 7px 15px 8px;
+  transition: .1s;
+}
+
+.selectBox2 .optionItem:hover {
+  background: rgb(175, 93, 93);
+}
+
+.selectBox2 .optionItem:last-child {
+  border-bottom: 0 none;
+}
+
+
+.selectBox2 .optionList::-webkit-scrollbar {width: 6px;}
+.selectBox2 .optionList::-webkit-scrollbar-track {background: transparent; }
+.selectBox2 .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
+.selectBox2 .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}

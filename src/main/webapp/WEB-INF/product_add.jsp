@@ -438,7 +438,7 @@ var app = new Vue({
 				}
 				
 				// 모든 작업이 완료되었을 때의 처리
-				alert("등록완료!");
+				alert('등록완료');
 			} catch (error) {
 				// 에러 처리
 			}

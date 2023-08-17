@@ -26,7 +26,7 @@
 		</div>
 		<div id="container">
 			<div class="order_list_menu">
-				<a class="aBox" @click="fnOrderList(1)">
+				<a class="aBox" @click="fnClickOption(1)">
 					<div class="textBox">
 						<div>결제완료</div>
 						<div>{{deliverySit.order}}</div>
@@ -34,21 +34,21 @@
 					<i class="fa-solid fa-arrow-left fa-rotate-180 fa-2xl"></i>
 				</a>
 				<a class="aBox">
-					<div class="textBox" @click="fnOrderList(2)">
+					<div class="textBox" @click="fnClickOption(2)">
 						<div>배송준비</div>
 						<div>{{deliverySit.ready}}</div>
 					</div>
 					<i class="fa-solid fa-arrow-left fa-rotate-180 fa-2xl"></i>
 				</a>
 				<a class="aBox">
-					<div class="textBox" @click="fnOrderList(3)">
+					<div class="textBox" @click="fnClickOption(3)">
 						<div>배송중</div>
 						<div>{{deliverySit.shipping}}</div>
 					</div>
 					<i class="fa-solid fa-arrow-left fa-rotate-180 fa-2xl"></i>
 				</a>
 				<a class="aBox">
-					<div class="textBox" @click="fnOrderList(4)">
+					<div class="textBox" @click="fnClickOption(4)">
 						<div>배송완료</div>
 						<div>{{deliverySit.completed}}</div>
 					</div>
@@ -56,9 +56,16 @@
 			</div>
 			<div class="order_list">
 				<div class="optionListBox">
-					<div v-for="item in optionList">
-						<div class="optionBox">{{item.name}}<i class="fa-solid fa-circle-xmark" style="color: #a782c3;"><span> </span></i></div>
-						
+					<div>
+					    <div class="selectBox2" @mouseover="showOptions" @mouseleave="hideOptions" :class="{ active: optionsVisible }">
+					      <button class="label">{{ selectedOption }}</button>
+					      <ul class="optionList">
+					        <li v-for="(option, index) in options" :key="index" class="optionItem" @click="handleSelect(option.value)">{{ option.text }}</li>
+					      </ul>
+					    </div>					
+					</div>
+					<div v-for="(item, index) in optionList">
+						<div class="optionBox" @click="fnOptionDel(index)" v-if="item.name != undefined">{{item.name}} <i class="fa-solid fa-circle-xmark" style="color: #ffffff;"></i></div>
 					</div>
 				</div>
 				<div>
@@ -96,7 +103,17 @@ var app = new Vue({
 			shipping : 0,
 			completed : 0
 		},
-		optionList : [],
+		optionList : [{},{}],
+		selectedOption: '기간',
+        options: [
+          { text: '1개월 전', value: '1' },
+          { text: '3개월 전', value: '3' },
+          { text: '6개월 전', value: '6' },
+          { text: '1년 전', value: '12' },
+          { text: '2년 전', value: '24' },
+          { text: '3년 전', value: '36' },
+        ],
+        optionsVisible: false
 	},// data
 	methods : {
 		fnGetOrderList(){
@@ -120,8 +137,6 @@ var app = new Vue({
                 		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
                 		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
                 	}
-                	console.log(self.orderList);
-                	console.log(self.orderList[0].productPrice);
                 }
             });
 		},
@@ -131,20 +146,9 @@ var app = new Vue({
 		fnReviewMove(productNo){
 			$.pageChange("/product/view.do", {no : productNo} );
 		},
-		fnOrderList(deliverySit, index){
+		fnOrderList(){
 			var self = this;
-			var deliverySitName ='';
-			switch(deliverySit){
-				case 1:  deliverySitName = '결제완료'; break;
-				case 2:  deliverySitName = '배송준비'; break;
-				case 3:  deliverySitName = '배송중'; break;
-				case 4:  deliverySitName = '배송완료'; break;
-				default : break;
-			}
-			self.optionList[0] = {};
-			self.optionList.splice(0,1,{name : deliverySitName});
-			console.log(self.optionList);
-			var nparmap = {userNo : self.userNo, deliverySit};
+			var nparmap = {userNo : self.userNo, deliverySit : self.optionList[0].deliverySit, month : Number(self.optionList[1].value)};
             $.ajax({
                 url : "searchOrderList.dox",
                 dataType:"json",	
@@ -152,9 +156,70 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.orderList = data.list;
+                	self.deliverySit = {
+                		order : 0,
+            			ready : 0,
+            			shipping : 0,
+            			completed : 0
+                	}
+                	for(let i = 0; i < self.orderList.length; i++){
+	                	switch(self.orderList[i].deliverySit){
+		        			case '1':  self.deliverySit.order++; break;
+		        			case '2':  self.deliverySit.ready++; break;
+		        			case '3':  self.deliverySit.shipping++; break;
+		        			case '4':  self.deliverySit.completed++; break;
+		        			default : break;
+	        			}
+                	}
                 }
             });
-		}
+		},
+		fnOptionDel(index){
+			var self = this;
+			if(index == 0){
+				self.optionList[0]= ({name : undefined, deliverySit : undefined});
+			} else {
+				self.optionList[1]= ({name : undefined, value : undefined});
+			}
+			self.fnOrderList();
+		},
+        handleSelect(value) {
+	          this.selectedOption = value ? this.options.find(option => option.value === value).text : '기간';
+	          this.optionsVisible = false;
+	          var month = '';
+	          switch(value){
+				case '1':  month = '1개원 전'; break;
+				case '3':  month = '3개원 전'; break;
+				case '6':  month = '6개원 전'; break;
+				case '12':  month = '1년 전'; break;
+				case '24':  month = '2년 전'; break;
+				case '36':  month = '3년 전'; break;
+				default : break;
+			}
+	          if(this.optionList.length == 2){
+	        	  this.optionList[1] = ({name : month, value});
+	          }
+	          this.fnOrderList();
+        },
+        showOptions() {
+            this.optionsVisible = true;
+        },
+        hideOptions() {
+           this.optionsVisible = false;
+        },
+        fnClickOption(deliverySit){
+        	var deliverySitName ='';
+			switch(deliverySit){
+				case 1:  deliverySitName = '결제완료'; break;
+				case 2:  deliverySitName = '배송준비'; break;
+				case 3:  deliverySitName = '배송중'; break;
+				case 4:  deliverySitName = '배송완료'; break;
+				default : break;
+			}
+			this.optionList[0] = ({name : deliverySitName, deliverySit : deliverySit});
+			this.fnOrderList();
+        }
+        
 	}, // methods
 	created : function() {
 		var self = this;

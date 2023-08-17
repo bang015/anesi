@@ -104,6 +104,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<UserOrder> searchOrderList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
+		System.out.println(map.get("month"));
 		return userMapper.selectOrderList(map);
 	}
 
