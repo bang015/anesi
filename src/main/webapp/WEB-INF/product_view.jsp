@@ -137,7 +137,7 @@
 	.nav-box{
 		overflow: auto;
 		position: sticky;
-		top: 185px;
+		top: 165px;
 		z-index: 999;
 	}
 	.nav-wrap{
@@ -1108,7 +1108,14 @@ var app = new Vue({
 		    },
 		fnReviewAdd : function(){
 			var self = this;
-			var scrollPosition = $(window).scrollTop();
+			if(self.reviewText == ""){
+				alert("내용을 입력해주세요.");
+				return;
+			}
+			if(self.selectedRating ==0){
+				alert("별점을 입력해주세요.");
+				return;
+			}
             var nparmap = {userNo : self.userNo, reviewText : self.reviewText, productNo : self.productNo, csat : self.selectedRating, optionName : self.optionName};
             $.ajax({
                 url:"/reviewAdd.dox",
