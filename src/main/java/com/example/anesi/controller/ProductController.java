@@ -43,12 +43,12 @@ public class ProductController {
 		
 	}
 	//상품 상세 페이지
-	@RequestMapping("/product/view.do") 
-	public String view(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		request.setAttribute("map", map);
-		System.out.println(map);
-		return "/product_view";
-		
+	@RequestMapping("/product/view.do")
+	public String view(HttpSession session, HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	    session.setAttribute("productNo", map.get("productNo"));
+	    request.setAttribute("map", map);
+	    System.out.println(map);
+	    return "/product_view";
 	}
 	//상품 상세 페이지
 	@RequestMapping("/navi.do") 
@@ -242,6 +242,20 @@ public class ProductController {
 			    System.out.println("세션에서 가져온 검색어: " + session.getAttribute("searchKeyword"));
 			    return new Gson().toJson(resultMap);
 			}
+			@RequestMapping(value = "/selectLatest.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			public String selectLast(Model model, HttpSession session, @RequestParam HashMap<String, Object> map) throws Exception {
+			    String productNo = (String) session.getAttribute("productNo");
+			    
+			    map.put("productNo", productNo); // 세션값을 요청 맵에 추가
+
+			    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			    List<Product> list = productService.selectLatest(map);
+			    resultMap.put("list", list);
+			    return new Gson().toJson(resultMap);
+			}
+
+
 
 
 }

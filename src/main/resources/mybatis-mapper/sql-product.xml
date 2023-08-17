@@ -257,11 +257,11 @@
 	 	VALUES(#{productNo}, #{productStock}, #{optionPrice}, #{optionName})
 	 </insert>
 	 
-	 <select id="selectLatest" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
-		SELECT *
-		FROM t3_tbl_product_image 
-		WHERE Product_NO = #{productNo}
-	</select>
+	 <select id="selectLatest" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+    SELECT *
+    FROM t3_tbl_product_image
+    WHERE PRODUCT_NO = #{productNo}
+</select>
 </mapper>
 
 	
