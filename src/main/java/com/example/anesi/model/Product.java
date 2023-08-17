@@ -28,6 +28,8 @@ public class Product {
 		private String imgPath;
 		private String imgOrgName;
 		
+		private int stock;
+		
 	
 		
 		
@@ -227,6 +229,10 @@ public class Product {
 
 		public void setImgOrgName(String imgOrgName) {
 			this.imgOrgName = imgOrgName;
+		}
+
+		public int getStock() {
+			return stock;
 		}
 
 	

@@ -4,7 +4,14 @@
 <mapper namespace="com.example.anesi.mapper.AdminMapper">
 	<!-- 상품 리스트 조회 -->
 	<select id="adminProductList" parameterType="hashmap" resultType="com.example.anesi.model.Product">
-		SELECT *
-		FROM t3_tbl_product
+		SELECT p.*, o.STOCK, CATEGORY_NAME
+		FROM t3_tbl_product p
+		LEFT JOIN (
+			SELECT PRODUCT_NO, SUM(PRODUCT_STOCK) STOCK
+			FROM t3_tbl_product_option
+			GROUP BY PRODUCT_NO
+		) o ON p.PRODUCT_NO = o.PRODUCT_NO
+		INNER JOIN t3_tbl_product_category c
+			ON p.CATEGORY_NO = c.CATEGORY_NO
 	</select>
 </mapper>

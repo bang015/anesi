@@ -9,6 +9,7 @@
 	box-shadow: 0 1px 3px 0 #dbdbdb;
 	border-radius: 4px;
 	padding-left: 20px;
+	font-size: 20px;
 }
 .iconBack{
 	background-color: darkslategray;
@@ -22,6 +23,7 @@
 .checkList{
 	display: flex;
 	height: 100%;
+	margin-right: 50px;
 }
 .containerCheckList{
 	box-shadow: 0 1px 3px 0 #dbdbdb;
@@ -31,6 +33,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	margin-bottom: 20px;
 }
 .checkListText{
 	margin-left: 15px;
@@ -41,4 +44,39 @@
 .numText{
 	font-size: 20px;
 	font-weight: bold;
+}
+.containerProductList{
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	border-radius: 4px;
+	height: 50px;
+	height: 500px;
+}
+.productListTitle{
+	display: flex;
+	align-items: center;
+	padding-left: 20px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	height: 50px;
+}
+.table-container {
+  max-height: 400px; /* 최대 높이를 설정합니다. 테이블이 이 높이를 초과하면 스크롤이 생성됩니다. */
+  overflow-y: auto; /* 세로 스크롤을 생성합니다. */
+}
+.tableBox{
+	padding: 30px;
+}
+.table-container > table{
+	width: 100%; /* 테이블이 컨테이너에 꽉 차도록 설정합니다. */
+    border-collapse: collapse;
+}
+.table-container > th, td {
+  border: 1px solid #ccc; /* 셀 테두리 스타일을 지정합니다. */
+  padding: 8px;
+  text-align: center;
+}
+
+.table-container > td, th {
+  border: 1px solid #ccc; /* 셀 테두리 스타일을 지정합니다. */
+  padding: 8px;
+  text-align: center;
 }
