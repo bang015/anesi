@@ -114,5 +114,8 @@
 		INNER JOIN t3_tbl_product_option ot
 			ON o.OPTION_NO = ot.OPTION_NO
 		WHERE USER_NO = #{userNo} AND i.THUMBNAIL_YN = 'Y'
+		<if test="deliverySit !=null and deliverySit != ''">
+			AND DELIVERY_SIT = #{deliverySit}
+		</if>
 	</select>
 </mapper>

@@ -62,12 +62,11 @@
     flex-direction: column;
 }
 .orderBox{
-	height: 100px;
+	height: 150px;
 	margin-bottom: 30px;
 	display: flex;
 	padding: 10px;
 	border-radius: 4px;
-	box-shadow: 0 1px 3px 0 #dbdbdb;
 	font-size: 16px;
     align-items: center;
     text-align: left;
@@ -76,10 +75,11 @@
 	width: 100px;
 	height: 100px;
 	margin-right: 10px;
+	border-radius: 4px;
 }
 .productName{
 	
-	width: 30%;
+	width: 35%;
 	margin-right: 70px;
 }
 .manufacturer{
@@ -87,6 +87,7 @@
 }
 .optionName{
 	font-size: 14px;
+	width: 30%;
 }
 .productPrice{
 	font-weight: bold;
@@ -103,4 +104,38 @@
 .productName > .name {
 	font-weight: bold;
 	cursor: pointer;
+}
+.buttonBox{
+	text-align: right;
+	}
+.buttonBox button{
+	width: 130px;
+	padding: 10px;
+	border-radius: 5px;
+	font-size: 17px;
+	cursor: pointer;
+}
+.btn1{
+	border: 1.5px solid #A782C3;
+	color: #A782C3;
+	background-color: #fff;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.btn2{
+	border: 0;
+	color: #fff;
+	background-color: #A782C3;
+}
+.optionListBox{
+	text-align: left;
+	display: flex;
+}
+.optionBox{
+	
+	background-color: #A782C3;
+	padding: 10px;
+	border-radius: 50px;
+	color: #fff;
+	font-weight: bold;
 }

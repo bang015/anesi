@@ -26,7 +26,7 @@
 		</div>
 		<div id="container">
 			<div class="order_list_menu">
-				<a class="aBox">
+				<a class="aBox" @click="fnOrderList(1)">
 					<div class="textBox">
 						<div>결제완료</div>
 						<div>{{deliverySit.order}}</div>
@@ -34,29 +34,32 @@
 					<i class="fa-solid fa-arrow-left fa-rotate-180 fa-2xl"></i>
 				</a>
 				<a class="aBox">
-					<div class="textBox">
+					<div class="textBox" @click="fnOrderList(2)">
 						<div>배송준비</div>
 						<div>{{deliverySit.ready}}</div>
 					</div>
 					<i class="fa-solid fa-arrow-left fa-rotate-180 fa-2xl"></i>
 				</a>
 				<a class="aBox">
-					<div class="textBox">
+					<div class="textBox" @click="fnOrderList(3)">
 						<div>배송중</div>
 						<div>{{deliverySit.shipping}}</div>
 					</div>
 					<i class="fa-solid fa-arrow-left fa-rotate-180 fa-2xl"></i>
 				</a>
 				<a class="aBox">
-					<div class="textBox">
+					<div class="textBox" @click="fnOrderList(4)">
 						<div>배송완료</div>
 						<div>{{deliverySit.completed}}</div>
 					</div>
 				</a>
 			</div>
 			<div class="order_list">
-				<div>
-				
+				<div class="optionListBox">
+					<div v-for="item in optionList">
+						<div class="optionBox">{{item.name}}<i class="fa-solid fa-circle-xmark" style="color: #a782c3;"><span> </span></i></div>
+						
+					</div>
 				</div>
 				<div>
 				    <div v-for="item in orderList" class="orderBox">
@@ -70,8 +73,8 @@
 					    	<div class="productPrice">{{item.productPrice}}<span class="span1"> | </span><span class="span2">{{item.cnt}}개</span></div>
 					    </div>
 					    <div class="buttonBox">
-					    	<button @click="fnReOrder">재구매</button>
-					    	<button @click="fnReviewMove(item.productNo)">리뷰작성</button>
+					    	<button @click="fnReOrder(item)" class="btn1">재구매</button>
+					    	<button @click="fnReviewMove(item.productNo)" class="btn2">리뷰작성</button>
 					    </div>
 				    </div>
 				</div>
@@ -92,7 +95,8 @@ var app = new Vue({
 			ready : 0,
 			shipping : 0,
 			completed : 0
-		}
+		},
+		optionList : [],
 	},// data
 	methods : {
 		fnGetOrderList(){
@@ -121,11 +125,35 @@ var app = new Vue({
                 }
             });
 		},
-		fnReOrder(){
-			
+		fnReOrder(item){
+			$.pageChange("/order/main.do", {product : [{productNo : item.productNo, optionNo : item.optionNo, quantity : item.cnt}]} );
 		},
 		fnReviewMove(productNo){
 			$.pageChange("/product/view.do", {no : productNo} );
+		},
+		fnOrderList(deliverySit, index){
+			var self = this;
+			var deliverySitName ='';
+			switch(deliverySit){
+				case 1:  deliverySitName = '결제완료'; break;
+				case 2:  deliverySitName = '배송준비'; break;
+				case 3:  deliverySitName = '배송중'; break;
+				case 4:  deliverySitName = '배송완료'; break;
+				default : break;
+			}
+			self.optionList[0] = {};
+			self.optionList.splice(0,1,{name : deliverySitName});
+			console.log(self.optionList);
+			var nparmap = {userNo : self.userNo, deliverySit};
+            $.ajax({
+                url : "searchOrderList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.orderList = data.list;
+                }
+            });
 		}
 	}, // methods
 	created : function() {

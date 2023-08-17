@@ -226,7 +226,36 @@
 		SET USER_NO = #{userNo} WHERE NON_USER = 965452
 	</update>
   -->
-	
+		<insert id="insertPorduct" parameterType="hashmap">
+		INSERT INTO t3_tbl_product (
+		  PRODUCT_NAME,
+		  PRODUCT_PRICE,
+		  DISCOUNT,
+		  DISCOUNT_YN,
+		  CATEGORY_NO,
+		  MANUFACTURER,
+		  COUNTRY
+		) VALUES (
+		#{productName},
+		#{productPrices},
+		#{discount},
+		#{discountYn},
+		#{category},
+		#{manufacturer},
+		#{country}
+		);
+	</insert>
+		
+	 <select id="insertSelectPorduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+	 	SELECT *
+	 	FROM t3_tbl_product
+	 	WHERE CATEGORY_NO = #{category} AND PRODUCT_NAME = #{productName} AND MANUFACTURER = #{manufacturer} AND PRODUCT_PRICE = #{productPrices}
+	 </select>
+	 
+	 <insert id="insertOption" parameterType="hashmap">
+	 	INSERT INTO t3_tbl_product_option(PRODUCT_NO, PRODUCT_STOCK, OPTION_PRICE, OPTION_NAME)
+	 	VALUES(#{productNo}, #{productStock}, #{optionPrice}, #{optionName})
+	 </insert>
 </mapper>
 
 	
