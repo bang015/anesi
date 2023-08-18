@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,13 +16,16 @@
 <body>
 <div id="recentProductsApp">
   <div class="choi">
+   <div class="just" >최근본상품</div>
   </div>
   <div class="navi-container">
-    <div v-for="product in recentProducts" :key="product.productNo" class="thumbnail">
-      <img class="navi-item-thumnail__image" alt="썸네일" :src="product.imgPath + '/' + product.imgName" @click="fnProductView(product.productNo)">
-    </div>
+   <div v-for="product in recentProducts" :key="product.productNo" class="thumbnail" @mouseover="onMouseOver(product)" @mouseleave="onMouseLeave(product)">
+  <span class="product-name" v-bind:class="{ visible: product.hover }"></span>
+  <img class="navi-item-thumnail__image" :title="product.productName" alt="썸네일" :src="product.imgPath + '/' + product.imgName" @click="fnProductView(product.productNo)">
+</div>
   </div>
 </div>
+ 
 </body>
 
 <script>
@@ -33,10 +38,18 @@ var recentProductsApp = new Vue({
     this.recentProducts = this.getRecentProducts();
   },
   methods: {
-    getRecentProducts: function() {
-      const recentProductKey = 'recentProducts';
-      return JSON.parse(localStorage.getItem(recentProductKey) || '[]');
-    },
+	  onMouseOver: function(product) {
+		    product.hover = true;
+		  },
+		  onMouseLeave: function(product) {
+		    product.hover = false;
+		  },
+		  getRecentProducts: function() {
+			  const recentProductKey = 'recentProducts';
+			  const products = JSON.parse(localStorage.getItem(recentProductKey) || '[]');
+			  products.forEach(product => product.hover = false);
+			  return products;
+			},
     fnProductView : function(productNo){
       var self = this;
         

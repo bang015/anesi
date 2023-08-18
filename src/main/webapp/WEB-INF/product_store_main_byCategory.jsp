@@ -10,12 +10,14 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 <!-- 스토어 메인 CSS-->
 <link href="../css/store_main.css" rel="stylesheet">
+
 <meta charset="EUC-KR">
 <title>카테고리별 상품메인페이지</title>
 <style>
 </style>
 </head>
 <body>
+   <jsp:include page="naviBar.jsp"></jsp:include>
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
 
