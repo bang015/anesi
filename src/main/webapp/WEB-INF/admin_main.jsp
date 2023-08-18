@@ -21,10 +21,11 @@
   height: 100px;  
 }
 
-.admin_header span {
+.admin_header a {
   margin-left: 10px;
 }
-.admin_header span:hover {
+.admin_header a:hover {
+ color : #424242;
  font-weight:bold;
 }
 
@@ -46,7 +47,7 @@
 }
 .side_menu div{
  font-size : 15px;
- margin-left: 35px ;
+ margin-left: 20px ;
  padding : 15px;
 }
 .side_menu div:hover{
@@ -242,7 +243,7 @@ border:1px solid black;
 <body>
 	<div id="admin_first">
 	
-	<jsp:include page="adminH.jsp"></jsp:include>
+	 <jsp:include page="adminH.jsp"></jsp:include>
 	
 			
 		<div class="delivery">
@@ -331,7 +332,7 @@ border:1px solid black;
 			</div>
 			
 			<div class="customer">
-				<span>고객현황<span>최근 1주일기준</span></span>
+				<span>상품현황<span>최근 1주일기준</span></span>
 				<hr>
 				
 				<i class="iconA fa-solid fa-user"></i>				
