@@ -16,147 +16,173 @@
 <!-- 주석 꼭 남겨주세요 -->
 <body>
 	<div id="app">
-		<div id="container">
-			<div class="containerTitle">상품 조회/수정</div>
-			<div class="containerCheckList">
-				<div class="checkList">
-					<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
-					<div class="checkListText">
-						<div>전체</div>
-						<div><span class="numText">{{productList.length}}</span>건</div> 
-					</div>
-				</div>
-				<div class="checkList">
-					<div class="iconBack"><i class="fa-solid fa-cart-shopping fa-2xl" style="color: #ffffff;"></i></div>
-					<div class="checkListText">
-						<div>판매중</div>
-						<div><span class="numText">{{productList.length - soldOut}}</span>건</div> 
-					</div>
-				</div>
-				<div class="checkList">
-					<div class="iconBack"><i class="fa-solid fa-cart-arrow-down fa-2xl" style="color: #ffffff;"></i></div>
-					<div class="checkListText">
-						<div>품절</div>
-						<div><span class="numText">{{soldOut}}</span>건</div> 
-					</div>
-				</div>
-				<div class="checkList">
-					<div class="iconBack"><i class="fa-solid fa-pause fa-2xl" style="color: #ffffff;"></i></div>
-					<div class="checkListText">
-						<div>판매중지</div>
-						<div><span class="numText">{{stop}}</span>건</div> 
-					</div>
-				</div>
-				<div class="checkList">
-					<div class="iconBack"><i class="fa-solid fa-ban fa-2xl" style="color: #ffffff;"></i></div>
-					<div class="checkListText">
-						<div>판매종료</div>
-						<div><span class="numText">{{end}}</span>건</div> 
-					</div>
-				</div>
+		
+		<header class="admin_header">
+		  <h1>관리자센터</h1>
+		  	<nav>
+				<span>로그인</span>
+				<span>로그아웃</span>
+				<span>도움말</span>
+				<span>아네시 홈페이지</span>
+			</nav>
+		</header>
+		
+	
+		
+   		<div class="flex-container1">
+			<div class="side_menu">
+					<div>상품관리</div>
+					<div>판매통계</div>
+					<div>리뷰관리</div>
+					<div>문의관리</div>
+					<div>배송관리</div>
+					<div>고객관리</div>
+					<div>혜택관리</div>
+					<div>알림관리</div>
 			</div>
-			<div class="containerProductList">
-				<div class="productListTitle">
-					<span>상품목록 (총 {{productList.length}}개)</span>
-				</div>
-				<div class="btnBox">
-					<button class="btn1 btn2 btn3" @click="fnCheckStop">선택중지</button>
-					<button class="btn1 btn2 btn3">선택종료</button>
-				</div>
-				<div class="tableBox">
-					<div class="table-container">
-						<table>
-							<tr>
-								<th><input type="checkbox" @click="fnAllCheck" v-model="allChecked"></th>
-								<th>수정</th>
-								<th>상품번호</th>
-								<th>상품명</th>
-								<th>판매상태</th>
-								<th>전시상태</th>
-								<th>재고수량</th>
-								<th>정가</th>
-								<th>할인율</th>
-								<th>할인상태</th>
-								<th>할인가</th>
-								<th>카테고리</th>
-								<th>제조사</th>
-								<th>제조국</th>
-								<th>등록일</th>
-								<th>수정일</th>
-							</tr>
-							<tr v-for="item in productList">
-								<td><input type="checkbox" v-model="checkList" :value="item.productNo" @change="updateAllCheck"></td>
-								<td><button class="btn1" @click="fnProductEdit(item.productNo)">수정</button></td>
-								<td>{{item.productNo}}</td>
-								<td>{{item.productName}}</td>
-								<td>{{item.deleteYn == 'N' ? '판매중' : '판매종료'}}</td>
-								<td>전시중</td>
-								<td>{{item.stock}}</td>
-								<td>{{item.productPrice}}</td>
-								<td>{{item.discount}}%</td>
-								<td>{{item.discountYn == 'Y' ? '할인중' : '정가'}}</td>
-								<td v-if="item.discountYn == 'Y'">{{(item.productPrice * ((100-item.discount)/100))}}</td>
-								<td v-else></td>
-								<td>{{item.categoryName}}</td>
-								<td>{{item.manufacturer}}</td>
-								<td>{{item.country}}</td>
-								<td>{{item.cdatetime}}</td>
-								<td>{{item.udatetime}}</td>
-							</tr>
-						</table>
+			<div id="container">
+				<div class="containerTitle">상품 조회/수정</div>
+				<div class="containerCheckList">
+					<div class="checkList">
+						<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
+						<div class="checkListText">
+							<div>전체</div>
+							<div><span class="numText">{{productList.length}}</span>건</div> 
+						</div>
+					</div>
+					<div class="checkList">
+						<div class="iconBack"><i class="fa-solid fa-cart-shopping fa-2xl" style="color: #ffffff;"></i></div>
+						<div class="checkListText">
+							<div>판매중</div>
+							<div><span class="numText">{{productList.length - soldOut}}</span>건</div> 
+						</div>
+					</div>
+					<div class="checkList">
+						<div class="iconBack"><i class="fa-solid fa-cart-arrow-down fa-2xl" style="color: #ffffff;"></i></div>
+						<div class="checkListText">
+							<div>품절</div>
+							<div><span class="numText">{{soldOut}}</span>건</div> 
+						</div>
+					</div>
+					<div class="checkList">
+						<div class="iconBack"><i class="fa-solid fa-pause fa-2xl" style="color: #ffffff;"></i></div>
+						<div class="checkListText">
+							<div>판매중지</div>
+							<div><span class="numText">{{stop}}</span>건</div> 
+						</div>
+					</div>
+					<div class="checkList">
+						<div class="iconBack"><i class="fa-solid fa-ban fa-2xl" style="color: #ffffff;"></i></div>
+						<div class="checkListText">
+							<div>판매종료</div>
+							<div><span class="numText">{{end}}</span>건</div> 
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="modal" v-if="showScrapModal">
-		        <div class="modal-card">
-		        	<div class="modalTitle">상품정보 수정</div>
-		        	<div class="modalStyle1">
-		        		<span class="modalSpan1">상품번호</span>
-		        		<span>{{producInfo[0].productNo}}</span>
-		        	</div>
-		        	<div class="modalStyle1">
-		        		<span class="modalSpan1">상품명</span>
-		        		<span><input v-model="producInfo[0].productName" class="inputStyle inputStyle2"></span>
-		        	</div>
-		        	<div class="modalStyle1">
-		        		<span class="modalSpan1">가격</span>
-		        		<span><input v-model="producInfo[0].productPrice" class="inputStyle inputStyle2"></span>
-		        	</div>
-		        	<div class="modalStyle1">
-		        		<span class="modalSpan1">할인율</span>
-		        		<span><input v-model="producInfo[0].discount" class="inputStyle inputStyle2"></span>
-		        	</div>
-		        	<div class="modalStyle1 modalStyle2">
-		        		<span class="modalSpan1">옵션</span>
-	        			<div v-if="producInfo.length != 0">
-	        				<table class="modalTable">
-	        					<tr>
-	        						<th class="modalTdTr">옵션이름</th>
-	        						<th class="modalTdTr">옵션 가격 증가량</th>
-	        						<th class="modalTdTr">옵션 재고 수량</th>
-	        					</tr>
-	        					<tr v-for="item in producInfo">
-	        						<td class="modalTdTr"><input v-model="item.optionName"  class="modalSpan2 inputStyle"></td>
-	        						<td class="modalTdTr"><input v-model="item.optionPrice" class="modalSpan2 inputStyle"></td>
-	        						<td class="modalTdTr"><input v-model="item.productStock" class="inputStyle"></td>
-	        					</tr>
-	        				</table>
-	        			</div>
-		        	</div>
-	        		<div class="modalStyle4">
-	        			<span>
-	        				<button class="btn1 btn2 btn3" @click="fnOptionAdd">옵션+</button>
-	        				<button class="btn1 btn2" @click="fnOptionDel">옵션-</button>
-	        				<span>(최소 1개 최대 5개)</span>
-	        			</span>
-	        			<span>
-		        			<button class="btn1 btn2" @click="fnUpdateProduct">저장</button>
-		        			<button @click="closeModal" class="btn1 btn2 btn3">취소</button>
-	        			</span>
-	        		</div>
+				<div class="containerProductList">
+					<div class="productListTitle">
+						<span>상품목록 (총 {{productList.length}}개)</span>
+					</div>
+					<div class="btnBox">
+						<button class="btn1 btn2 btn3" @click="fnCheckSituation('N')">선택판매</button>
+						<button class="btn1 btn2 btn3" @click="fnCheckSituation('S')">선택중지</button>
+						<button class="btn1 btn2 btn3" @click="fnCheckSituation('Y')">선택종료</button>
+					</div>
+					<div class="tableBox">
+						<div class="table-container">
+							<table>
+								<tr>
+									<th><input type="checkbox" @click="fnAllCheck" v-model="allChecked"></th>
+									<th>수정</th>
+									<th>상품번호</th>
+									<th>상품명</th>
+									<th>판매상태</th>
+									<th>전시상태</th>
+									<th>재고수량</th>
+									<th>정가</th>
+									<th>할인율</th>
+									<th>할인상태</th>
+									<th>할인가</th>
+									<th>카테고리</th>
+									<th>제조사</th>
+									<th>제조국</th>
+									<th>등록일</th>
+									<th>수정일</th>
+								</tr>
+								<tr v-for="item in productList">
+									<td><input type="checkbox" v-model="checkList" :value="item.productNo" @change="updateAllCheck"></td>
+									<td><button class="btn1" @click="fnProductEdit(item.productNo)">수정</button></td>
+									<td>{{item.productNo}}</td>
+									<td>{{item.productName}}</td>
+									<td>{{item.deleteYn == 'N' ? '판매중' : '판매종료'}}</td>
+									<td>전시중</td>
+									<td>{{item.stock}}</td>
+									<td>{{item.productPrice}}</td>
+									<td>{{item.discount}}%</td>
+									<td>{{item.discountYn == 'Y' ? '할인중' : '정가'}}</td>
+									<td v-if="item.discountYn == 'Y'">{{(item.productPrice * ((100-item.discount)/100))}}</td>
+									<td v-else></td>
+									<td>{{item.categoryName}}</td>
+									<td>{{item.manufacturer}}</td>
+									<td>{{item.country}}</td>
+									<td>{{item.cdatetime}}</td>
+									<td>{{item.udatetime}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="modal" v-if="showScrapModal">
+			        <div class="modal-card">
+			        	<div class="modalTitle">상품정보 수정</div>
+			        	<div class="modalStyle1">
+			        		<span class="modalSpan1">상품번호</span>
+			        		<span>{{producInfo[0].productNo}}</span>
+			        	</div>
+			        	<div class="modalStyle1">
+			        		<span class="modalSpan1">상품명</span>
+			        		<span><input v-model="producInfo[0].productName" class="inputStyle inputStyle2"></span>
+			        	</div>
+			        	<div class="modalStyle1">
+			        		<span class="modalSpan1">가격</span>
+			        		<span><input v-model="producInfo[0].productPrice" class="inputStyle inputStyle2"></span>
+			        	</div>
+			        	<div class="modalStyle1">
+			        		<span class="modalSpan1">할인율</span>
+			        		<span><input v-model="producInfo[0].discount" class="inputStyle inputStyle2"></span>
+			        	</div>
+			        	<div class="modalStyle1 modalStyle2">
+			        		<span class="modalSpan1">옵션</span>
+		        			<div v-if="producInfo.length != 0">
+		        				<table class="modalTable">
+		        					<tr>
+		        						<th class="modalTdTr">옵션이름</th>
+		        						<th class="modalTdTr">옵션 가격 증가량</th>
+		        						<th class="modalTdTr">옵션 재고 수량</th>
+		        					</tr>
+		        					<tr v-for="item in producInfo">
+		        						<td class="modalTdTr"><input v-model="item.optionName"  class="modalSpan2 inputStyle"></td>
+		        						<td class="modalTdTr"><input v-model="item.optionPrice" class="modalSpan2 inputStyle"></td>
+		        						<td class="modalTdTr"><input v-model="item.productStock" class="inputStyle"></td>
+		        					</tr>
+		        				</table>
+		        			</div>
+			        	</div>
+		        		<div class="modalStyle4">
+		        			<span>
+		        				<button class="btn1 btn2 btn3" @click="fnOptionAdd">옵션+</button>
+		        				<button class="btn1 btn2" @click="fnOptionDel">옵션-</button>
+		        				<span>(최소 1개 최대 5개)</span>
+		        			</span>
+		        			<span>
+			        			<button class="btn1 btn2" @click="fnUpdateProduct">저장</button>
+			        			<button @click="closeModal" class="btn1 btn2 btn3">취소</button>
+		        			</span>
+		        		</div>
+			        </div>
 		        </div>
-	        </div>
-			
+				
+			</div>
 		</div>
 	</div>
 </body>
@@ -174,8 +200,10 @@ var app = new Vue({
 		showScrapModal : false,
 		producInfo : [],
 		optionCnt : 0,
+		optionCnt2 : 0,
 		productNo : 0,
-		addOptionCnt : 0
+		addOptionCnt : 0,
+		delectOption : []
 		
 	},// data
 	methods : {
@@ -196,9 +224,9 @@ var app = new Vue({
 					for(let i = 0; i < self.productList.length; i++){
 						if(self.productList[i].stock == 0){
 							self.soldOut++;
-						} else if(self.productList[i].leleteYn == 'S'){
+						} else if(self.productList[i].deleteYn == 'S'){
 							self.stop++;
-						} else if(self.productList[i].leleteYn == 'Y'){
+						} else if(self.productList[i].deleteYn == 'Y'){
 							self.end++;
 						}
 						
@@ -236,11 +264,13 @@ var app = new Vue({
                 success : function(data) {
                 	self.producInfo = data.info;
                 	self.optionCnt = data.info.length;
+                	self.optionCnt2 = data.info.length;
                 	self.productNo = productNo;
                 	
                 	if(self.producInfo[0].optionNo == 0){
                 		self.optionCnt--;
                 		self.addOptionCnt++;
+                		self.optionCnt2--;
                 	}
                 	self.openScrapModal();
                 }
@@ -256,7 +286,7 @@ var app = new Vue({
 		closeModal: function() {
 			var self = this;
 			self.showScrapModal = false;
-			self.fnGetProduct();
+			location.reload();
 		},
 		//수정 정보 업데이트
 		fnUpdateProduct(){
@@ -298,6 +328,18 @@ var app = new Vue({
 	                }
 	            });
 			}
+			if(self.delectOption.length != 0){
+				var list = JSON.stringify(self.delectOption);
+				var nparmap4 = {list};
+				$.ajax({
+	                url : "/admin/optionDelete.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap4,
+	                success : function(data) {
+	                }
+	            });
+			}
 			alert("저장성공");
 			self.closeModal();
 			
@@ -311,26 +353,35 @@ var app = new Vue({
 				self.addOptionCnt++;
 			}
 		},
+		//옵션 제거
 		fnOptionDel(){
 			var self = this;
 			if(self.producInfo.length > 1){
-				self.producInfo.pop();
 				if(self.addOptionCnt > 0){
 					self.addOptionCnt--;
 				} else {
 					self.optionCnt--;
+					self.delectOption.push(self.producInfo[self.producInfo.length-1].optionNo);
+					console.log(self.delectOption);
 				}
+				self.producInfo.pop();
 			}
 		},
-		fnCheckStop(){
+		//상품 상태
+		fnCheckSituation(situation){
 			var self = this;
-			var nparmap = {checkList : self.checkList};
+			var checkList = JSON.stringify(self.checkList);
+			var nparmap = {	checkList, situation};
 			$.ajax({
-                url : "/admin/productStop.dox",
+                url : "/admin/productSituation.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
+                	alert(data.cnt+"개 업데이트");
+                	self.checkList = []
+                	self.fnGetProduct();
+                	self.allChecked = false;
                 }
             });
 		}

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Product;
 import com.example.anesi.service.AdminService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 @Controller
@@ -72,6 +74,30 @@ public class AdminController {
 	@ResponseBody
 	public String optionInsert(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		adminService.adminAddOption(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//상품 상태 업데이트
+	@RequestMapping(value = "/admin/productSituation.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String productSituation(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		String json = map.get("checkList").toString();
+		ObjectMapper mapper = new ObjectMapper();
+		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+		map.put("list", list);
+		resultMap.put("cnt", adminService.adminEditProductSituation(map));
+		return new Gson().toJson(resultMap);
+	}
+	
+	//옵션 삭제
+	@RequestMapping(value = "/admin/optionDelete.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String optionDelete(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		String json = map.get("list").toString();
+		ObjectMapper mapper = new ObjectMapper();
+		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+		map.put("list", list);
+		resultMap.put("cnt", adminService.adminRemoveOption(map));
 		return new Gson().toJson(resultMap);
 	}
 }

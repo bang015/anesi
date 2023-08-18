@@ -48,5 +48,21 @@
     	VALUES(#{productNo}, #{optionName}, #{optionPrice}, #{productStock})
 	</insert>
 	
-	
+	<update id="adminProductSituation" parameterType="hashmap">
+		UPDATE t3_tbl_product
+			SET
+			DELETE_YN = #{situation}
+		WHERE PRODUCT_NO IN
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</update>
+	<delete id="adminDeleteOption" parameterType="hashmap">
+		DELETE 
+		FROM t3_tbl_product_option
+		WHERE OPTION_NO IN
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</delete>
 </mapper>

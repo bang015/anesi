@@ -12,4 +12,6 @@ public interface AdminService {
 	int adminEditProduct(HashMap<String, Object> map);
 	int adminEditOption(HashMap<String, Object> map);
 	int adminAddOption(HashMap<String, Object> map);
+	int adminEditProductSituation(HashMap<String, Object> map);
+	int adminRemoveOption(HashMap<String, Object> map);
 }

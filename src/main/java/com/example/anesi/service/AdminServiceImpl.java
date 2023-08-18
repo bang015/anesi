@@ -44,6 +44,19 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminMapper.adminInsertOption(map);
 	}
+
+	@Override
+	public int adminEditProductSituation(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		System.out.println(map);
+		return adminMapper.adminProductSituation(map);
+	}
+
+	@Override
+	public int adminRemoveOption(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.adminDeleteOption(map);
+	}
 	
 	
 	

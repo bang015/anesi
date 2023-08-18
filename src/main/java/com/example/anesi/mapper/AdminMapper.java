@@ -19,4 +19,8 @@ public interface AdminMapper {
 	int adminOptionUpdate(HashMap<String, Object> map);
 	//옵션 추가
 	int adminInsertOption(HashMap<String, Object> map);
+	//상품 상태 업데이트
+	int adminProductSituation(HashMap<String, Object> map);
+	//옵션 삭제
+	int adminDeleteOption(HashMap<String, Object> map);
 }
