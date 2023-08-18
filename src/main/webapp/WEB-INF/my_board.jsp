@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
 <meta charset="UTF-8">
-<title>마이페이지😏</title>
+<title>나의 게시글📚</title>
 <style>
 #app{
 	margin-top : 160px;
@@ -146,47 +146,41 @@ li{
 	opacity: 0.7; 
 }
 </style>
-<jsp:include page="header.jsp"></jsp:include>
 </head>
-<body>	
+<jsp:include page="header.jsp"></jsp:include>
+<body>
 <div id="app">
-<div class="top_menu">
-	<ul class="my_menu1">
-		<li class="my_li1"><a href="mypage.do" class="my_a1_ch" style="color : #A782C3;">프로필</a></li>
-		<li class="my_li1"><a href="mypage/myShopping.do" class="my_a1">나의 쇼핑</a></li>
-		<li class="my_li1"><a class="my_a1">나의 리뷰</a></li>
-		<li class="my_li1"><a href="mypage/user_edit.do" class="my_a1">설정 </a></li>
-	</ul>
-</div>
-<hr class="hrr">
-	<ul class="my_menu1">
-		<li class="my_li2"><a href="mypage.do" class="my_a2_ch" style="color : #A782C3;">모두 보기</a></li>
-		<li class="my_li2"><a class="my_a2">나의 문의</a></li>
-		<li class="my_li2"><a href="/mypage/myBoard.do" class="my_a2">나의 게시글</a></li>
-		<li class="my_li2"><a href="scrapbook.do" class="my_a2">스크랩북</a></li>
-	</ul>
-<hr class="hrr">
-<div id="container">
-	<div class="profile">
-		<div class="profile_left">
-			<div><img src="../css/image/profile.png" class="profile_img"></div>
-			<div class="nickName">{{sessionNick}}</div>
-		</div>
-		<div class="profile_right">	
-		<ul class="profile_list">
-			<li><label class="icon_label"><a href="scrapbook.do"><img src="../css/image/bookmark.png" class="icon" style="margin: 0px 65px 10px 10px; width: 52px;"><br><span class="comment" style="margin-left: 13px;">스크랩북</span></a></label></li>
-			<li><label class="icon_label"><a href=""><img src="../css/image/coupon.png" class="icon" style="margin : 6px 65px 18px 10px; width: 50px;"><br><span class="comment" style="margin-left:15px;">내 쿠폰</span></a></label></li>
-			<li><label class="icon_label"><a href=""><img src="../css/image/qna.png" class="icon" style="margin: 0px 65px 9px 10px; width: 52px;"><br><span class="comment" style="margin-left: 16px;">내 문의</span></a></label></li>
-			<li><label class="icon_label"><a href=""><img src="../css/image/post.png" class="icon" style="margin: 0px 10px 10px 10px; width: 50px;"><br><span class="comment" style="margin-left: 7px;">내 게시글</span></a></label></li>
+	<div class="top_menu">
+		<ul class="my_menu1">
+			<li class="my_li1"><a href="/mypage.do" class="my_a1_ch" style="color : #A782C3;">프로필</a></li>
+			<li class="my_li1"><a href="myShopping.do" class="my_a1">나의 쇼핑</a></li>
+			<li class="my_li1"><a class="my_a1">나의 리뷰</a></li>
+			<li class="my_li1"><a href="user_edit.do" class="my_a1">설정 </a></li>
 		</ul>
-			<button class="btn1" @click="fnEdit">회원정보수정</button>
-			<button class="btn1">로그아웃</button>
-		</div>
-		<div>
-			
+	</div>
+	<hr class="hrr">
+		<ul class="my_menu1">
+			<li class="my_li2"><a href="mypage.do" class="my_a2">모두 보기</a></li>
+			<li class="my_li2"><a class="my_a2">나의 문의</a></li>
+			<li class="my_li2"><a href="/mypage/myBoard.do" class="my_a2_ch" style="color : #A782C3;">나의 게시글</a></li>
+			<li class="my_li2"><a href="/scrapbook.do" class="my_a2">스크랩북</a></li>
+		</ul>
+	<hr class="hrr">
+	<div id="container">
+		<div v-for="(item, index) in list">
+			<div class="board1">
+		    	<div class="board1_item">
+		                <div class="photo1">
+		                    <a @click="fnView(item.boardNo)"><img class="photo2" src="../css/image/community/commu_test.jpg"></a>
+		                <img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
+		                </div>
+		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
+		                <div class="nick">{{item.nick}}</div>
+		        	<div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
+		    	</div>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 </body>
 <jsp:include page="footer.jsp"></jsp:include>
@@ -195,16 +189,48 @@ li{
 var app = new Vue({
 	el : '#app',
 	data : {
-		sessionNick : "${sessionNick}"
+
 	},// data
 	methods : {
-		fnEdit : function(){
-			location.href="/mypage/user_edit.do"
-		}
+		fnGetList : function(){
+			var self = this;
+            var startNum = ((self.selectPage-1) * 12);
+    		var lastNum = 12;
+			var param = {startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/community/boardList.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.list = data.list;
+                	self.cnt = data.cnt;
+	                self.pageCount = Math.ceil(self.cnt / 12);
+                }
+            }); 
+		},
+		fnPageSearch : function(pageNum){
+			var self = this;
+			/* self.selectPage = pageNum; */
+			var startNum = ((pageNum-1) * 12);
+			var lastNum = 12;
+			var nparmap = {startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/community/boardList.dox",
+				dataType : "json",
+				type : "POST",
+				data : nparmap,
+				success : function(data) {
+					self.list = data.list;
+					self.searchCnt = data.cnt;
+					self.pageCount = Math.ceil(self.searchCnt / 12);
+				}
+			});
+		},
 	}, // methods
 	created : function() {
 		var self = this;
-		console.log(self.sessionNick);
+
 	}// created
 });
 </script>

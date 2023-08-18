@@ -95,6 +95,13 @@ public class UserController {
 		return "/myShopping";
     }
 	
+	// 나의 게시글
+	@RequestMapping("mypage/myBoard.do") 
+    public String myBoard(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/my_board";
+    }
+	
 	// 회원가입
 	@RequestMapping(value = "/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody

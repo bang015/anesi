@@ -13,7 +13,7 @@
 </head>
 <style>
 #app{
-	margin-top : 180px;
+	margin-top : 160px;
 }
 #container{
 	margin : 30px auto;
