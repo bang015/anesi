@@ -27,11 +27,7 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-	@RequestMapping("/product/add.do") 
-	public String login(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		return "/product_add";
-		
-	}
+
 	@RequestMapping("/searchProduct.do") 
 	public String searchProduct(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		return "/searchProduct";

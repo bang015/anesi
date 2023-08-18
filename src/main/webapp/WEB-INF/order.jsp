@@ -244,7 +244,7 @@
 						</button>
 						<button @click="fnChangepayment('toss')" class="orBtn" :class="{onpayment_right : payment == 'kakaopay.TC0ONETIME', onpayment : payment == 'tosspay'}">
 							<div>
-								<div>카카오페이</div>
+								<div>토스</div>
 								<div><img alt="" src="https://image.ohou.se/i/bucketplace-v2-development/pg/img_toss_v2.png?w=144&h=144&c=c" class="btnImg"></div>
 							</div>
 						</button>

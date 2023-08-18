@@ -18,6 +18,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 public class AdminController {
 	
@@ -30,7 +32,7 @@ public class AdminController {
 		return "/admin_main";
 	}
 	
-	@RequestMapping("/admin/product/edit.do") 
+	@RequestMapping("/admin/product_edit.do") 
 	public String edit(Model model) throws Exception{
 		
 		return "/product_edit";
@@ -42,6 +44,11 @@ public class AdminController {
 		return "/admin_delivery";
 	}
 	
+	@RequestMapping("/admin/add.do") 
+	public String login(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/product_add";
+		
+	}
 	//상품 전체 조회
 	@RequestMapping(value = "/admin/productList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody

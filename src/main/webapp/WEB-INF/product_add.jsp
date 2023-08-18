@@ -7,8 +7,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
-<link href="../css/adminH.css" rel="stylesheet">
-
 <link href="../css/product_add.css" rel="stylesheet">
 <link href="../css/checkbox.css" rel="stylesheet">
 
@@ -19,6 +17,7 @@
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
+<jsp:include page="adminH.jsp"></jsp:include>
 	<div id="app">
 		<div id="container">
 			<div class="productTitleAdd"><h1>상품 등록</h1></div> 
@@ -228,7 +227,7 @@ var app = new Vue({
 			var self = this;
 			var nparmap = {};
             $.ajax({
-                url : "category.dox",
+                url : "../product/category.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
@@ -243,7 +242,7 @@ var app = new Vue({
 			self.category1Name = item.categoryName;
 			self.category1No = item.categoryNo;
             $.ajax({
-                url : "category2.dox",
+                url : "../product/category2.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
@@ -381,7 +380,7 @@ var app = new Vue({
 				var nparmap = self.product;
 				
 				$.ajax({
-		    		url : "/addProduct.dox",
+		    		url : "../product/addProduct.dox",
 	                dataType:"json",	
 	                type : "POST",
 			      	data: nparmap,
@@ -400,7 +399,7 @@ var app = new Vue({
 				var nparmap = self.product;
 				
 				$.ajax({
-			    		url : "../insertSearchProduct.dox",
+			    		url : "../product/insertSearchProduct.dox",
 		                dataType:"json",	
 		                type : "POST",
 				      	data: nparmap,
@@ -449,7 +448,7 @@ var app = new Vue({
 		upload(form) {
 			return new Promise((resolve, reject) => {
 				$.ajax({
-			      	url: "../fileUpload.dox",
+			      	url: "../product/fileUpload.dox",
 			      	type: "POST",
 			      	processData: false,
 			      	contentType: false,
@@ -467,7 +466,7 @@ var app = new Vue({
 	    	var self = this;
 	    	var nparmap = {productNo, productStock : info.productStock, optionPrice : info.optionPrice, optionName : info.optionName}
 	    	$.ajax({
-		       url: "../addOption.dox",
+		       url: "../product/addOption.dox",
 		       dataType: "json",
 		       type: "POST",
 		       data: nparmap,
