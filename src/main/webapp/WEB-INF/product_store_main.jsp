@@ -274,9 +274,9 @@ var app = new Vue({
 	    fnMoveLoginPage : function() {
         	location.href = "/login.do";
 	    },
-	    fnCheckCart : function(item) {
+	    fnCheckCart : function() {
 	    	var self = this;
-            var nparmap = {userNo: self.userNo};           
+	         var nparmap = {nonuserNo : self.nonuserNo, userNo: self.userNo};      
             $.ajax({
                 url : "/product/selectCartList.dox",
                 dataType:"json",	
@@ -386,6 +386,8 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) { 
 	                	self.nonuserNo = data.value;
+	            		self.fnCheckCart();
+
 	                }
 	            }); 
 		},
@@ -411,9 +413,8 @@ var app = new Vue({
 	created : function() {
 		var self = this;
 		self.fnGetList();
-		self.fnCheckCart();
-		self.fnCheckScrap();
 		self.fnaaa();
+		self.fnCheckScrap();
 
 	}// created
 });

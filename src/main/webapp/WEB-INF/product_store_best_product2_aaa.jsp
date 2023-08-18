@@ -170,7 +170,7 @@ var app = new Vue({
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar, productNo : self.productNo};
+            var nparmap = { productNo : self.productNo};
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	

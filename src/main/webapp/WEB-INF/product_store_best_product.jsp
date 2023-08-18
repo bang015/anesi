@@ -169,7 +169,7 @@ var app = new Vue({
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar, productNo : self.productNo};
+            var nparmap = {productNo : self.productNo};
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
@@ -197,18 +197,18 @@ var app = new Vue({
 	            return truncatedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       },
      
-     // 모달 열기
+    	 // 모달 열기
 	    openCartModal: function() {
-       var self = this;
-       self.showCartModal = true;
+	       var self = this;
+	       self.showCartModal = true;
 	    },
 	    openScrapModal: function() {
-       var self = this;
-       self.showScrapModal = true;
+	       var self = this;
+	       self.showScrapModal = true;
 	    },
 	    openScrapDeleteModal: function() {
-       var self = this;
-       self.showScrapDeleteModal = true;
+	       var self = this;
+	       self.showScrapDeleteModal = true;
 	    },
 	    // 모달 닫기
 	    closeModal: function() {
@@ -220,19 +220,19 @@ var app = new Vue({
 	    },
 	    //모달에서 페이지이동 함수
 	    fnMoveCart : function() {
-     	location.href = "/product/cart.do";
+     		location.href = "/product/cart.do";
 	    },
 	    fnMoveMyPage : function() {
-     	location.href = "/mypage.do";
+     		location.href = "/mypage.do";
 	    },
 	    fnMoveLoginPage : function() {
-     	location.href = "/login.do";
+     		location.href = "/login.do";
 	    },
 	    
-	    fnCheckCart : function(item) {
-	    	var self = this;
-         var nparmap = {userNo: self.userNo};           
-         $.ajax({
+	    fnCheckCart : function() {
+    	  var self = this;
+          var nparmap = {nonuserNo : self.nonuserNo, userNo: self.userNo};      
+          $.ajax({
              url : "/product/selectCartList.dox",
              dataType:"json",	
              type : "POST", 
@@ -265,6 +265,7 @@ var app = new Vue({
          self.openCartModal();
          console.log(self.showCartModal);
 		}, 
+		
 	    fnUpdateUserCart : function(item) {
 	    	var self = this;
          var nparmap = { userNo: self.userNo, productNo: item.productNo};
@@ -313,6 +314,7 @@ var app = new Vue({
          self.openScrapModal();
          console.log(self.showScrapModal);
 		},
+		
 	    fnDeleteScrapbook : function(item) {
 	    	var self = this;
          var nparmap = { userNo: self.userNo, productNo: item.productNo};
@@ -346,9 +348,10 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) { 
 	                	self.nonuserNo = data.value;
-	                    console.log(self.nonuserNo);
+	            		self.fnCheckCart();
+
 	                }
-	            }); 
+            }); 
 		},
 		//비회원 장바구니 추가
 		fnAddNonUserCart : function(item) {
@@ -372,7 +375,6 @@ var app = new Vue({
 	created : function() {
 		var self = this;
 		self.fnGetList();
-		self.fnCheckCart();
 		self.fnCheckScrap();
 		self.fnaaa();
 	}// created
