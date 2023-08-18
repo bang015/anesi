@@ -54,7 +54,9 @@ var app = new Vue({
 	el : '#app',
 	data : {
 		orderList : [],
-		
+		wait : 0,
+		shipping : 0,
+		complete : 0,
 	},// data
 	methods : {
 		fnGetOrderList(){
@@ -66,6 +68,12 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
+                	self.orderList = data.list;
+                	for(){
+                		
+                	}
+                	console.log(data.list);
+                	
                 }
             });
 		}

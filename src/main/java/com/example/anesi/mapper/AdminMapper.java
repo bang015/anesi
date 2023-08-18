@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.anesi.model.Product;
+import com.example.anesi.model.UserOrder;
 
 @Mapper
 public interface AdminMapper {
@@ -23,4 +24,6 @@ public interface AdminMapper {
 	int adminProductSituation(HashMap<String, Object> map);
 	//옵션 삭제
 	int adminDeleteOption(HashMap<String, Object> map);
+	//주문 검색
+	List<UserOrder> selectDeliveryList(HashMap<String, Object> map);
 }

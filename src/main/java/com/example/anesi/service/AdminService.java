@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.anesi.model.Product;
+import com.example.anesi.model.UserOrder;
 
 public interface AdminService {
 	
@@ -14,4 +15,5 @@ public interface AdminService {
 	int adminAddOption(HashMap<String, Object> map);
 	int adminEditProductSituation(HashMap<String, Object> map);
 	int adminRemoveOption(HashMap<String, Object> map);
+	List<UserOrder> selectDeliveryList(HashMap<String, Object> map);
 }

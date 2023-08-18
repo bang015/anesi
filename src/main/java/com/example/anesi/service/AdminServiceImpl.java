@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.AdminMapper;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.UserOrder;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -55,6 +56,12 @@ public class AdminServiceImpl implements AdminService {
 	public int adminRemoveOption(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return adminMapper.adminDeleteOption(map);
+	}
+
+	@Override
+	public List<UserOrder> selectDeliveryList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectDeliveryList(map);
 	}
 	
 	
