@@ -19,42 +19,46 @@
 <jsp:include page="header.jsp"></jsp:include>
   <div id="app">
     <div id="container">
-  <button class="btn" @click="goToPurchasePage">구매하기</button>
-      <h2>장바구니</h2>
   
       <div id="cart-app" class="container">
   <table id="cart-table" class="table table-bordered">
   <!--    <input type="checkbox" id="cb1" class="chbox">
     <label for="cb1" class="chbox"></label> -->
-    <thead>
-      <tr>
-        <th>상품 번호</th>
-        <th>상품 이름</th>
-        <th>이미지</th>
-        <th>제조사</th>
-        <th>제조국</th>
-        <th>가격</th>
-      </tr>
-    </thead>
-    <tbody class="fon">
-      <tr v-for="item in cartItems">
-        <i class="fa-solid fa-xmark" v-on:click="deleteAllCartItems(item)" style="cursor:pointer" id="non">전체삭제</i>
-        <td>{{ item.productNo }}</td>
-        <td>{{ item.productName }}</td>
-        <td><img alt="" :src="item.imgPath+'/'+item.imgName"  class="cartImg" ></td>
-        <td>{{ item.manufacturer }}</td>
-        <td>{{ item.country }}</td>
-        <td>{{ item.productPrice }}</td>
-        <td><i class="fa-solid fa-xmark" v-on:click="deleteItem(item)" style="cursor:pointer"></i></td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="cal">
-  <p>총 가격: {{ totalPrice }}원</p>
-  <p>총 배송비: {{ totalShippingCost }}원</p>
-  <p>총 할인금액: {{ totalDiscount }}원</p>
-  <p>최종 가격: {{ finalPrice }}원</p>
+ <div class="cart-item container mb-4" v-for="item in cartItems">
+  <div class="row align-items-center">
+    <div class="col-md-3">
+      <img class="img-fluid" :src="item.imgPath+'/'+item.imgName" />
+    </div>
+    <div class="col-md-6">
+      <h5 class="mb-2">{{ '['+ item.productName +']' }} {{ '['+item.manufacturer+']' }}</h5>
+      <p>{{ item.productPrice }}원</p>
+   <button class="btn btn-primary" id="btnbuy" @click="goToPurchasePage">구매하기</button>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-sm btn-danger" v-on:click="deleteItem(item)">
+        <i class="fas fa-trash-alt" aria-hidden="true" id="delete"></i> 삭제
+      </button>
+    </div>
   </div>
+</div>
+   
+  
+  </table>
+<div class="cal container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <p>총 가격: {{ totalPrice }}원</p>
+      <p>총 배송비: {{ totalShippingCost }}원</p>
+    </div>
+    <div class="col-md-6">
+      <p>총 할인금액: {{ totalDiscount }}원</p>
+      <p>최종 가격: {{ finalPrice }}원</p>
+    </div>
+    <div class="col-md-12 text-right mt-2">
+      <button class="btn btn-primary" id="btnbuy2" @click="goToPurchasePage">전체 구매하기</button>
+    </div>
+  </div>
+</div>
 </div>
   
 
@@ -153,7 +157,6 @@ new Vue({
     	        alert("요청 처리 실패");
     	    });
     	},
-
 
 
       goToPurchasePage() {

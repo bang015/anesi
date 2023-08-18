@@ -18,7 +18,7 @@
   padding: 10px 20px;
   background-color: #e0d4c6;
   width : 100%;
-  height: 10%;  
+  height: 100px;  
 }
 
 .admin_header span {
@@ -225,6 +225,11 @@
 	grid-row-end: 2;	
 }
 
+.inquiry{
+  
+
+}
+
 
 
 
@@ -351,7 +356,7 @@ border:1px solid black;
 				<span>고객현황<span>최근 1주일기준</span></span>
 				<hr>
 				
-				<i class="iconA fa-solid fa-comments"></i>
+				<i class="iconA fa-solid fa-user"></i>				
 				<ul class="deliveryA">
 					<li>새로 작성된 리뷰</li>
 					<li>평점낮은리뷰</li>
@@ -374,7 +379,7 @@ border:1px solid black;
 					<a class="inquiryB">기타</a>
 				</ul>
 				
-				<div>
+				<div class="inquiryC">
 					<span>Q. 하단의 길이가 몇센티인가요?</span>
 					2023.02.05
 				</div>

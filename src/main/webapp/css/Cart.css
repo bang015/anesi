@@ -1,81 +1,58 @@
 @charset "EUC-KR";
 
-body{
-	background-color:white;
-	width: 800px;
-	left: 400px;
 
-	}
-.firstbox{
-background-color: white;
-padding-left: 40px;
+.cart-item {
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 1rem;
 }
 
-.cartImg{
-	width: 60px;
+.cart-item img {
+  max-width: 20%;
 }
-		#container{
-				font-size: 20px;
-			margin-top: 200px;
-			margin-left: 40px;
-			width: 700px;
-			border: 1px solid whitesmoke;
-			padding: 60px;
-		
-			margin-bottom:100px ;
-			background-color: whitesmoke
-		}
-		
-		
-		input[id="cb1"] + label {
-			position: absolute;
-			left: 470px;
-			top: 220px;
-			size: 20px;
-			
-				display: inline-block;
-				width: 20px;
-				height: 20px;
-				border: 2px solid #bcbcbc;
-				cursor: pointer;
-			}
-			input[id="cb1"]:checked + label {
-				background-color: deepskyblue;
-					position: relative;
-				left: 100px;
-			}
-			input[id="cb1"] {
-				display: none;
-			}
-			#non{
-				position: relative;
-			left: 650px;
-			bottom: 190px;
-			font-size: 15px;
-			}
-			.cal {
-  position: relative;
-  left: 800px;
-  bottom: 250px;
-  width: 400px;
-  border: 1px solid whitesmoke;
-  text-align: center;
-  background-color: whitesmoke;
-  font-size: 18px;
+
+.btn-danger {
+  background-color: #ff5e5e;
+  border: none;
 }
-			th{
-				padding: 15px;
-			}
-			td{
-				padding-left: 15px;
-			}
-			.btn{
-			position: relative;
-			left: 850px;
-			width: 300px;
-			height: 40px;
-			top: 200px;
-			}
+.cal {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.cal p {
+  margin-bottom: 0.5rem;
+}
+#container{
+	margin-top: 180px;
+}
+.cal .btn-primary {
+  margin-top: -5rem;
+  margin-left: 900px;
+}
+#btnbuy{
+	position: relative;
+	bottom: -30px;
+	margin-left: 1000px;
+	width: 200px;
+	height: 40px;
+}
 			
+#btnbuy2{
+	position: relative;
+	bottom: 0px;
+	margin-left: 1000px;
+	width: 200px;
+	height: 40px;
+}
+#delete{
+	position: relative;
+	bottom: 0px;
+}
 			
 			
