@@ -240,33 +240,11 @@ border:1px solid black;
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
-	<div id="app">
+	<div id="admin_first">
 	
-		<header class="admin_header">
-		  <h1>관리자센터</h1>
-		  	<nav>
-				<span>로그인</span>
-				<span>로그아웃</span>
-				<span>도움말</span>
-				<span>아네시 홈페이지</span>
-			</nav>
-		</header>
-		
+	<jsp:include page="adminH.jsp"></jsp:include>
 	
-		
-   	<div class="flex-container1">
-			<div class="side_menu">
-					<div>상품관리</div>
-					<div>판매통계</div>
-					<div>리뷰관리</div>
-					<div>문의관리</div>
-					<div>배송관리</div>
-					<div>고객관리</div>
-					<div>혜택관리</div>
-					<div>알림관리</div>
-			</div>
 			
-		
 		<div class="delivery">
 			<span>주문/배송</span>
 			<hr>
@@ -386,19 +364,14 @@ border:1px solid black;
 				<button>문의 관리 ></button>
 			</div>
 			
-    	</div>
-    	
-			
-			
-		
- 
+    	</div><!-- 컨테이너 end-->
 	</div>
 </body>
 </html>
 
 <script>
 var app = new Vue({
-	el : '#app',
+	el : '#admin_first',
 	data : {
 
 	},// data
