@@ -9,7 +9,7 @@
 <!-- 주석 꼭 남겨주세요 -->
 <body>
 		<header class="admin_header">
-		  <h1><a href="/admin/main.do">관리자센터</a></h1>
+		  <h1>관리자센터</h1>
 		  	<nav>
 		  		<a href="/admin/main.do">홈으로</a>
 				<a href="../login.do">로그인</a>
