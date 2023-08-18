@@ -90,7 +90,7 @@ Copy code
                 <i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark  fa-xl " style="color:#A782C3;"></i>
             </a>
             <a v-else class="scrap_button">
-                <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i>
+                <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
             </a>
         </div> <!-- class="production-item__content" 끝-->
 	    
