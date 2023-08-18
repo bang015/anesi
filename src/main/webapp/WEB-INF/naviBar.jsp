@@ -1,65 +1,39 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
 <link href="../css/NaviBar.css" rel="stylesheet">
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 </head>
 <body>
-<div id="container">
-
+<div id="recentProductsApp">
   <div class="choi">
-    ÃÖ±Ùº»»óÇ°
   </div>
   <div class="thumbnail-container">
-  <div v-for="product in recentProducts" :key="product.id" class="thumbnail">
-    <img :src="item.imgPath + '/' + item.imgName" :alt="product.name" width="100" height="100">
-    <p>{{ product.name }}</p>
+    <div v-for="product in recentProducts" :key="product.productNo" class="thumbnail">
+      <img class="production-item-thumnail__image " alt="ì¸ë„¤ì¼" :src="product.imgPath + '/' + product.imgName">
+    </div>
   </div>
 </div>
-
-  
-</div>
 </body>
+
 <script>
-// ¼¼¼Ç °ª Ãâ·Â
-     var productNo = '<%=session.getAttribute("productNo")%>';
-    console.log('productNo:', productNo);
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-	  var app = new Vue({
-	    el: "#container",
-	    data: {
-	    	  productNo: productNo
-	    },
-	    methods: {
-	      getRecentProducts: function() {
-	        var self = this;
-	        $.ajax({
-	          url: "/selectLatest.dox",
-	          type: "POST",
-	          dataType: "json",
-	          success: function(response) {
-	            var data = response.list;
-	            self.recentProducts = data;
-	          },
-	          error: function(error) {
-	            console.log(error);
-	          }
-	        });
-	      }
-	    },
-	    mounted: function() {
-	      this.getRecentProducts();
-	    }
-	  });
-	});
+var recentProductsApp = new Vue({
+  el: '#recentProductsApp',
+  data: {
+    recentProducts: [],
+  },
+  mounted: function() {
+    this.recentProducts = this.getRecentProducts();
+  },
+  methods: {
+    getRecentProducts: function() {
+      const recentProductKey = 'recentProducts';
+      return JSON.parse(localStorage.getItem(recentProductKey) || '[]');
+    },
+  },
+});
 </script>
-
 </html>
