@@ -242,7 +242,7 @@ h1{
 			<div id="content-head">
 				<div><h1>{{info.title}}</h1></div>
 				<div><img class="profile" src="../css/image/profile.png"></div>
-				<div class="time">{{postCalculateTime(info.cDateTime)}}</div>
+				<div class="time">{{postCalculateTime(info.cDateTime)}}<span v-if="info.cDateTime!=info.uDateTime"> · {{calculateTime(info.uDateTime)}} 수정</span></div>
 				<div class="nick">{{info.nick}}</div>
 			</div>
 			<hr class="hrr">
@@ -279,7 +279,7 @@ h1{
 					                    {{item.comm}}
 					                </span>
 					            </div>
-					            <div class="cDate"><span>{{calculateTime(item.cCDateTime)}} </span><span v-if="item.cCDateTime!=item.cUDatetime"> · {{calculateTime(item.cUDatetime)}} 수정</span>
+					            <div class="cDate"><span>{{calculateTime(item.cCDateTime)}} </span><span v-if="item.cCDateTime!=item.cUDateTime"> · {{calculateTime(item.cUDateTime)}} 수정</span>
 					                <span v-if='sessionNick==item.cNick'>
 					                     · <a @click="fnComEditOpen(item.commentNo)">수정</a>
 					                </span>
@@ -299,7 +299,7 @@ h1{
 					    	:prev-text="'<'"
 					    	:next-text="'>'"
 					    	:container-class="'pagination'"
-					    	:page-class="'page-item'">
+					    	:page-class="'page-item'" v-if="(cList.length>0)">
 						</paginate>
 					</template>
 				</div>
@@ -340,27 +340,43 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	self.cList = data.cList;
-                	self.commentList = data.cList.map(comment => ({ ...comment, commFlg: false }));
-                    console.log(self.commentList);
+                	console.log(self.info);
                 }
             });
 		},
+		fnGetComment : function(){
+			var self = this;
+            var startNum = ((self.selectPage-1) * 10);
+    		var lastNum = 10;
+			var param = {bNo : self.bNo, startNum : startNum, lastNum : lastNum};
+			$.ajax({
+                url : "/community/cList.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) {
+                	self.cList = data.list;
+                	self.commentList = self.cList.map(comment => ({ ...comment, commFlg: false }));
+                	self.cnt = data.cnt;
+	                self.pageCount = Math.ceil(self.cnt / 10);
+                }
+            }); 
+		},
 		fnSearch : function(pageNum){
 			var self = this;
-			self.selectPage = pageNum;
 			var startNum = ((pageNum-1) * 10);
 			var lastNum = 10;
-			var nparmap = {startNum : startNum, lastNum : lastNum};
+			var nparmap = {bNo : self.bNo, startNum : startNum, lastNum : lastNum};
 			$.ajax({
-				url : "list.dox",
+				url : "/community/cList.dox",
 				dataType : "json",
 				type : "POST",
 				data : nparmap,
 				success : function(data) {
-					self.list = data.list;
-					self.cnt = data.cnt;
-					self.pageCount = Math.ceil(self.cnt / 10);
+					self.cList = data.list;
+                	self.commentList = self.cList.map(comment => ({ ...comment, commFlg: false }));
+                	self.cnt = data.cnt;
+	                self.pageCount = Math.ceil(self.cnt / 10);
 				}
 			});
 		},
@@ -518,7 +534,7 @@ var app = new Vue({
 		var self = this;
 		console.log(self.sessionNick);
 		self.fnGetInfo();
-		self.paginatePosts();
+		self.fnGetComment();
 	}// created
 });
 </script>

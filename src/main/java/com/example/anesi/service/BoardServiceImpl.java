@@ -49,8 +49,6 @@ public class BoardServiceImpl implements BoardService{
 		boardMapper.updateViewCnt(map);
 		//게시글 상세보기
 		resultMap.put("info", boardMapper.selectBoardView(map));
-		//댓글 목록
-		resultMap.put("cList", boardMapper.selectComment(map));
 		return resultMap;
 	}
 	@Override
@@ -79,9 +77,12 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.insertComment(map);
 	}
 	@Override
-	public List<Board> selectComment(HashMap<String, Object> map) {
+	public HashMap<String, Object> selectComment(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return boardMapper.selectComment(map);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", boardMapper.selectComment(map));
+		resultMap.put("cnt", boardMapper.commentCnt(map));
+		return resultMap;
 	}
 	@Override
 	public int deleteComment(HashMap<String, Object> map) {

@@ -111,6 +111,13 @@
 		FROM t3_tbl_board_comment
 		WHERE BOARD_NO = #{bNo}
 		ORDER BY C_CDATETIME DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	
+	<!-- 댓글 cnt -->
+	<select id="commentCnt" resultType="int">
+		SELECT COUNT(*) FROM t3_tbl_board_comment
+		WHERE BOARD_NO = #{bNo}
 	</select>
 	
 	<!-- 댓글 삭제 -->
@@ -128,6 +135,4 @@
 		WHERE
 		    COMMENT_NO = #{cNo}
 	</update>
-	
-
 </mapper>

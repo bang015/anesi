@@ -13,7 +13,7 @@ public class Board {
 	private String cNick;
 	private String comm;
 	private String cCDateTime;
-	private String cUDatetime;
+	private String cUDateTime;
 	private int commCnt;
 	
 	
@@ -42,10 +42,10 @@ public class Board {
 		this.cCDateTime = cCDateTime;
 	}
 	public String getcUDatetime() {
-		return cUDatetime;
+		return cUDateTime;
 	}
 	public void setcUDatetime(String cUDatetime) {
-		this.cUDatetime = cUDatetime;
+		this.cUDateTime = cUDatetime;
 	}
 	public String getcNick() {
 		return cNick;
