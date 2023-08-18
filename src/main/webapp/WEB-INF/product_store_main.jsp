@@ -7,10 +7,8 @@ Copy code
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
     <link href="../css/mainCss.css" rel="stylesheet">
     <link href="../css/store_main.css" rel="stylesheet">
-    
     <meta charset="UTF-8">
     <title>스토어메인페이지</title>
     <style>
@@ -18,7 +16,6 @@ Copy code
 </head>
 <body>
 
-    <jsp:include page="naviBar.jsp"></jsp:include>
     <jsp:include page="header.jsp"></jsp:include>
     <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
     
@@ -42,7 +39,7 @@ Copy code
 	   
     <div id="store_main">
         <div class="production-item__content" v-for="item in list">
-            <div class="production-item-header" @click="onThumbnailClick(item)">
+            <div class="production-item-header" @click="fnProductView(item.productNo)">
 		             <a class="production-item-thumnail">
 		                <div class="production-item-thumnail__overlay"></div>
 		                <img class="production-item-thumnail__image " alt="썸네일" :src="item.imgPath + '/' + item.imgName">
@@ -86,14 +83,14 @@ Copy code
 			  </a>
             <!-- 공유하기버튼-->
             <a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes fa-xl"></i></a>
-            <!-- 스크랩북버튼-->
-            <a class="scrap_button">
-			    <i
-			      @click="userId ? (scrapbookList.includes(item.productNo) ? fnDeleteScrapbook(item) : fnInsertScrapbook(item)) : openScrapModal"
-			      class="fa-regular fa-bookmark modal-toggle-button fa-xl"
-			      :style="{ color: scrapbookList.includes(item.productNo) ? '#A782C3' : '' }"
-			    ></i>
-			  </a>
+            <!-- 스크랩버튼-->
+            <a v-if="userId!=''" class="scrap_button">
+                <i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button  fa-xl"></i>
+                <i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark  fa-xl " style="color:#A782C3;"></i>
+            </a>
+            <a v-else class="scrap_button">
+                <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i>
+            </a>
         </div> <!-- class="production-item__content" 끝-->
 	    
 	    
@@ -242,7 +239,7 @@ var app = new Vue({
             const truncatedPrice = Math.floor(price / 100) * 100;
             return truncatedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
-       
+
         // 모달 열기
 	    openCartModal: function() {
           var self = this;
@@ -256,29 +253,6 @@ var app = new Vue({
           var self = this;
           self.showScrapDeleteModal = true;
 	    },
-	    fnAddRecentProducts: function(item) {
-			  const recentProductKey = 'recentProducts';
-			  let recentProducts = JSON.parse(localStorage.getItem(recentProductKey) || '[]');
-
-			  // 이미 최근 본 상품에 동일한 상품이 있으면 제거
-			  recentProducts = recentProducts.filter(product => product.productNo !== item.productNo);
-
-			  // 최근 본 상품 배열에 추가
-			  recentProducts.unshift(item);
-
-			  // 최근 본 상품 배열의 크기를 5개로 유지
-			  if (recentProducts.length > 5) {
-			    recentProducts.pop();
-			  }
-
-			  // 로컬 스토리지에 저장
-			  localStorage.setItem(recentProductKey, JSON.stringify(recentProducts));
-			  localStorage.setItem('thumbnailSrc', item.imgPath + '/' + item.imgName);
-			},
-			 onThumbnailClick: function(item) {
-			      this.fnProductView(item.productNo);
-			      this.fnAddRecentProducts(item);
-			    },
 	
 	    // 모달 닫기
 	    closeModal: function() {
