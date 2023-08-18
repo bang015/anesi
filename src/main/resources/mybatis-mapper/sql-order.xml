@@ -37,12 +37,12 @@
 	    INSERT INTO t3_tbl_user_order (
 	        PRODUCT_NO, OPTION_NO, USER_NO, ADDR_NO, DELIVERY_SIT, REQUEST,
 	        ORDER_PRICE, ORDER_NAME, ORDER_EMAIL, ORDER_PHONE,
-	        RECEIPT_NAME, RECEIPT_PHONE, CNT
+	        RECEIPT_NAME, RECEIPT_PHONE, CNT, PAYMENT_NO
 	    )
 	    VALUES (
 	        #{productNo}, #{optionNo}, #{userNo}, #{addrNo}, '1', #{request},
 	        #{orderPrice}, #{orderName}, #{orderEmail}, #{orderPhone},
-	        #{receiptName}, #{receiptPhone}, #{cnt}
+	        #{receiptName}, #{receiptPhone}, #{cnt}, #{paymentNo}
 	    )
 	</insert>
 	<update id="deleteCoupon" parameterType="hashmap">

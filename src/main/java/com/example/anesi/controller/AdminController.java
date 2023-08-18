@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Product;
+import com.example.anesi.model.UserOrder;
 import com.example.anesi.service.AdminService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +34,12 @@ public class AdminController {
 	public String edit(Model model) throws Exception{
 		
 		return "/product_edit";
+	}
+	
+	@RequestMapping("/admin/delivery.do") 
+	public String delivery(Model model) throws Exception{
+		
+		return "/admin_delivery";
 	}
 	
 	//상품 전체 조회
@@ -98,6 +105,15 @@ public class AdminController {
 		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
 		map.put("list", list);
 		resultMap.put("cnt", adminService.adminRemoveOption(map));
+		return new Gson().toJson(resultMap);
+	}
+	
+	//옵션 추가
+	@RequestMapping(value = "/admin/orderList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String orderList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+//		List<UserOrder> list = ;
+//		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
 }
