@@ -75,26 +75,22 @@ Copy code
                 <span class="production-item-rating__score ">{{item.csatAvg}}.5</span>
             </div>
             <!-- 장바구니버튼-->
-            <a  v-if="userId!=''" class="cart_button">
-                <i @click="fnInsertUserCart(item)" v-if="!(cartList.includes(item.productNo))" class="fa-solid fa-cart-shopping fa-xl " ></i>
-                <i @click="fnUpdateUserCart(item)" v-if="cartList.includes(item.productNo)" class="fa-solid fa-cart-shopping fa-xl" ></i>
-            </a>
-            
-            <!-- 유저번호가 없을때, 로그인화면으로 전환-->
-            <a v-else class="cart_button">
-                <i @click="fnAddNonUserCart(item)" v-if="!(nonuserCartList.includes(item.productNo))" class="fa-solid fa-cart-shopping fa-xl" ></i>
-                <i @click="fnUpdateUserCart(item)" v-if="nonuserCartList.includes(item.productNo)" class="fa-solid fa-cart-shopping fa-xl"  ></i>
-            </a>
+             <a class="cart_button">
+			    <i
+			      @click="userId ? (cartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnInsertUserCart(item)) : (nonuserCartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnAddNonUserCart(item))"
+			      class="fa-solid fa-cart-shopping fa-xl"
+			    ></i>
+			  </a>
             <!-- 공유하기버튼-->
             <a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes fa-xl"></i></a>
-            <!-- 스크랩버튼-->
-            <a v-if="userId!=''" class="scrap_button">
-                <i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button  fa-xl"></i>
-                <i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark  fa-xl " style="color:#A782C3;"></i>
-            </a>
-            <a v-else class="scrap_button">
-                <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button"></i>
-            </a>
+            <!-- 스크랩북버튼-->
+            <a class="scrap_button">
+			    <i
+			      @click="userId ? (scrapbookList.includes(item.productNo) ? fnDeleteScrapbook(item) : fnInsertScrapbook(item)) : openScrapModal"
+			      class="fa-regular fa-bookmark modal-toggle-button fa-xl"
+			      :style="{ color: scrapbookList.includes(item.productNo) ? '#A782C3' : '' }"
+			    ></i>
+			  </a>
         </div> <!-- class="production-item__content" 끝-->
 	    
 	    
@@ -192,6 +188,8 @@ var app = new Vue({
 		scrapbookList : [],
 		cartList : [],
 		nonuserCartList : [],
+		nonuserNo : ""
+
      
 
 	},// data
