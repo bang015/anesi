@@ -159,14 +159,34 @@ new Vue({
     	},
 
 
-      goToPurchasePage() {
-          if (this.cartItems.length > 0) {
-            sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-            window.location.href = "../order/main.do";
-          } else {
-            alert('장바구니에 상품이 없습니다. 상품을 추가한 후 다시 시도해주세요.');
-          }
-        }
+    	goToPurchasePage() {
+    		  if (this.cartItems.length > 0) {
+    		    sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+
+    		    // 선택된 상품 정보를 POST 메서드로 전달하기 위해 form 생성
+    		    const form = document.createElement('form');
+    		    form.method = 'POST';
+    		    form.action = '../order/main.do';
+
+    		    // 필요한 input 요소 추가: productNo, optionNo, quantity
+    		    this.cartItems.forEach((item) => {
+    		      ['productNo', 'optionNo', 'quantity'].forEach((key) => {
+    		        const input = document.createElement('input');
+    		        input.type = 'hidden';
+    		        input.name = key;
+    		        input.value = item[key];
+    		        form.appendChild(input);
+    		      });
+    		    });
+
+    		    // 페이지 연결
+    		    document.body.appendChild(form);
+    		    form.submit();
+    		  } else {
+    		    alert('장바구니에 상품이 없습니다. 상품을 추가한 후 다시 시도해주세요.');
+    		  }
+    		} // 수정된 부분: 누락된 '}' 추가
+
     }
 });
 </script>
