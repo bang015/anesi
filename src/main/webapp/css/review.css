@@ -1,0 +1,365 @@
+@charset "EUC-KR";
+
+	.content-review{
+		margin-left: 70px;
+		width: 700px;
+		display: inline-block;
+		margin-top: 30px;
+	}
+	.review-span{
+		color : rgba(0,0,0,.4);
+		font-weight: bold;
+		font-size: 17px;
+	}
+	.review-title2{
+		font-size: 20px;
+		font-weight: bold;
+		display: inline-block;
+		width: 700px;
+	}
+	.review-text2{
+		color:#A782C3; 
+	}
+	.review-btn{
+		float: right;
+		background-color: #fff;
+		border : 0;
+		color : #A782C3;
+		font-size: 15px;
+		font-weight: bold;
+		font-family: 'Pretendard-Regular';
+	}
+	.csat-box{
+		background-color: #f7f8fa;
+		width: 700px;
+		height : 150px;
+		border-radius: 8px;
+		margin-top: 30px;
+		display: flex;
+	}
+	.csat1{
+		display : inline-block;
+		width: 300px;
+		height: 120px;
+		border-right: 2px solid #ededed;
+		margin-top: 20px;
+		margin-left: 30px;
+		 
+	}
+	.csat-box1{
+		margin-top : 45px;
+		margin-left: 55px;
+	}
+	.csatAvg{
+		margin-left: 10px;
+		font-size: 25px;
+		font-weight: bold;
+	}
+	.csat2{
+		display: inline-block;
+	}
+	.recently-viewed{
+		border: 1px solid;
+		width: 400px;
+		height: 525px;
+		position: sticky;
+		top: 240px;
+	}
+	.content-box2{
+		display: flex;
+	}
+	.content-view{
+		width: 800px;
+	}
+	.user-profile{
+		display: inline-block;
+		width: 25px;
+		height: 25px;
+		margin-right: 5px;
+	}
+	.user-profileImg{
+		width: 25px;
+		height: 25px;
+		border-radius: 100px;
+		
+	}
+	.review-user{
+		display: inline-block;
+	}
+	.user-nick{
+		margin-left: 2px;
+		font-size: 14px;
+		color: #424242;
+		margin-bottom: 1px;
+	}
+	.review-user-box{
+		display: inline-block;
+		margin-top: 20px;
+	}
+	.review-box{
+		border-top: 1px solid #ededed;
+		margin-top: 10px;
+	}
+	.review-box2{
+		font-size: 16px;
+		margin-top: 10px;
+		margin-left: 250px;
+		margin-bottom: 30px;
+	}
+	.review-optionName{
+		margin-top: 10px;
+		border-left: 3px solid #ededed;
+	}
+	.review-optionName1{
+		margin-left: 5px;
+	}
+	.review-wrap{
+		margin-top: 30px;
+	}
+	.review-content{
+		margin-top : 20px;
+		margin-bottom : 20px;
+		font-size: 15px;
+	}
+	.help-btn{
+		height: 30px;
+		border: 1px solid #A782C3;
+		background-color: #fff;
+		color: #A782C3;
+		border-radius: 5px;
+		font-weight: bold;
+	}
+	.review-img-box{
+		width: 200px;
+		height: 200px;
+		margin-top: 20px;
+	}
+	.review-img{
+		width: 200px;
+		height: 200px;
+		border-radius: 5px;
+	}
+	.pagination {
+        display: inline-flex;
+        margin-top: 40px;
+        margin-left: 200px;
+    }
+    ul {
+    }
+	.pagination li {
+	    min-width:32px;
+	    padding:2px 6px;
+	    text-align:center;
+	    margin:0 3px;
+	    border-radius: 6px;
+	    border:1px solid #eee;
+	    color:#666;
+	    display : inline;
+	}
+	.pagination li:hover {
+	    background: #E4DBD6;
+	}
+	.page-item a {
+	    color:#666;
+	    text-decoration: none;
+	    padding: 4px 12px ;
+	}
+	.pagination li.active {
+	    background-color : #A782C3;
+	    color:#fff;
+	}
+	.pagination li.active a {
+	    color:#fff;
+	    
+	}
+	.pagination a{
+		padding: 4px 12px ;
+	}
+	.quantity-box {
+	  display: flex;
+	  align-items: center;
+	}
+	/*리뷰 작성페이지*/
+	.review-add{
+		background-color: #fff;
+		width: 700px;
+		border-radius: 5px;
+	}
+	.review-add-box{
+		width: 600px;
+		margin: 0 auto;
+	}
+	.review-product-name{
+		margin-top: 20px;
+	}
+	.review-add-name{
+		font-size: 20px;
+		display: inline-block;
+		margin-right: 5px;
+	}
+	.review-add-option{
+		font-size: 17px;
+	}
+	.review-product{
+		margin-top: 30px;
+		margin-left: 10px;
+	}
+	.review-title1{
+		margin-top : 30px;
+		margin-left : 270px;
+		margin-bottom : 20px;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.review-product-csat{
+		margin-bottom: 20px;
+		padding-bottom: 10px;
+		margin-top: 20px;
+	}
+	.review-csat{
+		font-size: 16px;
+		font-weight: bold;
+		margin-bottom: 10px;
+		display: inline-block;
+	}
+	.not-check-csat{
+		font-size: 16px;
+		font-weight: bold;
+		margin-bottom: 10px;
+		display: inline-block;
+		color: #f06060;
+	}
+	.review-csat-box{
+		display: flex;
+	}
+	.review-csat1{
+		line-height: 35px;
+		font-size: 16px;
+		margin-right: 10px;
+	}
+	.review-top-wrap{
+		display: flex;
+	}	
+	.img-add{
+		margin-bottom: 10px;
+	}
+	.img-add1{
+		font-size: 17px;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	.review-product-img1{
+		width: 150px;
+		height: 150px;
+		border-radius: 5px;
+	}
+	.file-upload-label{
+		width: 600px;
+		height: 40px;
+		border-radius: 5px;
+		border: 1px solid #A782C3;
+		background-color: #fff;
+		color: #A782C3;
+		font-size: 16px;
+		font-weight: bold;
+		display: flex;
+		
+	}
+	.img-icon{
+		margin-left: 240px;
+		margin-top: 4px;
+	}
+	.img-btn-text{
+		margin-top : 11px;
+		margin-left: 10px;
+	}
+	
+	.review-img-btn-wrap{
+		margin-bottom: 10px;
+	}
+	.fileName{
+		margin: 0;
+	}
+	.review-add-text{
+		margin-top : 20px;
+		width: 580px;
+		border-radius: 5px;
+		line-height: 10px;
+		padding: 10px;
+		font-weight: 500;
+		resize: none;
+ 		outline: none;
+	}
+	.not-check-textarea{
+		margin-top : 20px;
+		width: 580px;
+		border-radius: 5px;
+		border-color : #f77;
+		line-height: 10px;
+		padding: 10px;
+		font-weight: 500;
+		resize: none;
+ 		outline: none;
+	}
+	.review-add-btn{
+		margin-top : 40px;
+		width: 600px;
+		height: 40px;
+		border-radius: 5px;
+		border: 1px solid #A782C3;
+		background-color: #A782C3;
+		margin-bottom: 20px;
+		color: #fff;
+		font-size: 16px;
+		font-weight: 900;
+	}
+	.review-add-btn-wrap{
+		margin-bottom: 40px;
+	}
+	.review-back{
+		float: right;
+		margin-top: 10px;
+		margin-right: 10px;
+	}
+	.review-back button{
+		background-color: #fff;
+		border: 0;
+	}
+	.star-rating {
+	  position: relative;
+	  display: inline-block;
+	  font-size: 0; /* To remove white space between inline-block elements */
+	}	
+	.fa-star.half {
+	  width: 50%;
+	  overflow: hidden;
+	}
+	
+	.fa-star.filled {
+	  color: #A782C3;
+	}
+	
+	.fa-star.empty {
+	  color: #ababab;
+	}
+	.custom-star {
+  	  font-size: 2rem;
+	}
+	.notCheck{
+		color: #f77;
+		font-size: 12px;
+	}
+	.review-title{
+		font-size: 16px;
+		font-weight: bold;
+		margin-top: 10px;
+		display: inline-block;
+		
+	}
+	.not-check-title{
+		font-size: 16px;
+		font-weight: bold;
+		margin-top: 10px;
+		display: inline-block;
+		color: #f06060;
+	}

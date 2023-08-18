@@ -5,9 +5,16 @@
 <mapper namespace="com.example.anesi.mapper.InquiryMapper">	
 	<!-- 문의 리스트 -->
 	<select id="selectInqiryList" parameterType="hashmap" resultType="com.example.anesi.model.Inquiry">
-		SELECT i.CdateTIME, i.CONTENT, i.REPLY, i.OPENYN, i.INQUIRY_CATEGORY, u.NICK,i.PURCHASE_YN
+		SELECT SUBSTR(i.CdateTIME,1,16) as CdateTIME, i.CONTENT, i.REPLY, i.OPENYN, i.INQUIRY_CATEGORY, u.NICK,i.PURCHASE_YN
 		FROM t3_tbl_user_inquiry i 
 		INNER JOIN t3_tbl_user u ON i.USER_NO = u.USER_NO
+		WHERE PRODUCT_NO = #{productNo}
+		ORDER BY CdateTIME desc
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	<!-- 리뷰 페이지 카운트 --> 
+	<select id="selectCnt1" resultType="int">
+		SELECT COUNT(*) FROM t3_tbl_user_inquiry
 		WHERE PRODUCT_NO = #{productNo}
 	</select>
 	<!-- 리뷰 개수 -->
@@ -16,6 +23,12 @@
 		FROM t3_tbl_user_inquiry 		
 		WHERE PRODUCT_NO = #{productNo}
 	</select>
+	<!-- 문의 등록 -->
+	<insert id="insertInquiry" parameterType="hashmap">
+		INSERT INTO t3_tbl_user_inquiry(USER_NO, PRODUCT_NO, CONTENT, OPENYN, INQUIRY_CATEGORY, PURCHASE_YN, OPTION_NO)
+		VALUES
+			(#{userNo},#{productNo}, #{content}, #{openYn}, #{inquiryCategory}, #{purchaseYn}, #{optionNo})
+	</insert>
 </mapper>
 
 	

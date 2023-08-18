@@ -10,638 +10,12 @@
 <script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <link href="../css/mainCss.css" rel="stylesheet">
+<link href="../css/inquiry.css" rel="stylesheet">
+<link href="../css/review.css" rel="stylesheet">
+<link href="../css/productView.css" rel="stylesheet">
 <meta charset="EUC-KR">
 <title>상품 상세 페이지</title>
 <style>
-	/* html { 
-  		scroll-behavior: smooth;
-	} */
-	.content{
-		position: relative;
-    	min-height: 1px;
-		width: 1300px;
-		margin: 0 auto;
-		margin-top : 170px;
-		
-	}
-	.content-box{
-		display : flex;
-		width: 1200px;
-		margin: 0 auto;
-		margin-bottom: 30px;
-		min-height: 700px;
-	}
-	.main-left{
-		width: 60%;
-		display: inline-block;
-		position: relative;
-	}
-	.main-box{
-		width : 400px;
-		display: inline-block;
-		margin-left: 30px;
-		margin-top: 50px;
-	}
-	.category-wrap{
-		margin-top: 20px;
-		font-size: 15px;
-		color: #424242;
-	}
-	.main-img-table{
-	}
-	.main-ul{
-		list-style-type: none;
-		padding-left: 0px;
-	}
-	.main-li{
-		margin-bottom: 5px;
-		margin-top: 0px;
-		
-	}
-	.main-li img{
-		width: 100px;
-		height: 100px;
-		border-radius: 10px;
-	}
-	.main-img{
-		position : absolute;
-		left : 110px;
-		top : 51px;
-		width: 600px;
-		height: 600px;
-		
-	}
-	.main-img img{
-		width: 600px;
-		height: 600px;
-		border-radius: 10px;	
-	}
-	.main-title{
-		font-size: 30px;
-		font-weight:bold;
-		margin-top: 0;
-		
-	}
-	.main-csat{
-		font-size : 20px;
-		margin-top: 20px;
-	}
-	.main-discount{
-		margin-top: 20px;
-		font-size: 20px;
-	}
-	.price{
-		text-decoration: line-through;
-	}
-	.discount-price{
-		height : 50px;
-		border-bottom: 1px solid #ededed;
-		font-size: 30px;
-	}
-	.main-price2{
-		height : 50px;
-		border-bottom: 1px solid #ededed;
-		font-size: 30px;
-		margin-top: 20px;
-	}
-	.main-option{
-		margin-top: 30px;
-	}
-	.option-box{
-		width: 100%;
-		height: 50px;
-		font-size: 18px;
-		border-radius: 5px;
-		border: 1px solid #ededed;
-	}
-	.main-btn-wrap{
-		margin-top: 30px;
-	}
-	.main-btn-wrap button{
-		width: 198px;
-		height: 50px;
-		border-radius: 5px;
-		font-size: 17px;
-	}
-	.btn1{
-		border: 1.5px solid #A782C3;
-		color: #A782C3;
-		background-color: #fff;
-		font-weight: bold;
-	}
-	.btn2{
-		border: 0;
-		color: #fff;
-		background-color: #A782C3;
-	}
-	.nav-box{
-		overflow: auto;
-		position: sticky;
-		top: 165px; 
-		z-index: 999;
-	}
-	.nav-wrap{
-    	border-bottom: 1px solid #ededed;
-		border-top: 1px solid #ededed;
-		width : 100%;
-		height: 52px;
-		background-color: #fafafa;
-		
-	}
-	.nav-wrap div{
-		font-size : 16px;
-		font-weight : bold;
-		line-height : 50px;
-		text-align : center;
-		width: 395.5px;
-		height : 50px;
-		display: inline-block;
-		
-	}
-	.nav-wrap div:hover{
-		border-bottom: 2px solid #A782C3;
-		color: #A782C3;
-	}
-	.nav-wrap a{
-		font-family: 'Pretendard-Regular';
-		font-size: 17px;
-		padding: 17px 165px 17px 168px;
-	}
-	.content-img{
-		margin-left: 70px;
-		width: 700px;
-		display: inline-block;
-	}
-	.content-img img{
-		width: 700px;
-	}
-	.content-title{
-		font-size: 20px;
-		font-weight: bold;
-		margin-left: 70px;
-		margin-top: 20px;
-		width: 700px;
-		display: inline-block;
-	}
-	.content-text-box{
-		background-color: #FDF4F5;
-		text-align: center;
-		width: 700px;
-		height : 200px;
-		font-size: 20px;
-		margin-top: 20px;
-		margin-bottom: 50px;
-	}
-	.text1{
-		color: #F54644;
-		line-height: 80px;
-		font-weight: bold;
-		font-size: 30px;
-	}
-	.content-review{
-		margin-left: 70px;
-		width: 700px;
-		display: inline-block;
-		margin-top: 30px;
-	}
-	.review-span{
-		color : rgba(0,0,0,.4);
-		font-weight: bold;
-		font-size: 17px;
-	}
-	.review-title2{
-		font-size: 20px;
-		font-weight: bold;
-		display: inline-block;
-		width: 700px;
-	}
-	.review-text2{
-		color:#A782C3; 
-	}
-	.review-btn{
-		float: right;
-		background-color: #fff;
-		border : 0;
-		color : #A782C3;
-		font-size: 15px;
-		font-weight: bold;
-		font-family: 'Pretendard-Regular';
-	}
-	.csat-box{
-		background-color: #f7f8fa;
-		width: 700px;
-		height : 150px;
-		border-radius: 8px;
-		margin-top: 30px;
-		display: flex;
-	}
-	.csat1{
-		display : inline-block;
-		width: 300px;
-		height: 120px;
-		border-right: 2px solid #ededed;
-		margin-top: 20px;
-		margin-left: 30px;
-		 
-	}
-	.csat-box1{
-		margin-top : 45px;
-		margin-left: 55px;
-	}
-	.csatAvg{
-		margin-left: 10px;
-		font-size: 25px;
-		font-weight: bold;
-	}
-	.csat2{
-		display: inline-block;
-	}
-	.recently-viewed{
-		border: 1px solid;
-		width: 400px;
-		height: 525px;
-		position: sticky;
-		top: 240px;
-	}
-	.content-box2{
-		display: flex;
-	}
-	.content-view{
-		width: 800px;
-	}
-	.user-profile{
-		display: inline-block;
-		width: 25px;
-		height: 25px;
-		margin-right: 5px;
-	}
-	.user-profileImg{
-		width: 25px;
-		height: 25px;
-		border-radius: 100px;
-		
-	}
-	.review-user{
-		display: inline-block;
-	}
-	.user-nick{
-		margin-left: 2px;
-		font-size: 14px;
-		color: #424242;
-		margin-bottom: 1px;
-	}
-	.review-user-box{
-		display: inline-block;
-		margin-top: 20px;
-	}
-	.review-box{
-		border-top: 1px solid #ededed;
-		margin-top: 10px;
-	}
-	.review-box2{
-		font-size: 16px;
-		margin-top: 10px;
-		margin-left: 250px;
-		margin-bottom: 30px;
-	}
-	.review-optionName{
-		margin-top: 10px;
-		border-left: 3px solid #ededed;
-	}
-	.review-optionName1{
-		margin-left: 5px;
-	}
-	.review-wrap{
-		margin-top: 30px;
-	}
-	.review-content{
-		margin-top : 20px;
-		margin-bottom : 20px;
-		font-size: 15px;
-	}
-	.help-btn{
-		height: 30px;
-		border: 1px solid #A782C3;
-		background-color: #fff;
-		color: #A782C3;
-		border-radius: 5px;
-		font-weight: bold;
-	}
-	.review-img-box{
-		width: 200px;
-		height: 200px;
-		margin-top: 20px;
-	}
-	.review-img{
-		width: 200px;
-		height: 200px;
-		border-radius: 5px;
-	}
-	.pagination {
-        display: inline-flex;
-        margin-top: 40px;
-        margin-left: 200px;
-    }
-    ul {
-    }
-	.pagination li {
-	    min-width:32px;
-	    padding:2px 6px;
-	    text-align:center;
-	    margin:0 3px;
-	    border-radius: 6px;
-	    border:1px solid #eee;
-	    color:#666;
-	    display : inline;
-	}
-	.pagination li:hover {
-	    background: #E4DBD6;
-	}
-	.page-item a {
-	    color:#666;
-	    text-decoration: none;
-	    padding: 4px 12px ;
-	}
-	.pagination li.active {
-	    background-color : #A782C3;
-	    color:#fff;
-	}
-	.pagination li.active a {
-	    color:#fff;
-	    
-	}
-	.pagination a{
-		padding: 4px 12px ;
-	}
-	.quantity-box {
-	  display: flex;
-	  align-items: center;
-	}
-	.choice-option ul{
-		padding: 0;
-	}
-	.choice-option li{
-		list-style: none;
-		background-color:#ededed; 
-		border-radius: 5px;
-		padding: 10px;
-	}
-	.choice-option li span{
-		font-size: 17px;
-		margin-top: 30px;
-		margin-left: 8px;
-	}
-	.choice-option li .del-btn{
-		border: 0;
-		background-color: #ededed;
-		float: right;
-		
-	}
-	.option-stock{
-		display: flex;
-  		align-items: center;
-	}
-	.quantity-box{
-	    border-radius: 4px;
-		border: 1px solid rgb(218, 221, 224);
-		background: rgb(255, 255, 255);
-		width: 77px;
-		margin-top: 12px;
-		margin-left: 8px;
-	}
-	.quantity-box input{
-		border: 0;
-		width: 25px;
-		height: 30px;
-		text-align: center;
-	}
-	.minus-btn, .plus-btn{
-		background-color: #fff;
-		border: 0;
-	}
-	.option-stock-price{
-		overflow: auto;
-		font-size: 18px;
-		font-weight: bold;
-		flex: 1 1 0%;
-    	text-align: right;
-    	margin-top: 25px;
-	}
-	.total-price{
-		margin-top: 30px;
-		display: flex;
-		align-items: center;
-	}
-	.total-title{
-		font-size: 18px;
-		font-weight: bold;
-	}
-	.total-price1{
-		flex: 1 1 0%;
-	}
-	.total-price2{
-		float: right;
-	}
-	.review-add{
-		background-color: #fff;
-		width: 700px;
-		border-radius: 5px;
-	}
-	.review-product-name{
-		margin-top: 20px;
-	}
-	.review-add-name{
-		font-size: 20px;
-		display: inline-block;
-		margin-right: 5px;
-	}
-	.review-add-option{
-		font-size: 17px;
-	}
-	.review-add-box{
-		width: 600px;
-		margin: 0 auto;
-		
-	}
-	.review-product{
-		margin-top: 30px;
-		margin-left: 10px;
-	}
-	.review-title1{
-		margin-top : 30px;
-		margin-left : 270px;
-		margin-bottom : 20px;
-		font-size: 20px;
-		font-weight: bold;
-	}
-	.review-product-csat{
-		margin-bottom: 20px;
-		padding-bottom: 10px;
-		margin-top: 20px;
-	}
-	.review-csat{
-		font-size: 16px;
-		font-weight: bold;
-		margin-bottom: 10px;
-		display: inline-block;
-	}
-	.not-check-csat{
-		font-size: 16px;
-		font-weight: bold;
-		margin-bottom: 10px;
-		display: inline-block;
-		color: #f06060;
-	}
-	.review-csat-box{
-		display: flex;
-	}
-	.review-csat1{
-		line-height: 35px;
-		font-size: 16px;
-		margin-right: 10px;
-	}
-	.review-top-wrap{
-		display: flex;
-	}	
-	.img-add{
-		margin-bottom: 10px;
-	}
-	.img-add1{
-		font-size: 17px;
-		font-weight: bold;
-		margin-bottom: 10px;
-	}
-	.review-product-img1{
-		width: 150px;
-		height: 150px;
-		border-radius: 5px;
-	}
-	.file-upload-label{
-		width: 600px;
-		height: 40px;
-		border-radius: 5px;
-		border: 1px solid #A782C3;
-		background-color: #fff;
-		color: #A782C3;
-		font-size: 16px;
-		font-weight: bold;
-		display: flex;
-		
-	}
-	.img-icon{
-		margin-left: 240px;
-		margin-top: 4px;
-	}
-	.img-btn-text{
-		margin-top : 11px;
-		margin-left: 10px;
-	}
-	
-	.review-img-btn-wrap{
-		margin-bottom: 10px;
-	}
-	.fileName{
-		margin: 0;
-	}
-	.review-add-text{
-		margin-top : 20px;
-		width: 580px;
-		border-radius: 5px;
-		line-height: 10px;
-		padding: 10px;
-		font-weight: 500;
-		resize: none;
- 		outline: none;
-	}
-	.not-check-textarea{
-		margin-top : 20px;
-		width: 580px;
-		border-radius: 5px;
-		border-color : #f77;
-		line-height: 10px;
-		padding: 10px;
-		font-weight: 500;
-		resize: none;
- 		outline: none;
-	}
-	.review-add-btn{
-		margin-top : 40px;
-		width: 600px;
-		height: 40px;
-		border-radius: 5px;
-		border: 1px solid #A782C3;
-		background-color: #fff;
-		margin-bottom: 20px;
-		color: #A782C3;
-		font-size: 16px;
-		font-weight: 900;
-	}
-	.review-add-btn-wrap{
-		margin-bottom: 40px;
-	}
-	.review-back{
-		float: right;
-		margin-top: 10px;
-		margin-right: 10px;
-	}
-	.review-back button{
-		background-color: #fff;
-		border: 0;
-	}
-	.star-rating {
-	  position: relative;
-	  display: inline-block;
-	  font-size: 0; /* To remove white space between inline-block elements */
-	}	
-	.fa-star.half {
-	  width: 50%;
-	  overflow: hidden;
-	}
-	
-	.fa-star.filled {
-	  color: #A782C3;
-	}
-	
-	.fa-star.empty {
-	  color: #ababab;
-	}
-	.custom-star {
-  	  font-size: 2rem;
-	}
-	.notCheck{
-		color: #f77;
-		font-size: 12px;
-	}
-	.review-title{
-		font-size: 16px;
-		font-weight: bold;
-		margin-top: 10px;
-		display: inline-block;
-		
-	}
-	.not-check-title{
-		font-size: 16px;
-		font-weight: bold;
-		margin-top: 10px;
-		display: inline-block;
-		color: #f06060;
-	}
-	.inquiry-wrap{
-		margin-left: 70px;
-		margin-top: 40px;
-	}
-	.inquiry-content{
-		margin-top: 20px;
-	}
-	.inquiry-category{
-		font-size: 13px;
-	}
-	.inquiry-user{
-		color: #bdbdbd;
-		font-size: 14px;
-		margin-top: 5px;
-		margin-bottom: 5px;
-	}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -777,7 +151,7 @@
 						<div class="nav-wrap">
 							<div class="product-a"><a href="#product">상품정보</a></div>
 							<div class="review-a"><a href="#review">리뷰  <span class="review-span" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span></a></div>
-							<div class="inquiry-a"><a href="#inquiry">문의</a></div>
+							<div class="inquiry-a"><a href="#inquiry">문의 <span class="review-span" v-if="inquiryListCnt > 0">{{inquiryListCnt}}</span></a></div>
 						</div>
 					</div>
 					<div class="content-box2">
@@ -803,7 +177,7 @@
 									
 							        <div class="review-add">
 							        <div class="review-back">
-										<button @click="closeScrapModal()"><i  class="fa-solid fa-x fa-2x" style="color: #410349;"></i></button>
+										<button @click="closeScrapModal()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
 									</div>
 							        	<div class="review-add-box">
 								        	<div class="review-add-product">
@@ -860,10 +234,10 @@
 									        	<span class="notCheck" v-if="reviewCheck == true">필수 입력 항목입니다.</span>
 									        	<div class="review-add-textarea">
 									        		<textarea :class="reviewTextareaClass" @click="reviewTextarea" @input="updateCharacterCount" rows="10" cols="53.9" v-model="reviewText" placeholder="자세하고 솔직한 리뷰는 다른고객에게 큰 도움이 됩니다."></textarea>
-									        		 <div class="character-count">{{ characterCount }} / 500</div>
+									        		 <div class="character-count">{{ characterCount }} / 200</div>
 									        	</div>
 									        	<div class="review-add-btn-wrap"> 
-									        		<button @click="fnReviewAdd" class="review-add-btn">리뷰 등록</button>
+									        		<button @click="fnReviewAdd" class="review-add-btn">완료</button>
 									        	</div>
 								        	</div>
 							        	</div>
@@ -942,7 +316,7 @@
 									<div class="review-box2" v-if="reviewList.length == 0">
 										첫 리뷰를 남겨주세요!
 									</div>
-									<template v-if="cnt > 0">
+									<template v-if="pageCount > 1">
 									  <paginate
 									    :page-count="pageCount"
 									    :page-range="5"
@@ -958,26 +332,120 @@
 							</div><!-- content-review end -->
 							<div class="inquiry-wrap" id="inquiry">
 								<div class="review-title2" >
-									<span class="review-text1">문의 </span><span class="review-text2"> {{inquiryListCnt}}</span>
-									<button class="review-btn">문의하기</button>
+									<span class="review-text1">문의 </span><span class="review-text2" v-if="inquiryListCnt > 0"> {{inquiryListCnt}}</span>
+									<button class="review-btn" @click="openScrapModal2">문의하기</button>
 								</div>
-								<div class="inquiry-content" v-for="item in inquiryList">
+								<div class="modal" v-if="showScrapModal2">
+									<div class="inquiry-add-wrap">
+										<div class="review-back">
+											<button @click="closeScrapModal2()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
+										</div>
+										<div class="inquiry-add-box">										
+											<div class="inquiry-add-title">
+												상품 문의하기
+											</div>
+											<div class="inquiry-add-category">
+												<div class="inquiry-content-title">
+													문의 유형
+												</div>
+												<div class="inquiry-category-box">
+													<div class="category-box active category-box1" @click="changeCategoryStyle('상품')">상품</div>
+													<div class="category-box category-box2" @click="changeCategoryStyle('배송')">배송</div>
+													<div class="category-box category-box3" @click="changeCategoryStyle('반품')">반품</div>
+													<div class="category-box category-box4" @click="changeCategoryStyle('교환')">교환</div>
+													<div class="category-box category-box5" @click="changeCategoryStyle('환불')">환불</div>
+													<div class="category-box category-box6" @click="changeCategoryStyle('기타')">기타</div>
+												</div>											
+											</div>
+											<div class="inquiry-add-option">
+												<div class="inquiry-content-title">
+													상품 및 옵션	
+												</div>
+												<div class="inquiry-option-select">
+													<select class="option-select-box" v-model="inquiryOption">
+														<option value=0>상품을 선택하세요.</option>
+														<option v-for="item in option" :value="item.optionNo">
+															{{item.optionName}}
+														</option>
+													</select>
+													<div class="option-not-check">
+														<label class="styled-checkbox">																												
+															<input class="inquiry-checkbox" type="checkbox">														    														
+															<span class="inquiry-span">선택안함</span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="inquiry-add-content">
+												<div class="inquiry-content-title">
+													문의내용
+												</div>
+												<textarea :class="reviewTextareaClass" @click="reviewTextarea" @input="updateCharacterCount" rows="10" cols="53.9" v-model="inquiryText" placeholder="문의 내용을 입력하세요."></textarea>
+									        	<div class="character-count">{{ characterCount }} / 200</div>
+											</div>
+											<div class="privateText" v-if="privateCheck">
+												<label class="styled-checkbox">	
+													<input class="inquiry-checkbox" type="checkbox" id="openYnCheckbox" @click="privateInquiry">
+													<span class="inquiry-span">비밀글로 문의하기</span>
+												</label>
+											</div>
+											<div class="inquiry-add-btn-wrap">
+												<button @click="inquiryAdd" class="inquiry-add-btn">완료</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="inquiry-content" v-for="item in inquiryList" v-if="inquiryListCnt > 0">
 									<div class="inquiry-category">
-										{{item.purchaseYn}} / {{item.inquiryCategory}} / <span v-if="item.reply==undefined">답변완료</span><span v-if="item.reply!=undefined">미답변</span>
+										{{item.purchaseYn}}  | {{item.inquiryCategory}}  | <span class="reply-Y" v-if="item.reply!=undefined">답변완료</span><span v-if="item.reply==undefined">미답변</span>
 									</div>
 									<div class="inquiry-user">
-										{{item.nick}}
+										<span class="inquiry-nick">{{item.nick}}</span>
+										<span class="inquiry-time">{{item.cDateTime}}</span>
 									</div>
 									<div v-if="item.openYn =='Y'" class="inquiry-question">
-										{{item.content}}
+										<span class="a-icon">
+											<i class="fa-solid fa-q" style="color: #A782C3;"></i>
+										</span>
+										<span class="inquiry-content-text">
+											{{item.content}}
+										</span>
 									</div>
-									<div v-if="item.reply!=undefined||item.openYn !='Y'" class="inquiry-answer">
-										{{item.reply}}
+									<div  class="inquiry-answer">
+										<span class="a-icon" v-if="item.reply != undefined && item.openYn =='Y'">
+											<i  class="fa-solid fa-a" style="color: #A782C3;"></i>
+										</span>
+										<span class="inquiry-reply" v-if="item.reply!=undefined && item.openYn =='Y'">
+											{{item.reply}}
+										</span>
 									</div>
 									<div class="private-inquiry" v-if="item.openYn=='N'">
-										비밀글입니다.
+										<span class="q-icon">
+											<i  class="fa-solid fa-q" style="color: #A782C3;"></i>
+										</span>
+										<span class="rock-icon">
+											<i class="fa-solid fa-lock" style="color: rgb(175, 175, 175);"></i>
+										</span>
+										<span class="private-text">
+											비밀글입니다.
+										</span>
 									</div>
 								</div>
+								<div v-if="inquiryListCnt == 0" class="non-inquiry-cnt">
+									문의 내역이 없습니다.
+								</div>
+								<template v-if="pageCount1 > 1">
+									  <paginate
+									    :page-count="pageCount1"
+									    :page-range="5"
+									    :margin-pages="2"
+									    :click-handler="fnSearch1"
+									    :prev-text="'<'"
+									    :next-text="'>'"
+									    :container-class="'pagination'"
+									    :page-class="'page-item'">
+									  </paginate>
+									</template>
 							</div>
 						</div>
 						<div class="recently-viewed">
@@ -999,6 +467,12 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		openYn : "Y",
+		privateCheck : false,
+		purchaseYn : "",
+		inquiryText : "",
+		inquiryCategory : "상품",
+		inquiryOption : 0,
 		inquiryListCnt : 0,
 		inquiryList : [],
 		reviewTitleClass : 'review-title',
@@ -1035,9 +509,13 @@ var app = new Vue({
 		mainImg : "",
 		csatCnt : [],
 		selectPage: 1,
+		selectPage1: 1,
 		pageCount: 1,
+		pageCount1: 1,
 		cnt : 0,
+		cnt1 : 0,
 		showScrapModal : false,
+		showScrapModal2 : true,
 		/* 그래프 시작 */
 		series: [{
             data : []
@@ -1099,8 +577,10 @@ var app = new Vue({
 	            }); 
 		},
 		fnGetInquiryList : function(){
-			 var self = this;
-	            var nparmap = {productNo : self.productNo};	            
+			 	var self = this;
+				var startNum = ((self.selectPage1-1) * 5);
+				var lastNum = 5;
+	            var nparmap = {productNo : self.productNo,startNum : startNum, lastNum : lastNum};	            
 	            $.ajax({
 	                url : "/selectInquiryList.dox",
 	                dataType:"json",	
@@ -1108,17 +588,45 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.inquiryList = data.inquiryList;
+	               		self.cnt1 = data.cnt;
+						self.pageCount1 = Math.ceil(self.cnt1 / 5);
 	               		console.log(self.inquiryList);
 	               		for(var i=0; i<self.inquiryList.length; i++){
 	               			if(self.inquiryList[i].purchaseYn=="Y"){
 	               				self.inquiryList[i].purchaseYn="구매"
 	               			}else{
 	               				self.inquiryList[i].purchaseYn="비구매"
-	               			}	               			
+	               			}
+	               			console.log(self.inquiryList[i].reply);
 	               		}
 	                }                
 	            }); 
 		},
+		 fnSearch1 : function(pageNum){
+				var self = this;
+				self.selectPage1 = pageNum;
+				var startNum = ((self.selectPage1-1) * 5);
+				var lastNum = 5;
+				var nparmap = {productNo : self.productNo,startNum : startNum, lastNum : lastNum};
+				$.ajax({
+					url : "/selectInquiryList.dox",
+					dataType : "json",
+					type : "POST",
+					data : nparmap,
+					success : function(data) {
+						self.inquiryList = data.inquiryList;
+						self.cnt1 = data.cnt;
+						self.pageCount1 = Math.ceil(self.cnt1 / 5);
+						for(var i=0; i<self.inquiryList.length; i++){
+	               			if(self.inquiryList[i].purchaseYn=="Y"){
+	               				self.inquiryList[i].purchaseYn="구매"
+	               			}else{
+	               				self.inquiryList[i].purchaseYn="비구매"
+	               			}
+	               		}
+					}
+				});
+			},
 		fnGetInquiryListCnt : function(){
 			 var self = this;
 	            var nparmap = {productNo : self.productNo};	            
@@ -1270,7 +778,11 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {
 	                	self.reviewUser = data.user	
-	                	
+	                	if(self.reviewUser.length==0){
+	                		self.purchaseYn = "N"
+	                	}else{
+	                		self.purchaseYn = "Y"
+	                	}
 	                	for (var i = 0; i < self.reviewUser.length; i++) {
 	                		  self.reviewPrice += self.reviewUser[i].orderPrice;
 	                		  self.optionName += self.reviewUser[i].optionName + ' + '; // 각 옵션 이름 누적
@@ -1282,6 +794,7 @@ var app = new Vue({
 	                		}
 	                	console.log(self.reviewUser);
 	                	console.log(self.optionName);
+	                	console.log(self.purchaseYn);
 	                }                
 	            })
 		},
@@ -1358,6 +871,22 @@ var app = new Vue({
 		      }	
 		},
 		changeTextareaStyle() {
+		      if (this.reviewCheck) {
+		        this.reviewTextareaClass = 'not-check-textarea';
+		        this.reviewTitleClass = 'not-check-title';
+		      } else {
+		        this.reviewTextareaClass = 'review-add-text';
+		        this.reviewTitleClass = 'review-title';
+		      }	
+		},
+		changeCategoryStyle() {
+		      if (this.reviewCsatCheck) {		    	
+		        this.reviewCsatClass = 'not-check-csat';
+		      } else {
+		        this.reviewCsatClass = 'review-csat';		        
+		      }	
+		},
+		changeTextareaStyle1() {
 		      if (this.reviewCheck) {
 		        this.reviewTextareaClass = 'not-check-textarea';
 		        this.reviewTitleClass = 'not-check-title';
@@ -1445,10 +974,18 @@ var app = new Vue({
 		    var self = this;
 		    self.showScrapModal = true;
 		    },
+		openScrapModal2: function() {
+		    var self = this;
+		    self.showScrapModal2 = true;
+		    },
 		closeScrapModal: function() {
 			var self = this;
 			self.showScrapModal = false;
 			self.selectedFile = null;
+			},
+		closeScrapModal2: function() {
+			var self = this;
+			self.showScrapModal2 = false;
 			},
 		starClass(index) {
 			 const rating = this.hoveringRating || this.selectedRating;
@@ -1476,7 +1013,49 @@ var app = new Vue({
 			 },
 		updateCharacterCount() {
 			 this.characterCount = this.reviewText.length;
-			 }
+			 this.characterCount = this.inquiryText.length;
+			 },
+		changeCategoryStyle(category) {
+			// inquiryCategory 변수를 업데이트
+			this.inquiryCategory = category;
+			if(category =="상품"){
+				this.privateCheck = false;
+			}else{
+				this.privateCheck = true;
+			}
+			// 선택된 요소의 active 클래스를 추가하고 나머지 요소의 active 클래스를 제거
+			const boxes = document.querySelectorAll('.category-box');
+			boxes.forEach(box => box.classList.remove('active'));
+			event.target.classList.add('active');
+			},
+		privateInquiry(){
+				var self = this;
+				const checkbox = document.getElementById('openYnCheckbox');
+			    self.openYn = checkbox.checked ? "N" : "Y";
+			},
+		inquiryAdd(){
+				 var self = this;
+				 console.log(self.inquiryOption);
+				 console.log(self.purchaseYn);	
+				 console.log(self.openYn);
+		         var nparmap = {productNo : self.productNo, userNo : self.userNo, content : self.inquiryText, openYn : self.openYn, inquiryCategory : self.inquiryCategory, purchaseYn : self.purchaseYn, optionNo : self.inquiryOption};
+		         $.ajax({
+		             url : "/inquiryAdd.dox",
+		             dataType:"json",	
+		             type : "POST", 
+		             data : nparmap,
+		             success : function(data) {
+		                alert(data.message);
+		                self.fnGetInquiryList();
+		        		self.fnGetInquiryListCnt();
+		        		self.showScrapModal2=false;
+		        		self.inquiryText = "";
+		        		self.inquiryOption = 0;
+		        		self.inquiryCategory = "상품";
+		        		self.privateCheck = false;
+		             }             
+		            });
+			},
 			  
 	}, // methods
 	created : function() {

@@ -24,8 +24,11 @@ public class InquiryController {
 	   @ResponseBody
 	   public String reviewUser(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
 	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
-	       List<Inquiry> inquiryList = inquiryService.searchInqiryList(map);
-	       resultMap.put("inquiryList", inquiryList);			   
+	       int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+	       int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+	       map.put("startNum", startNum);
+	       map.put("lastNum", lastNum);
+	       resultMap=inquiryService.searchInqiryList(map);			   
 	       return new Gson().toJson(resultMap);
 	   }
 	// 문의 개수
@@ -37,5 +40,14 @@ public class InquiryController {
 	       resultMap.put("inquiryListCnt", cnt);			   
 	       return new Gson().toJson(resultMap);
 	   }
+	// 문의 등록
+	@RequestMapping(value = "/inquiryAdd.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String insert(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+		    HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		    inquiryService.addInquiry(map);
+		    resultMap.put("message", "등록되었습니다.");			   
+		    return new Gson().toJson(resultMap);
+		   }
 	
 }
