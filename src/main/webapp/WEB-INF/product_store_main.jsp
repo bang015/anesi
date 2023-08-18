@@ -16,7 +16,6 @@ Copy code
 </head>
 <body>
 
-    <jsp:include page="naviBar.jsp"></jsp:include>
     <jsp:include page="header.jsp"></jsp:include>
     <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
     
@@ -38,8 +37,9 @@ Copy code
 		</div>
 	 </div>
 	   
-   <div class="production-item__content" v-for="item in list">
-  <div class="production-item-header" @click="onThumbnailClick(item)">
+    <div id="store_main">
+        <div class="production-item__content" v-for="item in list">
+            <div class="production-item-header" @click="onThumbnailClick(item)">
 		             <a class="production-item-thumnail">
 		                <div class="production-item-thumnail__overlay"></div>
 		                <img class="production-item-thumnail__image " alt="썸네일" :src="item.imgPath + '/' + item.imgName">
@@ -239,7 +239,7 @@ var app = new Vue({
             const truncatedPrice = Math.floor(price / 100) * 100;
             return truncatedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
-
+       
         // 모달 열기
 	    openCartModal: function() {
           var self = this;
@@ -253,6 +253,29 @@ var app = new Vue({
           var self = this;
           self.showScrapDeleteModal = true;
 	    },
+	    fnAddRecentProducts: function(item) {
+			  const recentProductKey = 'recentProducts';
+			  let recentProducts = JSON.parse(localStorage.getItem(recentProductKey) || '[]');
+
+			  // 이미 최근 본 상품에 동일한 상품이 있으면 제거
+			  recentProducts = recentProducts.filter(product => product.productNo !== item.productNo);
+
+			  // 최근 본 상품 배열에 추가
+			  recentProducts.unshift(item);
+
+			  // 최근 본 상품 배열의 크기를 5개로 유지
+			  if (recentProducts.length > 5) {
+			    recentProducts.pop();
+			  }
+
+			  // 로컬 스토리지에 저장
+			  localStorage.setItem(recentProductKey, JSON.stringify(recentProducts));
+			  localStorage.setItem('thumbnailSrc', item.imgPath + '/' + item.imgName);
+			},
+			 onThumbnailClick: function(item) {
+			      this.fnProductView(item.productNo);
+			      this.fnAddRecentProducts(item);
+			    },
 	
 	    // 모달 닫기
 	    closeModal: function() {
@@ -306,27 +329,6 @@ var app = new Vue({
             }); 
             self.openCartModal();
 		}, 
-		fnAddRecentProducts: function(item) {
-			  const recentProductKey = 'recentProducts';
-			  let recentProducts = JSON.parse(localStorage.getItem(recentProductKey) || '[]');
-
-			  // 이미 최근 본 상품에 동일한 상품이 있으면 제거
-			  recentProducts = recentProducts.filter(product => product.productNo !== item.productNo);
-
-			  // 최근 본 상품 배열에 추가
-			  recentProducts.unshift(item);
-
-			  // 최근 본 상품 배열의 크기를 5개로 유지
-			  if (recentProducts.length > 5) {
-			    recentProducts.pop();
-			  }
-
-			  // 로컬 스토리지에 저장
-			  localStorage.setItem(recentProductKey, JSON.stringify(recentProducts));
-			  localStorage.setItem('thumbnailSrc', item.imgPath + '/' + item.imgName);
-			},
-			// 삭제한 닫는 중괄호를 다시 추가해 주세요.
-
 	    fnUpdateUserCart : function(item) {
 	    	var self = this;
             var nparmap = { userNo: self.userNo, productNo: item.productNo};
@@ -409,10 +411,6 @@ var app = new Vue({
 
 	                }
 	            }); 
-		},
-		// 로컬 스토리지에 저장
-		  localStorage.setItem(recentProductKey, JSON.stringify(recentProducts));
-		  localStorage.setItem('thumbnailSrc', item.imgPath + '/' + item.imgName);
 		},
 		//비회원 장바구니 추가
 		fnAddNonUserCart : function(item) {
