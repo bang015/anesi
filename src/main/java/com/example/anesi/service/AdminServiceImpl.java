@@ -20,6 +20,30 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminMapper.adminProductList(map);
 	}
+
+	@Override
+	public List<Product> adminProductInfo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.adminProductInfo(map);
+	}
+
+	@Override
+	public int adminEditProduct(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.adminUpdateProduct(map);
+	}
+
+	@Override
+	public int adminEditOption(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.adminOptionUpdate(map);
+	}
+
+	@Override
+	public int adminAddOption(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.adminInsertOption(map);
+	}
 	
 	
 	

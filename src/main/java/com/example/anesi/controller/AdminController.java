@@ -37,8 +37,41 @@ public class AdminController {
 	@RequestMapping(value = "/admin/productList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String productList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
-	List<Product> list = adminService.adminProductList(map);
-	resultMap.put("list", list);
-	return new Gson().toJson(resultMap);
-		}
+		List<Product> list = adminService.adminProductList(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	//상품 전체 조회
+	@RequestMapping(value = "/admin/productInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String productInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Product> info = adminService.adminProductInfo(map);
+		resultMap.put("info", info);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//상품 업데이트
+	@RequestMapping(value = "/admin/productUpdate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String productUpdate(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		adminService.adminEditProduct(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//옵션 업데이트
+	@RequestMapping(value = "/admin/optionUpdate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String optionUpdate(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		adminService.adminEditOption(map);
+		
+		return new Gson().toJson(resultMap);
+	}
+	
+	//옵션 추가
+	@RequestMapping(value = "/admin/optionInsert.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String optionInsert(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		adminService.adminAddOption(map);
+		return new Gson().toJson(resultMap);
+	}
 }

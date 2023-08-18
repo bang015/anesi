@@ -14,4 +14,39 @@
 		INNER JOIN t3_tbl_product_category c
 			ON p.CATEGORY_NO = c.CATEGORY_NO
 	</select>
+	
+	<select id="adminProductInfo" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+		SELECT *
+		FROM t3_tbl_product p
+		LEFT JOIN t3_tbl_product_option o
+			ON p.PRODUCT_NO = o.PRODUCT_NO
+		WHERE p.PRODUCT_NO = #{productNo}
+	</select>
+	
+	<update id="adminUpdateProduct" parameterType="hashmap">
+		UPDATE t3_tbl_product
+			SET
+			PRODUCT_NAME = #{productName},
+			PRODUCT_PRICE = #{productPrice},
+			DISCOUNT = #{discount},
+			DISCOUNT_YN = #{discountYn},
+			UDATETIME = now()			
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<update id="adminOptionUpdate" parameterType="hashmap">
+		UPDATE t3_tbl_product_option
+			SET
+			OPTION_NAME = #{optionName},
+			OPTION_PRICE = #{optionPrice},
+			PRODUCT_STOCK = #{productStock}
+		WHERE OPTION_NO = #{optionNo}
+	</update>
+	
+	<insert id="adminInsertOption" parameterType="hashmap">
+		INSERT INTO t3_tbl_product_option(PRODUCT_NO, OPTION_NAME, OPTION_PRICE, PRODUCT_STOCK)
+    	VALUES(#{productNo}, #{optionName}, #{optionPrice}, #{productStock})
+	</insert>
+	
+	
 </mapper>
