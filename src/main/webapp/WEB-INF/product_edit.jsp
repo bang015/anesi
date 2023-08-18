@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,94 +8,96 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../../css/mainCss.css" rel="stylesheet">
 <link href="../../css/product_edit.css" rel="stylesheet">
-<meta charset="EUC-KR">
+<link href="../../css/adminH.css" rel="stylesheet">
+
+<meta charset="UTF-8">
 <title>Insert title here</title>
 
 </head>
-<!-- ÁÖ¼® ²À ³²°ÜÁÖ¼¼¿ä -->
+<!-- ì£¼ì„ ê¼­ ë‚¨ê²¨ì£¼ì„¸ìš” -->
 <body>
 	<jsp:include page="adminH.jsp"></jsp:include>
 	<div id="app">
 			<div id="container">
-				<div class="containerTitle">»óÇ° Á¶È¸/¼öÁ¤</div>
+				<div class="containerTitle">ìƒí’ˆ ì¡°íšŒ/ìˆ˜ì •</div>
 				<div class="containerCheckList">
 					<div class="checkList">
 						<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
 						<div class="checkListText">
-							<div>ÀüÃ¼</div>
-							<div><span class="numText">{{productList.length}}</span>°Ç</div> 
+							<div>ì „ì²´</div>
+							<div><span class="numText">{{productList.length}}</span>ê±´</div> 
 						</div>
 					</div>
 					<div class="checkList">
 						<div class="iconBack"><i class="fa-solid fa-cart-shopping fa-2xl" style="color: #ffffff;"></i></div>
 						<div class="checkListText">
-							<div>ÆÇ¸ÅÁß</div>
-							<div><span class="numText">{{productList.length - soldOut}}</span>°Ç</div> 
+							<div>íŒë§¤ì¤‘</div>
+							<div><span class="numText">{{productList.length - soldOut}}</span>ê±´</div> 
 						</div>
 					</div>
 					<div class="checkList">
 						<div class="iconBack"><i class="fa-solid fa-cart-arrow-down fa-2xl" style="color: #ffffff;"></i></div>
 						<div class="checkListText">
-							<div>Ç°Àı</div>
-							<div><span class="numText">{{soldOut}}</span>°Ç</div> 
+							<div>í’ˆì ˆ</div>
+							<div><span class="numText">{{soldOut}}</span>ê±´</div> 
 						</div>
 					</div>
 					<div class="checkList">
 						<div class="iconBack"><i class="fa-solid fa-pause fa-2xl" style="color: #ffffff;"></i></div>
 						<div class="checkListText">
-							<div>ÆÇ¸ÅÁßÁö</div>
-							<div><span class="numText">{{stop}}</span>°Ç</div> 
+							<div>íŒë§¤ì¤‘ì§€</div>
+							<div><span class="numText">{{stop}}</span>ê±´</div> 
 						</div>
 					</div>
 					<div class="checkList">
 						<div class="iconBack"><i class="fa-solid fa-ban fa-2xl" style="color: #ffffff;"></i></div>
 						<div class="checkListText">
-							<div>ÆÇ¸ÅÁ¾·á</div>
-							<div><span class="numText">{{end}}</span>°Ç</div> 
+							<div>íŒë§¤ì¢…ë£Œ</div>
+							<div><span class="numText">{{end}}</span>ê±´</div> 
 						</div>
 					</div>
 				</div>
 				<div class="containerProductList">
 					<div class="productListTitle">
-						<span>»óÇ°¸ñ·Ï (ÃÑ {{productList.length}}°³)</span>
+						<span>ìƒí’ˆëª©ë¡ (ì´ {{productList.length}}ê°œ)</span>
 					</div>
 					<div class="btnBox">
-						<button class="btn1 btn2 btn3" @click="fnCheckSituation('N')">¼±ÅÃÆÇ¸Å</button>
-						<button class="btn1 btn2 btn3" @click="fnCheckSituation('S')">¼±ÅÃÁßÁö</button>
-						<button class="btn1 btn2 btn3" @click="fnCheckSituation('Y')">¼±ÅÃÁ¾·á</button>
+						<button class="btn1 btn2 btn3" @click="fnCheckSituation('N')">ì„ íƒíŒë§¤</button>
+						<button class="btn1 btn2 btn3" @click="fnCheckSituation('S')">ì„ íƒì¤‘ì§€</button>
+						<button class="btn1 btn2 btn3" @click="fnCheckSituation('Y')">ì„ íƒì¢…ë£Œ</button>
 					</div>
 					<div class="tableBox">
 						<div class="table-container">
 							<table>
 								<tr>
 									<th><input type="checkbox" @click="fnAllCheck" v-model="allChecked"></th>
-									<th>¼öÁ¤</th>
-									<th>»óÇ°¹øÈ£</th>
-									<th>»óÇ°¸í</th>
-									<th>ÆÇ¸Å»óÅÂ</th>
-									<th>Àü½Ã»óÅÂ</th>
-									<th>Àç°í¼ö·®</th>
-									<th>Á¤°¡</th>
-									<th>ÇÒÀÎÀ²</th>
-									<th>ÇÒÀÎ»óÅÂ</th>
-									<th>ÇÒÀÎ°¡</th>
-									<th>Ä«Å×°í¸®</th>
-									<th>Á¦Á¶»ç</th>
-									<th>Á¦Á¶±¹</th>
-									<th>µî·ÏÀÏ</th>
-									<th>¼öÁ¤ÀÏ</th>
+									<th>ìˆ˜ì •</th>
+									<th>ìƒí’ˆë²ˆí˜¸</th>
+									<th>ìƒí’ˆëª…</th>
+									<th>íŒë§¤ìƒíƒœ</th>
+									<th>ì „ì‹œìƒíƒœ</th>
+									<th>ì¬ê³ ìˆ˜ëŸ‰</th>
+									<th>ì •ê°€</th>
+									<th>í• ì¸ìœ¨</th>
+									<th>í• ì¸ìƒíƒœ</th>
+									<th>í• ì¸ê°€</th>
+									<th>ì¹´í…Œê³ ë¦¬</th>
+									<th>ì œì¡°ì‚¬</th>
+									<th>ì œì¡°êµ­</th>
+									<th>ë“±ë¡ì¼</th>
+									<th>ìˆ˜ì •ì¼</th>
 								</tr>
 								<tr v-for="item in productList">
 									<td><input type="checkbox" v-model="checkList" :value="item.productNo" @change="updateAllCheck"></td>
-									<td><button class="btn1" @click="fnProductEdit(item.productNo)">¼öÁ¤</button></td>
+									<td><button class="btn1" @click="fnProductEdit(item.productNo)">ìˆ˜ì •</button></td>
 									<td>{{item.productNo}}</td>
 									<td>{{item.productName}}</td>
-									<td>{{item.deleteYn == 'N' ? 'ÆÇ¸ÅÁß' : 'ÆÇ¸ÅÁ¾·á'}}</td>
-									<td>Àü½ÃÁß</td>
+									<td>{{item.deleteYn == 'N' ? 'íŒë§¤ì¤‘' : 'íŒë§¤ì¢…ë£Œ'}}</td>
+									<td>ì „ì‹œì¤‘</td>
 									<td>{{item.stock}}</td>
 									<td>{{item.productPrice}}</td>
 									<td>{{item.discount}}%</td>
-									<td>{{item.discountYn == 'Y' ? 'ÇÒÀÎÁß' : 'Á¤°¡'}}</td>
+									<td>{{item.discountYn == 'Y' ? 'í• ì¸ì¤‘' : 'ì •ê°€'}}</td>
 									<td v-if="item.discountYn == 'Y'">{{(item.productPrice * ((100-item.discount)/100))}}</td>
 									<td v-else></td>
 									<td>{{item.categoryName}}</td>
@@ -110,31 +112,31 @@
 				</div>
 				<div class="modal" v-if="showScrapModal">
 			        <div class="modal-card">
-			        	<div class="modalTitle">»óÇ°Á¤º¸ ¼öÁ¤</div>
+			        	<div class="modalTitle">ìƒí’ˆì •ë³´ ìˆ˜ì •</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">»óÇ°¹øÈ£</span>
+			        		<span class="modalSpan1">ìƒí’ˆë²ˆí˜¸</span>
 			        		<span>{{producInfo[0].productNo}}</span>
 			        	</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">»óÇ°¸í</span>
+			        		<span class="modalSpan1">ìƒí’ˆëª…</span>
 			        		<span><input v-model="producInfo[0].productName" class="inputStyle inputStyle2"></span>
 			        	</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">°¡°İ</span>
+			        		<span class="modalSpan1">ê°€ê²©</span>
 			        		<span><input v-model="producInfo[0].productPrice" class="inputStyle inputStyle2"></span>
 			        	</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">ÇÒÀÎÀ²</span>
+			        		<span class="modalSpan1">í• ì¸ìœ¨</span>
 			        		<span><input v-model="producInfo[0].discount" class="inputStyle inputStyle2"></span>
 			        	</div>
 			        	<div class="modalStyle1 modalStyle2">
-			        		<span class="modalSpan1">¿É¼Ç</span>
+			        		<span class="modalSpan1">ì˜µì…˜</span>
 		        			<div v-if="producInfo.length != 0">
 		        				<table class="modalTable">
 		        					<tr>
-		        						<th class="modalTdTr">¿É¼ÇÀÌ¸§</th>
-		        						<th class="modalTdTr">¿É¼Ç °¡°İ Áõ°¡·®</th>
-		        						<th class="modalTdTr">¿É¼Ç Àç°í ¼ö·®</th>
+		        						<th class="modalTdTr">ì˜µì…˜ì´ë¦„</th>
+		        						<th class="modalTdTr">ì˜µì…˜ ê°€ê²© ì¦ê°€ëŸ‰</th>
+		        						<th class="modalTdTr">ì˜µì…˜ ì¬ê³  ìˆ˜ëŸ‰</th>
 		        					</tr>
 		        					<tr v-for="item in producInfo">
 		        						<td class="modalTdTr"><input v-model="item.optionName"  class="modalSpan2 inputStyle"></td>
@@ -146,13 +148,13 @@
 			        	</div>
 		        		<div class="modalStyle4">
 		        			<span>
-		        				<button class="btn1 btn2 btn3" @click="fnOptionAdd">¿É¼Ç+</button>
-		        				<button class="btn1 btn2" @click="fnOptionDel">¿É¼Ç-</button>
-		        				<span>(ÃÖ¼Ò 1°³ ÃÖ´ë 5°³)</span>
+		        				<button class="btn1 btn2 btn3" @click="fnOptionAdd">ì˜µì…˜+</button>
+		        				<button class="btn1 btn2" @click="fnOptionDel">ì˜µì…˜-</button>
+		        				<span>(ìµœì†Œ 1ê°œ ìµœëŒ€ 5ê°œ)</span>
 		        			</span>
 		        			<span>
-			        			<button class="btn1 btn2" @click="fnUpdateProduct">ÀúÀå</button>
-			        			<button @click="closeModal" class="btn1 btn2 btn3">Ãë¼Ò</button>
+			        			<button class="btn1 btn2" @click="fnUpdateProduct">ì €ì¥</button>
+			        			<button @click="closeModal" class="btn1 btn2 btn3">ì·¨ì†Œ</button>
 		        			</span>
 		        		</div>
 			        </div>
@@ -181,7 +183,7 @@ var app = new Vue({
 		
 	},// data
 	methods : {
-		//»óÇ° ÀüÃ¼ °Ë»ö
+		//ìƒí’ˆ ì „ì²´ ê²€ìƒ‰
 		fnGetProduct(){
 			var self = this;
 			var nparmap = {};
@@ -208,7 +210,7 @@ var app = new Vue({
                 }
             });
 		},
-		// ¿ÃÃ¼Å©
+		// ì˜¬ì²´í¬
 		fnAllCheck(){
 			var self = this;
 		    if (self.checkList.length === self.productList.length) {
@@ -217,7 +219,7 @@ var app = new Vue({
 			    self.checkList = self.productList.map(item => item.productNo);
 		    }
 		},
-		// Ã¼Å©¹Ú½º Ã¼Å©
+		// ì²´í¬ë°•ìŠ¤ ì²´í¬
 		updateAllCheck() {
 			var self = this;
 			if (self.checkList.length === self.productList.length) {
@@ -226,7 +228,7 @@ var app = new Vue({
 				self.allChecked = false;
 			}
 		},
-		//»óÇ° »ó¼¼&¿É¼Ç Á¤º¸
+		//ìƒí’ˆ ìƒì„¸&ì˜µì…˜ ì •ë³´
 		fnProductEdit(productNo){
 			var self = this;
 			var nparmap = {productNo};
@@ -251,18 +253,18 @@ var app = new Vue({
             });
 			
 		},
-		// ¸ğ´Ş¿­±â
+		// ëª¨ë‹¬ì—´ê¸°
 		openScrapModal: function() {
 			var self = this;
 			self.showScrapModal = true;
 		},
-		// ¸ğ´Ş ´İ±â
+		// ëª¨ë‹¬ ë‹«ê¸°
 		closeModal: function() {
 			var self = this;
 			self.showScrapModal = false;
 			location.reload();
 		},
-		//¼öÁ¤ Á¤º¸ ¾÷µ¥ÀÌÆ®
+		//ìˆ˜ì • ì •ë³´ ì—…ë°ì´íŠ¸
 		fnUpdateProduct(){
 			var self = this;
 			var discountYn = '';
@@ -314,11 +316,11 @@ var app = new Vue({
 	                }
 	            });
 			}
-			alert("ÀúÀå¼º°ø");
+			alert("ì €ì¥ì„±ê³µ");
 			self.closeModal();
 			
 		},
-		//¿É¼Ç Ãß°¡
+		//ì˜µì…˜ ì¶”ê°€
 		fnOptionAdd(){
 			var self = this
 			console.log();
@@ -327,7 +329,7 @@ var app = new Vue({
 				self.addOptionCnt++;
 			}
 		},
-		//¿É¼Ç Á¦°Å
+		//ì˜µì…˜ ì œê±°
 		fnOptionDel(){
 			var self = this;
 			if(self.producInfo.length > 1){
@@ -341,7 +343,7 @@ var app = new Vue({
 				self.producInfo.pop();
 			}
 		},
-		//»óÇ° »óÅÂ
+		//ìƒí’ˆ ìƒíƒœ
 		fnCheckSituation(situation){
 			var self = this;
 			var checkList = JSON.stringify(self.checkList);
@@ -352,7 +354,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	alert(data.cnt+"°³ ¾÷µ¥ÀÌÆ®");
+                	alert(data.cnt+"ê°œ ì—…ë°ì´íŠ¸");
                 	self.checkList = []
                 	self.fnGetProduct();
                 	self.allChecked = false;

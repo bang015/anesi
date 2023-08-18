@@ -9,12 +9,13 @@
 <!-- 주석 꼭 남겨주세요 -->
 <body>
 		<header class="admin_header">
-		  <h1>관리자센터</h1>
+		  <h1><a href="/admin/main.do">관리자센터</a></h1>
 		  	<nav>
+		  		<a href="/admin/main.do">홈으로</a>
 				<a href="../login.do">로그인</a>
 				<a href="../logout.do">로그아웃</a>
 				<a>도움말</a>
-				<a>아네시 홈페이지</a>
+				<a href="../main.do">아네시 홈페이지</a>
 			</nav>
 		</header>
 		

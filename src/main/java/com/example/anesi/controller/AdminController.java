@@ -26,7 +26,7 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
-	@RequestMapping("/admin_main.do") 
+	@RequestMapping("/admin/main.do") 
 	public String admin_main(Model model) throws Exception{
 		
 		return "/admin_main";

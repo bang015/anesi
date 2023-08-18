@@ -7,27 +7,11 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
+<link href="../css/adminH.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
 
-.admin_header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #e0d4c6;
-  width : 100%;
-  height: 100px;  
-}
-
-.admin_header a {
-  margin-left: 10px;
-}
-.admin_header a:hover {
- color : #424242;
- font-weight:bold;
-}
 
 .flex-container1 {
  	display:grid;
@@ -35,24 +19,6 @@
     grid-template-columns: 1fr 4fr 4fr;
 }
 
-
-/*사이드메뉴 */
-.side_menu{
-  grid-row-start: 1;
-  grid-row-end: 4; 
-  grid-column-start: 1;
-  grid-column-end: 2;
-  background-color: #cec9c3;
-  
-}
-.side_menu div{
- font-size : 15px;
- margin-left: 20px ;
- padding : 15px;
-}
-.side_menu div:hover{
- font-weight:bold;
-}
 /*배너*/
 .delivery,
 .change,
@@ -249,14 +215,8 @@
 }
 
 
-
-
-/* *{
-border:1px solid black;
-} */
 </style>
 </head>
-<!-- 주석 꼭 남겨주세요 -->
 <body>
 	<div id="admin_first">
 	
@@ -345,31 +305,25 @@ border:1px solid black;
 					<img src="\css\image\Admin\review_chart.png">
 					<button>전체 리뷰 보기 ></button>
 				</span>
-		
 			</div>
 			
 			<div class="product">
 				<span>상품현황<span>최근 1주일기준</span></span>
 				<hr>
-				
 				<i class="iconA fa-solid fa-chart-line"></i>				
 				<ul class="productA">
 					<li>판매중</li>
 					<li>판매중지</li>
-				
 				</ul>
 				<ul class="productB">
 					<li>70건</li>
 					<li>1건</li>
-				
 				</ul>
 				<ul class="productA">
-				
-					<li>재고없음</li>
+					<li>품절</li>
 					<li>할인중</li>
 				</ul>
 				<ul class="productB">
-				
 					<li>0건</li>
 					<li>0건</li>
 				</ul>
