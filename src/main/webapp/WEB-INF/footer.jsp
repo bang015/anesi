@@ -59,6 +59,11 @@
     float : left;
     width :20%;
 }
+
+#admin {
+    font-size: 19px;
+    background: #a782c3;}
+
 #f_part5 {
     float : left;
     width :5%;
@@ -185,9 +190,10 @@
 	           <span>신한은행 110-409-609660</span>
 	           </div>
 	           <div>예금주 정선일</div>
+	           <div><a id="admin" href="admin_main.do">관리자 페이지>></a></div>
 	       </div>
 	   </div>
-	   
+   	 
 	   <div id="f_part5">
 	       <div class="pt_title"> SNS</div>
 	       <div class="내용">
