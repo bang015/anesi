@@ -27,8 +27,6 @@
 			</nav>
 		</header>
 		
-	
-		
    		<div class="flex-container1">
 			<div class="side_menu">
 					<div>상품관리</div>
