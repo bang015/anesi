@@ -7,6 +7,8 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
+<script src="https://unpkg.com/vuejs-paginate@latest"></script>
+<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
 <meta charset="UTF-8">
 <title>커뮤니티📝</title>
 <style>
@@ -24,6 +26,7 @@
     gap: 16px;
     text-align : center;
     position: relative;
+    margin-top: 12px;
 }
 .board1{
     position: relative;
@@ -81,6 +84,11 @@
     color: #9b9b9b;
     margin-left: 3px;
 }
+.text2{
+	font-size: 15px;
+    font-weight: 100;
+    margin-left: 3px;
+}
 #board-body-head{
 	display: inline-block;
 }
@@ -105,6 +113,36 @@
     width: 50px;
     top: 8px;
     left: 8px;
+}
+.pagination {
+    text-align: center;
+    margin-top: 65px;
+    font-size:14px;
+}
+.pagination li {
+    margin: 6px;
+    border-radius: 6px;
+    display: inline;
+    margin: 15px;
+    padding: 8px 10px;
+}
+.pagination li:hover {
+	background:#eee;
+}
+.page-item a {
+	color:#666;
+	text-decoration: none;
+}
+.pagination li.active {
+	color: white;
+    font-weight: bold;
+    border: 1px solid;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: #A782C3;
+}
+.pagination li.active a{
+	color : white;
 }
 </style>
 </head>
@@ -132,7 +170,7 @@
 		</div>
 		<hr class="hrr">
 		<div id="board-body">
-			<div id="board-body-head"><h2>전체글<span class="text1"> {{list.length}}</span></h2></div>
+			<div id="board-body-head"><h2>전체글<span class="text1"> {{cnt}}</span> <span class="text2" v-if="searchFlg==true">검색된 글 <span class="text1">{{searchCnt}}</span></span></h2></div>
 			<div class="searchbar">
 				<button class="btn" @click="fnWrite">글쓰기(임시)</button>
 				<input type="text" class="search-input" @keyup.enter="fnSearch" v-model="keyword"><img class="glass" src="../css/image/community/m-glass.png">
@@ -153,12 +191,35 @@
 		        </div>
 			</div>
 		</div>
+		<template>
+	  <paginate
+	    :page-count="pageCount"
+	    :page-range="3"
+	    :margin-pages="1"
+	    :click-handler="fnPageSearch"
+	    :prev-text="'〈'"
+	    :next-text="'〉'"
+	    :container-class="'pagination'"
+	    :page-class="'page-item'" v-if="boardFlg==true">
+	  </paginate>
+	  <paginate
+	    :page-count="searchPageCount"
+	    :page-range="3"
+	    :margin-pages="1"
+	    :click-handler="fnSearchPageSearch"
+	    :prev-text="'〈'"
+	    :next-text="'〉'"
+	    :container-class="'pagination'"
+	    :page-class="'page-item'" name="searchPage" v-if="searchFlg==true">
+	  </paginate>
+	</template>
 	</div>
 </div>
 </body>
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>
+Vue.component('paginate', VuejsPaginate)
 var app = new Vue({
 	el : '#app',
 	data : {
@@ -166,21 +227,51 @@ var app = new Vue({
 		bList : [],
 		keyword : "",
 		sessionNick : "${sessionNick}",
-		sessionNo : "${sessionNo}"
+		sessionNo : "${sessionNo}",
+		selectPage: 1,
+		pageCount: 1,
+		cnt : 0,
+		searchCnt : 0,
+		searchPageCount : 1,
+		boardFlg : true,
+		searchFlg : false
+	
 	},// data
 	methods : {
 		fnGetList : function(){
 			var self = this;
-			var nparmap = {};
-            $.ajax({
-                url : "/community/boardList.dox",
+            var startNum = ((self.selectPage-1) * 12);
+    		var lastNum = 12;
+			var param = {startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/community/boardList.dox",
                 dataType:"json",	
-                type : "POST", 
-                data : nparmap,
+                type : "POST",
+                data : param,
                 success : function(data) { 
-        			self.list = data.list;
+                	self.list = data.list;
+                	self.cnt = data.cnt;
+	                self.pageCount = Math.ceil(self.cnt / 12);
                 }
-            });
+            }); 
+		},
+		fnPageSearch : function(pageNum){
+			var self = this;
+			/* self.selectPage = pageNum; */
+			var startNum = ((pageNum-1) * 12);
+			var lastNum = 12;
+			var nparmap = {startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/community/boardList.dox",
+				dataType : "json",
+				type : "POST",
+				data : nparmap,
+				success : function(data) {
+					self.list = data.list;
+					self.searchCnt = data.cnt;
+					self.pageCount = Math.ceil(self.searchCnt / 12);
+				}
+			});
 		},
 		fnGetBestList : function(){
 			var self = this;
@@ -210,8 +301,14 @@ var app = new Vue({
 			return diffInHours < 24;
 		},
         fnSearch : function(){
-            var self = this;
-            var nparmap = {keyword : self.keyword};
+        	var self = this;
+        	if(self.keyword==''){
+        		alert("검색어를 입력하세요.");
+        		return;
+        	}
+            var startNum = ((0) * 12);
+    		var lastNum = 12;
+            var nparmap = {keyword : self.keyword, startNum : startNum, lastNum : lastNum};
             $.ajax({
                 url : "/community/search.dox",
                 dataType:"json",	
@@ -219,9 +316,32 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	self.list = data.sList;
+                	self.searchCnt = data.cnt;
+	                self.searchPageCount = Math.ceil(self.searchCnt / 12);
+	                self.searchFlg=true;
+					self.boardFlg=false;
                 }
             }); 
         },
+        fnSearchPageSearch : function(pageNum){
+			var self = this;
+			var startNum = ((pageNum-1) * 12);
+			var lastNum = 12;
+			var nparmap = {keyword : self.keyword, startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/community/search.dox",
+				dataType : "json",
+				type : "POST",
+				data : nparmap,
+				success : function(data) {
+					self.list = data.sList;
+					self.searchCnt = data.cnt;
+					self.searchPageCount = Math.ceil(self.searchCnt / 12);
+					self.searchFlg=true;
+					self.boardFlg=false;
+				}
+			});
+		}
 	}, // methods
 	created : function() {
 		var self = this;

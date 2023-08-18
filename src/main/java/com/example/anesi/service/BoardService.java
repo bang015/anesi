@@ -10,7 +10,9 @@ public interface BoardService {
 	// 게시글 작성
 	int insertBoard(HashMap<String, Object> map);
 	// 전체 게시글
-	List<Board> boardAll(HashMap<String, Object> map);
+	HashMap<String, Object> boardAll(HashMap<String, Object> map);
+	// 게시글 검색
+	HashMap<String, Object> searchBoard(HashMap<String, Object> map);
 	// 인기글
 	List<Board> boardBest(HashMap<String, Object> map);
 	// 게시글 보기
@@ -27,6 +29,7 @@ public interface BoardService {
 	List<Board> selectComment(HashMap<String, Object> map);
 	// 댓글 삭제
 	int deleteComment(HashMap<String, Object> map);
-	// 게시글 검색
-	List<Board> searchBoard(HashMap<String, Object> map);
+	// 댓글 수정
+	int editComment(HashMap<String, Object> map);
+	
 }

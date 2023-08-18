@@ -18,11 +18,23 @@ public class BoardServiceImpl implements BoardService{
 	
 	// 전체 게시글
 	@Override
-	public List<Board> boardAll(HashMap<String, Object> map) {
+	public HashMap<String, Object> boardAll(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return boardMapper.boardAll(map);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", boardMapper.boardAll(map));
+		resultMap.put("cnt", boardMapper.selectCnt(map));
+		return resultMap;
 	}
-	// 인기글
+	// 게시글 검색
+	@Override
+	public HashMap<String, Object> searchBoard(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("sList", boardMapper.searchBoard(map));
+		resultMap.put("cnt", boardMapper.searchCnt(map));
+		return resultMap;
+	}
+	
 	@Override
 	public List<Board> boardBest(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -76,10 +88,11 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardMapper.deleteComment(map);
 	}
+	
 	@Override
-	public List<Board> searchBoard(HashMap<String, Object> map) {
+	public int editComment(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return boardMapper.searchBoard(map);
+		return boardMapper.editComment(map);
 	}
 	
 }

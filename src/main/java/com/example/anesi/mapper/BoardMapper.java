@@ -14,6 +14,12 @@ public interface BoardMapper {
 	int insertBoard(HashMap<String, Object> map);
 	// 전체 게시글 
 	List<Board> boardAll(HashMap<String, Object> map);
+	// 게시글 검색
+	List<Board> searchBoard(HashMap<String, Object> map);
+	// 게시글 cnt
+	int selectCnt(HashMap<String, Object> map);
+	// 검색 게시글 cnt
+	int searchCnt(HashMap<String, Object> map);
 	// 인기글
 	List<Board> boardBest(HashMap<String, Object> map);
 	// 게시글 보기
@@ -30,6 +36,7 @@ public interface BoardMapper {
 	List<Board> selectComment(HashMap<String, Object> map);
 	// 댓글 삭제
 	int deleteComment(HashMap<String, Object> map);
-	// 게시글 검색
-	List<Board> searchBoard(HashMap<String, Object> map);
+	// 댓글 수정
+	int editComment(HashMap<String, Object> map);
+	
 }

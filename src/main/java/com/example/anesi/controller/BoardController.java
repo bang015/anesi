@@ -26,7 +26,7 @@ public class BoardController {
 	
 	@Autowired 
 	HttpSession session;
-	
+		
 	// 커뮤니티 메인
 	@RequestMapping("/community/main.do") 
     public String boardmain(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
@@ -62,11 +62,28 @@ public class BoardController {
 	@ResponseBody
 	public String boardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Board> list = boardService.boardAll(map); 
-		resultMap.put("list", list);
+		int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+		int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+		map.put("startNum", startNum);
+		map.put("lastNum", lastNum);
+		resultMap = boardService.boardAll(map);
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 검색 게시글 
+	@RequestMapping(value = "/community/search.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String sList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+		int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+		map.put("startNum", startNum);
+		map.put("lastNum", lastNum);
+		resultMap = boardService.searchBoard(map);
+		return new Gson().toJson(resultMap);
+	}
+		
+		
 	// 인기글 리스트
 	@RequestMapping(value = "/community/bestBoardList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -122,24 +139,22 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	// 댓글 삭제
+	@RequestMapping(value = "/community/editComm.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editComm(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.editComment(map);
+		return new Gson().toJson(resultMap);
+	}
+	
 	// 댓글 리스트
 	@RequestMapping(value = "/community/cList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String cList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Board> cList = boardService.boardAll(map); 
+		List<Board> cList = boardService.selectComment(map);
 		resultMap.put("cList", cList);
-		return new Gson().toJson(resultMap);
-	}
-	
-	// 검색 게시글 
-	@RequestMapping(value = "/community/search.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String sList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Board> sList = boardService.searchBoard(map);
-		System.out.println(map);
-		resultMap.put("sList", sList);
 		return new Gson().toJson(resultMap);
 	}
 }
