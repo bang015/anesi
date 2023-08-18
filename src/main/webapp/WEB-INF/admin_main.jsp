@@ -57,7 +57,7 @@
 .delivery,
 .change,
 .review,
-.customer,
+.product,
 .inquiry {
   width: 93%;
   height: 200px;
@@ -68,7 +68,7 @@
   margin: 10px 20px;
 }
 
-.customer,
+.product,
 .inquiry {
   height: 400px;
 
@@ -92,12 +92,12 @@
 }
 
 .review span,
-.customer span,
+.product span,
 .inquiry span{
   font-size : 20px;
 }
 .review span span,
-.customer span span,
+.product span span,
 .inquiry span span{
   font-size : 14px;
   margin-left : 10px;
@@ -115,7 +115,9 @@
 .deliveryB,
 .deliveryC,
 .deliveryD,
-.revC{
+.revC,
+.productA,
+.productB{
  float : left;
  box-sizing :border-box;
  list-style: none;
@@ -132,7 +134,7 @@
 }
 .deliveryB{
  width : 15%;
-  border-right: 2px solid ;
+ border-right: 2px solid ;
  
 }
 .deliveryD{
@@ -148,13 +150,28 @@
   width: 97%;
   
 }
-.customer{
+.product{
   grid-row-start: 3;
   grid-row-end: 5; 
   grid-column-start: 2;
   grid-column-end: 3;	
   width: 93%;
-  
+}
+
+.productA{
+  width: 23%;
+ margin-left : 10px;
+}
+
+.productB{
+  width: 20%;
+}
+
+.productA li,
+.productB li{
+  font-size: 18px;
+  margin-bottom : 6px;
+
 }
 .inquiry{
   grid-row-start: 3;
@@ -194,11 +211,11 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 .inquiryB {
-    width: 76%;
+    width: 77%;
     list-style: none;
     font-size: 17px;
     text-align: center;
-    padding: 18px;
+    padding: 14px;
     border-left: 1px solid #e0d4c6;
 }
 
@@ -226,9 +243,9 @@
 	grid-row-end: 2;	
 }
 
-.inquiry{
-  
-
+.inquiryD{
+	border-radius : 50%;
+	color : tomato;
 }
 
 
@@ -331,21 +348,34 @@ border:1px solid black;
 		
 			</div>
 			
-			<div class="customer">
+			<div class="product">
 				<span>상품현황<span>최근 1주일기준</span></span>
 				<hr>
 				
-				<i class="iconA fa-solid fa-user"></i>				
-				<ul class="deliveryA">
-					<li>새로 작성된 리뷰</li>
-					<li>평점낮은리뷰</li>
-					<li>리뷰이벤트</li>
+				<i class="iconA fa-solid fa-chart-line"></i>				
+				<ul class="productA">
+					<li>판매중</li>
+					<li>판매중지</li>
+				
 				</ul>
-				<ul class="deliveryB">
+				<ul class="productB">
 					<li>70건</li>
 					<li>1건</li>
+				
+				</ul>
+				<ul class="productA">
+				
+					<li>재고없음</li>
+					<li>할인중</li>
+				</ul>
+				<ul class="productB">
+				
+					<li>0건</li>
 					<li>0건</li>
 				</ul>
+				<br><br><br><br><br><br><br>
+				<div>상품현황차트</div>
+				<div>카테고리별(6) 판매 차트</div>
 			</div>
 			
 			<div class="inquiry">
@@ -353,9 +383,9 @@ border:1px solid black;
 				<hr>
 				<i class="iconA fa-solid fa-file-circle-exclamation"></i>
 				<ul class="inquiryA">
-					<a class="inquiryB">상품/배송</a>
-					<a class="inquiryB">환불/반품/교환</a>
-					<a class="inquiryB">기타</a>
+					<a class="inquiryB">상품/배송<span class="inquiryD">6</span></a>
+					<a class="inquiryB">환불/반품/교환<span class="inquiryD">4</span></a>
+					<a class="inquiryB">기타<span class="inquiryD">0</span></a>
 				</ul>
 				
 				<div class="inquiryC">
