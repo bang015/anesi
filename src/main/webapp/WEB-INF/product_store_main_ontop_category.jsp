@@ -75,7 +75,6 @@ padding : 0px 0px 0px 0px;
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
-
 <div id="store-main-ontop-category__container">
 	<div><h1>카테고리</h1></div>
 	<ul id ="product-main-category__total">
