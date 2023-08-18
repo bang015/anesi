@@ -34,9 +34,12 @@ public interface BoardMapper {
 	int insertComment(HashMap<String, Object> map);
 	// 댓글 리스트
 	List<Board> selectComment(HashMap<String, Object> map);
+	// 댓글 cnt
+	int commentCnt(HashMap<String, Object> map);
 	// 댓글 삭제
 	int deleteComment(HashMap<String, Object> map);
 	// 댓글 수정
 	int editComment(HashMap<String, Object> map);
+
 	
 }

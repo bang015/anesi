@@ -262,6 +262,7 @@
 		        	</div>
 		        	<div class="modalStyle2">
 		        		<div class="modalStyle4">주문번호</div>
+		        		<div class="modalStyle3">{{"ORD"+formatDate(new Date())+"-"+cnt}}</div>
 		        	</div>
 		        	<div class="modalStyle2">
 		        		<div class="modalStyle4">배송지</div>
@@ -598,7 +599,7 @@ var app = new Vue({
 	              if (rsp.success && rsp.paid_amount == self.finalAmount) {
 	            	  
 	            	  for(let i=0;i < self.productNoList.length;i++){
-	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity};
+	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity, paymentNo : "ORD"+self.formatDate(new Date())+"-"+self.cnt};
 		 		    	 $.ajax({
 		 		                url : "../order/order.dox",
 		 		                dataType:"json",	

@@ -48,7 +48,6 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int adminEditProductSituation(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		System.out.println(map);
 		return adminMapper.adminProductSituation(map);
 	}
 

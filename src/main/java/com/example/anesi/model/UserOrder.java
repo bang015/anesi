@@ -27,8 +27,13 @@ public class UserOrder {
     private int optionPrice;
     private String manufacturer;
     private int discount;
+    private String paymentNo;
+
     
     
+	public String getPaymentNo() {
+		return paymentNo;
+	}
 	public int getDiscount() {
 		return discount;
 	}
