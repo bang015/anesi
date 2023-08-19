@@ -234,4 +234,5 @@ public class UserController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
+	
 }

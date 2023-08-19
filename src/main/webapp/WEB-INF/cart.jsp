@@ -17,33 +17,42 @@
 <!-- 주석 꼭 남겨주세요 -->
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-  <div id="app">
+    <div id="cart-app">
     <div id="container">
   
-      <div id="cart-app" class="container">
-  <table id="cart-table" class="table table-bordered">
-  <!--    <input type="checkbox" id="cb1" class="chbox">
-    <label for="cb1" class="chbox"></label> -->
- <div class="cart-item container mb-4" v-for="item in cartItems">
-  <div class="row align-items-center">
-    <div class="col-md-3">
-      <img class="img-fluid" :src="item.imgPath+'/'+item.imgName" />
-    </div>
-    <div class="col-md-6">
-      <h5 class="mb-2">{{ '['+ item.productName +']' }} {{ '['+item.manufacturer+']' }}</h5>
-      <p>{{ item.productPrice }}원</p>
-   <button class="btn btn-primary" id="btnbuy" @click="goToPurchasePage">구매하기</button>
-    </div>
-    <div class="col-md-3">
-      <button class="btn btn-sm btn-danger" v-on:click="deleteItem(item)">
-        <i class="fas fa-trash-alt" aria-hidden="true" id="delete"></i> 삭제
-      </button>
+     <div class="cart-item container mb-4" v-for="item in cartItemsUnique">
+    <div class="row align-items-center">
+      <div class="col-md-3">
+        <img class="img-fluid" :src="item.imgPath + '/' + item.imgName" />
+      </div>
+      <div class="col-md-6">
+        <h5 class="mb-2">{{ "[" + item.productName + "]" }} {{ "[" + item.manufacturer + "]" }}</h5>
+        <p>{{ item.productPrice }}원</p>
+
+        <div class="main-option">
+       <select class="option-box" v-model="item.option" @change="addToSelectedOptions">
+  <option value="">이걸 눌러야 값이 출력됩니다 </option>
+  <option v-for="(option, index) in item.options" :key="option.optionNo + index" :value="option.optionNo">
+    {{ option.optionName + " (+" + option.optionPrice + "원)" }}
+  </option>
+</select>
+        </div>
+
+        <button class="btn btn-primary" id="btnbuy" @click="goToPurchasePage">구매하기</button>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-sm btn-danger" v-on:click="deleteItem(item)">
+          <i class="fas fa-trash-alt" aria-hidden="true" id="delete"></i> 삭제
+        </button>
+      </div>
     </div>
   </div>
 </div>
-   
-  
-  </table>
+
+
+
+
+
 <div class="cal container mt-4">
   <div class="row">
     <div class="col-md-6">
@@ -60,6 +69,8 @@
   </div>
 </div>
 </div>
+
+    
   
 
 </body>
@@ -68,14 +79,26 @@
 new Vue({
    el: '#cart-app',
     data: {
-      cartItems: []
+    	  cartItems: [],
+    	  optionName: "",
+    	  option1: "",
+    	  option: [],
+    	  optionPrice: "",
+    	  selectedOptions: [], // 선택된 옵션 정보를 저장할 배열
     },
     computed: {
-      totalPrice() {
-        return this.cartItems.reduce((total, item) => {
-          return total + parseInt(item.productPrice);
-        }, 0);
-      },
+    	 cartItemsUnique() {
+    		    const unique = [... new Set(this.cartItems.map(item => item.productNo))];
+    		    return unique.map(pno => {
+    		      return this.cartItems.find(item => item.productNo === pno);
+    		    });
+    		  },
+    	
+    	totalPrice() {
+          return this.cartItems.reduce((total, item) => {
+            return total + parseInt(item.productPrice);
+          }, 0);
+        },
       totalShippingCost() {
       	return this.totalPrice >= 30000 ? 0 : this.cartItems.length * 2500;
       },
@@ -90,25 +113,37 @@ new Vue({
       this.loadCartList();
     },
     methods: {
-      loadCartList() {
-        const self = this;
-        const userNo = '${sessionNo}';
+        loadCartList() {
+            const self = this;
+            const userNo = '${sessionNo}';
 
-        if (userNo) {
-          $.ajax({
-            url: '/product/viewCartList.dox',
-            method: 'POST',
-            dataType: 'json',
-            data: { userNo: userNo },
-            success: function (response) {
-              console.log(response);
-              self.cartItems = response.list;
+            if (userNo) {
+              $.ajax({
+                url: '/product/viewCartList.dox',
+                method: 'POST',
+                dataType: 'json',
+                data: { userNo: userNo },
+                success: function(response) {
+                  console.log(response);
+                  self.cartItems = response.list;
+                  response.list.forEach(function(item) {
+                    console.log('상품 번호: ' + item.productNo);
+                    console.log('상품 이름: ' + item.productName);
+                    
+                    // 각 상품마다 옵션들을 불러오기
+                    self.fnOption(item.productNo, function(options) {
+                      // 각 상품의 옵션을 추가
+                      item.options = [{ optionNo: '', optionName: '상품을 선택하세요.', optionPrice: 0 }].concat(options);
+                      // 옵션 배열에 해당 상품의 옵션들을 추가해준다.
+                      self.option = self.option.concat(options); 
+                    });
+                  });
+                }
+              });
+            } else {
+              alert('사용자 번호가 없습니다. 로그인 후 이용해주세요.');
             }
-          });
-        } else {
-          alert('사용자 번호가 없습니다. 로그인 후 이용해주세요.');
-        }
-      },
+          },
       deleteItem(item) {
     	    const requestData = {
     	        productNo: item.productNo,
@@ -166,7 +201,56 @@ new Vue({
           } else {
             alert('장바구니에 상품이 없습니다. 상품을 추가한 후 다시 시도해주세요.');
           }
-        }
-    }
+        },
+        addToSelectedOptions() {
+            const selectedItem = this.option.find(item => item.optionNo === this.option1);
+            if (selectedItem) {
+              const existingOption = this.selectedOptions.find(opt => opt.optionNo === selectedItem.optionNo);
+              if (existingOption) {
+                existingOption.quantity++; // 이미 있는 상품의 수량 증가
+              } else {
+                // 옵션을 새로 추가
+                this.selectedOptions.push({
+                  productNo: item.productNo, // 상품 번호도 함께 저장
+                  optionNo: selectedItem.optionNo,
+                  optionName: selectedItem.optionName,
+                  quantity: 1
+                });
+              }
+              this.option1="";
+            }
+            console.log(this.selectedOptions);
+          },
+  	    fnOption: function(productNo, callback) {
+  	      var self = this;
+  	      var nparmap = { productNo: productNo };
+  	      $.ajax({
+  	        url: '/optionSearch.dox',
+  	        dataType: 'json',
+  	        type: 'POST',
+  	        data: nparmap,
+  	        success: function(data) {
+  	          // 옵션들을 콜백 함수로 전달
+  	          typeof callback === 'function' && callback(data.option);
+  	        },
+  	        error: function(err) {
+  	          console.error('옵션을 불러오는 데 실패했습니다.', err);
+  	        }
+  	      });
+  	    },
+  	  mounted() { // 또는 created()를 사용해도 됩니다.
+  	      this.$nextTick(function() {
+  	        for(let i in this.cartItems) {
+  	          var dropdownElement = this.$refs['optionBox_' + i][0];
+  	          if (dropdownElement) {
+  	            dropdownElement.click();
+  	          }
+  	        }
+  	      });
+  	    },
+  
+  }
+        
+        
 });
 </script>

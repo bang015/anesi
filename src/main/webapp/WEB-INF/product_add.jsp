@@ -381,7 +381,7 @@ var app = new Vue({
 				var nparmap = self.product;
 				
 				$.ajax({
-		    		url : "../product/addProduct.dox",
+		    		url : "../addProduct.dox",
 	                dataType:"json",	
 	                type : "POST",
 			      	data: nparmap,
@@ -400,7 +400,7 @@ var app = new Vue({
 				var nparmap = self.product;
 				
 				$.ajax({
-			    		url : "../product/insertSearchProduct.dox",
+			    		url : "../insertSearchProduct.dox",
 		                dataType:"json",	
 		                type : "POST",
 				      	data: nparmap,
@@ -449,7 +449,7 @@ var app = new Vue({
 		upload(form) {
 			return new Promise((resolve, reject) => {
 				$.ajax({
-			      	url: "../product/fileUpload.dox",
+			      	url: "../fileUpload.dox",
 			      	type: "POST",
 			      	processData: false,
 			      	contentType: false,
@@ -467,7 +467,7 @@ var app = new Vue({
 	    	var self = this;
 	    	var nparmap = {productNo, productStock : info.productStock, optionPrice : info.optionPrice, optionName : info.optionName}
 	    	$.ajax({
-		       url: "../product/addOption.dox",
+		       url: "../addOption.dox",
 		       dataType: "json",
 		       type: "POST",
 		       data: nparmap,

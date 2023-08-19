@@ -1,6 +1,7 @@
 @charset "UTF-8";
 #container{
 	padding: 10px 20px;
+	width: 100%;
 }
 .containerTitle{
 	height: 50px;
@@ -57,25 +58,25 @@
 	height: 50px;
 }
 .table-container {
-  max-height: 400px; /* 理��� ���대�� �ㅼ���⑸����. ���대��� �� ���대�� 珥�怨쇳��硫� �ㅽ�щ·�� ���깅�⑸����. */
-  overflow-y: auto; /* �몃� �ㅽ�щ·�� ���깊�⑸����. */
+  max-height: 400px; 
+  overflow-y: auto; 
   border: 1px solid #dbdbdb;
 }
 .tableBox{
 	padding: 15px 30px 30px 30px;
 }
 .table-container > table{
-	width: 100%; /* ���대��� 而⑦���대���� 苑� 李⑤��濡� �ㅼ���⑸����. */
+	width: 100%; 
     border-collapse: collapse;
 }
 .table-container > th, td {
-  border: 1px solid #ccc; /* �� ����由� �ㅽ���쇱�� 吏����⑸����. */
+  border: 1px solid #ccc; 
   padding: 8px;
   text-align: center;
 }
 
 .table-container > td, th {
-  border: 1px solid #ccc; /* �� ����由� �ㅽ���쇱�� 吏����⑸����. */
+  border: 1px solid #ccc; 
   padding: 8px;
   text-align: center;
 }
@@ -156,8 +157,8 @@
 /* 헤더 CSS*/
 .flex-container1 {
   display:grid;
-  grid-template-rows: 1fr 1fr 2fr ;
-  grid-template-columns: 1fr 8fr;}
+  grid-template-columns: 1fr 8fr !important;
+  }
     
 .admin_header {
   display: flex;

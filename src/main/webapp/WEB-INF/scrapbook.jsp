@@ -20,7 +20,7 @@
 		<div id="container">
 			<h2>스크랩북</h2>
 			<div id="inner">
-				<div><img alt="프로필" src="../css/image/pfimgG2.png" class="pfSytle"></div>
+				<div v-if="profileImg.uImgPath != undefined"><img alt="프로필" :src="profileImg.uImgPath+'/'+profileImg.uImgName" class="pfSytle"></div>
 				<div class="nickStyle">{{userNick}}</div>
 				<div class="allTextBox">
 					<div class="allText">상품({{list.length}})</div>
@@ -68,6 +68,7 @@ var app = new Vue({
 		list : [],
 		checkSb : [],
 		flg : false,
+		profileImg : {},
 	},// data
 	methods : {
 		getSbList(){
@@ -127,11 +128,25 @@ var app = new Vue({
 			if(!self.flg){
 				$.pageChange("/product/view.do", {no : productNo} );
 			}
+		},
+		fnGetProfile(){
+			var self = this;
+			var nparmap = {userNo : self.userNo};
+			$.ajax({
+                url : "/profileImg.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.profileImg = data.img;
+                }
+			})
 		}
 	}, // methods
 	created : function() {
 		var self = this;
 		self.getSbList();
+		self.fnGetProfile();
 	}// created
 });
 </script>

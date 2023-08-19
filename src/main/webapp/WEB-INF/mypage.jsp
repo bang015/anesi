@@ -169,7 +169,7 @@ li{
 <div id="container">
 	<div class="profile">
 		<div class="profile_left">
-			<div><img src="../css/image/profile.png" class="profile_img"></div>
+			<div v-if="profileImg.uImgPath != undefined"><img :src="profileImg.uImgPath+'/'+profileImg.uImgName" class="profile_img"></div>
 			<div class="nickName">{{sessionNick}}</div>
 		</div>
 		<div class="profile_right">	
@@ -195,15 +195,31 @@ li{
 var app = new Vue({
 	el : '#app',
 	data : {
-		sessionNick : "${sessionNick}"
+		sessionNick : "${sessionNick}",
+		sessionNo : "${sessionNo}",
+		profileImg : {},
 	},// data
 	methods : {
 		fnEdit : function(){
 			location.href="/mypage/user_edit.do"
+		},
+		fnGetProfile(){
+			var self = this;
+			var nparmap = {userNo : self.sessionNo};
+			$.ajax({
+                url : "/profileImg.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.profileImg = data.img;
+                }
+			})
 		}
 	}, // methods
 	created : function() {
 		var self = this;
+		self.fnGetProfile();
 		console.log(self.sessionNick);
 	}// created
 });

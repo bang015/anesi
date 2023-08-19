@@ -138,7 +138,7 @@ public class ProductController {
 		       resultMap.put("imgList2", imgList2);
 		       return new Gson().toJson(resultMap);
 		   }
-		  
+		  //장바구니 목록 출력
 		  @RequestMapping(value = "/product/viewCartList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 			@ResponseBody
 			public String userCartList(Model model, @RequestParam("userNo") int userNo) throws Exception {

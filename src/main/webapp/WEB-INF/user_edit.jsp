@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="js/jquery.js"></script>
+<script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
@@ -163,6 +163,10 @@ img:hover{
     top: 8%;
     right: 5%;
 }
+.inputFile{
+	position: absolute;
+    left: -9999px;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -250,7 +254,10 @@ img:hover{
 					</div>
 			<div class="part">
 				<div class="edit_title">프로필 이미지</div>
-				<img src="../css/image/profile.png" @click="fnProfileChange" style="width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">
+				<label v-if="profileImg.uImgPath != undefined">
+					<img :src="profileImg.uImgPath+'/'+profileImg.uImgName" style="width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">
+					<input type="file" id="file1" name="file1" class="inputFile" @change="fnProfileChange">
+				</label>
 			</div>				
 	</div>
 	<button class="btn" @click="fnEdit">회원정보수정</button>
@@ -280,7 +287,8 @@ var app = new Vue({
 		bDay : "",
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
-		info : {}
+		info : {},
+		profileImg : {}
 	},// data
 	methods : {
 		fnGetInfo : function(){
@@ -410,11 +418,39 @@ var app = new Vue({
             });
 		},
 		fnProfileChange : function(){
-			
+			var self = this;
+			var form = new FormData();
+   	        form.append( "file1",  $("#file1")[0].files[0] );
+   	     	form.append( "sessionNo",  self.sessionNo); // pk
+	         $.ajax({
+	             url : "/fileUpload2.dox"
+	           , type : "POST"
+	           , processData : false
+	           , contentType : false
+	           , data : form
+	           , success:function(response) { 
+	        	   self.fnGetProfile();
+	           }
+	           
+	       });
+		},
+		fnGetProfile(){
+			var self = this;
+			var nparmap = {userNo : self.sessionNo};
+			$.ajax({
+                url : "../profileImg.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.profileImg = data.img;
+                }
+			})
 		}
 	}, // methods
 	created : function() {
 		var self = this;
+		self.fnGetProfile();
 		self.fnGetInfo();
 	}// created
 });

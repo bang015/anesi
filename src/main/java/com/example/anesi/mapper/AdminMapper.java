@@ -26,4 +26,8 @@ public interface AdminMapper {
 	int adminDeleteOption(HashMap<String, Object> map);
 	//주문 검색
 	List<UserOrder> selectDeliveryList(HashMap<String, Object> map);
+	//배송상태 업데이트
+	int updateDelivery(HashMap<String, Object> map);
+	//배송 검색
+	List<UserOrder> selectSearchList(HashMap<String, Object> map);
 }

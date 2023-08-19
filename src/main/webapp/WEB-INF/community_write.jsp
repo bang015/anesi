@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="../js/jquery.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
@@ -129,7 +128,7 @@ var app = new Vue({
 		            $.pageChange("view.do", {boardNo : self.bNo});
 		        }
 			});
-		}		
+		},
 	}, // methods
 	created : function() {
 		var self = this;
