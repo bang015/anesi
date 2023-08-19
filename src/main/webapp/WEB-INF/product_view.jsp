@@ -358,7 +358,7 @@
 												</div>											
 											</div>
 											<div class="inquiry-add-option">
-												<div class="inquiry-content-title">
+												<div :class="optionCheckStyle">
 													상품 및 옵션	
 												</div>
 												<div class="inquiry-option-select">
@@ -370,17 +370,17 @@
 													</select>
 													<div class="option-not-check">
 														<label class="styled-checkbox">																												
-															<input class="inquiry-checkbox" type="checkbox">														    														
+															<input class="inquiry-checkbox" type="checkbox" id="optionYnCheckbox" @click="optionCheckYn">														    														
 															<span class="inquiry-span">선택안함</span>
 														</label>
 													</div>
 												</div>
 											</div>
 											<div class="inquiry-add-content">
-												<div :class="reviewTitleClass">
+												<div :class="inquiryTitleClass">
 													문의내용
 												</div>												
-												<textarea :class="reviewTextareaClass" @click="reviewTextarea" @input="updateCharacterCount" rows="10" cols="53.9" v-model="inquiryText" placeholder="문의 내용을 입력하세요."></textarea>
+												<textarea :class="inquiryTextareaClass" @click="inquiryTextarea" @input="updateCharacterCount" rows="10" cols="53.9" v-model="inquiryText" placeholder="문의 내용을 입력하세요."></textarea>
 									        	<div class="character-count">{{ characterCount }} / 200</div>
 											</div>
 											<div class="privateText" v-if="privateCheck">
@@ -467,6 +467,12 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		inquiryTextareaClass : 'inquiry-add-text',
+		inquiryTitleClass : 'inquiry-title',
+		inquiryOptionCheck : false,
+		optionCheckStyle : 'inquiry-content-title',
+		inquiryCheck : false,
+		optionCheckbox : false,
 		openYn : "Y",
 		privateCheck : false,
 		purchaseYn : "",
@@ -812,7 +818,7 @@ var app = new Vue({
 				self.reviewCsatCheck = true;
 				self.changeCsatStyle();
 			}
-			if(self.reviewCheck){
+			if(self.reviewCheck || self.reviewCsatCheck){
 				return;	
 			}
             var nparmap = {userNo : self.userNo, reviewText : self.reviewText, productNo : self.productNo, csat : self.selectedRating, optionName : self.optionName};
@@ -879,25 +885,29 @@ var app = new Vue({
 		        this.reviewTitleClass = 'review-title';
 		      }	
 		},
-		changeCategoryStyle() {
-		      if (this.reviewCsatCheck) {		    	
-		        this.reviewCsatClass = 'not-check-csat';
+		changeTextareaStyle2() {
+		      if (this.inquiryCheck) {
+		        this.inquiryTextareaClass = 'not-check-textarea2';
+		        this.inquiryTitleClass = 'not-check-title2';
 		      } else {
-		        this.reviewCsatClass = 'review-csat';		        
+		        this.inquiryTextareaClass = 'inquiry-add-text';
+		        this.inquiryTitleClass = 'inquiry-title';
 		      }	
 		},
-		changeTextareaStyle1() {
-		      if (this.reviewCheck) {
-		        this.reviewTextareaClass = 'not-check-textarea';
-		        this.reviewTitleClass = 'not-check-title';
+		changeOptionStyle() {
+		      if (this.inquiryOptionCheck) {		    	
+		        this.optionCheckStyle = 'not-check-option';
 		      } else {
-		        this.reviewTextareaClass = 'review-add-text';
-		        this.reviewTitleClass = 'review-title';
+		        this.optionCheckStyle = 'inquiry-content-title';		        
 		      }	
 		},
 		reviewTextarea(){
 			this.reviewCheck=false;
 			this.changeTextareaStyle();
+		},
+		inquiryTextarea(){
+			this.inquiryCheck=false;
+			this.changeTextareaStyle2();
 		},
 		addToSelectedOptions() {
 		      const selectedItem = this.option.find(item => item.optionNo === this.option1);
@@ -1030,12 +1040,16 @@ var app = new Vue({
 		inquiryAdd(){
 				 var self = this;
 				 if(self.inquiryText == ""){
-					 self.changeTextareaStyle();
-					 this.reviewCheck = true;
-					 return;
+					 self.changeTextareaStyle2();
+					 self.inquiryCheck = true;
+					 console.log(self.inquiryCheck);
 				 }
-				 if(self.inquiryOption == 0){
-					 
+				 if(self.inquiryOption == 0 && !self.optionCheckbox){
+					 self.inquiryOptionCheck = true;
+					 self.changeOptionStyle();
+				 } 
+				 if(self.inquiryCheck || self.inquiryOptionCheck){
+					 return;
 				 }
 		         var nparmap = {productNo : self.productNo, userNo : self.userNo, content : self.inquiryText, openYn : self.openYn, inquiryCategory : self.inquiryCategory, purchaseYn : self.purchaseYn, optionNo : self.inquiryOption};
 		         $.ajax({
@@ -1055,7 +1069,13 @@ var app = new Vue({
 		             }             
 		            });
 			},
-			  
+			optionCheckYn(){
+				var self = this;				
+				const checkbox = document.getElementById('optionYnCheckbox');
+			    self.optionCheckbox = checkbox.checked ? true : false;
+			    self.inquiryOptionCheck = false;
+			    console.log(self.optionCheckbox);
+			}  
 	}, // methods
 	created : function() {
 		var self = this;

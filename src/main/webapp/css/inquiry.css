@@ -179,4 +179,43 @@
     		margin-left: 250px;
     		margin-bottom: 30px;
 	}
-	
+	.inquiry-title{
+		font-size: 16px;
+		font-weight: bold;
+		margin-top: 10px;
+		display: inline-block;
+	}
+	.not-check-title2{
+		font-size: 16px;
+		font-weight: bold;
+		margin-top: 10px;
+		display: inline-block;
+		color: #f06060;
+	}
+	.inquiry-add-text{
+		margin-top : 20px;
+		width: 580px;
+		border-radius: 5px;
+		line-height: 10px;
+		padding: 10px;
+		font-weight: 500;
+		resize: none;
+ 		outline: none;
+	}
+	.not-check-textarea2{
+		margin-top : 20px;
+		width: 580px;
+		border-radius: 5px;
+		border-color : #f77;
+		line-height: 10px;
+		padding: 10px;
+		font-weight: 500;
+		resize: none;
+ 		outline: none;
+	}
+	.not-check-option{
+		font-size: 16px;
+		font-weight: bold;
+		display: inline-block;
+		color: #f06060;
+	}
