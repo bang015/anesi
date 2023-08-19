@@ -377,9 +377,9 @@
 												</div>
 											</div>
 											<div class="inquiry-add-content">
-												<div class="inquiry-content-title">
+												<div :class="reviewTitleClass">
 													문의내용
-												</div>
+												</div>												
 												<textarea :class="reviewTextareaClass" @click="reviewTextarea" @input="updateCharacterCount" rows="10" cols="53.9" v-model="inquiryText" placeholder="문의 내용을 입력하세요."></textarea>
 									        	<div class="character-count">{{ characterCount }} / 200</div>
 											</div>
@@ -933,12 +933,6 @@ var app = new Vue({
 		    	  this.calculateOrderTotal();
 		        
 		      },
-		calculateTotalPrice(selectedOption) {
-		        const item = this.option.find(opt => opt.optionNo === selectedOption.optionNo);
-		        this.totalPrice = item.optionPrice * selectedOption.quantity+this.discountPrice
-		        return item ? item.optionPrice * selectedOption.quantity : 0;
-		        
-		      },
 		   // totalPrice 계산 메서드
 		calculateTotalPrice(selectedOption) {
 		        const item = this.option.find(opt => opt.optionNo === selectedOption.optionNo);
@@ -1035,9 +1029,14 @@ var app = new Vue({
 			},
 		inquiryAdd(){
 				 var self = this;
-				 console.log(self.inquiryOption);
-				 console.log(self.purchaseYn);	
-				 console.log(self.openYn);
+				 if(self.inquiryText == ""){
+					 self.changeTextareaStyle();
+					 this.reviewCheck = true;
+					 return;
+				 }
+				 if(self.inquiryOption == 0){
+					 
+				 }
 		         var nparmap = {productNo : self.productNo, userNo : self.userNo, content : self.inquiryText, openYn : self.openYn, inquiryCategory : self.inquiryCategory, purchaseYn : self.purchaseYn, optionNo : self.inquiryOption};
 		         $.ajax({
 		             url : "/inquiryAdd.dox",
