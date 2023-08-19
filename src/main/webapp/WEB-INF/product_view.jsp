@@ -362,7 +362,7 @@
 													상품 및 옵션	
 												</div>
 												<div class="inquiry-option-select">
-													<select class="option-select-box" v-model="inquiryOption">
+													<select :class="inquirySelectClass" v-model="inquiryOption">
 														<option value=0>상품을 선택하세요.</option>
 														<option v-for="item in option" :value="item.optionNo">
 															{{item.optionName}}
@@ -377,10 +377,10 @@
 												</div>
 											</div>
 											<div class="inquiry-add-content">
-												<div :class="inquiryTitleClass">
+												<div :class="{'inquiry-title' : !inquiryCheck, 'not-check-title2' : inquiryCheck}">
 													문의내용
 												</div>												
-												<textarea :class="inquiryTextareaClass" @click="inquiryTextarea" @input="updateCharacterCount" rows="10" cols="53.9" v-model="inquiryText" placeholder="문의 내용을 입력하세요."></textarea>
+												<textarea :class="{'inquiry-add-text' : !inquiryCheck, 'not-check-textarea2' : inquiryCheck}" @click="inquiryTextarea" @input="updateCharacterCount" rows="10" cols="53.9" v-model="inquiryText" placeholder="문의 내용을 입력하세요."></textarea>
 									        	<div class="character-count">{{ characterCount }} / 200</div>
 											</div>
 											<div class="privateText" v-if="privateCheck">
@@ -467,6 +467,7 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		inquirySelectClass : 'option-select-box',
 		inquiryTextareaClass : 'inquiry-add-text',
 		inquiryTitleClass : 'inquiry-title',
 		inquiryOptionCheck : false,
@@ -521,7 +522,7 @@ var app = new Vue({
 		cnt : 0,
 		cnt1 : 0,
 		showScrapModal : false,
-		showScrapModal2 : true,
+		showScrapModal2 : false,
 		/* 그래프 시작 */
 		series: [{
             data : []
@@ -885,20 +886,13 @@ var app = new Vue({
 		        this.reviewTitleClass = 'review-title';
 		      }	
 		},
-		changeTextareaStyle2() {
-		      if (this.inquiryCheck) {
-		        this.inquiryTextareaClass = 'not-check-textarea2';
-		        this.inquiryTitleClass = 'not-check-title2';
-		      } else {
-		        this.inquiryTextareaClass = 'inquiry-add-text';
-		        this.inquiryTitleClass = 'inquiry-title';
-		      }	
-		},
 		changeOptionStyle() {
 		      if (this.inquiryOptionCheck) {		    	
 		        this.optionCheckStyle = 'not-check-option';
+		        this.inquirySelectClass = 'not-check-select';
 		      } else {
-		        this.optionCheckStyle = 'inquiry-content-title';		        
+		        this.optionCheckStyle = 'inquiry-content-title';
+		        this.inquirySelectClass = 'option-select-box';
 		      }	
 		},
 		reviewTextarea(){
@@ -907,7 +901,7 @@ var app = new Vue({
 		},
 		inquiryTextarea(){
 			this.inquiryCheck=false;
-			this.changeTextareaStyle2();
+			
 		},
 		addToSelectedOptions() {
 		      const selectedItem = this.option.find(item => item.optionNo === this.option1);
@@ -1040,7 +1034,7 @@ var app = new Vue({
 		inquiryAdd(){
 				 var self = this;
 				 if(self.inquiryText == ""){
-					 self.changeTextareaStyle2();
+					 
 					 self.inquiryCheck = true;
 					 console.log(self.inquiryCheck);
 				 }
@@ -1074,6 +1068,7 @@ var app = new Vue({
 				const checkbox = document.getElementById('optionYnCheckbox');
 			    self.optionCheckbox = checkbox.checked ? true : false;
 			    self.inquiryOptionCheck = false;
+			    self.changeOptionStyle();
 			    console.log(self.optionCheckbox);
 			}  
 	}, // methods
