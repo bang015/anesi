@@ -159,7 +159,7 @@
 	<select id="selectCartList" parameterType="int" resultType="com.example.anesi.model.Product">
 	    SELECT
 	        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
-	        user.USER_NO
+	        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO
 	    FROM
 	        t3_tbl_product product
 	    INNER JOIN
@@ -168,10 +168,11 @@
 	        t3_tbl_user_cart cart ON cart.PRODUCT_NO = product.PRODUCT_NO
 	    INNER JOIN
 	        t3_tbl_user user ON user.USER_NO = cart.USER_NO
+	    INNER JOIN 
+	        t3_tbl_product_option o ON product.PRODUCT_NO = o.PRODUCT_NO
 	    WHERE
 	        user.USER_NO = #{userNo} AND image.THUMBNAIL_YN = 'Y'
 	</select>
-
 	
 	<!-- 비회원 장바구니 등록 -->
 	<insert id="nonUserCartInsert" parameterType="hashmap" >
