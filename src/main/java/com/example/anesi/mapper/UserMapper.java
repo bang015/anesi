@@ -44,5 +44,4 @@ public interface UserMapper {
 	int withdrawal(HashMap<String, Object> map);
 	// 주문내역 조회
 	List<UserOrder> selectOrderList(HashMap<String, Object> map);
-	
 }

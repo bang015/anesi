@@ -115,7 +115,7 @@ public class AdminController {
 		return new Gson().toJson(resultMap);
 	}
 	
-	//옵션 추가
+	//배송 전체
 	@RequestMapping(value = "/admin/orderList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String orderList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -132,7 +132,16 @@ public class AdminController {
 		ObjectMapper mapper = new ObjectMapper();
 		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
 		map.put("list", list);
-		resultMap.put("cnt", adminService.adminRemoveOption(map));
+		resultMap.put("cnt", adminService.editDelivery(map));
+		return new Gson().toJson(resultMap);
+	}
+	
+	//배송 검색
+	@RequestMapping(value = "/admin/searchList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<UserOrder> list = adminService.searchSearchList(map);
+		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
 }

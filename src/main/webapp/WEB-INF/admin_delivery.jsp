@@ -50,6 +50,30 @@
 					</div>
 				</div>
 			</div>
+			<div class="deliverySearchBox">
+				<div>
+					<span>진행상태</span>
+					<select v-model="selectListNo" class="selectStyle">
+						<option value="0">전체</option>
+						<option value="1">결제완료</option>
+						<option value="2">배송대기</option>
+						<option value="3">배송중</option>
+						<option value="4">배송완료</option>
+					</select>
+					<span @mouseover="showhint" @mouseleave="hidehint"><i class="fa-solid fa-circle-question fa-2xs"></i></span>
+					<span class="hint" v-if="hihtflg">전체 상태에서는 배송상태를 변경할 수 없습니다.</span>
+				</div>
+				<div>
+					<span>상세조건</span>
+					<select v-model="searchOption" class="selectStyle">
+						<option value="PAYMENT_NO">주문번호</option>
+						<option value="PRODUCT_NAME">상품이름</option>
+						<option value="RECEIPT_NAME">수취인</option>
+					</select>
+					<span><input v-model="searchText" class="inputStyle" @keyup.enter="fnSearch"></span>
+					<button class="btn1 btn2 btn3" @click="fnSearch">검색</button>
+				</div>
+			</div>
 			<div class="deliveryListBox">
 				<div class="buttonBox">
 					<button class="btn1 btn2" v-if="listNo == 1" @click="fnUpdateDelivery('2')">선택물품<br>결제확인</button>	
@@ -66,7 +90,7 @@
 									<th>구매수량</th>
 									<th>수취인</th>
 									<th>배송지(우편번호)</th>
-									<th>쉬취인 연락처</th>
+									<th>수취인 연락처</th>
 									<th>결제일</th>
 									<th>진행상태(최종처리일)</th>
 								</tr>
@@ -102,7 +126,10 @@ var app = new Vue({
 		checkList : [],
 		allChecked : false,
 		listNo : 0,
-		
+		selectListNo : 0,
+		hihtflg : false,
+		searchOption : 'PAYMENT_NO',
+		searchText : '',
 	},// data
 	methods : {
 		fnGetOrderList(){
@@ -155,6 +182,7 @@ var app = new Vue({
 		fnChangeList(num){
 			var self = this;
 			self.listNo = Number(num);
+			self.selectListNo = Number(num);
 		},
 		fnReload(){
 			location.reload();
@@ -169,7 +197,45 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	
+                	alert("변경");
+                	self.fnGetOrderList();
+                	self.checkList = [];
+            		self.allChecked = false;
+                }
+			});
+		},
+		showhint(){
+			var self = this;
+			self.hihtflg = true;
+		},
+		hidehint(){
+			var self = this;
+			self.hihtflg = false;
+		},
+		fnSearch(){
+			var self = this;
+			self.listNo = self.selectListNo;
+			var nparmap = {searchOption : self.searchOption, searchText : self.searchText};
+			console.log(nparmap);
+			$.ajax({
+                url : "/admin/searchList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.orderList = data.list;
+                	self.orderList2 = [];
+                	self.orderList2 = self.orderList.map(item => {
+                		if(item.deliverySit == 1){
+                			 return { ...item, deliveryName: '결제완료' };
+                		} else if(item.deliverySit == 2){
+                			 return { ...item, deliveryName: '배송준비' };
+                		} else if(item.deliverySit == 3){
+                			 return { ...item, deliveryName: '배송중' };
+                		} else if(item.deliverySit == 4){
+                			 return { ...item, deliveryName: '배송완료' };
+                		}
+                	})
                 }
 			});
 		}

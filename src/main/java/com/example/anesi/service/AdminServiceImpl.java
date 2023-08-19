@@ -63,6 +63,18 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminMapper.selectDeliveryList(map);
 	}
+
+	@Override
+	public int editDelivery(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.updateDelivery(map);
+	}
+
+	@Override
+	public List<UserOrder> searchSearchList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectSearchList(map);
+	}
 	
 	
 	

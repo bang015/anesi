@@ -16,4 +16,6 @@ public interface AdminService {
 	int adminEditProductSituation(HashMap<String, Object> map);
 	int adminRemoveOption(HashMap<String, Object> map);
 	List<UserOrder> selectDeliveryList(HashMap<String, Object> map);
+	int editDelivery(HashMap<String, Object> map);
+	List<UserOrder> searchSearchList(HashMap<String, Object> map);
 }
