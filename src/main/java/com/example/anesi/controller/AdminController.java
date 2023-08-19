@@ -123,4 +123,16 @@ public class AdminController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
+	
+	//배송 상태 업데이트
+	@RequestMapping(value = "/admin/editDelivery.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editDelivery(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		String json = map.get("checkList").toString();
+		ObjectMapper mapper = new ObjectMapper();
+		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+		map.put("list", list);
+		resultMap.put("cnt", adminService.adminRemoveOption(map));
+		return new Gson().toJson(resultMap);
+	}
 }

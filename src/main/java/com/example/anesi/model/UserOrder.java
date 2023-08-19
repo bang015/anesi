@@ -28,9 +28,20 @@ public class UserOrder {
     private String manufacturer;
     private int discount;
     private String paymentNo;
-
+    private String zipcode;
+    private String addr;
+    private String addr2;
     
     
+	public String getZipcode() {
+		return zipcode;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public String getAddr2() {
+		return addr2;
+	}
 	public String getPaymentNo() {
 		return paymentNo;
 	}

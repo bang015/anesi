@@ -13,6 +13,7 @@ input, button{
 	width: 170px;
 	text-align: center;
 	padding: 10px;
+	padding-right: 5px;
 }
 .productTitleAdd{
 	margin-bottom: 20px;
@@ -24,7 +25,7 @@ input, button{
 }
 .guide{
 	font-size: 13px;
-	color: #A782C3;
+	color: #5E503F;
 }
 
 .err{
@@ -44,7 +45,7 @@ input, button{
 	height : 30px;
 	margin-left: 40px;
 	margin-top: 10px;
-	background: #A782C3;
+	background: #5E503F;
 	border: 0;
 	border-radius: 5px;
 	color: #fff;
@@ -59,7 +60,7 @@ input, button{
 	width: 50%;
 	padding: 5px 10px;
 	height : 30px;
-	background: #A782C3;
+	background: #5E503F;
 	border: 0;
 	border-radius: 5px;
 	color: #fff;
@@ -69,7 +70,7 @@ input, button{
 	padding: 5px 10px;
 	height : 50px;
 	margin-left: 40px;
-	background: #A782C3;
+	background: #5E503F;
 	border: 0;
 	border-radius: 5px;
 	color: #fff;
@@ -87,7 +88,7 @@ input, button{
 	width: 65px;
 	padding: 5px 10px;
 	height : 20px;
-	background: #A782C3;
+	background: #5E503F;
 	border: 0;
 	border-radius: 5px;
 	color: #fff;
@@ -124,7 +125,7 @@ input, button{
   border-right: 1px solid #ccc;
   }
   .categoryNo{
-	  color: #A782C3;
+	  color: #5E503F;
   }
   
 .content{
@@ -151,9 +152,9 @@ input, button{
 	border: 1px solid;
 	transition : border-color 0.3s;
 	border-color: #dbdbdb;
-    width: 300px;
+    width: 250px;
 }
-/* Çì´õ CSS*/
+/* ï¿½ï¿½ï¿½ CSS*/
 .flex-container1 {
  	display:grid;
     grid-template-rows: 1fr 1fr 2fr ;
