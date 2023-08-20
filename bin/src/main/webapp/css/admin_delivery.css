@@ -1,0 +1,147 @@
+@charset "EUC-KR";
+
+/* ��� CSS */
+.admin_header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #e0d4c6;
+  width : 100%;
+  padding: 30px 20px;
+}
+.flex-container1 {
+ 	display:grid;
+    grid-template-rows: 1fr 1fr 2fr ;
+    grid-template-columns: 1fr 8fr;
+}
+/* ��� CSS end*/
+#container{
+	padding: 10px 20px;
+}
+.containerTitle{
+	height: 50px;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	border-radius: 4px;
+	padding-left: 20px;
+	font-size: 20px;
+	display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.iconBack{
+	background-color: #5E503F;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+}	
+.checkList{
+	display: flex;
+	height: 100%;
+	margin-right: 50px;
+	cursor: pointer;
+}
+.containerCheckList{
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	border-radius: 4px;
+	height: 50px;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+.checkListText{
+	margin-left: 15px;
+    display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.numText{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+
+.deliveryListBox{
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	border-radius: 4px;
+	padding: 15px 30px 30px 30px;
+	font-size: 20px;
+}
+.table-container {
+  max-height: 400px; 
+  overflow-y: auto; 
+  border: 1px solid #dbdbdb;
+  font-size: 14px;
+}
+.tableBox{
+	margin-top: 20px;
+}
+.table-container > table{
+	width: 100%; 
+    border-collapse: collapse;
+}
+.table-container > th, td {
+  border: 1px solid #ccc; 
+  padding: 8px;
+  text-align: center;
+}
+
+.table-container > td, th {
+  border: 1px solid #ccc; 
+  padding: 8px;
+  text-align: center;
+}
+.btn1{
+	background-color: #5E503F;
+	color: #fff;
+	border: 1px solid #dbdbdb;
+	width: 45px;
+	height: 30px;
+	cursor: pointer;
+}
+.btn2 {
+	font-size: 12px;
+	height: 35px;
+	border-radius: 4px;
+	width: 100px;
+}
+.buttonBox{
+	display: flex;
+}
+.deliverySearchBox{
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	border-radius: 4px;
+	padding: 20px;
+	font-size: 16px;
+	display: flex;
+	justify-content: space-between;
+}
+.selectStyle{
+    width: 100px;
+    height: 25px;
+    margin: 0 5px;
+}
+.hint{
+	font-size: 12px;	
+}
+.deliverySearchBox > div {
+	display: flex;
+    align-items: center;
+}
+.inputStyle{
+    height: 21px;
+    padding: 0px;
+    margin: 0px;
+}
+.btn3{
+	background-color: #fff;
+	color: #5E503F;
+	margin-left: 20px;
+}

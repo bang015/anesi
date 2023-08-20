@@ -1,0 +1,307 @@
+@charset "UTF-8";
+
+.flex-container {
+    display: flex;
+    justify-content: space-between; /* 요소들을 양쪽 끝으로 정렬 */
+    align-items: center; /* 요소들을 수직 가운데 정렬 */
+}
+.main-category__title{
+ 	 font-size : 25px;
+ 	 font-weight : bold;
+ 	 margin-right: auto; /* 변경: 오른쪽 여백을 자동으로 채우기 */
+     display: inline-block;
+     margin-left: 10px; /* 추가: 왼쪽 여백 설정 */
+}
+/*섬네일이미지*/
+.production-item-thumnail__image{
+	width:250px;
+	height:250px;
+    transition: opacity 0.3s; /* 변경 효과를 부드럽게 적용 */
+    position: relative; /* 부모 요소를 기준으로 자식 요소를 배치하기 위함 */
+    display: inline-block; /* 인라인 블록 요소로 배치 */
+    border-radius:  8px;
+}
+.production-item-thumnail__image:hover {
+    opacity: 0.5; /* 마우스 오버시 불투명도 설정 */
+}
+.production-item-thumnail__overlay {
+    position: absolute; /* 부모 요소에 대해 절대 위치로 배치 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* 기본적으로 투명한 상태 */
+    transition: opacity 0.3s; /* 변경 효과를 부드럽게 적용 */
+    pointer-events: none; /* 오버레이 요소를 클릭 가능한 영역 밖으로 배치 */
+}
+.production-item-thumnail:hover .production-item-thumnail__overlay {
+    opacity: 1; /* 마우스 오버시 불투명도 설정 */
+}
+
+
+
+
+/*상품 상세 정보*/
+
+.production-item-header__brand{
+	font-size: 14px;
+
+}
+.brand_name{
+	margin: 10px 10px;
+	font-size: 18px;
+	font-weight: bold;
+}
+.brand_name:hover{
+	text-decoration: underline;
+	color :rgb(229, 229, 229);
+}
+
+.category_country{
+	margin: 10px 10px;
+	font-size: 14px;
+}
+
+.production-item-price__orginal{
+	margin-left: 10px;
+}
+
+.production-item-price__percent{
+	color : #A782C3;
+	font-size: 18px;
+	font-weight: bold;
+	margin-left: 5px;
+}
+.production-item-price__sell{
+	margin-left: 10px;
+	margin-bottom: 20px;
+	font-size: 22px;
+	font-weight: bold;
+	
+}
+
+.production-item-rating{
+	margin-left: 10px;
+	margin-bottom: 20px;
+}
+.scrap_button,
+.cart_button,
+.share_button{
+	margin : 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.product-main-category__name{
+	font-size : 15px;
+}
+.won_icon,.production-item-price__orginal2{
+	text-decoration: line-through;
+}
+
+.production-item__content{
+	width:250px;
+	height:420px;
+	float : left;
+	margin : 35px;
+}
+
+#product-main-category__total > li {
+        display: inline-block;
+        position: relative;
+        top: 10px;
+}
+#product-main-category__total > li > a {
+  display:block; position:relative; padding-bottom:19px;
+  margin: 40px;
+}
+#product-main-category__total > li > a > img {
+  width:100px; height:100px;
+}
+#product-main-category__total > li > a > span {
+  position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0)
+}
+      
+.category-order_toggle{
+	background-color:#A782C3;
+	border: #fff;
+	text-align: center;
+	border-radius:10px; 
+	padding:8px;
+	height:35px; 
+	width: 100px;
+	font-family: 'Pretendard-Regular';
+	color :  #fff;
+ 	position:relative;
+ }
+.category-order_toggle:hover {
+    background-color:rgb(235, 236, 237);
+    transition: 0.7s;
+    
+}  
+.category-order-list {
+
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position:absolute;
+  z-index : 999;
+  background:white;
+  border-radius : 0px 0px 10px 10px;
+  
+}
+
+.category-order-list li {
+
+  /* 카테고리 스타일링 */
+  padding: .5em;
+  border-bottom: 1px solid #ccc;
+  
+  
+}
+.category-order-list-container {
+	background :  #fff;
+   	width: 100px;
+    
+
+}
+
+.aaa {
+  color: #A782C3; /* 원하는 색상 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
+}
+
+/*모달부분*/
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 불투명한 검은색 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index:1000;
+  
+}
+
+.modal-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+.modal-card .left_button{
+  background-color: #fff;
+  border: 2px solid  #A782C3;
+ font-family: 'Pretendard-Regular';
+ width: 150px;
+ height: 50px;
+ border-radius: 5px;
+
+}
+.modal-card .right_button{
+  background-color: #A782C3;
+   border: none;
+ font-family: 'Pretendard-Regular';
+  width: 150px;
+ height: 50px;
+  border-radius: 5px;
+
+
+
+}
+
+
+.selectBox2 * { box-sizing: border-box; }
+.selectBox2 {
+  position: relative;
+  width: 150px;
+  height: 35px;
+  border-radius: 4px;
+  background: url('../css/image/Main/pngwing.com.png') calc(100% - 7px) center no-repeat;
+  border: 2px solid #A782C3;
+  background-size: 20px;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: auto; /* 변경: 왼쪽 여백을 자동으로 채우기 */
+  margin-right: 10px; /* 추가: 오른쪽 여백 설정 */
+}
+
+.selectBox2::after {
+  content: '';
+  display: block; 
+  width: 2px;
+  height: 100%; 
+  position: absolute; 
+  top: 0; 
+  right: 35px;
+  background: #A782C3;
+}
+
+.selectBox2 .label {
+  display: flex;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+  border: 0 none;
+  outline: 0 none;
+  padding-left: 15px;
+  background: transparent;
+  cursor: pointer;
+   font-family: 'Pretendard-Regular';
+
+}
+
+.selectBox2 .optionList {
+  position: absolute; 
+  top: 28px;
+  left: 0;
+  width: 100%;
+  background: #A782C3;
+  color: #fff;
+  list-style-type: none;
+  padding: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  max-height: 0;
+  transition: .3s ease-in;
+  z-index: 1000;
+
+}
+
+.selectBox2.active .optionList {
+  max-height: 500px;
+}
+
+.selectBox2 .optionItem {
+  border-bottom: 1px dashed rgb(170, 72, 72);
+  padding: 7px 15px 8px;
+  transition: .1s;
+}
+
+.selectBox2 .optionItem:hover {
+  background: rgb(175, 93, 93);
+}
+
+.selectBox2 .optionItem:last-child {
+  border-bottom: 0 none;
+}
+
+
+.selectBox2 .optionList::-webkit-scrollbar {width: 6px;}
+.selectBox2 .optionList::-webkit-scrollbar-track {background: transparent; }
+.selectBox2 .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
+.selectBox2 .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}

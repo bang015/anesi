@@ -7,7 +7,10 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
+<link href="../../css/adminH.css" rel="stylesheet">
 <link href="../css/product_add.css" rel="stylesheet">
+<link href="../css/checkbox.css" rel="stylesheet">
+
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <style>
@@ -15,6 +18,7 @@
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
+<jsp:include page="adminH.jsp"></jsp:include>
 	<div id="app">
 		<div id="container">
 			<div class="productTitleAdd"><h1>상품 등록</h1></div> 
@@ -39,34 +43,34 @@
 			</div>
 			<div class="box"><!-- 상품 내용 -->
 				<div><h3>상품 정보</h3> <span class="err"> {{errMsg1}}</span></div>
-				<div>
+				<div class="addInputBox">
 					<div>상품 이름</div>
 					<input v-model="product.productName">
 				</div>
-				<div>
+				<div class="addInputBox">
 					<div>제조사</div>
 					<input v-model="product.manufacturer">
 				</div>
-				<div>
+				<div  class="addInputBox">
 					<div>제조국</div>
 					<input v-model="product.country">
 				</div>
-				<div>
+				<div class="addInputBox">
 					<div>상품 가격</div>
 					<input v-model="product.productPrices">
 				</div>
-				<div>
+				<div class="addInputBox">
 					<div>할인율</div>
-					<input v-model="product.duscount">
+					<input v-model="product.discount">
 				</div>
 			</div>	
 			<div class="box"><!-- 옵션 추가 -->
-				<div><h3>옵션<span class="guide"> 상품 옵션은 최대 5개 입니다.</span></h3></div>
+				<div id="productOption"><h3>옵션<span class="guide"> 상품 옵션은 최대 5개 입니다.</span></h3></div>
 				<button @click="fnOptionAdd" class="btn">옵션 추가</button><span class="err">{{errMsg3}}</span>
 				<table class="tableStyle">
 					<tr>
 						<th class="tdthsy">옵션명</th>
-						<th class="tdthsy">가격</th>
+						<th class="tdthsy">가격증가량</th>
 						<th class="tdthsy">재고량</th>
 						<th class="tdthsy">삭제</th>
 					</tr>
@@ -76,18 +80,17 @@
 					<tr v-for="(item, index) in optionList">
 						
 						<td class="tdthsy"><input v-model="optionList[index].optionName"></td>
-						<td class="tdthsy"><input v-model="optionList[index].productStock"></td>
 						<td class="tdthsy"><input v-model="optionList[index].optionPrice"></td>
+						<td class="tdthsy"><input v-model="optionList[index].productStock"></td>
 						<td class="tdthsy"><button @click="fnOptionDelete(index)" class="delBtn">삭제</button></td>
 				</table>
 			</div>
 			<div class="box"> <!-- 상품 이미지 등록 -->
-				<div><h3>상품 이미지<span class="guide"> 상품 이미지는 최대 5개 입니다.</span></h3></div>
+				<div id="productImgT"><h3>상품 이미지<span class="guide"> 상품 이미지는 최대 5개 입니다.</span></h3></div>
 				<button @click="fnProductImgAdd" class="btn">이미지 추가</button><span class="err">{{errMsg2}}</span>
 				<table class="tableStyle productImg">
 					<tr>
 						<th class="tdthsy">대표 이미지</th>
-						<th class="tdthsy">이미지 이름</th>
 						<th class="tdthsy">이미지 파일</th>
 						<th class="tdthsy">삭제</th>
 						<th class="tdthsy">이미지</th>
@@ -96,21 +99,21 @@
 						<td colspan="4" class="tdthsy">이미지를 추가해 주세요</td>
 					</tr>
 					<tr v-for="(item, index) in productImgList">
-						<td class="tdthsy"><input type="radio" v-model="item.thumbnail" value="Y" name="thumbnail"></td>
-						<td class="tdthsy"><input v-model="item.orgName"></td>
-						<td class="tdthsy"><label class="fileBox">파일선택<input type="file" @change="fnOnFileChange($event, index)" class="fileBtn"></label></td>
+						<td class="tdthsy el-radio"><input type="radio" v-model="item.thumbnail" value="Y" name="thumbnail" :id="index"><label class="el-radio-style" :for="index"></label></td>
+						<td class="tdthsy"><label class="fileBox">파일선택<input type="file" @change="fnOnFileChange($event, index)" class="fileBtn" name="file1"></label></td>
 						<td class="tdthsy"><button @click="fnProductImgDel(index)" class="delBtn">삭제</button></td>
 						<td class="imgDiv"><img v-if="imageList[index]" :src="imageList[index]" alt="Image preview" class="pvImg"></td>
 					</tr>
 				</table>
 			</div>
 				<div class="box"> <!-- 상품 상세설명 이미지 등록 -->
-				<div><h3>상품 상세설명 이미지<span class="guide"> 상품 상세 이미지는 최대 5개 입니다.</span></h3><span class="guide"></span></div> 
+				<div id="productImgC"><h3>상품 상세설명 이미지<span class="guide"> 상품 상세 이미지는 최대 5개 입니다.</span></h3><span class="guide"></span></div> 
 				<button @click="fnContentImgAdd" class="btn">이미지 추가</button><span class="err">{{errMsg4}}</span>
 				<table class="tableStyle">
 					<tr>
 						<th class="tdthsy">이미지 파일</th>
 						<th class="tdthsy">삭제</th>
+						<th class="tdthsy">이미지</th>
 					</tr>
 					<tr v-if="contentImgList.length == 0">
 						<td colspan="4" class="tdthsy">이미지를 추가해 주세요</td>
@@ -119,8 +122,6 @@
 						<tr>
 							<td class="tdthsy"><label class="fileBox">파일선택<input type="file" @change="fnOnFileChange2($event, index)" class="fileBtn"></label></td>
 							<td class="tdthsy"><button @click="fnProductImgDel2(index)" class="delBtn">삭제</button></td>
-						</tr>
-						<tr>
 							<td class="imgDiv content"><img v-if="imageList2[index]" :src="imageList2[index]" alt="Image preview" class="pvImg" ref="image" required></td>
 						</tr>
 					</template>
@@ -145,8 +146,9 @@ var app = new Vue({
 			productPrices : "",
 			manufacturer : "",
 			country : "",
-			duscount : "",
-			category : ""
+			discount : "",
+			category : "",
+			discountYn  : ""
 		},
 		optionList : [], // 옵션 리스트
 		productImgList : [], // 상품 이미지 리스트
@@ -154,10 +156,13 @@ var app = new Vue({
 		imageList : [], // 상품 이미지리스트
 		imageList2 : [], // 상품 상세 이미지 리스트
 		categoryList1 : [], //카테고리 대분류
-		categoryList2 : [], //카테고리 대분류
+		categoryList2 : [], //카테고리 소분류
 		category1Name : "",
 		category2Name : "",
 		category1No : "",
+		fileList : [],
+		fileList2 : [],
+		productInfo : {},
 	},// data
 	methods : {
 		fnTest(){
@@ -177,6 +182,7 @@ var app = new Vue({
 		},
 		fnProductImgDel(index){
 			var self = this;
+			self.fileList.splice(index,1);
 			self.productImgList.splice(index,1);
 			self.imageList.splice(index,1);
 			self.errMsg2 = "";
@@ -189,8 +195,6 @@ var app = new Vue({
 		},
 		fnProductImgAdd(){
 			var self = this;
-			console.log(self.imageList);
-			console.log(self.productImgList);
 			if(self.productImgList.length < 5){
 				self.productImgList.push({orgName : "", thumbnail : "N"});
 			} else {
@@ -214,8 +218,9 @@ var app = new Vue({
 			self.errMsg2 = "";
 		    const file = event.target.files[0];	
 		    if (file) {
+	    	  self.fileList.splice(index,1);
+		      self.fileList.splice(index,0,file);
 		      self.imageList.splice(index,1);
-		      console.log(index);
 		      self.imageList.splice(index,0,URL.createObjectURL(file));
 		    }
 		},
@@ -223,7 +228,7 @@ var app = new Vue({
 			var self = this;
 			var nparmap = {};
             $.ajax({
-                url : "category.dox",
+                url : "../product/category.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
@@ -237,14 +242,15 @@ var app = new Vue({
 			var nparmap = {no : item.categoryNo};
 			self.category1Name = item.categoryName;
 			self.category1No = item.categoryNo;
-			console.log(self.category1No);
             $.ajax({
-                url : "category2.dox",
+                url : "../product/category2.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
                 	self.categoryList2 = data.list;
+                	self.product.category = '';
+                	self.category2Name = '';
                 }
             });
 		},
@@ -258,6 +264,8 @@ var app = new Vue({
 			self.errMsg2 = "";
 		    const file = event.target.files[0];	
 		    if (file) {
+	    	  self.fileList2.splice(index,1);
+		      self.fileList2.splice(index,0,file);
 		      self.imageList2.splice(index,1)
 		      self.imageList2.splice(index,0,URL.createObjectURL(file));
 		    }
@@ -273,28 +281,200 @@ var app = new Vue({
 				return;
 			}
 			self.errMsg5 = '';
-			if(self.product.productName == '' || self.product.productPrices == '' || self.product.manufacturer == '' || self.product.country == '' || self.product.duscount == ''){
+			if(self.product.productName == '' || self.product.productPrices == '' || self.product.manufacturer == '' || self.product.country == '' || self.product.discount == ''){
 				self.errMsg1 = '모든 정보를 입력해주세요';
 				var box = document.querySelector(".box");
 				var top = box.offsetTop;
 			  	window.scrollTo({
-			    	top: 0,
+			    	top: 200,
 			        behavior: 'smooth',
 			      });
 				return;
 			}
 			self.errMsg1 = '';
+			const numericRegex = /^\d+$/;
+			if(!numericRegex.test(self.product.productPrices) || !numericRegex.test(self.product.discount)){
+				self.errMsg1 = '상품 가격과 할인율은 숫자만 입력해주세요';
+				var box = document.querySelector(".box");
+				var top = box.offsetTop;
+			  	window.scrollTo({
+			    	top: 200,
+			        behavior: 'smooth',
+			      });
+				return;
+			}
+			self.errMsg1 = '';
+			
+			if (self.optionList.length > 0) {
+			    let foundInvalidOption = false;
+
+			    for (let i = 0; i < self.optionList.length; i++) {
+			        if (self.optionList[i].optionName == '' || self.optionList[i].productStock == '' || self.optionList[i].optionPrice == '') {
+			        	 self.errMsg3 = '옵션을 채워주세요';
+			            foundInvalidOption = true;
+			            break;
+			        } else if (!numericRegex.test(self.optionList[i].productStock) || !numericRegex.test(self.optionList[i].optionPrice)) {
+			            foundInvalidOption = true;
+			            self.errMsg3 = '가격과 재고는 숫자만 입력해주세요';
+			            break;
+			        }
+			    }
+
+			    if (foundInvalidOption) {
+			        const element = document.getElementById('productOption');
+			        element.scrollIntoView({ behavior: 'smooth' });
+			        return;
+			    }
+			}
+			self.errMsg3 = '';
 			if(self.imageList.length == 0){
 				self.errMsg2 = '이미지를 최소 1개 추가해주세요'
-					return;
+				const element = document.getElementById('productImgT');
+				element.scrollIntoView({ behavior: 'smooth' });
+				return;
 			}
 			self.errMsg2 = '';
-			if(self.imageList.length == 0){
-				self.errMsg4 = '상세 이미지를 최소 1개 추가해주세요'
-					return;
+			if(self.productImgList.length != self.fileList.length){
+				self.errMsg2 = '이미지를 채워주세요.';
+				const element = document.getElementById('productImgT');
+				element.scrollIntoView({ behavior: 'smooth' });
+				return;
+		    }
+			self.errMsg2 = '';
+			let thumbnailYFound = false;
+
+			for (let i = 0; i < self.productImgList.length; i++) {
+			    if (self.productImgList[i].thumbnail == 'Y') {
+			        thumbnailYFound = true;
+			        break;
+			    }
 			}
-  
-		}
+
+			if (!thumbnailYFound) {
+				self.errMsg2 = '대표이미지를 선택해주세요';
+				const element = document.getElementById('productImgT');
+				element.scrollIntoView({ behavior: 'smooth' });
+				return;
+			}
+			self.errMsg2 = '';
+			if(self.imageList2.length == 0){
+				self.errMsg4 = '상세 이미지를 최소 1개 추가해주세요'
+				const element = document.getElementById('productImgC');
+				element.scrollIntoView({ behavior: 'smooth' });
+				return;
+			}
+			self.errMsg4 = '';
+			if(self.contentImgList.length != self.fileList2.length){
+				self.errMsg4 = '상세 이미지를 채워주세요.';
+				const element = document.getElementById('productImgC');
+				element.scrollIntoView({ behavior: 'smooth' });
+				return;
+			}
+			self.errMsg4 = '';
+			
+			self.fnAdd();
+		},
+		addProductAsync() {
+			return new Promise((resolve, reject) => {
+				var self = this;
+				self.product.discountYn = self.product.discount == 0 ? 'N' : 'Y';
+				var nparmap = self.product;
+				
+				$.ajax({
+		    		url : "../addProduct.dox",
+	                dataType:"json",	
+	                type : "POST",
+			      	data: nparmap,
+			      	success: function (response) {
+			      		resolve(response);
+			      	},
+			      	error: function (error) {
+			      		reject(error);
+			      	}
+		    	});
+			});
+		},
+		insertSearchProductAsync() {
+			return new Promise((resolve, reject) => {
+				var self = this;
+				var nparmap = self.product;
+				
+				$.ajax({
+			    		url : "../insertSearchProduct.dox",
+		                dataType:"json",	
+		                type : "POST",
+				      	data: nparmap,
+				      	success: function (response) {
+				      		resolve(response);
+				      	},
+				      	error: function (error) {
+				      		reject(error);
+				      	}
+		      	});
+			});
+		},
+		async fnAdd() {
+			try {
+				var addProductResponse = await this.addProductAsync();
+				var insertSearchResponse = await this.insertSearchProductAsync();
+				
+				this.productInfo = insertSearchResponse.info;
+				
+				for(let i=0; i<this.optionList.length; i++){
+					this.fnAddOption(this.productInfo.productNo, this.optionList[i]);
+				}
+				
+				for(let i=0; i<this.productImgList.length; i++){
+					var form = new FormData();
+					form.append("file1", this.fileList[i]);
+					form.append("productNo", this.productInfo.productNo);
+					form.append("thumbnailYn", this.productImgList[i].thumbnail);
+					await this.upload(form);
+				}
+				
+				for(let i=0; i<this.contentImgList.length; i++){
+					var form = new FormData();
+					form.append("file1", this.fileList2[i]);
+					form.append("productNo", this.productInfo.productNo);
+					form.append("thumbnailYn", this.contentImgList[i].thumbnail);
+					await this.upload(form);
+				}
+				
+				// 모든 작업이 완료되었을 때의 처리
+				alert('등록완료');
+			} catch (error) {
+				// 에러 처리
+			}
+		},
+		upload(form) {
+			return new Promise((resolve, reject) => {
+				$.ajax({
+			      	url: "../fileUpload.dox",
+			      	type: "POST",
+			      	processData: false,
+			      	contentType: false,
+			      	data: form,
+			      	success: function (response) {
+			      		resolve(response);
+			      	},
+			      	error: function (error) {
+			      		reject(error);
+			      	}
+		    	});
+			});
+		},
+	    fnAddOption(productNo, info){
+	    	var self = this;
+	    	var nparmap = {productNo, productStock : info.productStock, optionPrice : info.optionPrice, optionName : info.optionName}
+	    	$.ajax({
+		       url: "../addOption.dox",
+		       dataType: "json",
+		       type: "POST",
+		       data: nparmap,
+		       success: function (response) {
+		      	},
+	    	});
+	    },
 	}, // methods
 	created : function() {
 		var self = this;

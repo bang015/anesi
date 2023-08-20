@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="js/jquery.js"></script>
+<script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
@@ -11,7 +11,7 @@
 <title>회원정보수정🧐</title>
 <style>
 #app{
-	margin-top : 180px;
+	margin-top : 160px;
 }
 #container{
 	margin : 30px auto;
@@ -21,7 +21,7 @@
 	list-style : none;
 	display : flex;
 	justify-content: center;
-	padding: 0px 0px 0px 0px;
+	padding: 5px 0px 0px 0px;
 }
 .my_li1 {
 	margin: 0px 30px 0px 30px;
@@ -61,6 +61,7 @@
 	visibility: visible;
 	text-decoration: none;
 	opacity: 1;
+	color : #A782C3;
 }
 .my_a2_ch {
     position: relative;
@@ -80,6 +81,7 @@
 	background-color: #A782C3;
 	visibility: visible; 
 	opacity: 1; 
+	color : #A782C3;
 }
 .hrr {
 	margin : 4px 0px;
@@ -91,7 +93,8 @@
     border-radius: 5px;
     padding: 30px 40px;
     box-shadow: 0px 2px 11px -3px #dddbdb;
-    height:1100px;
+    height:1200px;
+	position: relative;
 }
 #title {
 	font-size:22px;
@@ -132,7 +135,7 @@
     padding: 8px;
 }
 .part{
-	margin : 20px 0px;
+	margin : 30px 0px;
 }
 .red{
 	color : #ff9797;
@@ -151,6 +154,19 @@ img:hover{
 .clause1{
 	color : #A782C3;
 }
+.span1{
+	color : #A782C3;
+	font-size: 12px;
+}
+.withdrawal{
+    position: absolute;
+    top: 8%;
+    right: 5%;
+}
+.inputFile{
+	position: absolute;
+    left: -9999px;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -166,26 +182,27 @@ img:hover{
 </div>
 <hr class="hrr">
 	<ul class="my_menu1">
-		<li class="my_li2"><a class="my_a2_ch">회원정보수정</a></li>
-		<li class="my_li2"><a class="my_a2">알림 설정</a></li>
-		<li class="my_li2"><a class="my_a2">비밀번호 변경</a></li>
+		<li class="my_li2"><a href="/mypage/user_edit.do" class="my_a2_ch" style="color : #A782C3;">회원정보수정</a></li>
+		<li class="my_li2"><a href="/mypage/push_setting.do" class="my_a2">알림 설정</a></li>
+		<li class="my_li2"><a href="/mypage/edit_password.do" class="my_a2">비밀번호 변경</a></li>
 	</ul>
 <hr class="hrr">
 <div id="container">
 	<div class="edit">
 		<div id="title"><h3>회원정보수정</h3></div>
+		<div class="withdrawal"><label><a href="withdrawal.do" style="color : #ff9797; text-decoration:underline;">탈퇴하기</a></label></div>
 		<hr>
 			<div class="part">
 				<div class="edit_title">이메일<span class="clause1"> *</span></div>
 					<div>
 						<div><input readonly class="put" ref="emailInput" type="text" v-model="info.userEmail" ></div>
-						<div>이메일을 변경하려면 운영자에게 이메일을 보내주세요.</div>
+						<div><span class="span1"> 이메일을 변경하려면 운영자에게 이메일을 보내주세요.</span></div>
 					</div>
 			</div>
 			<div class="part">
 				<div class="edit_title">이름<span class="clause1"> *</span></div>
 				<div><input readonly class="put" ref="nameInput" type="text" v-model="info.userName"></div>
-				<div>이름을 변경하려면 운영자에게 이메일을 보내주세요.</div>
+				<div><span class="span1"> 이름을 변경하려면 운영자에게 이메일을 보내주세요.</span></div>
 			</div>
 			<div class="part">
 				<div class="edit_title">닉네임<span class="clause1"> *</span></div>
@@ -237,7 +254,10 @@ img:hover{
 					</div>
 			<div class="part">
 				<div class="edit_title">프로필 이미지</div>
-				<div style="width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">프로필사진</div>
+				<label v-if="profileImg.uImgPath != undefined">
+					<img :src="profileImg.uImgPath+'/'+profileImg.uImgName" style="width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">
+					<input type="file" id="file1" name="file1" class="inputFile" @change="fnProfileChange">
+				</label>
 			</div>				
 	</div>
 	<button class="btn" @click="fnEdit">회원정보수정</button>
@@ -267,7 +287,8 @@ var app = new Vue({
 		bDay : "",
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
-		info : {}
+		info : {},
+		profileImg : {}
 	},// data
 	methods : {
 		fnGetInfo : function(){
@@ -334,6 +355,7 @@ var app = new Vue({
                 success : function(data) { 
                 	alert("회원정보수정이 완료되었습니다.");
                 	self.fnGetInfo();
+                	location.reload();
                 }
             });
 		},
@@ -394,10 +416,41 @@ var app = new Vue({
                 	}
                 }
             });
+		},
+		fnProfileChange : function(){
+			var self = this;
+			var form = new FormData();
+   	        form.append( "file1",  $("#file1")[0].files[0] );
+   	     	form.append( "sessionNo",  self.sessionNo); // pk
+	         $.ajax({
+	             url : "/fileUpload2.dox"
+	           , type : "POST"
+	           , processData : false
+	           , contentType : false
+	           , data : form
+	           , success:function(response) { 
+	        	   self.fnGetProfile();
+	           }
+	           
+	       });
+		},
+		fnGetProfile(){
+			var self = this;
+			var nparmap = {userNo : self.sessionNo};
+			$.ajax({
+                url : "../profileImg.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.profileImg = data.img;
+                }
+			})
 		}
 	}, // methods
 	created : function() {
 		var self = this;
+		self.fnGetProfile();
 		self.fnGetInfo();
 	}// created
 });

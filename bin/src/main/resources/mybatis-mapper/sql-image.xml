@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.anesi.mapper.ImageMapper">
+	<insert id="insertPorductImage" parameterType="hashmap">
+		INSERT INTO t3_tbl_product_image(PRODUCT_NO, IMG_ORG_NAME, IMG_NAME, IMG_PATH, IMG_SIZE, THUMBNAIL_YN)
+		VALUES(#{productNo}, #{imgOrgName}, #{imgName}, #{imgPath}, #{imgSize}, #{thumbnailYn})
+	</insert>
+	<!-- 프로필 이미지 -->
+	<select id="selectProfileImg" parameterType="hashmap" resultType="com.example.anesi.model.Image">
+		SELECT *
+		FROM t3_tbl_profile_image
+		WHERE USER_NO = #{userNo}
+	</select>
+	<!-- 프로필 이미지 업데이트 -->
+	<update id="updateProfileImg" parameterType="hashmap">
+		UPDATE t3_tbl_profile_image
+			SET
+			U_IMG_ORG_NAME = #{imgOrgName},
+			U_IMG_NAME = #{imgName},
+			U_IMG_PATH = #{imgPath},
+			U_IMG_SIZE = #{imgSize}
+		WHERE USER_NO = #{userNo}
+	</update>
+</mapper>

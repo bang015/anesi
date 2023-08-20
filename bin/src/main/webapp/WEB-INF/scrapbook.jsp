@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="../js/jquery.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 		<div id="container">
 			<h2>스크랩북</h2>
 			<div id="inner">
-				<div><img alt="프로필" src="../css/image/pfimgG2.png" class="pfSytle"></div>
+				<div v-if="profileImg.uImgPath != undefined"><img alt="프로필" :src="profileImg.uImgPath+'/'+profileImg.uImgName" class="pfSytle"></div>
 				<div class="nickStyle">{{userNick}}</div>
 				<div class="allTextBox">
 					<div class="allText">상품({{list.length}})</div>
@@ -39,7 +39,7 @@
 				
 				<div v-else class="imgBox">
 					<div v-for="item in list" class="chStandard" @click="imgClick(item)">
-						<div class="imgWrapper">
+						<div class="imgWrapper" @click="fnViewMove(item.productNo)">
 							<img alt="" :src="item.imgPath+'/'+item.imgName"  class="sbImg">
 							<div class="overlay" :class="{ 'selected': checkSb.includes(item.scrapbookNo) }" v-if="flg"></div>
 							<div class="custom-checkbox" :class="{ 'checked': checkSb.includes(item.scrapbookNo) }" @click="toggleCheckbox(item)" v-if="flg">
@@ -48,7 +48,7 @@
 					            </div>
 							</div>
 	    				</div>				
-						<input type="checkbox" class="sbCheckBox" v-model="checkSb" :value="item.scrapbookNo" v-if="flg" @click="fnTest">
+						<input type="checkbox" class="sbCheckBox" v-model="checkSb" :value="item.scrapbookNo" v-if="flg">
 					</div>
 				</div>
 			</div>
@@ -57,6 +57,7 @@
 
 </body>
 </html>
+<script src="../js/jquery.js"></script>
 <script>
 var app = new Vue({
 	el : '#app',
@@ -67,6 +68,7 @@ var app = new Vue({
 		list : [],
 		checkSb : [],
 		flg : false,
+		profileImg : {},
 	},// data
 	methods : {
 		getSbList(){
@@ -121,10 +123,30 @@ var app = new Vue({
                 }
             });
 		},
+		fnViewMove(productNo){
+			var self = this;
+			if(!self.flg){
+				$.pageChange("/product/view.do", {no : productNo} );
+			}
+		},
+		fnGetProfile(){
+			var self = this;
+			var nparmap = {userNo : self.userNo};
+			$.ajax({
+                url : "/profileImg.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.profileImg = data.img;
+                }
+			})
+		}
 	}, // methods
 	created : function() {
 		var self = this;
 		self.getSbList();
+		self.fnGetProfile();
 	}// created
 });
 </script>

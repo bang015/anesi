@@ -1,270 +1,174 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+Copy code
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<script src="../js/jquery.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-<link href="../css/mainCss.css" rel="stylesheet">
-<meta charset="EUC-KR">
-<title>½ºÅä¾î¸ŞÀÎ</title>
-<style>
-
-
-
-
-.product-main-category__image{
-	width:100px;
-	height:100px;
-}
-
-
-.production-item-thumnail__image{
-	width:250px;
-	height:250px;
-}
-
-.product-main-category__name{
-	font-size : 15px;
-}
-.won_icon,.production-item-price__orginal2{
-	text-decoration: line-through;
-}
-
-.production-item__content{
-	width:220px;
-	height:338px;
-  	float : left;
-	margin : 50px;
-}
-
-#product-main-category__total > li {
-        display: inline-block;
-        position: relative;
-        top: 10px;
-      }
-#product-main-category__total > li > a {
-  display:block; position:relative; padding-bottom:19px;
-  margin: 40px;
-}
-#product-main-category__total > li > a > img {
-  width:100px; height:100px;
-}
-#product-main-category__total > li > a > span {
-  position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0)
-}
-      
-.category-order_toggle{
-	float : right;
-	margin-right : 100px;
-	background-color:#A782C3;
-	border: #fff;
-	text-align: center;
-	border-radius:10px; 
-	padding:8px;
-	height:35px; 
-	width: 100px;
-	font-family: 'Pretendard-Regular';
-	color :  #fff;
-	
-	
-	
-  }
-.category-order_toggle:hover {
-    background-color:rgb(235, 236, 237);
-    transition: 0.7s;
-    
-}  
-.category-order-list {
-
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.category-order-list li {
-
-  /* Ä«Å×°í¸® ½ºÅ¸ÀÏ¸µ */
-  padding: .5em;
-  border-bottom: 1px solid #ccc;
-}
-.category-order-list-container {
-	background :  #fff;
-   	width: 100px;
-   	float : right;
-    
-
-}
-
-.aaa {
-  color: #A782C3; /* ¿øÇÏ´Â »ö»ó */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* ±×¸²ÀÚ Ãß°¡ */
-  /* ´Ù¸¥ ½ºÅ¸ÀÏ ¼Ó¼ºµµ Ãß°¡ °¡´É */
-}
-
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* ºÒÅõ¸íÇÑ °ËÀº»ö ¹è°æ */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-    z-index:1000;
-  
-}
-
-.modal-card {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-
-
-
-</style>
+    <script src="../js/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="../css/mainCss.css" rel="stylesheet">
+    <link href="../css/store_main.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>ìŠ¤í† ì–´ë©”ì¸í˜ì´ì§€</title>
+    <style>
+    </style>
 </head>
-<!-- ÁÖ¼® ²À ³²°ÜÁÖ¼¼¿ä -->
 <body>
-<jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
-
-
-	<div id="store_main">
 	
-	
-
-<!-- »óÇ° Á¤·ÄÇÏ´Â ¹öÆ°-->	
-<button class="category-order_toggle">
-	  Á¤·Ä<i class="fa-solid fa-chevron-down"></i>
-</button>
-<div class="category-order-list-container" style="display:none;">
-
-
-	
-  <ul class="category-order-list" >
-    <li value=""><a>ÀüÃ¼</a></li>
-    <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">°¡°İ³·Àº¼ø</a></li>
-    <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">°¡°İ³ôÀº¼ø</a></li>
-    <li value="NewArrival"><a @click="fnOrderBy('NewArrival')">ÃÖ½Å¼ø</a></li>
-    <li><a>--¾ÆÁ÷¸øÇÔ¡é--</a></li>
-    <li value="HighestPurchase"><a @click="fnOrderBy('HighestPurchase')">±¸¸Å³ôÀº¼ø</a></li>
-    <li value="HighestScrap"><a @click="fnOrderBy('HighestScrap')">½ºÅ©·¦¸¹Àº¼ø</a></li>
-    <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">¸®ºä¸¹Àº¼ø</a></li>
-  </ul>
-</div>
-  
-	<div ><h1>ÀüÃ¼»óÇ°</h1></div>
-	
-	
-		<div class="production-item__content" v-for="item in list">
-			<a href="javascript:;" class="production-item-thumnail">
-			
-				<div  v-for="item in img">
-					<img alt="½æ³×ÀÏ" :src="item.imgPath+'/'+item.imgName">
-				</div>
-			
-			
-			
-			<!-- 
-		    <img class="production-item-thumnail__image animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation"
-			    src="../css/image/productMain/productMain_category1.png" > -->
-		    </a>
-		    <div class="production-item-header" >
-			    <span class="production-item-header__brand" >{{item.manufacturer}}</span>
-			    <span class="production-item-header__name">{{item.productName}}</span>
-			    <div class="production-item-header__kind">{{item.categoryName}} 
-			    <span class="production-item-header__country">{{item.country}}</span>
-			    </div>
-		    </div>
-
-		    <span class="production-item-price">
+    <jsp:include page="naviBar.jsp"></jsp:include>
+    <jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
+    
+    <div class="flex-container">
+      <span class="main-category__title">ì „ì²´ìƒí’ˆ</span>
+    
+     <div class="selectBox2 ">
+		  <button class="label">ì •ë ¬</button>
+		  <ul class="optionList">
+		    <li value="LowestPrice"class="optionItem" >ê°€ê²©ë‚®ì€ìˆœ</li>
+		    <li value="HighestPrice" class="optionItem">ê°€ê²©ë†’ì€ìˆœ</li>
+		    <li value="NewArrival" class="optionItem">ìµœì‹ ìˆœ</li>
 		    
-		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
-			    Á¤°¡
-			    <span class="won_icon">£Ü</span>
-				<span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
-			   </span>
-			    
-			    
-			    <!-- production-item-price__sell  : ÆÄ´Â °¡°İ -->
-		       <div class="production-item-price__sell">
-			    <span class="won_icon">£Ü</span>
-			    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
-			    <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
-			    </div>
-	        </span>
-	        
-	        
-			    <!--  production-item-rating : º°Á¡-->
-		       <div class="production-item-rating">
-		       	<!-- º°¸ğ¾ç-->
-			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
-			    <span class="production-item-rating__score">4.5</span>
-			   </div>
-			   <!-- Àå¹Ù±¸´Ï¹öÆ°-->
-				<a ><i @click="fnInsertCart(item.productNo)" class="fa fa-shopping-cart modal-toggle-button" ></i></a>
-		    	<!-- °øÀ¯ÇÏ±â¹öÆ°-->
-		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-		    	<!-- ½ºÅ©·¦¹öÆ°-->
-		    	<a><i @click="fnInsertScrapbook(item.productNo), fnCheckScrap(item.productNo)"class="fa-regular fa-bookmark modal-toggle-button"></i></a>
-	    </div> <!-- class="production-item__content" ³¡-->
-	    
+		    <li class="optionItem">--ì•„ì§ëª»í•¨â†“--</li>
+            <li value="HighestPurchase" class="optionItem">êµ¬ë§¤ë†’ì€ìˆœ</li>
+            <li value="HighestScrap" class="optionItem">ìŠ¤í¬ë©ë§ì€ìˆœ</li>
+            <li value="ManyReview" class="optionItem" >ë¦¬ë·°ë§ì€ìˆœ</li>
+		  </ul>
+		</div>
+	 </div>
+	   
+    <div id="store_main">
+        <div class="production-item__content" v-for="item in list">
+            <div class="production-item-header" @click="fnProductView(item.productNo)">
+		             <a class="production-item-thumnail">
+		                <div class="production-item-thumnail__overlay"></div>
+		                <img class="production-item-thumnail__image " alt="ì¸ë„¤ì¼" :src="item.imgPath + '/' + item.imgName">
+		            </a>
+            	<div class="brand_name">
+            		<span class="production-item-header__brand">{{item.manufacturer}}</span>
+                	<span class="production-item-header__name">{{item.productName}}</span>
+            	</div>
+                <div class="category_country">
+                    <span class="production-item-header__kind">{{item.categoryName}},</span>
+                    <span class="production-item-header__country">{{item.country}}</span>
+                </div>
+            </div>
+            
+            <div class="production-item-price">
+                <div class="production-item-price__orginal" v-if="item.discountPrice!=''">ì •ê°€
+                    <span class="won_icon">ï¿¦</span>
+                    <span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
+                    <span class="production-item-price__percent">{{ item.discount }}%</span>
+                </div>
+                <!-- production-item-price__sell  : íŒŒëŠ” ê°€ê²© -->
+                <div class="production-item-price__sell">
+                    <span class="won_icon">ï¿¦</span>
+                    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
+                    <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
+                </div>
+            </div>
+            
+            <!--  production-item-rating : ë³„ì -->
+            <div class="production-item-rating">
+                <!-- ë³„ëª¨ì–‘-->
+                <i class="fa-solid fa-star" style="color: #A782C3;"></i>
+                <span class="production-item-rating__score ">{{item.csatAvg}}.5</span>
+            </div>
+            <!-- ì¥ë°”êµ¬ë‹ˆë²„íŠ¼-->
+             <a class="cart_button">
+			    <i
+			      @click="userId ? (cartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnInsertUserCart(item)) : (nonuserCartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnAddNonUserCart(item))"
+			      class="fa-solid fa-cart-shopping fa-xl"
+			    ></i>
+			  </a>
+            <!-- ê³µìœ í•˜ê¸°ë²„íŠ¼-->
+            <a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes fa-xl"></i></a>
+            <!-- ìŠ¤í¬ë©ë²„íŠ¼-->
+            <a v-if="userId!=''" class="scrap_button">
+                <i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button  fa-xl"></i>
+                <i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark  fa-xl " style="color:#A782C3;"></i>
+            </a>
+            <a v-else class="scrap_button">
+                <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
+            </a>
+        </div> <!-- class="production-item__content" ë-->
 	    
 	    
     	<div class="modal" v-if="showCartModal" >
 		  <div class="modal-card">
-		    <h2>Àå¹Ù±¸´Ï¿¡ Ãß°¡</h2>
-		    <p>»óÇ°À» Àå¹Ù±¸´Ï¿¡ ´ã¾Ò½À´Ï´Ù.Àå¹Ù±¸´Ï·Î ÀÌµ¿ÇÏ½Ã°Ú½À´Ï±î?</p>
-		    <button @click="closeModal">¼îÇÎ°è¼ÓÇÏ±â</button>
-		    <button @click="fnMoveCart" >Àå¹Ù±¸´Ï·Î ÀÌµ¿ÇÏ±â</button>
+		    <h2>ì¥ë°”êµ¬ë‹ˆì— ì¶”ê°€</h2>
+		    <p>ìƒí’ˆì„ ì¥ë°”êµ¬ë‹ˆì— ë‹´ì•˜ìŠµë‹ˆë‹¤.ì¥ë°”êµ¬ë‹ˆë¡œ ì´ë™í•˜ì‹œê² ìŠµë‹ˆê¹Œ?</p>
+		    <button @click="closeModal" class="left_button">ì‡¼í•‘ê³„ì†í•˜ê¸°</button>
+		    <button @click="fnMoveCart" class="right_button">ì¥ë°”êµ¬ë‹ˆë¡œ ì´ë™í•˜ê¸°</button>
 		  </div>
 		</div>
 		
     	<div class="modal" v-if="showScrapModal">
-		  <div class="modal-card">
-		    <h2>½ºÅ©·¦ºÏ¿¡ µî·Ï</h2>
-		    <p>»óÇ°ÀÌ ½ºÅ©·¦µÇ¾ú½À´Ï´Ù.</p>
-		    <button @click="closeModal">¼îÇÎ°è¼ÓÇÏ±â</button>
-		    <button @click="fnMoveMyPage">½ºÅ©·¦ºÏÀ¸·Î ÀÌµ¿ÇÏ±â</button>
+		  <div class="modal-card"  v-if="userId!=''">
+		    <h2>ìŠ¤í¬ë©ë¶ì— ë“±ë¡</h2>
+		    <p>ìƒí’ˆì´ ìŠ¤í¬ë©ë˜ì—ˆìŠµë‹ˆë‹¤.</p>
+		    <button @click="closeModal" class="left_button">ì‡¼í•‘ê³„ì†í•˜ê¸°</button>
+		    <button @click="fnMoveScrapbook" class="right_button">ìŠ¤í¬ë©ë¶ìœ¼ë¡œ ì´ë™í•˜ê¸°</button>
+		  </div>
+		  
+		  <div class="modal-card"  v-else>
+		    <h2>ë¡œê·¸ì¸í›„ ì‚¬ìš© ê°€ëŠ¥í•©ë‹ˆë‹¤.</h2>
+		    <p>ë¡œê·¸ì¸í•˜ì‹œê² ìŠµë‹ˆê¹Œ?</p>
+		    <button @click="closeModal" class="left_button">ì‡¼í•‘ê³„ì†í•˜ê¸°</button>
+		    <button @click="fnMoveLoginPage" class="right_button">ë¡œê·¸ì¸í˜ì´ì§€ë¡œ ì´ë™í•˜ê¸°</button>
 		  </div>
 		</div>
-	
+		
+    	<div class="modal" v-if="showScrapDeleteModal">
+		  <div class="modal-card">
+		    <h2>ìŠ¤í¬ë©ë¶ì—ì„œ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.</h2>
+		    <button @click="closeModal" class="left_button">ì‡¼í•‘ê³„ì†í•˜ê¸°</button>
+		    <button @click="fnMoveScrapbook" class="right_button">ìŠ¤í¬ë©ë¶ìœ¼ë¡œ ì´ë™í•˜ê¸°</button>
+		  </div>
+		</div>
+		
     	<div class="modal" v-if="showScrapModalBan">
 		  <div class="modal-card">
-		    <h2>ÀÌ¹Ì ´ã±ä»óÇ°ÀÔ´Ï´Ù.</h2>
-		    <p>½ºÅ©·¦ºÏÀ» È®ÀÎÇØÁÖ¼¼¿ä</p>
-		    <button @click="closeModal">¼îÇÎ°è¼ÓÇÏ±â</button>
-		    <button @click="fnMoveMyPage">½ºÅ©·¦ºÏÀ¸·Î ÀÌµ¿ÇÏ±â</button>
+		    <h2>ì´ë¯¸ ë‹´ê¸´ìƒí’ˆì…ë‹ˆë‹¤.</h2>
+		    <p>ìŠ¤í¬ë©ë¶ì„ í™•ì¸í•´ì£¼ì„¸ìš”</p>
+		    <button @click="closeModal" class="left_button">ì‡¼í•‘ê³„ì†í•˜ê¸°</button>
+		    <button @click="fnMoveMyPage" class="right_button">ìŠ¤í¬ë©ë¶ìœ¼ë¡œ ì´ë™í•˜ê¸°</button>
 		  </div>
 		</div>
-	
-	    
-    </div>
-
-
-	
-	
+		
+    </div><!--storeMain ë-->
 	<jsp:include page="footer.jsp"></jsp:include>
 	
 </body>
 </html>
 <script>
 
-$(document).ready(function() {
-    // »óÇ°Á¤·Ä ¹öÆ° Å¬¸¯ ÀÌº¥Æ® Ãß°¡
-    $('.category-order_toggle').click(function() {
-       $('.category-order-list-container').slideToggle('fast');
-    });
-});
+
+
+/* í™”ì‚´í‘œ í•¨ìˆ˜ */
+const label = document.querySelector('.label');
+const options = document.querySelectorAll('.optionItem');
+
+// í´ë¦­í•œ ì˜µì…˜ì˜ í…ìŠ¤íŠ¸ë¥¼ ë¼ë²¨ ì•ˆì— ë„£ìŒ
+const handleSelect = (item) => {
+  label.parentNode.classList.remove('active');
+  label.innerHTML = item.textContent;
+}
+// ì˜µì…˜ í´ë¦­ì‹œ í´ë¦­í•œ ì˜µì…˜ì„ ë„˜ê¹€
+options.forEach(option => {
+	option.addEventListener('click', () => handleSelect(option))
+})
+
+// ë¼ë²¨ì„ í´ë¦­ì‹œ ì˜µì…˜ ëª©ë¡ì´ ì—´ë¦¼/ë‹«í˜
+label.addEventListener('click', () => {
+  if(label.parentNode.classList.contains('active')) {
+  	label.parentNode.classList.remove('active');
+  } else {
+  	label.parentNode.classList.add('active');
+  }
+})
+
 
 
 var app = new Vue({
@@ -272,68 +176,72 @@ var app = new Vue({
 	data : {
 		list : [],
 		list2 : [],
-		
 		item : "",
 		showCartModal: false,
 		showScrapModal: false,
 		showScrapModalBan: false,
+		showScrapDeleteModal: false,
 		userId : '${sessionId}',
 		userNick : '${sessionNick}',
 		userNo : '${sessionNo}',
+		nonuserNo : '${nonuserNo}',
 		productNo : "",
+		scrapbookList : [],
+		cartList : [],
+		nonuserCartList : [],
+		nonuserNo : ""
 
-		img : []
-
-	
-		
-		
+     
 
 	},// data
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar};
+            var nparmap = {optionList : self.optionList, productNo : self.productNo};
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	
                 	self.list = data.list;
                 	self.list2=data.list2;
-                	console.log(data.list2);
-                	
                 }
             }); 
 		},
 		
-
-
-	     fnOrderBy: function (orderBy) {
-            var self = this;
-            self.categoryOrderBar = orderBy; // Ä«Å×°í¸® Á¤·Ä°ª ¼³Á¤
-            self.fnGetList(); // AJAX ¿äÃ» º¸³»±â
+		  shareSelectedOption() {
+		      // í˜„ì¬ í˜ì´ì§€ì˜ URLì„ ê°€ì ¸ì˜¤ê¸°
+		      const currentUrl = window.location.href;
+		      
+		      // í…ìŠ¤íŠ¸ë¥¼ í´ë¦½ë³´ë“œì— ë³µì‚¬
+		      const textArea = document.createElement("textarea");
+		      textArea.value = currentUrl;
+		      document.body.appendChild(textArea);
+		      textArea.select();
+		      document.execCommand("copy");
+		      document.body.removeChild(textArea);
+		      
+		      alert("í˜„ì¬ í˜ì´ì§€ URLì´ ë³µì‚¬ë˜ì—ˆìŠµë‹ˆë‹¤.");
+		    },
+		
+		
+		
+		
+		
+		 fnOrderBy: function (orderBy) {
+	            var self = this;
+	            self.optionList = orderBy; // ì¹´í…Œê³ ë¦¬ ì •ë ¬ê°’ ì„¤ì •
+	            self.fnGetList(); // AJAX ìš”ì²­ ë³´ë‚´ê¸°
 	     },
-	      
-	      
-	    //ÀÌ¹ÌÁö ¸¶¿ì½º ¿À¹öÇßÀ»¶§ pulse ¾Ö´Ï¸ŞÀÌ¼Ç
-        addPulseAnimation: function(event) {
-            event.currentTarget.classList.add('animate__animated', 'animate__pulse');
-        },
-        removePulseAnimation: function(event) {
-            event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
-        },
-        
-
+	    
         formatPrice: function(price) {
-            // Ãµ ´ÜÀ§¸¶´Ù ½°Ç¥(,)¸¦ Ãß°¡ÇÏ´Â Á¤±Ô½Ä Ã³¸®
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            // 100ì˜ ìë¦¬ê¹Œì§€ ë‚´ë¦¼í•˜ì—¬ í‘œì‹œí•˜ë©° ì²œ ë‹¨ìœ„ë§ˆë‹¤ ì‰¼í‘œ(,)ë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
+            const truncatedPrice = Math.floor(price / 100) * 100;
+            return truncatedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
-        
-        
-        
-        // ¸ğ´Ş ¿­±â
+
+        // ëª¨ë‹¬ ì—´ê¸°
 	    openCartModal: function() {
           var self = this;
           self.showCartModal = true;
@@ -342,47 +250,98 @@ var app = new Vue({
           var self = this;
           self.showScrapModal = true;
 	    },
+	    openScrapDeleteModal: function() {
+          var self = this;
+          self.showScrapDeleteModal = true;
+	    },
 	
-	    // ¸ğ´Ş ´İ±â
+	    // ëª¨ë‹¬ ë‹«ê¸°
 	    closeModal: function() {
 	      this.showCartModal = false;
 	      this.showScrapModal = false;
+	      this.showScrapModalBan = false;
+	      this.showScrapDeleteModal = false;
+	      location.reload();
 	    },
 	    
 	    fnMoveCart : function() {
         	location.href = "/product/cart.do";
 	    },
-	    fnMoveMyPage : function() {
-        	location.href = "/mypage.do";
+	    fnMoveScrapbook : function() {
+        	location.href = "/scrapbook.do";
 	    },
-	    
-	    fnInsertCart : function(productNo) {
+	    fnMoveLoginPage : function() {
+        	location.href = "/login.do";
+	    },
+	    fnCheckCart : function() {
 	    	var self = this;
-            var nparmap = { userNo: self.userNo, productNo: productNo};
-            console.log(self.showCartModal);
-
+	         var nparmap = {nonuserNo : self.nonuserNo, userNo: self.userNo};      
+            $.ajax({
+                url : "/product/selectCartList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	for(let i=0; i<data.list.length;i++){
+	                	if(self.userNo != '' && self.userNo != null) {
+	                        self.cartList.push(data.list[i].productNo.toString());
+	                	}else{
+	                        self.nonuserCartList.push(data.list[i].productNo.toString());
+	                	}
+                     }
+                   }
+            }); 
+		},
+		
+	   fnInsertUserCart : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
             $.ajax({
                 url : "/product/insertCart.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	/* alert("µî·Ï¿Ï"); */
-                    console.log(self.userNo);
+                	/* alert("ë“±ë¡ì™„"); */
+                }
+            }); 
+            self.openCartModal();
+		}, 
+	    fnUpdateUserCart : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+            $.ajax({
+                url : "/product/addCartCnt.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
 
                 }
             }); 
-            
             self.openCartModal();
-            console.log(self.showCartModal);
 
-		},
-		
-	    fnInsertScrapbook : function(productNo) {
+		}, 
+		fnCheckScrap : function(item) {
 	    	var self = this;
-            var nparmap = { userNo : self.userNo, productNo: productNo};
-            console.log(self.showScrapModal);
-
+            var nparmap = {userNo: self.userNo};
+            $.ajax({
+                url : "/product/selectScrapList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	for(let i=0; i<data.list.length;i++){
+                        self.scrapbookList.push(data.list[i].productNo.toString());
+                     }
+                }
+            }); 
+            
+		},
+	    fnInsertScrapbook : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+           
             $.ajax({
                 url : "/product/insertScrap.dox",
                 dataType:"json",	
@@ -390,76 +349,73 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	
-                	self.fnCheckScrap();
-                	alert("µî·Ï¿Ï");
-                    console.log(data);
-
                 }
             }); 
             self.openScrapModal();
-            console.log(self.showScrapModal);
 		},
-		
-		fnCheckScrap : function(productNo) {
+	    fnDeleteScrapbook : function(item) {
 	    	var self = this;
-            var nparmap = { userNo : self.userNo, productNo: productNo};
-
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+           
             $.ajax({
-                url : "/product/selectScrapCnt.dox",
+                url : "/product/deleteScrap.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	 if(data.cnt>=1){
-                		 alert("ÀÌ¹Ì´ã±ä»óÇ°");
-                		 return;
-                	 }
                 }
             }); 
-            
+            self.openScrapDeleteModal();
 		},
-		fnDeleteScrapbook : function(productNo) {
+		//'ì œí’ˆìƒì„¸ë³´ê¸°' í˜ì´ì§€ ì´ë™
+		fnProductView : function(productNo){
 	    	var self = this;
-            var nparmap = { userNo : self.userNo, productNo: productNo};
-
-            $.ajax({
-                url : "/product/selectScrapCnt.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	 if(data.cnt>=1){
-                		 alert("ÀÌ¹Ì´ã±ä»óÇ°");
-                		 return;
-                	 }
-                }
-            }); 
-            
+	    	   $.pageChange("/product/view.do",{no : productNo});//ë³´ë‚¼í•„ìš”ì—†ì„ë•Œ íŒŒë¼ë¯¸í„° ë¹ˆê°’ìœ¼ë¡œ{}
 		},
 		
-		
-		fnThumbnailImg : function(){
-			 var self = this;
-	            var nparmap = {productNo : self.productNo};	            
-	            $.ajax({
-	                url : "../imgThumbnailSearch_1.dox",
+		//ë¹„íšŒì› ë²ˆí˜¸ ì¿ í‚¤ë¶ˆëŸ¬ì˜¤ëŠ” ì•  
+		fnaaa : function(item){
+			var self = this;
+            var nparmap = '';
+            //{ nonuserNo: self.nonuserNo, productNo: item.productNo};
+			 $.ajax({
+	                url : "/nonUserCookie.dox",
 	                dataType:"json",	
 	                type : "POST", 
 	                data : nparmap,
-	                success : function(data) {                
-	               		self.img = data.img;
-	               		console.log(self.img);
-	                }                
+	                success : function(data) { 
+	                	self.nonuserNo = data.value;
+	            		self.fnCheckCart();
+
+	                }
 	            }); 
+		},
+		//ë¹„íšŒì› ì¥ë°”êµ¬ë‹ˆ ì¶”ê°€
+		fnAddNonUserCart : function(item) {
+	    	var self = this;
+            var nparmap = 
+            	{nonuserNo: self.nonuserNo, productNo: item.productNo}
+            $.ajax({
+                url : "/product/addNonUserCart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                    
+
+                }
+            }); 
+            self.openCartModal();
 		}
 
      }, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
-	
-		self.fnThumbnailImg();
+		self.fnaaa();
+		self.fnCheckScrap();
 
 	}// created
 });
 </script>
+	

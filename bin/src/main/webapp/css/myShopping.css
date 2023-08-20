@@ -1,0 +1,222 @@
+@charset "EUC-KR";
+.my_menu1 {
+	list-style : none;
+	display : flex;
+	justify-content: center;
+	padding: 5px 0px 0px 0px;
+    border-bottom: 1px #eee solid;
+    padding-bottom: 14px;
+}
+.my_li1 {
+	margin: 0px 30px 0px 30px;
+    font-size: 17px;
+}
+#app{
+	margin-top : 180px;
+}
+.on{
+	color: #A782C3;
+}
+#container{
+	margin-top: 30px;
+	text-align: center;
+}
+.order_list_menu{
+	height: 100px;
+	padding: 20px;
+	display: flex;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	width: 80%;
+	margin: 0 auto;
+	justify-content: center;
+}
+.textBox{
+	width: 100px;
+	height: 55px;
+	font-size: 20px;
+}
+.aBox{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 70px;
+}
+.fa-arrow-left:before {
+    content: "\f060";
+    position: absolute;
+    left: -50px;
+}
+.aBox:hover > i{
+	color: #424242;
+}
+.order_list{
+	min-height: 100px;
+	padding: 20px;
+	display: flex;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	width: 80%;
+	margin: 50px auto 0 auto;
+    flex-direction: column;
+}
+.orderBox{
+	height: 150px;
+	margin-bottom: 30px;
+	display: flex;
+	padding: 10px;
+	border-radius: 4px;
+	font-size: 16px;
+    align-items: center;
+    text-align: left;
+}
+.imgBox{
+	width: 100px;
+	height: 100px;
+	margin-right: 10px;
+	border-radius: 4px;
+}
+.productName{
+	
+	width: 35%;
+	margin-right: 70px;
+}
+.manufacturer{
+	font-size: 14px;
+}
+.optionName{
+	font-size: 14px;
+	width: 30%;
+}
+.productPrice{
+	font-weight: bold;
+}
+.productPrice > .span1{
+	font-weight: normal;
+	font-size: 12px;
+	color: #ccc;
+}
+.productPrice > .span2{
+	font-weight: normal;
+	font-size: 12px;
+}
+.productName > .name {
+	font-weight: bold;
+	cursor: pointer;
+}
+.buttonBox{
+	text-align: right;
+	}
+.buttonBox button{
+	width: 130px;
+	padding: 10px;
+	border-radius: 5px;
+	font-size: 17px;
+	cursor: pointer;
+}
+.btn1{
+	border: 1.5px solid #A782C3;
+	color: #A782C3;
+	background-color: #fff;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.btn2{
+	border: 0;
+	color: #fff;
+	background-color: #A782C3;
+}
+.optionListBox{
+	text-align: left;
+	display: flex;
+}
+.optionBox{
+	cursor: pointer;
+	background-color: #A782C3;
+	padding: 10px;
+	border-radius: 50px;
+	color: #fff;
+	font-weight: bold;
+}
+
+.selectBox2 * { box-sizing: border-box; }
+.selectBox2 {
+  position: relative;
+  width: 150px;
+  height: 35px;
+  border-radius: 4px;
+  background: url('../css/image/Main/pngwing.com.png') calc(100% - 7px) center no-repeat;
+  border: 2px solid #A782C3;
+  background-size: 20px;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: auto; /* 변경: 왼쪽 여백을 자동으로 채우기 */
+  margin-right: 10px; /* 추가: 오른쪽 여백 설정 */
+}
+
+.selectBox2::after {
+  content: '';
+  display: block; 
+  width: 2px;
+  height: 100%; 
+  position: absolute; 
+  top: 0; 
+  right: 35px;
+  background: #A782C3;
+}
+
+.selectBox2 .label {
+  display: flex;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+  border: 0 none;
+  outline: 0 none;
+  padding-left: 15px;
+  background: transparent;
+  cursor: pointer;
+   font-family: 'Pretendard-Regular';
+
+}
+
+.selectBox2 .optionList {
+  position: absolute; 
+  top: 28px;
+  left: 0;
+  width: 100%;
+  background: #A782C3;
+  color: #fff;
+  list-style-type: none;
+  padding: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  max-height: 0;
+  transition: .3s ease-in;
+  z-index: 1000;
+
+}
+
+.selectBox2.active .optionList {
+  max-height: 500px;
+}
+
+.selectBox2 .optionItem {
+  border-bottom: 1px dashed rgb(170, 72, 72);
+  padding: 7px 15px 8px;
+  transition: .1s;
+}
+
+.selectBox2 .optionItem:hover {
+  background: rgb(175, 93, 93);
+}
+
+.selectBox2 .optionItem:last-child {
+  border-bottom: 0 none;
+}
+
+
+.selectBox2 .optionList::-webkit-scrollbar {width: 6px;}
+.selectBox2 .optionList::-webkit-scrollbar-track {background: transparent; }
+.selectBox2 .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
+.selectBox2 .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}

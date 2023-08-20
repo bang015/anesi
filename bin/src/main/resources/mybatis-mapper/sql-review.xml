@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.example.anesi.mapper.ReviewMapper">	
+	<!-- 상품 리뷰 평점 -->
+	<select id="selectCsatAvg" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+		SELECT ROUND(AVG(CSAT), 1) AS csatAvg , COUNT(*) AS csatCnt
+		FROM t3_tbl_user_review 
+		WHERE PRODUCT_NO = #{productNo}
+	</select> 
+	<!-- 리뷰 -->
+	<select id="selectReview" parameterType="hashmap" resultType="com.example.anesi.model.Review">
+		SELECT u.NICK, SUBSTR(r.CREATEDATE,1,11) as CREATEDATE, r.CSAT , r.`HELP`,r.CONTENT, p.U_IMG_NAME, p.U_IMG_PATH, ri.R_IMG_NAME, ri.R_IMG_PATH , r.OPTION_NAME
+		FROM t3_tbl_user_review r
+		INNER JOIN t3_tbl_user u ON r.USER_NO = u.USER_NO
+		LEFT JOIN t3_tbl_review_image ri ON ri.R_NO = r.R_NO
+		LEFT JOIN t3_tbl_profile_image p ON p.USER_NO = u.USER_NO
+		WHERE r.PRODUCT_NO = #{productNo}
+		ORDER BY r.CREATEDATE desc
+		LIMIT #{startNum}, #{lastNum}
+	</select> 
+	<!-- 리뷰 페이지 카운트 --> 
+	<select id="selectCnt" resultType="int">
+		SELECT COUNT(*) FROM t3_tbl_user_review
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	<!-- 리뷰 별점 개수-->
+	<select id="selectReviewCnt" parameterType="hashmap" resultType="com.example.anesi.model.Review">
+		SELECT COUNT(*) AS csatCnt, csat
+		FROM t3_tbl_user_review
+		WHERE PRODUCT_NO = #{productNo}
+		GROUP BY csat
+		ORDER BY csat desc 
+	</select>
+	<!-- 상품 구매 고객 확인(리뷰)-->
+	<select id="selectReviewUser" parameterType="hashmap" resultType="com.example.anesi.model.Order">
+		SELECT *
+		FROM t3_tbl_user_order o
+		INNER JOIN t3_tbl_product_option p ON o.OPTION_NO = p.OPTION_NO
+		WHERE o.PRODUCT_NO = #{productNo} AND o.USER_NO = #{userNo}
+	</select>
+	<!-- 리뷰 등록 -->
+	<insert id="insertReview" parameterType="hashmap" useGeneratedKeys="true" keyProperty="idx" keyColumn="idx">
+		INSERT INTO t3_tbl_user_review(USER_NO, PRODUCT_NO, CONTENT, CSAT, OPTION_NAME)
+		VALUES
+			(#{userNo}, #{productNo}, #{reviewText}, #{csat}, #{optionName})
+	</insert>
+	<!-- 리뷰 이미지 등록 -->
+	<insert id="insertReviewImg" parameterType="hashmap">
+		INSERT INTO t3_tbl_review_image(R_NO, R_IMG_ORG_NAME, R_IMG_NAME, R_IMG_PATH, R_IMG_SIZE)
+		VALUES
+			(#{rNo},#{imgOrgName}, #{imgName}, #{imgPath}, #{imgSize})
+	</insert>	
+</mapper>
+
+	
+	
+	

@@ -8,213 +8,141 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="../css/mainCss.css" rel="stylesheet">
+<!-- 스토어 메인 CSS-->
+<link href="../css/store_main.css" rel="stylesheet">
+
 <meta charset="EUC-KR">
-<title>가구메인페이지</title>
+<title>카테고리별 상품메인페이지</title>
 <style>
-
-
-
-
-.product-main-category__image{
-	width:100px;
-	height:100px;
-}
-
-
-.production-item-thumnail__image{
-	width:250px;
-	height:250px;
-}
-
-.product-main-category__name{
-	font-size : 15px;
-}
-.won_icon,.production-item-price__orginal2{
-	text-decoration: line-through;
-}
-
-.production-item__content{
-	width:220px;
-	height:338px;
-  	float : left;
-	  margin : 50px;
-}
-
-#product-main-category__total > li {
-        display: inline-block;
-        position: relative;
-        top: 10px;
-      }
-#product-main-category__total > li > a {
-  display:block; position:relative; padding-bottom:19px;
-  margin: 40px;
-}
-#product-main-category__total > li > a > img {
-  width:100px; height:100px;
-}
-#product-main-category__total > li > a > span {
-  position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0)
-}
-      
-.category-order_toggle{
-	float : right;
-	margin-right : 100px;
-	background-color:#A782C3;
-	border: #fff;
-	text-align: center;
-	border-radius:10px; 
-	padding:8px;
-	height:35px; 
-	width: 100px;
-	font-family: 'Pretendard-Regular';
-	color :  #fff;
-	
-	
-	
-  }
-.category-order_toggle:hover {
-    background-color:rgb(235, 236, 237);
-    transition: 0.7s;
-    
-}  
-.category-order-list {
-
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.category-order-list li {
-
-  /* 카테고리 스타일링 */
-  padding: .5em;
-  border-bottom: 1px solid #ccc;
-}
-.category-order-list-container {
-	background :  #fff;
-   	width: 100px;
-   	float : right;
-    
-
-}
-
-.aaa {
-  color: #A782C3; /* 원하는 색상 */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-  /* 다른 스타일 속성도 추가 가능 */
-}
-
-
-
-
-
-
 </style>
 </head>
-<!-- 주석 꼭 남겨주세요 -->
 <body>
+   <jsp:include page="naviBar.jsp"></jsp:include>
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
 
+  <div class="flex-container">
+      <span class="main-category__title"></span>
+    
+     <div class="selectBox2 ">
+		  <button class="label">정렬</button>
+		  <ul class="optionList">
+		    <li value="LowestPrice"class="optionItem" >가격낮은순</li>
+		    <li value="HighestPrice" class="optionItem">가격높은순</li>
+		    <li value="NewArrival" class="optionItem">최신순</li>
+		    
+		    <li class="optionItem">--아직못함↓--</li>
+            <li value="HighestPurchase" class="optionItem">구매높은순</li>
+            <li value="HighestScrap" class="optionItem">스크랩많은순</li>
+            <li value="ManyReview" class="optionItem" >리뷰많은순</li>
+		  </ul>
+		</div>
+	 </div>
+	   
 
-	<div id="store_main_furniture">
-	
-	
-<!-- 상품 정렬하는 버튼-->	
-<button class="category-order_toggle">
-	  정렬<i class="fa-solid fa-chevron-down"></i>
-</button>
-<div class="category-order-list-container" style="display:none;">
 
 
-	
-  <ul class="category-order-list" >
-    <li value=""><a>전체</a></li>
-    <li value="LowestPrice"><a @click="fnOrderBy('LowestPrice')">가격낮은순</a></li>
-    <li value="HighestPrice"><a @click="fnOrderBy('HighestPrice')">가격높은순</a></li>
-    <li value="NewArrival"><a @click="fnOrderBy('NewArrival')">최신순</a></li>
-    <li><a>--아직못함↓--</a></li>
-    <li value="HighestPurchase"><a @click="fnOrderBy('HighestPurchase')">구매높은순</a></li>
-    <li value="HighestScrap"><a @click="fnOrderBy('HighestScrap')">스크랩많은순</a></li>
-    <li value="ManyReview"><a @click="fnOrderBy('ManyReview')">리뷰많은순</a></li>
-  </ul>
-</div>
-
-  
-
-		<h1 >{{categoryNo}}</h1>
-	
-	
+	<div id="store_main_byCategory">
 		<div class="production-item__content" v-for="item in list" >
-		
-		
-		
-			<a href="javascript:;" class="production-item-thumnail">
-		    <img class="production-item-thumnail__image animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation"
-			    src="../css/image/productMain/productMain_category1.png" >
-		    </a>
-		    <div class="production-item-header"  >
-			    <span class="production-item-header__brand">{{item.manufacturer}}</span>
-			    <span class="production-item-header__name">{{item.productName}}</span>
-			    <div class="production-item-header__kind">{{item.categoryName}} 
-			    <span class="production-item-header__country">{{item.country}}</span>
-			    </div>
+			<div class="production-item-header"  @click="fnProductView(item.productNo)">
+	            <a  class="production-item-thumnail">
+	                <div class="production-item-thumnail__overlay"></div>
+				    <img class="production-item-thumnail__image"alt="썸네일" :src="item.imgPath + '/' + item.imgName">
+			    </a>
+		  		  <div class="brand_name">
+            		<span class="production-item-header__brand">{{item.manufacturer}}</span>
+                	<span class="production-item-header__name">{{item.productName}}</span>
+            	</div>
+                <div class="category_country">
+                    <span class="production-item-header__kind">{{item.categoryName}},</span>
+                    <span class="production-item-header__country">{{item.country}}</span>
+                </div>
 		    </div>
 			 
-		    <span class="production-item-price">
-		    
-		       <span class="production-item-price__orginal" v-if="item.discountPrice!=''">
-			    정가
-			    <span class="won_icon">￦</span>
-				<span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
-			   </span>
-			    
-			    
-			    <!-- production-item-price__sell  : 파는 가격 -->
-		       <div class="production-item-price__sell">
-			    <span class="won_icon">￦</span>
-			    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
-			    <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
-			    </div>
-	        </span>
-	        
-	        
-			    <!--  production-item-rating : 별점-->
-		       <div class="production-item-rating">
-		       	<!-- 별모양-->
-			   	<i class="fa-solid fa-star" style="color: #A782C3;"></i>
-			    <span class="production-item-rating__score">4.5</span>
-			   </div>
-				<a><i class="fa fa-shopping-cart modal-toggle-button" @click="openCartModal"></i></a>
-		    	<a><i class="fa-solid fa-share-nodes"></i></a>
-		    	<a><i class="fa-regular fa-bookmark modal-toggle-button" @click="openScrapModal"></i></a>
-	    </div> <!-- class="production-item__content" 끝-->
+           <div class="production-item-price">
+                <div class="production-item-price__orginal" v-if="item.discountPrice!=''">정가
+                    <span class="won_icon">￦</span>
+                    <span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
+                    <span class="production-item-price__percent">{{ item.discount }}%</span>
+                </div>
+                <!-- production-item-price__sell  : 파는 가격 -->
+                <div class="production-item-price__sell">
+                    <span class="won_icon">￦</span>
+                    <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
+                    <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
+                </div>
+            </div>
+            
+		         <!--  production-item-rating : 별점-->
+            <div class="production-item-rating">
+                <!-- 별모양-->
+                <i class="fa-solid fa-star" style="color: #A782C3;"></i>
+                <span class="production-item-rating__score ">{{item.csatAvg}}.5</span>
+            </div>
+           <!-- 장바구니버튼-->
+             <a class="cart_button">
+			    <i
+			      @click="userId ? (cartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnInsertUserCart(item)) : (nonuserCartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnAddNonUserCart(item))"
+			      class="fa-solid fa-cart-shopping fa-xl"
+			    ></i>
+			  </a>
+            <!-- 공유하기버튼-->
+            <a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes fa-xl"></i></a>
+            <!-- 스크랩북버튼-->
+             <a v-if="userId!=''" class="scrap_button">
+                <i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button  fa-xl"></i>
+                <i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark  fa-xl " style="color:#A782C3;"></i>
+            </a>
+            <a v-else class="scrap_button">
+                <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
+            </a>
+    	    </div> <!-- class="production-item__content" 끝-->
 	    
 	    
-	    
-    	<div class="modal" v-if="showCartModal">
+    	<div class="modal" v-if="showCartModal" >
 		  <div class="modal-card">
 		    <h2>장바구니에 추가</h2>
 		    <p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveCart" >장바구니로 이동하기</button>
+		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
+		    <button @click="fnMoveCart" class="right_button">장바구니로 이동하기</button>
 		  </div>
 		</div>
 		
     	<div class="modal" v-if="showScrapModal">
-		  <div class="modal-card">
+		  <div class="modal-card"  v-if="userId!=''">
 		    <h2>스크랩북에 등록</h2>
 		    <p>상품이 스크랩되었습니다.</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">마이페이지로 이동하기</button>
+		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
+		    <button @click="fnMoveScrapbook" class="right_button">스크랩북으로 이동하기</button>
+		  </div>
+		  
+		  <div class="modal-card"  v-else>
+		    <h2>로그인후 사용 가능합니다.</h2>
+		    <p>로그인하시겠습니까?</p>
+		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
+		    <button @click="fnMoveLoginPage" class="right_button">로그인페이지로 이동하기</button>
+		  </div>
+		</div>
+		
+    	<div class="modal" v-if="showScrapDeleteModal">
+		  <div class="modal-card">
+		    <h2>스크랩북에서 삭제되었습니다.</h2>
+		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
+		    <button @click="fnMoveScrapbook" class="right_button">스크랩북으로 이동하기</button>
+		  </div>
+		</div>
+		
+    	<div class="modal" v-if="showScrapModalBan">
+		  <div class="modal-card">
+		    <h2>이미 담긴상품입니다.</h2>
+		    <p>스크랩북을 확인해주세요</p>
+		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
+		    <button @click="fnMoveMyPage" class="right_button">스크랩북으로 이동하기</button>
 		  </div>
 		</div>
 	
 	    
     </div>
-
-
 	
 	
 	<jsp:include page="footer.jsp"></jsp:include>
@@ -223,10 +151,30 @@
 </html>
 <script>
 
+/* 화살표 함수 */
+const label = document.querySelector('.label');
+const options = document.querySelectorAll('.optionItem');
 
+// 클릭한 옵션의 텍스트를 라벨 안에 넣음
+const handleSelect = (item) => {
+  label.parentNode.classList.remove('active');
+  label.innerHTML = item.textContent;
+}
+// 옵션 클릭시 클릭한 옵션을 넘김
+options.forEach(option => {
+	option.addEventListener('click', () => handleSelect(option))
+})
 
+// 라벨을 클릭시 옵션 목록이 열림/닫힘
+label.addEventListener('click', () => {
+  if(label.parentNode.classList.contains('active')) {
+  	label.parentNode.classList.remove('active');
+  } else {
+  	label.parentNode.classList.add('active');
+  }
+})
 var app = new Vue({
-	el : '#store_main_furniture',
+	el : '#store_main_byCategory',
 	data : {
 		list : [],
 		list2 : [],
@@ -234,58 +182,49 @@ var app = new Vue({
 		item2 : "",
 		showCartModal: false,
 		showScrapModal: false,
+		showScrapModalBan: false,
+		showScrapDeleteModal: false,
 		userId : '${sessionId}',
 		userNick : '${sessionNick}',
+		userNo : '${sessionNo}',
 		categoryNo : '${map.no}',
-		categoryName : ""
-		
-		
-		
-	
+		categoryName : "",
+		productNo : "",
+		scrapbookList : [],
+		cartList : [],
+		nonuserCartList : [],
+		nonuserNo : ""
+
 	},// data
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar, categoryNo : self.categoryNo, categoryName : self.categoryName};
+            var nparmap = {categoryOrderBar : self.categoryOrderBar, 
+		            		categoryNo : self.categoryNo, 
+		            		categoryName : self.categoryName,
+		            		productNo : self.productNo};
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-				
                 	self.list = data.list;
                 	self.list2 = data.list2;
                 	console.log(self.list2.categoryNo);
-             
                 }
             }); 
 		},
-		
-
-
 	     fnOrderBy: function (orderBy) {
             var self = this;
-            self.categoryOrderBar = orderBy; // 카테고리 정렬값 설정
+            self.categoryOrderBar = orderBy; // 카테고리 정렬값 설
             self.fnGetList(); // AJAX 요청 보내기
 	     },
-	      
-	      
-	    //이미지 마우스 오버했을때 pulse 애니메이션
-        addPulseAnimation: function(event) {
-            event.currentTarget.classList.add('animate__animated', 'animate__pulse');
-        },
-        removePulseAnimation: function(event) {
-            event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
-        },
-        
-
-        formatPrice: function(price) {
-            // 천 단위마다 쉼표(,)를 추가하는 정규식 처리
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        },
-        
-        
+	     formatPrice: function(price) {
+	            // 100의 자리까지 내림하여 표시하며 천 단위마다 쉼표(,)를 추가합니다.
+	            const truncatedPrice = Math.floor(price / 100) * 100;
+	            return truncatedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+         },
         
         // 모달 열기
 	    openCartModal: function() {
@@ -296,43 +235,178 @@ var app = new Vue({
           var self = this;
           self.showScrapModal = true;
 	    },
+	    openScrapDeleteModal: function() {
+          var self = this;
+          self.showScrapDeleteModal = true;
+	    },
 	    // 모달 닫기
 	    closeModal: function() {
 	      this.showCartModal = false;
 	      this.showScrapModal = false;
+	      this.showScrapModalBan = false;
+	      this.showScrapDeleteModal = false;
+	      location.reload();
 	    },
-	    
+	    //모달에서 페이지이동 함수
 	    fnMoveCart : function() {
         	location.href = "/product/cart.do";
 	    },
 	    fnMoveMyPage : function() {
         	location.href = "/mypage.do";
-	    }
+	    },
+	    fnMoveLoginPage : function() {
+        	location.href = "/login.do";
+	    },
 	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	        
-	        
+	    fnCheckCart : function() {
+	    	var self = this;
+	         var nparmap = {nonuserNo : self.nonuserNo, userNo: self.userNo};      
+            $.ajax({
+                url : "/product/selectCartList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	for(let i=0; i<data.list.length;i++){
+	                	if(self.userNo != '' && self.userNo != null) {
+	                        self.cartList.push(data.list[i].productNo.toString());
+	                	}else{
+	                        self.nonuserCartList.push(data.list[i].productNo.toString());
+	                	}
+                     }
+                   }
+            }); 
+		},
+		
+	   fnInsertUserCart : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+            $.ajax({
+                url : "/product/insertCart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	/* alert("등록완"); */
+                   console.log(self.userNo);
+                }
+            }); 
+            self.openCartModal();
+            console.log(self.showCartModal);
+		}, 
+	    fnUpdateUserCart : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+            $.ajax({
+                url : "/product/addCartCnt.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+
+                }
+            }); 
+            self.openCartModal();
+            console.log(self.showCartModal);
+
+		}, 
+		fnCheckScrap : function(item) {
+	    	var self = this;
+            var nparmap = {userNo: self.userNo};
+            $.ajax({
+                url : "/product/selectScrapList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	for(let i=0; i<data.list.length;i++){
+                        self.scrapbookList.push(data.list[i].productNo.toString());
+                     }
+                }
+            }); 
+            
+		},
+	    fnInsertScrapbook : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+           
+            $.ajax({
+                url : "/product/insertScrap.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	
+                }
+            }); 
+            self.openScrapModal();
+            console.log(self.showScrapModal);
+		},
+	    fnDeleteScrapbook : function(item) {
+	    	var self = this;
+            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+           
+            $.ajax({
+                url : "/product/deleteScrap.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                }
+            }); 
+            self.openScrapDeleteModal();
+            console.log(self.showScrapModal);
+		},
+		//'제품상세보기' 페이지 이동
+		fnProductView : function(productNo){
+	    	var self = this;
+	    	   $.pageChange("/product/view.do",{no : productNo});//보낼필요없을때 파라미터 빈값으로{}
+		},
+		
+		//비회원 번호 쿠키불러오는 애 
+		fnaaa : function(item){
+			var self = this;
+            var nparmap = '';
+            //{ nonuserNo: self.nonuserNo, productNo: item.productNo};
+			 $.ajax({
+	                url : "/nonUserCookie.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	self.nonuserNo = data.value;
+	            		self.fnCheckCart();
+
+	                }
+	            }); 
+		},
+		//비회원 장바구니 추가
+		fnAddNonUserCart : function(item) {
+	    	var self = this;
+            var nparmap = 
+            	{nonuserNo: self.nonuserNo, productNo: item.productNo}
+            $.ajax({
+                url : "/product/addNonUserCart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                }
+            }); 
+            self.openCartModal();
+            console.log(self.showCartModal);
+		}
+
      }, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
-
+		self.fnaaa();
+		self.fnCheckScrap();
 	}// created
 });
 
 
-$(document).ready(function() {
-    // 상품정렬 버튼 클릭 이벤트 추가
-    $('.category-order_toggle').click(function() {
-       $('.category-order-list-container').slideToggle('fast');
-    });
-});
+
 
 </script>

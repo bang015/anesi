@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.anesi.mapper.AdminMapper">
+	<!-- 상품 리스트 조회 -->
+	<select id="adminProductList" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+		SELECT p.*, o.STOCK, CATEGORY_NAME
+		FROM t3_tbl_product p
+		LEFT JOIN (
+			SELECT PRODUCT_NO, SUM(PRODUCT_STOCK) STOCK
+			FROM t3_tbl_product_option
+			GROUP BY PRODUCT_NO
+		) o ON p.PRODUCT_NO = o.PRODUCT_NO
+		INNER JOIN t3_tbl_product_category c
+			ON p.CATEGORY_NO = c.CATEGORY_NO
+	</select>
+	
+	<select id="adminProductInfo" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+		SELECT *
+		FROM t3_tbl_product p
+		LEFT JOIN t3_tbl_product_option o
+			ON p.PRODUCT_NO = o.PRODUCT_NO
+		WHERE p.PRODUCT_NO = #{productNo}
+	</select>
+	
+	<update id="adminUpdateProduct" parameterType="hashmap">
+		UPDATE t3_tbl_product
+			SET
+			PRODUCT_NAME = #{productName},
+			PRODUCT_PRICE = #{productPrice},
+			DISCOUNT = #{discount},
+			DISCOUNT_YN = #{discountYn},
+			UDATETIME = now()			
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<update id="adminOptionUpdate" parameterType="hashmap">
+		UPDATE t3_tbl_product_option
+			SET
+			OPTION_NAME = #{optionName},
+			OPTION_PRICE = #{optionPrice},
+			PRODUCT_STOCK = #{productStock}
+		WHERE OPTION_NO = #{optionNo}
+	</update>
+	
+	<insert id="adminInsertOption" parameterType="hashmap">
+		INSERT INTO t3_tbl_product_option(PRODUCT_NO, OPTION_NAME, OPTION_PRICE, PRODUCT_STOCK)
+    	VALUES(#{productNo}, #{optionName}, #{optionPrice}, #{productStock})
+	</insert>
+	
+	<update id="adminProductSituation" parameterType="hashmap">
+		UPDATE t3_tbl_product
+			SET
+			DELETE_YN = #{situation}
+		WHERE PRODUCT_NO IN
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</update>
+	<delete id="adminDeleteOption" parameterType="hashmap">
+		DELETE 
+		FROM t3_tbl_product_option
+		WHERE OPTION_NO IN
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<select id="selectDeliveryList" resultType="com.example.anesi.model.UserOrder">
+		SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+		FROM t3_tbl_user_order o
+		INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
+		INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
+		INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
+	</select>
+	
+	<update id="updateDelivery" parameterType="hashmap">
+		UPDATE t3_tbl_user_order
+			SET
+			DELIVERY_SIT = #{sit}
+		WHERE ORDER_NO IN 
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</update>
+	
+	<select id="selectSearchList" parameterType="hashmap" resultType="com.example.anesi.model.UserOrder">
+		SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+		FROM t3_tbl_user_order o
+		INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
+		INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
+		INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
+		WHERE
+			<choose>
+				<when test="searchOption == 'PAYMENT_NO'">
+					PAYMENT_NO LIKE CONCAT('%',#{searchText},'%')
+				</when>
+				<when test="searchOption == 'PRODUCT_NAME'">
+					PRODUCT_NAME LIKE CONCAT('%',#{searchText},'%')
+				</when>
+				<when test="searchOption == 'RECEIPT_NAME'">
+					RECEIPT_NAME LIKE CONCAT('%',#{searchText},'%')
+				</when>
+			</choose>
+	</select>
+</mapper>

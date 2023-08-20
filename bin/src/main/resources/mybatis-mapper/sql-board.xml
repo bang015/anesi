@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.anesi.mapper.BoardMapper">
+	
+	<!-- 게시글 작성 -->
+	<insert id="insertBoard" parameterType="hashmap">
+		INSERT INTO t3_tbl_board(TITLE, CONTENT, NICK)
+		VALUES(#{title}, #{content}, #{nick})
+	</insert>
+	
+	<!-- 게시글 리스트 -->
+	<select id="boardAll" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT *
+		FROM t3_tbl_board B
+		LEFT JOIN (
+			SELECT COUNT(*) COMM_CNT, BOARD_NO
+			FROM t3_tbl_board_comment
+			GROUP BY BOARD_NO
+		) C ON B.BOARD_NO = C.BOARD_NO
+		ORDER BY B.BOARD_NO DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+
+	<!-- 게시글 검색 -->
+	<select id="searchBoard" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT *
+		FROM t3_tbl_board B
+		LEFT JOIN (
+			SELECT COUNT(*) COMM_CNT, BOARD_NO
+			FROM t3_tbl_board_comment
+			GROUP BY BOARD_NO
+		) C ON B.BOARD_NO = C.BOARD_NO
+		WHERE 1=1  
+		<if test="keyword != '' and keyword != null"> 
+			AND (TITLE LIKE CONCAT('%', #{keyword}, '%')
+				OR NICK LIKE CONCAT('%', #{keyword}, '%'))
+		</if>
+		ORDER BY B.BOARD_NO DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	
+	<!-- 게시글 cnt -->
+	<select id="selectCnt" resultType="int">
+		SELECT COUNT(*) FROM t3_tbl_board
+	</select>
+	
+	<select id="searchCnt" resultType="int">
+		SELECT COUNT(*) FROM t3_tbl_board
+		WHERE 1=1
+		<if test="keyword != '' and keyword != null"> 
+			AND (TITLE LIKE CONCAT('%', #{keyword}, '%')
+				OR NICK LIKE CONCAT('%', #{keyword}, '%'))
+		</if>
+	</select>
+	
+	<!-- 인기글 -->
+	<select id="boardBest" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT *
+		FROM t3_tbl_board B
+		LEFT JOIN (
+			SELECT COUNT(*) COMM_CNT, BOARD_NO
+			FROM t3_tbl_board_comment
+			GROUP BY BOARD_NO
+		) C ON B.BOARD_NO = C.BOARD_NO
+		ORDER BY VIEW DESC
+		LIMIT 4
+	</select>
+	
+	<!-- 게시글 보기 -->
+	<select id="selectBoardView" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT *
+		FROM t3_tbl_board
+		WHERE BOARD_NO = #{bNo}
+	</select>
+	
+	<!-- 조회수 업데이트 -->
+	<update id="updateViewCnt" parameterType="hashmap">
+		UPDATE t3_tbl_board
+		SET
+			VIEW = VIEW+1
+		WHERE BOARD_NO = #{bNo}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterType="hashmap">
+		DELETE FROM t3_tbl_board
+		WHERE BOARD_NO = #{bNo}
+	</delete>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="hashmap">
+		UPDATE t3_tbl_board
+		SET
+		    TITLE = #{title},
+		    CONTENT = #{content},
+		    UDATETIME = NOW()
+		WHERE
+		    BOARD_NO = #{bNo}
+	</update>
+	
+	<!-- 댓글 입력 -->
+	<insert id="insertComment" parameterType="hashmap">
+		INSERT INTO t3_tbl_board_comment(BOARD_NO, C_NICK, COMM)
+		VALUES(#{bNo}, #{nick}, #{content})
+	</insert>
+	
+	<!-- 댓글 리스트 -->
+	<select id="selectComment" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT *
+		FROM t3_tbl_board_comment
+		WHERE BOARD_NO = #{bNo}
+		ORDER BY C_CDATETIME DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	
+	<!-- 댓글 cnt -->
+	<select id="commentCnt" resultType="int">
+		SELECT COUNT(*) FROM t3_tbl_board_comment
+		WHERE BOARD_NO = #{bNo}
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment" parameterType="hashmap">
+		DELETE FROM t3_tbl_board_comment
+		WHERE COMMENT_NO = #{cNo}
+	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="editComment" parameterType="hashmap">
+		UPDATE t3_tbl_board_comment
+		SET
+		    COMM = #{comm},
+		    C_UDATETIME = NOW()
+		WHERE
+		    COMMENT_NO = #{cNo}
+	</update>
+</mapper>

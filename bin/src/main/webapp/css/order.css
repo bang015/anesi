@@ -17,9 +17,6 @@
 	border-radius: 4px;
 
 }
-.test{
-	height: 2000px;
-	}
 .amount{
 	position: sticky;
 	top: 209px;
@@ -286,7 +283,7 @@
 	font-weight: normal;
 }
 .orProductList{
-	margin-top: 50px;
+	margin: 50px 0;
 }
 .orProductList > .subheading {
 	padding-bottom: 20px;
@@ -301,6 +298,7 @@
 	width: 100%;
 	height: 105px;
 	display: flex;
+	margin-bottom: 20px;
 }
 .orProduct > img{
 	border-radius: 4px;
@@ -310,19 +308,141 @@
 	margin-left: 10px;
 }
 .orProduct > div > div{
-	margin-bottom: 13px;
+	margin-bottom: 10px;
 }
 .prProductName {
-	font-size: 14px;
+	font-size: 16px;
 }
 .prProductOption{
-	font-size: 14px;
+	font-size: 16px;
 	color: #828c94;
 }
 .prProductPrice{
-	font-size: 16px;
+	font-size: 18px;
 }
 .prProductPrice > span{
 	font-size: 12px;
 	color: #828c94;
+}
+.subheading > .text2{
+	font-weight: normal;
+	font-size: 15px;
+}
+.orCoupon{
+	margin-bottom: 30px;
+}
+.orCoupon > div > div > span{
+	font-size: 16px;
+	font-weight: bold;
+}
+.coupon1{
+	display: inline-block;
+	margin-bottom: 10px;
+}
+.coupon1 > span{
+	font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.orCoupon > div {
+	display: inline-grid;
+}
+.coupon2{
+	font-size: 14px !important;
+	font-weight: normal !important;
+}
+.err{
+	color : #ff9797;
+}
+.orInputBox3{
+	display: flex;
+    width: 100%;
+    height: 40px;
+    margin: 8px 0;
+    line-height: 40px;
+    transition: background-color 0.3s;
+}
+.orBtn{
+	width: 100px;
+	height: 120px;
+	border: 1px #ccc solid;
+	background-color: #fff;
+	margin-left: -1px;
+    cursor: pointer;
+}
+.card{
+	margin-bottom: 23px;
+	margin-top: 18px;
+}
+.btnImg{
+	width: 60px;
+	height: 60px;
+}
+.paymentS{
+	display: flex;
+}
+.cardBtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.onpayment{
+	border: 1px #A782C3 solid;
+	background-color: #f5e8ff;
+}
+.onpayment_right{border-left: 1px #A782C3 solid;}
+.modalStyle1{
+	text-align: center;
+	font-size: 24px;
+	padding-bottom: 30px;
+	border-bottom: 1px #ccc solid;
+}
+.modalStyle2{
+	margin-top: 10px;
+	display: flex;
+	font-size: 18px;
+	padding-bottom: 30px;
+	border-bottom: 1px #ccc solid;
+	text-align: center;
+}
+.modalStyle3{
+	text-align: left;
+}
+.modalStyle4{
+	width: 150px;
+	text-align: left;
+}
+.modal-card {
+	width: 700px;
+}
+.modalButBox{
+	text-align: center;
+	margin-bottom: 20px;
+}
+.modalBut{
+	width: 176px;
+	height: 52px;
+	background-color: #fff;
+	color: #2f3438;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	margin-top: 30px;
+	font-weight: bold;
+	font-size: 17px;
+	cursor: pointer;
+	
+}
+.modalBut2{
+	width: 176px;
+	height: 52px;
+	background-color: #A782C3;
+	color: #fff;
+	border-radius: 4px;
+	border: 0px;
+	margin-top: 30px;
+	font-weight: bold;
+	font-size: 17px;
+	cursor: pointer;
+	
 }

@@ -11,7 +11,7 @@
 <title>마이페이지😏</title>
 <style>
 #app{
-	margin-top : 180px;
+	margin-top : 160px;
 }
 #container{
 	margin : 30px auto;
@@ -24,7 +24,7 @@ li{
 	list-style : none;
 	display : flex;
 	justify-content: center;
-	padding: 0px 0px 0px 0px;
+	padding: 5px 0px 0px 0px;
 }
 .my_li1 {
 	margin: 0px 30px 0px 30px;
@@ -152,24 +152,24 @@ li{
 <div id="app">
 <div class="top_menu">
 	<ul class="my_menu1">
-		<li class="my_li1"><a class="my_a1_ch">프로필</a></li>
-		<li class="my_li1"><a class="my_a1">나의 쇼핑</a></li>
+		<li class="my_li1"><a href="mypage.do" class="my_a1_ch" style="color : #A782C3;">프로필</a></li>
+		<li class="my_li1"><a href="mypage/myShopping.do" class="my_a1">나의 쇼핑</a></li>
 		<li class="my_li1"><a class="my_a1">나의 리뷰</a></li>
 		<li class="my_li1"><a href="mypage/user_edit.do" class="my_a1">설정 </a></li>
 	</ul>
 </div>
 <hr class="hrr">
 	<ul class="my_menu1">
-		<li class="my_li2"><a class="my_a2_ch">모두 보기</a></li>
+		<li class="my_li2"><a href="mypage.do" class="my_a2_ch" style="color : #A782C3;">모두 보기</a></li>
 		<li class="my_li2"><a class="my_a2">나의 문의</a></li>
-		<li class="my_li2"><a class="my_a2">나의 게시글</a></li>
+		<li class="my_li2"><a href="/mypage/myBoard.do" class="my_a2">나의 게시글</a></li>
 		<li class="my_li2"><a href="scrapbook.do" class="my_a2">스크랩북</a></li>
 	</ul>
 <hr class="hrr">
 <div id="container">
 	<div class="profile">
 		<div class="profile_left">
-			<div><img src="../css/image/profile.png" class="profile_img"></div>
+			<div v-if="profileImg.uImgPath != undefined"><img :src="profileImg.uImgPath+'/'+profileImg.uImgName" class="profile_img"></div>
 			<div class="nickName">{{sessionNick}}</div>
 		</div>
 		<div class="profile_right">	
@@ -195,15 +195,31 @@ li{
 var app = new Vue({
 	el : '#app',
 	data : {
-		sessionNick : "${sessionNick}"
+		sessionNick : "${sessionNick}",
+		sessionNo : "${sessionNo}",
+		profileImg : {},
 	},// data
 	methods : {
 		fnEdit : function(){
 			location.href="/mypage/user_edit.do"
+		},
+		fnGetProfile(){
+			var self = this;
+			var nparmap = {userNo : self.sessionNo};
+			$.ajax({
+                url : "/profileImg.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.profileImg = data.img;
+                }
+			})
 		}
 	}, // methods
 	created : function() {
 		var self = this;
+		self.fnGetProfile();
 		console.log(self.sessionNick);
 	}// created
 });

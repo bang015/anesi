@@ -6,14 +6,14 @@ input, button{
 }
 
 #container{
-	width: 1300px;
-	margin: 30px auto;
+	padding: 10px 20px;
 	font-size: 18px;
 }
 .tdthsy{
 	width: 170px;
 	text-align: center;
 	padding: 10px;
+	padding-right: 5px;
 }
 .productTitleAdd{
 	margin-bottom: 20px;
@@ -25,7 +25,7 @@ input, button{
 }
 .guide{
 	font-size: 13px;
-	color: #A782C3;
+	color: #5E503F;
 }
 
 .err{
@@ -45,7 +45,7 @@ input, button{
 	height : 30px;
 	margin-left: 40px;
 	margin-top: 10px;
-	background: #A782C3;
+	background: #5E503F;
 	border: 0;
 	border-radius: 5px;
 	color: #fff;
@@ -60,7 +60,7 @@ input, button{
 	width: 50%;
 	padding: 5px 10px;
 	height : 30px;
-	background: #A782C3;
+	background: #5E503F;
 	border: 0;
 	border-radius: 5px;
 	color: #fff;
@@ -70,7 +70,7 @@ input, button{
 	padding: 5px 10px;
 	height : 50px;
 	margin-left: 40px;
-	background: #A782C3;
+	background: #5E503F;
 	border: 0;
 	border-radius: 5px;
 	color: #fff;
@@ -88,7 +88,7 @@ input, button{
 	width: 65px;
 	padding: 5px 10px;
 	height : 20px;
-	background: #A782C3;
+	background: #5E503F;
 	border: 0;
 	border-radius: 5px;
 	color: #fff;
@@ -125,9 +125,44 @@ input, button{
   border-right: 1px solid #ccc;
   }
   .categoryNo{
-	  color: #A782C3;
+	  color: #5E503F;
   }
   
 .content{
 	text-align: center;
 }
+.el-radio > input[type="radio"] + .el-radio-style:after {
+    top: 8.5px !important;
+    left: 8.1px !important;
+    }
+.addInputBox{
+	width: 50%;
+}
+.addInputBox > input, select{
+	padding: 8px 15px 9px;
+	border-radius: 4px;
+	border: 1px solid;
+	transition : border-color 0.3s;
+	border-color: #dbdbdb;
+    width: 100%;
+}
+.tdthsy > input{
+	padding: 8px 15px 9px;
+	border-radius: 4px;
+	border: 1px solid;
+	transition : border-color 0.3s;
+	border-color: #dbdbdb;
+    width: 250px;
+}
+/* ��� CSS*/
+.flex-container1 {
+ 	display:grid;
+    grid-template-rows: 1fr 1fr 2fr ;
+    grid-template-columns: 1fr 8fr;}
+.admin_header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #e0d4c6;
+  width : 100%;
+  padding: 30px 20px;}

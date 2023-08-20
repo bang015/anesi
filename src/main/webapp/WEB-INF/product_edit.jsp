@@ -179,8 +179,7 @@ var app = new Vue({
 		optionCnt2 : 0,
 		productNo : 0,
 		addOptionCnt : 0,
-		delectOption : []
-		
+		delectOption : [],
 	},// data
 	methods : {
 		//상품 전체 검색
@@ -346,21 +345,23 @@ var app = new Vue({
 		//상품 상태
 		fnCheckSituation(situation){
 			var self = this;
-			var checkList = JSON.stringify(self.checkList);
-			var nparmap = {	checkList, situation};
-			$.ajax({
-                url : "/admin/productSituation.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {
-                	alert(data.cnt+"개 업데이트");
-                	self.checkList = []
-                	self.fnGetProduct();
-                	self.allChecked = false;
-                }
-            });
-		}
+			if(self.checkList.length > 0){
+				var checkList = JSON.stringify(self.checkList);
+				var nparmap = {	checkList, situation};
+				$.ajax({
+	                url : "/admin/productSituation.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {
+	                	alert(data.cnt+"개 업데이트");
+	                	self.checkList = []
+	                	self.fnGetProduct();
+	                	self.allChecked = false;
+	                }
+	            });
+			}
+		},
 	}, // methods
 	created : function() {
 		var self = this;

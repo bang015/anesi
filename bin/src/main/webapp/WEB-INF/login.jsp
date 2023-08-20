@@ -19,7 +19,7 @@
 	<div id="container">
 		<div class="content">
 			<div class="logo">
-				<img alt="logo" src="../css/image/footer_img.png">
+				<a href="main.do"><img alt="logo" src="../css/image/footer_img.png" ></a>
 			</div>
 			<div class="login-wrap">
 				<div class="login-title">

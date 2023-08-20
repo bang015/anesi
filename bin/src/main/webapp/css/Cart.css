@@ -1,88 +1,58 @@
 @charset "EUC-KR";
 
-body{
-	position: absolute;
-	background-color: rgb(231, 231, 231);
-	width: 800px;
-	left: 400px;
-}
-.firstbox{
-background-color: white;
-padding-left: 40px;
+
+.cart-item {
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 1rem;
 }
 
-.cartbtn{
-	width: 15%;
-	padding: 5px 10px;
-	height : 30px;
-	margin-top: 10px;
-	background: #A782C3;
-	border: 0;
-	border-radius: 5px;
-	color: #fff;
-	
+.cart-item img {
+  max-width: 20%;
 }
-.cartbtn:hover {
-      background-color:rgb(164, 80, 239);
-      transition: 0.7s;
-  }
-.cartbtn2:hover {
-      background-color:rgb(164, 80, 239);
-      transition: 0.7s;
-  }
-    .custom-checkbox {
-            position: relative;
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-        }
 
-        .custom-checkbox:checked::before {
-            content: '✓';
-            position: absolute;
-            top: 2px;
-            left: 6px;
-            font-size: 15px;
-            color: #A782C3;
-        }
-
-        input[type=checkbox] {
-            display: none;
-        }
-        .price-summary{
-			width: 300px;
-			background-color: white;
-			position: absolute;
-			right: -320px;
-			top: 58px;
-			text-align: center;
-		}	
-		.cartbtn2{
-	width: 300px;
-	padding: 5px 10px;
-	height : 30px;
-	margin-left: 40px;
-	margin-top: 10px;
-	background: #A782C3;
-	border: 0;
-	border-radius: 5px;
-	color: #fff;
-	position: absolute;
-	right: -320px;
-	
+.btn-danger {
+  background-color: #ff5e5e;
+  border: none;
 }
-	.custom-checkbox{
-		position: absolute;
-		left: 40px;
-	}
-	.all{
-		position: absolute;
-		left: 65px;
-		
-	}
-	.cartTable{
-		padding: 20px;
-	}
-		
+.cal {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.cal p {
+  margin-bottom: 0.5rem;
+}
+#container{
+	margin-top: 180px;
+}
+.cal .btn-primary {
+  margin-top: -5rem;
+  margin-left: 900px;
+}
+#btnbuy{
+	position: relative;
+	bottom: -30px;
+	margin-left: 1000px;
+	width: 200px;
+	height: 40px;
+}
+			
+#btnbuy2{
+	position: relative;
+	bottom: 0px;
+	margin-left: 1000px;
+	width: 200px;
+	height: 40px;
+}
+#delete{
+	position: relative;
+	bottom: 0px;
+}
+			
+			

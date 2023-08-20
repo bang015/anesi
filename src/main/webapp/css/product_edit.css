@@ -152,7 +152,13 @@
 .btnBox{
 	padding: 30px 30px 15px 30px;
 }
-
+.popover {
+  /* Your popover styles here */
+  display: none;
+}
+.show {
+  display: block !important;
+}
 
 /* 헤더 CSS*/
 .flex-container1 {

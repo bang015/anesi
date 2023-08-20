@@ -73,10 +73,10 @@ var app = new Vue({
 		fnLogin : function(){
             var self = this;
             var nparmap = {userEmail : self.userEmail, pwd : self.pwd};
-            if(userEmail == ""){
+            if(self.userEmail == ""){
             	alert("이메일을 입력하세요.");
             }
-            if(pwd == ""){
+            if(self.pwd == ""){
             	alert("비밀번호를 입력하세요.");
             }
             $.ajax({

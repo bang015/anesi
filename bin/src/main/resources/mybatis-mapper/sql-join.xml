@@ -25,7 +25,6 @@
 		FROM t3_tbl_user
 		WHERE PHONE = #{phone}
 	</select>
-	
 	<!-- 스크랩북 리스트 -->
 	<select id="selectScrapbookList" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
 		SELECT SCRAPBOOK_NO, s.PRODUCT_NO, IMG_NAME, IMG_PATH
@@ -61,6 +60,7 @@
 		FROM t3_tbl_user
 		WHERE PHONE = #{phone} AND USER_NO != #{no}
 	</select>
+	<!-- 유저 정보 수정 -->
 	<update id="editUser" parameterType="hashmap">
 		UPDATE t3_tbl_user
 		SET
@@ -70,4 +70,49 @@
 			BIRTHDAY = #{birthday}
 		WHERE USER_NO = #{no}
 	</update>
+	<!-- 알림설정 -->
+	<update id="smsYnEdit" parameterType="hashmap">
+		UPDATE t3_tbl_user
+		SET
+			SMSYN = #{smsYn}
+		WHERE USER_NO = #{no}
+	</update>
+	<!-- 닉네임검색 -->
+	<select id="searchNick" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT *
+		FROM t3_tbl_user
+		WHERE NICK = #{nick}
+	</select>
+	<!-- 기본프로필입력 -->
+	<insert id="insertProfile">
+		INSERT INTO t3_tbl_profile_image(USER_NO, U_IMG_ORG_NAME) 
+     	VALUES(#{userNo}, #{profile})
+	</insert>
+	<!-- 비밀번호변경 -->
+	<update id="editPassword" parameterType="hashmap">
+		UPDATE t3_tbl_user
+		SET
+			USER_PWD = #{pwd}
+		WHERE USER_NO = #{no}
+	</update>
+	<!-- 회원탈퇴 -->
+	<update id="withdrawal" parameterType="hashmap">
+		UPDATE t3_tbl_user
+		SET
+			DELETE_YN = 'Y'
+		WHERE USER_NO = #{no}
+	</update>
+	<!-- 주문목록 -->
+	<select id="selectOrderList" parameterType="hashmap" resultType="com.example.anesi.model.UserOrder">
+		SELECT o.*, i.IMG_NAME, i.IMG_PATH, p.PRODUCT_NAME, p.PRODUCT_PRICE, p.MANUFACTURER, ot.OPTION_NAME, ot.OPTION_PRICE, p.DISCOUNT
+		FROM t3_tbl_user_order o
+		INNER JOIN t3_tbl_product_image i ON o.PRODUCT_NO = i.PRODUCT_NO
+		INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
+		INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
+		WHERE USER_NO = #{userNo} AND i.THUMBNAIL_YN = 'Y'
+		AND o.CREATEDATE >= DATE_SUB(NOW(), INTERVAL IFNULL(#{month}, 1) MONTH)
+		<if test="deliverySit !=null and deliverySit != ''">
+			AND DELIVERY_SIT = #{deliverySit}
+		</if>
+	</select>
 </mapper>

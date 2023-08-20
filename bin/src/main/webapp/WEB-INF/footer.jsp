@@ -59,6 +59,11 @@
     float : left;
     width :20%;
 }
+
+#admin {
+    font-size: 19px;
+    background: #a782c3;}
+
 #f_part5 {
     float : left;
     width :5%;
@@ -87,8 +92,21 @@
 	margin-right:10px;
 
 }
-
-
+.btn_gotop {
+	display:none;
+	position:fixed;
+	bottom:30px;
+	right:30px;
+	z-index:999;
+	cursor:pointer;
+	padding:15px 20px;
+	border-radius:100%;
+}
+#topbutton{
+	width : 50px;
+	opacity: 0.7;
+	
+}
 </style>
 </head>
 <!-- 주석 꼭 남겨주세요 넹 -->
@@ -104,7 +122,7 @@
     <img id="f_img" src="../css/image/anesilogo.png" >
     </a>
     <div id="f_part1">
-       <div class="pt_title"><p id="anesi_info">anesi 기본정보</p></div>
+       <div class="pt_title"><p id="anesi_info">ANESI 기본정보</p></div>
        <div class="내용">
            <div>
           	<span class="content_bold" >상호명</span>
@@ -172,9 +190,10 @@
 	           <span>신한은행 110-409-609660</span>
 	           </div>
 	           <div>예금주 정선일</div>
+	           <div><a id="admin" href="admin/main.do">관리자 페이지>></a></div>
 	       </div>
 	   </div>
-	   
+   	 
 	   <div id="f_part5">
 	       <div class="pt_title"> SNS</div>
 	       <div class="내용">
@@ -197,6 +216,20 @@
 	   
 	   
    </div>
-    
+<a class="btn_gotop">
+	<img id="topbutton" src="../css/image/Main/topbutton.png">
+</a>
 </body>
 </html>
+<script>
+$(window).scroll(function(){
+	if ($(this).scrollTop() > 200){
+		$('.btn_gotop').show();
+	} else{
+		$('.btn_gotop').hide();
+	}
+});
+$('.btn_gotop').click(function(){
+	$('html, body').animate({scrollTop:0},400);
+});
+</script>

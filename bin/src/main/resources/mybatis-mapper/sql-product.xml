@@ -6,8 +6,9 @@
 	
 	<!-- 상품데이터 가져오는 쿼리 -->
 	<select id="selectProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
-		<!-- SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE -->
-		SELECT *
+		SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE, i.*
+		<!-- , csatAvg -->
+
 		FROM t3_tbl_product AS P
 		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
 		LEFT JOIN (
@@ -16,32 +17,33 @@
 		    WHERE DISCOUNT_YN = 'Y'
 		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
 		
-		INNER JOIN t3_tbl_product_image i
+		
+	<!-- 	JOIN (
+			SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
+			FROM t3_tbl_user_review R
+			JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
+		) AS R2 ON P.PRODUCT_NO = R2.PRODUCT_NO -->
+		
+		JOIN t3_tbl_product_image i
 			ON P.PRODUCT_NO = i.PRODUCT_NO
-		WHERE  i.THUMBNAIL_YN ='Y'
+			WHERE  i.THUMBNAIL_YN ='Y' 
 		
-		
-		
-	
 		
 		    <if test="categoryNo != '' and categoryNo != null">
 		       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
 		    </if>
 		
-		   
-	
-	
-		<if test="categoryOrderBar!='' and categoryOrderBar !=null">
+		<if test="optionList!='' and optionList !=null">
 			<!-- 가격낮은순정렬-->
-			<if test='categoryOrderBar=="LowestPrice"'>
+			<if test='optionList=="LowestPrice"'>
 				ORDER BY P.PRODUCT_PRICE ASC
 			</if>
 			<!-- 가격높은순정렬-->
-			<if test='categoryOrderBar=="HighestPrice"'>
+			<if test='optionList=="HighestPrice"'>
 				ORDER BY P.PRODUCT_PRICE DESC
 			</if>
 			<!-- 최신순정렬-->
-			<if test='categoryOrderBar=="NewArrival"'>
+			<if test='optionList=="NewArrival"'>
 				ORDER BY P.CDATETIME DESC			
 			</if>
 		</if>
@@ -72,13 +74,6 @@
 		FROM t3_tbl_product 
 		WHERE PRODUCT_NO= #{productNo}
 	</select>
-	<!-- 상품 리뷰 평점 -->
-	<select id="selectCsatAvg" parameterType="hashmap" resultType="com.example.anesi.model.Product">
-		SELECT AVG(r.CSAT) AS csatAvg , COUNT(*) AS csatCnt
-		FROM t3_tbl_product p
-		INNER JOIN t3_tbl_user_review r ON p.PRODUCT_NO = r.PRODUCT_NO
-		WHERE p.PRODUCT_NO= #{productNo}
-	</select>
 	<!-- 상품 옵션 정보 -->
 	<select id="selectOption" parameterType="hashmap" resultType="com.example.anesi.model.Product">
 		SELECT o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO
@@ -96,43 +91,180 @@
 	<select id="selectcontentImg" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
 		SELECT *
 		FROM t3_tbl_product_image
-		WHERE PRODUCT_NO = #{productNo} AND (THUMBNAIL_YN = 'N' OR THUMBNAIL_YN = 'Y')
+		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'N'
 	</select>
 	<!-- 상품 상세 이미지 -->
 	<select id="selectcontentImg2" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
 		SELECT *
 		FROM t3_tbl_product_image
 		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'D'
-	</select> 
-	
-	
+	</select>  
 	<!-- 장바구니 등록 -->
 	<insert id="insertCartUser" parameterType="hashmap">
 		INSERT INTO t3_tbl_user_cart 
-		(USER_NO, PRODUCT_NO, CNT)
-		VALUES (#{userNo}, #{productNo}, 0)
+		(USER_NO, PRODUCT_NO, OPTION_NO, CNT)
+		VALUES (#{userNo}, #{productNo}, 1, 1)
 	</insert>
-	<!-- 장바구니 카운트 -->
+	<!-- 장바구니 리스트불러오기-->
+	<select id="userCartList" parameterType="hashmap" resultType="com.example.anesi.model.Cart">
+		SELECT *
+		FROM t3_tbl_user_cart 
+		WHERE 1=1 
+		 <if test="userNo != '' and userNo != null">AND USER_NO = #{userNo}</if>
+       	 <if test="nonuserNo != '' and nonuserNo != null">AND NONUSER_NO = #{nonuserNo}</if>
+	</select>
 	
+	<!-- 장바구니 수량추가-->
+	<update id="updateCartCnt" parameterType="hashmap">
+	    UPDATE t3_tbl_user_cart
+	    SET
+	        CNT = CNT + 1
+	    WHERE PRODUCT_NO = #{productNo}
+	        <if test="userNo != '' and userNo != null">AND USER_NO = #{userNo}</if>
+	        <if test="nonuserNo != '' and nonuserNo != null">AND NONUSER_NO = #{nonuserNo}</if>
+	</update>
 	
 	<!-- 스크랩북 등록 -->
 	<insert id="insertScrapbook" parameterType="hashmap">
 		INSERT INTO t3_tbl_user_scrapbook 
 		(USER_NO, PRODUCT_NO, CNT)
+		
+		<if test="userNo!='' and userNo !=null">
 		VALUES (#{userNo}, #{productNo}, 1)
+		</if>
 	</insert>
-	
-	<select id="selectScrapbookCnt" parameterType="hashmap" resultType="int">
-		SELECT COUNT(*) AS CNT
+	<select id="selectScrapbookList" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
+		SELECT *
 		FROM t3_tbl_user_scrapbook 
-		WHERE USER_NO = #{userNo} AND PRODUCT_NO=#{productNo}
+		WHERE USER_NO = #{userNo}
 	</select>
 	
+	<!-- 스크랩북 삭제 -->
+	<delete id="deleteScrapbook" parameterType="hashmap">
+		DELETE FROM t3_tbl_user_scrapbook 
+		WHERE USER_NO=#{userNo} AND PRODUCT_NO = #{productNo} AND CNT>=1
+	</delete>
 
+	<!--장바구니 삭제-->
+	<delete id="deleteCartlist" parameterType="hashmap">
+		 DELETE FROM t3_tbl_user_cart
+		 WHERE PRODUCT_NO = #{productNo} AND USER_NO = #{userNo}
+	</delete>
+	<!--장바구니 모두삭제-->
+	<delete id="deleteAllCartItems" parameterType="hashmap">
+		 DELETE FROM t3_tbl_user_cart
+		 WHERE USER_NO = #{userNo}
+	</delete>
+
+	<select id="selectCartList" parameterType="int" resultType="com.example.anesi.model.Product">
+	    SELECT
+	        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
+	        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO
+	    FROM
+	        t3_tbl_product product
+	    INNER JOIN
+	        t3_tbl_product_image image ON product.PRODUCT_NO = image.PRODUCT_NO
+	    INNER JOIN 
+	        t3_tbl_user_cart cart ON cart.PRODUCT_NO = product.PRODUCT_NO
+	    INNER JOIN
+	        t3_tbl_user user ON user.USER_NO = cart.USER_NO
+	    INNER JOIN 
+	        t3_tbl_product_option o ON product.PRODUCT_NO = o.PRODUCT_NO
+	    WHERE
+	        user.USER_NO = #{userNo} AND image.THUMBNAIL_YN = 'Y'
+	</select>
 	
+	<!-- 비회원 장바구니 등록 -->
+	<insert id="nonUserCartInsert" parameterType="hashmap" >
+		INSERT INTO t3_tbl_user_cart 
+		(PRODUCT_NO,  OPTION_NO, NONUSER_NO, CNT)
+		VALUES
+		(#{productNo} , 1, #{nonuserNo}, 1)
+	</insert>
+ 
+ <select id="searchProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+    SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE, i.*
+    FROM t3_tbl_product AS P
+    JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
+    LEFT JOIN (
+        SELECT PRODUCT_NO, PRODUCT_PRICE * (100 - DISCOUNT) / 100 AS DISCOUNT_PRICE
+        FROM t3_tbl_product
+        WHERE DISCOUNT_YN = 'Y'
+    ) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
+    INNER JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
+    <where>
+        <if test="productName != null and productName != ''">
+            AND P.PRODUCT_NAME LIKE CONCAT('%', #{productName}, '%')
+        </if>
+    </where>
+		
+	</select>
+ 
+ <select id="searchBarProductList" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+    SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE, i.*
+    FROM t3_tbl_product AS P
+    JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
+    LEFT JOIN (
+        SELECT PRODUCT_NO, PRODUCT_PRICE * (100 - DISCOUNT) / 100 AS DISCOUNT_PRICE
+        FROM t3_tbl_product
+        WHERE DISCOUNT_YN = 'Y'
+    ) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
+    INNER JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
+    <where>
+    	AND i.THUMBNAIL_YN = 'Y'
+        <if test="productNo != null and productNo != ''">
+            AND P.PRODUCT_NO = #{productNo}
+        </if>
+        <if test="productName != null and productName != ''">
+            AND P.PRODUCT_NAME LIKE CONCAT('%', #{productName}, '%')
+        </if>
+    </where>  
+</select>
+ 
+	
+<!-- 	<update id="nonUserToUser">
+		UPDATE t3_tbl_user_cart
+		SET USER_NO = #{userNo} WHERE NON_USER = 965452
+	</update>
+  -->
+		<insert id="insertPorduct" parameterType="hashmap">
+		INSERT INTO t3_tbl_product (
+		  PRODUCT_NAME,
+		  PRODUCT_PRICE,
+		  DISCOUNT,
+		  DISCOUNT_YN,
+		  CATEGORY_NO,
+		  MANUFACTURER,
+		  COUNTRY
+		) VALUES (
+		#{productName},
+		#{productPrices},
+		#{discount},
+		#{discountYn},
+		#{category},
+		#{manufacturer},
+		#{country}
+		);
+	</insert>
+		
+	 <select id="insertSelectPorduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+	 	SELECT *
+	 	FROM t3_tbl_product
+	 	WHERE CATEGORY_NO = #{category} AND PRODUCT_NAME = #{productName} AND MANUFACTURER = #{manufacturer} AND PRODUCT_PRICE = #{productPrices}
+	 </select>
+	 
+	 <insert id="insertOption" parameterType="hashmap">
+	 	INSERT INTO t3_tbl_product_option(PRODUCT_NO, PRODUCT_STOCK, OPTION_PRICE, OPTION_NAME)
+	 	VALUES(#{productNo}, #{productStock}, #{optionPrice}, #{optionName})
+	 </insert>
+	 
+	 <select id="selectLatest" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+    SELECT *
+    FROM t3_tbl_product_image
+    WHERE PRODUCT_NO = #{productNo}
+</select>
 </mapper>
 
-	
 	
 	
 	
