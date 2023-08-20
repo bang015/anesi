@@ -12,6 +12,7 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/inquiry.css" rel="stylesheet">
 <link href="../css/review.css" rel="stylesheet">
+<link href="../css/login.css" rel="stylesheet">
 <link href="../css/productView.css" rel="stylesheet">
 <meta charset="EUC-KR">
 <title>상품 상세 페이지</title>
@@ -448,6 +449,37 @@
 									</template>
 							</div>
 						</div>
+						<div class="modal" v-if="showScrapModal3">
+							<div class="container">
+							<div class="review-back">
+								<button @click="closeScrapModal3()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
+							</div>
+								<div class="content1">
+									<div class="logo2">
+										<a href="main.do"><img alt="logo" src="../css/image/footer_img.png" ></a>
+									</div>
+									<div class="login-wrap">
+										<div class="login-title">
+											<span class="title1">로그인</span>
+										</div>
+										<div class="login-box"> <!-- 로그인 입력 박스 -->
+											<input class="login-input" v-model="userEmail" placeholder="이메일" @keyup.enter="fnLogin">
+											<input class="login-input" type="password" v-model="pwd" placeholder="패스워드" @keyup.enter="fnLogin">
+										</div>
+										<div class="login-btn">
+											<button class="loginBtn btn" @click="fnLogin">로그인</button>
+										</div>
+									</div>
+									<div class="a-wrap"> <!-- 기타등등 -->
+										<a href="/selectEmail.do" class="a a1">아이디찾기</a>
+										<a href="/join.do" class="a a2">회원가입</a>
+									</div>
+									<div class="non-user-wrap1"> <!-- 비회원 주문 조회 -->
+										<button class="loginBtn1 btn" @click="">비회원 구매하기</button>
+									</div>
+								</div>
+							</div>		
+						</div>
 						<div class="recently-viewed">
       						최근본 상품
 						</div>
@@ -467,6 +499,8 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		userEmail : "",
+		pwd : "",
 		inquirySelectClass : 'option-select-box',
 		inquiryTextareaClass : 'inquiry-add-text',
 		inquiryTitleClass : 'inquiry-title',
@@ -523,6 +557,7 @@ var app = new Vue({
 		cnt1 : 0,
 		showScrapModal : false,
 		showScrapModal2 : false,
+		showScrapModal3 : false,
 		/* 그래프 시작 */
 		series: [{
             data : []
@@ -564,6 +599,24 @@ var app = new Vue({
 	    },
 	  },
 	methods : {
+		fnLogin : function(){
+            var self = this;
+            var nparmap = {userEmail : self.userEmail, pwd : self.pwd};
+            
+            $.ajax({
+                url : "../login.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {                
+               		if(data.success){                		
+               			location.reload();	                	
+                   	} else {	
+                   		alert(data.message);
+                   	}
+                }                
+            }); 
+        },
 		
 		fnGetList : function(){
 			 var self = this;
@@ -954,9 +1007,14 @@ var app = new Vue({
 			 if(self.selectedOptions.length == 0){
 				 alert("상품을 선택해주세요.");
 				 return;
-			 }else{
-				 $.pageChange("../order/main.do" , {product : self.selectedOptions});
 			 }
+			 if(self.userNo==null || self.userNo==""){
+				 self.showScrapModal3 = true;
+				 return;
+			 }
+			if(self.selectedOptions.length > 0 && (self.userNo !=null || self.userNo !="")){
+				 $.pageChange("../order/main.do" , {product : self.selectedOptions});
+			 } 
 			},
 		clickImg : function(imgPath,imgName){
 			var self = this
@@ -984,6 +1042,11 @@ var app = new Vue({
 		closeScrapModal2: function() {
 			var self = this;
 			self.showScrapModal2 = false;
+			},
+		closeScrapModal3: function() {
+			var self = this;
+			self.showScrapModal3 = false;
+			
 			},
 		starClass(index) {
 			 const rating = this.hoveringRating || this.selectedRating;
