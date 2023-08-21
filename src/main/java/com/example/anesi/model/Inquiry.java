@@ -11,6 +11,27 @@ public class Inquiry {
 	private String nick;
 	private String purchaseYn;
 	private int cnt;
+	private String udatetime;
+	private String productNo;
+	private String userEmail;
+	private String productName;
+	private int enquiryNo;
+	
+	public int getEnquiryNo() {
+		return enquiryNo;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public String getUdatetime() {
+		return udatetime;
+	}
+	public String getProductNo() {
+		return productNo;
+	}
+	public String getUserEmail() {
+		return userEmail;
+	}
 	public int getCnt() {
 		return cnt;
 	}

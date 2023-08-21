@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.AdminMapper;
+import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.UserOrder;
 
@@ -74,6 +75,18 @@ public class AdminServiceImpl implements AdminService {
 	public List<UserOrder> searchSearchList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return adminMapper.selectSearchList(map);
+	}
+
+	@Override
+	public List<Inquiry> searchAdminInquiriesList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectAdminInquiryList(map);
+	}
+
+	@Override
+	public int editAdminInquiry(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.updateAdminInquiry(map);
 	}
 	
 	

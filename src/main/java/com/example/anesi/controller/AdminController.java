@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.UserOrder;
 import com.example.anesi.service.AdminService;
@@ -47,6 +48,12 @@ public class AdminController {
 	@RequestMapping("/admin/add.do") 
 	public String login(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		return "/product_add";
+		
+	}
+	
+	@RequestMapping("/admin/inquiry.do") 
+	public String review(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/admin_inquiry";
 		
 	}
 	//상품 전체 조회
@@ -142,6 +149,23 @@ public class AdminController {
 	public String searchList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<UserOrder> list = adminService.searchSearchList(map);
 		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//문의 내용 검색
+	@RequestMapping(value = "/admin/searchInquiryList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchInquiryList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Inquiry> list = adminService.searchAdminInquiriesList(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//문의 답변
+	@RequestMapping(value = "/admin/editInquiry.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editInquiry(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		adminService.editAdminInquiry(map);
 		return new Gson().toJson(resultMap);
 	}
 }

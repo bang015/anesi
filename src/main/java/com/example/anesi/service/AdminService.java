@@ -3,6 +3,7 @@ package com.example.anesi.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.UserOrder;
 
@@ -18,4 +19,6 @@ public interface AdminService {
 	List<UserOrder> selectDeliveryList(HashMap<String, Object> map);
 	int editDelivery(HashMap<String, Object> map);
 	List<UserOrder> searchSearchList(HashMap<String, Object> map);
+	List<Inquiry> searchAdminInquiriesList(HashMap<String, Object> map);
+	int editAdminInquiry(HashMap<String, Object> map);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.UserOrder;
 
@@ -30,4 +31,9 @@ public interface AdminMapper {
 	int updateDelivery(HashMap<String, Object> map);
 	//배송 검색
 	List<UserOrder> selectSearchList(HashMap<String, Object> map);
+	// 문의 내역 조회
+	List<Inquiry> selectAdminInquiryList(HashMap<String, Object> map);
+	// 답변 등록
+	int updateAdminInquiry(HashMap<String, Object> map);
+
 }

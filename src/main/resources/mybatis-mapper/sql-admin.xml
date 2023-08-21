@@ -103,4 +103,21 @@
 				</when>
 			</choose>
 	</select>
+	
+	<select id="selectAdminInquiryList" parameterType="hashmap" resultType="com.example.anesi.model.Inquiry">
+		SELECT i.*, u.USER_EMAIL, p.PRODUCT_NAME
+		FROM t3_tbl_user_inquiry i
+		INNER JOIN t3_tbl_user u
+			ON i.USER_NO = u.USER_NO
+		INNER JOIN t3_tbl_product p
+			ON i.PRODUCT_NO = p.PRODUCT_NO
+	</select>
+	
+	<update id="updateAdminInquiry" parameterType="hashmap">
+		UPDATE t3_tbl_user_inquiry
+			SET
+			REPLY = #{reply},
+			UDATETIME = now()
+		WHERE ENQUIRY_NO = #{enquiryNo}			
+	</update>
 </mapper>
