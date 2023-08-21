@@ -3,12 +3,10 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.example.anesi.mapper.ProductMapper">
-	
-	<!-- 상품데이터 가져오는 쿼리 -->
+		<!-- 상품데이터 가져오는 쿼리 -->
 	<select id="selectProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
 		SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE, i.*
 		<!-- , csatAvg -->
-
 		FROM t3_tbl_product AS P
 		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
 		LEFT JOIN (
@@ -16,40 +14,65 @@
 		    FROM t3_tbl_product
 		    WHERE DISCOUNT_YN = 'Y'
 		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
-		
-		
-	<!-- 	JOIN (
+		JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
+		<!--JOIN (
 			SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
 			FROM t3_tbl_user_review R
 			JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
 		) AS R2 ON P.PRODUCT_NO = R2.PRODUCT_NO -->
-		
-		JOIN t3_tbl_product_image i
-			ON P.PRODUCT_NO = i.PRODUCT_NO
-			WHERE  i.THUMBNAIL_YN ='Y'
-			AND P.DELETE_YN = 'N' 
-		
-		
-		    <if test="categoryNo != '' and categoryNo != null">
-		       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
-		    </if>
-		<if test="optionList!='' and optionList !=null">
-			<!-- 가격낮은순정렬-->
-			<if test='optionList=="LowestPrice"'>
-				ORDER BY P.PRODUCT_PRICE ASC
-			</if>
-			<!-- 가격높은순정렬-->
-			<if test='optionList=="HighestPrice"'>
-				ORDER BY P.PRODUCT_PRICE DESC
-			</if>
-			<!-- 최신순정렬-->
-			<if test='optionList=="NewArrival"'>
-				ORDER BY P.CDATETIME DESC			
-			</if>
-		</if>
-		
+		WHERE  i.THUMBNAIL_YN ='Y'
+		  	   AND P.DELETE_YN = 'N' 
+			    <if test="categoryNo != '' and categoryNo != null">
+			       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
+			    </if>
+	     <choose>
+            <when test="order == 1">
+                ORDER BY P.PRODUCT_PRICE ASC
+            </when>
+            <when test="order == 2">
+                ORDER BY P.PRODUCT_PRICE DESC
+            </when>
+            <when test="order == 3">
+                ORDER BY P.CDATETIME DESC
+            </when>
+            <otherwise>
+                <!-- 기본 정렬 -->
+                ORDER BY P.PRODUCT_NO DESC
+            </otherwise>
+        </choose>
+				LIMIT #{startNum}, #{lastNum}
 	</select>
 	
+	<select resultType="int" id="selectCnt" parameterType="hashmap">
+		SELECT COUNT(*) FROM t3_tbl_product AS P
+		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
+		LEFT JOIN (
+		    SELECT PRODUCT_NO, PRODUCT_PRICE * (100 - DISCOUNT) / 100 AS DISCOUNT_PRICE
+		    FROM t3_tbl_product
+		    WHERE DISCOUNT_YN = 'Y'
+		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
+		JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
+		WHERE  i.THUMBNAIL_YN ='Y'
+		  	   AND P.DELETE_YN = 'N'
+	    <if test="categoryNo != '' and categoryNo != null">
+	       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
+	    </if>
+	     <choose>
+            <when test="order == 1">
+                ORDER BY P.PRODUCT_PRICE ASC
+            </when>
+            <when test="order == 2">
+                ORDER BY P.PRODUCT_PRICE DESC
+            </when>
+            <when test="order == 3">
+                ORDER BY P.CDATETIME DESC
+            </when>
+            <otherwise>
+                <!-- 기본 정렬 -->
+                ORDER BY P.PRODUCT_NO DESC
+            </otherwise>
+        </choose>
+	</select>
 	
 	
 	<select id="selectCategoryList" parameterType="hashmap" resultType="com.example.anesi.model.Category">
@@ -162,7 +185,7 @@
 	<select id="selectCartList" parameterType="int" resultType="com.example.anesi.model.Product">
 	    SELECT
 	        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
-	        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO ,product.DISCOUNT , product.DISCOUNT_YN
+	        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO
 	    FROM
 	        t3_tbl_product product
 	    INNER JOIN
@@ -265,13 +288,6 @@
     SELECT *
     FROM t3_tbl_product_image
     WHERE PRODUCT_NO = #{productNo}
-</select>
-
-<!-- 카테고리 출력 -->
-	 <select id="selectCate" parameterType="hashmap" resultType="com.example.anesi.model.Category">
-    SELECT *
-    FROM t3_tbl_product_category
-    WHERE CATEGORY_NAME = #{categoryName}
 </select>
 <!-- 장바구니 구매버튼 -->
 

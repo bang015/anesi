@@ -118,7 +118,7 @@
 	<!-- 이미지를 포함 모든 링크는 href="javascript:;"-->
 	
 	<hr id="footer_hr">
-	<a href="../main.do"">
+	<a href="../main.do">
     <img id="f_img" src="../css/image/anesilogo.png" >
     </a>
     <div id="f_part1">

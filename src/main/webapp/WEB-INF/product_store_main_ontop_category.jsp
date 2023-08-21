@@ -160,7 +160,7 @@ var app = new Vue({
 		fnGetList : function(){
             var self = this;
             var nparmap = {categoryOrderBar : self.categoryOrderBar};
-            $.ajax({
+            /* $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
                 type : "POST", 
@@ -169,7 +169,7 @@ var app = new Vue({
                 	console.log(data);
                 	self.list = data.list;
                 }
-            }); 
+            });  */
 		},
 		
 

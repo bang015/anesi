@@ -63,13 +63,18 @@ public class StoreController {
 	@ResponseBody
 	public String storeMain(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Product> list = storeService.searchProduct(map);
-		resultMap.put("list", list);
+//		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		System.out.println(map);
+		int startNum =  Integer.parseInt(String.valueOf(map.get("startNum")));
+		int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+		map.put("startNum", startNum);
+		map.put("lastNum", lastNum);
+		
+		
+		HashMap<String, Object>  resultMap = storeService.searchProduct(map);
+//		resultMap.put("list", list);
 		List<Category> list2 = storeService.searchCategoryList();
-		resultMap.put("list2", list2);
-		
-		
+//		resultMap.put("list2", list2);
 		return new Gson().toJson(resultMap);
 	}
 	

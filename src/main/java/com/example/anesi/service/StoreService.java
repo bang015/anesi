@@ -11,8 +11,10 @@ import com.example.anesi.model.Scrapbook;
 
 
 public interface StoreService {
+	//상품리스트조회
+	HashMap<String, Object> searchProduct (HashMap<String, Object> map);
 	
-	List<Product> searchProduct (HashMap<String, Object> map);
+	
 	List<Category> searchCategoryList();
 	//회원 상품 장바구니에 추가
 	int addCartUser(HashMap<String, Object> map);

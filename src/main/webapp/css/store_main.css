@@ -12,6 +12,12 @@
      display: inline-block;
      margin-left: 10px; /* 추가: 왼쪽 여백 설정 */
 }
+
+#store_main_cont{
+	width: 1300px;
+	height: 1550px;
+	margin-bottom: 50px;
+}
 /*섬네일이미지*/
 .production-item-thumnail__image{
 	width:250px;
@@ -297,4 +303,38 @@
 .selectBox2 .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
 .selectBox2 .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}
 
+.pagination {
+        display: inline-flex;
+        margin-top: 0px;
+        margin-left: 400px;
+    }
+.pagination li {
+    min-width:32px;
+    padding:2px 6px;
+    text-align:center;
+    margin:0 3px;
+    border-radius: 6px;
+    border:1px solid #eee;
+    color:#666;
+    display : inline;
+}
+.pagination li:hover {
+    background: #E4DBD6;
+}
+.page-item a {
+    color:#666;
+    text-decoration: none;
+    padding: 4px 12px ;
+}
+.pagination li.active {
+    background-color : #A782C3;
+    color:#fff;
+}
+.pagination li.active a {
+    color:#fff;
+    
+}
+.pagination a{
+	padding: 4px 12px ;
+}
 

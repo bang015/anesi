@@ -30,6 +30,10 @@ public class Product {
 		
 		private int stock;
 		
+		//페이징인덱스
+		private int idx;
+
+		
 	
 		
 		
@@ -233,6 +237,14 @@ public class Product {
 
 		public int getStock() {
 			return stock;
+		}
+
+		public int getIdx() {
+			return idx;
+		}
+
+		public void setIdx(int idx) {
+			this.idx = idx;
 		}
 
 	

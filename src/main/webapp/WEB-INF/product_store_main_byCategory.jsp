@@ -5,13 +5,17 @@
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<!--페이징-->
+<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+	integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link href="../css/mainCss.css" rel="stylesheet">
-<link href="../css/login.css" rel="stylesheet">
-
-<!-- 스토어 메인 CSS-->
 <link href="../css/store_main.css" rel="stylesheet">
+<link href="../css/login.css" rel="stylesheet">
 
 <meta charset="EUC-KR">
 <title>카테고리별 상품메인페이지</title>
@@ -23,28 +27,18 @@
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
 
-  <div class="flex-container">
-      <span class="main-category__title"></span>
-    
-     <div class="selectBox2 ">
-		  <button class="label">정렬</button>
-		  <ul class="optionList">
-		    <li value="LowestPrice"class="optionItem" >가격낮은순</li>
-		    <li value="HighestPrice" class="optionItem">가격높은순</li>
-		    <li value="NewArrival" class="optionItem">최신순</li>
-		    
-		    <li class="optionItem">--아직못함↓--</li>
-            <li value="HighestPurchase" class="optionItem">구매높은순</li>
-            <li value="HighestScrap" class="optionItem">스크랩많은순</li>
-            <li value="ManyReview" class="optionItem" >리뷰많은순</li>
-		  </ul>
-		</div>
-	 </div>
-	   
-
-
-
-	<div id="store_main_byCategory">
+<div id="store_main_byCategory">
+		<div id="store_main_cont">
+			<div class="flex-container">
+				<span class="main-category__title">전체상품</span>
+				
+		 			<div class="selectBox2" @mouseover="showOptions" @mouseleave="hideOptions" :class="{ active: optionsVisible }">
+				      <button class="label">{{ selectedOption }}</button>
+				      <ul class="optionList">
+				        <li v-for="(option, index) in options" :key="index" class="optionItem" @click="handleSelect(option.value)">{{ option.text }}</li>
+				      </ul>
+				    </div>		
+			</div>
 		<div class="production-item__content" v-for="item in list" >
 			<div class="production-item-header"  @click="fnProductView(item.productNo)">
 	            <a  class="production-item-thumnail">
@@ -99,6 +93,15 @@
                 <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
             </a>
     	    </div> <!-- class="production-item__content" 끝-->
+    	    
+    	    </div><!-- store_main_cont 끝-->
+			<!-- 페이징 -->
+			<template>
+				<paginate :page-count="pageCount" :page-range="3" :margin-pages="2"
+					:click-handler="fnSearch" :prev-text="'<'" :next-text="'>'"
+					:container-class="'pagination'" :page-class="'page-item'">
+				</paginate>
+			</template>
 	    
 	    
     	<div class="modal" v-if="showCartModal" >
@@ -148,7 +151,7 @@
 		<div class="modal" v-if="showScrapModal3">
               <div class="container">
 	              <div class="review-back">
-	                 <button @click="closeScrapModal3"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
+	                 <button @click="closeModal"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
 	              </div>
                  <div class="content1">
                     <div class="logo2">
@@ -186,29 +189,8 @@
 </body>
 </html>
 <script>
-
-/* 화살표 함수 */
-const label = document.querySelector('.label');
-const options = document.querySelectorAll('.optionItem');
-
-// 클릭한 옵션의 텍스트를 라벨 안에 넣음
-const handleSelect = (item) => {
-  label.parentNode.classList.remove('active');
-  label.innerHTML = item.textContent;
-}
-// 옵션 클릭시 클릭한 옵션을 넘김
-options.forEach(option => {
-	option.addEventListener('click', () => handleSelect(option))
-})
-
-// 라벨을 클릭시 옵션 목록이 열림/닫힘
-label.addEventListener('click', () => {
-  if(label.parentNode.classList.contains('active')) {
-  	label.parentNode.classList.remove('active');
-  } else {
-  	label.parentNode.classList.add('active');
-  }
-})
+<!--페이징 -->
+Vue.component('paginate', VuejsPaginate)
 var app = new Vue({
 	el : '#store_main_byCategory',
 	data : {
@@ -232,16 +214,35 @@ var app = new Vue({
 		nonuserNo : "",
 		userEmail : "",
         pwd : "",
-        showScrapModal3 : false
+        showScrapModal3 : false,
+        <!-- 페이징 -->
+		selectPage: 1,
+		pageCount: 1,
+		cnt : 0,
+		
+		optionList : [],
+		selectedOption: '정렬',
+	    options: [
+	      { text: '낮은가격순', value: '1' },
+	      { text: '높은가격순', value: '2' },
+	      { text: '최신순', value: '3' },
+	    ],
+	    optionsVisible: false,
+	    order : ""
 
 	},// data
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar, 
-		            		categoryNo : self.categoryNo, 
-		            		categoryName : self.categoryName,
-		            		productNo : self.productNo};
+            <!-- 페이징 -->
+			var startNum = ((self.selectPage-1) * 12);
+    		var lastNum = 12;
+            var nparmap = { order : self.order,
+    						productNo : self.productNo,
+            				categoryNo : self.categoryNo, 
+            				startNum : startNum, 
+            				lastNum : lastNum};
+            console.log(nparmap);
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
@@ -250,15 +251,31 @@ var app = new Vue({
                 success : function(data) { 
                 	self.list = data.list;
                 	self.list2 = data.list2;
-                	console.log(self.list2.categoryNo);
+                	self.cnt = data.cnt;
+	                self.pageCount = Math.ceil(self.cnt / 12);
                 }
             }); 
 		},
-	     fnOrderBy: function (orderBy) {
-            var self = this;
-            self.categoryOrderBar = orderBy; // 카테고리 정렬값 설
-            self.fnGetList(); // AJAX 요청 보내기
-	     },
+		
+		fnSearch : function(pageNum){
+			var self = this;
+			self.selectPage = pageNum; 
+			var startNum = ((pageNum-1) * 12);
+			var lastNum = 12;
+			var nparmap = {startNum : startNum, lastNum : lastNum};
+		 $.ajax({
+                url : "/product/store_main.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+					self.list = data.list;
+					self.cnt = data.cnt;
+					self.pageCount = Math.ceil(self.cnt / 12);
+				}
+			});
+		},
+	
 	     formatPrice: function(price) {
 	            // 100의 자리까지 내림하여 표시하며 천 단위마다 쉼표(,)를 추가합니다.
 	            const truncatedPrice = Math.floor(price / 100) * 100;
@@ -288,11 +305,8 @@ var app = new Vue({
 	      this.showScrapModal = false;
 	      this.showScrapModalBan = false;
 	      this.showScrapDeleteModal = false;
+    	  this.showScrapModal3 = false;
 	      location.reload();
-	    },
-	    closeScrapModal3 : function(){
-	    	this.showScrapModal3 = false;
-	        location.reload();
 	    },
 	    //모달에서 페이지이동 함수
 	    fnMoveCart : function() {
@@ -465,6 +479,20 @@ var app = new Vue({
                       }
                 }                
             }); 
+        },
+        
+        handleSelect(value) {
+	          this.selectedOption = value ? this.options.find(option => option.value === value).text : '정렬';
+	          this.optionsVisible = false;
+	          this.order = value;
+	          this.fnGetList();
+    	},
+      
+        showOptions() {
+          this.optionsVisible = true;
+        },
+        hideOptions() {
+         this.optionsVisible = false;
         },
 
      }, // methods
