@@ -50,6 +50,7 @@ var recentProductsApp = new Vue({
 			  products.forEach(product => product.hover = false);
 			  return products;
 			},
+		
     fnProductView : function(productNo){
       var self = this;
         

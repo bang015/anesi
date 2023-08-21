@@ -26,13 +26,13 @@
 		
 		JOIN t3_tbl_product_image i
 			ON P.PRODUCT_NO = i.PRODUCT_NO
-			WHERE  i.THUMBNAIL_YN ='Y' 
+			WHERE  i.THUMBNAIL_YN ='Y'
+			AND P.DELETE_YN = 'N' 
 		
 		
 		    <if test="categoryNo != '' and categoryNo != null">
 		       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
 		    </if>
-		
 		<if test="optionList!='' and optionList !=null">
 			<!-- 가격낮은순정렬-->
 			<if test='optionList=="LowestPrice"'>

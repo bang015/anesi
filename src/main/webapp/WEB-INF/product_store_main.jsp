@@ -41,7 +41,7 @@ Copy code
 	   
     <div id="store_main">
         <div class="production-item__content" v-for="item in list">
-            <div class="production-item-header" @click="fnProductView(item.productNo)">
+            <div class="production-item-header" @click="addRecentProduct(item)">
 		             <a class="production-item-thumnail">
 		                <div class="production-item-thumnail__overlay"></div>
 		                <img class="production-item-thumnail__image " alt="썸네일" :src="item.imgPath + '/' + item.imgName">
@@ -418,7 +418,26 @@ var app = new Vue({
 	    	var self = this;
 	    	   $.pageChange("/product/view.do",{no : productNo});//보낼필요없을때 파라미터 빈값으로{}
 		},
-		
+		addRecentProduct(item) {
+		      const recentProductKey = 'recentProducts';
+
+		      // 기존에 저장된 최근 본 상품 목록을 가져옵니다.
+		      const existingProducts = JSON.parse(localStorage.getItem(recentProductKey) || '[]');
+		      // 중복된 상품이 있는지 체크합니다.
+		      const isDuplicate = existingProducts.some(existingProduct => existingProduct.productNo === item.productNo);
+		      if (!isDuplicate) {
+		        // 새로운 상품을 배열 앞에 추가합니다.
+		        existingProducts.unshift(item);
+		        // 상위 N개의 상품만 유지하려면 아래 라인을 추가할 수 있습니다.
+		         const updatedProducts = existingProducts.slice(0, 5);
+
+		        // 로컬 스토리지에 저장합니다.
+		        localStorage.setItem(recentProductKey, JSON.stringify(updatedProducts));
+		      }
+
+		      // 페이지 전환을 처리합니다.
+		      this.fnProductView(item.productNo);
+		    },
 		//비회원 번호 쿠키불러오는 애 
 		fnaaa : function(item){
 			var self = this;
