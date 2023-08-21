@@ -101,6 +101,13 @@ public class UserController {
 
 		return "/my_board";
     }
+
+	// 나의 게시글
+	@RequestMapping("mypage/myReview.do") 
+    public String myReview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/myReview";
+    }
 	
 	// 회원가입
 	@RequestMapping(value = "/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -225,7 +232,7 @@ public class UserController {
 		return new Gson().toJson(resultMap);
 	}
 	
-	//
+	//주문 내역 검색
 	@RequestMapping(value = "/mypage/searchOrderList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String searchOrderList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {

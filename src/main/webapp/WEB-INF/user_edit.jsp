@@ -176,8 +176,8 @@ img:hover{
 	<ul class="my_menu1">
 		<li class="my_li1"><a href="/mypage.do" class="my_a1">프로필</a></li>
 		<li class="my_li1"><a class="my_a1" href="http://localhost:8080/mypage/myShopping.do">나의 쇼핑</a></li>
-		<li class="my_li1"><a class="my_a1">나의 리뷰</a></li>
-		<li class="my_li1"><a class="my_a1_ch">설정 </a></li>
+		<li class="my_li1"><a class="my_a1" onclick="location.href='../mypage/myReview.do'">나의 리뷰</a></li>
+		<li class="my_li1"><a class="my_a1_ch" onclick="location.href='../mypage/user_edit.do'">설정 </a></li>
 	</ul>
 </div>
 <hr class="hrr">
