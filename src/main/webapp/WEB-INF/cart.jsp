@@ -31,13 +31,13 @@
         <p>{{ item.productPrice }}원</p>
 
         <div class="main-option">
-       <select class="option-box" v-model="item.option" @change="addToSelectedOptions">
-  <option value="">이걸 눌러야 값이 출력됩니다 </option>
-  <option v-for="(option, index) in item.options" :key="option.optionNo + index" :value="option.optionNo">
-    {{ option.optionName + " (+" + option.optionPrice + "원)" }}
-  </option>
-</select>
-        </div>
+  <select class="option-box" v-model="option1" @change="optionSelected">
+    <option disabled value="">옵션을 선택해주세요</option>
+    <option v-for="(item, index) in option" :key="item.optionNo + '-' + index" :value="item.optionNo">
+      {{ item.optionName }}
+    </option>
+  </select>
+</div>
 
    <button v-on:click="goToPurchasePage(cartItems.map(item => item.productNo))">구매하기</button>
       </div>
@@ -130,42 +130,54 @@ new Vue({
     mounted() {
       this.loadCartList();
     },
+    
     methods: {
-        loadCartList() {
-            const self = this;
-            const userNo = '${sessionNo}';
+    	loadCartList() {
+    		  const self = this;
+    		  const userNo = '${sessionNo}';
 
-            if (userNo) {
-              $.ajax({
-                url: '/product/viewCartList.dox',
-                method: 'POST',
-                dataType: 'json',
-                data: { userNo: userNo },
-                success: function(response) {
-                  console.log(response);
-                  self.cartItems = response.list.map(item => ({
-                	    ...item,
-                	    mapProduct: item.productNo,  // 이 상품에 대한 mapProduct 속성을 추가합니다.
-                	  }));
-                  self.cartItems = response.list;
-                  response.list.forEach(function(item) {
-                    console.log('상품 번호: ' + item.productNo);
-                    console.log('상품 이름: ' + item.productName);
-                    
-                    // 각 상품마다 옵션들을 불러오기
-                    self.fnOption(item.productNo, function(options) {
-                      // 각 상품의 옵션을 추가
-                      item.options = [{ optionNo: '', optionName: '상품을 선택하세요.', optionPrice: 0 }].concat(options);
-                      // 옵션 배열에 해당 상품의 옵션들을 추가해준다.
-                      self.option = self.option.concat(options); 
-                    });
-                  });
-                }
-              });
-            } else {
-              alert('사용자 번호가 없습니다. 로그인 후 이용해주세요.');
-            }
-          },
+    		  if (userNo) {
+    		    $.ajax({
+    		      url: '/product/viewCartList.dox',
+    		      method: 'POST',
+    		      dataType: 'json',
+    		      data: { userNo: userNo },
+    		      success: function(response) {
+    		        console.log(response);
+
+    		        // 중복 상품 제거
+    		        const uniqueItemsMap = new Map();
+    		        response.list.forEach(item => {
+    		          if (!uniqueItemsMap.has(item.productNo)) {
+    		            uniqueItemsMap.set(item.productNo, item);
+    		          }
+    		        });
+    		        
+    		        const uniqueItems = Array.from(uniqueItemsMap.values());
+    		        self.cartItems = uniqueItems;
+
+    		        uniqueItems.forEach(function(item) {
+    		          console.log('상품 번호: ' + item.productNo);
+    		          console.log('상품 이름: ' + item.productName);
+
+    		          // 각 상품마다 옵션들을 불러오기
+    		          self.fnOption(item.productNo, function(options) {
+    		            // 각 상품의 옵션을 추가
+    		            item.options = [{ optionNo: '', optionName: '상품을 선택하세요.', optionPrice: 0 }].concat(options);
+    		            // 옵션 배열에 해당 상품의 옵션들을 추가해준다.
+    		            self.option = self.option.concat(options); 
+    		          });
+    		        });
+    		      }
+    		    });
+    		  } else {
+    		    alert('사용자 번호가 없습니다. 로그인 후 이용해주세요.');
+    		  }
+    		},
+          optionSelected() {
+        	    const selectedOption = this.option.find(item => item.optionNo === this.option1);
+        	    console.log(selectedOption);
+        	  },
       deleteItem(item) {
     	    const requestData = {
     	        productNo: item.productNo,
@@ -253,25 +265,31 @@ new Vue({
     	        alert('장바구니에 상품이 없습니다. 상품을 추가한 후 다시 시도해주세요.');
     	      }
     	    },
-        addToSelectedOptions() {
-            const selectedItem = this.option.find(item => item.optionNo === this.option1);
-            if (selectedItem) {
-              const existingOption = this.selectedOptions.find(opt => opt.optionNo === selectedItem.optionNo);
-              if (existingOption) {
-                existingOption.quantity++; // 이미 있는 상품의 수량 증가
-              } else {
-                // 옵션을 새로 추가
-                this.selectedOptions.push({
-                  productNo: item.productNo, // 상품 번호도 함께 저장
-                  optionNo: selectedItem.optionNo,
-                  optionName: selectedItem.optionName,
-                  quantity: 1
-                });
-              }
-              this.option1="";
-            }
-            console.log(this.selectedOptions);
-          },
+    	    
+    	    addToSelectedOptions(productNo) {
+    	    	  if (this.option1) {
+    	    	    const selectedItem = this.option.find(item => item.optionNo === this.option1);
+    	    	    if (selectedItem) {
+    	    	      const existingOption = this.selectedOptions.find(opt => opt.optionNo === selectedItem.optionNo);
+    	    	      if (existingOption) {
+    	    	        existingOption.quantity++; // 이미 있는 상품의 수량 증가
+    	    	      } else {
+    	    	        // 옵션을 새로 추가
+    	    	        this.selectedOptions.push({
+    	    	          productNo: productNo,
+    	    	          optionNo: selectedItem.optionNo,
+    	    	          optionName: selectedItem.optionName,
+    	    	          quantity: 1
+    	    	        });
+    	    	      }
+    	    	    } else {
+    	    	      console.error("옵션을 찾지 못했습니다.");
+    	    	    }
+    	    	    this.option1 = "";
+    	    	  } else {
+    	    	      console.error("선택한 옵션이 없습니다.");
+    	    	  }
+    	    	},
   	    fnOption: function(productNo, callback) {
   	      var self = this;
   	      var nparmap = { productNo: productNo };
