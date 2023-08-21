@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.anesi.mapper.AdminMapper;
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 
 @Service
@@ -87,6 +88,11 @@ public class AdminServiceImpl implements AdminService {
 	public int editAdminInquiry(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return adminMapper.updateAdminInquiry(map);
+	}
+	
+	@Override
+	public List<User> searchUserList(HashMap<String, Object> map) {
+		return adminMapper.selectUserList(map);
 	}
 	
 	

@@ -120,4 +120,11 @@
 			UDATETIME = now()
 		WHERE ENQUIRY_NO = #{enquiryNo}			
 	</update>
+	
+	<select id="selectUserList" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT *
+		FROM t3_tbl_user
+	</select>
+	
+	
 </mapper>

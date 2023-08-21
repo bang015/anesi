@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 import com.example.anesi.service.AdminService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -56,6 +57,13 @@ public class AdminController {
 		return "/admin_inquiry";
 		
 	}
+	
+	@RequestMapping("/admin/user.do") 
+	public String user(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/admin_user";
+		
+	}
+	
 	//상품 전체 조회
 	@RequestMapping(value = "/admin/productList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -166,6 +174,15 @@ public class AdminController {
 	@ResponseBody
 	public String editInquiry(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		adminService.editAdminInquiry(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//고객 전체 조회
+	@RequestMapping(value = "/admin/userList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String userList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<User> list = adminService.searchUserList(map);
+		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
 }

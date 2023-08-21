@@ -12,7 +12,7 @@
 <link href="../css/checkbox.css" rel="stylesheet">
 
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>상품등록</title>
 <style>
 </style>
 </head>
