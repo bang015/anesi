@@ -6,6 +6,7 @@
 	position: fixed;
 	right: 150px;
 	top: 400px;
+	padding-top: 15px;
 }
 .navi-item-thumnail__image{
 	width: 80px;
