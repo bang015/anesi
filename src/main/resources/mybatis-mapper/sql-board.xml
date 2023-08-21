@@ -94,6 +94,19 @@
 		WHERE BOARD_NO = #{bNo}
 	</select>
 	
+	<select id="selectBoardViewUser" parameterType="hashmap">
+		SELECT USER_NO
+		FROM t3_tbl_user
+		WHERE NICK = #{nick}
+	</select>
+	
+	<!-- 작성자 프로필 -->
+	<select id="selectProfileImg" parameterType="hashmap" resultType="com.example.anesi.model.Image">
+		SELECT *
+		FROM t3_tbl_profile_image
+		WHERE USER_NO = #{userNo}
+	</select>
+	
 	<!-- 조회수 업데이트 -->
 	<update id="updateViewCnt" parameterType="hashmap">
 		UPDATE t3_tbl_board
@@ -121,8 +134,8 @@
 	
 	<!-- 댓글 입력 -->
 	<insert id="insertComment" parameterType="hashmap">
-		INSERT INTO t3_tbl_board_comment(BOARD_NO, C_NICK, COMM)
-		VALUES(#{bNo}, #{nick}, #{content})
+		INSERT INTO t3_tbl_board_comment(BOARD_NO, C_NICK, C_USER_NO, COMM)
+		VALUES(#{bNo}, #{nick}, #{cUserNo}, #{content})
 	</insert>
 	
 	<!-- 댓글 리스트 -->

@@ -59,7 +59,11 @@ public class BoardServiceImpl implements BoardService{
 		//조회수 증가
 		boardMapper.updateViewCnt(map);
 		//게시글 상세보기
-		resultMap.put("info", boardMapper.selectBoardView(map));
+		Board info = boardMapper.selectBoardView(map);
+		resultMap.put("info", info);
+		//작성자 no
+		map.put("nick", info.getNick());
+		resultMap.put("userInfo", boardMapper.selectBoardViewUser(map));
 		return resultMap;
 	}
 	@Override

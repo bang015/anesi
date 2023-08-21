@@ -215,6 +215,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.profileImg = data.img;
+                	console.log(self.profileImg);
                 }
 			})
 		}

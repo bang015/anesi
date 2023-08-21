@@ -7,8 +7,6 @@ import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 
-
-
 public interface UserService {
 	//회원가입
 	int userJoin(HashMap<String, Object> map);

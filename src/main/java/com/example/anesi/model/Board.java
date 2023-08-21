@@ -15,6 +15,7 @@ public class Board {
 	private String cCDateTime;
 	private String cUDateTime;
 	private int commCnt;
+	private String cUserNo;
 	
 	
 	public int getCommentNo() {
@@ -100,6 +101,12 @@ public class Board {
 	}
 	public void setuDateTime(String uDateTime) {
 		this.uDateTime = uDateTime;
+	}
+	public String getcUserNo() {
+		return cUserNo;
+	}
+	public void setcUserNo(String cUserNo) {
+		this.cUserNo = cUserNo;
 	}
 
 }

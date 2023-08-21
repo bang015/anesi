@@ -8,7 +8,14 @@ public class BoardComment {
 	private String content;
 	private String cDateTime;
 	private String uDateTime;
+	private int cUserNo;
 	
+	public int getcUserNo() {
+		return cUserNo;
+	}
+	public void setcUserNo(int cUserNo) {
+		this.cUserNo = cUserNo;
+	}
 	public int getBoardNo() {
 		return boardNo;
 	}

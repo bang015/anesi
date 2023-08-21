@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.anesi.model.Board;
-import com.example.anesi.model.BoardComment;
+import com.example.anesi.model.User;
 
 @Mapper
 public interface BoardMapper {
@@ -28,6 +28,8 @@ public interface BoardMapper {
 	List<Board> boardBest(HashMap<String, Object> map);
 	// 게시글 보기
 	Board selectBoardView(HashMap<String, Object> map);
+	// 작성자 info
+	User selectBoardViewUser(HashMap<String, Object> map);
 	// 조회수 증가
 	int updateViewCnt(HashMap<String, Object> map);
 	// 게시글 삭제
