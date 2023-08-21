@@ -134,17 +134,28 @@
 
 	    console.log('sessionNo:', '<%= sessionNo %>');
 
-	    $(document).ready(function() {
-	    	  $(".subcategory-list > li > a").click(function() {
-	    	    // 클릭된 a 요소의 부모 li 요소와 그의 부모 li 요소인 대분류 a 요소에서 데이터를 가져옵니다.
-	    	    var $parent_li = $(this).closest("li");
-	    	    var $category_a = $parent_li.parents(".category-list > li").find("> a");
-	    	    var category_no = $category_a.data("category-no");
-	    	    var category_name = $category_a.data("category-name");
-	    	    var subcategory_name = $(this).text();
-	    	    loadSubcategoryProducts(category_no, category_name, subcategory_name);
-	    	  });
-	    	});
+		$(document).ready(function() {
+			  $(".subcategory-list > li > a").click(function() {
+			    // 클릭된 a 요소의 부모 li 요소와 그 부모의 대분류를 찾기 위한 코드
+			    var $parent_li = $(this).closest("li");
+			    var $category_a = $parent_li.parents(".category-list > li").find("> a");
+
+			    // 대분류 카테고리 번호와 이름을 찾기 위한 코드
+			    var category_no = $category_a.attr("onclick").match(/'(\d+)'/)[1];
+			    var category_name = $category_a.text();
+
+			    // 소분류 카테고리 이름
+			    var subcategory_name = $(this).text();
+
+			    // 클릭된 소분류 카테고리 정보 출력을 확인해 볼 수 있는 코드
+			    console.log("category_no:", category_no);
+			    console.log("category_name:", category_name);
+			    console.log("subcategory_name:", subcategory_name);
+
+			    // 이후 로직: 로드하는 상품이나 다른 작업 수행
+			    // 예시) loadSubcategoryProducts(category_no, category_name, subcategory_name);
+			  });
+			});
 	function saveRecentSearch(search) {
 		  if (!search) return;
 
@@ -279,6 +290,8 @@
 		        searchProduct(productName);
 		    }
 		});
+		
+		
 		function loadCategoryProducts(categoryName) {
 			  // 서버에서 카테고리별 상품 데이터를 가져오는 AJAX 요청
 			  $.ajax({
@@ -310,28 +323,14 @@
 			  });
 			}
 			
-		$(document).ready(function() {
-			  $(".subcategory-list > li > a").click(function() {
-			    // 클릭된 a 요소의 부모 li 요소와 그 부모의 대분류를 찾기 위한 코드
-			    var $parent_li = $(this).closest("li");
-			    var $category_a = $parent_li.parents(".category-list > li").find("> a");
-
-			    // 대분류 카테고리 번호와 이름을 찾기 위한 코드
-			    var category_no = $category_a.attr("onclick").match(/'(\d+)'/)[1];
-			    var category_name = $category_a.text();
-
-			    // 소분류 카테고리 이름
-			    var subcategory_name = $(this).text();
-
-			    // 클릭된 소분류 카테고리 정보 출력을 확인해 볼 수 있는 코드
-			    console.log("category_no:", category_no);
-			    console.log("category_name:", category_name);
-			    console.log("subcategory_name:", subcategory_name);
-
-			    // 이후 로직: 로드하는 상품이나 다른 작업 수행
-			    // 예시) loadSubcategoryProducts(category_no, category_name, subcategory_name);
+		  $(document).ready(function() {
+			    $('.category-link').on('click', function() {
+			      var categoryName = $(this).text();
+			      console.log('categoryName:', categoryName);
+			    });
 			  });
-			});
+		
+	
 		
 
 

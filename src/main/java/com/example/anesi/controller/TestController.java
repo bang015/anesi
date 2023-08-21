@@ -38,6 +38,11 @@ public class TestController {
 		return "/testNavi";
 	}
 	
+	@RequestMapping("testcate.do") 
+	public String testcate(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/testcate";
+	}
+	
 	
 	
 
