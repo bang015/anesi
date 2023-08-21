@@ -75,9 +75,11 @@ var app = new Vue({
             var nparmap = {userEmail : self.userEmail, pwd : self.pwd};
             if(self.userEmail == ""){
             	alert("이메일을 입력하세요.");
+            	return;
             }
             if(self.pwd == ""){
             	alert("비밀번호를 입력하세요.");
+            	return;
             }
             $.ajax({
                 url : "login.dox",

@@ -55,7 +55,8 @@
 								{{product.manufacturer}}
 							</div>
 							<div class="main-title" >
-								{{product.productName}}
+								<div>{{product.productName}}</div>
+								<div></div>
 							</div>
 							<div class="main-csat">
 								<div v-for="(rating, index) in csatAvg" :key="index">
@@ -339,7 +340,7 @@
 								<div class="modal" v-if="showScrapModal2">
 									<div class="inquiry-add-wrap">
 										<div class="review-back">
-											<button @click="closeScrapModal2()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
+											<button class="back-btn" @click="closeScrapModal2()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
 										</div>
 										<div class="inquiry-add-box">										
 											<div class="inquiry-add-title">
@@ -452,7 +453,7 @@
 						<div class="modal" v-if="showScrapModal3">
 							<div class="container">
 							<div class="review-back">
-								<button @click="closeScrapModal3()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
+								<button class="back-btn" @click="closeScrapModal3()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
 							</div>
 								<div class="content1">
 									<div class="logo2">
@@ -499,6 +500,7 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		scrapbookList : [],
 		userEmail : "",
 		pwd : "",
 		inquirySelectClass : 'option-select-box',
@@ -602,7 +604,14 @@ var app = new Vue({
 		fnLogin : function(){
             var self = this;
             var nparmap = {userEmail : self.userEmail, pwd : self.pwd};
-            
+            if(self.userEmail == ""){
+            	alert("이메일을 입력하세요.");
+            	return;
+            }
+            if(self.pwd == ""){
+            	alert("비밀번호를 입력하세요.");
+            	return;
+            }
             $.ajax({
                 url : "../login.dox",
                 dataType:"json",	
@@ -1133,7 +1142,52 @@ var app = new Vue({
 			    self.inquiryOptionCheck = false;
 			    self.changeOptionStyle();
 			    console.log(self.optionCheckbox);
-			}  
+			},
+			fnCheckScrap : function(item) {
+		    	var self = this;
+	            var nparmap = {userNo: self.userNo, productNo : self.productNo};
+	            $.ajax({
+	                url : "/product/selectScrapList.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	for(let i=0; i<data.list.length;i++){
+	                        self.scrapbookList.push(data.list[i].productNo.toString());
+	                     }
+	                }
+	            }); 
+	            
+			},
+			fnInsertScrapbook : function(item) {
+		    	var self = this;
+	            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+	           
+	            $.ajax({
+	                url : "/product/insertScrap.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	
+	                }
+	            }); 
+	            
+			},
+		    fnDeleteScrapbook : function(item) {
+		    	var self = this;
+	            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+	           
+	            $.ajax({
+	                url : "/product/deleteScrap.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                }
+	            }); 
+	            
+			},
 	}, // methods
 	created : function() {
 		var self = this;

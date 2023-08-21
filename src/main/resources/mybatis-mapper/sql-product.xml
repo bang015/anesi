@@ -137,6 +137,9 @@
 		SELECT *
 		FROM t3_tbl_user_scrapbook 
 		WHERE USER_NO = #{userNo}
+		<if test="productNo !='' and productNo != null">
+		and PRODUCT_NO = #{productNo}
+		</if>
 	</select>
 	
 	<!-- 스크랩북 삭제 -->
