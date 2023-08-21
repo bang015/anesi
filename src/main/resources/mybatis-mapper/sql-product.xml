@@ -162,7 +162,7 @@
 	<select id="selectCartList" parameterType="int" resultType="com.example.anesi.model.Product">
 	    SELECT
 	        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
-	        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO
+	        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO ,product.DISCOUNT , product.DISCOUNT_YN
 	    FROM
 	        t3_tbl_product product
 	    INNER JOIN

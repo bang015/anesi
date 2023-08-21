@@ -31,8 +31,11 @@
 	
 	
 	<div class="col-md-4">
-  <h5>{{ item.productName }}</h5>
-  <p>제조사: {{ item.manufacturer }}</p>
+    <h5>{{ item.productName }}</h5>
+  <h5>제조사: {{ item.manufacturer }}</h5>
+ <h5 class="production-item-price__orginal">정가: {{ numberWithCommas(item.productPrice) }}원</h5>
+<span class="production-item-price__percent">-{{ item.discount }}%</span>
+<h4 class="production-item-price__sell">할인가격: {{ numberWithCommas(calculateDiscountedPrice(item)) }}원</h4>
         <div class="main-option">
   <select class="option-box" v-model="item.selectedOption" @change="optionSelected(item)">
     <option disabled value="">옵션을 선택해주세요</option>
@@ -106,6 +109,12 @@ new Vue({
     		      return this.cartItems.find(item => item.productNo === pno);
     		    });
     		  },
+    		  discountedPrice() {
+    			    if (this.cartItems.length > 0 && this.cartItems[0].discountYn === 'Y') {
+    			      return Math.floor((this.cartItems[0].productPrice * ((100 - this.cartItems[0].discount) / 100)) / 100) * 100;
+    			    }
+    			    return null;
+    			  },
     	
     	
       
@@ -130,6 +139,8 @@ new Vue({
     		      success: function(response) {
     		        console.log(response);
 
+    		       
+    		        
     		        // 중복 상품 제거
     		        const uniqueItemsMap = new Map();
     		        response.list.forEach(item => {
@@ -162,6 +173,9 @@ new Vue({
     		    alert('사용자 번호가 없습니다. 로그인 후 이용해주세요.');
     		  }
     		},
+    		  numberWithCommas(x) {
+    		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    		  },
     		optionSelected(item) {
     			  const selectedOption = item.options.find(opt => opt.optionNo === item.selectedOption);
     			  console.log(selectedOption);
@@ -170,6 +184,12 @@ new Vue({
     			    this.addToSelectedOptions(item); // 새롭게 추가된 메소드 호출
     			    this.calculateTotalPrice(); // 추가된 부분. 총 가격을 계산하기 위함.
     			  }
+    			},
+    			  calculateDiscountedPrice(product) {
+    			    if (product.discountYn === 'Y') {
+    			      return Math.floor((product.productPrice * ((100 - product.discount) / 100)) / 100) * 100;
+    			    }
+    			    return product.productPrice;
     			},
       deleteItem(item) {
     	    const requestData = {
@@ -195,12 +215,14 @@ new Vue({
     	        alert("요청 처리 실패");
     	    });
     	},
-    	  calculateTotalPrice() {
-    	    const totalPrice = this.selectedOptions.reduce(
-    	      (sum, option) => sum + (option.quantity * (this.cartItems.find(cartItem => {
-    	        return cartItem.productNo === option.productNo;
-    	      }).productPrice)), 0);
-    	    this.totalPrice = totalPrice;
+    	  calculateDiscountedPrice(product) {
+    	    if (product.discountYn === 'Y') {
+    	      return Math.floor(((100 - product.discount) / 100) * product.productPrice / 100) * 100;
+    	    }
+    	    return product.productPrice;
+    	  },
+    	  formatPrice(price) {
+    	    return price.toLocaleString() // 예시: 1234500 -> "1,234,500"
     	  },
     	deleteAllCartItems(item) {
     	    // userNo를 requestData 객체에 추가
@@ -284,6 +306,7 @@ new Vue({
     	    	    }
     	    	  }
     	    	},
+    	    	
   	    fnOption: function(productNo, callback) {
   	      var self = this;
   	      var nparmap = { productNo: productNo };
