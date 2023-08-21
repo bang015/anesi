@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자센터 헤더</title>
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
