@@ -139,9 +139,6 @@ var app = new Vue({
                 			return {...item, inquiryYn : '´äº¯'};
                 		}
                 	})
-                	console.log(self.inquiryCnt);
-                	console.log(self.completeCnt);
-                	console.log(self.inquiryList2);
                 }
 			})
 		},

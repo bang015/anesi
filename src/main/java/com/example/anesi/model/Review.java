@@ -12,7 +12,19 @@ public class Review {
 	private String uImgName;
 	private int csatCnt;
 	private String optionName;
-
+	private String rNo;
+	private String productName;
+	private String productNo;
+	
+	public String getProductNo() {
+		return productNo;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public String getrNo() {
+		return rNo;
+	}
 	public String getOptionName() {
 		return optionName;
 	}

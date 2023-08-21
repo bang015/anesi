@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Review;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 import com.example.anesi.service.AdminService;
@@ -53,7 +54,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/inquiry.do") 
-	public String review(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+	public String inquiry(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		return "/admin_inquiry";
 		
 	}
@@ -63,6 +64,13 @@ public class AdminController {
 		return "/admin_user";
 		
 	}
+	
+	
+	@RequestMapping("/admin/review.do") 
+	public String review(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/admin_review";
+	}
+	
 	
 	//상품 전체 조회
 	@RequestMapping(value = "/admin/productList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -191,6 +199,27 @@ public class AdminController {
 	public String userInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<User> info = adminService.searchUserInfo(map);
 		resultMap.put("info", info);
+		return new Gson().toJson(resultMap);
+	}
+	//리뷰 검색
+	@RequestMapping(value = "/admin/searchReviewList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchReviewList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Review> list = adminService.searchAdminReviewList(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//리뷰 삭제
+	@RequestMapping(value = "/admin/removeReview.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String removeReview(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		String json = map.get("checkList").toString();
+		ObjectMapper mapper = new ObjectMapper();
+		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+		map.put("list", list);
+		adminService.removeAdminReview(map);
+		resultMap.put("cnt", adminService.removeAdminReview(map));
 		return new Gson().toJson(resultMap);
 	}
 }

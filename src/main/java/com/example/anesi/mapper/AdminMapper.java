@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Review;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 
@@ -36,8 +37,10 @@ public interface AdminMapper {
 	List<Inquiry> selectAdminInquiryList(HashMap<String, Object> map);
 	// 답변 등록
 	int updateAdminInquiry(HashMap<String, Object> map);
-	
-
+	// 리뷰 검색
+	List<Review> selectAdminReviewList(HashMap<String, Object> map);
+	// 리뷰 삭제
+	int deleteAdminReview(HashMap<String, Object> map);
 	//고객 리스트검색
 	List<User> selectUserList(HashMap<String, Object> map);
 	//고객 상세정보검색
