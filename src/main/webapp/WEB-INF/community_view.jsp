@@ -260,7 +260,7 @@ h1{
 			<div style="font-size:19px;">댓글 <span>{{cList.length}}</span></div>
 			<div id="comment-head">
 				<div v-if="sessionNo!=''">
-					<img class="profile2" src="../css/image/profile.png"><input class="comment-input" type="text" v-model="content">
+					<img class="profile2" :src="profileImg.uImgPath+'/'+profileImg.uImgName"><input class="comment-input" type="text" v-model="content">
 					<button class="btn1" @click="fnComInsert">입력</button>
 				</div>
 				<div v-else class="guide">로그인 후 댓글 입력 가능합니다.</div>
@@ -327,7 +327,8 @@ var app = new Vue({
 		comNo : "",
 		selectPage: 1,
 		pageCount: 1,
-		cnt : 0
+		cnt : 0,
+		profileImg : {}
 	},// data
 	methods : {
 		fnGetInfo : function(){
@@ -528,7 +529,20 @@ var app = new Vue({
 	            document.execCommand('copy');
 	            document.body.removeChild(dummyTextArea);
 	            alert('주소가 복사되었습니다.');
-        }
+        },
+        fnGetProfile(){
+			var self = this;
+			var nparmap = {userNo : self.sessionNo};
+			$.ajax({
+                url : "/profileImg.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.profileImg = data.img;
+                }
+			})
+		}
 	}, // methods
 	created : function() {
 		var self = this;

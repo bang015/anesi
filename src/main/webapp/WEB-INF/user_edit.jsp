@@ -255,7 +255,7 @@ img:hover{
 			<div class="part">
 				<div class="edit_title">프로필 이미지</div>
 				<label v-if="profileImg.uImgPath != undefined">
-					<img :src="profileImg.uImgPath+'/'+profileImg.uImgName" style="width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">
+					<img :src="profileImg.uImgPath+'/'+profileImg.uImgName" style="object-fit: cover; width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">
 					<input type="file" id="file1" name="file1" class="inputFile" @change="fnProfileChange">
 				</label>
 			</div>				

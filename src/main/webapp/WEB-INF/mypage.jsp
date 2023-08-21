@@ -98,8 +98,10 @@ li{
 }
 .profile_img{
 	width: 160px;
+	height : 160px;
     border-radius: 50%;
 	margin: 15px 65px 15px 68px;
+	object-fit: cover;
 }
 .nickName{
     font-size: 17px;
@@ -152,18 +154,18 @@ li{
 <div id="app">
 <div class="top_menu">
 	<ul class="my_menu1">
-		<li class="my_li1"><a href="mypage.do" class="my_a1_ch" style="color : #A782C3;">프로필</a></li>
-		<li class="my_li1"><a href="mypage/myShopping.do" class="my_a1">나의 쇼핑</a></li>
+		<li class="my_li1"><a href="/mypage.do" class="my_a1_ch" style="color : #A782C3;">프로필</a></li>
+		<li class="my_li1"><a href="/mypage/myShopping.do" class="my_a1">나의 쇼핑</a></li>
 		<li class="my_li1"><a class="my_a1">나의 리뷰</a></li>
-		<li class="my_li1"><a href="mypage/user_edit.do" class="my_a1">설정 </a></li>
+		<li class="my_li1"><a href="/mypage/user_edit.do" class="my_a1">설정 </a></li>
 	</ul>
 </div>
 <hr class="hrr">
 	<ul class="my_menu1">
-		<li class="my_li2"><a href="mypage.do" class="my_a2_ch" style="color : #A782C3;">모두 보기</a></li>
+		<li class="my_li2"><a href="/mypage.do" class="my_a2_ch" style="color : #A782C3;">모두 보기</a></li>
 		<li class="my_li2"><a class="my_a2">나의 문의</a></li>
 		<li class="my_li2"><a href="/mypage/myBoard.do" class="my_a2">나의 게시글</a></li>
-		<li class="my_li2"><a href="scrapbook.do" class="my_a2">스크랩북</a></li>
+		<li class="my_li2"><a href="/scrapbook.do" class="my_a2">스크랩북</a></li>
 	</ul>
 <hr class="hrr">
 <div id="container">
@@ -177,7 +179,7 @@ li{
 			<li><label class="icon_label"><a href="scrapbook.do"><img src="../css/image/bookmark.png" class="icon" style="margin: 0px 65px 10px 10px; width: 52px;"><br><span class="comment" style="margin-left: 13px;">스크랩북</span></a></label></li>
 			<li><label class="icon_label"><a href=""><img src="../css/image/coupon.png" class="icon" style="margin : 6px 65px 18px 10px; width: 50px;"><br><span class="comment" style="margin-left:15px;">내 쿠폰</span></a></label></li>
 			<li><label class="icon_label"><a href=""><img src="../css/image/qna.png" class="icon" style="margin: 0px 65px 9px 10px; width: 52px;"><br><span class="comment" style="margin-left: 16px;">내 문의</span></a></label></li>
-			<li><label class="icon_label"><a href=""><img src="../css/image/post.png" class="icon" style="margin: 0px 10px 10px 10px; width: 50px;"><br><span class="comment" style="margin-left: 7px;">내 게시글</span></a></label></li>
+			<li><label class="icon_label"><a href="/mypage/myBoard.do"><img src="../css/image/post.png" class="icon" style="margin: 0px 10px 10px 10px; width: 50px;"><br><span class="comment" style="margin-left: 7px;">내 게시글</span></a></label></li>
 		</ul>
 			<button class="btn1" @click="fnEdit">회원정보수정</button>
 			<button class="btn1">로그아웃</button>

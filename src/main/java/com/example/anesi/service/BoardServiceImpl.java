@@ -25,6 +25,17 @@ public class BoardServiceImpl implements BoardService{
 		resultMap.put("cnt", boardMapper.selectCnt(map));
 		return resultMap;
 	}
+	
+	// 내 전체 게시글
+	@Override
+	public HashMap<String, Object> myBoardAll(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", boardMapper.myBoardAll(map));
+		resultMap.put("cnt", boardMapper.mySelectCnt(map));
+		return resultMap;
+	}
+	
 	// 게시글 검색
 	@Override
 	public HashMap<String, Object> searchBoard(HashMap<String, Object> map) {
@@ -95,5 +106,6 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardMapper.editComment(map);
 	}
+
 	
 }

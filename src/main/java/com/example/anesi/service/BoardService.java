@@ -11,6 +11,8 @@ public interface BoardService {
 	int insertBoard(HashMap<String, Object> map);
 	// 전체 게시글
 	HashMap<String, Object> boardAll(HashMap<String, Object> map);
+	// 내 게시글
+	HashMap<String, Object> myBoardAll(HashMap<String, Object> map);
 	// 게시글 검색
 	HashMap<String, Object> searchBoard(HashMap<String, Object> map);
 	// 인기글

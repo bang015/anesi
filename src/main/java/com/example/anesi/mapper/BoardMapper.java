@@ -14,10 +14,14 @@ public interface BoardMapper {
 	int insertBoard(HashMap<String, Object> map);
 	// 전체 게시글 
 	List<Board> boardAll(HashMap<String, Object> map);
+	// 내 게시글
+	List<Board> myBoardAll(HashMap<String, Object> map);
 	// 게시글 검색
 	List<Board> searchBoard(HashMap<String, Object> map);
 	// 게시글 cnt
 	int selectCnt(HashMap<String, Object> map);
+	// 내 게시글 cnt
+	int mySelectCnt(HashMap<String, Object> map);
 	// 검색 게시글 cnt
 	int searchCnt(HashMap<String, Object> map);
 	// 인기글

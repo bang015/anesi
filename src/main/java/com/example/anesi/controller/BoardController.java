@@ -27,6 +27,13 @@ public class BoardController {
 	@Autowired 
 	HttpSession session;
 		
+	// test
+	@RequestMapping("/test2.do") 
+    public String test2(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		
+		return "/test2";
+    }
+	
 	// 커뮤니티 메인
 	@RequestMapping("/community/main.do") 
     public String boardmain(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
@@ -69,6 +76,19 @@ public class BoardController {
 		resultMap = boardService.boardAll(map);
 		return new Gson().toJson(resultMap);
 	}
+	
+	// 게시글 리스트
+		@RequestMapping(value = "/community/myBoardList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String myBoardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+			int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+			map.put("startNum", startNum);
+			map.put("lastNum", lastNum);
+			resultMap = boardService.myBoardAll(map);
+			return new Gson().toJson(resultMap);
+		}
 	
 	// 검색 게시글 
 	@RequestMapping(value = "/community/search.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

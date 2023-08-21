@@ -200,7 +200,7 @@ public class UserController {
 		session.setAttribute("sessionNick", info.getNick());
 		return new Gson().toJson(resultMap);
 	}
-	//유저 정보 수정
+	//알림 설정
 	@RequestMapping(value = "/mypage/smsYn_edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String smsEdit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -225,7 +225,7 @@ public class UserController {
 		return new Gson().toJson(resultMap);
 	}
 	
-	//회원탈퇴
+	//
 	@RequestMapping(value = "/mypage/searchOrderList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String searchOrderList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
