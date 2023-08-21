@@ -354,6 +354,7 @@ var app = new Vue({
                 	self.userNo = data.userInfo.userNo;
                 	self.fnGetUserProfile();
                 	self.cCnt = data.cCnt;
+                	console.log(self.bNo);
                 }
             });
 		},

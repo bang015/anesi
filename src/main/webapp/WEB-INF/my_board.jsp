@@ -245,14 +245,14 @@ li{
 .pagination {
     text-align: center;
     margin-top: 65px;
-    font-size:14px;
+    font-size : 13px;
 }
 .pagination li {
     margin: 6px;
     border-radius: 6px;
     display: inline;
     margin: 15px;
-    padding: 8px 10px;
+    padding: 5px 9px;
 }
 .pagination li:hover {
 	background:#eee;
@@ -262,15 +262,14 @@ li{
 	text-decoration: none;
 }
 .pagination li.active {
-	color: white;
+	color: #A782C3;
     font-weight: bold;
     border: 1px solid;
-    padding: 8px 10px;
+    padding: 5px 9px;
     border-radius: 6px;
-    background: #A782C3;
 }
 .pagination li.active a{
-	color : white;
+	color : #A782C3;
 }
 .partName{
 	margin: 0 0 26px 25px;
