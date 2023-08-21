@@ -19,16 +19,16 @@
 	<jsp:include page="adminH.jsp"></jsp:include>
 	<div id="app">
 		<div id="container">
-			<div class="containerTitle" @click="">문의 관리</div>
+			<div class="containerTitle cursorPointer" @click="fnReload">문의 관리</div>
 			<div class="containerCheckList">
-				<div class="checkList" @click="">
+				<div class="checkList cursorPointer" @click="fnChangeInquiryflg('미답변')">
 					<div class="iconBack"><i class="fa-brands fa-quora fa-2xl" style="color: #ffffff;"></i></div>
 					<div class="checkListText">
 						<div>미답변</div>
 						<div><span class="numText">{{inquiryCnt}}</span>건</div> 
 					</div>
 				</div>
-				<div class="checkList" @click="">
+				<div class="checkList cursorPointer" @click="fnChangeInquiryflg('답변')">
 					<div class="iconBack"><i class="fa-solid fa-check fa-2xl" style="color: #ffffff;"></i></div>
 					<div class="checkListText">
 						<div>답변완료</div>
@@ -50,16 +50,16 @@
 								<th>처리일</th>
 								<th>답변</th>
 							</tr>
-							<tr v-for="(item,index) in inquiryList2">
+							<tr v-for="(item,index) in inquiryList2" v-if="item.inquiryYn == inquiryflg || inquiryflg == ''">
 								<td>{{item.cDateTime}}</td>
 								<td>{{item.inquiryYn}}</td>
 								<td>{{item.inquiryCategory}}</td>
-								<td><div class="productNo">{{item.productNo}}</div>{{item.productName}}</td>
+								<td @click="fnMoveProduct(item.productNo)" class="productName1"><div class="productNo">{{item.productNo}}</div>{{item.productName}}</td>
 								<td>{{item.content}}</td>
 								<td>{{item.userEmail}}</td>
 								<td v-if="item.inquiryYn == '답변'">{{item.udatetime}}</td>
 								<td v-else>-</td>
-								<td v-if="item.inquiryYn == '답변'"><button class="btn1 btn2" @click="openScrapModal(index)">답변수정</button></td>
+								<td v-if="item.inquiryYn == '답변'"><button class="btn1 btn2 btn3" @click="openScrapModal(index)">답변수정</button></td>
 								<td v-else><button class="btn1 btn2" @click="openScrapModal(index)">답변하기</button></td>
 							</tr>
 						</table>
@@ -111,6 +111,7 @@ var app = new Vue({
 		completeCnt : 0,
 		showScrapModal : false,
 		inquiryIndex : 0,
+		inquiryflg : '',
 		
 	},// data
 	methods : {
@@ -166,9 +167,20 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	alert('답변저장');
+                	self.closeModal();
                 } 
 			})
-		}
+		},
+		fnMoveProduct(productNo){
+			 $.pageChange("/product/view.do",{no : productNo});
+		},
+		fnChangeInquiryflg(text){
+			var self = this;
+			self.inquiryflg = text;
+		},
+		fnReload(){
+			location.reload();
+		},
 	}, // methods
 	created : function() {
 		var self = this;

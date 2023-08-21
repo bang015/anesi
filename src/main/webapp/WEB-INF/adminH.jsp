@@ -27,7 +27,7 @@
 				<div onclick="location.href='product_edit.do'">상품조회/수정</div>
 				<div>판매통계</div>
 				<div>리뷰관리</div>
-				<div>문의관리</div>
+				<div onclick="location.href='inquiry.do'">문의관리</div>
 				<div onclick="location.href='delivery.do'">배송관리</div>
 				<div>고객관리</div>
 				<div>혜택관리</div>

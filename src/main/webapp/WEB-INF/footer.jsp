@@ -190,7 +190,7 @@
 	           <span>신한은행 110-409-609660</span>
 	           </div>
 	           <div>예금주 정선일</div>
-	           <div><a id="admin" href="admin/main.do" target="_blank">관리자 페이지>></a></div>
+	           <div><a id="admin" href="http://localhost:8080/admin/main.do" target="_blank">관리자 페이지>></a></div>
 	       </div>
 	   </div>
    	 

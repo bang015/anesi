@@ -132,7 +132,7 @@
 	<div class="top_menu">
 		<ul class="my_menu1">
 			<li class="my_li1"><a href="/mypage.do" class="my_a1">프로필</a></li>
-			<li class="my_li1"><a class="my_a1">나의 쇼핑</a></li>
+			<li class="my_li1"><a class="my_a1" href="http://localhost:8080/mypage/myShopping.do">나의 쇼핑</a></li>
 			<li class="my_li1"><a class="my_a1">나의 리뷰</a></li>
 			<li class="my_li1"><a class="my_a1_ch">설정 </a></li>
 		</ul>

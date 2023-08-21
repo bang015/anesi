@@ -45,14 +45,13 @@
 			href="/community/main.do">커뮤니티</a> <a class="ccc" href="javascript:;">중고장터</a>
 
 		<ul id="header_navi">
-			<li><a><i class="fa fa-shopping-cart "></i></a></li>
 			<li id="login-button"><a href="#" id="login-button-link"><i class="fa-solid fa-door-open"></i></a><span
 				class="fon" id="login-button-text"></span></li>
 			<li><a href="../join.do"><i class="fa-solid fa-user-plus "></i></a><span
 				class="fon">회원가입</span></li>
 			<li><a href="../mypage.do"><i class="fa-solid fa-user "></i></a><span
 				class="fon">마이페이지</span></li>
-			<li><a><i class="fa-solid fa-bookmark "></i></a><span></span></li>
+			<li><a href="http://localhost:8080/scrapbook.do"><i class="fa-solid fa-bookmark "></i></a><span></span></li>
 			<li><a><i class="fa-solid fa-bell "></i></a><span></span></li>
 			<li><a href="../product/cart.do"><i
 					class="fa fa-shopping-cart "></i></a><span></span></li>
