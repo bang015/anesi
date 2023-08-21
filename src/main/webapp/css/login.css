@@ -148,4 +148,12 @@
 		border-radius: 5px;
 		color: #fff;
 	}
-	
+	.review-back{
+		float: right;
+		margin-top: 10px;
+		margin-right: 10px;
+	}
+	.back-btn{
+		background-color: #fff;
+		border: 0;
+	}
