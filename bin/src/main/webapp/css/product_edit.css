@@ -152,7 +152,13 @@
 .btnBox{
 	padding: 30px 30px 15px 30px;
 }
-
+.popover {
+  /* Your popover styles here */
+  display: none;
+}
+.show {
+  display: block !important;
+}
 
 /* 헤더 CSS*/
 .flex-container1 {
@@ -168,3 +174,30 @@
   width : 100%;
   padding: 30px 20px;}
 /* 헤더 CSS end*/
+
+.containerInquiry{
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	border-radius: 4px;
+	padding: 15px 30px 30px 30px;
+	font-size: 16px;
+}
+.productNo{
+	color: #ccc;
+}
+.inquiryReply{
+	resize: none;
+	border-radius: 4px;
+}
+.productName1{
+	cursor: pointer;
+}
+.cursorPointer{
+	cursor: pointer;
+}
+
+
+.imgSize{
+	width: 100px;
+	height: 100px;
+}

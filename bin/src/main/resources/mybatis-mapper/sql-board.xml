@@ -21,6 +21,20 @@
 		ORDER BY B.BOARD_NO DESC
 		LIMIT #{startNum}, #{lastNum}
 	</select>
+	
+	<!-- 내 게시글 리스트 -->
+	<select id="myBoardAll" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT *
+		FROM t3_tbl_board B
+		LEFT JOIN (
+			SELECT COUNT(*) COMM_CNT, BOARD_NO
+			FROM t3_tbl_board_comment
+			GROUP BY BOARD_NO
+		) C ON B.BOARD_NO = C.BOARD_NO
+		WHERE NICK = #{nick}
+		ORDER BY B.BOARD_NO DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
 
 	<!-- 게시글 검색 -->
 	<select id="searchBoard" parameterType="hashmap" resultType="com.example.anesi.model.Board">
@@ -43,6 +57,12 @@
 	<!-- 게시글 cnt -->
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(*) FROM t3_tbl_board
+	</select>
+	
+	<!-- 내 게시글 cnt -->
+	<select id="mySelectCnt" resultType="int">
+		SELECT COUNT(*) FROM t3_tbl_board
+		WHERE NICK = #{nick}
 	</select>
 	
 	<select id="searchCnt" resultType="int">
@@ -74,6 +94,19 @@
 		WHERE BOARD_NO = #{bNo}
 	</select>
 	
+	<select id="selectBoardViewUser" parameterType="hashmap">
+		SELECT USER_NO
+		FROM t3_tbl_user
+		WHERE NICK = #{nick}
+	</select>
+	
+	<!-- 작성자 프로필 -->
+	<select id="selectProfileImg" parameterType="hashmap" resultType="com.example.anesi.model.Image">
+		SELECT *
+		FROM t3_tbl_profile_image
+		WHERE USER_NO = #{userNo}
+	</select>
+	
 	<!-- 조회수 업데이트 -->
 	<update id="updateViewCnt" parameterType="hashmap">
 		UPDATE t3_tbl_board
@@ -101,8 +134,8 @@
 	
 	<!-- 댓글 입력 -->
 	<insert id="insertComment" parameterType="hashmap">
-		INSERT INTO t3_tbl_board_comment(BOARD_NO, C_NICK, COMM)
-		VALUES(#{bNo}, #{nick}, #{content})
+		INSERT INTO t3_tbl_board_comment(BOARD_NO, C_NICK, C_USER_NO, COMM)
+		VALUES(#{bNo}, #{nick}, #{cUserNo}, #{content})
 	</insert>
 	
 	<!-- 댓글 리스트 -->

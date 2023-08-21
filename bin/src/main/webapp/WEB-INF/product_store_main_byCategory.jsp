@@ -5,11 +5,17 @@
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<!--페이징-->
+<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+	integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link href="../css/mainCss.css" rel="stylesheet">
-<!-- 스토어 메인 CSS-->
 <link href="../css/store_main.css" rel="stylesheet">
+<link href="../css/login.css" rel="stylesheet">
 
 <meta charset="EUC-KR">
 <title>카테고리별 상품메인페이지</title>
@@ -21,28 +27,18 @@
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
 
-  <div class="flex-container">
-      <span class="main-category__title"></span>
-    
-     <div class="selectBox2 ">
-		  <button class="label">정렬</button>
-		  <ul class="optionList">
-		    <li value="LowestPrice"class="optionItem" >가격낮은순</li>
-		    <li value="HighestPrice" class="optionItem">가격높은순</li>
-		    <li value="NewArrival" class="optionItem">최신순</li>
-		    
-		    <li class="optionItem">--아직못함↓--</li>
-            <li value="HighestPurchase" class="optionItem">구매높은순</li>
-            <li value="HighestScrap" class="optionItem">스크랩많은순</li>
-            <li value="ManyReview" class="optionItem" >리뷰많은순</li>
-		  </ul>
-		</div>
-	 </div>
-	   
-
-
-
-	<div id="store_main_byCategory">
+<div id="store_main_byCategory">
+		<div id="store_main_cont">
+			<div class="flex-container">
+				<span class="main-category__title">전체상품</span>
+				
+		 			<div class="selectBox2" @mouseover="showOptions" @mouseleave="hideOptions" :class="{ active: optionsVisible }">
+				      <button class="label">{{ selectedOption }}</button>
+				      <ul class="optionList">
+				        <li v-for="(option, index) in options" :key="index" class="optionItem" @click="handleSelect(option.value)">{{ option.text }}</li>
+				      </ul>
+				    </div>		
+			</div>
 		<div class="production-item__content" v-for="item in list" >
 			<div class="production-item-header"  @click="fnProductView(item.productNo)">
 	            <a  class="production-item-thumnail">
@@ -97,6 +93,15 @@
                 <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
             </a>
     	    </div> <!-- class="production-item__content" 끝-->
+    	    
+    	    </div><!-- store_main_cont 끝-->
+			<!-- 페이징 -->
+			<template>
+				<paginate :page-count="pageCount" :page-range="3" :margin-pages="2"
+					:click-handler="fnSearch" :prev-text="'<'" :next-text="'>'"
+					:container-class="'pagination'" :page-class="'page-item'">
+				</paginate>
+			</template>
 	    
 	    
     	<div class="modal" v-if="showCartModal" >
@@ -120,7 +125,7 @@
 		    <h2>로그인후 사용 가능합니다.</h2>
 		    <p>로그인하시겠습니까?</p>
 		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
-		    <button @click="fnMoveLoginPage" class="right_button">로그인페이지로 이동하기</button>
+		    <button @click="openScrapModal3" class="right_button">로그인페이지로 이동하기</button>
 		  </div>
 		</div>
 		
@@ -140,6 +145,40 @@
 		    <button @click="fnMoveMyPage" class="right_button">스크랩북으로 이동하기</button>
 		  </div>
 		</div>
+		
+		
+		<!-- 로그인 페이지로 이동-->
+		<div class="modal" v-if="showScrapModal3">
+              <div class="container">
+	              <div class="review-back">
+	                 <button @click="closeModal"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
+	              </div>
+                 <div class="content1">
+                    <div class="logo2">
+                       <a href="main.do"><img alt="logo" src="../css/image/footer_img.png" ></a>
+                    </div>
+                    <div class="login-wrap">
+                       <div class="login-title">
+                          <span class="title1">로그인</span>
+                       </div>
+                       <div class="login-box"> <!-- 로그인 입력 박스 -->
+                          <input class="login-input" v-model="userEmail" placeholder="이메일" @keyup.enter="fnLogin">
+                          <input class="login-input" type="password" v-model="pwd" placeholder="패스워드" @keyup.enter="fnLogin">
+                       </div>
+                       <div class="login-btn">
+                          <button class="loginBtn btn" @click="fnLogin">로그인</button>
+                       </div>
+                    </div>
+                    <div class="a-wrap"> <!-- 기타등등 -->
+                       <a href="/selectEmail.do" class="a a1">아이디찾기</a>
+                       <a href="/join.do" class="a a2">회원가입</a>
+                    </div>
+                    <div class="non-user-wrap1"> <!-- 비회원 주문 조회 -->
+                       <button class="loginBtn1 btn" @click="">비회원 구매하기</button>
+                    </div>
+                 </div>
+              </div>      
+          </div>
 	
 	    
     </div>
@@ -150,29 +189,8 @@
 </body>
 </html>
 <script>
-
-/* 화살표 함수 */
-const label = document.querySelector('.label');
-const options = document.querySelectorAll('.optionItem');
-
-// 클릭한 옵션의 텍스트를 라벨 안에 넣음
-const handleSelect = (item) => {
-  label.parentNode.classList.remove('active');
-  label.innerHTML = item.textContent;
-}
-// 옵션 클릭시 클릭한 옵션을 넘김
-options.forEach(option => {
-	option.addEventListener('click', () => handleSelect(option))
-})
-
-// 라벨을 클릭시 옵션 목록이 열림/닫힘
-label.addEventListener('click', () => {
-  if(label.parentNode.classList.contains('active')) {
-  	label.parentNode.classList.remove('active');
-  } else {
-  	label.parentNode.classList.add('active');
-  }
-})
+<!--페이징 -->
+Vue.component('paginate', VuejsPaginate)
 var app = new Vue({
 	el : '#store_main_byCategory',
 	data : {
@@ -193,16 +211,38 @@ var app = new Vue({
 		scrapbookList : [],
 		cartList : [],
 		nonuserCartList : [],
-		nonuserNo : ""
+		nonuserNo : "",
+		userEmail : "",
+        pwd : "",
+        showScrapModal3 : false,
+        <!-- 페이징 -->
+		selectPage: 1,
+		pageCount: 1,
+		cnt : 0,
+		
+		optionList : [],
+		selectedOption: '정렬',
+	    options: [
+	      { text: '낮은가격순', value: '1' },
+	      { text: '높은가격순', value: '2' },
+	      { text: '최신순', value: '3' },
+	    ],
+	    optionsVisible: false,
+	    order : ""
 
 	},// data
 	methods : {
 		fnGetList : function(){
             var self = this;
-            var nparmap = {categoryOrderBar : self.categoryOrderBar, 
-		            		categoryNo : self.categoryNo, 
-		            		categoryName : self.categoryName,
-		            		productNo : self.productNo};
+            <!-- 페이징 -->
+			var startNum = ((self.selectPage-1) * 12);
+    		var lastNum = 12;
+            var nparmap = { order : self.order,
+    						productNo : self.productNo,
+            				categoryNo : self.categoryNo, 
+            				startNum : startNum, 
+            				lastNum : lastNum};
+            console.log(nparmap);
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
@@ -211,15 +251,31 @@ var app = new Vue({
                 success : function(data) { 
                 	self.list = data.list;
                 	self.list2 = data.list2;
-                	console.log(self.list2.categoryNo);
+                	self.cnt = data.cnt;
+	                self.pageCount = Math.ceil(self.cnt / 12);
                 }
             }); 
 		},
-	     fnOrderBy: function (orderBy) {
-            var self = this;
-            self.categoryOrderBar = orderBy; // 카테고리 정렬값 설
-            self.fnGetList(); // AJAX 요청 보내기
-	     },
+		
+		fnSearch : function(pageNum){
+			var self = this;
+			self.selectPage = pageNum; 
+			var startNum = ((pageNum-1) * 12);
+			var lastNum = 12;
+			var nparmap = {startNum : startNum, lastNum : lastNum};
+		 $.ajax({
+                url : "/product/store_main.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+					self.list = data.list;
+					self.cnt = data.cnt;
+					self.pageCount = Math.ceil(self.cnt / 12);
+				}
+			});
+		},
+	
 	     formatPrice: function(price) {
 	            // 100의 자리까지 내림하여 표시하며 천 단위마다 쉼표(,)를 추가합니다.
 	            const truncatedPrice = Math.floor(price / 100) * 100;
@@ -239,12 +295,17 @@ var app = new Vue({
           var self = this;
           self.showScrapDeleteModal = true;
 	    },
+	    openScrapModal3: function() {
+	          var self = this;
+	          self.showScrapModal3 = true;
+	    },
 	    // 모달 닫기
 	    closeModal: function() {
 	      this.showCartModal = false;
 	      this.showScrapModal = false;
 	      this.showScrapModalBan = false;
 	      this.showScrapDeleteModal = false;
+    	  this.showScrapModal3 = false;
 	      location.reload();
 	    },
 	    //모달에서 페이지이동 함수
@@ -254,10 +315,7 @@ var app = new Vue({
 	    fnMoveMyPage : function() {
         	location.href = "/mypage.do";
 	    },
-	    fnMoveLoginPage : function() {
-        	location.href = "/login.do";
-	    },
-	    
+	  	    
 	    fnCheckCart : function() {
 	    	var self = this;
 	         var nparmap = {nonuserNo : self.nonuserNo, userNo: self.userNo};      
@@ -395,7 +453,47 @@ var app = new Vue({
             }); 
             self.openCartModal();
             console.log(self.showCartModal);
-		}
+		},
+		
+		fnLogin : function(){
+            var self = this;
+            var nparmap = {userEmail : self.userEmail, pwd : self.pwd};
+            if(self.userEmail == ""){
+               alert("이메일을 입력하세요.");
+               return;
+            }
+            if(self.pwd == ""){
+               alert("비밀번호를 입력하세요.");
+               return;
+            }
+            $.ajax({
+                url : "../login.dox",
+                dataType:"json",   
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {                
+                     if(data.success){                      
+                        location.reload();                      
+                      } else {   
+                         alert(data.message);
+                      }
+                }                
+            }); 
+        },
+        
+        handleSelect(value) {
+	          this.selectedOption = value ? this.options.find(option => option.value === value).text : '정렬';
+	          this.optionsVisible = false;
+	          this.order = value;
+	          this.fnGetList();
+    	},
+      
+        showOptions() {
+          this.optionsVisible = true;
+        },
+        hideOptions() {
+         this.optionsVisible = false;
+        },
 
      }, // methods
 	created : function() {

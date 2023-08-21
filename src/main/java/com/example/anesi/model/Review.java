@@ -1,6 +1,7 @@
 package com.example.anesi.model;
 
 public class Review {
+	private int rNo;
 	private String nick;
 	private String createDate;
 	private int csat;
@@ -12,24 +13,25 @@ public class Review {
 	private String uImgName;
 	private int csatCnt;
 	private String optionName;
-	private String rNo;
-	private String productName;
-	private String productNo;
-	
-	public String getProductNo() {
-		return productNo;
+	private int userNo;
+
+	public int getUserNo() {
+		return userNo;
 	}
-	public String getProductName() {
-		return productName;
-	}
-	public String getrNo() {
-		return rNo;
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 	public String getOptionName() {
 		return optionName;
 	}
 	public void setOptionName(String optionName) {
 		this.optionName = optionName;
+	}
+	public int getrNo() {
+		return rNo;
+	}
+	public void setrNo(int rNo) {
+		this.rNo = rNo;
 	}
 	public int getCsatCnt() {
 		return csatCnt;

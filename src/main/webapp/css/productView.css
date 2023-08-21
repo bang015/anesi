@@ -33,6 +33,10 @@
 		margin-top: 20px;
 		font-size: 15px;
 		color: #424242;
+		display: inline-block;
+	}
+	.category-span{
+		margin-right: 5px;
 	}
 	.main-img-table{
 	}
@@ -64,14 +68,30 @@
 		border-radius: 10px;	
 	}
 	.main-title{
-		font-size: 30px;
-		font-weight:bold;
+		position: relative;
 		margin-top: 0;
 		
+	}
+	.product-title{
+		display: inline-block;
+		width: 350px;
+		font-size: 25px;
+		font-weight:bold;
+		margin-right: 70px;
+	}
+	.scrapbook{
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: inline-block;
+		font-size: 25px;
 	}
 	.main-csat{
 		font-size : 20px;
 		margin-top: 20px;
+	}
+	.main-star{
+		display: inline-block;
 	}
 	.main-discount{
 		margin-top: 20px;
@@ -93,6 +113,7 @@
 	}
 	.main-option{
 		margin-top: 30px;
+		flex: 0 0 auto;
 	}
 	.option-box{
 		width: 100%;
@@ -100,6 +121,7 @@
 		font-size: 18px;
 		border-radius: 5px;
 		border: 1px solid #ededed;
+		outline: none;
 	}
 	.main-btn-wrap{
 		margin-top: 30px;
@@ -188,6 +210,8 @@
 
 	.choice-option ul{
 		padding: 0;
+		max-height: none;
+	   	flex: 1 1 auto;
 	}
 	.choice-option li{
 		list-style: none;
@@ -251,4 +275,78 @@
 	}
 	.total-price2{
 		float: right;
+	}
+	.delivery{
+		margin-top: 50px;
+		margin-bottom: 20px;
+		
+	}
+	.Etc-title{
+		font-size: 17px;	
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	.Etc-table{
+		width: 100%;
+	    border-collapse: collapse;
+	    border-spacing: 0;
+	}
+	.Etc-table tr{
+		border: none;
+    	border-bottom: 1px solid #ededed;
+	}
+	.Etc-table td{
+		padding: 10px;
+	}
+	.refund{
+		margin-bottom: 60px;
+		margin-top: 40px;
+		
+	}
+	.Etc-title2{
+		font-size: 16px;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	.Etc-text{
+		font-size: 13px;
+		margin-bottom: 10px;
+		font-weight: 100px;
+	}
+	.Etc-box{
+		margin-left: 70px;
+	}
+	.Etc-box ol{
+		padding: 0;
+		margin-left: 14px;
+		margin-bottom: 10px;
+	}
+	.Etc-box li{
+		margin-bottom: 5px;
+	}
+	.Etc-box2{
+		margin-bottom: 30px;
+	}
+	.recently-viewed{
+		width: 400px;
+		height: 700px;
+		position: sticky;
+		top: 220px;
+		margin-left: 30px;
+	}
+	.recently-box{
+		flex-direction: column;
+		display: flex;
+		height: 100%;
+	}
+	.recently-box2{
+		display: flex;
+		flex-direction: column;
+		flex:  1 1 auto;
+		min-height: 0;
+	}
+	.recently-box3{
+		flex: 1 1 auto;
+		min-height: 1px;
+		
 	}

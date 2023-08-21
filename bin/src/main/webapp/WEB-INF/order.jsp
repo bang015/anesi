@@ -704,7 +704,7 @@ var app = new Vue({
 		                		console.log(productPrice1);
 		                	}
 		                	
-							var nparmap = {optionNo : self.productNoList[i].optionNo};
+							var nparmap = {optionNo : self.productNoList[i].optionNo};	
 				            $.ajax({
 				                url : "../order/optionSearchInfo.dox",
 				                dataType:"json",	

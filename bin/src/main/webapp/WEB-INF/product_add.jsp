@@ -12,7 +12,7 @@
 <link href="../css/checkbox.css" rel="stylesheet">
 
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>상품등록</title>
 <style>
 </style>
 </head>
@@ -171,7 +171,7 @@ var app = new Vue({
 		fnOptionAdd(){ //옵션 추가 메서드
 			var self = this;
 			if(self.optionList.length < 5){
-				self.optionList.push({optionName : "", productStock : "", optionPrice : "",});
+				self.optionList.push({optionName : "", productStock : "10", optionPrice : "0",});
 			} else{
 				self.errMsg3 = '상품 옵션은 최대 5개까지 입니다.';
 			}
@@ -442,6 +442,8 @@ var app = new Vue({
 				
 				// 모든 작업이 완료되었을 때의 처리
 				alert('등록완료');
+				location.reload();
+				window.scrollTo(0,0);
 			} catch (error) {
 				// 에러 처리
 			}

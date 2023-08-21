@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.anesi.model.Order;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Review;
 
 public interface ReviewService {
 		// 상품 별점 검색
@@ -19,4 +20,10 @@ public interface ReviewService {
 		HashMap<String, Object> addReview(HashMap<String, Object> map);
 		// 리뷰 이미지 등록
 		int addReviewImg(HashMap<String, Object> map);
+		// 도움이돼요!
+		HashMap<String, Object> editHelp(HashMap<String, Object> map);
+		// 도움이돼요 중복체크
+		List<Review> searchHelpUser(HashMap<String, Object> map);
+		// 도움이 돼요 해제/삭제
+		int editHelp2(HashMap<String, Object> map);
 }

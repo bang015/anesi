@@ -18,7 +18,7 @@
 <div id="app">
 	<div id="container">
 		<div class="content">
-			<div class="logo">
+			<div class="logo1">
 				<a href="main.do"><img alt="logo" src="../css/image/footer_img.png" ></a>
 			</div>
 			<div class="login-wrap">
@@ -73,7 +73,14 @@ var app = new Vue({
 		fnLogin : function(){
             var self = this;
             var nparmap = {userEmail : self.userEmail, pwd : self.pwd};
-            
+            if(self.userEmail == ""){
+            	alert("이메일을 입력하세요.");
+            	return;
+            }
+            if(self.pwd == ""){
+            	alert("비밀번호를 입력하세요.");
+            	return;
+            }
             $.ajax({
                 url : "login.dox",
                 dataType:"json",	

@@ -54,5 +54,45 @@
 	position: relative;
 	bottom: 0px;
 }
+.col-md-4{
+	font-size: 18px;
+}
+.production-item-price__orginal{
+	margin-left: 10px;
+	text-decoration: line-through;
+}
+
+.production-item-price__percent{
+	color : #A782C3;
+	font-size: 18px;
+	font-weight: bold;
+	margin-left: 5px;
+}
+.production-item-price__sell{
+	margin-left: 10px;
+	margin-bottom: 20px;
+	font-size: 22px;
+	font-weight: bold;
+	
+}.production-item-price__orginal{
+	margin-left: 10px;
+}
+
+.production-item-price__percent{
+	color : #A782C3;
+	font-size: 18px;
+	font-weight: bold;
+	margin-left: 5px;
+	position: relative;
+	left: 130px;
+	bottom: 45px;
+}
+.production-item-price__sell{
+	margin-left: 10px;
+	margin-bottom: 20px;
+	font-size: 22px;
+	font-weight: bold;
+	
+}
 			
 			

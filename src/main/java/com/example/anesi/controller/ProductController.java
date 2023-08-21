@@ -53,6 +53,16 @@ public class ProductController {
 		return "/naviBar";
 		
 	}
+	//상품 카테고리
+	  @RequestMapping(value = "/categorySearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	   @ResponseBody
+	   public String category(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	       List<Category> category = productService.searchCategory(map);
+	       resultMap.put("category", category);
+	       System.out.println(map);
+	       return new Gson().toJson(resultMap);
+	   }
 	
 	@RequestMapping(value = "/product/category.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody

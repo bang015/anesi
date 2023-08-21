@@ -25,4 +25,14 @@ public interface ReviewMapper {
 		int insertReview(HashMap<String, Object> map);
 		// 리뷰 이미지 등록
 		int insertReviewImg(HashMap<String, Object> map);
+		// 도움이돼요!
+		int updateHelp(HashMap<String, Object> map);
+		// 도움이돼요를 누른 유저
+		int insertHelp(HashMap<String, Object> map);
+		// 도움이돼요 중복체크
+		List<Review> selectHelpUser(HashMap<String, Object> map);
+		// 도움이돼요 해제
+		int updateHelp2(HashMap<String, Object> map);
+		// 도움이돼요 유저 삭제
+		int deleteHelp(HashMap<String, Object> map);
 }

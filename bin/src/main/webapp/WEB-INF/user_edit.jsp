@@ -175,9 +175,9 @@ img:hover{
 <div class="top_menu">
 	<ul class="my_menu1">
 		<li class="my_li1"><a href="/mypage.do" class="my_a1">프로필</a></li>
-		<li class="my_li1"><a class="my_a1">나의 쇼핑</a></li>
-		<li class="my_li1"><a class="my_a1">나의 리뷰</a></li>
-		<li class="my_li1"><a class="my_a1_ch">설정 </a></li>
+		<li class="my_li1"><a class="my_a1" href="http://localhost:8080/mypage/myShopping.do">나의 쇼핑</a></li>
+		<li class="my_li1"><a class="my_a1" onclick="location.href='../mypage/myReview.do'">나의 리뷰</a></li>
+		<li class="my_li1"><a class="my_a1_ch" onclick="location.href='../mypage/user_edit.do'">설정 </a></li>
 	</ul>
 </div>
 <hr class="hrr">
@@ -255,7 +255,7 @@ img:hover{
 			<div class="part">
 				<div class="edit_title">프로필 이미지</div>
 				<label v-if="profileImg.uImgPath != undefined">
-					<img :src="profileImg.uImgPath+'/'+profileImg.uImgName" style="width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">
+					<img :src="profileImg.uImgPath+'/'+profileImg.uImgName" style="object-fit: cover; width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">
 					<input type="file" id="file1" name="file1" class="inputFile" @change="fnProfileChange">
 				</label>
 			</div>				

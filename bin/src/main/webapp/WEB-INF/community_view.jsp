@@ -49,13 +49,17 @@
 .profile{
 	border-radius : 50%;
 	width : 30px;
-	float:left;
+	height : 30px;
+	float : left;
+	object-fit: cover;
 }
 .profile2{
 	border-radius : 50%;
 	width : 40px;
+	height : 40px;
 	float:left;
 	margin-top: 5px;
+	object-fit: cover;
 }
 .nick{
 	font-size: 16px;
@@ -241,7 +245,7 @@ h1{
 			</div>
 			<div id="content-head">
 				<div><h1>{{info.title}}</h1></div>
-				<div><img class="profile" src="../css/image/profile.png"></div>
+				<div><img class="profile" :src="uProfileImg.uImgPath+'/'+uProfileImg.uImgName"></div>
 				<div class="time">{{postCalculateTime(info.cDateTime)}}<span v-if="info.cDateTime!=info.uDateTime"> · {{calculateTime(info.uDateTime)}} 수정</span></div>
 				<div class="nick">{{info.nick}}</div>
 			</div>
@@ -260,7 +264,7 @@ h1{
 			<div style="font-size:19px;">댓글 <span>{{cList.length}}</span></div>
 			<div id="comment-head">
 				<div v-if="sessionNo!=''">
-					<img class="profile2" src="../css/image/profile.png"><input class="comment-input" type="text" v-model="content">
+					<img class="profile2" :src="profileImg.uImgPath+'/'+profileImg.uImgName"><input class="comment-input" type="text" v-model="content">
 					<button class="btn1" @click="fnComInsert">입력</button>
 				</div>
 				<div v-else class="guide">로그인 후 댓글 입력 가능합니다.</div>
@@ -269,7 +273,7 @@ h1{
 				<div v-for="(item, index) in commentList">
 					    <div class="comment-item">
 					        <div>
-					            <div class="cNick">{{item.cNick}}<img class="c-profile" src="../css/image/profile.png"></div>
+					            <div class="cNick">{{item.cNick}}<img class="c-profile" :src="userProfileImagePath(item.cUserNo)"></div>
 					            <div class="cComm">
 					                <span v-if="item.commFlg==true">
 					                    <input v-model="item.comm" class="comment-edit-input" @keyup.enter="fnComEdit(item.commentNo, item.comm)">
@@ -320,15 +324,29 @@ var app = new Vue({
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
 		bNo : "${map.boardNo}",
+		userNo : "",
 		info : {},
+		userInfo : {},
 		content : "",
 		cList : [],
 		commentList: [],
 		comNo : "",
 		selectPage: 1,
 		pageCount: 1,
-		cnt : 0
+		cnt : 0,
+		profileImg : {},
+		uProfileImg : {}
 	},// data
+	computed: {
+	    userProfileImagePath() {
+	    	var self = this;
+	        return function (cUserNo) {
+	            if (self.cProfileImg && self.cProfileImg.uImgPath && self.cProfileImg.uImgName) {
+	                return `${self.cProfileImg.uImgPath}/${self.cProfileImg.uImgName}`;
+	            }; // 이미지가 없는 경우에 대한 기본 경로를 설정해주세요
+	        };
+	    },
+	},
 	methods : {
 		fnGetInfo : function(){
 			var self = this;
@@ -340,7 +358,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	console.log(self.info);
+                	self.userInfo = data.userInfo;
+                	self.userNo = data.userInfo.userNo;
+                	self.fnGetUserProfile();
                 }
             });
 		},
@@ -456,7 +476,7 @@ var app = new Vue({
 		},
 		fnComInsert : function(){
 			var self = this;
-			var nparmap = {bNo : self.bNo, nick : self.sessionNick, content: self.content};
+			var nparmap = {bNo : self.bNo, nick : self.sessionNick, cUserNo : self.sessionNo, content: self.content};
             $.ajax({
                 url : "/community/addComment.dox",
                 dataType:"json",	
@@ -528,12 +548,52 @@ var app = new Vue({
 	            document.execCommand('copy');
 	            document.body.removeChild(dummyTextArea);
 	            alert('주소가 복사되었습니다.');
-        }
+        },
+        fnGetProfile(){
+			var self = this;
+			var nparmap = {userNo : self.sessionNo};
+			$.ajax({
+                url : "/profileImg.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.profileImg = data.img;
+                }
+			})
+		},
+		fnGetUserProfile(){
+			var self = this;
+			var nparmap = {userNo: self.userNo};
+			$.ajax({
+                url : "/profileImg.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.uProfileImg = data.img;
+                }
+			})
+		},
+		fnGetcUserProfile(){
+			var self = this;
+			var nparmap = {userNo: cUserNo};
+			$.ajax({
+                url : "/profileImg.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.cProfileImg = data.img;
+                	console.log(data.img);
+                }
+			})
+		}
 	}, // methods
 	created : function() {
 		var self = this;
-		console.log(self.sessionNick);
 		self.fnGetInfo();
+		self.fnGetProfile();
 		self.fnGetComment();
 	}// created
 });

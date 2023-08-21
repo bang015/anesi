@@ -19,9 +19,9 @@
 		<div class="top_menu">
 			<ul class="my_menu1">
 				<li class="my_li1"><a class="my_a1_ch" onclick="location.href='../mypage.do'">프로필</a></li>
-				<li class="my_li1 on"><a class="my_a1">나의 쇼핑</a></li>
-				<li class="my_li1"><a class="my_a1">나의 리뷰</a></li>
-				<li class="my_li1"><a href="mypage/user_edit.do" class="my_a1">설정 </a></li>
+				<li class="my_li1 on"><a class="my_a1" onclick="location.href='../mypage/myShopping.do'">나의 쇼핑</a></li>
+				<li class="my_li1"><a class="my_a1" onclick="location.href='../mypage/myReview.do'">나의 리뷰</a></li>
+				<li class="my_li1"><a href="../mypage/user_edit.do" class="my_a1">설정 </a></li>
 			</ul>
 		</div>
 		<div id="container">

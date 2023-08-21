@@ -9,7 +9,7 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/adminH.css" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자센터</title>
 <style>
 
 

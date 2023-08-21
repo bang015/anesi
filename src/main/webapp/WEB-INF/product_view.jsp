@@ -27,8 +27,9 @@
 			<div class="content">
 				<div class="content-box">
 					<div class="main-left">
-						<div class="category-wrap">
-							이거 > 저거 > 요거
+						<div class="category-wrap" v-for="(item,index) in category">
+							{{item.categoryName}} 
+							<span class="category-span" v-if="index !== category.length - 1"> > </span>
 						</div>
 						<div class="main-view">
 							<div class="main-img-table">
@@ -55,11 +56,15 @@
 								{{product.manufacturer}}
 							</div>
 							<div class="main-title" >
-								<div>{{product.productName}}</div>
-								<div></div>
+								<span class="product-title">{{product.productName}}</span>
+								<div class="scrapbook">
+									<i @click="fnInsertScrapbook()" v-if="scrapbookList.length == 0" class="fa-regular fa-bookmark modal-toggle-button"></i>
+               						<i @click="fnDeleteScrapbook()" v-if="scrapbookList.length != 0"class="fa-regular fa-solid fa-bookmark" style="color:#A782C3;"></i>
+               						<a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes"></i></a>
+								</div>
 							</div>
 							<div class="main-csat">
-								<div v-for="(rating, index) in csatAvg" :key="index">
+								<div class="main-star" v-for="(rating, index) in csatAvg" :key="index">
 							      <span v-for="star in 5" :key="star">
 							        <template v-if="rating >= star ">
 							          <i class="fa-solid fa-star" style="color: #A782C3;"></i> <!-- 채워진 별표 -->
@@ -310,9 +315,12 @@
 										<div class="review-content">
 											{{item.content}}
 										</div>
-										<div class="review-help">
-											<button class="help-btn">도움이 돼요</button> <span v-if="item.help > 0">{{item.help}}명에게 도움이 되었습니다.</span>
-										</div>
+										<div class="review-help"  v-if="!helpList.includes(item.rNo)">
+											<button class="help-btn" @click="fnHelp(item.rNo)">도움이 돼요</button> <span v-if="item.help > 0">{{item.help}}명에게 도움이 되었습니다.</span>
+										</div>	
+										<div class="review-help" v-else>
+											<button class="help-btn1" @click="fndeleteHelp(item.rNo)"><i class="fa-solid fa-check" style="color: #ffffff;"></i>도움됨</button> <span v-if="item.help > 0">{{item.help}}명에게 도움이 되었습니다.</span>
+										</div>	
 										 
 									</div>
 									<div class="review-box2" v-if="reviewList.length == 0">
@@ -449,7 +457,71 @@
 									  </paginate>
 									</template>
 							</div>
+						<div class="Etc-box">
+							<div class="delivery Etc">
+								<div class="Etc-title">
+									배송
+								</div>
+								<table class="Etc-table">
+									<tr>
+										<td>배송</td>
+										<td>업체직접배송, 희망일배송 <small>(상품 상세정보 확인)</small></td>
+									</tr>
+									<tr>
+										<td>배송비</td>
+										<td>무료배송</td>
+									</tr>
+									<tr>
+										<td>배송불가 지역</td>
+										<td>배송불가 지역이 없습니다.</td>
+									</tr>
+								</table>
+							</div>
+							<div class="refund Etc">
+								<div class="Etc-title">
+									교환/환불
+								</div>
+								<table class="Etc-table">
+									<tr>
+										<td>반품배송비</td>
+										<td>50,000원<small>(최초 배송비가 무료인 경우 100,000원부과)</small></td>
+									</tr>
+									<tr>
+										<td>교환배송비</td>
+										<td>100,000원</td>
+									</tr>
+									<tr>
+										<td>보내실 곳</td>
+										<td>인천광역시 부평구 경원대로 1366,(부평동,스테이션타워 7F)</td>
+									</tr>
+								</table>
+							</div>
 						</div>
+						<div class="Etc-box">
+							<div class="Etc-box2">
+								<div class="Etc-title2">반품/교환 사유에 따른 요청 가능 기간</div>
+								<div class="Etc-text">반품 시 먼저 판매자와 연락하셔서 반품사유, 택배사, 배송비, 반품지 주소등을 협의하신후 반품 상품을 발송해 주시기 바랍니다.</div>
+								<ol>
+									<li>구매자 단순 변심은 상품 수령 후 7일 이내 <small>(구매자 반품배송비 부담)</small></li>
+									<li>표시/광고와 상이, 계약내용과 다르게 이행된 경우 상품 수령 후 3개월 이내, 그 사실을 안 날 또는 알 수 있었던 날로부터30일 이내. 둘중 하나 경과시 반품/교환불가<small>(판매자 반품배송비 부담)</small></li>
+								</ol>
+							</div>
+							<div>
+								<div class="Etc-title2">반품/교환 불가능 사유</div>
+								<div class="Etc-text">아래와 같은 경우 반품/교환이 불가능합니다.</div>
+								<ol>
+									<li>반품요청기간이 지난 경우<span></span></li>
+									<li>구매자의 책임 있는 사유로 상품 등이 멸실 또는 훼손된 경우 <small> (단, 상품의 내용을 확인하기 위하여 포장 등을 훼손한 경우는 제외)</small></li>
+									<li>포장을 개봉하였으나 포장이 훼손되어 상품가치가 현저히 상실된 경우<small> (예: 식품, 화장품)</small></li>
+									<li>구매자의 사용 또는 일부 소비에 의하여 상품의 가치가 현저히 감소한 경우<small> (라벨이 떨어진 의류 또는 태그가 떨어진 명품관 상품인 경우)</small></li>
+									<li>시간의 경과에 의하여 재판매가 곤란할 정도로 상품 등의 가치가 현저히 감소한 경우<small>(예: 식품, 화장품)</small></li>
+									<li>고객주문 확인 후 상품제작에 들어가는 주문제작상품</li>
+									<li>복제가 가능한 상품 등의 포장을 훼손한 경우<small>(CD/DVD/GAME/도서의 경우 포장 개봉 시)</small></li>
+								</ol>
+							</div>
+						</div>
+						</div>
+						
 						<div class="modal" v-if="showScrapModal3">
 							<div class="container">
 							<div class="review-back">
@@ -475,14 +547,65 @@
 										<a href="/selectEmail.do" class="a a1">아이디찾기</a>
 										<a href="/join.do" class="a a2">회원가입</a>
 									</div>
-									<div class="non-user-wrap1"> <!-- 비회원 주문 조회 -->
+									<div class="non-user-wrap1" v-if="!nonUserScrapbook"> <!-- 비회원 주문 조회 -->
 										<button class="loginBtn1 btn" @click="">비회원 구매하기</button>
+									</div>
+									<div class="non-user-wrap1" v-if="nonUserScrapbook"> <!-- 비회원 주문 조회 -->
+										<button class="loginBtn1 btn" @click="closeScrapModal3()">쇼핑 계속하기</button>
 									</div>
 								</div>
 							</div>		
 						</div>
 						<div class="recently-viewed">
-      						최근본 상품
+						<div class="recently-box">
+						<div class="recently-box2">
+						<div class="recently-box3">
+      						<div class="main-option">
+								<select class="option-box" v-model="option1" @change="addToSelectedOptions">
+									<option value="">상품을 선택하세요.</option>
+									<option v-for="item in option" :key="item.optionNo + '-' + item.optionName" :value="item.optionNo">
+										{{item.optionName}}(+{{item.optionPrice | formatPrice}}원)
+									</option>
+								</select>
+							</div>
+							<div class="choice-option">
+								<ul>
+							       <li v-for="(selectedOption, index) in selectedOptions" :key="index">
+							        <span>{{ selectedOption.optionName }}</span>
+							        <button class="del-btn"  @click="removeSelectedOption(index)">
+							        	<i class="fa-solid fa-x" style="color: #6e86af;"></i>
+							        </button> 
+							        <div class="option-stock">
+							        	 <div class="quantity-box">
+										   <button class="minus-btn" @click="decreaseQuantity(selectedOption)">
+										   		<i class="fa-solid fa-minus" style="color: #4c6794;"></i>
+										   </button>
+							               <input v-model ="selectedOption.quantity" min="1">
+							               <button class="plus-btn" @click="increaseQuantity(selectedOption)">
+							               		<i class="fa-solid fa-plus" style="color: #4b638b;"></i>
+							               </button>
+										 </div>
+										 <div class="option-stock-price">
+										 	{{ calculateTotalPrice(selectedOption) | formatPrice}}원
+										 </div>
+							        </div>							        
+							       </li>
+							    </ul>    
+							</div>
+							
+							</div>
+							<div class="total-price">
+							    <div class="total-title">주문금액</div>
+							    <div class="total-price1">
+							    	<span class="total-price2">{{totalPrice | formatPrice}}원</span>
+							    </div>
+							</div>
+							<div class="main-btn-wrap">
+								<button class="btn1">장바구니</button>
+								<button class="btn2" @click="fnPay">바로구매</button>
+							</div>
+							</div>
+							</div>
 						</div>
 					</div>
 			</div>
@@ -500,6 +623,9 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		selectHelp : [],
+		nonUserScrapbook : false,
+		category : {},
 		scrapbookList : [],
 		userEmail : "",
 		pwd : "",
@@ -560,6 +686,7 @@ var app = new Vue({
 		showScrapModal : false,
 		showScrapModal2 : false,
 		showScrapModal3 : false,
+		helpList : [],
 		/* 그래프 시작 */
 		series: [{
             data : []
@@ -637,6 +764,7 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.product = data.product;
+	            		self.fnGetCategory();
 	               		var price = self.product.productPrice - Math.round(self.product.productPrice * (self.product.discount/100));
 	               		var price2 = Math.floor(price / 100) * 100;
 	               		self.discountPrice =price2
@@ -644,6 +772,20 @@ var app = new Vue({
 	               		self.defaultPrice = self.product.productPrice;
 	                }                
 	            }); 
+		},
+		fnGetCategory : function(){
+			var self = this;
+            var nparmap = {categoryNo : self.product.categoryNo};	            
+            $.ajax({
+                url : "../categorySearch.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {                
+               		self.category = data.category;
+               		
+                }                
+            }); 
 		},
 		fnGetInquiryList : function(){
 			 	var self = this;
@@ -659,14 +801,13 @@ var app = new Vue({
 	               		self.inquiryList = data.inquiryList;
 	               		self.cnt1 = data.cnt;
 						self.pageCount1 = Math.ceil(self.cnt1 / 5);
-	               		console.log(self.inquiryList);
 	               		for(var i=0; i<self.inquiryList.length; i++){
 	               			if(self.inquiryList[i].purchaseYn=="Y"){
 	               				self.inquiryList[i].purchaseYn="구매"
 	               			}else{
 	               				self.inquiryList[i].purchaseYn="비구매"
 	               			}
-	               			console.log(self.inquiryList[i].reply);
+	               			
 	               		}
 	                }                
 	            }); 
@@ -706,7 +847,6 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.inquiryListCnt = data.inquiryListCnt;
-						console.log(self.inquiryListCnt);               			         
 	               		}
 	                              
 	            }); 
@@ -794,11 +934,11 @@ var app = new Vue({
 	               		self.reviewList = data.reviewList;
 	               		self.cnt = data.cnt;
 		                self.pageCount = Math.ceil(self.cnt / 5);
-		                console.log(self.reviewList);
+		                
 	                }                
 	            })
 		},
-		 fnSearch : function(pageNum){
+		 fnSearch : function(pageNum){	
 			var self = this;
 			self.selectPage = pageNum;
 			var startNum = ((pageNum-1) * 5);
@@ -861,9 +1001,6 @@ var app = new Vue({
 	                		if (self.optionName.endsWith(' + ')) {
 	                		  self.optionName = self.optionName.slice(0, -3);
 	                		}
-	                	console.log(self.reviewUser);
-	                	console.log(self.optionName);
-	                	console.log(self.purchaseYn);
 	                }                
 	            })
 		},
@@ -891,7 +1028,6 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	console.log(data.idx);
 	           		var form = new FormData();
 	       	        form.append( "file1",  $("#file1")[0].files[0] );
 	       	     	form.append( "idx",  data.idx); // pk
@@ -982,7 +1118,6 @@ var app = new Vue({
 		          }
 		        this.option1="";
 		      }
-		      console.log(this.selectedOptions);
 		    },
 		removeSelectedOption(index) {
 		        this.selectedOptions.splice(index, 1);
@@ -1041,6 +1176,11 @@ var app = new Vue({
 		    },
 		openScrapModal2: function() {
 		    var self = this;
+		    if(self.userNo == "" || self.userNo == null){
+	    		self.showScrapModal3 = true;
+				self.nonUserScrapbook = true;
+				return;
+	    	}
 		    self.showScrapModal2 = true;
 		    },
 		closeScrapModal: function() {
@@ -1055,7 +1195,7 @@ var app = new Vue({
 		closeScrapModal3: function() {
 			var self = this;
 			self.showScrapModal3 = false;
-			
+			self.nonUserScrapbook = false;
 			},
 		starClass(index) {
 			 const rating = this.hoveringRating || this.selectedRating;
@@ -1108,7 +1248,6 @@ var app = new Vue({
 				 if(self.inquiryText == ""){
 					 
 					 self.inquiryCheck = true;
-					 console.log(self.inquiryCheck);
 				 }
 				 if(self.inquiryOption == 0 && !self.optionCheckbox){
 					 self.inquiryOptionCheck = true;
@@ -1141,9 +1280,8 @@ var app = new Vue({
 			    self.optionCheckbox = checkbox.checked ? true : false;
 			    self.inquiryOptionCheck = false;
 			    self.changeOptionStyle();
-			    console.log(self.optionCheckbox);
 			},
-			fnCheckScrap : function(item) {
+			fnCheckScrap : function() {
 		    	var self = this;
 	            var nparmap = {userNo: self.userNo, productNo : self.productNo};
 	            $.ajax({
@@ -1154,29 +1292,34 @@ var app = new Vue({
 	                success : function(data) { 
 	                	for(let i=0; i<data.list.length;i++){
 	                        self.scrapbookList.push(data.list[i].productNo.toString());
+	                        
 	                     }
 	                }
 	            }); 
 	            
 			},
-			fnInsertScrapbook : function(item) {
+			fnInsertScrapbook : function() {
 		    	var self = this;
-	            var nparmap = { userNo: self.userNo, productNo: item.productNo};
-	           
+	            var nparmap = { userNo: self.userNo, productNo: self.productNo};
+	            if(self.userNo == "" || self.userNo==null){
+	            	self.showScrapModal3 = true;
+	            	self.nonUserScrapbook = true;
+	            	return;
+	            }
 	            $.ajax({
 	                url : "/product/insertScrap.dox",
 	                dataType:"json",	
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) { 
-	                	
+	                	self.fnCheckScrap();
 	                }
 	            }); 
 	            
 			},
-		    fnDeleteScrapbook : function(item) {
+		    fnDeleteScrapbook : function() {
 		    	var self = this;
-	            var nparmap = { userNo: self.userNo, productNo: item.productNo};
+	            var nparmap = { userNo: self.userNo, productNo: self.productNo};
 	           
 	            $.ajax({
 	                url : "/product/deleteScrap.dox",
@@ -1184,10 +1327,83 @@ var app = new Vue({
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) { 
+	                	self.fnCheckScrap();
+	                	self.scrapbookList = [];
 	                }
 	            }); 
 	            
 			},
+			 shareSelectedOption() {
+			      // 현재 페이지의 URL을 가져오기
+			      const currentUrl = window.location.href;
+			      
+			      // 텍스트를 클립보드에 복사
+			      const textArea = document.createElement("textarea");
+			      textArea.value = currentUrl;
+			      document.body.appendChild(textArea);
+			      textArea.select();
+			      document.execCommand("copy");
+			      document.body.removeChild(textArea);
+			      
+			      alert("현재 페이지 URL이 복사되었습니다.");
+			    },
+			   fnSelectHelp(){
+			    	var self = this;
+			    	if(self.userNo==""||self.userNo==null){
+			    		return;
+			    	}
+		            var nparmap = { userNo: self.userNo};
+		            $.ajax({
+		                url : "/reviewSelectHelp.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) { 
+		                	self.selectHelp=data.selectHelp
+		                	self.helpList = [];
+		                	self.selectHelp.forEach(item => self.helpList.push(item.rNo));
+		                	console.log(self.helpList);
+		                	
+		                }
+		            });
+			    },
+			   fnHelp(rNo){
+			    	var self = this;
+			    	if(self.userNo == "" || self.userNo == null){
+			    		self.showScrapModal3 = true;
+						self.nonUserScrapbook = true;
+						return;
+			    	}
+		            var nparmap = { userNo: self.userNo, productNo: self.productNo, rNo : rNo};
+		            $.ajax({
+		                url : "/reviewHelp.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) { 
+		                	self.fnReview();
+		                	self.fnSelectHelp();
+		                }
+		            });
+			    },
+			   fndeleteHelp(rNo){
+			    	var self = this;
+			    	if(product.help <= 0){
+			    		return;
+			    	}
+		            var nparmap = { userNo: self.userNo, productNo: self.productNo, rNo : rNo};
+		            $.ajax({
+		                url : "/reviewDeleteHelp.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+		                	self.helpList = [];
+		                	self.fnReview();
+		                	self.fnSelectHelp();
+		                }
+		            });
+			    }
 	}, // methods
 	created : function() {
 		var self = this;
@@ -1204,6 +1420,8 @@ var app = new Vue({
 		self.changeTextareaStyle();
 		self.fnGetInquiryList();
 		self.fnGetInquiryListCnt();
+		self.fnCheckScrap();
+		self.fnSelectHelp();
 	}// created
 });
 </script>

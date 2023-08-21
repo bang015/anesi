@@ -10,7 +10,7 @@
 <link href="../../css/adminH.css" rel="stylesheet">
 <link href="../css/admin_delivery.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>배송조회</title>
 <style>
 </style>
 </head>

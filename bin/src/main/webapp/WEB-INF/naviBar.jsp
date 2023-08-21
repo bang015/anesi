@@ -9,7 +9,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 <style>
-
+ #recentProductsApp{
+ 	
+ }
 </style>
 
 </head>
@@ -50,6 +52,7 @@ var recentProductsApp = new Vue({
 			  products.forEach(product => product.hover = false);
 			  return products;
 			},
+		
     fnProductView : function(productNo){
       var self = this;
         

@@ -122,6 +122,12 @@
 		FROM t3_tbl_product_image
 		WHERE PRODUCT_NO = #{productNo} AND THUMBNAIL_YN = 'D'
 	</select>  
+	<!-- 상품 카테고리 -->
+	<select id="selectCategory" parameterType="hashmap" resultType="com.example.anesi.model.Category">
+		SELECT *
+		FROM t3_tbl_product_category
+		WHERE CATEGORY_NO = #{categoryNo} OR CATEGORY_NO = (TRUNCATE(#{categoryNo}/10, 0)*10)
+	</select>
 	<!-- 장바구니 등록 -->
 	<insert id="insertCartUser" parameterType="hashmap">
 		INSERT INTO t3_tbl_user_cart 

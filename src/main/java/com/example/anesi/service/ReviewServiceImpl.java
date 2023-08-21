@@ -93,5 +93,29 @@ public class ReviewServiceImpl implements ReviewService{
 		// TODO Auto-generated method stub
 		return reviewMapper.insertReviewImg(map);
 	}
+
+	@Override
+	public HashMap<String, Object> editHelp(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object>resultMap = new HashMap<String, Object>();
+		int help1=reviewMapper.insertHelp(map);
+		int help2=reviewMapper.updateHelp(map);
+		resultMap.put("help1", help1);
+		return resultMap;
+	}
+
+	@Override
+	public List<Review> searchHelpUser(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return reviewMapper.selectHelpUser(map);
+	}
+
+	@Override
+	public int editHelp2(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		reviewMapper.deleteHelp(map);
+		return reviewMapper.updateHelp2(map);
+	}
 	
 }
+ 

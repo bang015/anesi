@@ -1,10 +1,12 @@
 .navi-container{
 	width: 110px;
 	height: 435px;
-	background-color: ghostwhite;
+	background-color: #fff;
+	border: 1px solid #ccc;
 	position: fixed;
 	right: 150px;
 	top: 400px;
+	padding-top: 15px;
 }
 .navi-item-thumnail__image{
 	width: 80px;
@@ -14,7 +16,7 @@
 }
 
 .just{
-	 	width: 110px;
+	 	width: 112px;
 	height: 50px;
 	background-color: #A782C3;
 	position: fixed;
@@ -25,21 +27,30 @@
 	font-size: 16px;
 	color: white;
 	}
-
+#recentProductsApp{
+	display: inline-block;
+    width: 112px;
+    position: fixed;
+    right: 92px;
+    top: 418px;
+    z-index: 1;
+}
 /* 화면 크기가 768px 이하일 때 */
-@media screen and (max-width: 1820px) {
+@media screen and (max-width: 768px) {
   .navi-container  {
     position: static; /* 고정 위치에서 해제됩니다 */
     right: auto; /* 초기값으로 설정 */
     top: auto; /* 초기값으로 설정 */
   }
-  @media screen and (max-width: 1820px) {
+  @media screen and (max-width: 768px) {
   .just  {
     position: static; /* 고정 위치에서 해제됩니다 */
     right: auto; /* 초기값으로 설정 */
     top: auto; /* 초기값으로 설정 */
   }
-  
+ #recentProductsApp{
+	display: none;
+} 
  .thumbnail {
   position: relative;
 }

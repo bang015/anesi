@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.anesi.model.Order;
 import com.example.anesi.model.Product;
+import com.example.anesi.model.Review;
 import com.example.anesi.service.ReviewService;
 import com.google.gson.Gson;
 
@@ -45,6 +46,7 @@ public class ReviewController {
 		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		       int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
 		       int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+		       System.out.println(map);
 		       map.put("startNum", startNum);
 		       map.put("lastNum", lastNum);
 		       resultMap=reviewService.searchReview(map);
@@ -73,6 +75,32 @@ public class ReviewController {
 			public String add(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 				HashMap<String, Object> resultMap = new HashMap<String, Object>();
 				resultMap = reviewService.addReview(map);
+				return new Gson().toJson(resultMap);
+			}
+		// 도움이돼요!
+		  @RequestMapping(value = "/reviewHelp.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			public String help(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+				HashMap<String, Object> resultMap = new HashMap<String, Object>();
+				resultMap = reviewService.editHelp(map);
+				return new Gson().toJson(resultMap);
+			}
+		// 도움이돼요! 해제/삭제
+		  @RequestMapping(value = "/reviewDeleteHelp.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			public String help23(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+				HashMap<String, Object> resultMap = new HashMap<String, Object>();
+				int help = reviewService.editHelp2(map);
+				resultMap.put("help", help);
+				return new Gson().toJson(resultMap);
+			}
+		// 도움이돼요! 중복체크
+		  @RequestMapping(value = "/reviewSelectHelp.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			public String help2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+				HashMap<String, Object> resultMap = new HashMap<String, Object>();
+				List<Review> selectHelp = reviewService.searchHelpUser(map);
+				resultMap.put("selectHelp", selectHelp);
 				return new Gson().toJson(resultMap);
 			}
 		// 리뷰 이미지 등록

@@ -118,7 +118,7 @@
 	<!-- 이미지를 포함 모든 링크는 href="javascript:;"-->
 	
 	<hr id="footer_hr">
-	<a href="../main.do"">
+	<a href="../main.do">
     <img id="f_img" src="../css/image/anesilogo.png" >
     </a>
     <div id="f_part1">
@@ -190,7 +190,7 @@
 	           <span>신한은행 110-409-609660</span>
 	           </div>
 	           <div>예금주 정선일</div>
-	           <div><a id="admin" href="admin/main.do">관리자 페이지>></a></div>
+	           <div><a id="admin" href="http://localhost:8080/admin/main.do" target="_blank">관리자 페이지>></a></div>
 	       </div>
 	   </div>
    	 
