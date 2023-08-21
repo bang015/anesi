@@ -124,6 +124,13 @@
 	<select id="selectUserList" parameterType="hashmap" resultType="com.example.anesi.model.User">
 		SELECT *
 		FROM t3_tbl_user
+		WHERE STATUS = 'U'
+	</select>
+	
+	<select id="selectUserInfo" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT *
+		FROM t3_tbl_user 
+		WHERE USER_NO = #{userNo} 
 	</select>
 	
 	

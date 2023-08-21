@@ -40,5 +40,7 @@ public interface AdminMapper {
 
 	//고객 리스트검색
 	List<User> selectUserList(HashMap<String, Object> map);
+	//고객 상세정보검색
+	List<User> selectUserInfo(HashMap<String, Object> map);
 
 }

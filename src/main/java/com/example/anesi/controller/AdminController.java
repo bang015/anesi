@@ -185,4 +185,12 @@ public class AdminController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
+	//상품 전체 조회
+	@RequestMapping(value = "/admin/userInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String userInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<User> info = adminService.searchUserInfo(map);
+		resultMap.put("info", info);
+		return new Gson().toJson(resultMap);
+	}
 }

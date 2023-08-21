@@ -96,55 +96,45 @@
 						</div>
 					</div>
 				</div>
-<!-- 				<div class="modal" v-if="showScrapModal">
+				<div class="modal" v-if="showViewModal">
 			        <div class="modal-card">
-			        	<div class="modalTitle">상품정보 수정</div>
+			        	<div class="modalTitle">고객정보 수정</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">상품번호</span>
-			        		<span>{{producInfo[0].userNo}}</span>
+			        		<span class="modalSpan1">고객번호</span>
+			        		<span>{{info[0].userNo}}</span>
 			        	</div>
-			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">상품명</span>
-			        		<span><input v-model="producInfo[0].userName" class="inputStyle inputStyle2"></span>
-			        	</div>
-			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">가격</span>
-			        		<span><input v-model="producInfo[0].userPrice" class="inputStyle inputStyle2"></span>
+			     		 <div class="modalStyle1">
+			        		<span class="modalSpan1">고객아이디</span>
+			        		<span><input v-model="info[0].userEmail" class="inputStyle inputStyle2"></span>
 			        	</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">할인율</span>
-			        		<span><input v-model="producInfo[0].discount" class="inputStyle inputStyle2"></span>
+			        		<span class="modalSpan1">연락처</span>
+			        		<span><input v-model="info[0].phone" class="inputStyle inputStyle2"></span>
 			        	</div>
-			        	<div class="modalStyle1 modalStyle2">
-			        		<span class="modalSpan1">옵션</span>
-		        			<div v-if="producInfo.length != 0">
-		        				<table class="modalTable">
-		        					<tr>
-		        						<th class="modalTdTr">옵션이름</th>
-		        						<th class="modalTdTr">옵션 가격 증가량</th>
-		        						<th class="modalTdTr">옵션 재고 수량</th>
-		        					</tr>
-		        					<tr v-for="item in producInfo">
-		        						<td class="modalTdTr"><input v-model="item.optionName"  class="modalSpan2 inputStyle"></td>
-		        						<td class="modalTdTr"><input v-model="item.optionPrice" class="modalSpan2 inputStyle"></td>
-		        						<td class="modalTdTr"><input v-model="item.productStock" class="inputStyle"></td>
-		        					</tr>
-		        				</table>
-		        			</div>
+			        	<div class="modalStyle1">
+			        		<span class="modalSpan1">생일</span>
+			        		<span><input v-model="info[0].birthday" class="inputStyle inputStyle2"></span>
 			        	</div>
+			        	<div class="modalStyle1">
+			        		<span class="modalSpan1">성별</span>
+			        		<span><input v-model="info[0].gender" class="inputStyle inputStyle2"></span>
+			        	</div>
+			        	<div class="modalStyle1">
+			        		<span class="modalSpan1">문자수신여부</span>
+			        		<span><input v-model="info[0].smsYn" class="inputStyle inputStyle2"></span>
+			        	</div>
+			        	
+			        	
+			        	
+			        	
 		        		<div class="modalStyle4">
-		        			<span>
-		        				<button class="btn1 btn2 btn3" @click="fnOptionAdd">옵션+</button>
-		        				<button class="btn1 btn2" @click="fnOptionDel">옵션-</button>
-		        				<span>(최소 1개 최대 5개)</span>
-		        			</span>
 		        			<span>
 			        			<button class="btn1 btn2" @click="fnUpdateuser">저장</button>
 			        			<button @click="closeModal" class="btn1 btn2 btn3">취소</button>
 		        			</span>
-		        		</div>
+		        		</div> 
 			        </div>
-		        </div> -->
+		        </div>
 				</div>
 			</div>
 </body>
@@ -159,8 +149,9 @@ var app = new Vue({
 		checkList : [],
 		allChecked : false,
 		
-		showScrapModal : false,
-		userInfo : [],
+		showViewModal : false,
+		info : [],
+		userNo : 0
 
 		
 	},// data
@@ -176,7 +167,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.list = data.list;
-						
 					}
             });
 		},
@@ -198,7 +188,7 @@ var app = new Vue({
 				self.allChecked = false;
 			}
 		},
-		//상품 상세&옵션 정보
+		//고객 상세 정보
 		fnUserEdit(userNo){
 			var self = this;
 			var nparmap = {userNo};
@@ -208,25 +198,27 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	self.userInfo = data.info;
-                	self.userNo = userNo;
-                	
+                	self.info = data.info;
+                	console.log(data);
+                	self.openViewModal(); 
+
                 }
+
             });
 			
 		},
-		/*// 모달열기
-		openScrapModal: function() {
+		// 모달열기
+		openViewModal: function() {
 			var self = this;
-			self.showScrapModal = true;
+			self.showViewModal = true;
 		},
 		// 모달 닫기
 		closeModal: function() {
 			var self = this;
-			self.showScrapModal = false;
+			self.showViewModal = false;
 			location.reload();
 		},
-		//수정 정보 업데이트
+		/* //수정 정보 업데이트
 		fnUpdateProduct(){
 			var self = this;
 			var discountYn = '';

@@ -94,6 +94,11 @@ public class AdminServiceImpl implements AdminService {
 	public List<User> searchUserList(HashMap<String, Object> map) {
 		return adminMapper.selectUserList(map);
 	}
+
+	@Override
+	public List<User> searchUserInfo(HashMap<String, Object> map) {
+		return adminMapper.selectUserInfo(map);
+	}
 	
 	
 	
