@@ -20,43 +20,7 @@
 	<div id="app">
 			<div id="container">
 				<div class="containerTitle">고객관리</div>
-			<!-- 	<div class="containerCheckList">
-					<div class="checkList">
-						<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
-						<div class="checkListText">
-							<div>전체</div>
-							<div><span class="numText">{{list.length}}</span>건</div> 
-						</div>
-					</div>
-					<div class="checkList">
-						<div class="iconBack"><i class="fa-solid fa-cart-shopping fa-2xl" style="color: #ffffff;"></i></div>
-						<div class="checkListText">
-							<div>판매중</div>
-							<div><span class="numText">{{list.length - soldOut}}</span>건</div> 
-						</div>
-					</div>
-					<div class="checkList">
-						<div class="iconBack"><i class="fa-solid fa-cart-arrow-down fa-2xl" style="color: #ffffff;"></i></div>
-						<div class="checkListText">
-							<div>품절</div>
-							<div><span class="numText">{{soldOut}}</span>건</div> 
-						</div>
-					</div>
-					<div class="checkList">
-						<div class="iconBack"><i class="fa-solid fa-pause fa-2xl" style="color: #ffffff;"></i></div>
-						<div class="checkListText">
-							<div>판매중지</div>
-							<div><span class="numText">{{stop}}</span>건</div> 
-						</div>
-					</div>
-					<div class="checkList">
-						<div class="iconBack"><i class="fa-solid fa-ban fa-2xl" style="color: #ffffff;"></i></div>
-						<div class="checkListText">
-							<div>판매종료</div>
-							<div><span class="numText">{{end}}</span>건</div> 
-						</div>
-					</div>
-				</div> -->
+				
 				<div class="containerProductList">
 					<div class="productListTitle">
 						<span>고객목록 (총 {{list.length}}개)</span>
@@ -102,6 +66,10 @@
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">고객번호</span>
 			        		<span>{{info[0].userNo}}</span>
+			        	</div>
+			     		 <div class="modalStyle1">
+			        		<span class="modalSpan1">이름</span>
+			        		<span><input v-model="info[0].userName" class="inputStyle inputStyle2"></span>
 			        	</div>
 			     		 <div class="modalStyle1">
 			        		<span class="modalSpan1">고객아이디</span>
