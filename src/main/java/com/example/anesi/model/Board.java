@@ -18,6 +18,7 @@ public class Board {
 	private String cUserNo;
 	private String uImgName;
 	private String uImgPath;
+	private String userNo;
 	
 	
 	public int getCommentNo() {
@@ -121,6 +122,12 @@ public class Board {
 	}
 	public void setuImgPath(String uImgPath) {
 		this.uImgPath = uImgPath;
+	}
+	public String getUserNo() {
+		return userNo;
+	}
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
 	}
 
 }

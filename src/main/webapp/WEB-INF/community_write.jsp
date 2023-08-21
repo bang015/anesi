@@ -97,7 +97,7 @@ var app = new Vue({
 			}
 			var nparmap = self.info;   // { title : self.info.title, contents : self.info.contents } 
 			nparmap.nick = self.sessionNick; // { title : self.info.title, contents : self.info.contents, bUser : self.bUser }    
-			console.log(nparmap);
+			nparmap.userNo = self.sessionNo;
 			$.ajax({
 				url : "/community/insert.dox",
 				dataType:"json",   

@@ -5,8 +5,8 @@
 	
 	<!-- 게시글 작성 -->
 	<insert id="insertBoard" parameterType="hashmap">
-		INSERT INTO t3_tbl_board(TITLE, CONTENT, NICK)
-		VALUES(#{title}, #{content}, #{nick})
+		INSERT INTO t3_tbl_board(TITLE, CONTENT, NICK, USER_NO)
+		VALUES(#{title}, #{content}, #{nick}, #{userNo})
 	</insert>
 	
 	<!-- 게시글 리스트 -->
