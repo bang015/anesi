@@ -52,5 +52,7 @@ public interface ProductService {
 	int deleteAllCartItems (HashMap<String, Object> map);
 	//최근본상품 출력
 	List<Product> selectLatest (HashMap<String, Object> map);
+	//카테고리 상품 출력
+	List<Product> selectCate (HashMap<String, Object> map);
 }
 

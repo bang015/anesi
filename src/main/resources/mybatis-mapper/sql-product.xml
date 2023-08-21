@@ -266,6 +266,13 @@
     FROM t3_tbl_product_image
     WHERE PRODUCT_NO = #{productNo}
 </select>
+
+<!-- 카테고리 출력 -->
+	 <select id="selectCate" parameterType="hashmap" resultType="com.example.anesi.model.Category">
+    SELECT *
+    FROM t3_tbl_product_category
+    WHERE CATEGORY_NAME = #{categoryName}
+</select>
 <!-- 장바구니 구매버튼 -->
 
 </mapper>

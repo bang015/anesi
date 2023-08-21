@@ -82,48 +82,48 @@
 
 				<li><a onclick="fnMoveaa('10')">가구</a>
 					<ul class="subcategory-list" style="display: none;">
-						<li><a>침대</a></li>
-						<li><a>소파</a></li>
-						<li><a>수납장</a></li>
-						<li><a>의자</a></li>
-						<li><a>식탁</a></li>
+						<li><a class="category-link">침대</a></li>
+						<li><a class="category-link">소파</a></li>
+						<li><a class="category-link">수납장</a></li>
+						<li><a class="category-link">의자</a></li>
+						<li><a class="category-link">식탁</a></li>
 					</ul></li>
 				<li><a onclick="fnMoveaa('20')">조명</a>
 					<ul class="subcategory-list" style="display: none;">
-						<li><a>장스텐드</a></li>
-						<li><a>단스탠드</a></li>
-						<li><a>무드등</a></li>
-						<li><a>천장등</a></li>
+						<li><a class="category-link">장스텐드</a></li>
+						<li><a class="category-link">단스탠드</a></li>
+						<li><a class="category-link">무드등</a></li>
+						<li><a class="category-link">천장등</a></li>
 					</ul></li>
 				<li><a onclick="fnMoveaa('30')">패브릭</a>
 					<ul class="subcategory-list" style="display: none;">
-						<li><a>침구</a></li>
-						<li><a>커튼</a></li>
-						<li><a>러그</a></li>
+						<li><a class="category-link">침구</a></li>
+						<li><a class="category-link">커튼</a></li>
+						<li><a class="category-link">러그</a></li>
 					</ul></li>
 				<li><a onclick="fnMoveaa('40')">가전</a>
 					<ul class="subcategory-list" style="display: none;">
-						<li><a>냉장고</a></li>
-						<li><a>tv</a></li>
-						<li><a>세탁기</a></li>
-						<li><a>음향/영상가전</a></li>
-						<li><a>청소가전</a></li>
+						<li><a class="category-link">냉장고</a></li>
+						<li><a class="category-link">tv</a></li>
+						<li><a class="category-link">세탁기</a></li>
+						<li><a class="category-link">음향/영상가전</a></li>
+						<li><a class="category-link">청소가전</a></li>
 					</ul></li>
 				<li><a onclick="fnMoveaa('50')">데코/식물</a>
 					<ul class="subcategory-list" style="display: none;">
-						<li><a>조화</a></li>
-						<li><a>꽃다발</a></li>
-						<li><a>화병</a></li>
-						<li><a>그림 액자</a></li>
-						<li><a>캔들 디퓨저</a></li>
+						<li><a class="category-link">조화</a></li>
+						<li><a class="category-link">꽃다발</a></li>
+						<li><a class="category-link">화병</a></li>
+						<li><a class="category-link">그림 액자</a></li>
+						<li><a class="category-link">캔들 디퓨저</a></li>
 					</ul></li>
 				<li><a onclick="fnMoveaa('60')">반려동물</a>
 					<ul class="subcategory-list" style="display: none;">
-						<li><a>하우스/방석</a></li>
-						<li><a>캣타워/스크래쳐</a></li>
-						<li><a>안전문/울타리</a></li>
-						<li><a>밥그릇/급식기</a></li>
-						<li><a>위생용품</a></li>
+						<li><a class="category-link">하우스/방석</a></li>
+						<li><a class="category-link">캣타워/스크래쳐</a></li>
+						<li><a class="category-link">안전문/울타리</a></li>
+						<li><a class="category-link">밥그릇/급식기</a></li>
+						<li><a class="category-link">위생용품</a></li>
 					</ul></li>
 			</ul>
 		</div>
@@ -284,7 +284,43 @@
 		        searchProduct(productName);
 		    }
 		});
+		function loadCategoryProducts(categoryName) {
+			  // 서버에서 카테고리별 상품 데이터를 가져오는 AJAX 요청
+			  $.ajax({
+			    method: "POST",
+			    url: "/product/getProductsByCategory.dox",
+			    data: {
+			      category: categoryName
+			    },
+			    success: function(response) {
+			    	 console.log("Full response data:", response); // 'data' 대신 'response' 사용
+			         console.log("Products list:", response.list); // 'data' 대신 'response' 사용
+			    	// 응답 데이터를 바로 사용하십시오 (JSON.parse 사용하지 말것)
+			        var data = response;
 
+			        // 가져온 상품 데이터를 페이지에 출력하는 로직
+			        var productContainer = $("#product-container");
+			        productContainer.empty(); // 기존 상품 데이터 삭제
+			                                
+			        // 상품 데이터를 추가
+			        $.each(data.list, function(index, product) {
+			            // 여기에 각 상품을 표시하는 HTML 코드를 작성하세요.
+			            // 예를 들어, 아래와 같이 간단한 div를 사용할 수 있습니다.
+			            var productDiv = $("<div>").text(product.name).appendTo(productContainer);
+			        });
+			    },
+			    error: function(error) {
+			      console.error("Error occurred while fetching category data:", error);
+			    }
+			  });
+			}
+			
+		$(document).ready(function() {
+			  $(".category-link").click(function() {
+			    var categoryName = $(this).text();
+			    loadCategoryProducts(categoryName);
+			  });
+			});
 		
 
 

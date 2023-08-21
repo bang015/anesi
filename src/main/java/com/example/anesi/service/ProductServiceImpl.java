@@ -107,6 +107,11 @@ public class ProductServiceImpl implements ProductService {
 			// TODO Auto-generated method stub
 			return productMapper.selectLatest(map);
 		}
+		@Override
+		public List<Product> selectCate(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			return productMapper.selectCate(map);
+		}
 	
 	
 }
