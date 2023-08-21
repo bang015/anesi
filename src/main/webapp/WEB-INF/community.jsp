@@ -89,6 +89,13 @@
     font-weight: 100;
     margin-left: 3px;
 }
+.text3{
+	text-align:center;
+	font-size: 18px;
+    font-weight: 100;
+    color: #9b9b9b;
+    margin : 50px 0px;
+}
 #board-body-head{
 	display: inline-block;
 }
@@ -191,6 +198,7 @@
 		        </div>
 			</div>
 		</div>
+		<div v-if="list < 1" class="text3"> 검색된 게시글이 없습니다.</div>
 		<template>
 	  <paginate
 	    :page-count="pageCount"
@@ -210,7 +218,7 @@
 	    :prev-text="'〈'"
 	    :next-text="'〉'"
 	    :container-class="'pagination'"
-	    :page-class="'page-item'" name="searchPage" v-if="searchFlg==true">
+	    :page-class="'page-item'" name="searchPage" v-if="searchFlg==true && list.length > 0">
 	  </paginate>
 	</template>
 	</div>
@@ -257,7 +265,6 @@ var app = new Vue({
 		},
 		fnPageSearch : function(pageNum){
 			var self = this;
-			/* self.selectPage = pageNum; */
 			var startNum = ((pageNum-1) * 12);
 			var lastNum = 12;
 			var nparmap = {startNum : startNum, lastNum : lastNum};

@@ -16,6 +16,8 @@ public class Board {
 	private String cUDateTime;
 	private int commCnt;
 	private String cUserNo;
+	private String uImgName;
+	private String uImgPath;
 	
 	
 	public int getCommentNo() {
@@ -107,6 +109,18 @@ public class Board {
 	}
 	public void setcUserNo(String cUserNo) {
 		this.cUserNo = cUserNo;
+	}
+	public String getuImgName() {
+		return uImgName;
+	}
+	public void setuImgName(String uImgName) {
+		this.uImgName = uImgName;
+	}
+	public String getuImgPath() {
+		return uImgPath;
+	}
+	public void setuImgPath(String uImgPath) {
+		this.uImgPath = uImgPath;
 	}
 
 }

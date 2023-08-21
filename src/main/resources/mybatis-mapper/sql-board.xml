@@ -141,7 +141,9 @@
 	<!-- 댓글 리스트 -->
 	<select id="selectComment" parameterType="hashmap" resultType="com.example.anesi.model.Board">
 		SELECT *
-		FROM t3_tbl_board_comment
+		FROM t3_tbl_board_comment c
+		INNER JOIN
+		t3_tbl_profile_image i ON c.C_USER_NO = i.USER_NO
 		WHERE BOARD_NO = #{bNo}
 		ORDER BY C_CDATETIME DESC
 		LIMIT #{startNum}, #{lastNum}

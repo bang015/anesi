@@ -174,6 +174,7 @@ h1{
     width: 30px;
     height: 30px;
     border-radius: 100%;
+    object-fit: cover;
 }
 .comment-item{
 	padding-left: 43px;
@@ -254,14 +255,14 @@ h1{
 			<div style="overflow: auto;">
 			    <pre v-html="info.content"></pre>
 			</div>
-			<div class="stat"><!-- 좋아요 <span class="stat-detail">2</span> 　 -->댓글 <span class="stat-detail">{{cList.length}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
+			<div class="stat"><!-- 좋아요 <span class="stat-detail">2</span> 　 -->댓글 <span class="stat-detail">{{cCnt}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
 			
 			<button class="btn2" @click="fnBack">목록으로</button>
 			<button class="btn2" @click="fnDelete" v-if="sessionNick==info.nick||sessionNick=='관리자'">삭제</button>
 			<button class="btn2" @click="fnEdit(bNo)" v-if="sessionNick==info.nick">수정</button>
 			</div>
 			<hr class="hrr">
-			<div style="font-size:19px;">댓글 <span>{{cList.length}}</span></div>
+			<div style="font-size:19px;">댓글 <span>{{cCnt}}</span></div>
 			<div id="comment-head">
 				<div v-if="sessionNo!=''">
 					<img class="profile2" :src="profileImg.uImgPath+'/'+profileImg.uImgName"><input class="comment-input" type="text" v-model="content">
@@ -273,7 +274,7 @@ h1{
 				<div v-for="(item, index) in commentList">
 					    <div class="comment-item">
 					        <div>
-					            <div class="cNick">{{item.cNick}}<img class="c-profile" :src="userProfileImagePath(item.cUserNo)"></div>
+					            <div class="cNick">{{item.cNick}}<img class="c-profile" :src="item.uImgPath+'/'+item.uImgName"></div>
 					            <div class="cComm">
 					                <span v-if="item.commFlg==true">
 					                    <input v-model="item.comm" class="comment-edit-input" @keyup.enter="fnComEdit(item.commentNo, item.comm)">
@@ -326,6 +327,7 @@ var app = new Vue({
 		bNo : "${map.boardNo}",
 		userNo : "",
 		info : {},
+		cCnt : "",
 		userInfo : {},
 		content : "",
 		cList : [],
@@ -336,17 +338,7 @@ var app = new Vue({
 		cnt : 0,
 		profileImg : {},
 		uProfileImg : {}
-	},// data
-	computed: {
-	    userProfileImagePath() {
-	    	var self = this;
-	        return function (cUserNo) {
-	            if (self.cProfileImg && self.cProfileImg.uImgPath && self.cProfileImg.uImgName) {
-	                return `${self.cProfileImg.uImgPath}/${self.cProfileImg.uImgName}`;
-	            }; // 이미지가 없는 경우에 대한 기본 경로를 설정해주세요
-	        };
-	    },
-	},
+	},// data	
 	methods : {
 		fnGetInfo : function(){
 			var self = this;
@@ -361,6 +353,7 @@ var app = new Vue({
                 	self.userInfo = data.userInfo;
                 	self.userNo = data.userInfo.userNo;
                 	self.fnGetUserProfile();
+                	self.cCnt = data.cCnt;
                 }
             });
 		},
@@ -572,26 +565,14 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.uProfileImg = data.img;
-                }
-			})
-		},
-		fnGetcUserProfile(){
-			var self = this;
-			var nparmap = {userNo: cUserNo};
-			$.ajax({
-                url : "/profileImg.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {
-                	self.cProfileImg = data.img;
-                	console.log(data.img);
+                	console.log(self.uProfileImg);
                 }
 			})
 		}
 	}, // methods
 	created : function() {
 		var self = this;
+		console.log(self.uProfileImg.uImgPath);
 		self.fnGetInfo();
 		self.fnGetProfile();
 		self.fnGetComment();
