@@ -47,4 +47,8 @@ public interface UserMapper {
 	List<UserOrder> selectOrderList(HashMap<String, Object> map);
 	// 리뷰조회
 	List<Review> selectMyReviewList(HashMap<String, Object> map);
+	// 리뷰 수정
+	int undateReview(HashMap<String, Object> map);
+	// 리뷰 이미지 삭제
+	int deleteReviewImage(HashMap<String, Object> map);
 }

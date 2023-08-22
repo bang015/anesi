@@ -252,4 +252,13 @@ public class UserController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
+	
+	//리뷰 수정
+	@RequestMapping(value = "/mypage/editReview.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editReview(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("cnt", userService.editReview(map));
+		return new Gson().toJson(resultMap);
+	}
 }

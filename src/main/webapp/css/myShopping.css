@@ -62,7 +62,6 @@
     flex-direction: column;
 }
 .orderBox{
-	height: 150px;
 	margin-bottom: 30px;
 	display: flex;
 	padding: 10px;
@@ -86,7 +85,7 @@
 	font-size: 14px;
 }
 .optionName{
-	font-size: 14px;
+	font-size: 16px;
 	width: 30%;
 }
 .productPrice{
@@ -255,7 +254,7 @@
 	margin-left: 20px;
 }
 .reviewBox{
-	margin-bottom: 50px;
+	margin-bottom: 70px;
 	display: flex;
 	justify-content: space-between;
 }
@@ -271,4 +270,18 @@
 }
 .content1{
 	font-size: 16px;
+}	
+.deliverySitName{
+	padding: 10px;
+	margin-left: 10px;
+	display: inline-block;
+	border: #dbdbdb solid 1px;
+	background-color: #fff;
+	border-radius: 4px;
+	color: #A782C3;
+}
+.box5{
+	margin-top: 50px;
+	height: 170px;
+	text-align: left;
 }

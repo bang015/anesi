@@ -69,20 +69,23 @@
 					</div>
 				</div>
 				<div>
-				    <div v-for="item in orderList" class="orderBox">
-					    <img alt="" :src="item.imgPath+'/'+item.imgName" class="imgBox">
+				    <div v-for="item in orderList" class="box5">
+				    	<div class="deliverySitName">{{item.deliverySitName}}</div>
+					   <div class="orderBox">
+					   	 <img alt="" :src="item.imgPath+'/'+item.imgName" class="imgBox">
 					    <div class="productName">
 					    	<div class="manufacturer">{{item.manufacturer}}</div>
 					    	<div class="name" @click="fnReviewMove(item.productNo)">{{item.productName}}</div>
 					    </div>
 					    <div class="optionName">
 					    	<div>{{item.optionName}}</div>
-					    	<div class="productPrice">{{item.productPrice}}<span class="span1"> | </span><span class="span2">{{item.cnt}}개</span></div>
+					    	<div class="productPrice">{{numberWithCommas(item.productPrice)}}<span class="span1"> | </span><span class="span2">{{item.cnt}}개</span></div>
 					    </div>
 					    <div class="buttonBox">
 					    	<button @click="fnReOrder(item)" class="btn1">재구매</button>
 					    	<button @click="fnReviewMove(item.productNo)" class="btn2">리뷰작성</button>
 					    </div>
+					   </div>
 				    </div>
 				</div>
 			</div>
@@ -127,16 +130,30 @@ var app = new Vue({
                 success : function(data) {
                 	self.orderList = data.list;
                 	for(let i = 0; i < self.orderList.length; i++){
-                		switch(self.orderList[i].deliverySit){
-                			case '1':  self.deliverySit.order++; break;
-                			case '2':  self.deliverySit.ready++; break;
-                			case '3':  self.deliverySit.shipping++; break;
-                			case '4':  self.deliverySit.completed++; break;
-                			default : break;
-                		}
+                		switch (self.orderList[i].deliverySit) {
+                	    case '1':
+                	        self.deliverySit.order++;
+                	        self.orderList[i].deliverySitName = '결제완료';
+                	        break;
+                	    case '2':
+                	        self.deliverySit.ready++;
+                	        self.orderList[i].deliverySitName = '배송준비';
+                	        break;
+                	    case '3':
+                	        self.deliverySit.shipping++;
+                	        self.orderList[i].deliverySitName = '배송중';
+                	        break;
+                	    case '4':
+                	        self.deliverySit.completed++;
+                	        self.orderList[i].deliverySitName = '배송완료';
+                	        break;
+                	    default:
+                	        break;
+                	}
                 		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
                 		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
                 	}
+                	console.log(self.orderList);
                 }
             });
 		},
@@ -204,6 +221,9 @@ var app = new Vue({
 			}
 			this.optionList[0] = ({name : deliverySitName, deliverySit : deliverySit});
 			this.fnOrderList();
+        },
+        numberWithCommas(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
         
 	}, // methods

@@ -26,11 +26,11 @@
 					<div class="amountBox">
 						<h2 class="moneyText">결제 금액</h2>
 						<div>
-							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{totalProductAmount}}원</span></div>
-							<div class="orNameText">배송비<span class="allMoneyText">3000원</span></div>
-							<div class="orNameText">쿠폰 사용<span class="allMoneyText">{{discount}}원</span></div>
+							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{numberWithCommas(totalProductAmount)}}원</span></div>
+							<div class="orNameText">배송비<span class="allMoneyText">3,000원</span></div>
+							<div class="orNameText">쿠폰 사용<span class="allMoneyText">{{numberWithCommas(discount)}}원</span></div>
 						</div>
-						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{finalAmount+deliveryfee+discount}}</span> 원</span></div>
+						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{numberWithCommas(finalAmount+deliveryfee+discount)}}</span> 원</span></div>
 					</div>
 					<div class="orTerms">
 						<div class="allTerms">
@@ -197,7 +197,7 @@
 							<div>
 								<div class="prProductName">{{item.productName}}</div>
 								<div class="prProductOption">{{item.optionName}}</div>
-								<div class="prProductPrice">{{item.productPrice}}원 <span>| {{item.cnt}}개</span></div>
+								<div class="prProductPrice">{{numberWithCommas(item.productPrice)}}원 <span>| {{item.cnt}}개</span></div>
 							</div>
 						</div>
 					</div>
@@ -797,7 +797,9 @@ var app = new Vue({
 	              location.reload();
 
 	            },
-
+	            numberWithCommas(number) {
+	                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	            }
 	}, // methods
 	created : function() {
 		var self = this;

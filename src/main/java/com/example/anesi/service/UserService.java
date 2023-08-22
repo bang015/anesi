@@ -43,4 +43,9 @@ public interface UserService {
 	List<UserOrder> searchOrderList(HashMap<String, Object> map);
 	// 나의 리뷰 조회
 	List<Review> searchMyReviewList(HashMap<String, Object> map);
+	// 리뷰 수정
+	int editReview(HashMap<String, Object> map);
+	
+	// 리뷰 이미지 수정
+	int editReviewImage(HashMap<String, Object> map);
 }
