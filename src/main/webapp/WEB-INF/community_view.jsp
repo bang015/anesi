@@ -23,9 +23,12 @@
 	margin : 10px auto;
 }
 #container{
-	margin : 10px auto;
-	width: 700px;
-	padding : 10px 0px;
+	margin: 10px auto;
+    width: 700px;
+    padding: 10px 0px;
+    font-size: 15px;
+    font-weight: 100;
+    line-height: 24px;
 }
 .thum1{
 	position: relative;
@@ -155,6 +158,10 @@
 h1{
 	margin: 30px 0px;
 }
+h2{
+	margin : 30px 0px;
+	margin-bottom : 40px;
+}
 .cNick{
 	position: relative;
     display: flex;
@@ -229,6 +236,12 @@ h1{
 .pagination li.active a{
 	color : white;
 }
+#comment-body pre {
+    white-space: pre-wrap; /* 이 속성은 텍스트의 자동 줄 바꿈을 활성화합니다 */
+}
+img{
+	max-width: 700px;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -242,18 +255,18 @@ h1{
 		</div>
 		<div id="container">
 			<div class="thum1">
-				<img class="thum2" src="../css/image/community/commu_test.jpg">
+				<img :src="imgPath+'/'+imgName" class="thum2">
 			</div>
 			<div id="content-head">
-				<div><h1>{{info.title}}</h1></div>
+				<div><h2>{{info.title}}</h2></div>
 				<div><img class="profile" :src="uProfileImg.uImgPath+'/'+uProfileImg.uImgName"></div>
 				<div class="time">{{postCalculateTime(info.cDateTime)}}<span v-if="info.cDateTime!=info.uDateTime"> · {{calculateTime(info.uDateTime)}} 수정</span></div>
 				<div class="nick">{{info.nick}}</div>
 			</div>
 			<hr class="hrr">
 			<div id="comment"></div>
-			<div style="overflow: auto;">
-			    <pre v-html="info.content"></pre>
+			<div>
+			    <div v-html="info.content"></div>
 			</div>
 			<div class="stat"><!-- 좋아요 <span class="stat-detail">2</span> 　 -->댓글 <span class="stat-detail">{{cCnt}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
 			
@@ -337,7 +350,9 @@ var app = new Vue({
 		pageCount: 1,
 		cnt : 0,
 		profileImg : {},
-		uProfileImg : {}
+		uProfileImg : {},
+		imgPath : "",
+		imgName : ""
 	},// data	
 	methods : {
 		fnGetInfo : function(){
@@ -354,7 +369,8 @@ var app = new Vue({
                 	self.userNo = data.userInfo.userNo;
                 	self.fnGetUserProfile();
                 	self.cCnt = data.cCnt;
-                	console.log(self.bNo);
+                	self.imgPath = data.info.imgPath;
+                	self.imgName = data.info.imgName;
                 }
             });
 		},
@@ -484,7 +500,6 @@ var app = new Vue({
 		fnComDelete : function(cNo){
 			var self = this;
 			var nparmap = {cNo : cNo};
-			console.log(cNo);
             $.ajax({
                 url : "/community/deleteComm.dox",
                 dataType:"json",	
@@ -566,14 +581,12 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.uProfileImg = data.img;
-                	console.log(self.uProfileImg);
                 }
 			})
 		}
 	}, // methods
 	created : function() {
 		var self = this;
-		console.log(self.uProfileImg.uImgPath);
 		self.fnGetInfo();
 		self.fnGetProfile();
 		self.fnGetComment();

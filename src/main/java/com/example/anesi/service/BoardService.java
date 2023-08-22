@@ -8,7 +8,7 @@ import com.example.anesi.model.BoardComment;
 
 public interface BoardService {
 	// 게시글 작성
-	int insertBoard(HashMap<String, Object> map);
+	HashMap<String, Object> insertBoard(HashMap<String, Object> map);
 	// 전체 게시글
 	HashMap<String, Object> boardAll(HashMap<String, Object> map);
 	// 내 게시글
@@ -22,7 +22,9 @@ public interface BoardService {
 	// 조회수 증가
 	int updateViewCnt(HashMap<String, Object> map);
 	// 게시글 삭제
-	int deleteBoard(HashMap<String, Object> map);
+	HashMap<String, Object> deleteBoard(HashMap<String, Object> map);
+	// 게시글 이미지 삭제
+	int deleteBoardImage(HashMap<String, Object> map);
 	// 게시글 수정
 	int updateBoard(HashMap<String, Object> map);
 	// 댓글 입력
@@ -33,5 +35,9 @@ public interface BoardService {
 	int deleteComment(HashMap<String, Object> map);
 	// 댓글 수정
 	int editComment(HashMap<String, Object> map);
+	// 커뮤니티 썸네일 등록
+	int communityUpload(HashMap<String, Object> map);
+	// 커뮤니티 썸네일 수정
+	int communityUpdate(HashMap<String, Object> map);
 	
 }

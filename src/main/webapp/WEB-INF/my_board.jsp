@@ -162,29 +162,28 @@ li{
 	display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
-    text-align : center;
-    position: relative;
-    margin-top: 12px;
-    place-items: center;
+    margin: 0px 0px 0px 23px;
 }
 .board1{
-    position: relative;
-    display: flex;
-    text-align : center;
+    text-align: center;
+    width: 200px;
+}
+.board1-item{
+	width: 300px;
 }
 .photo1{
-	position: relative;
-    width: 170px;
-    height: 170px;
+    position: relative;
+    width: 200px;
+    height: 200px;
     overflow: hidden;
-    border-radius : 5px;
-}
+    border-radius: 5px;
+	}
 .photo2{
-	position: absolute; 
+	position: absolute;
     top: 0;
     left: 0;
-	width: 170px;
-    height: 170px;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
     transition: opacity 0.3s, visibility 0.3s;
 }
@@ -195,7 +194,7 @@ li{
 }
 .title{
 	margin : 14px 0px 10px 0px;
-	font-size: 17px;
+	font-size: 16px;
 }
 .nick{
 	margin-bottom : 12px;
@@ -304,7 +303,7 @@ li{
 		        <div class="board1">
 		            <div class="board1_item">
 		                <div class="photo1">
-		                   	<a @click="fnView(item.boardNo)"><img class="photo2" src="../css/image/community/commu_test.jpg"></a>
+		                   	<a @click="fnView(item.boardNo)"><img class="photo2" :src="item.imgPath+'/'+item.imgName"></a>
 		               		<img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
 		               	</div>
 		               	<a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
@@ -365,6 +364,7 @@ var app = new Vue({
                 	self.list = data.list;
                 	self.cnt = data.cnt;
 	                self.pageCount = Math.ceil(self.cnt / 8);
+	                console.log(self.list);
                 }
             }); 
 		},

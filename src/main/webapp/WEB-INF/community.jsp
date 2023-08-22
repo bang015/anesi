@@ -62,7 +62,7 @@
 	font-size: 17px;
 }
 .nick{
-	margin-bottom : 12px;
+	margin-bottom : 14px;
 	font-size : 14px;
 }
 .view{
@@ -151,6 +151,16 @@
 .pagination li.active a{
 	color : white;
 }
+.profile{
+	width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    align-items: center;
+    top: 4.5px;
+    left: -5px;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -164,12 +174,12 @@
 		            <div class="board1_item">
 		           		<div>
 		                <div class="photo1">
-		                    <a @click="fnView(item.boardNo)"><img class="photo2" src="../css/image/community/commu_test.jpg"></a>
+		                    <a @click="fnView(item.boardNo)"><img class="photo2" :src="item.imgPath+'/'+item.imgName"></a>
 		                <img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
 		                </div>
 		                </div>
 		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
-		                <div class="nick">{{item.nick}}</div>
+		                <div class="nick"><img :src="item.uImgPath+'/'+item.uImgName" class="profile">{{item.nick}}</div>
 		                <div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		            </div>
 		        </div>
@@ -188,11 +198,11 @@
 		        <div class="board1">
 		            <div class="board1_item">
 		                <div class="photo1">
-		                    <a @click="fnView(item.boardNo)"><img class="photo2" src="../css/image/community/commu_test.jpg"></a>
+		                    <a @click="fnView(item.boardNo)"><img class="photo2" :src="item.imgPath+'/'+item.imgName"></a>
 		                <img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
 		                </div>
 		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
-		                <div class="nick">{{item.nick}}</div>
+		                <div class="nick"><img :src="item.uImgPath+'/'+item.uImgName" class="profile">{{item.nick}}</div>
 		                <div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		            </div>
 		        </div>
@@ -260,6 +270,7 @@ var app = new Vue({
                 	self.list = data.list;
                 	self.cnt = data.cnt;
 	                self.pageCount = Math.ceil(self.cnt / 12);
+	                console.log(self.list);
                 }
             }); 
 		},

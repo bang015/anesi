@@ -4,7 +4,7 @@
 <mapper namespace="com.example.anesi.mapper.BoardMapper">
 	
 	<!-- 게시글 작성 -->
-	<insert id="insertBoard" parameterType="hashmap">
+	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyProperty="BOARD_NO" keyColumn="BOARD_NO">
 		INSERT INTO t3_tbl_board(TITLE, CONTENT, NICK, USER_NO)
 		VALUES(#{title}, #{content}, #{nick}, #{userNo})
 	</insert>
@@ -18,6 +18,8 @@
 			FROM t3_tbl_board_comment
 			GROUP BY BOARD_NO
 		) C ON B.BOARD_NO = C.BOARD_NO
+		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
+		LEFT JOIN t3_tbl_profile_image P ON B.USER_NO = P.USER_NO
 		ORDER BY B.BOARD_NO DESC
 		LIMIT #{startNum}, #{lastNum}
 	</select>
@@ -31,6 +33,7 @@
 			FROM t3_tbl_board_comment
 			GROUP BY BOARD_NO
 		) C ON B.BOARD_NO = C.BOARD_NO
+		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
 		WHERE NICK = #{nick}
 		ORDER BY B.BOARD_NO DESC
 		LIMIT #{startNum}, #{lastNum}
@@ -45,6 +48,8 @@
 			FROM t3_tbl_board_comment
 			GROUP BY BOARD_NO
 		) C ON B.BOARD_NO = C.BOARD_NO
+		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
+		LEFT JOIN t3_tbl_profile_image P ON B.USER_NO = P.USER_NO
 		WHERE 1=1  
 		<if test="keyword != '' and keyword != null"> 
 			AND (TITLE LIKE CONCAT('%', #{keyword}, '%')
@@ -83,6 +88,8 @@
 			FROM t3_tbl_board_comment
 			GROUP BY BOARD_NO
 		) C ON B.BOARD_NO = C.BOARD_NO
+		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
+		LEFT JOIN t3_tbl_profile_image P ON B.USER_NO = P.USER_NO
 		ORDER BY VIEW DESC
 		LIMIT 4
 	</select>
@@ -90,8 +97,9 @@
 	<!-- 게시글 보기 -->
 	<select id="selectBoardView" parameterType="hashmap" resultType="com.example.anesi.model.Board">
 		SELECT *
-		FROM t3_tbl_board
-		WHERE BOARD_NO = #{bNo}
+		FROM t3_tbl_board B
+		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
+		WHERE B.BOARD_NO = #{bNo}
 	</select>
 	
 	<select id="selectBoardViewUser" parameterType="hashmap">
@@ -115,6 +123,11 @@
 		WHERE BOARD_NO = #{bNo}
 	</update>
 	
+	<!-- 게시글 사진 삭제 (게시글 삭제 시 선실행)-->
+	<delete id="deleteBoardImage" parameterType="hashmap">
+		DELETE FROM t3_tbl_board_image
+		WHERE BOARD_NO = #{bNo}
+	</delete>
 	<!-- 게시글 삭제 -->
 	<delete id="deleteBoard" parameterType="hashmap">
 		DELETE FROM t3_tbl_board
@@ -170,4 +183,21 @@
 		WHERE
 		    COMMENT_NO = #{cNo}
 	</update>
+	
+	<!-- 썸네일 등록 -->
+	<insert id="communityUpload" parameterType="hashmap">
+		INSERT INTO t3_tbl_board_image(BOARD_NO, IMG_ORG_NAME, IMG_NAME, IMG_PATH, IMG_SIZE)
+		VALUES(#{bNo}, #{imgOrgName}, #{imgName}, #{imgPath}, #{imgSize})
+	</insert>
+	
+	<!-- 썸네일 수정 -->
+	<insert id="communityUpdate" parameterType="hashmap">
+		UPDATE t3_tbl_board_image
+		SET
+			IMG_ORG_NAME = #{imgOrgName},
+			IMG_NAME = #{imgName},
+			IMG_PATH = #{imgPath},
+			IMG_SIZE = #{imgSize}
+		WHERE BOARD_NO = #{bNo}			
+	</insert>
 </mapper>

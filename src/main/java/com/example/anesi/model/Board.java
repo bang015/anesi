@@ -19,6 +19,8 @@ public class Board {
 	private String uImgName;
 	private String uImgPath;
 	private String userNo;
+	private String imgName;
+	private String imgPath;
 	
 	
 	public int getCommentNo() {

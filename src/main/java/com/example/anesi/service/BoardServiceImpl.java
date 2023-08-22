@@ -72,15 +72,38 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardMapper.updateViewCnt(map);
 	}
+	
+	// 게시글 등록
 	@Override
-	public int insertBoard(HashMap<String, Object> map) {
+	public HashMap<String, Object> insertBoard(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return boardMapper.insertBoard(map);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int bNo = boardMapper.insertBoard(map);
+		resultMap.put("bNo", map.get("BOARD_NO"));
+		return resultMap;
 	}
+	
+	// 썸네일 등록
 	@Override
-	public int deleteBoard(HashMap<String, Object> map) {
+	public int communityUpload(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return boardMapper.deleteBoard(map);
+		return boardMapper.communityUpload(map);
+	}
+	
+	// 썸네일 수정
+	@Override
+	public int communityUpdate(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.communityUpdate(map);
+	}
+	
+	@Override
+	public HashMap<String, Object> deleteBoard(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardMapper.deleteBoardImage(map);
+		boardMapper.deleteBoard(map);
+		return resultMap;
 	}
 	@Override
 	public int updateBoard(HashMap<String, Object> map) {
@@ -112,5 +135,10 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.editComment(map);
 	}
 
-	
+	@Override
+	public int deleteBoardImage(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.deleteBoardImage(map);
+	}
+
 }

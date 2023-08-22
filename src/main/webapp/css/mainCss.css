@@ -81,3 +81,6 @@ hr{
   
 }
 
+input:focus {
+	outline: none;
+}
