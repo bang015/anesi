@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.LoginMapper;
 import com.example.anesi.mapper.UserMapper;
+import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
@@ -106,6 +107,11 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		System.out.println(map.get("month"));
 		return userMapper.selectOrderList(map);
+	}
+	@Override
+	public List<Review> searchMyReviewList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.selectMyReviewList(map);
 	}
 
 }

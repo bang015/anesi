@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
@@ -44,4 +45,6 @@ public interface UserMapper {
 	int withdrawal(HashMap<String, Object> map);
 	// 주문내역 조회
 	List<UserOrder> selectOrderList(HashMap<String, Object> map);
+	// 리뷰조회
+	List<Review> selectMyReviewList(HashMap<String, Object> map);
 }

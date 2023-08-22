@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
@@ -19,6 +20,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -49,7 +51,7 @@ public class OrderController {
 	@ResponseBody
 	public String addAddr(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		orderService.addAddr(map);
+		resultMap.put("no", orderService.addAddr(map));
 		return new Gson().toJson(resultMap);
 	}
 	
@@ -76,10 +78,13 @@ public class OrderController {
 	//옵션 상세 검색
 	@RequestMapping(value = "/order/optionSearchInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String optionSearchInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	public String optionSearchInfo(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		ProductOption info = orderService.searchOptionInfo(map);
+		Cookie cookie = WebUtils.getCookie(request, "cartCookie");
+		String ckValue = cookie.getValue();
 		resultMap.put("info", info);
+		resultMap.put("cookie", ckValue);
 		return new Gson().toJson(resultMap);
 	}
 		

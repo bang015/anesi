@@ -14,7 +14,15 @@ public class Review {
 	private int csatCnt;
 	private String optionName;
 	private int userNo;
-
+	private int helpCnt;
+	private String productName;
+	
+	public String getProductName() {
+		return productName;
+	}
+	public int getHelpCnt() {
+		return helpCnt;
+	}
 	public int getUserNo() {
 		return userNo;
 	}

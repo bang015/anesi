@@ -15,6 +15,8 @@ public interface OrderMapper {
 	List<Order> selectCouponList(HashMap<String, Object> map);
 	// 주소 입력
 	int insertAddr(HashMap<String, Object> map);
+	// 비회원 주소 입력
+	int insertNonAddr(HashMap<String, Object> map);
 	// 주소 검색
 	List<UserAddress> selectAddrList(HashMap<String, Object> map);
 	// 주소 한개 검색

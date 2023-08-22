@@ -3,6 +3,7 @@ package com.example.anesi.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
@@ -40,4 +41,6 @@ public interface UserService {
 	int withdrawal(HashMap<String, Object> map);
 	//주문내역조회
 	List<UserOrder> searchOrderList(HashMap<String, Object> map);
+	// 나의 리뷰 조회
+	List<Review> searchMyReviewList(HashMap<String, Object> map);
 }

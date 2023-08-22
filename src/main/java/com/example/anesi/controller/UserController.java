@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
@@ -242,4 +243,13 @@ public class UserController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	//나의 리뷰 검색
+	@RequestMapping(value = "/mypage/searchMyReview.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchMyReview(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Review> list = userService.searchMyReviewList(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
 }

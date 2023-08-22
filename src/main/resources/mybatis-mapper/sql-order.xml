@@ -9,9 +9,14 @@
 		WHERE USER_NO = #{userNo} AND USE_YN = 'N'
 	</select>
 	
-	<insert id="insertAddr" parameterType="hashmap" >
+	<insert id="insertAddr" parameterType="hashmap" useGeneratedKeys="true" keyProperty="ORDER_NO" keyColumn="ORDER_NO">
 		INSERT INTO t3_tbl_user_address(USER_NO, ZIPCODE, ADDR, ADDR2, ADDR_KIND, DEFAULT_YN)
 		VALUES(#{userNo}, #{zip}, #{addr1}, #{addr2}, #{addrName}, #{addrDefault})
+	</insert>
+	
+	<insert id="insertNonAddr" parameterType="hashmap" useGeneratedKeys="true" keyProperty="ORDER_NO" keyColumn="ORDER_NO">
+		INSERT INTO t3_tbl_nonuser_address(NONUSER_NO, ZIPCODE, ADDR, ADDR2, ADDR_KIND, DEFAULT_YN)
+		VALUES(#{nonUserNo}, #{zip}, #{addr1}, #{addr2}, #{addrName}, #{addrDefault})
 	</insert>
 	
 	<select id="selectAddrList" parameterType="hashmap" resultType="com.example.anesi.model.UserAddress">
