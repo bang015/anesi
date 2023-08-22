@@ -86,5 +86,6 @@ public interface ProductMapper {
 		public List<Product> selectCate(String categoryName);
 	// 회원 장바구니 등록(상세페이지)
 	int insertCart(HashMap<String, Object> map);
-
+	// 장바구니 중복체크v
+	List<Cart>selectCartCheck(HashMap<String, Object> map);
 }

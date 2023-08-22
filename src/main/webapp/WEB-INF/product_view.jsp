@@ -634,6 +634,7 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		cartCheck : [],
 		nonuserNo : "",
 		selectHelp : [],
 		nonUserScrapbook : false,
@@ -1446,6 +1447,13 @@ var app = new Vue({
 			    },
 			    fnCart(){
 			    	var self = this;
+			    	self.selectedOptions.forEach(selectedOption => {
+			    		  const item = self.cartCheck.find(cartItem => cartItem.optionNo === selectedOption.optionNo);
+			    		  if (item) {
+			    			  self.showScrapModal4 = true;
+			    			  return;
+			    		  }
+			    		
 			    	for(let i=0; i<self.selectedOptions.length; i++){
 			    		if(self.userNo!=""||self.userNo!=null){
 			    			var nparmap = { userNo: self.userNo, productNo: self.productNo, optionNo : self.selectedOptions[i].optionNo, cnt:self.selectedOptions[i].quantity};	
@@ -1463,6 +1471,7 @@ var app = new Vue({
 				                }
 				            });
 			    	}
+			    	})
 		           
 			    },
 			    fnMoveCart(){
@@ -1486,10 +1495,30 @@ var app = new Vue({
 			                data : nparmap,
 			                success : function(data) { 
 			                	self.nonuserNo = data.value;
-			                	console.log(self.nonuserNo);
 			                }
 			            }); 
 				},
+				fnCartCheck(){
+			    	var self = this;			    	
+			    	if(self.userNo!=""||self.userNo!=null){			    		
+			    		var nparmap = { userNo: self.userNo, productNo: self.productNo};
+			    	}
+			    	if(self.userNo==""||self.userNo==null){
+			    		var nparmap = { nonUserNo: self.nonUserNo, productNo: self.productNo};
+			    	}			    		
+				     $.ajax({
+				              url : "/cartCheck.dox",
+				              dataType:"json",	
+				              type : "POST", 
+				              data : nparmap,
+				           success : function(data) {
+				               self.cartCheck=data.cartCheck
+				               console.log(self.cartCheck);
+				           }
+				        });
+			    	}
+		           
+			     
 	}, // methods
 	created : function() {
 		var self = this;
@@ -1509,6 +1538,7 @@ var app = new Vue({
 		self.fnCheckScrap();
 		self.fnSelectHelp();
 		self.fnaaa();
+		self.fnCartCheck();
 	}// created
 });
 </script>

@@ -493,7 +493,6 @@ var app = new Vue({
 	                success : function(data) { 
 	                	self.nonuserNo = data.value;
 	            		self.fnCheckCart();
-
 	                }
 	            }); 
 		},
@@ -560,7 +559,7 @@ var app = new Vue({
 		self.fnGetList();
 		self.fnaaa();
 		self.fnCheckScrap();
-
+	
 	}// created
 });
 </script>

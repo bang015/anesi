@@ -290,6 +290,15 @@ public class ProductController {
 			       productService.addCart(map);
 			       return new Gson().toJson(resultMap);
 			   }
+			//상품 카테고리
+			  @RequestMapping(value = "/cartCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			   @ResponseBody
+			   public String cartCheck(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+			       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			       List<Cart> cartCheck = productService.searchCartCheck(map);
+			       resultMap.put("cartCheck", cartCheck);
+			       return new Gson().toJson(resultMap);
+			   }
 
 
 }

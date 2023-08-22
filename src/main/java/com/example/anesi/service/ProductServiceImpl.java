@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.ProductMapper;
+import com.example.anesi.model.Cart;
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.Product;
@@ -132,6 +133,11 @@ public class ProductServiceImpl implements ProductService {
 		public int addCart(HashMap<String, Object> map) {
 			// TODO Auto-generated method stub
 			return productMapper.insertCart(map);
+		}
+		@Override
+		public List<Cart> searchCartCheck(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			return productMapper.selectCartCheck(map);
 		}
 	
 }

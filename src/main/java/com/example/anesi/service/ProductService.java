@@ -3,6 +3,7 @@ package com.example.anesi.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.anesi.model.Cart;
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.Product;
@@ -59,6 +60,7 @@ public interface ProductService {
 	public List<Product> selectCate(String categoryName);
 	// 회원 장바구니 등록(상세페이지)
 	int addCart(HashMap<String, Object> map);
-
+	// 장바구니 중복체크
+	List<Cart>searchCartCheck(HashMap<String, Object> map);
 }
 
