@@ -196,6 +196,16 @@ public class StoreController {
 			resultMap.put("success", "비회원장바구니등록완료");
 			return new Gson().toJson(resultMap);
 		}
+		
+		//베스트상품리스트
+		@RequestMapping(value = "/product/bestProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String bestProduct(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			List<Product> list = storeService.bestProduct(map);
+			resultMap.put("list", list);
+			return new Gson().toJson(resultMap);
+		}
 	  
 
 	

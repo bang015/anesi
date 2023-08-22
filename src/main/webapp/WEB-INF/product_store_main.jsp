@@ -80,7 +80,7 @@
 				<div class="production-item-rating">
 					<!-- 별모양-->
 					<i class="fa-solid fa-star" style="color: #A782C3;"></i> <span
-						class="production-item-rating__score ">{{item.csatAvg}}.5</span>
+						class="production-item-rating__score ">{{item.csatAvg}}</span>
 				</div>
 				<!-- 장바구니버튼-->
 				<a class="cart_button"> <i
@@ -493,6 +493,7 @@ var app = new Vue({
 	                success : function(data) { 
 	                	self.nonuserNo = data.value;
 	            		self.fnCheckCart();
+
 	                }
 	            }); 
 		},
@@ -559,7 +560,7 @@ var app = new Vue({
 		self.fnGetList();
 		self.fnaaa();
 		self.fnCheckScrap();
-	
+
 	}// created
 });
 </script>

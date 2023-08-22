@@ -81,6 +81,12 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 
+	@Override
+	public List<Product> bestProduct(HashMap<String, Object> map) {
+		return productMapper.bestProduct(map);
+	}
+
+
 	
 	
 

@@ -32,6 +32,8 @@ public class Product {
 		
 		//페이징인덱스
 		private int idx;
+		
+		//
 
 		
 	

@@ -16,9 +16,13 @@ import com.example.anesi.model.Scrapbook;
 
 @Mapper
 public interface ProductMapper {
+
 	// Store서비스에 상품기본정보 가져오는 매퍼
 	List<Product> selectProduct(HashMap<String, Object> map);
 	int selectCnt(HashMap<String, Object> map);
+
+	// Store서비스에 베스트상품리스트
+	List<Product> bestProduct(HashMap<String, Object> map);
 
 	
 	// 카테고리 검색

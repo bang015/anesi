@@ -53,6 +53,8 @@
       width: 1300px;
       height: 600px;
       object-fit: cover;
+      margin-bottom : 10px;
+      
     }
 
 
@@ -104,7 +106,7 @@
  
 </div>
 </body>
-<jsp:include page="product_store_best_product.jsp"></jsp:include>
+<jsp:include page="best_product.jsp"></jsp:include>
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>

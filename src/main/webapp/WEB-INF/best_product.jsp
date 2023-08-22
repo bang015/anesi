@@ -15,19 +15,27 @@
 <meta charset="EUC-KR">
 <title>인기상품</title>
 <style>
+.best {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-shadow: -1px 0px yellow, 0px 1px yellow, 1px 0px yellow, 0px -1px yellow;
+}
 </style>
 </head>
 <body>
-<jsp:include page="product_store_main_ontop_category.jsp"></jsp:include>
-<div id="store_main_best">
+
+<div id="store_main_best" style="margin-bottom : 50px;">
 <h1>베스트상품</h1>
 <!-- 상품 정렬하는 버튼-->	
 	<div class="production-item__content" v-for="item in list" >
 			<div class="production-item-header"  @click="fnProductView(item.productNo)">
+				<div class="best">Best</div>
 	            <a  class="production-item-thumnail">
 	                <div class="production-item-thumnail__overlay"></div>
 				    <img class="production-item-thumnail__image"alt="썸네일" :src="item.imgPath + '/' + item.imgName">
 			    </a>
+			    
 		  		  <div class="brand_name">
             		<span class="production-item-header__brand">{{item.manufacturer}}</span>
                 	<span class="production-item-header__name">{{item.productName}}</span>
@@ -162,23 +170,6 @@
 </html>
 <script>
 
-$(document).ready(function() {
-    // 상품정렬 버튼 클릭 이벤트 추가
-    var isListOpen = false; // Flag to track the state of the list container
-
-    $('.category-order_toggle').click(function() {
-        if (!isListOpen) { // 현재 목록이 닫혀있는 경우에만 열기
-            $('.category-order-list-container').slideDown('slow');
-            isListOpen = true;
-        }
-    });
-    // 목록 항목 클릭 이벤트 추가
-    $('.category-order-list a').click(function() {
-        // 목록 항목을 클릭하면 목록을 닫습니다.
-        $('.category-order-list-container').slideUp('slow');
-        isListOpen = false;
-    });
-});
 
 var app = new Vue({
 	el : '#store_main_best',
@@ -211,15 +202,12 @@ var app = new Vue({
             var self = this;
             var nparmap = {productNo : self.productNo};
             $.ajax({
-                url : "/product/store_main.dox",
+                url : "/product/bestProduct.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	
                 	self.list = data.list;
-                	self.list2=data.list2;
-              	
                 }
             }); 
 		},
