@@ -16,7 +16,15 @@ public class Review {
 	private int userNo;
 	private int helpCnt;
 	private String productName;
+	private int productNo;
+	private String rImgOrgName;
 	
+	public String getrImgOrgName() {
+		return rImgOrgName;
+	}
+	public int getProductNo() {
+		return productNo;
+	}
 	public String getProductName() {
 		return productName;
 	}

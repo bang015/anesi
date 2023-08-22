@@ -116,17 +116,44 @@
 		</if>
 	</select>
 	<select id="selectMyReviewList" parameterType="hashmap" resultType="com.example.anesi.model.Review">
-		SELECT r.*, COALESCE(h.HELP_CNT, 0) AS HELP_CNT, p.PRODUCT_NAME, COALESCE(i.R_IMG_NAME, 0) AS R_IMG_NAME, COALESCE(i.R_IMG_PATH, 0) AS R_IMG_PATH
-		FROM t3_tbl_user_review r
-		INNER JOIN t3_tbl_product p
-			ON r.PRODUCT_NO = p.PRODUCT_NO
-		LEFT JOIN t3_tbl_review_image i
-			ON r.R_NO = i.R_NO
-		LEFT JOIN (
-			SELECT R_NO, COUNT(R_NO) AS HELP_CNT
-			FROM t3_tbl_user_help
-			GROUP BY R_NO
-		) h ON r.R_NO = h.R_NO
-		WHERE r.USER_NO = #{userNo}
+	    SELECT r.*, COALESCE(h.HELP_CNT, 0) AS HELP_CNT, p.PRODUCT_NAME, COALESCE(i.R_IMG_NAME, 0) AS R_IMG_NAME, COALESCE(i.R_IMG_PATH, 0) AS R_IMG_PATH, COALESCE(i.R_IMG_ORG_NAME, 0) AS R_IMG_ORG_NAME
+	    FROM t3_tbl_user_review r
+	    INNER JOIN t3_tbl_product p
+	        ON r.PRODUCT_NO = p.PRODUCT_NO
+	    LEFT JOIN t3_tbl_review_image i
+	        ON r.R_NO = i.R_NO
+	    LEFT JOIN (
+	        SELECT R_NO, COUNT(R_NO) AS HELP_CNT
+	        FROM t3_tbl_user_help
+	        GROUP BY R_NO
+	    ) h ON r.R_NO = h.R_NO
+	    <where>
+	        <choose>
+	            <when test="selectType == 1">
+	                r.USER_NO = #{userNo}
+	                ORDER BY HELP_CNT DESC
+	            </when>
+	            <when test="selectType == 0">
+	                r.USER_NO = #{userNo}
+	                ORDER BY CREATEDATE DESC
+	            </when>
+	        </choose>
+	    </where>
 	</select>
+	
+	<update id="undateReview" parameterType="hashmap">
+		UPDATE t3_tbl_user_review
+			SET
+			UDATETIME = now(),
+			CONTENT = #{content},
+			CSAT = #{csat}
+		WHERE R_NO = #{rNo}			
+	</update>
+	
+	<delete id="deleteReviewImage" parameterType="hashmap">
+		DELETE 
+		FROM t3_tbl_review_image
+		WHERE R_NO = #{rNo}
+	</delete>
+	
 </mapper>

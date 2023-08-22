@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.LoginMapper;
+import com.example.anesi.mapper.ReviewMapper;
 import com.example.anesi.mapper.UserMapper;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
@@ -19,6 +20,10 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	UserMapper userMapper;
+	
+	@Autowired
+	ReviewMapper reviewMapper;
+	
 	//회원가입
 	@Override
 	public int userJoin(HashMap<String, Object> map) {
@@ -111,6 +116,17 @@ public class UserServiceImpl implements UserService{
 	public List<Review> searchMyReviewList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return userMapper.selectMyReviewList(map);
+	}
+	@Override
+	public int editReview(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.undateReview(map);
+	}
+	@Override
+	public int editReviewImage(HashMap<String, Object> map) {
+		userMapper.deleteReviewImage(map);
+		reviewMapper.insertReviewImg(map);
+		return 1;
 	}
 
 }
