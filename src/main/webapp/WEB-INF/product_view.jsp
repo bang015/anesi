@@ -1467,7 +1467,11 @@ var app = new Vue({
 				                type : "POST", 
 				                data : nparmap,
 				                success : function(data) {
+				                	  console.log("응답 데이터:", nparmap );
 				                	self.showScrapModal4 = true;
+				                	 self.selectedNparmap = nparmap;
+				                	 // 넘겨받은 nparmap 값을 LocalStorage에 저장
+				                	  localStorage.setItem("selectedNparmap", JSON.stringify(nparmap));
 				                }
 				            });
 			    	}
