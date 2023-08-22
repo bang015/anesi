@@ -85,7 +85,7 @@ public class LoginController {
 		};
 		return new Gson().toJson(resultMap);
 	}
-	// 아이디 찾기
+	// 이메일 확인
 	@RequestMapping(value = "/emailSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String search(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -93,7 +93,15 @@ public class LoginController {
 	resultMap.put("emailCheck", email);
 	return new Gson().toJson(resultMap);
 		}
-	// 아이디 찾기
+	// 이메일 찾기
+		@RequestMapping(value = "/emailSearch1.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String email(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		User email1 = loginService.searchUserEmail1(map);
+		resultMap.put("emailSelect", email1);
+		return new Gson().toJson(resultMap);
+			}
+	// 비번 찾기
 	@RequestMapping(value = "/pwdSearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String searchPwd(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();

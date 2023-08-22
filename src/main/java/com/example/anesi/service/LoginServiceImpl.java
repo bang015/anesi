@@ -69,5 +69,10 @@ public class LoginServiceImpl implements LoginService{
 			}
 			return resultMap;
 		}
+		@Override
+		public User searchUserEmail1(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			return loginMapper.selectUserEmail1(map);
+		}
 
 }

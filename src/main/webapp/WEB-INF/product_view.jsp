@@ -36,12 +36,12 @@
 								<ul class="main-ul">
 									<li class="main-li" v-for="item in img">
 										<a href="javascript:;">
-											<img alt="ƒ‹≈Ÿ√˜ ¿ÃπÃ¡ˆ" :src="item.imgPath+'/'+item.imgName" @click="clickImg(item.imgPath, item.imgName)">
+											<img alt="ƒ‹≈Ÿ√˜ ¿ÃπÃ¡ˆ" :src="item.imgPath+'/'+item.imgName" @mouseover="clickImg(item.imgPath, item.imgName)">
 										</a>	
 									</li>
 									<li class="main-li" v-for="item in imgList">
 										<a href="javascript:;">
-											<img alt="ƒ‹≈Ÿ√˜ ¿ÃπÃ¡ˆ" :src="item.imgPath+'/'+item.imgName" @click="clickImg(item.imgPath, item.imgName)">
+											<img alt="ƒ‹≈Ÿ√˜ ¿ÃπÃ¡ˆ" :src="item.imgPath+'/'+item.imgName" @mouseover="clickImg(item.imgPath, item.imgName)">
 										</a>
 									</li>
 								</ul>
@@ -154,15 +154,16 @@
 							</div>
 						</div>
 					</div>
+					<div id="product"></div>
 					<div class="nav-box">
 						<div class="nav-wrap">
-							<div class="product-a"><a href="#product">ªÛ«∞¡§∫∏</a></div>
-							<div class="review-a"><a href="#review">∏Æ∫‰  <span class="review-span" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span></a></div>
-							<div class="inquiry-a"><a href="#inquiry">πÆ¿« <span class="review-span" v-if="inquiryListCnt > 0">{{inquiryListCnt}}</span></a></div>
-							<div class="product-a"><a href="#Etc">πËº€/»Ø∫“</a></div>
+							<div class="product-a"><a href="javascript:;" @click="scrollUpFromSection('product', 160)">ªÛ«∞¡§∫∏</a></div>
+							<div class="review-a"><a href="javascript:;" @click="scrollUpFromSection('review', 240)">∏Æ∫‰  <span class="review-span" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span></a></div>
+							<div class="inquiry-a"><a href="javascript:;" @click="scrollUpFromSection('inquiry', 240)">πÆ¿« <span class="review-span" v-if="inquiryListCnt > 0">{{inquiryListCnt}}</span></a></div>
+							<div class="product-a"><a href="javascript:;" @click="scrollUpFromSection('Etc', 0 )">πËº€/»Ø∫“</a></div>
 						</div>
 					</div>
-					<div id="product"></div>
+					
 					<div class="content-box2">
 						<div class="content-view">
 							<div class="content-title">
@@ -1420,7 +1421,18 @@ var app = new Vue({
 		                	self.fnSelectHelp();
 		                }
 		            });
-			    }
+			    },
+			    scrollUpFromSection(sectionId, amount) {
+			    	  const section = document.getElementById(sectionId);
+			    	  if (section) {
+			    	    const currentScrollPosition = section.getBoundingClientRect().top + window.scrollY;
+			    	    const targetScrollPosition = currentScrollPosition - amount;
+			    	    window.scrollTo({
+			    	      top: targetScrollPosition,
+			    	      behavior: "smooth"
+			    	    });
+			    	  }
+			    	}
 	}, // methods
 	created : function() {
 		var self = this;
