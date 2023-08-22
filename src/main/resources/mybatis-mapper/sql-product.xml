@@ -189,22 +189,29 @@
 	</delete>
 
 	<select id="selectCartList" parameterType="hashmap" resultType="com.example.anesi.model.Product">
-	    SELECT
-	        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
-	        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO
-	    FROM
-	        t3_tbl_product product
-	    INNER JOIN
-	        t3_tbl_product_image image ON product.PRODUCT_NO = image.PRODUCT_NO
-	    INNER JOIN 
-	        t3_tbl_user_cart cart ON cart.PRODUCT_NO = product.PRODUCT_NO
-	    INNER JOIN
-	        t3_tbl_user user ON user.USER_NO = cart.USER_NO
-	    INNER JOIN 
-	        t3_tbl_product_option o ON product.PRODUCT_NO = o.PRODUCT_NO
-	    WHERE
-	        user.USER_NO = #{userNo} AND image.THUMBNAIL_YN = 'Y'
-	</select>
+    SELECT DISTINCT
+        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
+        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO, product.DISCOUNT_YN, product.DISCOUNT
+    FROM
+        t3_tbl_product product
+    INNER JOIN
+        t3_tbl_product_image image ON product.PRODUCT_NO = image.PRODUCT_NO
+    INNER JOIN 
+        t3_tbl_user_cart cart ON cart.PRODUCT_NO = product.PRODUCT_NO
+    INNER JOIN
+        t3_tbl_user user ON user.USER_NO = cart.USER_NO
+    INNER JOIN (
+	SELECT p.PRODUCT_NO, MIN(o.OPTION_NO) AS FIRST_OPTION_NO
+	FROM t3_tbl_product_option o
+	JOIN t3_tbl_product p ON p.PRODUCT_NO = o.PRODUCT_NO
+	GROUP BY p.PRODUCT_NO
+    ) fo ON product.PRODUCT_NO = fo.PRODUCT_NO
+    INNER JOIN 
+        t3_tbl_product_option o ON product.PRODUCT_NO = o.PRODUCT_NO AND o.OPTION_NO = fo.FIRST_OPTION_NO
+    WHERE
+        user.USER_NO = #{userNo} AND image.THUMBNAIL_YN = 'Y'
+</select>
+
 	
 		<select id="selectNonCartList" parameterType="hashmap" resultType="com.example.anesi.model.Product">
 		    SELECT
