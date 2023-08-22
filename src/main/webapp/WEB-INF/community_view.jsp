@@ -371,6 +371,7 @@ var app = new Vue({
                 	self.cCnt = data.cCnt;
                 	self.imgPath = data.info.imgPath;
                 	self.imgName = data.info.imgName;
+                	console.log(self.info);
                 }
             });
 		},

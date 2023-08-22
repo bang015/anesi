@@ -194,6 +194,7 @@ var app = new Vue({
 		},
 	    fnThumbnail : function(form){
 			var self = this;
+			console.log(form);
 	         $.ajax({
 	            url : "/thumbfileUpload.dox", 
 	            type : "POST", 

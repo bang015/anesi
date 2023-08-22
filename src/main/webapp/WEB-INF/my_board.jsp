@@ -215,11 +215,10 @@ li{
     margin-left: 3px;
 }
 .text2{
-	position: absolute;
 	font-size: 15px;
     font-weight: 100;
     color: #9b9b9b;
-    margin-left: 3px;
+    text-align: center;
 }
 #board-body-head{
 	display: inline-block;
@@ -311,8 +310,8 @@ li{
 		           	</div>
 		        </div>
 			</div>
-			<div v-if="list.length < 1" class="text2">등록된 게시글이 없습니다.</div>
 			</div>
+			<div v-if="list.length < 1" class="text2">등록된 게시글이 없습니다.</div>
 			<paginate
 			    :page-count="pageCount"
 			    :page-range="3"
