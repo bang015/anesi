@@ -12,7 +12,7 @@
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <style>
-.inquiry{
+.inquiry2{
 	background: white;
 	color: #5E503F;
 	border-radius: 10px 0px 0px 10px;

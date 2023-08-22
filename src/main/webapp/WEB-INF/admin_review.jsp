@@ -13,7 +13,7 @@
 <style>
 
 
-.review{
+.review2{
 	background: white;
 	color: #5E503F;
 	border-radius: 10px 0px 0px 10px;
