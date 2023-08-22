@@ -20,6 +20,10 @@
 <meta charset="EUC-KR">
 <title>카테고리별 상품메인페이지</title>
 <style>
+
+.pagination {
+    margin-left : 40%;
+ }
 </style>
 </head>
 <body>

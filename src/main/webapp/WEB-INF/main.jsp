@@ -72,8 +72,10 @@
     <!-- 실제 이미지나 컨텐츠가 들어갈 slide들 -->
     
     <div class="swiper-slide">
+   	   <img src="../css\image\Main\banner7.png">
+    </div>
+    <div class="swiper-slide">
    	   <img src="../css\image\Main\banner4.png">
-    
     </div>
     <div class="swiper-slide">
    	   <img src="../css\image\Main\banner5.png">
