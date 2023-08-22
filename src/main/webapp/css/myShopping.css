@@ -241,7 +241,7 @@
 }
 .rBtnBox{
 	display: flex;
-	margin-bottom: 20px;
+	margin-bottom: 50px;
 }
 #container2{
 	margin: 30px 30px 0 30px;
@@ -255,7 +255,20 @@
 	margin-left: 20px;
 }
 .reviewBox{
-	margin-bottom: 20px;
+	margin-bottom: 50px;
 	display: flex;
 	justify-content: space-between;
+}
+.imgEditBox{
+	display: flex;
+	min-height: 100px;
+}
+.title1{
+	font-size: 18px;
+}
+.optionName1{
+	font-size: 14px;
+}
+.content1{
+	font-size: 16px;
 }

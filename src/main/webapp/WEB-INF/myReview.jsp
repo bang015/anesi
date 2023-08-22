@@ -5,6 +5,7 @@
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/myShopping.css" rel="stylesheet">
 <meta charset="EUC-KR">
@@ -32,13 +33,14 @@
 			<div class="reviewListBox">
 				<div v-for="item in reviewList" class="reviewBox">
 					<div>
-						<div>{{item.productName}}</div>
-						<div>{{item.optionName}}</div>
-						<div>{{item.content}}</div>
+						<div class="title1">{{item.productName}}</div>
+						<div class="optionName1">{{item.optionName}}</div>
+						<span v-for="index in item.csat"><i class="fa-solid fa-star" style="color: #A782C3;"></i></span><span v-for="index in 5-item.csat"><i class="fa-solid fa-star" style="color: #ababab;"></i></span>
+						<div class="content1">{{item.content}}</div>
 					</div>
-					<div class="">
+					<div class="imgEditBox">
 						<img alt="" :src="item.rImgPath+'/'+item.rImgName" v-if="item.rImgPath != 0" class="imgBox">
-						<div><button>수정하기</button></div>
+						<div><button class="btn4 btn5">수정하기</button></div>
 					</div>
 				</div>
 			</div>
