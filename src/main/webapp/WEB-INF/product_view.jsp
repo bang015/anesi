@@ -162,9 +162,10 @@
 							<div class="product-a"><a href="#Etc">배송/환불</a></div>
 						</div>
 					</div>
+					<div id="product"></div>
 					<div class="content-box2">
 						<div class="content-view">
-							<div class="content-title" id="product">
+							<div class="content-title">
 								상품 정보
 								<div class="content-text-box">
 									<div class="text1">판매자 직거래 주의 안내</div>
@@ -549,7 +550,7 @@
 										<a href="/join.do" class="a a2">회원가입</a>
 									</div>
 									<div class="non-user-wrap1" v-if="!nonUserScrapbook"> <!-- 비회원 주문 조회 -->
-										<button class="loginBtn1 btn" @click="">비회원 구매하기</button>
+										<button class="loginBtn1 btn" @click="fnPay1">비회원 구매하기</button>
 									</div>
 									<div class="non-user-wrap1" v-if="nonUserScrapbook"> <!-- 비회원 주문 조회 -->
 										<button class="loginBtn1 btn" @click="closeScrapModal3()">쇼핑 계속하기</button>
@@ -1031,6 +1032,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
 	           		var form = new FormData();
+	           		alert("등록되었습니다.")
 	       	        form.append( "file1",  $("#file1")[0].files[0] );
 	       	     	form.append( "idx",  data.idx); // pk
 	       	     	if(self.selectedFile != null){
@@ -1161,6 +1163,16 @@ var app = new Vue({
 			if(self.selectedOptions.length > 0 && (self.userNo !=null || self.userNo !="")){
 				 $.pageChange("../order/main.do" , {product : self.selectedOptions});
 			 } 
+			},
+		fnPay1 : function(){
+			var self = this;
+			if(self.selectedOptions.length == 0){
+				alert("상품을 선택해주세요.");
+				return;
+			}
+			if(self.selectedOptions.length > 0){
+				$.pageChange("../order/main.do" , {product : self.selectedOptions});
+			} 
 			},
 		clickImg : function(imgPath,imgName){
 			var self = this

@@ -3,7 +3,7 @@
 	.content{
 		width: 400px;
 		margin: 0 auto;
-		margin-top : 100px;
+		margin-top : 250px;
 		height: 550px;
 		
 	}
@@ -23,7 +23,7 @@
 	}
 	.email-input button{
 		position: absolute;
-		top : 2.5px;
+		bottom: 2px;
 		right: 10%;
 		width: 50px;
 		height: 35px;
