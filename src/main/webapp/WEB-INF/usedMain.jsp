@@ -26,9 +26,36 @@
 <body>
 <div id="app">
 	<div id="container">
-	
+		<div>
+			<div>중고 판매</div>
+			<div>중고 판매 리스트</div>
+		</div>
+		<hr>
+		<div>
+			<div>중고 매입</div>
+			<div>
+				<div>매입 사례</div>
+			</div>
+			<div><button @click="fnPurchase">매입 문의 게시판</button></div>
+		</div>
 	</div>
 </div>
 </body>
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
+<script>
+var app = new Vue({
+	el : '#app',
+	data : {
+		
+	},// data
+	methods : {
+		fnPurchase:function(){
+			location.href="/used/purchase.do";
+		}
+	}, // methods
+	created : function() {
+		
+	}// created
+});
+</script>

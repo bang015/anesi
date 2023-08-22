@@ -146,8 +146,7 @@ var app = new Vue({
     		title : "",
 			content : ""
 		},
-		image1 : '',
-		
+		image1 : ''
 	},// data
 	components: {VueEditor},
 	methods : {
