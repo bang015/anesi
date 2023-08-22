@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+	integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/Cart.css" rel="stylesheet">
 <link href="../css/order.css" rel="stylesheet">
@@ -18,43 +21,51 @@
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
-<jsp:include page="header.jsp"></jsp:include>
-    <div id="cart-app">
-    <div id="container">
-  
-     <div class="cart-item container mb-4" v-for="item in cartItemsUnique">
-    <div class="row align-items-center">
-      <div class="col-md-3">
-        <img class="img-fluid" :src="item.imgPath + '/' + item.imgName" />
-      </div>
-     
-	
-	
-	<div class="col-md-4">
-    <h5>{{ item.productName }}</h5>
-  <h5>제조사: {{ item.manufacturer }}</h5>
- <h5 class="production-item-price__orginal">정가: {{ numberWithCommas(item.productPrice) }}원</h5>
-<span class="production-item-price__percent">-{{ item.discount }}%</span>
-<h4 class="production-item-price__sell">할인가격: {{ numberWithCommas(calculateDiscountedPrice(item)) }}원</h4>
-        <div class="main-option">
-  <select class="option-box" v-model="item.selectedOption" @change="optionSelected(item)">
-    <option disabled value="">옵션을 선택해주세요</option>
-    <option v-for="(opt, index) in item.options" :key="opt.optionNo + '-' + index" :value="opt.optionNo">
-      {{ opt.optionName }} +{{ opt.optionPrice }}원
-    </option>
-  </select>
-</div>
+	<jsp:include page="header.jsp"></jsp:include>
+	<div id="cart-app">
+		<div id="container">
+
+			<div class="cart-item container mb-4" v-for="item in cartItemsUnique">
+				<div class="row align-items-center">
+					<div class="col-md-3">
+						<img class="img-fluid" :src="item.imgPath + '/' + item.imgName" />
+					</div>
 
 
- <button v-on:click="goToPurchasePage([item.productNo])" class="btn btn-sm btn-danger">구매하기</button>
-      <div class="col-md-3">
-        <button class="btn btn-sm btn-danger" v-on:click="deleteItem(item)">
-          <i class="fas fa-trash-alt" aria-hidden="true" id="delete"></i> 삭제
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+
+					<div class="col-md-4">
+						<h5>{{ item.productName }}</h5>
+						<h5>제조사: {{ item.manufacturer }}</h5>
+						<h5 class="production-item-price__orginal">정가: {{
+							numberWithCommas(item.productPrice) }}원</h5>
+						<span class="production-item-price__percent">-{{
+							item.discount }}%</span>
+						<h4 class="production-item-price__sell">할인가격: {{
+							numberWithCommas(calculateDiscountedPrice(item)) }}원</h4>
+						
+						<div class="main-option">	
+							<select class="option-box" v-model="item.selectedOption"
+								@change="optionSelected(item)">
+								<option disabled value="">옵션을 선택해주세요</option>
+								<option v-for="(opt, index) in item.options"
+									:key="opt.optionNo + '-' + index" :value="opt.optionNo">
+									{{ opt.optionName }} +{{ opt.optionPrice }}원</option>
+							</select>
+						</div>
+
+
+						<button v-on:click="goToPurchasePage([item.productNo])"
+							class="btn btn-sm btn-danger">구매하기</button>
+						<div class="col-md-3">
+							<button class="btn btn-sm btn-danger"
+								v-on:click="deleteItem(item)">
+								<i class="fas fa-trash-alt" aria-hidden="true" id="delete"></i>
+								삭제
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
 
 
@@ -62,22 +73,20 @@
 
 
 			<div class="col-md-12 text-right mt-2">
-     <button v-on:click="goToPurchasePage(cartItems.map(item => item.productNo))" class="btn btn-primary" style="width: 300px; float: right; height:30px">전체 구매하기</button>
-    </div>
-  </div>
-</div>
-</div>
+				<button
+					v-on:click="goToPurchasePage(cartItems.map(item => item.productNo))"
+					class="btn btn-primary"
+					style="width: 300px; float: right; height: 30px">전체 구매하기</button>
+			</div>
+		</div>
+	</div>
+	</div>
 
-    
-  <template>
-	  <paginate
-	    :page-count="pageCount"
-	    :page-range="3"
-	    :margin-pages="2"
-	    :click-handler= "goToPurchasePage"
-	    :container-class="'pagination'"
-	    :page-class="'page-item'">
-	  </paginate>
+
+	<template>
+		<paginate :page-count="pageCount" :page-range="3" :margin-pages="2"
+			:click-handler="goToPurchasePage" :container-class="'pagination'"
+			:page-class="'page-item'"> </paginate>
 	</template>
 
 </body>
@@ -172,14 +181,29 @@ new Vue({
     		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     		  },
     		optionSelected(item) {
+    			  const productNo = item.productNo;
+    			    const optionNo = item.selectedOption;
+    			    
+    			    // 선택한 옵션 값을 확인하고 저장합니다.
+    			    const selectedOptionIndex = this.selectedOptions.findIndex(
+    			      (option) => option.productNo === productNo
+    			    );
+
+    			    if (selectedOptionIndex > -1) {
+    			      this.selectedOptions[selectedOptionIndex].optionNo = optionNo;
+    			    } else {
+    			      this.selectedOptions.push({ productNo: productNo, optionNo: optionNo });
+    			    }
+
+    			  
     			  const selectedOption = item.options.find(opt => opt.optionNo === item.selectedOption);
     			  console.log(selectedOption);
-
     			  if (selectedOption) {
     			    this.addToSelectedOptions(item); // 새롭게 추가된 메소드 호출
     			    this.calculateTotalPrice(); // 추가된 부분. 총 가격을 계산하기 위함.
     			  }
     			},
+    		
     			  calculateDiscountedPrice(product) {
     			    if (product.discountYn === 'Y') {
     			      return Math.floor((product.productPrice * ((100 - product.discount) / 100)) / 100) * 100;
@@ -253,19 +277,29 @@ new Vue({
     		  const startNum = ((self.selectPage - 1) * 2);
     		  const lastNum = 10;
 
+    		  // 선택된 옵션 값을 저장하는 배열
+    		  const selectedOptions = [];
+
+    		  // 선택된 옵션 값을 selectedOptions 배열에 추가하는 코드를 추가합니다.
+
     		  if (this.cartItems.length > 0) {
     		    // 상품 데이터를 필터 합니다: productNoList에 포함된 상품만 포함되도록 합니다.
     		    const filteredItems = this.cartItems.filter(item => productNoList.includes(item.productNo));
     		    sessionStorage.setItem('cartItems', JSON.stringify(filteredItems));
 
     		    // 여기에서 order.do로 이동하면서 데이터를 넘겨줍니다.
-    		    const productData = filteredItems.map(item => ({
-    		      productNo: item.productNo,
-    		      productName: item.productName,
-    		      productPrice: item.productPrice,
-    		      optionNo: item.optionNo,
-    		      quantity: 1
-    		    }));
+    		    const productData = filteredItems.map(item => {
+  					const selectedOption = this.selectedOptions.find(
+   					 o => o.productNo === item.productNo
+				 ); 
+ 				 return {
+				    productNo: item.productNo,
+				    productName: item.productName,
+				    productPrice: item.productPrice,
+				    optionNo: selectedOption?.optionNo, // 선택한 옵션 값 사용
+				    quantity: 1
+ 				};
+			});
 
     		    let queryString = '';
     		    productData.forEach(item => {
@@ -279,7 +313,20 @@ new Vue({
     		  } else {
     		    alert('장바구니에 상품이 없습니다. 상품을 추가한 후 다시 시도해주세요.');
     		  }
-    		},
+    		}, //goToPurchasePage 메서드 종료
+    		
+    		onOptionSelect(productNo, optionNo) {
+    		    const selectedOptionIndex = this.selectedOptions.findIndex(
+    		      (option) => option.productNo === productNo
+    		    );
+
+    		    if (selectedOptionIndex > -1) {
+    		      this.selectedOptions[selectedOptionIndex].optionNo = optionNo;
+    		    } else {
+    		      this.selectedOptions.push({ productNo: productNo, optionNo: optionNo });
+    		    }
+    		  },
+
 
     	    
     	    addToSelectedOptions(item) {
