@@ -1495,6 +1495,7 @@ var app = new Vue({
 			                data : nparmap,
 			                success : function(data) { 
 			                	self.nonuserNo = data.value;
+			                	self.fnCartCheck();
 			                }
 			            }); 
 				},
@@ -1502,11 +1503,14 @@ var app = new Vue({
 			    	var self = this;			    	
 			    	if(self.userNo!=""||self.userNo!=null){			    		
 			    		var nparmap = { userNo: self.userNo, productNo: self.productNo};
+			    		console.log(nparmap)
 			    	}
 			    	if(self.userNo==""||self.userNo==null){
-			    		var nparmap = { nonUserNo: self.nonUserNo, productNo: self.productNo};
-			    	}			    		
-				     $.ajax({
+			    		var nparmap = { nonUserNo: self.nonuserNo, productNo: self.productNo};
+			    		console.log(nparmap)
+			    	}	
+			    	
+				    $.ajax({
 				              url : "/cartCheck.dox",
 				              dataType:"json",	
 				              type : "POST", 
@@ -1538,7 +1542,6 @@ var app = new Vue({
 		self.fnCheckScrap();
 		self.fnSelectHelp();
 		self.fnaaa();
-		self.fnCartCheck();
 	}// created
 });
 </script>

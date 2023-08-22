@@ -335,6 +335,17 @@
 		 	VALUES(#{productNo}, #{nonUserNo}, #{optionNo}, #{cnt})
 	 	</if>
 	 </insert>
+	 <!-- 장바구니 중복체크 -->
+	 <select id="selectCartCheck" parameterType="hashmap" resultType="com.example.anesi.model.Cart">
+	 	SELECT *
+		FROM t3_tbl_user_cart
+		<if test="userNo != '' and userNo != null">
+			WHERE USER_NO= #{userNo} AND PRODUCT_NO= #{productNo}
+		</if>
+		<if test="nonUserNo != '' and nonUserNo != null">
+		 	WHERE NONUSER_NO= #{nonUserNo} AND PRODUCT_NO= #{productNo}
+	 	</if>
+	 </select>
 </mapper>
 
 	
