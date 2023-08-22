@@ -23,13 +23,13 @@
 		
    	<div class="flex-container1">
 		<div class="side_menu">
-				<div onclick="location.href='add.do'">상품등록</div>
-				<div onclick="location.href='product_edit.do'">상품조회/수정</div>
+				<div onclick="location.href='add.do'" class="add">상품등록</div>
+				<div onclick="location.href='product_edit.do'" class="product_edit">상품조회/수정</div>
 				<div>판매통계</div>
-				<div onclick="location.href='review.do'">리뷰관리</div>
-				<div onclick="location.href='inquiry.do'">문의관리</div>
-				<div onclick="location.href='delivery.do'">배송관리</div>
-				<div onclick="location.href='user.do'">고객관리</div>
+				<div onclick="location.href='review.do'" class="review">리뷰관리</div>
+				<div onclick="location.href='inquiry.do'" class="inquiry">문의관리</div>
+				<div onclick="location.href='delivery.do'" class="delivery">배송관리</div>
+				<div onclick="location.href='user.do'" class="user">고객관리</div>
 				<div>혜택관리</div>
 				<div>알림관리</div>
 		</div>

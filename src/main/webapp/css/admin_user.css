@@ -1,6 +1,11 @@
 @charset "EUC-KR";
 
 /* ��� CSS */
+.user{
+	background: white;
+	color: #5E503F;
+	border-radius: 10px 0px 0px 10px;
+}
 .admin_header {
   display: flex;
   justify-content: flex-end;

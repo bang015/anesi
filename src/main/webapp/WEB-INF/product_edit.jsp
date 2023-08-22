@@ -13,6 +13,14 @@
 <meta charset="UTF-8">
 <title>상품조회/수정</title>
 
+<style>
+.product_edit{
+	background: white;
+	color: #5E503F;
+	border-radius: 10px 0px 0px 10px;
+}
+</style>
+
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
