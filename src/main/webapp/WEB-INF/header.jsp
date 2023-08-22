@@ -77,55 +77,57 @@
 
 		<hr>
 
-		<div class="category-list-container" style="display: none;">
-			<ul class="category-list">
+			 <div class="category-list-container" style="display: none;">
+         <ul class="category-list">
 
-				<li><a onclick="fnMoveaa('10')">가구</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a>침대</a></li>
-						<li><a>소파</a></li>
-						<li><a>수납장</a></li>
-						<li><a>의자</a></li>
-						<li><a>식탁</a></li>
-					</ul></li>
-				<li><a onclick="fnMoveaa('20')">조명</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a>장스텐드</a></li>
-						<li><a>단스탠드</a></li>
-						<li><a>무드등</a></li>
-						<li><a>천장등</a></li>
-					</ul></li>
-				<li><a onclick="fnMoveaa('30')">패브릭</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a>침구</a></li>
-						<li><a>커튼</a></li>
-						<li><a>러그</a></li>
-					</ul></li>
-				<li><a onclick="fnMoveaa('40')">가전</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a>냉장고</a></li>
-						<li><a>tv</a></li>
-						<li><a>세탁기</a></li>
-						<li><a>음향/영상가전</a></li>
-						<li><a>청소가전</a></li>
-					</ul></li>
-				<li><a onclick="fnMoveaa('50')">데코/식물</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a>조화</a></li>
-						<li><a>꽃다발</a></li>
-						<li><a>화병</a></li>
-						<li><a>그림 액자</a></li>
-						<li><a>캔들 디퓨저</a></li>
-					</ul></li>
-				<li><a onclick="fnMoveaa('60')">반려동물</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a>하우스/방석</a></li>
-						<li><a>캣타워/스크래쳐</a></li>
-						<li><a>안전문/울타리</a></li>
-						<li><a>밥그릇/급식기</a></li>
-						<li><a>위생용품</a></li>
-					</ul></li>
-			</ul>
+            <li><a onclick="fnMoveaa('10')">가구</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">침대</a></li>
+                  <li><a class="category-link">소파</a></li>
+                  <li><a class="category-link">수납장</a></li>
+                  <li><a class="category-link">의자</a></li>
+                  <li><a class="category-link">식탁</a></li>
+               </ul></li>
+            <li><a onclick="fnMoveaa('20')">조명</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">장스탠드</a></li>
+                  <li><a class="category-link">단스탠드</a></li>
+                  <li><a class="category-link">무드등</a></li>
+                  <li><a class="category-link">천장등</a></li>
+               </ul></li>
+            <li><a onclick="fnMoveaa('30')">패브릭</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">침구</a></li>
+                  <li><a class="category-link">커튼</a></li>
+                  <li><a class="category-link">러그</a></li>
+               </ul></li>
+            <li><a onclick="fnMoveaa('40')">가전</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">냉장고</a></li>
+                  <li><a class="category-link">TV</a></li>
+                  <li><a class="category-link">세탁기</a></li>
+                  <li><a class="category-link">음향 영상가전</a></li>
+                  <li><a class="category-link">청소 가전</a></li>
+               </ul></li>
+            <li><a onclick="fnMoveaa('50')">데코/식물</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">조화</a></li>
+                  <li><a class="category-link">꽃다발</a></li>
+                  <li><a class="category-link">화병</a></li>
+                  <li><a class="category-link">그림 액자</a></li>
+                  <li><a class="category-link">캔들 디퓨저</a></li>
+               </ul></li>
+            <li><a onclick="fnMoveaa('60')">반려동물</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">하우스/방석</a></li>
+                  <li><a class="category-link">캣타워/스크래쳐</a></li>
+                  <li><a class="category-link">안전문/울타리</a></li>
+                  <li><a class="category-link">밥그릇/급식기</a></li>
+                  <li><a class="category-link">위생용품</a></li>
+               </ul></li>
+         </ul>
+      </div>
+
 		</div>
 	</header>
 	<script>
@@ -193,6 +195,58 @@
 		    li.append(deleteIcon);
 		    $('#recent_search').append(li);
 		  }
+		  
+		  $('.category-link').on('click', function () {
+			  var categoryName = $(this).text();
+
+			  $.ajax({
+			      url: "/product/getProductsByCategory.dox",
+			      type: "POST",
+			      data: { categoryName: categoryName },
+			      success: function (products) {
+			          // 상품 목록 처리 코드 (예: 리스트 렌더링)
+			      },
+			      error: function (error) {
+			          console.log("카테고리 별 상품 목록을 가져오는데 실패했습니다: ", error);
+			      }
+			  });
+			});
+
+		  function loadCategoryProducts(categoryName) {
+			  // 서버에서 카테고리별 상품 데이터를 가져오는 AJAX 요청
+			  $.ajax({
+			    method: "POST",
+			    url: "/product/getProductsByCategory.dox",
+			    data: {
+			      categoryName: categoryName
+			    },
+			    success: function(response) {
+			      console.log("Full response data:", response);
+			      console.log("Products list:", response.list);
+
+			      var data = response;
+
+			      // testcate.do 페이지로 이동하면서 category와 list 데이터를 전달합니다.
+			      var url = "/testcate.do";
+			      var params = "categoryName=" + encodeURIComponent(categoryName) + "&list=" + encodeURIComponent(JSON.stringify(data.list));
+
+			      window.location.href = url + "?" + params;
+			    },
+			    error: function(error) {
+			      console.error("Error occurred while fetching category data:", error);
+			    }
+			  });
+			}
+
+			$(document).ready(function() {
+			  $('.category-link').on('click', function() {
+			    var categoryName = $(this).text();
+
+			    loadCategoryProducts(categoryName); // 데이터를 AJAX로 가져와서 로컬에서 처리
+			  });
+			});
+
+
 			  }
 		}
 		$('#search_input').focus(function() {

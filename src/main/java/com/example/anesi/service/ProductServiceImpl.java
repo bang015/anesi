@@ -108,9 +108,13 @@ public class ProductServiceImpl implements ProductService {
 			return productMapper.selectLatest(map);
 		}
 		@Override
-		public List<Product> selectCate(HashMap<String, Object> map) {
+		public List<Product> selectCate(String categoryName) {
+		    return productMapper.selectCate(categoryName);
+		}
+		@Override
+		public List<Product> selectCateList(HashMap<String, Object> map) {
 			// TODO Auto-generated method stub
-			return productMapper.selectCate(map);
+			return productMapper.selectCateList(map);
 		}
 		@Override
 				public List<Category> searchCategory(HashMap<String, Object> map) {

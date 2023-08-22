@@ -80,5 +80,9 @@ public interface ProductMapper {
 		//최근본 상품 출력
 		List<Product> selectLatest (HashMap<String, Object> map);
 		//카테고리 상품 출력
-		List<Product> selectCate (HashMap<String, Object> map);
+		List<Product> selectCateList (HashMap<String, Object> map);
+		//카테고리 상품 출력selectCateList
+		public List<Product> selectCate(String categoryName);
+
+
 }

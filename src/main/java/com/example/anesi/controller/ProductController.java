@@ -138,15 +138,7 @@ public class ProductController {
 	       resultMap.put("list", list);
 	       return new Gson().toJson(resultMap);
 	   }
-	  //상품 카테고리 출력
-	  @RequestMapping(value = "/product/getProductsByCategory.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	  @ResponseBody
-	  public String selectCate(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
-		  HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		  List<Product> list = productService.selectCate(map);
-		  resultMap.put("list", list);
-		  return new Gson().toJson(resultMap);
-	  }
+	 
 	// 상품 콘텐츠 이미지
 		  @RequestMapping(value = "/imgSearch2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 		   @ResponseBody
@@ -269,7 +261,24 @@ public class ProductController {
 			    resultMap.put("list", list);
 			    return new Gson().toJson(resultMap);
 			}
+			@RequestMapping(value = "/product/selectcate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			public String cateList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+				HashMap<String, Object> resultMap = new HashMap<String, Object>();
+				List<Product> list = productService.selectCateList(map);
+				resultMap.put("list", list);
+				return new Gson().toJson(resultMap);
+			}
 
+		  //상품 카테고리 출력
+			  @RequestMapping(value = "/product/getProductsByCategory.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			  @ResponseBody
+			  public String selectCate(Model model, @RequestParam String categoryName) throws Exception {
+			      HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			      List<Product> list = productService.selectCate(categoryName);
+			      resultMap.put("list", list);
+			      return new Gson().toJson(resultMap);
+			  }
 
 
 
