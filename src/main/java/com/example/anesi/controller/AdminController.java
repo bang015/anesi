@@ -210,6 +210,15 @@ public class AdminController {
 		resultMap.put("success", "고객정보수정완료");
 		return new Gson().toJson(resultMap);
 	}
+	//고객 상세 정보 업데이트
+	@RequestMapping(value = "/admin/removeUser.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String removeUser(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		adminService.removeUser(map);		
+		resultMap.put("success", "고객정보삭제완료");
+		return new Gson().toJson(resultMap);
+	}
 	//리뷰 검색
 	@RequestMapping(value = "/admin/searchReviewList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody

@@ -46,6 +46,8 @@ public interface AdminService {
 	User searchUserInfo(HashMap<String, Object> map);
 	//고객상세정보 업데이트
 	int editUser(HashMap<String, Object> map);
+	//고객상세정보 업데이트
+	int removeUser(HashMap<String, Object> map);
 
 }
 

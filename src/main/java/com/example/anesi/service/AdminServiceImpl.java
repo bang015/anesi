@@ -117,6 +117,11 @@ public class AdminServiceImpl implements AdminService {
 	public int editUser(HashMap<String, Object> map) {
 		return adminMapper.updateUser(map);
 	}
+
+	@Override
+	public int removeUser(HashMap<String, Object> map) {
+		return adminMapper.deleteUser(map);
+	}
 	
 	
 	

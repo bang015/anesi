@@ -57,6 +57,7 @@
 			#{item}
 		</foreach>
 	</update>
+	
 	<delete id="adminDeleteOption" parameterType="hashmap">
 		DELETE 
 		FROM t3_tbl_product_option
@@ -154,6 +155,17 @@
 		SELECT *
 		FROM t3_tbl_user
 		WHERE STATUS = 'U'
+		<choose>
+				<when test="searchOption == 'USER_NO'">
+					  AND USER_NO LIKE CONCAT('%',#{searchText},'%')
+				</when>
+				<when test="searchOption == 'USER_EMAIL'">
+					  AND USER_EMAIL LIKE CONCAT('%',#{searchText},'%')
+				</when>
+				<when test="searchOption == 'USER_NAME'">
+					  AND USER_NAME LIKE CONCAT('%',#{searchText},'%')
+				</when>
+			</choose>
 	</select>
 	
 	<select id="selectUserInfo" parameterType="hashmap" resultType="com.example.anesi.model.User">
@@ -172,6 +184,20 @@
 			GENDER = #{gender},
 			SMSYN = #{smsYn},
 			UDATETIME = now()			
+		WHERE USER_NO = #{userNo}
+	</update>
+	
+	<update id="deleteUser" parameterType="hashmap">
+		UPDATE t3_tbl_user
+			SET
+			DELETE_YN = #{deleteYn}
+		WHERE USER_NO = #{userNo}
+	</update>
+	
+	<update id="resetUser" parameterType="hashmap">
+		UPDATE t3_tbl_user
+			SET
+			CNT = 0
 		WHERE USER_NO = #{userNo}
 	</update>
 	

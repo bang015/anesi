@@ -49,5 +49,7 @@ public interface AdminMapper {
 	User selectUserInfo(HashMap<String, Object> map);
 	//고객상세정보 업데이트
 	int updateUser(HashMap<String, Object> map);
+	//고객 삭제
+	int deleteUser(HashMap<String, Object> map);
 	
 }

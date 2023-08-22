@@ -26,9 +26,19 @@
 						<span>고객목록 (총 {{list.length}}개)</span>
 					</div>
 					<div class="btnBox">
-						<button class="btn1 btn2 btn3" @click="fnCheckSituation('N')">선택판매</button>
-						<button class="btn1 btn2 btn3" @click="fnCheckSituation('S')">선택중지</button>
-						<button class="btn1 btn2 btn3" @click="fnCheckSituation('Y')">선택종료</button>
+						<button class="btn1 btn2 btn3" @click="fnDelete(item,'Y')">선택계정 정지</button>
+						<!-- <button class="btn1 btn2 btn3" @click="fnReset">선택계정 로그인횟수 초기화</button> -->
+					</div>
+					
+					<div>
+						<span>상세검색</span>
+						<select v-model="searchOption" class="selectStyle">
+							<option value="USER_NO">고객번호</option>
+							<option value="USER_EMAIL">고객아이디</option>
+							<option value="USER_NAME">고객성함</option>
+						</select>
+						<span><input v-model="searchText" class="inputStyle" @keyup.enter="fnSearch"></span>
+						<button class="btn1 btn2 btn3" @click="fnSearch">검색</button>
 					</div>
 					<div class="tableBox">
 						<div class="table-container">
@@ -39,22 +49,23 @@
 									<th>고객번호</th>
 									<th>고객아이디</th>
 									<th>고객성함</th>
-									<th>등록일</th>
-									<th>수정일</th>
+									<th>닉네임</th>
 									<th>계정삭제여부</th>
 									<th>로그인시도횟수</th>
+									<th>등록일</th>
+									<th>수정일</th>
 								</tr>
 								<tr v-for="item in list">
 									<td><input type="checkbox" v-model="checkList" :value="item.userNo" @change="updateAllCheck"></td>
-									<td><button class="btn1" @click="fnUserEdit(item.userNo)">수정</button></td>
+									<td><button class="btn1" @click="fnUserInfo(item.userNo)">수정</button></td>
 									<td>{{item.userNo}}</td>
 									<td>{{item.userEmail}}</td>
 									<td>{{item.userName}}</td>
-									<td>{{item.cDateTime}}</td>
-									<td>{{item.uDateTime}}</td>
+									<td>{{item.nick}}</td>
 									<td>{{item.deleteYn}}</td>
 									<td>{{item.cnt}}</td>
-									
+									<td>{{item.cDateTime}}</td>
+									<td>{{item.uDateTime}}</td>
 								</tr>
 							</table>
 						</div>
@@ -81,23 +92,20 @@
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">연락처</span>
-			        		<span><input v-model="info.phone" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.phone" class="inputStyle inputStyle2"><span class="small">ex : 01012341234</span></span>
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">생년월일</span>
-			        		<span><input v-model="info.birthday" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.birthday" class="inputStyle inputStyle2"><span class="small">ex : 19990101</span></span>
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">성별</span>
-			        		<span><input v-model="info.gender" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.gender" class="inputStyle inputStyle2"><span class="small">남자:M, 여자:F, 선택안함:N</span></span>
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">문자수신여부</span>
-			        		<span><input v-model="info.smsYn" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.smsYn" class="inputStyle inputStyle2"><span class="small">수신동의:Y, 비동의:N</span></span>
 			        	</div>
-			        	
-			        	
-			        	
 			        	
 		        		<div class="modalStyle4">
 		        			<span>
@@ -117,15 +125,13 @@ var app = new Vue({
 	data : {
 		list : [],
 		item : "",
-		
 		checkList : [],
 		allChecked : false,
-		
 		showViewModal : false,
 		info : {},
-		userNo : ""
-
-		
+		userNo : "",
+		searchOption :'USER_NO',
+		searchText : '',
 	},// data
 	methods : {
 		//고객 전체 검색
@@ -162,7 +168,7 @@ var app = new Vue({
 			}
 		},
 		//고객 상세 정보 불러오기
-		fnUserEdit(userNo){
+		fnUserInfo(userNo){
 			var self = this;
 			var nparmap = {userNo};
 			self.userNo = userNo
@@ -175,20 +181,7 @@ var app = new Vue({
                 	self.info = data.info;
                 	self.openViewModal();
                 }
-
             });
-			
-		},
-		// 모달열기
-		openViewModal: function() {
-			var self = this;
-			self.showViewModal = true;
-		},
-		// 모달 닫기
-		closeModal: function() {
-			var self = this;
-			self.showViewModal = false;
-			location.reload();
 		},
 		//수정 정보 업데이트
 		fnUpdateUser(info){
@@ -210,27 +203,58 @@ var app = new Vue({
 			self.closeModal(); 
 			
 		},
-		
-		//상품 상태
-		fnCheckSituation(situation){
+		// 모달열기
+		openViewModal: function() {
 			var self = this;
-			if(self.checkList.length > 0){
-				var checkList = JSON.stringify(self.checkList);
-				var nparmap = {	checkList, situation};
-				$.ajax({
-	                url : "/admin/productSituation.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap,
-	                success : function(data) {
-	                	alert(data.cnt+"개 업데이트");
-	                	self.checkList = []
-	                	self.fnGetProduct();
-	                	self.allChecked = false;
-	                }
-	            });
-			}
+			self.showViewModal = true;
 		},
+		// 모달 닫기
+		closeModal: function() {
+			var self = this;
+			self.showViewModal = false;
+			location.reload();
+		},
+		
+		
+		//고객 삭제
+		fnDelete(item, deleteYn){
+			var self = this;
+			console.log(item);
+
+			var nparmap = {userNo : item.userNo, deleteYn : deleteYn};
+			$.ajax({
+                url : "/admin/removeUser.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	if(deleteYn=='Y'){
+                    	alert("삭제되었습니다.");
+                	}else{     
+                		alert("해제되었습니다.");
+					} 
+        	        self.checkList = []
+                	self.fnGetUser();
+                	self.allChecked = false;
+                }
+            });
+			
+		},
+		//검색
+		fnSearch(){
+			var self = this;
+			var nparmap = {searchOption : self.searchOption, searchText : self.searchText};
+			console.log(nparmap);
+			$.ajax({
+                url : "/admin/userList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.list = data.list;
+                }
+			});
+		}
 	}, // methods
 	created : function() {
 		var self = this;
