@@ -535,8 +535,7 @@ var app = new Vue({
                 success : function(data) {                
                      if(data.success){                      
                         location.reload();                      
-                      } else {   
-                      }
+                      } 
                 }                
             }); 
         },

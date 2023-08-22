@@ -92,4 +92,10 @@ public interface ProductMapper {
 	int insertCart(HashMap<String, Object> map);
 	// 장바구니 중복체크v
 	List<Cart>selectCartCheck(HashMap<String, Object> map);
+	// 회원 쿠폰 등록
+	int coupon(HashMap<String, Object> map);
+	// 회원 쿠폰 등록
+	int coupon2(HashMap<String, Object> map);
+	
+	
 }

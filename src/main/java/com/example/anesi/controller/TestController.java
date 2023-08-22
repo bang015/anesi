@@ -42,6 +42,10 @@ public class TestController {
 	public String testcate(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		return "/testcate";
 	}
+	@RequestMapping("popup.do") 
+	public String popup(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/popup";
+	}
 	
 	
 	

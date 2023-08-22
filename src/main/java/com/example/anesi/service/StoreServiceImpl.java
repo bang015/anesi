@@ -87,6 +87,16 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 
+	@Override
+	public int coupon(HashMap<String, Object> map) {
+		return productMapper.coupon(map);
+	}
+	@Override
+	public int coupon2(HashMap<String, Object> map) {
+		return productMapper.coupon2(map);
+	}
+
+
 	
 	
 

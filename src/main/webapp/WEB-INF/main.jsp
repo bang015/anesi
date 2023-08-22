@@ -62,9 +62,8 @@
 
 </style>
 <jsp:include page="header.jsp"></jsp:include>
-<body>
+<body onload="javascript:popUp()">
 <div id="app">
- 
  <!-- 슬라이드 전체 감싸는 컨테이너 -->
 <div class="swiper mySwiper">
   <!-- wrapper 추가 필수 -->
@@ -133,8 +132,28 @@ var swiper = new Swiper(".mySwiper", {
     
     // 옵션 끝 부분
   });
-
-  
-
-
 </script>
+<!--팝업-->
+<!--쿠키 cdn-->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script type="text/javascript">
+  function popUp(){
+    if(Cookies.get("popupCheck") !== "no"){
+      window.open("popup.do", 
+        "tap",
+        "width=600,height=600,resizable,status=1")
+    }
+}
+</script>
+<script type="text/javascript">
+    function closePopup(){
+      if(document.getElementById("check").value){
+        Cookies.set('popupCheck', 'no', { expires: 1/60 });
+      }
+      //자기 자신을 닫는 dom method
+      self.close();
+    }
+</script>
+       
+
+
