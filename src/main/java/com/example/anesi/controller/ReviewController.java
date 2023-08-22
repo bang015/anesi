@@ -46,7 +46,6 @@ public class ReviewController {
 		       HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		       int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
 		       int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
-		       System.out.println(map);
 		       map.put("startNum", startNum);
 		       map.put("lastNum", lastNum);
 		       resultMap=reviewService.searchReview(map);

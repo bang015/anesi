@@ -159,6 +159,7 @@
 							<div class="product-a"><a href="#product">상품정보</a></div>
 							<div class="review-a"><a href="#review">리뷰  <span class="review-span" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span></a></div>
 							<div class="inquiry-a"><a href="#inquiry">문의 <span class="review-span" v-if="inquiryListCnt > 0">{{inquiryListCnt}}</span></a></div>
+							<div class="product-a"><a href="#Etc">배송/환불</a></div>
 						</div>
 					</div>
 					<div class="content-box2">
@@ -184,7 +185,7 @@
 									
 							        <div class="review-add">
 							        <div class="review-back">
-										<button @click="closeScrapModal()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
+										<button class="back-btn" @click="closeScrapModal()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
 									</div>
 							        	<div class="review-add-box">
 								        	<div class="review-add-product">
@@ -240,8 +241,8 @@
 									        	</div>
 									        	<span class="notCheck" v-if="reviewCheck == true">필수 입력 항목입니다.</span>
 									        	<div class="review-add-textarea">
-									        		<textarea :class="reviewTextareaClass" @click="reviewTextarea" @input="updateCharacterCount" rows="10" cols="53.9" v-model="reviewText" placeholder="자세하고 솔직한 리뷰는 다른고객에게 큰 도움이 됩니다."></textarea>
-									        		 <div class="character-count">{{ characterCount }} / 200</div>
+									        		<textarea :class="reviewTextareaClass" @click="reviewTextarea" @input="updateCharacterCount1" rows="10" cols="53.9" v-model="reviewText" placeholder="자세하고 솔직한 리뷰는 다른고객에게 큰 도움이 됩니다."></textarea>
+									        		 <div class="character-count">{{ characterCount1 }} / 200</div>
 									        	</div>
 									        	<div class="review-add-btn-wrap"> 
 									        		<button @click="fnReviewAdd" class="review-add-btn">완료</button>
@@ -390,8 +391,8 @@
 												<div :class="{'inquiry-title' : !inquiryCheck, 'not-check-title2' : inquiryCheck}">
 													문의내용
 												</div>												
-												<textarea :class="{'inquiry-add-text' : !inquiryCheck, 'not-check-textarea2' : inquiryCheck}" @click="inquiryTextarea" @input="updateCharacterCount" rows="10" cols="53.9" v-model="inquiryText" placeholder="문의 내용을 입력하세요."></textarea>
-									        	<div class="character-count">{{ characterCount }} / 200</div>
+												<textarea :class="{'inquiry-add-text' : !inquiryCheck, 'not-check-textarea2' : inquiryCheck}" @click="inquiryTextarea" @input="updateCharacterCount2" rows="10" cols="53.9" v-model="inquiryText" placeholder="문의 내용을 입력하세요."></textarea>
+									        	<div class="character-count">{{ characterCount2 }} / 200</div>
 											</div>
 											<div class="privateText" v-if="privateCheck">
 												<label class="styled-checkbox">	
@@ -457,7 +458,7 @@
 									  </paginate>
 									</template>
 							</div>
-						<div class="Etc-box">
+						<div class="Etc-box" id="Etc">
 							<div class="delivery Etc">
 								<div class="Etc-title">
 									배송
@@ -649,7 +650,8 @@ var app = new Vue({
 		reviewCsatClass : 'review-csat',
 		reviewCsatCheck : false,
 		reviewCheck : false,
-		characterCount: 0,
+		characterCount1: 0,
+		characterCount2: 0,
 		defaultPrice : 0,
 		stars: Array(5).fill('empty'),
 	    selectedRating: 0,
@@ -1187,10 +1189,16 @@ var app = new Vue({
 			var self = this;
 			self.showScrapModal = false;
 			self.selectedFile = null;
+			self.reviewText="";
+			self.selectedRating=0;
+			self.characterCount1=0;
 			},
 		closeScrapModal2: function() {
 			var self = this;
 			self.showScrapModal2 = false;
+			self.characterCount2=0;
+			self.inquiryOption=0;
+			self.inquiryText="";
 			},
 		closeScrapModal3: function() {
 			var self = this;
@@ -1221,9 +1229,11 @@ var app = new Vue({
 			   this.hoveringRating = 0;
 			    }
 			 },
-		updateCharacterCount() {
-			 this.characterCount = this.reviewText.length;
-			 this.characterCount = this.inquiryText.length;
+		updateCharacterCount1() {
+			 this.characterCount1 = this.reviewText.length;			
+			 },
+		updateCharacterCount2() {			 
+			 this.characterCount2 = this.inquiryText.length;
 			 },
 		changeCategoryStyle(category) {
 			// inquiryCategory 변수를 업데이트
@@ -1361,15 +1371,12 @@ var app = new Vue({
 		                success : function(data) { 
 		                	self.selectHelp=data.selectHelp
 		                	self.helpList = [];
-		                	self.selectHelp.forEach(item => self.helpList.push(item.rNo));
-		                	console.log(self.helpList);
-		                	console.log(self.selectHelp);
+		                	self.selectHelp.forEach(item => self.helpList.push(item.rNo));		                
 		                }
 		            });
 			    },
 			   fnHelp(rNo){
-			    	var self = this;
-			    	console.log(rNo);
+			    	var self = this;			
 			    	if(self.userNo == "" || self.userNo == null){
 			    		self.showScrapModal3 = true;
 						self.nonUserScrapbook = true;
