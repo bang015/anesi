@@ -1363,12 +1363,13 @@ var app = new Vue({
 		                	self.helpList = [];
 		                	self.selectHelp.forEach(item => self.helpList.push(item.rNo));
 		                	console.log(self.helpList);
-		                	
+		                	console.log(self.selectHelp);
 		                }
 		            });
 			    },
 			   fnHelp(rNo){
 			    	var self = this;
+			    	console.log(rNo);
 			    	if(self.userNo == "" || self.userNo == null){
 			    		self.showScrapModal3 = true;
 						self.nonUserScrapbook = true;
@@ -1388,9 +1389,6 @@ var app = new Vue({
 			    },
 			   fndeleteHelp(rNo){
 			    	var self = this;
-			    	if(product.help <= 0){
-			    		return;
-			    	}
 		            var nparmap = { userNo: self.userNo, productNo: self.productNo, rNo : rNo};
 		            $.ajax({
 		                url : "/reviewDeleteHelp.dox",
