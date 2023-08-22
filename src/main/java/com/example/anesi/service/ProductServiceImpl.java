@@ -70,7 +70,13 @@ public class ProductServiceImpl implements ProductService {
 		@Override
 			public List<Product> selectCartList(HashMap<String, Object> map) {
 				// TODO Auto-generated method stub
-				return productMapper.selectCartList(map);
+				List<Product> list = null;
+				if (!map.get("userNo").equals("")) {
+					list = productMapper.selectCartList(map);
+				} else {
+					list =productMapper.selectNonCartList(map);
+				}
+				return list;
 		}
 		@Override
 		public int addProduct(HashMap<String, Object> map) {

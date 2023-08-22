@@ -188,7 +188,7 @@
 		 WHERE USER_NO = #{userNo}
 	</delete>
 
-	<select id="selectCartList" parameterType="int" resultType="com.example.anesi.model.Product">
+	<select id="selectCartList" parameterType="hashmap" resultType="com.example.anesi.model.Product">
 	    SELECT
 	        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
 	        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO
@@ -204,6 +204,22 @@
 	        t3_tbl_product_option o ON product.PRODUCT_NO = o.PRODUCT_NO
 	    WHERE
 	        user.USER_NO = #{userNo} AND image.THUMBNAIL_YN = 'Y'
+	</select>
+	
+		<select id="selectNonCartList" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+		    SELECT
+		        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
+		        o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO, cart.NONUSER_NO
+		    FROM
+		        t3_tbl_product product
+		    INNER JOIN
+		        t3_tbl_product_image image ON product.PRODUCT_NO = image.PRODUCT_NO
+		    INNER JOIN 
+		        t3_tbl_user_cart cart ON cart.PRODUCT_NO = product.PRODUCT_NO
+		    INNER JOIN 
+		        t3_tbl_product_option o ON product.PRODUCT_NO = o.PRODUCT_NO
+		    WHERE
+		        cart.NONUSER_NO = #{nonUserNo} AND image.THUMBNAIL_YN = 'Y'
 	</select>
 	
 	<!-- 비회원 장바구니 등록 -->

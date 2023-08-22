@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
+import com.example.anesi.model.Cart;
 import com.example.anesi.model.Category;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.Product;
@@ -18,6 +20,7 @@ import com.example.anesi.model.Scrapbook;
 import com.example.anesi.service.ProductService;
 import com.google.gson.Gson;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -152,13 +155,13 @@ public class ProductController {
 		  //장바구니 목록 출력
 		  @RequestMapping(value = "/product/viewCartList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 			@ResponseBody
-			public String userCartList(Model model, @RequestParam("userNo") int userNo) throws Exception {
-			    HashMap<String, Object> map = new HashMap<String, Object>();
+			public String userCartList(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception {
 			    HashMap<String, Object> resultMap = new HashMap<String, Object>();
-			    
-			    map.put("userNo", userNo); // userNo를 int 형으로 받아서 HashMap에 담아 전달합니다.
+			    Cookie cookie = WebUtils.getCookie(request, "cartCookie");
+				String ckValue = cookie.getValue();
+			    map.put("nonUserNo", ckValue);
 			    List<Product> list = productService.selectCartList(map);
-
+			    System.out.println(map);
 			    resultMap.put("list", list);
 			    return new Gson().toJson(resultMap);
 		  }

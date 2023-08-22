@@ -51,8 +51,9 @@ public interface ProductMapper {
 	//회원 상품 스크랩북 삭제
 	int deleteScrapbook (HashMap<String, Object> map);
 	//상품 장바구니
-	List<Product>selectCartList(HashMap<String, Object> map);
- 
+	List<Product> selectCartList(HashMap<String, Object> map);
+	//상품 비유저 장바구니
+	List<Product> selectNonCartList(HashMap<String, Object> map);
 	//회원 상품 스크랩북 리스트 체크
 	List<Scrapbook> selectScrapbookList (HashMap<String, Object> map);
 	 

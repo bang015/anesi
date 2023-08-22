@@ -129,8 +129,6 @@ new Vue({
     	loadCartList() {
     		  const self = this;
     		  const userNo = '${sessionNo}';
-
-    		  if (userNo) {
     		    $.ajax({
     		      url: '/product/viewCartList.dox',
     		      method: 'POST',
@@ -169,9 +167,6 @@ new Vue({
 
     		      }
     		    });
-    		  } else {
-    		    alert('사용자 번호가 없습니다. 로그인 후 이용해주세요.');
-    		  }
     		},
     		  numberWithCommas(x) {
     		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
