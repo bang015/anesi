@@ -42,8 +42,8 @@
 							item.discount }}%</span>
 						<h4 class="production-item-price__sell">할인가격: {{
 							numberWithCommas(calculateDiscountedPrice(item)) }}원</h4>
-						
-						<div class="main-option">	
+
+						<div class="main-option">
 							<select class="option-box" v-model="item.selectedOption"
 								@change="optionSelected(item)">
 								<option disabled value="">옵션을 선택해주세요</option>
@@ -52,7 +52,6 @@
 									{{ opt.optionName }} +{{ opt.optionPrice }}원</option>
 							</select>
 						</div>
-
 
 						<button v-on:click="goToPurchasePage([item.productNo])"
 							class="btn btn-sm btn-danger">구매하기</button>
@@ -136,15 +135,31 @@ new Vue({
     
     methods: {
     	loadCartList() {
+    		  const selectedNparmapString = localStorage.getItem("selectedNparmap");
+    		  let selectedNparmap = null;
+    		  if (selectedNparmapString) {
+    		    selectedNparmap = JSON.parse(selectedNparmapString);
+    		  }
+
     		  const self = this;
-    		  const userNo = '${sessionNo}';
-    		    $.ajax({
-    		      url: '/product/viewCartList.dox',
-    		      method: 'POST',
-    		      dataType: 'json',
-    		      data: { userNo: userNo },
-    		      success: function(response) {
-    		        console.log(response);
+    		  const userNo = "${sessionNo}";
+    		  $.ajax({
+    		    url: "/product/viewCartList.dox",
+    		    method: "POST",
+    		    dataType: "json",
+    		    data: { userNo: userNo },
+    		    success: function (response) {
+    		      console.log(response);
+					
+    		        
+    		        
+    		        // 선택된 nparmap에 따라 상품 목록 필터링
+    		        if (self.selectedNparmap && self.selectedNparmap.optionNo) {
+    		            const filteredList = response.list.filter(
+    		              (item) => item.optionNo === self.selectedNparmap.optionNo
+    		            );
+    		            response.list = filteredList;
+    		          }
 
     		       
     		        
@@ -159,20 +174,33 @@ new Vue({
     		        const uniqueItems = Array.from(uniqueItemsMap.values());
 
     		        // 상품별로 옵션 가져오기
-    		        Promise.all(uniqueItems.map(item => {
-    		          return new Promise(resolve => {
-    		            self.fnOption(item.productNo, function(options) {
-    		              // 각 상품의 옵션을 추가
-    		              item.options = [{ optionNo: '', optionName: '상품을 선택하세요.', optionPrice: 0 }].concat(options);
-    		              // 옵션 배열에 해당 상품의 옵션들을 추가해준다.
-    		              self.option = self.option.concat(options);
-    		              resolve();
-    		            });
-    		          });
-    		        })).then(() => {
-    		          // 모든 상품의 옵션이 로드된 후에 cartItems 할당
-    		          self.cartItems = uniqueItems;
-    		        });
+    		            Promise.all(
+       			 uniqueItems.map((item) => {
+ 				return new Promise((resolve) => {
+            if (!self.options || Object.keys(self.options).length === 0) {
+              self.options = [];
+            }
+            self.fnOption(item.productNo, (options) => {
+              // 각 상품의 옵션을 추가
+              item.options = [{ optionNo: "", optionName: "상품을 선택하세요.", optionPrice: 0 }].concat(options);
+
+              // 옵션 배열에 해당 상품의 옵션들을 추가
+              self.options = self.options.concat(options);
+
+              if (selectedNparmap && selectedNparmap.optionNo && item.productNo === selectedNparmap.productNo) {
+            	  item.selectedOption = item.options.find((option) => option.optionNo === selectedNparmap.optionNo).optionNo;
+            	} else {
+            	  item.selectedOption = options.length > 0 ? options[0].optionNo : "";
+            	}
+
+             	 resolve();
+       		   });
+    		    });
+    		     })
+    				).then(() => {
+    		        		  // 모든 상품의 옵션이 로드된 후에 cartItems 할당
+    		       self.cartItems = uniqueItems;
+    		         });
 
     		      }
     		    });
