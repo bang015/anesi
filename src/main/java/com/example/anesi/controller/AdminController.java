@@ -96,16 +96,13 @@ public class AdminController {
 		adminService.adminEditProduct(map);
 		return new Gson().toJson(resultMap);
 	}
-	
 	//옵션 업데이트
 	@RequestMapping(value = "/admin/optionUpdate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String optionUpdate(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		adminService.adminEditOption(map);
-		
 		return new Gson().toJson(resultMap);
 	}
-	
 	//옵션 추가
 	@RequestMapping(value = "/admin/optionInsert.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -113,7 +110,6 @@ public class AdminController {
 		adminService.adminAddOption(map);
 		return new Gson().toJson(resultMap);
 	}
-	
 	//상품 상태 업데이트
 	@RequestMapping(value = "/admin/productSituation.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -125,7 +121,6 @@ public class AdminController {
 		resultMap.put("cnt", adminService.adminEditProductSituation(map));
 		return new Gson().toJson(resultMap);
 	}
-	
 	//옵션 삭제
 	@RequestMapping(value = "/admin/optionDelete.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -137,7 +132,6 @@ public class AdminController {
 		resultMap.put("cnt", adminService.adminRemoveOption(map));
 		return new Gson().toJson(resultMap);
 	}
-	
 	//배송 전체
 	@RequestMapping(value = "/admin/orderList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -146,7 +140,6 @@ public class AdminController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
-	
 	//배송 상태 업데이트
 	@RequestMapping(value = "/admin/editDelivery.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -158,7 +151,6 @@ public class AdminController {
 		resultMap.put("cnt", adminService.editDelivery(map));
 		return new Gson().toJson(resultMap);
 	}
-	
 	//배송 검색
 	@RequestMapping(value = "/admin/searchList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -167,7 +159,6 @@ public class AdminController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
-	
 	//문의 내용 검색
 	@RequestMapping(value = "/admin/searchInquiryList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -176,7 +167,6 @@ public class AdminController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
-	
 	//문의 답변
 	@RequestMapping(value = "/admin/editInquiry.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -210,13 +200,17 @@ public class AdminController {
 		resultMap.put("success", "고객정보수정완료");
 		return new Gson().toJson(resultMap);
 	}
-	//고객 상세 정보 업데이트
+	//고객 정보 삭제
 	@RequestMapping(value = "/admin/removeUser.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String removeUser(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		adminService.removeUser(map);		
-		resultMap.put("success", "고객정보삭제완료");
+		String json = map.get("checkList").toString();
+		ObjectMapper mapper = new ObjectMapper();
+		
+		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+		map.put("list", list);
+		resultMap.put("cnt", adminService.removeUser(map));
 		return new Gson().toJson(resultMap);
 	}
 	//리뷰 검색

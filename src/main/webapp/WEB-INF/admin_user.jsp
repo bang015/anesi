@@ -25,20 +25,23 @@
 					<div class="productListTitle">
 						<span>고객목록 (총 {{list.length}}개)</span>
 					</div>
-					<div class="btnBox">
-						<button class="btn1 btn2 btn3" @click="fnDelete(item,'Y')">선택계정 정지</button>
-						<!-- <button class="btn1 btn2 btn3" @click="fnReset">선택계정 로그인횟수 초기화</button> -->
-					</div>
 					
-					<div>
-						<span>상세검색</span>
-						<select v-model="searchOption" class="selectStyle">
-							<option value="USER_NO">고객번호</option>
-							<option value="USER_EMAIL">고객아이디</option>
-							<option value="USER_NAME">고객성함</option>
-						</select>
-						<span><input v-model="searchText" class="inputStyle" @keyup.enter="fnSearch"></span>
-						<button class="btn1 btn2 btn3" @click="fnSearch">검색</button>
+					
+					<div class="update_cont">
+						<div class="btnBox">
+							<button class="btn1 btn2 btn3" @click="fnDelete('Y')">선택계정 정지</button>
+							<!-- <button class="btn1 btn2 btn3" @click="fnReset">선택계정 로그인횟수 초기화</button> -->
+						</div>
+						<div class="search_cont">
+							<span>상세검색</span>
+							<select v-model="searchOption" class="selectStyle">
+								<option value="USER_NO">고객번호</option>
+								<option value="USER_EMAIL">고객아이디</option>
+								<option value="USER_NAME">고객성함</option>
+							</select>
+							<span><input v-model="searchText" class="inputStyle" @keyup.enter="fnSearch"></span>
+							<button class="btn1 btn2 btn3" @click="fnSearch">검색</button>
+						</div>
 					</div>
 					<div class="tableBox">
 						<div class="table-container">
@@ -217,28 +220,26 @@ var app = new Vue({
 		
 		
 		//고객 삭제
-		fnDelete(item, deleteYn){
+		fnDelete(deleteYn){
 			var self = this;
-			console.log(item);
+			console.log(self.userNo);
 
-			var nparmap = {userNo : item.userNo, deleteYn : deleteYn};
-			$.ajax({
-                url : "/admin/removeUser.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {
-                	if(deleteYn=='Y'){
-                    	alert("삭제되었습니다.");
-                	}else{     
-                		alert("해제되었습니다.");
-					} 
-        	        self.checkList = []
-                	self.fnGetUser();
-                	self.allChecked = false;
-                }
-            });
-			
+			if(self.checkList.length > 0){
+				var checkList = JSON.stringify(self.checkList);
+				var nparmap = {checkList, deleteYn};
+				$.ajax({
+	                url : "/admin/removeUser.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {
+	                	alert(data.cnt+"개 업데이트");
+	        	        self.checkList = []
+	                	self.fnGetUser();
+	                	self.allChecked = false;
+                	}
+            	});
+			}
 		},
 		//검색
 		fnSearch(){
