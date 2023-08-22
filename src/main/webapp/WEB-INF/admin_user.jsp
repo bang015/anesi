@@ -65,31 +65,35 @@
 			        	<div class="modalTitle">고객정보 수정</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">고객번호</span>
-			        		<span>{{info[0].userNo}}</span>
+			        		<span>{{info.userNo}}</span>
+			        	</div>
+			        	<div class="modalStyle1">
+			        		<span class="modalSpan1">고객아이디</span>
+			        		<span>{{info.userEmail}}</span>
 			        	</div>
 			     		 <div class="modalStyle1">
 			        		<span class="modalSpan1">이름</span>
-			        		<span><input v-model="info[0].userName" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.userName" class="inputStyle inputStyle2"></span>
 			        	</div>
 			     		 <div class="modalStyle1">
-			        		<span class="modalSpan1">고객아이디</span>
-			        		<span><input v-model="info[0].userEmail" class="inputStyle inputStyle2"></span>
+			        		<span class="modalSpan1">닉네임</span>
+			        		<span><input v-model="info.nick" class="inputStyle inputStyle2"></span>
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">연락처</span>
-			        		<span><input v-model="info[0].phone" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.phone" class="inputStyle inputStyle2"></span>
 			        	</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">생일</span>
-			        		<span><input v-model="info[0].birthday" class="inputStyle inputStyle2"></span>
+			        		<span class="modalSpan1">생년월일</span>
+			        		<span><input v-model="info.birthday" class="inputStyle inputStyle2"></span>
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">성별</span>
-			        		<span><input v-model="info[0].gender" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.gender" class="inputStyle inputStyle2"></span>
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">문자수신여부</span>
-			        		<span><input v-model="info[0].smsYn" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.smsYn" class="inputStyle inputStyle2"></span>
 			        	</div>
 			        	
 			        	
@@ -97,7 +101,7 @@
 			        	
 		        		<div class="modalStyle4">
 		        			<span>
-			        			<button class="btn1 btn2" @click="fnUpdateuser">저장</button>
+			        			<button class="btn1 btn2" @click="fnUpdateUser(info)">저장</button>
 			        			<button @click="closeModal" class="btn1 btn2 btn3">취소</button>
 		        			</span>
 		        		</div> 
@@ -118,8 +122,8 @@ var app = new Vue({
 		allChecked : false,
 		
 		showViewModal : false,
-		info : [],
-		userNo : 0
+		info : {},
+		userNo : ""
 
 		
 	},// data
@@ -135,6 +139,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.list = data.list;
+
 					}
             });
 		},
@@ -156,10 +161,11 @@ var app = new Vue({
 				self.allChecked = false;
 			}
 		},
-		//고객 상세 정보
+		//고객 상세 정보 불러오기
 		fnUserEdit(userNo){
 			var self = this;
 			var nparmap = {userNo};
+			self.userNo = userNo
             $.ajax({
                 url : "/admin/userInfo.dox",
                 dataType:"json",	
@@ -167,9 +173,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	console.log(data);
-                	self.openViewModal(); 
-
+                	self.openViewModal();
                 }
 
             });
@@ -186,85 +190,27 @@ var app = new Vue({
 			self.showViewModal = false;
 			location.reload();
 		},
-		/* //수정 정보 업데이트
-		fnUpdateProduct(){
+		//수정 정보 업데이트
+		fnUpdateUser(info){
 			var self = this;
-			var discountYn = '';
-			if(self.producInfo[0].discount !='0'){
-				discountYn = 'Y';
-			} else{
-				discountYn = 'N';
-			}
-			var nparmap = {productNo : self.productNo, productName : self.producInfo[0].productName, productPrice : self.producInfo[0].productPrice, discount : self.producInfo[0].discount, discountYn, };
+			var nparmap = info;
+			console.log(info);
+
 			$.ajax({
-                url : "/admin/productUpdate.dox",
+                url : "/admin/editUser.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
+	             	console.log(data);
+
                 }
             });
-			for(let i = 0; i < self.optionCnt; i++){
-				var nparmap2 = {optionNo : self.producInfo[i].optionNo, optionName : self.producInfo[i].optionName, optionPrice : self.producInfo[i].optionPrice, productStock : self.producInfo[i].productStock};
-				$.ajax({
-	                url : "/admin/optionUpdate.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap2,
-	                success : function(data) {
-	                }
-	            });
-			}
-			for(let i=self.optionCnt; i < self.optionCnt+self.addOptionCnt; i++){
-				var nparmap3 = {productNo : self.productNo, optionName : self.producInfo[i].optionName, optionPrice : self.producInfo[i].optionPrice, productStock : self.producInfo[i].productStock};
-				$.ajax({
-	                url : "/admin/optionInsert.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap3,
-	                success : function(data) {
-	                }
-	            });
-			}
-			if(self.delectOption.length != 0){
-				var list = JSON.stringify(self.delectOption);
-				var nparmap4 = {list};
-				$.ajax({
-	                url : "/admin/optionDelete.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap4,
-	                success : function(data) {
-	                }
-	            });
-			}
 			alert("저장성공");
-			self.closeModal();
+			self.closeModal(); 
 			
 		},
-		//옵션 추가
-		fnOptionAdd(){
-			var self = this
-			console.log();
-			if(self.producInfo.length < 5){
-				self.producInfo.push({productNo : self.productNo, optionName : '', productStock : 0, optionPrice : 0});
-				self.addOptionCnt++;
-			}
-		},
-		//옵션 제거
-		fnOptionDel(){
-			var self = this;
-			if(self.producInfo.length > 1){
-				if(self.addOptionCnt > 0){
-					self.addOptionCnt--;
-				} else {
-					self.optionCnt--;
-					self.delectOption.push(self.producInfo[self.producInfo.length-1].optionNo);
-					console.log(self.delectOption);
-				}
-				self.producInfo.pop();
-			}
-		},
+		
 		//상품 상태
 		fnCheckSituation(situation){
 			var self = this;
@@ -284,7 +230,7 @@ var app = new Vue({
 	                }
 	            });
 			}
-		}, */
+		},
 	}, // methods
 	created : function() {
 		var self = this;

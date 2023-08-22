@@ -41,9 +41,13 @@ public interface AdminMapper {
 	List<Review> selectAdminReviewList(HashMap<String, Object> map);
 	// 리뷰 삭제
 	int deleteAdminReview(HashMap<String, Object> map);
+	
+	
 	//고객 리스트검색
 	List<User> selectUserList(HashMap<String, Object> map);
 	//고객 상세정보검색
-	List<User> selectUserInfo(HashMap<String, Object> map);
-
+	User selectUserInfo(HashMap<String, Object> map);
+	//고객상세정보 업데이트
+	int updateUser(HashMap<String, Object> map);
+	
 }

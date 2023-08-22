@@ -193,12 +193,21 @@ public class AdminController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
-	//상품 전체 조회
+	//고객 상세 조회
 	@RequestMapping(value = "/admin/userInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String userInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<User> info = adminService.searchUserInfo(map);
+		User info = adminService.searchUserInfo(map);
 		resultMap.put("info", info);
+		return new Gson().toJson(resultMap);
+	}
+	//고객 상세 정보 업데이트
+	@RequestMapping(value = "/admin/editUser.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editUser(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		adminService.editUser(map);		
+		resultMap.put("success", "고객정보수정완료");
 		return new Gson().toJson(resultMap);
 	}
 	//리뷰 검색

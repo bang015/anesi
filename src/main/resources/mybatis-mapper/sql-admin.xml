@@ -165,12 +165,14 @@
 	<update id="updateUser" parameterType="hashmap">
 		UPDATE t3_tbl_user
 			SET
-			PRODUCT_NAME = #{productName},
-			PRODUCT_PRICE = #{productPrice},
-			DISCOUNT = #{discount},
-			DISCOUNT_YN = #{discountYn},
+			USER_NAME = #{userName},
+			NICK = #{nick},
+			PHONE = #{phone},
+			BIRTHDAY = #{birthday},
+			GENDER = #{gender},
+			SMSYN = #{smsYn},
 			UDATETIME = now()			
-		WHERE PRODUCT_NO = #{productNo}
+		WHERE USER_NO = #{userNo}
 	</update>
 	
 	

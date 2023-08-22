@@ -172,6 +172,10 @@
 	height: 30px;
 	cursor: pointer;
 }
+
+.modal-card{
+	width: 500px;
+}
 .modalTitle{
 	font-size: 24px;
 	text-align: center;
@@ -220,6 +224,7 @@
 	display: flex;
     justify-content: space-between;
     padding-top: 20px;
+    margin-left: 126px; 
 }
 .inputStyle{
 	border-radius: 4px;
@@ -228,7 +233,7 @@
 	width: 250px;
 }
 .inputStyle2{
-	width: 555px;
+	width: 120px;
 }
 .modalTdTr {
 	border: 0;

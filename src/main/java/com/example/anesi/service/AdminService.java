@@ -43,5 +43,9 @@ public interface AdminService {
 	//고객리스트 검색
 	List<User> searchUserList(HashMap<String, Object> map);
 	//고객상세정보 검색
-	List<User> searchUserInfo(HashMap<String, Object> map);
+	User searchUserInfo(HashMap<String, Object> map);
+	//고객상세정보 업데이트
+	int editUser(HashMap<String, Object> map);
+
 }
+

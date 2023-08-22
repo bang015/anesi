@@ -97,7 +97,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<User> searchUserInfo(HashMap<String, Object> map) {
+	public User searchUserInfo(HashMap<String, Object> map) {
 		return adminMapper.selectUserInfo(map);
 	}
 
@@ -111,6 +111,11 @@ public class AdminServiceImpl implements AdminService {
 	public int removeAdminReview(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return adminMapper.deleteAdminReview(map);
+	}
+
+	@Override
+	public int editUser(HashMap<String, Object> map) {
+		return adminMapper.updateUser(map);
 	}
 	
 	
