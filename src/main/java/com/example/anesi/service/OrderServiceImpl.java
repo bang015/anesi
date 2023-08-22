@@ -24,9 +24,18 @@ public class OrderServiceImpl implements OrderService{
 	}
 	// 주소 입력
 	@Override
-	public int addAddr(HashMap<String, Object> map) {
+	public Object addAddr(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return orderMapper.insertAddr(map);
+		Object no = 1;
+		if (!map.get("userNo").equals("")) {
+			System.out.println(map);
+			orderMapper.insertAddr(map);
+			no = map.get("ADDR_NO");
+		} else {
+			orderMapper.insertNonAddr(map);
+			no = map.get("ADDR_NO");
+		}
+		return no;
 	}
 	// 주소 검색
 	@Override
@@ -48,8 +57,14 @@ public class OrderServiceImpl implements OrderService{
 	//주문 입력
 	@Override
 	public int addOrder(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return orderMapper.insertOrder(map);
+		// TODO Auto-generated method stub		
+		int no = 1;
+		if (!map.get("userNo").equals("")) {
+			no = orderMapper.insertOrder(map);
+		} else {
+			no = orderMapper.insertNonOrder(map);
+		}
+		return no;
 	}
 	@Override
 	public int removeCoupon(HashMap<String, Object> map) {
@@ -65,7 +80,13 @@ public class OrderServiceImpl implements OrderService{
 	// 당일 주문량 조회
 	@Override
 	public int searchOrderCnt(HashMap<String, Object> map) {
-		return orderMapper.selectOrderCnt(map);
+		int no = 1;
+		if (!map.get("userNo").equals("")) {
+			no = orderMapper.selectOrderCnt(map);
+		} else {
+			no = orderMapper.selectNonOrderCnt(map);
+		}
+		return no;
 	}
 	
 	// 재고 업데이트

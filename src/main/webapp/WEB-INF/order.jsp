@@ -525,7 +525,6 @@ var app = new Vue({
 		                type : "POST", 
 		                data : nparmap,
 		                success : function(data) {
-		                	console.log(data);
 		                	self.order.addrNo = data.no;
 		                	self.fnOrrder2();
 		                }
@@ -596,7 +595,7 @@ var app = new Vue({
 	              if (rsp.success && rsp.paid_amount == self.finalAmount) {
 	            	  
 	            	  for(let i=0;i < self.productNoList.length;i++){
-	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity, paymentNo : "ORD"+self.formatDate(new Date())+"-"+self.cnt};
+	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity, paymentNo : "ORD"+self.formatDate(new Date())+"-"+self.cnt, nonUserNo : self.addr.nonUserNo};
 		 		    	 $.ajax({
 		 		                url : "../order/order.dox",
 		 		                dataType:"json",	
@@ -629,7 +628,6 @@ var app = new Vue({
 	            	  }
 	            	  self.openScrapModal();
 	              } else {
-	               
 	                // 결제 실패 시 로직,
 	            	  self.finalAmount = self.finalAmount-self.deliveryfee-self.discount;
 	              }
@@ -649,7 +647,6 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {
 						self.addrList = data.list;
-						console.log(self.addrList);
 						for(let i = 0; i < self.addrList.length; i++){
 							if(self.addrList[i].defaultYn == 'Y'){
 								self.addr.addrName= self.addrList[i].addrKind;
@@ -694,14 +691,12 @@ var app = new Vue({
 		                type : "POST", 
 		                data : nparmap,
 		                success : function(data) {
-		                	console.log(data.product);
 		                	let productName1 = data.product.productName;
 		                	let productPrice1 = data.product.productPrice;
 		                	let optionName1 = '';
 		                	
 		                	if(data.product.discountYn == 'Y'){
 		                		productPrice1 = Math.floor( (productPrice1*((100-data.product.discount)/100)) / 100) * 100;
-		                		console.log(productPrice1);
 		                	}
 		                	
 							var nparmap = {optionNo : self.productNoList[i].optionNo};	
@@ -711,7 +706,8 @@ var app = new Vue({
 				                type : "POST", 
 				                data : nparmap,
 				                success : function(data) {
-				                	self.nonUserNo = data.cookie;
+				                	self.addr.nonUserNo = data.cookie;
+				                	self.fnCntOrder();
 				                	productPrice1 = productPrice1 + data.info.optionPrice;
 				                	optionName1 = data.info.optionName;
 						            self.productList.push({productName : productName1, productPrice : (productPrice1*self.productNoList[i].quantity), optionName : optionName1, cnt : self.productNoList[i].quantity, path : data.info.imgPath, imgName : data.info.imgName});
@@ -748,12 +744,23 @@ var app = new Vue({
 		        const year = date.getFullYear();
 		        const month = String(date.getMonth() + 1).padStart(2, '0');
 		        const day = String(date.getDate()).padStart(2, '0');
-		        
-		        return year+""+month+""+day;
+		        const result = this.fngenerateRandomString();
+		        return result+""+year+""+month+""+day;
 		      },
+      		fngenerateRandomString(){
+		    	  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		    	    let result = '';
+
+		    	    for (let i = 0; i < 5; i++) {
+		    	        const randomIndex = Math.floor(Math.random() * characters.length);
+		    	        result += characters.charAt(randomIndex);
+		    	    }
+
+		    	    return result;
+	    	  },
 		      fnCntOrder(){
 		    	  var self = this;
-					var nparmap = {productNo : self.productNo};
+					var nparmap = {userNo : self.userNo};
 		            $.ajax({
 		                url : "../order/cntOrder.dox",
 		                dataType:"json",	
@@ -797,7 +804,6 @@ var app = new Vue({
 		self.fnGetCoupon();
 		self.fnGetAddrList();
 		self.fnGetProduct();
-		self.fnCntOrder();
 		var IMP = window.IMP;
 		IMP.init('imp41836047');
 		window.jusoCallBack = self.handleAddressCallback;

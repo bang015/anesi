@@ -11,7 +11,7 @@ public interface OrderService {
 	//쿠폰 리스트
 	List<Order> searchCouponListt(HashMap<String, Object> map);
 	//주소 입력
-	int addAddr(HashMap<String, Object> map);
+	Object addAddr(HashMap<String, Object> map);
 	//주소 검색
 	List<UserAddress> searchAddrList(HashMap<String, Object> map);
 	// 입력 주소 검색
