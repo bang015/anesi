@@ -121,7 +121,7 @@ new Vue({
     			    if (this.cartItems.length > 0 && this.cartItems[0].discountYn === 'Y') {
     			      return Math.floor((this.cartItems[0].productPrice * ((100 - this.cartItems[0].discount) / 100)) / 100) * 100;
     			    }
-    			    return null;
+    			    return 50;
     			  },
     	
     	
@@ -150,6 +150,8 @@ new Vue({
     		    data: { userNo: userNo },
     		    success: function (response) {
     		      console.log(response);
+    		      
+    		      
 					
     		        
     		        
