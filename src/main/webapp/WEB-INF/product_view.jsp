@@ -149,7 +149,7 @@
 							    </div>
 							</div>
 							<div class="main-btn-wrap">
-								<button class="btn1">장바구니</button>
+								<button class="btn1" @click="fnCart">장바구니</button>
 								<button class="btn2" @click="fnPay">바로구매</button>
 							</div>
 						</div>
@@ -559,6 +559,14 @@
 								</div>
 							</div>		
 						</div>
+						<div class="modal" v-if="showScrapModal4">
+							<div class="modal-card">
+						<h2>장바구니에 추가</h2>
+						<p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
+						<button @click="fnMedal" class="left_button">쇼핑계속하기</button>
+						<button @click="fnMoveCart" class="right_button">장바구니로 이동하기</button>
+					</div>	
+						</div>
 						<div class="recently-viewed">
 						<div class="recently-box">
 						<div class="recently-box2">
@@ -626,6 +634,7 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		nonuserNo : "",
 		selectHelp : [],
 		nonUserScrapbook : false,
 		category : {},
@@ -690,6 +699,7 @@ var app = new Vue({
 		showScrapModal : false,
 		showScrapModal2 : false,
 		showScrapModal3 : false,
+		showScrapModal4 : false,
 		helpList : [],
 		/* 그래프 시작 */
 		series: [{
@@ -1172,7 +1182,8 @@ var app = new Vue({
 				return;
 			}
 			if(self.selectedOptions.length > 0){
-				$.pageChange("../order/main.do" , {product : self.selectedOptions});
+				/* $.pageChange("../order/main.do" , {product : self.selectedOptions}); */
+				console.log(self.selectedOptions);
 			} 
 			},
 		clickImg : function(imgPath,imgName){
@@ -1431,8 +1442,54 @@ var app = new Vue({
 			    	      top: targetScrollPosition,
 			    	      behavior: "smooth"
 			    	    });
-			    	  }
 			    	}
+			    },
+			    fnCart(){
+			    	var self = this;
+			    	for(let i=0; i<self.selectedOptions.length; i++){
+			    		if(self.userNo!=""||self.userNo!=null){
+			    			var nparmap = { userNo: self.userNo, productNo: self.productNo, optionNo : self.selectedOptions[i].optionNo, cnt:self.selectedOptions[i].quantity};	
+			    		}
+			    		if(self.userNo==""||self.userNo==null){
+			    			var nparmap = { nonUserNo: self.nonuserNo, productNo: self.productNo, optionNo : self.selectedOptions[i].optionNo, cnt:self.selectedOptions[i].quantity};
+			    		}
+				            $.ajax({
+				                url : "/cartAdd.dox",
+				                dataType:"json",	
+				                type : "POST", 
+				                data : nparmap,
+				                success : function(data) {
+				                	self.showScrapModal4 = true;
+				                }
+				            });
+			    	}
+		           
+			    },
+			    fnMoveCart(){
+			    	location.href = "/product/cart.do"
+			    },
+			    fnMedal(){
+			    	var self = this;
+			    	self.showScrapModal4 = false;
+			    	location.reload();
+			    	
+			    },
+			  //비회원 번호 쿠키불러오는 애 
+				fnaaa : function(item){
+					var self = this;
+		            var nparmap = '';
+		            //{ nonuserNo: self.nonuserNo, productNo: item.productNo};
+					 $.ajax({
+			                url : "/nonUserCookie.dox",
+			                dataType:"json",	
+			                type : "POST", 
+			                data : nparmap,
+			                success : function(data) { 
+			                	self.nonuserNo = data.value;
+			                	console.log(self.nonuserNo);
+			                }
+			            }); 
+				},
 	}, // methods
 	created : function() {
 		var self = this;
@@ -1451,6 +1508,7 @@ var app = new Vue({
 		self.fnGetInquiryListCnt();
 		self.fnCheckScrap();
 		self.fnSelectHelp();
+		self.fnaaa();
 	}// created
 });
 </script>

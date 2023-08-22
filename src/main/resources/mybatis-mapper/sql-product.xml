@@ -317,6 +317,17 @@
 		FROM t3_tbl_product_category
 		WHERE CATEGORY_NAME = #{categoryName}
 	</select>
+	<!-- 회원 장바구니 등록(상세페이지) -->
+	<insert id="insertCart" parameterType="hashmap">
+		<if test="userNo != '' and userNo != null">
+		 	INSERT INTO t3_tbl_user_cart(PRODUCT_NO, USER_NO, OPTION_NO, CNT)
+		 	VALUES(#{productNo}, #{userNo}, #{optionNo}, #{cnt})
+	 	</if>
+	 	<if test="nonUserNo != '' and nonUserNo != null">
+		 	INSERT INTO t3_tbl_user_cart(PRODUCT_NO, NONUSER_NO, OPTION_NO, CNT)
+		 	VALUES(#{productNo}, #{nonUserNo}, #{optionNo}, #{cnt})
+	 	</if>
+	 </insert>
 </mapper>
 
 	

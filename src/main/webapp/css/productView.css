@@ -350,3 +350,19 @@
 		min-height: 1px;
 		
 	}
+	.left_button{
+		background-color: #fff;
+		color: #A782C3;
+		border: 1px solid #A782C3;
+		width: 170px;
+		height: 45px;
+		border-radius: 5px;
+	}
+	.right_button{
+		background-color: #A782C3;
+		color: #fff;
+		border: 0;
+		width: 170px;
+		height: 45px;
+		border-radius: 5px;
+	}

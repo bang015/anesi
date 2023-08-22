@@ -282,7 +282,14 @@ public class ProductController {
 			      resultMap.put("list", list);
 			      return new Gson().toJson(resultMap);
 			  }
-
+			// 회원 장바구니 등록(상세페이지)
+			  @RequestMapping(value = "/cartAdd.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			   @ResponseBody
+			   public String cart(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+			       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			       productService.addCart(map);
+			       return new Gson().toJson(resultMap);
+			   }
 
 
 }

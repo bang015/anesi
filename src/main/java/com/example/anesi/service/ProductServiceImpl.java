@@ -128,5 +128,10 @@ public class ProductServiceImpl implements ProductService {
 					return productMapper.selectCategory(map);
 					
 				}
+		@Override
+		public int addCart(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			return productMapper.insertCart(map);
+		}
 	
 }

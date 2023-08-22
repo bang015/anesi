@@ -57,7 +57,8 @@ public interface ProductService {
 	List<Product> selectCateList (HashMap<String, Object> map);
 	//카테고리 상품 출력selectCateList
 	public List<Product> selectCate(String categoryName);
-
+	// 회원 장바구니 등록(상세페이지)
+	int addCart(HashMap<String, Object> map);
 
 }
 
