@@ -17,9 +17,23 @@
 .title {
 	margin: 0px 30px 0px 30px;
 	padding: 5px 0px 0px 0px;
-    font-size: 17px;
+    font-size: 20px;
    	display : flex;
 	justify-content: center;
+}
+
+.content {
+    width: 1300px;
+    height: 500px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-content: stretch;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+	
 }
 
 </style>
@@ -28,11 +42,10 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
-	<div class="title">알림</div>
-	
-	
-	
-	<hr class="hrr">
+		<div class="title">알림</div>
+		<hr class="hrr">
+		<div class="content">최근 소식이 없습니다.</div>
+		
 	</div>
 <jsp:include page="footer.jsp"></jsp:include>
 	
