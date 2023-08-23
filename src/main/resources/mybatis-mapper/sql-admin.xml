@@ -173,13 +173,6 @@
 		</foreach>
 	</delete>
 	
-	
-	
-	
-	
-	
-	
-	
 	<!--고객관리-->
 	<select id="selectUserList" parameterType="hashmap" resultType="com.example.anesi.model.User">
 		SELECT *
@@ -241,6 +234,35 @@
 		</foreach>
 	</update>
 	
+	
+		
+	<!-- 알림-->
+	
+	<!--전체 알림 리스트 불러오기-->
+	<select id="selectAlarmAll" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT A.*, T.ALARM_CONTENT,T.ICON, U.NICK
+		FROM t3_tbl_alarm A
+		JOIN t3_tbl_alarm_text T ON A.ALARM_TYPE=T.ALARM_TYPE 
+		JOIN t3_tbl_user U ON A.USER_NO=U.USER_NO
+		WHERE U.USER_NO = #{userNo}
+	</select>
+	
+	
+	<!--알림인서트-->
+	<insert id="insertAlarm" parameterType="hashmap">
+		INSERT INTO t3_tbl_alarm
+		(USER_NO, ALARM_TYPE)
+    	VALUES
+    	(#{userNo}, #{alarmType})
+	</insert>
+	
+	<!-- 알람삭제-->
+	<update id="deleteAlarm" parameterType="hashmap">
+		UPDATE t3_tbl_alarm
+			SET
+			DELETE_YN = 'Y'
+		WHERE USER_NO = #{userNo}
+	</update>
 	
 	
 	

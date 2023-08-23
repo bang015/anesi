@@ -242,4 +242,30 @@ public class AdminController {
 		resultMap.put("cnt", adminService.adminResetUserCnt(map));
 		return new Gson().toJson(resultMap);
 	}
+	
+	//알람인서트
+	@RequestMapping(value = "addAlarm.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String addAlarm(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		adminService.addAlarm(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//알람 전체 조회
+	@RequestMapping(value = "alarmList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String alarmAll(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<User> list = adminService.searchAlarmAll(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//알람삭제
+	@RequestMapping(value = "removeAlarm.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String removeAlarm(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		adminService.removeAlarm(map);
+		return new Gson().toJson(resultMap);
+	}
+		
 }

@@ -130,7 +130,20 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminMapper.adminResetUserCnt(map);
 	}
-	
-	
+
+	@Override
+	public int addAlarm(HashMap<String, Object> map) {
+		return adminMapper.insertAlarm(map);
+	}
+
+	@Override
+	public List<User> searchAlarmAll(HashMap<String, Object> map) {
+		return adminMapper.selectAlarmAll(map);
+	}
+
+	@Override
+	public int removeAlarm(HashMap<String, Object> map) {
+		return adminMapper.deleteAlarm(map);
+	}
 	
 }

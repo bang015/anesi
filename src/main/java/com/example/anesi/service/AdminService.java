@@ -50,5 +50,13 @@ public interface AdminService {
 	int removeUser(HashMap<String, Object> map);
 	// 고객 로그인 횟수 초기화
 	int adminResetUserCnt(HashMap<String, Object> map);
+	
+	
+	//알림 정보 검색
+	List<User> searchAlarmAll(HashMap<String, Object> map);
+	// 알람 등록
+	int addAlarm(HashMap<String, Object> map);
+	// 알람 삭제
+	int removeAlarm(HashMap<String, Object> map);
 }
 

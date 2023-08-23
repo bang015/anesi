@@ -54,4 +54,11 @@ public interface AdminMapper {
 	// 고객 로그인 횟수 초기화
 	int adminResetUserCnt(HashMap<String, Object> map);
 	
+	// 알람 목록 불러오기
+	List<User> selectAlarmAll(HashMap<String, Object> map);
+	// 알람 등록
+	int insertAlarm(HashMap<String, Object> map);
+	// 알람 삭제
+	int deleteAlarm(HashMap<String, Object> map);
+	
 }

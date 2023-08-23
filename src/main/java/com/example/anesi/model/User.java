@@ -17,6 +17,13 @@ public class User {
 	private String deleteYn;
 	private String smsYn;
 	
+	private int alarmNo;
+	private int alarmType;
+	private String alarmContent;
+	private String cTime;
+	private String icon;
+
+	
 	public int getUserNo() {
 		return userNo;
 	}
@@ -100,6 +107,36 @@ public class User {
 	}
 	public void setSmsYn(String smsYn) {
 		this.smsYn = smsYn;
+	}
+	public int getAlarmNo() {
+		return alarmNo;
+	}
+	public void setAlarmNo(int alarmNo) {
+		this.alarmNo = alarmNo;
+	}
+	public int getAlarmType() {
+		return alarmType;
+	}
+	public void setAlarmType(int alarmType) {
+		this.alarmType = alarmType;
+	}
+	public String getAlarmContent() {
+		return alarmContent;
+	}
+	public void setAlarmContent(String alarmContent) {
+		this.alarmContent = alarmContent;
+	}
+	public String getcTime() {
+		return cTime;
+	}
+	public void setcTime(String cTime) {
+		this.cTime = cTime;
+	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	
 
