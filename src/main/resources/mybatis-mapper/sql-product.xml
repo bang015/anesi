@@ -381,8 +381,11 @@
 	</select>
 	<!-- 카테고리 선택 상품 -->
 	<select id="selectProductList2" parameterType="hashmap" resultType="com.example.anesi.model.Product">
-		SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE, i.*
-		<!-- , csatAvg -->
+		SELECT P.*, 
+			   C.CATEGORY_NAME, 
+			   D.DISCOUNT_PRICE, 
+			   i.*, 
+			   COALESCE(R2.csatAvg, 0) AS csatAvg 
 		FROM t3_tbl_product AS P
 		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
 		LEFT JOIN (
@@ -391,11 +394,11 @@
 		    WHERE DISCOUNT_YN = 'Y'
 		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
 		JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
-		<!--JOIN (
-			SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
-			FROM t3_tbl_user_review R
-			JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
-		) AS R2 ON P.PRODUCT_NO = R2.PRODUCT_NO -->
+		LEFT JOIN (
+					SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
+					FROM t3_tbl_user_review R
+					JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
+				  ) R2 ON P.PRODUCT_NO = R2.PRODUCT_NO
 		WHERE  i.THUMBNAIL_YN ='Y'
 		  	   AND P.DELETE_YN = 'N' 
 			    <if test="categoryNo != '' and categoryNo != null">

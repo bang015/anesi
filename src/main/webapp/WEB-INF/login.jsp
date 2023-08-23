@@ -47,7 +47,7 @@
 						<input placeholder="이메일">
 					</div>
 					<div class="non-user-btn">
-						<button class="btn">주문조회</button>
+						<button class="btn" @click="">주문조회</button>
 					</div>
 				</div>
 			</div>

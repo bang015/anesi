@@ -15,23 +15,22 @@ header {
 }
 
 #header_navi {
-   position: absolute;
-  right: 50px;
-  bottom: 40px;
-  top: 15px;
+  position: absolute;
+  right: 85px;
+  top: 40px;
 }
 
 #header_navi li {
   display: inline-flex;
   align-items: center;
-  margin: 10px;
+
   margin-bottom: 20px;
   flex-direction: column;
 }
 
 #header_navi li span {
   margin-left: 0;
-  margin-top: 20px;
+  margin-top: 8px;
 }
 
 #header_navi li i {
@@ -39,17 +38,16 @@ header {
 }
 .headerbtn {
     position: absolute;
-    top:40%;
-    background-color:#A782C3; 
     text-align: center;
-    color: #fff;
-    border:none; 
-    border-radius:10px; 
+    border:none;     
     padding:15px;
     min-height:15px; 
-    min-width: 50px;
-       right: -55px;
-       top:0px;
+    min-width: 80px;
+    right: 0;
+    top:50px;
+    color: #fff;
+	background-color:#A782C3;
+	border-radius:10px;  
   }
   .headerbtn:hover {
       background-color:#7c6191;
@@ -63,6 +61,7 @@ header {
     padding:8px;
     min-height:10px; 
     min-width: 50px;
+    display: flex;
     }
     .category-toggle:hover {
       background-color:rgb(235, 236, 237);
@@ -169,29 +168,30 @@ header {
 	width: 300px;
 }
 
-.aaa,
+.aaa1,
 .bbb,
 .ccc {
+	font-family: 'Pretendard-Regular';
 	font-size: 25px;
 	margin : 20px;
 	
 }
 
 #search_input{
-  border-radius: 20px;
+  border-radius: 5px;
   border: 2px solid #ccc; /* 검색창 테두리 설정 */
   padding: 10px;
   width: 310px;
   position: absolute;
   left: 500px;
-  top: 113px;
+  top: 8px;
   font-weight: bold;
 }
 
 .glass{
 	position: absolute;
-  left: 780px;
-  top: 120px;
+  left: 800px;
+  top: 16px;
 font-size: 20px;
 opacity : 0.7;
 }
