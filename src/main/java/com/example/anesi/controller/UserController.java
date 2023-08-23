@@ -118,6 +118,13 @@ public class UserController {
 		return "/myInquiry";
     }
 	
+	// 내 쿠폰
+	@RequestMapping("mypage/myCoupon.do") 
+    public String myCoupon(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/myCoupon";
+    }
+	
 	// 회원가입
 	@RequestMapping(value = "/join.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
