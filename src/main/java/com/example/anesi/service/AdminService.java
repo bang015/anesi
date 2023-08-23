@@ -48,6 +48,7 @@ public interface AdminService {
 	int editUser(HashMap<String, Object> map);
 	//고객상세정보 업데이트
 	int removeUser(HashMap<String, Object> map);
-
+	// 고객 로그인 횟수 초기화
+	int adminResetUserCnt(HashMap<String, Object> map);
 }
 

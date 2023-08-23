@@ -23,6 +23,9 @@ public class Product {
 		//리뷰테이블 조인
 	    private double csatAvg; // 상품 평점
 	    private int csatCnt; // 상품 별점 개수
+	    //카트테이블 조인
+	    private int cnt;
+	    
 	    
 		private String imgName;
 		private String imgPath;
@@ -242,6 +245,14 @@ public class Product {
 	
 		public void setStock(int stock) {
 			this.stock = stock;
+		}
+
+		public int getCnt() {
+			return cnt;
+		}
+
+		public void setCnt(int cnt) {
+			this.cnt = cnt;
 		}
 
 	

@@ -205,11 +205,6 @@ public class AdminController {
 	@ResponseBody
 	public String removeUser(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		String json = map.get("checkList").toString();
-		ObjectMapper mapper = new ObjectMapper();
-		
-		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
-		map.put("list", list);
 		resultMap.put("cnt", adminService.removeUser(map));
 		return new Gson().toJson(resultMap);
 	}
@@ -232,6 +227,19 @@ public class AdminController {
 		map.put("list", list);
 		adminService.removeAdminReview(map);
 		resultMap.put("cnt", adminService.removeAdminReview(map));
+		return new Gson().toJson(resultMap);
+	}
+	
+	//리뷰 삭제
+	@RequestMapping(value = "/admin/userResetCnt.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String userResetCnt(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		String json = map.get("checkList").toString();
+		ObjectMapper mapper = new ObjectMapper();
+		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+		map.put("list", list);
+		adminService.removeAdminReview(map);
+		resultMap.put("cnt", adminService.adminResetUserCnt(map));
 		return new Gson().toJson(resultMap);
 	}
 }
