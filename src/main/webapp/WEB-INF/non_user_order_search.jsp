@@ -88,7 +88,7 @@
 						<button class="addrButton" @click="openAddressSearch">주소찾기</button>
 						<div class="orInputBox">
 					        <input v-model="addr.zip" readonly class="inpRead" :class="!flgAddr ? '' : 'orRed'">
-					    </div>
+					    </div> 
 					</label>
 					<label>
 						<div class="orInputBox addr2">
