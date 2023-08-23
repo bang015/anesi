@@ -1446,7 +1446,7 @@ var app = new Vue({
 			    },
 			    fnCart(){
 			    	var self = this;
-			    	if(self.option1==""){
+			    	if(self.selectedOptions.length == 0){
 			    		alert("상품을 선택해주세요.")
 			    	}
 			    	self.selectedOptions.forEach(selectedOption => {
