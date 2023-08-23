@@ -9,7 +9,7 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/myShopping.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>나의 문의</title>
 <style>
 </style>
 </head>

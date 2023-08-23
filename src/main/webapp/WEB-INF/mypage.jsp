@@ -179,7 +179,7 @@ li{
 		<ul class="profile_list">
 			<li><label class="icon_label"><a href="scrapbook.do"><img src="../css/image/bookmark.png" class="icon" style="margin: 0px 65px 10px 10px; width: 52px;"><br><span class="comment" style="margin-left: 13px;">스크랩북</span></a></label></li>
 			<li><label class="icon_label"><a href=""><img src="../css/image/coupon.png" class="icon" style="margin : 6px 65px 18px 10px; width: 50px;"><br><span class="comment" style="margin-left:15px;">내 쿠폰</span></a></label></li>
-			<li><label class="icon_label"><a href=""><img src="../css/image/qna.png" class="icon" style="margin: 0px 65px 9px 10px; width: 52px;"><br><span class="comment" style="margin-left: 16px;">내 문의</span></a></label></li>
+			<li><label class="icon_label"><a href="/mypage/myInquiry.do"><img src="../css/image/qna.png" class="icon" style="margin: 0px 65px 9px 10px; width: 52px;"><br><span class="comment" style="margin-left: 16px;">내 문의</span></a></label></li>
 			<li><label class="icon_label"><a href="/mypage/myBoard.do"><img src="../css/image/post.png" class="icon" style="margin: 0px 10px 10px 10px; width: 50px;"><br><span class="comment" style="margin-left: 7px;">내 게시글</span></a></label></li>
 		</ul>
 			<button class="btn1" @click="fnEdit">회원정보수정</button>

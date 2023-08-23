@@ -1,5 +1,6 @@
 package com.example.anesi.service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,7 +65,8 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<UserOrder> selectDeliveryList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return adminMapper.selectDeliveryList(map);
+		List<UserOrder> list = adminMapper.selectDeliveryList(map);
+		return  list;
 	}
 
 	@Override

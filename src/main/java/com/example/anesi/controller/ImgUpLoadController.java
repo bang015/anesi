@@ -102,18 +102,19 @@ public class ImgUpLoadController {
 		//삭제
         String path2 = System.getProperty("user.dir");
         
-	    String filePath = "\\src\\webapp\\css\\image\\review\\"+rImgName;
-	    System.out.println(filePath);
-	    File file = new File(path2 + "\\src\\main\\webapp\\css\\image\\review", rImgName);
-	    if (file.exists()) { // 파일이 존재하는지 확인
-            if (file.delete()) { // 파일 삭제 시도
-                System.out.println("파일이 삭제되었습니다.");
-            } else {
-                System.out.println("파일 삭제 실패");
-            }
-        } else {
-            System.out.println("파일이 존재하지 않습니다.");
-        }
+        // 기존 이미지 삭제
+//	    String filePath = "\\src\\webapp\\css\\image\\review\\"+rImgName;
+//	    System.out.println(filePath);
+//	    File file = new File(path2 + "\\src\\main\\webapp\\css\\image\\review", rImgName);
+//	    if (file.exists()) { // 파일이 존재하는지 확인
+//            if (file.delete()) { // 파일 삭제 시도
+//                System.out.println("파일이 삭제되었습니다.");
+//            } else {
+//                System.out.println("파일 삭제 실패");
+//            }
+//        } else {
+//            System.out.println("파일이 존재하지 않습니다.");
+//        }
 	    
 	    String url = null;
 	    String path = "c:\\img";

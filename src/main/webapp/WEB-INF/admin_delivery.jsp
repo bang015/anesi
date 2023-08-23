@@ -224,6 +224,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
+                	console.log(data);
                 	self.orderList = data.list;
                 	self.orderList2 = [];
                 	self.orderList2 = self.orderList.map(item => {

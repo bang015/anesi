@@ -9,7 +9,7 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/scrapbook.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>스크랩북</title>
 <style>
 </style>
 </head>

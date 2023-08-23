@@ -11,7 +11,7 @@
 <link href="../css/order.css" rel="stylesheet">
 <link href="../css/checkbox.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>결제 페이지</title>
 <style>
 </style>
 </head>

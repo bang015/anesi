@@ -6,7 +6,7 @@ public class UserOrder {
 	private Long orderNo;
     private Long productNo;
     private Long optionNo;
-    private Long userNo;
+    private String userNo;
     private Long addrNo;
     private char deliverySit;
     private String request;
@@ -60,7 +60,7 @@ public class UserOrder {
 	public Long getOptionNo() {
 		return optionNo;
 	}
-	public Long getUserNo() {
+	public String getUserNo() {
 		return userNo;
 	}
 	public Long getAddrNo() {

@@ -73,6 +73,14 @@
 		INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
 		INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
 		INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
+		
+		UNION
+		
+		SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+		FROM t3_tbl_nonuser_order o
+		INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
+		INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
+		INNER JOIN t3_tbl_nonuser_address a ON o.ADDR_NO = a.ADDR_NO
 	</select>
 	
 	<update id="updateDelivery" parameterType="hashmap">
@@ -86,23 +94,45 @@
 	</update>
 	
 	<select id="selectSearchList" parameterType="hashmap" resultType="com.example.anesi.model.UserOrder">
-		SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
-		FROM t3_tbl_user_order o
-		INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
-		INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
-		INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
-		WHERE
-			<choose>
-				<when test="searchOption == 'PAYMENT_NO'">
-					PAYMENT_NO LIKE CONCAT('%',#{searchText},'%')
-				</when>
-				<when test="searchOption == 'PRODUCT_NAME'">
-					PRODUCT_NAME LIKE CONCAT('%',#{searchText},'%')
-				</when>
-				<when test="searchOption == 'RECEIPT_NAME'">
-					RECEIPT_NAME LIKE CONCAT('%',#{searchText},'%')
-				</when>
-			</choose>
+	    SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+	    FROM t3_tbl_user_order o
+	    INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
+	    INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
+	    INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
+	    
+	    WHERE
+	        <choose>
+	            <when test="searchOption == 'PAYMENT_NO'">
+	                o.PAYMENT_NO LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'PRODUCT_NAME'">
+	                p.PRODUCT_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'RECEIPT_NAME'">
+	                o.RECEIPT_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	        </choose>
+	    
+	    UNION
+	    
+	    SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+	    FROM t3_tbl_nonuser_order o
+	    INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
+	    INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
+	    INNER JOIN t3_tbl_nonuser_address a ON o.ADDR_NO = a.ADDR_NO
+	    
+	    WHERE
+	        <choose>
+	            <when test="searchOption == 'PAYMENT_NO'">
+	                o.PAYMENT_NO LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'PRODUCT_NAME'">
+	                p.PRODUCT_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'RECEIPT_NAME'">
+	                o.RECEIPT_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	        </choose>
 	</select>
 	
 	<select id="selectAdminInquiryList" parameterType="hashmap" resultType="com.example.anesi.model.Inquiry">
