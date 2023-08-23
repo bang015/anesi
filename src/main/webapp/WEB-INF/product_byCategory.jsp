@@ -26,6 +26,16 @@
 .pagination {
     margin-left : 40%;
  }
+ .category-wrap{
+ 	font-size: 17px;
+ 	font-weight: bold;
+ }
+ .ca{
+ 	margin-left: 32px;
+ }
+ .category-wrap{
+ 	display: inline-block;
+ }
 </style>
 </head>
 <body>
@@ -34,11 +44,12 @@
 <div id="store_main_byCategory">
 		<div id="store_main_cont">
 			<div class="flex-container">
-				<div class="category-wrap" v-for="(item,index) in category">
-							{{item.categoryName}} 
-							<span class="category-span" v-if="index !== category.length - 1"> > </span>
-						</div>
-				
+				<div class="ca">
+					<div class="category-wrap" v-for="(item,index) in category">
+						{{item.categoryName}} 
+						<span class="category-span" v-if="index !== category.length - 1"> > </span>
+					</div>
+				</div>
 		 			<div class="selectBox2" @mouseover="showOptions" @mouseleave="hideOptions" :class="{ active: optionsVisible }">
 				      <button class="label">{{ selectedOption }}</button>
 				      <ul class="optionList">
@@ -80,7 +91,7 @@
             <div class="production-item-rating">
                 <!-- 별모양-->
                 <i class="fa-solid fa-star" style="color: #A782C3;"></i>
-                <span class="production-item-rating__score ">{{item.csatAvg}}.5</span>
+                <span class="production-item-rating__score ">{{item.csatAvg}}</span>
             </div>
            <!-- 장바구니버튼-->
              <a class="cart_button">
@@ -524,7 +535,7 @@ var app = new Vue({
 		self.fnGetList();
 		self.fnaaa();
 		self.fnCheckScrap();
-		console.log(self.categoryNo);
+		self.fnGetCategory();
 	}// created
 });
 

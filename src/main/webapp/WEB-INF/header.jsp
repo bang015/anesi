@@ -72,16 +72,20 @@
 	font-family:'Pretendard-Regular';
 }
 .nav1{
+	position : relative;
 	width: 100%;
-	height: 70px;
+	height: 75px;
 	border-bottom: 1px solid #e8e8e8;
 	border-top: 1px solid #e8e8e8;
 }
 .nav-left{
 	display: inline-block;
-	float: left;
 	height: 40px;
 	margin-top: 5px;
+	position: absolute;
+	left: 0;
+	top: 3px;
+	
 }
 .nav-left button{
 	height: 100%;
@@ -107,8 +111,30 @@
 	height: 100px;
 }
 .flow-container{
-	margin-top: 52px;
+	margin-top: 55px;
 	clear: both;
+}
+.logo-wrap{
+	display: inline-block;
+	float: left;
+}
+.top-left{
+	display: inline-block;
+	float: left;
+	margin-top: 60px;
+}
+.top-wrap{
+	width: 100%;
+	height: 100px;
+}
+.icon1{
+	margin-right: 10px;
+}
+.icon2{
+	margin-right: 5px;
+}
+.icon3{
+	margin-right: 10px;
 }
 </style>
 </head>
@@ -122,18 +148,22 @@
 %>
 <div id="app1">
 	<header>
-	
-		<span> <a href="/main.do"><img class="logo"
-				src="../css/image/anesilogo.png" /> </a></span> <a class="aaa"
-			href="/product/storemain.do">스토어</a> <a class="bbb"
-			href="/community/main.do">커뮤니티</a> <a class="ccc" href="/used/main.do">중고장터</a>
+		<div class="top-wrap">
+		<div class="logo-wrap">
+			<a href="/main.do"><img class="logo"src="../css/image/anesilogo.png" /> </a>
+		</div>
+		<div class="top-left"> 
+			<a class="aaa1" href="/product/storemain.do">스토어</a>
+			<a class="bbb" href="/community/main.do">커뮤니티</a>
+			<a class="ccc" href="/used/main.do">중고장터</a>
+		</div>
 		<div class="navi-wrap"> 
-			<ul id="header_navi">
+			<ul id="header_navi" v-if="userNo==''">
 				<li id="login-button">
-					<a href="#" id="login-button-link">
+					<a href="../login.do" id="login-button-link">
 						<i class="fa-solid fa-door-open"></i>
 					</a>
-					<span class="fon" id="login-button-text"></span>
+					<span class="fon" id="login-button-text">로그인</span>
 				</li>
 				<li>
 					<a href="../join.do">
@@ -141,47 +171,66 @@
 					</a>
 					<span class="fon">회원가입</span>
 				</li>
+				<li class="icon1">
+					<a href="http://localhost:8080/scrapbook.do">
+						<i class="fa-solid fa-bookmark "></i>
+					</a>
+					<span></span>
+				</li>
+				<li class="icon2">
+					<a href="http://localhost:8080/alarm.do">
+						<i class="fa-solid fa-bell "></i>
+					</a>
+					<span></span>
+				</li>
+				<li class="icon3">
+					<a href="../product/cart.do">
+						<i class="fa fa-shopping-cart "></i>
+					</a>
+					<span></span>
+				</li>
+			</ul>
+			<ul id="header_navi" v-if="userNo !=''">
+				<li id="login-button">
+					<a href="../logout.do" id="login-button-link">
+						<i class="fa-solid fa-door-closed"></i>
+					</a>
+					<span class="fon" id="login-button-text">로그아웃</span>
+				</li>
 				<li>
 					<a href="../mypage.do">
 						<i class="fa-solid fa-user "></i>
 					</a>
 					<span class="fon">마이페이지</span>
 				</li>
-				<li>
+				<li class="icon1">
 					<a href="http://localhost:8080/scrapbook.do">
 						<i class="fa-solid fa-bookmark "></i>
 					</a>
 					<span></span>
 				</li>
-				<li>
+				<li class="icon2">
 					<a href="http://localhost:8080/alarm.do">
 						<i class="fa-solid fa-bell "></i>
 					</a>
 					<span></span>
 				</li>
-				<li>
+				<li class="icon3">
 					<a href="../product/cart.do">
 						<i class="fa fa-shopping-cart "></i>
 					</a>
 					<span></span>
 				</li>
-				<li>
-					<a href="" class="headerbtn" title="Button fade blue/green"class="button btnFade btnBlueGreen">Fade</a>
-				</li>
 			</ul>
+			<button class="headerbtn">Fade</button>
+		</div>
 		</div>
 		<div class="nav1">
 			<div class="nav-left">
 				<button class="category-toggle" @mouseover="categoryFlg">
 					<span> <i class="fa-solid fa-bars" style="color: #47608a; font-size : 20px;"></i> <span class="category-title">카테고리</span></span>
 				</button> 
-				<span class="headerfont">
-					<a class="href">추천 </a>
-					<a class="href">랭킹</a>
-					<a class="href">특가</a> 
-					<a class="href">기획전</a> 
-					<a class="href">브랜드관</a>
-				</span>
+				
 			</div>
 			<div class="search-container">
 				 <input type="text" id="search_input" placeholder="제품명을 입력하세요">
@@ -232,8 +281,9 @@
 	var app = new Vue({   
 		el : '#app1',
 		data : {
+			userNo : '${sessionNo}',
 			flg : false,
-			product : {	//상품 맵
+			product : {	//상품 맵				
 				productName : "",
 				productPrices : "",
 				manufacturer : "",
@@ -293,6 +343,7 @@
 		created : function() {
 			var self = this;
 			self.fnGetcategoryList1();
+			console.log(self.userNo);
 		}// created
 	});
 	   var isLoggedIn = <%= isLoggedIn %>;
@@ -300,7 +351,7 @@
 
 	    console.log('sessionNo:', '<%= sessionNo %>');
 
-	    $(document).ready(function(){
+	    /* $(document).ready(function(){
 	        // 로그인되어 있지 않은 경우 로그인 버튼 및 아이콘을 조작합니다.
 	        if(!isLoggedIn) {
 	            $('#login-button-link').attr('href', '../login.do'); // 로그인 링크를 설정합니다.
@@ -313,7 +364,7 @@
 	            $('.fa-door-closed').removeClass('fa-door-closed').addClass('fa-door-open');
 	            // 로그인 아이콘의 클래스를 변경하여 열린 문 모양으로 설정합니다.
 	        }
-	    });
+	    }); */
 	
 	
 	function saveRecentSearch(search) {
