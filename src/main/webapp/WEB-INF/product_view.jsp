@@ -612,7 +612,7 @@
 							    </div>
 							</div>
 							<div class="main-btn-wrap">
-								<button class="btn1">장바구니</button>
+								<button class="btn1" @click="fnCart">장바구니</button>
 								<button class="btn2" @click="fnPay">바로구매</button>
 							</div>
 							</div>
@@ -1447,6 +1447,9 @@ var app = new Vue({
 			    },
 			    fnCart(){
 			    	var self = this;
+			    	if(self.option1==""){
+			    		alert("상품을 선택해주세요.")
+			    	}
 			    	self.selectedOptions.forEach(selectedOption => {
 			    		  const item = self.cartCheck.find(cartItem => cartItem.optionNo === selectedOption.optionNo);
 			    		  if (item) {
