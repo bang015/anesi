@@ -3,6 +3,7 @@ package com.example.anesi.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.anesi.model.Coupon;
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;

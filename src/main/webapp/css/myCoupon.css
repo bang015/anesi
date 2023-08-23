@@ -7,3 +7,53 @@
 	margin: 30px 30px 0 30px;
     min-height: 200px;
 }
+.nonCoupon{
+	display: flex;
+    justify-content: center;
+    height: 150px;
+    align-items: center;
+    font-size: 18px;
+}
+.couponTitle{
+	font-size: 32px;
+	font-weight: bold;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #dbdbdb;
+}
+.couponList{
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 40px;
+}
+.coupon{
+    width: 20%;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ededed;
+    box-shadow: 0 2px 12px 0 #ededed;
+    border-radius: 10px;
+    height: 300px;
+}
+.coupon > :nth-child(1) {
+	font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    height: 60px;
+}
+.coupon > :nth-child(2) > :nth-child(1) {
+	font-size: 55px;
+}
+.coupon > :nth-child(2) > :nth-child(2) {
+	font-size: 20px;
+}
+
+.coupon > :nth-child(2) {
+	margin-bottom: 15px;
+}
+.coupon > :nth-child(3) {
+	color: #757575;
+}
+.coupon > :nth-child(4) {
+	color: #757575;
+}

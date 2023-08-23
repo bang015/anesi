@@ -203,6 +203,7 @@ new Vue({
             loadCartList() {
             	  const selectedNparmapString = localStorage.getItem("selectedNparmap");
             	  const selectedNparmap = selectedNparmapString ? JSON.parse(selectedNparmapString) : null;
+					
 
             	  const self = this;
             	  const userNo = "${sessionNo}";
@@ -375,7 +376,6 @@ new Vue({
   		    	      optionPrice: item.optionPrice // 디폴트 옵션 가격을 0으로 설정하거나 다른 적절한 값으로 설정
   		    	    };
   		    	  }
-  		      console.log(selectedOption);
   		      return {
   		        productNo: item.productNo,
   		        productName: item.productName,

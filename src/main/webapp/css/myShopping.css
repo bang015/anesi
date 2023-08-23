@@ -349,6 +349,7 @@
     justify-content: center;
     height: 150px;
     align-items: center;
+    font-size: 18px;
 }
 .iconBack{
 	background-color: #fff;

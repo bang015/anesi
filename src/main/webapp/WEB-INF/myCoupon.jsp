@@ -18,7 +18,18 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
 		<div id="container">
-			<div v-if="inquiryList.length == 0" class="nonInquiry">사용 가능한 쿠폰이 없습니다.</div>
+			<div v-if="couponList.length == 0" class="nonCoupon">사용 가능한 쿠폰이 없습니다.</div>
+			<div class="couponTitle">쿠폰</div>
+			<div class="couponList">
+				<div v-for="item in couponList" class="coupon">
+					<div>{{item.couponName}}</div>
+					<div>
+						<span>{{item.discount}}</span><span>{{item.disFlg == 'A' ? '원' : '%'}}</span>
+					</div>
+					<div>·{{item.eDate.substring(0, 4)}}년 {{item.eDate.substring(5, 7)}}월 {{item.eDate.substring(8, 10)}}일 까지</div>
+					<div>·{{formatCurrency(item.minPrice)}}원 이상 구매시</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>	
@@ -37,7 +48,7 @@ var app = new Vue({
 			var self = this;
 			var nparmap = {userNo : self.userNo};
 			$.ajax({
-                url : "searchCouponList.dox",
+                url : "/order/getCoupon.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
@@ -46,7 +57,10 @@ var app = new Vue({
                 	console.log(self.couponList);
                 }
 			})
-		}
+		},
+		formatCurrency(value) {
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
 	}, // methods
 	created : function() {
 		var self = this;

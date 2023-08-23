@@ -171,4 +171,5 @@
 		FROM t3_tbl_user_inquiry
 		WHERE ENQUIRY_NO = #{enquiryNo}
 	</delete>
+	
 </mapper>

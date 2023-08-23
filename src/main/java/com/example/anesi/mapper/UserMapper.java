@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.anesi.model.Coupon;
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
