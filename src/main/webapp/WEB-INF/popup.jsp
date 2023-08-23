@@ -167,3 +167,14 @@ var app = new Vue({
 });
 
 </script>
+
+<script type="text/javascript">
+    function closePopup(){
+      if(document.getElementById("check").value){
+        Cookies.set('popupCheck', 'no', { expires: 24 });
+      }
+      //자기 자신을 닫는 dom method
+      self.close();
+    }
+</script>
+       
