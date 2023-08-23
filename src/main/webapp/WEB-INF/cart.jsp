@@ -54,17 +54,34 @@
 						</div>
 
 						<button v-on:click="goToPurchasePage([item.productNo])"
-							class="btn btn-sm btn-danger">구매하기</button>
-						<div class="col-md-3">
-							<button class="btn btn-sm btn-danger"
-								v-on:click="deleteItem(item)">
-								<i class="fas fa-trash-alt" aria-hidden="true" id="delete"></i>
-								삭제
-							</button>
+							  class="btn btn-sm btn-danger">구매하기</button>
+							<div class="col-md-3">
+							  <button class="btn btn-sm btn-danger"
+							    v-on:click="deleteItem(item)">
+							    <i class="fas fa-trash-alt" aria-hidden="true" id="delete"></i>
+							    삭제
+							  </button>
+							</div>
+						<div class="product-item__action">
+						  <div class="quantity-box">
+						    <button class="minus-btn" @click="decrementCount(item)">
+						      <i class="fa-solid fa-minus" style="color: #4c6794;"></i>
+						    </button>
+						    <input min="1" class="input-number" v-model="item.cnt" @input="inputCount(item, $event)">
+
+
+						    <button class="plus-btn" @click="incrementCount(item)">
+						      <i class="fa-solid fa-plus" style="color: #4b638b;"></i>
+						    </button>
+						  </div>
+						  <div class="option-stock-price">
+						    {{ calculateTotalPriceWithCount(item) | formatPrice }}원
+						  </div>
 						</div>
-					</div>
+
 				</div>
 			</div>
+		</div>
 
 
 
@@ -77,7 +94,6 @@
 					class="btn btn-primary"
 					style="width: 300px; float: right; height: 30px">전체 구매하기</button>
 			</div>
-		</div>
 	</div>
 	</div>
 
@@ -117,11 +133,11 @@ new Vue({
     		      return this.cartItems.find(item => item.productNo === pno);
     		    });
     		  },
-    		  discountedPrice() {
+    		  discountedAmount() {
     			    if (this.cartItems.length > 0 && this.cartItems[0].discountYn === 'Y') {
     			      return Math.floor((this.cartItems[0].productPrice * ((100 - this.cartItems[0].discount) / 100)) / 100) * 100;
     			    }
-    			    return 50;
+    			    return 0;
     			  },
     	
     	
@@ -133,7 +149,56 @@ new Vue({
       this.loadCartList();
     },
     
-    methods: {
+    filters: {
+        formatPrice(value) {
+          return value.toLocaleString();
+        },
+      },
+      methods: {
+    	  calculateTotalPriceWithCount(item) {
+    		    console.log('item:', item); // 아이템의 전체 객체를 확인
+
+    		    const discountPrice = this.discountedPrice(item);
+    		    const optionPrice =
+    		      (item.selectedOption &&
+    		        item.options.find(
+    		          (option) => option.optionNo === item.selectedOption
+    		        )?.optionPrice) ||
+    		      0;
+    		    const count = item.cnt || 1;
+
+    		    console.log('discountPrice:', discountPrice); // 할인 가격 확인
+    		    console.log('optionPrice:', optionPrice); // 옵션 가격 확인
+    		    console.log('count:', count); // 개수 확인
+
+    		    return (discountPrice + optionPrice) * count;
+    		  },
+    		  
+    		  discountedPrice(item) {
+    		    if (item && item.discountYn === 'Y') {
+    		      return Math.floor((item.productPrice * ((100 - item.discount) / 100)) / 100) * 100;
+    		    }
+    		    return item.productPrice || 0;
+    		  },
+
+        incrementCount(item) {
+            item.cnt += 1;
+          },
+          decrementCount(item) {
+            if (item.cnt > 1) {
+              item.cnt -= 1;
+            }
+          },
+          inputCount(item, event) {
+              const inputValue = parseInt(event.target.value);
+              
+              if (isNaN(inputValue) || inputValue < 1) {
+                item.cnt = 1;
+              } else {
+                item.cnt = inputValue;
+              }
+            },
+    	
     	loadCartList() {
     		  const selectedNparmapString = localStorage.getItem("selectedNparmap");
     		  let selectedNparmap = null;
@@ -151,9 +216,18 @@ new Vue({
     		    success: function (response) {
     		      console.log(response);
     		      
-    		      
+    		    
 					
-    		        
+    		      const cntString = localStorage.getItem("count");
+    		      if (cntString) {
+    		        const cnt = JSON.parse(cntString);
+    		        response.list.forEach((item) => {
+    		          if (item.productNo === cnt.productNo && item.selectedOption === cnt.optionNo) {
+    		            item.cnt = cnt.cnt; 
+    		          }
+    		        });
+    		      }
+
     		        
     		        // 선택된 nparmap에 따라 상품 목록 필터링
     		        if (self.selectedNparmap && self.selectedNparmap.optionNo) {
@@ -230,7 +304,6 @@ new Vue({
     			  console.log(selectedOption);
     			  if (selectedOption) {
     			    this.addToSelectedOptions(item); // 새롭게 추가된 메소드 호출
-    			    this.calculateTotalPrice(); // 추가된 부분. 총 가격을 계산하기 위함.
     			  }
     			},
     		
