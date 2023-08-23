@@ -139,5 +139,13 @@ public class ProductServiceImpl implements ProductService {
 			// TODO Auto-generated method stub
 			return productMapper.selectCartCheck(map);
 		}
+		@Override
+		public HashMap<String, Object> searchProduct2(HashMap<String, Object> map) { 
+			// TODO Auto-generated method stub
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("productList", productMapper.selectProductList2(map));
+			resultMap.put("cnt", productMapper.selectCnt2(map));
+			return resultMap;
+		}
 	
 }

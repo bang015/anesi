@@ -62,5 +62,7 @@ public interface ProductService {
 	int addCart(HashMap<String, Object> map);
 	// 장바구니 중복체크
 	List<Cart>searchCartCheck(HashMap<String, Object> map);
+	// 카테고리 선택 상품
+	HashMap<String, Object>searchProduct2(HashMap<String, Object> map); 
 }
 
