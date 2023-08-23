@@ -11,7 +11,7 @@
 <title>마이페이지😏</title>
 <style>
 #app{
-	margin-top : 160px;
+	margin-top : 200px;
 }
 #container{
 	margin : 30px auto;
