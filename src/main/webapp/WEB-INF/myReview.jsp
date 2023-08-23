@@ -47,7 +47,6 @@
 				</div>
 			</div>
 		</div>
-		<img class="review-product-img1" :scr="mainImg" alt="리뷰상품이미지" >
 		<div class="modal" v-if="showScrapModal">
 			<div class="review-add">
 		        <div class="review-back">
