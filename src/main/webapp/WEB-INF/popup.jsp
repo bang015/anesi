@@ -20,10 +20,12 @@
 
 .popup {
     padding: 40px;
+    padding-bottom: 20px;
     background-color: #424242;
     color : #fff;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+   
 }
 
 .popup-title1 {
@@ -37,6 +39,8 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
+    margin-left : 20px;
+    color: #A782C3;
 }
 
 
@@ -45,7 +49,7 @@
     background-color: #ffffff;
     color : #424242;
     margin-bottom:15px;
-    padding : 5px;
+    padding : 10px;
 }
 .point {
    border-radius: 4px;
@@ -53,44 +57,48 @@
    font-weight: bold;
    text-shadow: -1px 0px yellow, 0px 1px yellow, 1px 0px yellow, 0px -1px yellow;
 }
+.popup-text {
+    margin-bottom : 10px;
+}
 .popup-text1 {
-    font-size: 16px;
-    font-weight:bold;
+    font-size: 13px;
+   
 }
 .popup-text2 {
     font-size: 20px;
+    font-weight:bold;
+    padding : 3px;
+    
+    
 }
-
 .popup-button {
     background-color: #A782C3;
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 7px 15px;
     border-radius: 5px;
     cursor: pointer;
     font-family: 'Pretendard-Regular';
-    margin-bottom: 10px;
+    margin-left : 160px;
     
-}
 
+}
 .popup-button:hover {
     background-color: #8C5FAC;
 }
-
 .popup-checkbox {
     display: flex;
     align-items: center;
+    margin-top : 16px;
+    margin-left: 148px;
 }
-
 .popup-checkbox input {
     margin-right: 5px;
 }
 
-
-
 </style>
 </head>
-<body style="width :400px;">
+<body style="width :600px;">
 	 <div id="pop" class="popup-wrapper">
         <div class="popup">
             <div class="popup-title1">딱! 7일 한정</div>
@@ -99,12 +107,12 @@
             
             <div class="cp_wrapper">
 	            <div class="popup-text2"><span class="point">혜택1 </span>전품목 30% 할인 쿠폰</div>
-	            <div class="popup-text1">10000원 이상 구매고객, 최대 100만원까지</div>
-	            <button class="popup-button" @click="fnCoupon">쿠폰받기</button>
+	            <div class="popup-text1">10,000원 이상 구매시사용가능, 최대 100만원까지</div>
+	            <button class="popup-button" @click="fnCoupon()">쿠폰받기</button>
 			</div>
 			<div class="cp_wrapper">
 	            <div class="popup-text2"><span class="point">혜택2 </span> 3000원 할인 쿠폰</div>
-	            <div class="popup-text1">10000원 이상 구매고객</div>
+	            <div class="popup-text1">10,000원 이상 구매시 사용가능</div>
 	            <button class="popup-button" @click="fnCoupon2">쿠폰받기</button>
 			</div>
             <div class="popup-text">단, 발급일로부터 열흘간만 사용 가능</div>
@@ -127,19 +135,24 @@ var app = new Vue({
 			fnCoupon(){
 				var self = this;
 				if(self.userNo!=''){
-				var nparmap = {userNo:self.userNo};
-				   $.ajax({
-		                url : "coupon.dox",
-		                dataType:"json",	
-		                type : "POST", 
-		                data : nparmap,
-		                success : function(data) { 
-		        			alert("쿠폰등록");
-		                }
-		            }); 
+					var nparmap = {userNo:self.userNo};
+					   $.ajax({
+			                url : "coupon.dox",
+			                dataType:"json",	
+			                type : "POST", 
+			                data : nparmap,
+			                success : function(data) {
+			                	if(data.success){
+				        			alert(data.success.message);
+									
+			                	}else{
+				        			alert(data.message);
+			                	}
+			                }
+			            }); 
 				} else{
-					alert("로그인 후 이용가능합니다.");
-					window.close();
+						alert("로그인 후 이용가능합니다.");
+						window.close();
 				}
 				
 			},

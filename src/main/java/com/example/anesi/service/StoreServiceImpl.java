@@ -88,8 +88,18 @@ public class StoreServiceImpl implements StoreService{
 
 
 	@Override
-	public int coupon(HashMap<String, Object> map) {
-		return productMapper.coupon(map);
+	public HashMap<String, Object> coupon(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object> ();
+		int cpCnt = productMapper.couponCnt(map);
+		if(cpCnt > 0) {
+			resultMap.put("message", "이미 담긴 쿠폰");
+			resultMap.put("success", true);
+		}else {
+			productMapper.coupon(map);
+			resultMap.put("message", "쿠폰추가완료");
+			resultMap.put("success", false);
+		}
+		return resultMap;
 	}
 	@Override
 	public int coupon2(HashMap<String, Object> map) {

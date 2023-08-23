@@ -141,14 +141,14 @@ var swiper = new Swiper(".mySwiper", {
     if(Cookies.get("popupCheck") !== "no"){
       window.open("popup.do", 
         "tap",
-        "width=400px,height=450px,resizable,status=1")
+        "width=600px,height=450px,resizable,status=1")
     }
 }
 </script>
 <script type="text/javascript">
     function closePopup(){
       if(document.getElementById("check").value){
-        Cookies.set('popupCheck', 'no', { expires: 1/60 });
+        Cookies.set('popupCheck', 'no', { expires: 24 });
       }
       //자기 자신을 닫는 dom method
       self.close();
