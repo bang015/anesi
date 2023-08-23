@@ -37,7 +37,7 @@
 				<div v-for="item in inquiryList" class="inquiryBox">
 					<div class="replyBox1">
 						<span class="replyflgBox">{{item.reply == undefined ? '미답변' : '답변완료'}}</span>
-						<span>{{item.cDateTime}}</span>
+						<span class="cDateTime">{{item.cDateTime.substring(0,11)}}</span>
 					</div>
 					<div class="productNameBox">
 						<span>상품</span>
