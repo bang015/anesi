@@ -32,15 +32,6 @@ public class Product {
 		
 		//페이징인덱스
 		private int idx;
-		
-		//쿠폰 개수
-		private int cpCnt;
-		
-	
-		
-		
-	    
-	    
 	    
 	 	public int getCsatCnt() {
 			return csatCnt;
@@ -248,15 +239,7 @@ public class Product {
 		public void setIdx(int idx) {
 			this.idx = idx;
 		}
-
-		public int getCpCnt() {
-			return cpCnt;
-		}
-
-		public void setCpCnt(int cpCnt) {
-			this.cpCnt = cpCnt;
-		}
-
+	
 		public void setStock(int stock) {
 			this.stock = stock;
 		}

@@ -42,7 +42,4 @@ public interface StoreService {
 	int nonUserCartInsert(HashMap<String, Object> map);
 	//회원쿠폰등록
 	HashMap<String, Object> coupon(HashMap<String, Object> map);
-	//회원쿠폰등록
-	int coupon2(HashMap<String, Object> map);
-	
 }

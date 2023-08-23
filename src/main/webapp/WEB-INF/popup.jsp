@@ -108,12 +108,12 @@
             <div class="cp_wrapper">
 	            <div class="popup-text2"><span class="point">혜택1 </span>전품목 30% 할인 쿠폰</div>
 	            <div class="popup-text1">10,000원 이상 구매시사용가능, 최대 100만원까지</div>
-	            <button class="popup-button" @click="fnCoupon()">쿠폰받기</button>
+	            <button class="popup-button" @click="fnCoupon('2주년 감사 할인쿠폰','B','30')">쿠폰받기</button>
 			</div>
 			<div class="cp_wrapper">
 	            <div class="popup-text2"><span class="point">혜택2 </span> 3000원 할인 쿠폰</div>
 	            <div class="popup-text1">10,000원 이상 구매시 사용가능</div>
-	            <button class="popup-button" @click="fnCoupon2">쿠폰받기</button>
+	            <button class="popup-button" @click="fnCoupon('2주년 감사 3000원 할인쿠폰','A','3000')">쿠폰받기</button>
 			</div>
             <div class="popup-text">단, 발급일로부터 열흘간만 사용 가능</div>
             <div class="popup-checkbox">
@@ -132,10 +132,13 @@ var app = new Vue({
 
 	},// data
 	methods : {
-			fnCoupon(){
+			fnCoupon(couponName, disFlg, discount){
 				var self = this;
 				if(self.userNo!=''){
-					var nparmap = {userNo:self.userNo};
+					var nparmap = {userNo:self.userNo,
+								   couponName,
+								   disFlg,
+								   discount};
 					   $.ajax({
 			                url : "coupon.dox",
 			                dataType:"json",	
@@ -144,7 +147,6 @@ var app = new Vue({
 			                success : function(data) {
 			                	if(data.success){
 				        			alert(data.success.message);
-									
 			                	}else{
 				        			alert(data.message);
 			                	}
@@ -154,27 +156,8 @@ var app = new Vue({
 						alert("로그인 후 이용가능합니다.");
 						window.close();
 				}
-				
 			},
-			fnCoupon2(){
-				var self = this;
-				if(self.userNo!=''){
-				var nparmap = {userNo:self.userNo};
-				   $.ajax({
-		                url : "coupon2.dox",
-		                dataType:"json",	
-		                type : "POST", 
-		                data : nparmap,
-		                success : function(data) { 
-		        			alert("쿠폰등록");
-		                }
-		            }); 
-				} else{
-					alert("로그인 후 이용가능합니다.");
-					window.close();
-				}
-				
-			},
+			
 		
 	}, // methods
 	created : function() {

@@ -101,10 +101,6 @@ public class StoreServiceImpl implements StoreService{
 		}
 		return resultMap;
 	}
-	@Override
-	public int coupon2(HashMap<String, Object> map) {
-		return productMapper.coupon2(map);
-	}
 
 
 	

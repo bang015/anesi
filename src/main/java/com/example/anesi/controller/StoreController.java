@@ -215,15 +215,7 @@ public class StoreController {
 		resultMap.put("success",storeService.coupon(map));
 		return new Gson().toJson(resultMap);
 	}
-	//쿠폰 등록
-	@RequestMapping(value = "/coupon2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String coupon2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		storeService.coupon2(map);
-		return new Gson().toJson(resultMap);
-	}
-	  
+	
 
 	
 }
