@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -11,8 +11,8 @@
 <script src="https://unpkg.com/vuejs-paginate@latest"></script>
 <script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-<!--ÀÚµ¿°Ë»ö±â´É  -->
-<meta charset="EUC-KR">
+<!--ìë™ê²€ìƒ‰ê¸°ëŠ¥  -->
+<meta charset="UTF-8">
 <title>Insert title here</title>
 
 <link rel="stylesheet"
@@ -31,7 +31,7 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 
 <style>
-/* µå·Ó´Ù¿î ¸Ş´º¸¦ ¿À¸¥ÂÊ Á¤·Ä */
+/* ë“œë¡­ë‹¤ìš´ ë©”ë‰´ë¥¼ ì˜¤ë¥¸ìª½ ì •ë ¬ */
 
 .category1{
 	width: 150px;
@@ -125,8 +125,8 @@
 	
 		<span> <a href="/main.do"><img class="logo"
 				src="../css/image/anesilogo.png" /> </a></span> <a class="aaa"
-			href="/product/storemain.do">½ºÅä¾î</a> <a class="bbb"
-			href="/community/main.do">Ä¿¹Â´ÏÆ¼</a> <a class="ccc" href="/used/main.do">Áß°íÀåÅÍ</a>
+			href="/product/storemain.do">ìŠ¤í† ì–´</a> <a class="bbb"
+			href="/community/main.do">ì»¤ë®¤ë‹ˆí‹°</a> <a class="ccc" href="/used/main.do">ì¤‘ê³ ì¥í„°</a>
 		<div class="navi-wrap"> 
 			<ul id="header_navi">
 				<li id="login-button">
@@ -139,13 +139,13 @@
 					<a href="../join.do">
 						<i class="fa-solid fa-user-plus "></i>
 					</a>
-					<span class="fon">È¸¿ø°¡ÀÔ</span>
+					<span class="fon">íšŒì›ê°€ì…</span>
 				</li>
 				<li>
 					<a href="../mypage.do">
 						<i class="fa-solid fa-user "></i>
 					</a>
-					<span class="fon">¸¶ÀÌÆäÀÌÁö</span>
+					<span class="fon">ë§ˆì´í˜ì´ì§€</span>
 				</li>
 				<li>
 					<a href="http://localhost:8080/scrapbook.do">
@@ -154,7 +154,7 @@
 					<span></span>
 				</li>
 				<li>
-					<a>
+					<a href="http://localhost:8080/alarm.do">
 						<i class="fa-solid fa-bell "></i>
 					</a>
 					<span></span>
@@ -173,18 +173,18 @@
 		<div class="nav1">
 			<div class="nav-left">
 				<button class="category-toggle" @mouseover="categoryFlg">
-					<span> <i class="fa-solid fa-bars" style="color: #47608a; font-size : 20px;"></i> <span class="category-title">Ä«Å×°í¸®</span></span>
+					<span> <i class="fa-solid fa-bars" style="color: #47608a; font-size : 20px;"></i> <span class="category-title">ì¹´í…Œê³ ë¦¬</span></span>
 				</button> 
 				<span class="headerfont">
-					<a class="href">ÃßÃµ </a>
-					<a class="href">·©Å·</a>
-					<a class="href">Æ¯°¡</a> 
-					<a class="href">±âÈ¹Àü</a> 
-					<a class="href">ºê·£µå°ü</a>
+					<a class="href">ì¶”ì²œ </a>
+					<a class="href">ë­í‚¹</a>
+					<a class="href">íŠ¹ê°€</a> 
+					<a class="href">ê¸°íšì „</a> 
+					<a class="href">ë¸Œëœë“œê´€</a>
 				</span>
 			</div>
 			<div class="search-container">
-				 <input type="text" id="search_input" placeholder="Á¦Ç°¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä">
+				 <input type="text" id="search_input" placeholder="ì œí’ˆëª…ì„ ì…ë ¥í•˜ì„¸ìš”">
 				 <a id="glass" class="glass"><i class="fa-solid fa-magnifying-glass"></i></a>
 				 <div id="recent_search" class="recent-search-container" style="display: none;"></div>
 			</div>
@@ -233,7 +233,7 @@
 		el : '#app1',
 		data : {
 			flg : false,
-			product : {	//»óÇ° ¸Ê
+			product : {	//ìƒí’ˆ ë§µ
 				productName : "",
 				productPrices : "",
 				manufacturer : "",
@@ -243,7 +243,7 @@
 				discountYn  : ""
 			},
 			category1No : "",
-			categoryList1 : [], //Ä«Å×°í¸® ´ëºĞ·ù
+			categoryList1 : [], //ì¹´í…Œê³ ë¦¬ ëŒ€ë¶„ë¥˜
 			categoryList2 : [],
 			category2Name : "",
 		},// data
@@ -301,17 +301,17 @@
 	    console.log('sessionNo:', '<%= sessionNo %>');
 
 	    $(document).ready(function(){
-	        // ·Î±×ÀÎµÇ¾î ÀÖÁö ¾ÊÀº °æ¿ì ·Î±×ÀÎ ¹öÆ° ¹× ¾ÆÀÌÄÜÀ» Á¶ÀÛÇÕ´Ï´Ù.
+	        // ë¡œê·¸ì¸ë˜ì–´ ìˆì§€ ì•Šì€ ê²½ìš° ë¡œê·¸ì¸ ë²„íŠ¼ ë° ì•„ì´ì½˜ì„ ì¡°ì‘í•©ë‹ˆë‹¤.
 	        if(!isLoggedIn) {
-	            $('#login-button-link').attr('href', '../login.do'); // ·Î±×ÀÎ ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-	            $('#login-button-text').text('·Î±×ÀÎ'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×ÀÎ"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+	            $('#login-button-link').attr('href', '../login.do'); // ë¡œê·¸ì¸ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+	            $('#login-button-text').text('ë¡œê·¸ì¸'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì¸"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 	            $('.fa-door-open').removeClass('fa-door-open').addClass('fa-door-closed');
-	            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ´İÈù ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
-	        } else { // ·Î±×ÀÎµÇ¾î ÀÖ´Â °æ¿ì ·Î±×¾Æ¿ô ¹öÆ° ¹× ¾ÆÀÌÄÜÀ¸·Î Á¶ÀÛÇÕ´Ï´Ù.
-	            $('#login-button-link').attr('href', '../logout.do'); // ·Î±×¾Æ¿ô ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-	            $('#login-button-text').text('·Î±×¾Æ¿ô'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×¾Æ¿ô"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+	            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ë‹«íŒ ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+	        } else { // ë¡œê·¸ì¸ë˜ì–´ ìˆëŠ” ê²½ìš° ë¡œê·¸ì•„ì›ƒ ë²„íŠ¼ ë° ì•„ì´ì½˜ìœ¼ë¡œ ì¡°ì‘í•©ë‹ˆë‹¤.
+	            $('#login-button-link').attr('href', '../logout.do'); // ë¡œê·¸ì•„ì›ƒ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+	            $('#login-button-text').text('ë¡œê·¸ì•„ì›ƒ'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì•„ì›ƒ"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 	            $('.fa-door-closed').removeClass('fa-door-closed').addClass('fa-door-open');
-	            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ¿­¸° ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+	            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ì—´ë¦° ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 	        }
 	    });
 	
@@ -319,39 +319,39 @@
 	function saveRecentSearch(search) {
 		  if (!search) return;
 
-		  // °Ë»ö¾î ±â·ÏÀ» °¡Á®¿É´Ï´Ù.
+		  // ê²€ìƒ‰ì–´ ê¸°ë¡ì„ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 		  
 		  
-		  // µ¿ÀÏÇÑ °Ë»ö¾î°¡ ÀÖ´ÂÁö È®ÀÎÇÏ°í, ÀÖ´Ù¸é Á¦°ÅÇÕ´Ï´Ù.
+		  // ë™ì¼í•œ ê²€ìƒ‰ì–´ê°€ ìˆëŠ”ì§€ í™•ì¸í•˜ê³ , ìˆë‹¤ë©´ ì œê±°í•©ë‹ˆë‹¤.
 		  var index = recentSearches.indexOf(search);
 		  if (index > -1) recentSearches.splice(index, 1);
 
-		  // ÃÖ±Ù °Ë»ö¾î ±â·Ï¿¡ »õ·Î¿î °Ë»ö¾î¸¦ Ãß°¡ÇÕ´Ï´Ù.
+		  // ìµœê·¼ ê²€ìƒ‰ì–´ ê¸°ë¡ì— ìƒˆë¡œìš´ ê²€ìƒ‰ì–´ë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 		  recentSearches.unshift(search);
 		  
-		  // ÃÖ±Ù °Ë»ö¾î ¸ñ·ÏÀ» ÃÖ´ë 10°³·Î À¯ÁöÇÕ´Ï´Ù.
+		  // ìµœê·¼ ê²€ìƒ‰ì–´ ëª©ë¡ì„ ìµœëŒ€ 10ê°œë¡œ ìœ ì§€í•©ë‹ˆë‹¤.
 		  recentSearches = recentSearches.slice(0, 6);
 
-		  // º¯°æµÈ °Ë»ö¾î ±â·ÏÀ» ÀúÀåÇÕ´Ï´Ù.
+		  // ë³€ê²½ëœ ê²€ìƒ‰ì–´ ê¸°ë¡ì„ ì €ì¥í•©ë‹ˆë‹¤.
 		  localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
 		  
-		  // È­¸é¿¡ º¯°æµÈ °Ë»ö¾î ±â·ÏÀ» Ç¥½ÃÇÕ´Ï´Ù.
+		  // í™”ë©´ì— ë³€ê²½ëœ ê²€ìƒ‰ì–´ ê¸°ë¡ì„ í‘œì‹œí•©ë‹ˆë‹¤.
 		  showRecentSearches();
 		}
 	function showRecentSearches() {
-		  // localStorage¿¡¼­ ÃÖ±Ù °Ë»ö¾î¸¦ °¡Á®¿É´Ï´Ù.
+		  // localStorageì—ì„œ ìµœê·¼ ê²€ìƒ‰ì–´ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
-		  // ÃÖ±Ù °Ë»ö¾î ¸ñ·ÏÀ» ºñ¿ó´Ï´Ù.
+		  // ìµœê·¼ ê²€ìƒ‰ì–´ ëª©ë¡ì„ ë¹„ì›ë‹ˆë‹¤.
 		  $('#recent_search').empty();
 			
 		  if (recentSearches.length === 0) {
-			    // ÃÖ±Ù °Ë»ö¾î°¡ ¾ø´Ù¸é ¸Ş½ÃÁö¸¦ Ãâ·ÂÇÕ´Ï´Ù.
-			    var message = $('<li>').text('ÃÖ±Ù °Ë»ö¾î°¡ ¾ø½À´Ï´Ù.');
+			    // ìµœê·¼ ê²€ìƒ‰ì–´ê°€ ì—†ë‹¤ë©´ ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
+			    var message = $('<li>').text('ìµœê·¼ ê²€ìƒ‰ì–´ê°€ ì—†ìŠµë‹ˆë‹¤.');
 			    $('#recent_search').append(message);
 			  } else {
-		  // ¸ñ·ÏÀ» ¼øÈ¸ÇÏ¸ç È­¸é¿¡ ÃÖ±Ù °Ë»ö¾î¸¦ Ãß°¡ÇÕ´Ï´Ù.
+		  // ëª©ë¡ì„ ìˆœíšŒí•˜ë©° í™”ë©´ì— ìµœê·¼ ê²€ìƒ‰ì–´ë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 		  for (var i = 0; i < recentSearches.length; i++) {
 		    var search = recentSearches[i];
 		    var li = $('<li class="recent-search-item"></li>').text(search);
@@ -368,16 +368,16 @@
 			      type: "POST",
 			      data: { categoryName: categoryName },
 			      success: function (products) {
-			          // »óÇ° ¸ñ·Ï Ã³¸® ÄÚµå (¿¹: ¸®½ºÆ® ·»´õ¸µ)
+			          // ìƒí’ˆ ëª©ë¡ ì²˜ë¦¬ ì½”ë“œ (ì˜ˆ: ë¦¬ìŠ¤íŠ¸ ë Œë”ë§)
 			      },
 			      error: function (error) {
-			          console.log("Ä«Å×°í¸® º° »óÇ° ¸ñ·ÏÀ» °¡Á®¿À´Âµ¥ ½ÇÆĞÇß½À´Ï´Ù: ", error);
+			          console.log("ì¹´í…Œê³ ë¦¬ ë³„ ìƒí’ˆ ëª©ë¡ì„ ê°€ì ¸ì˜¤ëŠ”ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤: ", error);
 			      }
 			  });
 			});
 
 		  function loadCategoryProducts(categoryName) {
-			  // ¼­¹ö¿¡¼­ Ä«Å×°í¸®º° »óÇ° µ¥ÀÌÅÍ¸¦ °¡Á®¿À´Â AJAX ¿äÃ»
+			  // ì„œë²„ì—ì„œ ì¹´í…Œê³ ë¦¬ë³„ ìƒí’ˆ ë°ì´í„°ë¥¼ ê°€ì ¸ì˜¤ëŠ” AJAX ìš”ì²­
 			  $.ajax({
 			    method: "POST",
 			    url: "/product/getProductsByCategory.dox",
@@ -390,7 +390,7 @@
 
 			      var data = response;
 
-			      // testcate.do ÆäÀÌÁö·Î ÀÌµ¿ÇÏ¸é¼­ category¿Í list µ¥ÀÌÅÍ¸¦ Àü´ŞÇÕ´Ï´Ù.
+			      // testcate.do í˜ì´ì§€ë¡œ ì´ë™í•˜ë©´ì„œ categoryì™€ list ë°ì´í„°ë¥¼ ì „ë‹¬í•©ë‹ˆë‹¤.
 			      var url = "/testcate.do";
 			      var params = "categoryName=" + encodeURIComponent(categoryName) + "&list=" + encodeURIComponent(JSON.stringify(data.list));
 
@@ -406,7 +406,7 @@
 			  $('.category-link').on('click', function() {
 			    var categoryName = $(this).text();
 
-			    loadCategoryProducts(categoryName); // µ¥ÀÌÅÍ¸¦ AJAX·Î °¡Á®¿Í¼­ ·ÎÄÃ¿¡¼­ Ã³¸®
+			    loadCategoryProducts(categoryName); // ë°ì´í„°ë¥¼ AJAXë¡œ ê°€ì ¸ì™€ì„œ ë¡œì»¬ì—ì„œ ì²˜ë¦¬
 			  });
 			});
 
@@ -433,32 +433,32 @@
 			});
 		$('body').on('click', '.recent-search-item .fa-xmark', function() {
 			$(document).ready(function(){
-		        var isLoggedIn = <%= isLoggedIn %>; // ·Î±×ÀÎÀÌ µÇ¾î ÀÖ´ÂÁö ¿©ºÎ¸¦ ³ªÅ¸³»´Â º¯¼öÀÔ´Ï´Ù.
+		        var isLoggedIn = <%= isLoggedIn %>; // ë¡œê·¸ì¸ì´ ë˜ì–´ ìˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜ì…ë‹ˆë‹¤.
 
-		        // ·Î±×ÀÎµÇ¾î ÀÖÁö ¾ÊÀº °æ¿ì ·Î±×ÀÎ ¹öÆ° ¹× ¾ÆÀÌÄÜÀ» Á¶ÀÛÇÕ´Ï´Ù.
+		        // ë¡œê·¸ì¸ë˜ì–´ ìˆì§€ ì•Šì€ ê²½ìš° ë¡œê·¸ì¸ ë²„íŠ¼ ë° ì•„ì´ì½˜ì„ ì¡°ì‘í•©ë‹ˆë‹¤.
 		        if(!isLoggedIn) {
-		            $('#login-button-link').attr('href', '../login.do'); // ·Î±×ÀÎ ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-		            $('#login-button-text').text('·Î±×ÀÎ'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×ÀÎ"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+		            $('#login-button-link').attr('href', '../login.do'); // ë¡œê·¸ì¸ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+		            $('#login-button-text').text('ë¡œê·¸ì¸'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì¸"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 		            $('.fa-door-open').removeClass('fa-door-open').addClass('fa-door-closed');
-		            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ´İÈù ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
-		        } else { // ·Î±×ÀÎµÇ¾î ÀÖ´Â °æ¿ì ·Î±×¾Æ¿ô ¹öÆ° ¹× ¾ÆÀÌÄÜÀ¸·Î Á¶ÀÛÇÕ´Ï´Ù.
-		            $('#login-button-link').attr('href', '../logout.do'); // ·Î±×¾Æ¿ô ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-		            $('#login-button-text').text('·Î±×¾Æ¿ô'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×¾Æ¿ô"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+		            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ë‹«íŒ ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+		        } else { // ë¡œê·¸ì¸ë˜ì–´ ìˆëŠ” ê²½ìš° ë¡œê·¸ì•„ì›ƒ ë²„íŠ¼ ë° ì•„ì´ì½˜ìœ¼ë¡œ ì¡°ì‘í•©ë‹ˆë‹¤.
+		            $('#login-button-link').attr('href', '../logout.do'); // ë¡œê·¸ì•„ì›ƒ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+		            $('#login-button-text').text('ë¡œê·¸ì•„ì›ƒ'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì•„ì›ƒ"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 		            $('.fa-door-closed').removeClass('fa-door-closed').addClass('fa-door-open');
-		            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ¿­¸° ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+		            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ì—´ë¦° ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 		        }
 		    });
-			  // ÀÌº¥Æ® ¹öºí¸µ »óÀ§ ¿ä¼Ò¿¡ ¿µÇâÀ» ÁÖÁö ¾Êµµ·Ï ÇÕ´Ï´Ù.
+			  // ì´ë²¤íŠ¸ ë²„ë¸”ë§ ìƒìœ„ ìš”ì†Œì— ì˜í–¥ì„ ì£¼ì§€ ì•Šë„ë¡ í•©ë‹ˆë‹¤.
 			  return false;
 			});
 		
 	
-		// Ä«Å×°í¸® Åä±Û
+		// ì¹´í…Œê³ ë¦¬ í† ê¸€
 		$('.category-toggle').click(function() {
 			$('.category-list-container').slideToggle('fast');
 		});
 
-		// ¼­ºê Ä«Å×°í¸® Åä±Û ÀÌº¥Æ®
+		// ì„œë¸Œ ì¹´í…Œê³ ë¦¬ í† ê¸€ ì´ë²¤íŠ¸
 		$('.category-list > li > a').click(function(event) {
 			event.preventDefault();
 			$(this).siblings('.subcategory-list').slideToggle('fast');
@@ -474,16 +474,16 @@
 		    }).done(function(response) {
 		        console.log(response);
 
-		        // ¼¼¼Ç Á¤º¸¿Í °Ë»ö¾î¸¦ ÇÔ²² ÀúÀåÇÕ´Ï´Ù.
+		        // ì„¸ì…˜ ì •ë³´ì™€ ê²€ìƒ‰ì–´ë¥¼ í•¨ê»˜ ì €ì¥í•©ë‹ˆë‹¤.
 		        sessionStorage.setItem("searchResult", JSON.stringify(response));
 		        sessionStorage.setItem("searchKeyword", productName);
 
-		        // searchProduct.jsp·Î ÀÌµ¿ÇÕ´Ï´Ù.
+		        // searchProduct.jspë¡œ ì´ë™í•©ë‹ˆë‹¤.
 		        window.location.href = "/searchProduct.do?productName=" + encodeURIComponent(productName);
 		    });
 		    
 		}
-		// °Ë»ö ¾ÆÀÌÄÜ Å¬¸¯ ½Ã °Ë»ö¾î¸¦ °¡Áö°í searchProduct ÇÔ¼ö¸¦ ½ÇÇàÇÕ´Ï´Ù.
+		// ê²€ìƒ‰ ì•„ì´ì½˜ í´ë¦­ ì‹œ ê²€ìƒ‰ì–´ë¥¼ ê°€ì§€ê³  searchProduct í•¨ìˆ˜ë¥¼ ì‹¤í–‰í•©ë‹ˆë‹¤.
 		$('#glass').click(function() {
 		    var productName = $('#search_input').val();
 			
@@ -506,10 +506,4 @@
 		
 
 
-		/* //category ´­·¶À»¶§ ¸Ş´ºº°·Î ¹è¿­ÇØÁÜ
-		 function fnMoveaa (item){
-		 var self = this;
-		 $.pageChange("storemain_byCategory.do",{no : item});//º¸³¾ÇÊ¿ä¾øÀ»¶§ ÆÄ¶ó¹ÌÅÍ ºó°ªÀ¸·Î{}
-		 }
-		 */
 </script>
