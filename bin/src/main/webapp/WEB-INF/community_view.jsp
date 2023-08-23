@@ -23,9 +23,12 @@
 	margin : 10px auto;
 }
 #container{
-	margin : 10px auto;
-	width: 700px;
-	padding : 10px 0px;
+	margin: 10px auto;
+    width: 700px;
+    padding: 10px 0px;
+    font-size: 15px;
+    font-weight: 100;
+    line-height: 24px;
 }
 .thum1{
 	position: relative;
@@ -155,6 +158,10 @@
 h1{
 	margin: 30px 0px;
 }
+h2{
+	margin : 30px 0px;
+	margin-bottom : 40px;
+}
 .cNick{
 	position: relative;
     display: flex;
@@ -174,6 +181,7 @@ h1{
     width: 30px;
     height: 30px;
     border-radius: 100%;
+    object-fit: cover;
 }
 .comment-item{
 	padding-left: 43px;
@@ -228,6 +236,12 @@ h1{
 .pagination li.active a{
 	color : white;
 }
+#comment-body pre {
+    white-space: pre-wrap; /* 이 속성은 텍스트의 자동 줄 바꿈을 활성화합니다 */
+}
+img{
+	max-width: 700px;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -241,27 +255,27 @@ h1{
 		</div>
 		<div id="container">
 			<div class="thum1">
-				<img class="thum2" src="../css/image/community/commu_test.jpg">
+				<img :src="imgPath+'/'+imgName" class="thum2">
 			</div>
 			<div id="content-head">
-				<div><h1>{{info.title}}</h1></div>
+				<div><h2>{{info.title}}</h2></div>
 				<div><img class="profile" :src="uProfileImg.uImgPath+'/'+uProfileImg.uImgName"></div>
 				<div class="time">{{postCalculateTime(info.cDateTime)}}<span v-if="info.cDateTime!=info.uDateTime"> · {{calculateTime(info.uDateTime)}} 수정</span></div>
 				<div class="nick">{{info.nick}}</div>
 			</div>
 			<hr class="hrr">
 			<div id="comment"></div>
-			<div style="overflow: auto;">
-			    <pre v-html="info.content"></pre>
+			<div>
+			    <div v-html="info.content"></div>
 			</div>
-			<div class="stat"><!-- 좋아요 <span class="stat-detail">2</span> 　 -->댓글 <span class="stat-detail">{{cList.length}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
+			<div class="stat"><!-- 좋아요 <span class="stat-detail">2</span> 　 -->댓글 <span class="stat-detail">{{cCnt}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
 			
 			<button class="btn2" @click="fnBack">목록으로</button>
 			<button class="btn2" @click="fnDelete" v-if="sessionNick==info.nick||sessionNick=='관리자'">삭제</button>
 			<button class="btn2" @click="fnEdit(bNo)" v-if="sessionNick==info.nick">수정</button>
 			</div>
 			<hr class="hrr">
-			<div style="font-size:19px;">댓글 <span>{{cList.length}}</span></div>
+			<div style="font-size:19px;">댓글 <span>{{cCnt}}</span></div>
 			<div id="comment-head">
 				<div v-if="sessionNo!=''">
 					<img class="profile2" :src="profileImg.uImgPath+'/'+profileImg.uImgName"><input class="comment-input" type="text" v-model="content">
@@ -273,7 +287,7 @@ h1{
 				<div v-for="(item, index) in commentList">
 					    <div class="comment-item">
 					        <div>
-					            <div class="cNick">{{item.cNick}}<img class="c-profile" :src="userProfileImagePath(item.cUserNo)"></div>
+					            <div class="cNick">{{item.cNick}}<img class="c-profile" :src="item.uImgPath+'/'+item.uImgName"></div>
 					            <div class="cComm">
 					                <span v-if="item.commFlg==true">
 					                    <input v-model="item.comm" class="comment-edit-input" @keyup.enter="fnComEdit(item.commentNo, item.comm)">
@@ -326,6 +340,7 @@ var app = new Vue({
 		bNo : "${map.boardNo}",
 		userNo : "",
 		info : {},
+		cCnt : "",
 		userInfo : {},
 		content : "",
 		cList : [],
@@ -335,18 +350,10 @@ var app = new Vue({
 		pageCount: 1,
 		cnt : 0,
 		profileImg : {},
-		uProfileImg : {}
-	},// data
-	computed: {
-	    userProfileImagePath() {
-	    	var self = this;
-	        return function (cUserNo) {
-	            if (self.cProfileImg && self.cProfileImg.uImgPath && self.cProfileImg.uImgName) {
-	                return `${self.cProfileImg.uImgPath}/${self.cProfileImg.uImgName}`;
-	            }; // 이미지가 없는 경우에 대한 기본 경로를 설정해주세요
-	        };
-	    },
-	},
+		uProfileImg : {},
+		imgPath : "",
+		imgName : ""
+	},// data	
 	methods : {
 		fnGetInfo : function(){
 			var self = this;
@@ -361,6 +368,10 @@ var app = new Vue({
                 	self.userInfo = data.userInfo;
                 	self.userNo = data.userInfo.userNo;
                 	self.fnGetUserProfile();
+                	self.cCnt = data.cCnt;
+                	self.imgPath = data.info.imgPath;
+                	self.imgName = data.info.imgName;
+                	console.log(self.info);
                 }
             });
 		},
@@ -490,7 +501,6 @@ var app = new Vue({
 		fnComDelete : function(cNo){
 			var self = this;
 			var nparmap = {cNo : cNo};
-			console.log(cNo);
             $.ajax({
                 url : "/community/deleteComm.dox",
                 dataType:"json",	
@@ -572,20 +582,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.uProfileImg = data.img;
-                }
-			})
-		},
-		fnGetcUserProfile(){
-			var self = this;
-			var nparmap = {userNo: cUserNo};
-			$.ajax({
-                url : "/profileImg.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {
-                	self.cProfileImg = data.img;
-                	console.log(data.img);
                 }
 			})
 		}

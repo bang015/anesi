@@ -115,4 +115,18 @@
 			AND DELIVERY_SIT = #{deliverySit}
 		</if>
 	</select>
+	<select id="selectMyReviewList" parameterType="hashmap" resultType="com.example.anesi.model.Review">
+		SELECT r.*, COALESCE(h.HELP_CNT, 0) AS HELP_CNT, p.PRODUCT_NAME, COALESCE(i.R_IMG_NAME, 0) AS R_IMG_NAME, COALESCE(i.R_IMG_PATH, 0) AS R_IMG_PATH
+		FROM t3_tbl_user_review r
+		INNER JOIN t3_tbl_product p
+			ON r.PRODUCT_NO = p.PRODUCT_NO
+		LEFT JOIN t3_tbl_review_image i
+			ON r.R_NO = i.R_NO
+		LEFT JOIN (
+			SELECT R_NO, COUNT(R_NO) AS HELP_CNT
+			FROM t3_tbl_user_help
+			GROUP BY R_NO
+		) h ON r.R_NO = h.R_NO
+		WHERE r.USER_NO = #{userNo}
+	</select>
 </mapper>

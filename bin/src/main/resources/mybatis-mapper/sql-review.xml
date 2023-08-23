@@ -11,7 +11,7 @@
 	</select> 
 	<!-- 리뷰 -->
 	<select id="selectReview" parameterType="hashmap" resultType="com.example.anesi.model.Review">
-		SELECT u.NICK, SUBSTR(r.CREATEDATE,1,11) as CREATEDATE, r.CSAT , r.`HELP`,r.CONTENT, p.U_IMG_NAME, p.U_IMG_PATH, ri.R_IMG_NAME, ri.R_IMG_PATH , r.OPTION_NAME
+		SELECT u.NICK, SUBSTR(r.CREATEDATE,1,11) as CREATEDATE, r.CSAT , r.`HELP`,r.CONTENT, p.U_IMG_NAME, p.U_IMG_PATH, ri.R_IMG_NAME, ri.R_IMG_PATH , r.OPTION_NAME, r.R_NO
 		FROM t3_tbl_user_review r
 		INNER JOIN t3_tbl_user u ON r.USER_NO = u.USER_NO
 		LEFT JOIN t3_tbl_review_image ri ON ri.R_NO = r.R_NO
@@ -51,7 +51,38 @@
 		INSERT INTO t3_tbl_review_image(R_NO, R_IMG_ORG_NAME, R_IMG_NAME, R_IMG_PATH, R_IMG_SIZE)
 		VALUES
 			(#{rNo},#{imgOrgName}, #{imgName}, #{imgPath}, #{imgSize})
-	</insert>	
+	</insert>
+	<!-- 도움이돼요! -->
+	<update id="updateHelp" parameterType="hashmap">
+	    UPDATE t3_tbl_user_review
+	    SET
+		`HELP` = `HELP`+1
+		WHERE PRODUCT_NO = #{productNo} AND R_NO = #{rNo}
+	</update>	
+	<!-- 도움이돼요를 누른 유저 -->
+	<insert id="insertHelp" parameterType="hashmap">
+		INSERT INTO t3_tbl_user_help 
+		(USER_NO, R_NO)
+		VALUES (#{userNo}, #{rNo})
+	</insert>
+	<!-- 도움이돼요 해제 -->
+	<update id="updateHelp2" parameterType="hashmap">
+	    UPDATE t3_tbl_user_review
+	    SET
+		`HELP` = `HELP`-1
+		WHERE PRODUCT_NO = #{productNo} AND R_NO = #{rNo} AND `HELP` > 0
+	</update>
+	<!-- 도움이돼요 누른 유저 삭제 -->
+	<delete id="deleteHelp" parameterType="hashmap">
+		DELETE FROM t3_tbl_user_help 
+		WHERE USER_NO = #{userNo} AND R_NO = #{rNo}
+	</delete>
+	<!-- 도움이 돼요 중복체크-->
+	<select id="selectHelpUser" parameterType="hashmap" resultType="com.example.anesi.model.Review">
+		SELECT *
+		FROM t3_tbl_user_help
+		WHERE USER_NO = #{userNo} 
+	</select>
 </mapper>
 
 	

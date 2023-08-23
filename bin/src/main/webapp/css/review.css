@@ -58,13 +58,7 @@
 	.csat2{
 		display: inline-block;
 	}
-	.recently-viewed{
-		border: 1px solid;
-		width: 400px;
-		height: 525px;
-		position: sticky;
-		top: 240px;
-	}
+	
 	.content-box2{
 		display: flex;
 	}
@@ -126,6 +120,15 @@
 		border: 1px solid #A782C3;
 		background-color: #fff;
 		color: #A782C3;
+		border-radius: 5px;
+		font-weight: bold;
+	}
+	.help-btn1{
+		width: 90px;
+		height: 30px;
+		border: 0;
+		background-color:#A782C3;
+		color: #fff;
 		border-radius: 5px;
 		font-weight: bold;
 	}

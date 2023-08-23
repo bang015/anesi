@@ -62,7 +62,7 @@
 	font-size: 17px;
 }
 .nick{
-	margin-bottom : 12px;
+	margin-bottom : 14px;
 	font-size : 14px;
 }
 .view{
@@ -88,6 +88,13 @@
 	font-size: 15px;
     font-weight: 100;
     margin-left: 3px;
+}
+.text3{
+	text-align:center;
+	font-size: 18px;
+    font-weight: 100;
+    color: #9b9b9b;
+    margin : 50px 0px;
 }
 #board-body-head{
 	display: inline-block;
@@ -144,6 +151,16 @@
 .pagination li.active a{
 	color : white;
 }
+.profile{
+	width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    align-items: center;
+    top: 4.5px;
+    left: -5px;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -157,12 +174,12 @@
 		            <div class="board1_item">
 		           		<div>
 		                <div class="photo1">
-		                    <a @click="fnView(item.boardNo)"><img class="photo2" src="../css/image/community/commu_test.jpg"></a>
+		                    <a @click="fnView(item.boardNo)"><img class="photo2" :src="item.imgPath+'/'+item.imgName"></a>
 		                <img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
 		                </div>
 		                </div>
 		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
-		                <div class="nick">{{item.nick}}</div>
+		                <div class="nick"><img :src="item.uImgPath+'/'+item.uImgName" class="profile">{{item.nick}}</div>
 		                <div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		            </div>
 		        </div>
@@ -181,16 +198,17 @@
 		        <div class="board1">
 		            <div class="board1_item">
 		                <div class="photo1">
-		                    <a @click="fnView(item.boardNo)"><img class="photo2" src="../css/image/community/commu_test.jpg"></a>
+		                    <a @click="fnView(item.boardNo)"><img class="photo2" :src="item.imgPath+'/'+item.imgName"></a>
 		                <img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
 		                </div>
 		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
-		                <div class="nick">{{item.nick}}</div>
+		                <div class="nick"><img :src="item.uImgPath+'/'+item.uImgName" class="profile">{{item.nick}}</div>
 		                <div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		            </div>
 		        </div>
 			</div>
 		</div>
+		<div v-if="list < 1" class="text3"> 검색된 게시글이 없습니다.</div>
 		<template>
 	  <paginate
 	    :page-count="pageCount"
@@ -210,7 +228,7 @@
 	    :prev-text="'〈'"
 	    :next-text="'〉'"
 	    :container-class="'pagination'"
-	    :page-class="'page-item'" name="searchPage" v-if="searchFlg==true">
+	    :page-class="'page-item'" name="searchPage" v-if="searchFlg==true && list.length > 0">
 	  </paginate>
 	</template>
 	</div>
@@ -252,12 +270,12 @@ var app = new Vue({
                 	self.list = data.list;
                 	self.cnt = data.cnt;
 	                self.pageCount = Math.ceil(self.cnt / 12);
+	                console.log(self.list);
                 }
             }); 
 		},
 		fnPageSearch : function(pageNum){
 			var self = this;
-			/* self.selectPage = pageNum; */
 			var startNum = ((pageNum-1) * 12);
 			var lastNum = 12;
 			var nparmap = {startNum : startNum, lastNum : lastNum};

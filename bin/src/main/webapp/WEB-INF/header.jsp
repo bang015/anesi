@@ -42,7 +42,7 @@
 		<span> <a href="/main.do"><img class="logo"
 				src="../css/image/anesilogo.png" /> </a></span> <a class="aaa"
 			href="/product/storemain.do">스토어</a> <a class="bbb"
-			href="/community/main.do">커뮤니티</a> <a class="ccc" href="javascript:;">중고장터</a>
+			href="/community/main.do">커뮤니티</a> <a class="ccc" href="/used/main.do">중고장터</a>
 
 		<ul id="header_navi">
 			<li id="login-button"><a href="#" id="login-button-link"><i class="fa-solid fa-door-open"></i></a><span
@@ -77,55 +77,57 @@
 
 		<hr>
 
-		<div class="category-list-container" style="display: none;">
-			<ul class="category-list">
+			 <div class="category-list-container" style="display: none;">
+         <ul class="category-list">
 
-				<li><a onclick="fnMoveaa('10')">가구</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a class="category-link">침대</a></li>
-						<li><a class="category-link">소파</a></li>
-						<li><a class="category-link">수납장</a></li>
-						<li><a class="category-link">의자</a></li>
-						<li><a class="category-link">식탁</a></li>
-					</ul></li>
-				<li><a onclick="fnMoveaa('20')">조명</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a class="category-link">장스텐드</a></li>
-						<li><a class="category-link">단스탠드</a></li>
-						<li><a class="category-link">무드등</a></li>
-						<li><a class="category-link">천장등</a></li>
-					</ul></li>
-				<li><a onclick="fnMoveaa('30')">패브릭</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a class="category-link">침구</a></li>
-						<li><a class="category-link">커튼</a></li>
-						<li><a class="category-link">러그</a></li>
-					</ul></li>
-				<li><a onclick="fnMoveaa('40')">가전</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a class="category-link">냉장고</a></li>
-						<li><a class="category-link">tv</a></li>
-						<li><a class="category-link">세탁기</a></li>
-						<li><a class="category-link">음향/영상가전</a></li>
-						<li><a class="category-link">청소가전</a></li>
-					</ul></li>
-				<li><a onclick="fnMoveaa('50')">데코/식물</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a class="category-link">조화</a></li>
-						<li><a class="category-link">꽃다발</a></li>
-						<li><a class="category-link">화병</a></li>
-						<li><a class="category-link">그림 액자</a></li>
-						<li><a class="category-link">캔들 디퓨저</a></li>
-					</ul></li>
-				<li><a onclick="fnMoveaa('60')">반려동물</a>
-					<ul class="subcategory-list" style="display: none;">
-						<li><a class="category-link">하우스/방석</a></li>
-						<li><a class="category-link">캣타워/스크래쳐</a></li>
-						<li><a class="category-link">안전문/울타리</a></li>
-						<li><a class="category-link">밥그릇/급식기</a></li>
-						<li><a class="category-link">위생용품</a></li>
-					</ul></li>
-			</ul>
+            <li><a onclick="fnMoveaa('10')">가구</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">침대</a></li>
+                  <li><a class="category-link">소파</a></li>
+                  <li><a class="category-link">수납장</a></li>
+                  <li><a class="category-link">의자</a></li>
+                  <li><a class="category-link">식탁</a></li>
+               </ul></li>
+            <li><a onclick="fnMoveaa('20')">조명</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">장스탠드</a></li>
+                  <li><a class="category-link">단스탠드</a></li>
+                  <li><a class="category-link">무드등</a></li>
+                  <li><a class="category-link">천장등</a></li>
+               </ul></li>
+            <li><a onclick="fnMoveaa('30')">패브릭</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">침구</a></li>
+                  <li><a class="category-link">커튼</a></li>
+                  <li><a class="category-link">러그</a></li>
+               </ul></li>
+            <li><a onclick="fnMoveaa('40')">가전</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">냉장고</a></li>
+                  <li><a class="category-link">TV</a></li>
+                  <li><a class="category-link">세탁기</a></li>
+                  <li><a class="category-link">음향 영상가전</a></li>
+                  <li><a class="category-link">청소 가전</a></li>
+               </ul></li>
+            <li><a onclick="fnMoveaa('50')">데코/식물</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">조화</a></li>
+                  <li><a class="category-link">꽃다발</a></li>
+                  <li><a class="category-link">화병</a></li>
+                  <li><a class="category-link">그림 액자</a></li>
+                  <li><a class="category-link">캔들 디퓨저</a></li>
+               </ul></li>
+            <li><a onclick="fnMoveaa('60')">반려동물</a>
+               <ul class="subcategory-list" style="display: none;">
+                  <li><a class="category-link">하우스/방석</a></li>
+                  <li><a class="category-link">캣타워/스크래쳐</a></li>
+                  <li><a class="category-link">안전문/울타리</a></li>
+                  <li><a class="category-link">밥그릇/급식기</a></li>
+                  <li><a class="category-link">위생용품</a></li>
+               </ul></li>
+         </ul>
+      </div>
+
 		</div>
 	</header>
 	<script>
@@ -134,28 +136,22 @@
 
 	    console.log('sessionNo:', '<%= sessionNo %>');
 
-		$(document).ready(function() {
-			  $(".subcategory-list > li > a").click(function() {
-			    // 클릭된 a 요소의 부모 li 요소와 그 부모의 대분류를 찾기 위한 코드
-			    var $parent_li = $(this).closest("li");
-			    var $category_a = $parent_li.parents(".category-list > li").find("> a");
-
-			    // 대분류 카테고리 번호와 이름을 찾기 위한 코드
-			    var category_no = $category_a.attr("onclick").match(/'(\d+)'/)[1];
-			    var category_name = $category_a.text();
-
-			    // 소분류 카테고리 이름
-			    var subcategory_name = $(this).text();
-
-			    // 클릭된 소분류 카테고리 정보 출력을 확인해 볼 수 있는 코드
-			    console.log("category_no:", category_no);
-			    console.log("category_name:", category_name);
-			    console.log("subcategory_name:", subcategory_name);
-
-			    // 이후 로직: 로드하는 상품이나 다른 작업 수행
-			    // 예시) loadSubcategoryProducts(category_no, category_name, subcategory_name);
-			  });
-			});
+	    $(document).ready(function(){
+	        // 로그인되어 있지 않은 경우 로그인 버튼 및 아이콘을 조작합니다.
+	        if(!isLoggedIn) {
+	            $('#login-button-link').attr('href', '../login.do'); // 로그인 링크를 설정합니다.
+	            $('#login-button-text').text('로그인'); // 로그인 버튼의 텍스트를 "로그인"으로 설정합니다.
+	            $('.fa-door-open').removeClass('fa-door-open').addClass('fa-door-closed');
+	            // 로그인 아이콘의 클래스를 변경하여 닫힌 문 모양으로 설정합니다.
+	        } else { // 로그인되어 있는 경우 로그아웃 버튼 및 아이콘으로 조작합니다.
+	            $('#login-button-link').attr('href', '../logout.do'); // 로그아웃 링크를 설정합니다.
+	            $('#login-button-text').text('로그아웃'); // 로그인 버튼의 텍스트를 "로그아웃"으로 설정합니다.
+	            $('.fa-door-closed').removeClass('fa-door-closed').addClass('fa-door-open');
+	            // 로그인 아이콘의 클래스를 변경하여 열린 문 모양으로 설정합니다.
+	        }
+	    });
+	
+	
 	function saveRecentSearch(search) {
 		  if (!search) return;
 
@@ -199,6 +195,58 @@
 		    li.append(deleteIcon);
 		    $('#recent_search').append(li);
 		  }
+		  
+		  $('.category-link').on('click', function () {
+			  var categoryName = $(this).text();
+
+			  $.ajax({
+			      url: "/product/getProductsByCategory.dox",
+			      type: "POST",
+			      data: { categoryName: categoryName },
+			      success: function (products) {
+			          // 상품 목록 처리 코드 (예: 리스트 렌더링)
+			      },
+			      error: function (error) {
+			          console.log("카테고리 별 상품 목록을 가져오는데 실패했습니다: ", error);
+			      }
+			  });
+			});
+
+		  function loadCategoryProducts(categoryName) {
+			  // 서버에서 카테고리별 상품 데이터를 가져오는 AJAX 요청
+			  $.ajax({
+			    method: "POST",
+			    url: "/product/getProductsByCategory.dox",
+			    data: {
+			      categoryName: categoryName
+			    },
+			    success: function(response) {
+			      console.log("Full response data:", response);
+			      console.log("Products list:", response.list);
+
+			      var data = response;
+
+			      // testcate.do 페이지로 이동하면서 category와 list 데이터를 전달합니다.
+			      var url = "/testcate.do";
+			      var params = "categoryName=" + encodeURIComponent(categoryName) + "&list=" + encodeURIComponent(JSON.stringify(data.list));
+
+			      window.location.href = url + "?" + params;
+			    },
+			    error: function(error) {
+			      console.error("Error occurred while fetching category data:", error);
+			    }
+			  });
+			}
+
+			$(document).ready(function() {
+			  $('.category-link').on('click', function() {
+			    var categoryName = $(this).text();
+
+			    loadCategoryProducts(categoryName); // 데이터를 AJAX로 가져와서 로컬에서 처리
+			  });
+			});
+
+
 			  }
 		}
 		$('#search_input').focus(function() {
@@ -290,47 +338,7 @@
 		        searchProduct(productName);
 		    }
 		});
-		
-		
-		function loadCategoryProducts(categoryName) {
-			  // 서버에서 카테고리별 상품 데이터를 가져오는 AJAX 요청
-			  $.ajax({
-			    method: "POST",
-			    url: "/product/getProductsByCategory.dox",
-			    data: {
-			      category: categoryName
-			    },
-			    success: function(response) {
-			    	 console.log("Full response data:", response); // 'data' 대신 'response' 사용
-			         console.log("Products list:", response.list); // 'data' 대신 'response' 사용
-			    	// 응답 데이터를 바로 사용하십시오 (JSON.parse 사용하지 말것)
-			        var data = response;
 
-			        // 가져온 상품 데이터를 페이지에 출력하는 로직
-			        var productContainer = $("#product-container");
-			        productContainer.empty(); // 기존 상품 데이터 삭제
-			                                
-			        // 상품 데이터를 추가
-			        $.each(data.list, function(index, product) {
-			            // 여기에 각 상품을 표시하는 HTML 코드를 작성하세요.
-			            // 예를 들어, 아래와 같이 간단한 div를 사용할 수 있습니다.
-			            var productDiv = $("<div>").text(product.name).appendTo(productContainer);
-			        });
-			    },
-			    error: function(error) {
-			      console.error("Error occurred while fetching category data:", error);
-			    }
-			  });
-			}
-			
-		  $(document).ready(function() {
-			    $('.category-link').on('click', function() {
-			      var categoryName = $(this).text();
-			      console.log('categoryName:', categoryName);
-			    });
-			  });
-		
-	
 		
 
 

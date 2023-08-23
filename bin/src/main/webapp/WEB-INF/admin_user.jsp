@@ -20,51 +20,28 @@
 	<div id="app">
 			<div id="container">
 				<div class="containerTitle">고객관리</div>
-			<!-- 	<div class="containerCheckList">
-					<div class="checkList">
-						<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
-						<div class="checkListText">
-							<div>전체</div>
-							<div><span class="numText">{{list.length}}</span>건</div> 
-						</div>
-					</div>
-					<div class="checkList">
-						<div class="iconBack"><i class="fa-solid fa-cart-shopping fa-2xl" style="color: #ffffff;"></i></div>
-						<div class="checkListText">
-							<div>판매중</div>
-							<div><span class="numText">{{list.length - soldOut}}</span>건</div> 
-						</div>
-					</div>
-					<div class="checkList">
-						<div class="iconBack"><i class="fa-solid fa-cart-arrow-down fa-2xl" style="color: #ffffff;"></i></div>
-						<div class="checkListText">
-							<div>품절</div>
-							<div><span class="numText">{{soldOut}}</span>건</div> 
-						</div>
-					</div>
-					<div class="checkList">
-						<div class="iconBack"><i class="fa-solid fa-pause fa-2xl" style="color: #ffffff;"></i></div>
-						<div class="checkListText">
-							<div>판매중지</div>
-							<div><span class="numText">{{stop}}</span>건</div> 
-						</div>
-					</div>
-					<div class="checkList">
-						<div class="iconBack"><i class="fa-solid fa-ban fa-2xl" style="color: #ffffff;"></i></div>
-						<div class="checkListText">
-							<div>판매종료</div>
-							<div><span class="numText">{{end}}</span>건</div> 
-						</div>
-					</div>
-				</div> -->
+				
 				<div class="containerProductList">
 					<div class="productListTitle">
 						<span>고객목록 (총 {{list.length}}개)</span>
 					</div>
-					<div class="btnBox">
-						<button class="btn1 btn2 btn3" @click="fnCheckSituation('N')">선택판매</button>
-						<button class="btn1 btn2 btn3" @click="fnCheckSituation('S')">선택중지</button>
-						<button class="btn1 btn2 btn3" @click="fnCheckSituation('Y')">선택종료</button>
+					
+					
+					<div class="update_cont">
+						<div class="btnBox">
+							<button class="btn1 btn2 btn3" @click="fnDelete('Y')">선택계정 정지</button>
+							<!-- <button class="btn1 btn2 btn3" @click="fnReset">선택계정 로그인횟수 초기화</button> -->
+						</div>
+						<div class="search_cont">
+							<span>상세검색</span>
+							<select v-model="searchOption" class="selectStyle">
+								<option value="USER_NO">고객번호</option>
+								<option value="USER_EMAIL">고객아이디</option>
+								<option value="USER_NAME">고객성함</option>
+							</select>
+							<span><input v-model="searchText" class="inputStyle" @keyup.enter="fnSearch"></span>
+							<button class="btn1 btn2 btn3" @click="fnSearch">검색</button>
+						</div>
 					</div>
 					<div class="tableBox">
 						<div class="table-container">
@@ -75,22 +52,23 @@
 									<th>고객번호</th>
 									<th>고객아이디</th>
 									<th>고객성함</th>
-									<th>등록일</th>
-									<th>수정일</th>
+									<th>닉네임</th>
 									<th>계정삭제여부</th>
 									<th>로그인시도횟수</th>
+									<th>등록일</th>
+									<th>수정일</th>
 								</tr>
 								<tr v-for="item in list">
 									<td><input type="checkbox" v-model="checkList" :value="item.userNo" @change="updateAllCheck"></td>
-									<td><button class="btn1" @click="fnUserEdit(item.userNo)">수정</button></td>
+									<td><button class="btn1" @click="fnUserInfo(item.userNo)">수정</button></td>
 									<td>{{item.userNo}}</td>
 									<td>{{item.userEmail}}</td>
 									<td>{{item.userName}}</td>
-									<td>{{item.cDateTime}}</td>
-									<td>{{item.uDateTime}}</td>
+									<td>{{item.nick}}</td>
 									<td>{{item.deleteYn}}</td>
 									<td>{{item.cnt}}</td>
-									
+									<td>{{item.cDateTime}}</td>
+									<td>{{item.uDateTime}}</td>
 								</tr>
 							</table>
 						</div>
@@ -101,35 +79,40 @@
 			        	<div class="modalTitle">고객정보 수정</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">고객번호</span>
-			        		<span>{{info[0].userNo}}</span>
+			        		<span>{{info.userNo}}</span>
+			        	</div>
+			        	<div class="modalStyle1">
+			        		<span class="modalSpan1">고객아이디</span>
+			        		<span>{{info.userEmail}}</span>
 			        	</div>
 			     		 <div class="modalStyle1">
-			        		<span class="modalSpan1">고객아이디</span>
-			        		<span><input v-model="info[0].userEmail" class="inputStyle inputStyle2"></span>
+			        		<span class="modalSpan1">이름</span>
+			        		<span><input v-model="info.userName" class="inputStyle inputStyle2"></span>
+			        	</div>
+			     		 <div class="modalStyle1">
+			        		<span class="modalSpan1">닉네임</span>
+			        		<span><input v-model="info.nick" class="inputStyle inputStyle2"></span>
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">연락처</span>
-			        		<span><input v-model="info[0].phone" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.phone" class="inputStyle inputStyle2"><span class="small">ex : 01012341234</span></span>
 			        	</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">생일</span>
-			        		<span><input v-model="info[0].birthday" class="inputStyle inputStyle2"></span>
+			        		<span class="modalSpan1">생년월일</span>
+			        		<span><input v-model="info.birthday" class="inputStyle inputStyle2"><span class="small">ex : 19990101</span></span>
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">성별</span>
-			        		<span><input v-model="info[0].gender" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.gender" class="inputStyle inputStyle2"><span class="small">남자:M, 여자:F, 선택안함:N</span></span>
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">문자수신여부</span>
-			        		<span><input v-model="info[0].smsYn" class="inputStyle inputStyle2"></span>
+			        		<span><input v-model="info.smsYn" class="inputStyle inputStyle2"><span class="small">수신동의:Y, 비동의:N</span></span>
 			        	</div>
-			        	
-			        	
-			        	
 			        	
 		        		<div class="modalStyle4">
 		        			<span>
-			        			<button class="btn1 btn2" @click="fnUpdateuser">저장</button>
+			        			<button class="btn1 btn2" @click="fnUpdateUser(info)">저장</button>
 			        			<button @click="closeModal" class="btn1 btn2 btn3">취소</button>
 		        			</span>
 		        		</div> 
@@ -145,15 +128,13 @@ var app = new Vue({
 	data : {
 		list : [],
 		item : "",
-		
 		checkList : [],
 		allChecked : false,
-		
 		showViewModal : false,
-		info : [],
-		userNo : 0
-
-		
+		info : {},
+		userNo : "",
+		searchOption :'USER_NO',
+		searchText : '',
 	},// data
 	methods : {
 		//고객 전체 검색
@@ -167,6 +148,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.list = data.list;
+
 					}
             });
 		},
@@ -188,10 +170,11 @@ var app = new Vue({
 				self.allChecked = false;
 			}
 		},
-		//고객 상세 정보
-		fnUserEdit(userNo){
+		//고객 상세 정보 불러오기
+		fnUserInfo(userNo){
 			var self = this;
 			var nparmap = {userNo};
+			self.userNo = userNo
             $.ajax({
                 url : "/admin/userInfo.dox",
                 dataType:"json",	
@@ -199,12 +182,28 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	console.log(data);
-                	self.openViewModal(); 
+                	self.openViewModal();
+                }
+            });
+		},
+		//수정 정보 업데이트
+		fnUpdateUser(info){
+			var self = this;
+			var nparmap = info;
+			console.log(info);
+
+			$.ajax({
+                url : "/admin/editUser.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+	             	console.log(data);
 
                 }
-
             });
+			alert("저장성공");
+			self.closeModal(); 
 			
 		},
 		// 모달열기
@@ -218,105 +217,45 @@ var app = new Vue({
 			self.showViewModal = false;
 			location.reload();
 		},
-		/* //수정 정보 업데이트
-		fnUpdateProduct(){
+		
+		
+		//고객 삭제
+		fnDelete(deleteYn){
 			var self = this;
-			var discountYn = '';
-			if(self.producInfo[0].discount !='0'){
-				discountYn = 'Y';
-			} else{
-				discountYn = 'N';
-			}
-			var nparmap = {productNo : self.productNo, productName : self.producInfo[0].productName, productPrice : self.producInfo[0].productPrice, discount : self.producInfo[0].discount, discountYn, };
-			$.ajax({
-                url : "/admin/productUpdate.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {
-                }
-            });
-			for(let i = 0; i < self.optionCnt; i++){
-				var nparmap2 = {optionNo : self.producInfo[i].optionNo, optionName : self.producInfo[i].optionName, optionPrice : self.producInfo[i].optionPrice, productStock : self.producInfo[i].productStock};
-				$.ajax({
-	                url : "/admin/optionUpdate.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap2,
-	                success : function(data) {
-	                }
-	            });
-			}
-			for(let i=self.optionCnt; i < self.optionCnt+self.addOptionCnt; i++){
-				var nparmap3 = {productNo : self.productNo, optionName : self.producInfo[i].optionName, optionPrice : self.producInfo[i].optionPrice, productStock : self.producInfo[i].productStock};
-				$.ajax({
-	                url : "/admin/optionInsert.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap3,
-	                success : function(data) {
-	                }
-	            });
-			}
-			if(self.delectOption.length != 0){
-				var list = JSON.stringify(self.delectOption);
-				var nparmap4 = {list};
-				$.ajax({
-	                url : "/admin/optionDelete.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap4,
-	                success : function(data) {
-	                }
-	            });
-			}
-			alert("저장성공");
-			self.closeModal();
-			
-		},
-		//옵션 추가
-		fnOptionAdd(){
-			var self = this
-			console.log();
-			if(self.producInfo.length < 5){
-				self.producInfo.push({productNo : self.productNo, optionName : '', productStock : 0, optionPrice : 0});
-				self.addOptionCnt++;
-			}
-		},
-		//옵션 제거
-		fnOptionDel(){
-			var self = this;
-			if(self.producInfo.length > 1){
-				if(self.addOptionCnt > 0){
-					self.addOptionCnt--;
-				} else {
-					self.optionCnt--;
-					self.delectOption.push(self.producInfo[self.producInfo.length-1].optionNo);
-					console.log(self.delectOption);
-				}
-				self.producInfo.pop();
-			}
-		},
-		//상품 상태
-		fnCheckSituation(situation){
-			var self = this;
+			console.log(self.userNo);
+
 			if(self.checkList.length > 0){
 				var checkList = JSON.stringify(self.checkList);
-				var nparmap = {	checkList, situation};
+				var nparmap = {checkList, deleteYn};
 				$.ajax({
-	                url : "/admin/productSituation.dox",
+	                url : "/admin/removeUser.dox",
 	                dataType:"json",	
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) {
 	                	alert(data.cnt+"개 업데이트");
-	                	self.checkList = []
-	                	self.fnGetProduct();
+	        	        self.checkList = []
+	                	self.fnGetUser();
 	                	self.allChecked = false;
-	                }
-	            });
+                	}
+            	});
 			}
-		}, */
+		},
+		//검색
+		fnSearch(){
+			var self = this;
+			var nparmap = {searchOption : self.searchOption, searchText : self.searchText};
+			console.log(nparmap);
+			$.ajax({
+                url : "/admin/userList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.list = data.list;
+                }
+			});
+		}
 	}, // methods
 	created : function() {
 		var self = this;

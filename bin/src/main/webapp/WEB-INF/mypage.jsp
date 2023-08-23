@@ -106,6 +106,7 @@ li{
 .nickName{
     font-size: 17px;
     text-align : center;
+    margin-bottom: 15px;
 }
 .profile_left{
 	float : left;

@@ -220,3 +220,55 @@
 .selectBox2 .optionList::-webkit-scrollbar-track {background: transparent; }
 .selectBox2 .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
 .selectBox2 .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}
+.btn4{
+	background-color: #A782C3;
+	color: #fff;
+	border: 1px solid #dbdbdb;
+	width: 45px;
+	height: 30px;
+	cursor: pointer;
+}
+.btn5{
+	font-size: 12px;
+	height: 35px;
+	border-radius: 4px;
+	width: 100px;
+}
+.btn6{
+	background-color: #fff;
+	color: #828c94;
+	margin-left: 20px;
+}
+.rBtnBox{
+	display: flex;
+	margin-bottom: 50px;
+}
+#container2{
+	margin: 30px 30px 0 30px;
+    min-height: 200px;
+}
+.on2{
+	color: #A782C3 !important;
+	border-color: #A782C3;
+}
+.reviewListBox{
+	margin-left: 20px;
+}
+.reviewBox{
+	margin-bottom: 50px;
+	display: flex;
+	justify-content: space-between;
+}
+.imgEditBox{
+	display: flex;
+	min-height: 100px;
+}
+.title1{
+	font-size: 18px;
+}
+.optionName1{
+	font-size: 14px;
+}
+.content1{
+	font-size: 16px;
+}

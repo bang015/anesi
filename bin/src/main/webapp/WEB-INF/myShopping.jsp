@@ -148,7 +148,8 @@ var app = new Vue({
 		},
 		fnOrderList(){
 			var self = this;
-			var nparmap = {userNo : self.userNo, deliverySit : self.optionList[0].deliverySit, month : Number(self.optionList[1].value)};
+			var month = isNaN(Number(self.optionList[1].value)) ? 1 : Number(self.optionList[1].value);
+			var nparmap = {userNo : self.userNo, deliverySit : self.optionList[0].deliverySit, month};
             $.ajax({
                 url : "searchOrderList.dox",
                 dataType:"json",	
@@ -156,21 +157,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.orderList = data.list;
-                	self.deliverySit = {
-                		order : 0,
-            			ready : 0,
-            			shipping : 0,
-            			completed : 0
-                	}
-                	for(let i = 0; i < self.orderList.length; i++){
-	                	switch(self.orderList[i].deliverySit){
-		        			case '1':  self.deliverySit.order++; break;
-		        			case '2':  self.deliverySit.ready++; break;
-		        			case '3':  self.deliverySit.shipping++; break;
-		        			case '4':  self.deliverySit.completed++; break;
-		        			default : break;
-	        			}
-                	}
                 }
             });
 		},

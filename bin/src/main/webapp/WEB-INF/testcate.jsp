@@ -15,12 +15,19 @@
 <title>장바구니</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
-    $('.category-link').on('click', function() {
-      var categoryName = $(this).text();
-      console.log('categoryName:', categoryName);
-    });
+//값을 받아온 후, categoryNo 변수에 값을 저장합니다.
+$(document).ready(function() {
+  $('.category-link').on('click', function() {
+    // 클릭 이벤트가 발생한 요소에서 categoryNo 값을 얻습니다.
+    var categoryNo = $(this).closest('ul.subcategory-list').data('category-no');
+
+    // 콘솔에 categoryNo 값을 출력합니다.
+    console.log('카테고리 번호:', categoryNo);
+
+    var categoryName = $(this).text();
+    console.log('categoryName:', categoryName);
   });
+});
 </script>
 </head>
 <body>

@@ -53,6 +53,8 @@
       width: 1300px;
       height: 600px;
       object-fit: cover;
+      margin-bottom : 10px;
+      
     }
 
 
@@ -70,8 +72,10 @@
     <!-- 실제 이미지나 컨텐츠가 들어갈 slide들 -->
     
     <div class="swiper-slide">
+   	   <img src="../css\image\Main\banner7.png">
+    </div>
+    <div class="swiper-slide">
    	   <img src="../css\image\Main\banner4.png">
-    
     </div>
     <div class="swiper-slide">
    	   <img src="../css\image\Main\banner5.png">
@@ -104,7 +108,7 @@
  
 </div>
 </body>
-<jsp:include page="product_store_best_product.jsp"></jsp:include>
+<jsp:include page="best_product.jsp"></jsp:include>
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>

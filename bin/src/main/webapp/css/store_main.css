@@ -15,7 +15,7 @@
 
 #store_main_cont{
 	width: 1300px;
-	height: 1550px;
+	height: auto;
 	margin-bottom: 50px;
 }
 /*섬네일이미지*/
@@ -305,8 +305,8 @@
 
 .pagination {
         display: inline-flex;
-        margin-top: 0px;
-        margin-left: 400px;
+        margin-top: 80px;
+        margin-left : 400px;
     }
 .pagination li {
     min-width:32px;
