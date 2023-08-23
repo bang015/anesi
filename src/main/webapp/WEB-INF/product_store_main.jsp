@@ -109,13 +109,14 @@
 			
 			</div><!-- store_main_cont 끝-->
 			<!-- 페이징 -->
-			<template>
-				<paginate :page-count="pageCount" :page-range="3" :margin-pages="2"
-					:click-handler="fnSearch" :prev-text="'<'" :next-text="'>'"
-					:container-class="'pagination'" :page-class="'page-item'">
-				</paginate>
-			</template>
-
+			<div class="pa">
+				<template v-if="pageCount > 1">
+					<paginate :page-count="pageCount" :page-range="3" :margin-pages="2"
+						:click-handler="fnSearch" :prev-text="'<'" :next-text="'>'"
+						:container-class="'pagination'" :page-class="'page-item'">
+					</paginate>
+				</template>
+			</div>
 
 		<div class="modal" v-if="showCartModal">
 			<div class="modal-card">

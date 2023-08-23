@@ -12,10 +12,11 @@
      display: inline-block;
      margin-left: 10px; /* 추가: 왼쪽 여백 설정 */
 }
-
+.pa{
+	clear: both;
+}
 #store_main_cont{
 	width: 1300px;
-	height: 1550px;
 	margin-bottom: 50px;
 }
 /*섬네일이미지*/
@@ -108,8 +109,8 @@
 .production-item__content{
 	width:250px;
 	height:420px;
-	float : left;
 	margin : 35px;
+	float: left;
 }
 
 #product-main-category__total > li {

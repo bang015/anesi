@@ -22,6 +22,7 @@
 <style>
 #store_main_byCategory{
 	margin-top: 200px;
+	margin-bottom: 40px;
 }
 .pagination {
     margin-left : 40%;
@@ -36,6 +37,16 @@
  .category-wrap{
  	display: inline-block;
  }
+ .category-name1{
+ 	margin-left: 5px;
+ }
+
+ .production-item__content{
+ 	display: inline-block;
+ }
+ .pa{
+ 	clear: both;
+ }
 </style>
 </head>
 <body>
@@ -46,8 +57,8 @@
 			<div class="flex-container">
 				<div class="ca">
 					<div class="category-wrap" v-for="(item,index) in category">
-						{{item.categoryName}} 
-						<span class="category-span" v-if="index !== category.length - 1"> > </span>
+						<span class="category-name1">{{item.categoryName}}</span> 
+						<span class="category-span" v-if="index !== category.length - 1"> <i class="fa-solid fa-chevron-right" style="color: #424242; font-size : 14px;"></i> </span>
 					</div>
 				</div>
 		 			<div class="selectBox2" @mouseover="showOptions" @mouseleave="hideOptions" :class="{ active: optionsVisible }">
@@ -57,6 +68,7 @@
 				      </ul>
 				    </div>		
 			</div>
+			
 		<div class="production-item__content" v-for="item in list" >
 			<div class="production-item-header"  @click="fnProductView(item.productNo)">
 	            <a  class="production-item-thumnail">
@@ -111,16 +123,17 @@
                 <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
             </a>
     	    </div> <!-- class="production-item__content" ³¡-->
-    	    
+
     	    </div><!-- store_main_cont ³¡-->
 			<!-- ÆäÀÌÂ¡ -->
-			<template>
+			<div class="pa" >
+			<template v-if="pageCount > 1">
 				<paginate :page-count="pageCount" :page-range="3" :margin-pages="2"
 					:click-handler="fnSearch" :prev-text="'<'" :next-text="'>'"
 					:container-class="'pagination'" :page-class="'page-item'">
 				</paginate>
 			</template>
-	    
+	    	</div>
 	    
     	<div class="modal" v-if="showCartModal" >
 		  <div class="modal-card">
