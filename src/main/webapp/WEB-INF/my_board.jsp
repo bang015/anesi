@@ -13,7 +13,7 @@
 <title>나의 게시글📚</title>
 <style>
 #app{
-	margin-top : 160px;
+	margin-top : 180px;
 }
 #container{
 	margin : 30px auto;
