@@ -1,13 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+	pageEncoding="EUC-KR"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!--ìë™ê²€ìƒ‰ê¸°ëŠ¥  -->
-<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
+<script src="https://unpkg.com/vuejs-paginate@latest"></script>
+<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<!--ÀÚµ¿°Ë»ö±â´É  -->
+<meta charset="EUC-KR">
 <title>Insert title here</title>
 
 <link rel="stylesheet"
@@ -26,6 +31,85 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 
 <style>
+/* µå·Ó´Ù¿î ¸Ş´º¸¦ ¿À¸¥ÂÊ Á¤·Ä */
+
+.category1{
+	width: 150px;
+	border-left: 1px solid #e8e8e8;
+	border-right: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e8e8e8;
+	background-color: #fff;
+}
+.category2{
+	width: 150px;
+	border-right: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e8e8e8;
+	background-color: #fff;
+}
+.categoryAllBox{
+	display: inline-block;
+	width: 300px;
+	position: absolute;
+	top: 155px;
+	z-index: 1000;
+	position: fixed;
+	
+}
+.categoryAllBox2{
+	display: flex;
+	
+}
+.category-box{
+	font-size: 15px; 
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+.categoryBox{
+	padding: 10px 40px 10px 0;
+}
+.categoryNo{
+	margin-left: 10px;
+	font-family:'Pretendard-Regular';
+}
+.nav1{
+	width: 100%;
+	height: 70px;
+	border-bottom: 1px solid #e8e8e8;
+	border-top: 1px solid #e8e8e8;
+}
+.nav-left{
+	display: inline-block;
+	float: left;
+	height: 40px;
+	margin-top: 5px;
+}
+.nav-left button{
+	height: 100%;
+}
+.nav-mid{
+	display: inline-block;
+}
+.search-container{
+	display: inline-block;
+	float: left;
+}
+.category-title{
+	font-size: 16px;
+	font-weight: 600;
+	font-family:'Pretendard-Regular';
+	margin-left: 4px;
+	color: #424242;
+}
+.navi-wrap{
+	position: relative;
+	width: 500px;
+	float: right;
+	height: 100px;
+}
+.flow-container{
+	margin-top: 52px;
+	clear: both;
+}
 </style>
 </head>
 <body>
@@ -36,128 +120,198 @@
         isLoggedIn = true;
     }
 %>
-
+<div id="app1">
 	<header>
+	
 		<span> <a href="/main.do"><img class="logo"
 				src="../css/image/anesilogo.png" /> </a></span> <a class="aaa"
-			href="/product/storemain.do">ìŠ¤í† ì–´</a> <a class="bbb"
-			href="/community/main.do">ì»¤ë®¤ë‹ˆí‹°</a> <a class="ccc" href="/used/main.do">ì¤‘ê³ ì¥í„°</a>
-
-		<ul id="header_navi">
-			<li id="login-button"><a href="#" id="login-button-link"><i class="fa-solid fa-door-open"></i></a><span
-				class="fon" id="login-button-text"></span></li>
-			<li><a href="../join.do"><i class="fa-solid fa-user-plus "></i></a><span
-				class="fon">íšŒì›ê°€ì…</span></li>
-			<li><a href="../mypage.do"><i class="fa-solid fa-user "></i></a><span
-				class="fon">ë§ˆì´í˜ì´ì§€</span></li>
-			<li><a href="http://localhost:8080/scrapbook.do"><i class="fa-solid fa-bookmark "></i></a><span></span></li>
-			<li><a><i class="fa-solid fa-bell "></i></a><span></span></li>
-			<li><a href="../product/cart.do"><i
-					class="fa fa-shopping-cart "></i></a><span></span></li>
-			<li><a href="" class="headerbtn" title="Button fade blue/green"
-				class="button btnFade btnBlueGreen">Fade</a></li>
-		</ul>
-		<hr>
-		<span>
-			<button class="category-toggle">
-				<span> <i class="fa-solid fa-grip-lines"></i>ì¹´í…Œê³ ë¦¬ 
-			</button> <span class="headerfont"> <a class="href">ì¶”ì²œ </a> <a
-				class="href">ë­í‚¹</a> <a class="href">íŠ¹ê°€</a> <a class="href">ê¸°íšì „</a> <a
-				class="href">ë¸Œëœë“œê´€</a>
-		</span> <span>
-	<div class="search-container">
-	  <input type="text" id="search_input" placeholder="ì œí’ˆëª…ì„ ì…ë ¥í•˜ì„¸ìš”">
-	  <a id="glass" class="glass"><i class="fa-solid fa-magnifying-glass"></i></a>
-	  <div id="recent_search" class="recent-search-container" style="display: none;"></div>
-	</div>
-	
-	<div class="flow-container">
-        <div class="flow-text">
-            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
-            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
-            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
-            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
-            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
-            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
-            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
-            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
-            
-            
-        </div>
-    </div>
-		<hr>
-
-			 <div class="category-list-container" style="display: none;">
-         <ul class="category-list">
-
-            <li><a onclick="fnMoveaa('10')">ê°€êµ¬</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">ì¹¨ëŒ€</a></li>
-                  <li><a class="category-link">ì†ŒíŒŒ</a></li>
-                  <li><a class="category-link">ìˆ˜ë‚©ì¥</a></li>
-                  <li><a class="category-link">ì˜ì</a></li>
-                  <li><a class="category-link">ì‹íƒ</a></li>
-               </ul></li>
-            <li><a onclick="fnMoveaa('20')">ì¡°ëª…</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">ì¥ìŠ¤íƒ ë“œ</a></li>
-                  <li><a class="category-link">ë‹¨ìŠ¤íƒ ë“œ</a></li>
-                  <li><a class="category-link">ë¬´ë“œë“±</a></li>
-                  <li><a class="category-link">ì²œì¥ë“±</a></li>
-               </ul></li>
-            <li><a onclick="fnMoveaa('30')">íŒ¨ë¸Œë¦­</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">ì¹¨êµ¬</a></li>
-                  <li><a class="category-link">ì»¤íŠ¼</a></li>
-                  <li><a class="category-link">ëŸ¬ê·¸</a></li>
-               </ul></li>
-            <li><a onclick="fnMoveaa('40')">ê°€ì „</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">ëƒ‰ì¥ê³ </a></li>
-                  <li><a class="category-link">TV</a></li>
-                  <li><a class="category-link">ì„¸íƒê¸°</a></li>
-                  <li><a class="category-link">ìŒí–¥ ì˜ìƒê°€ì „</a></li>
-                  <li><a class="category-link">ì²­ì†Œ ê°€ì „</a></li>
-               </ul></li>
-            <li><a onclick="fnMoveaa('50')">ë°ì½”/ì‹ë¬¼</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">ì¡°í™”</a></li>
-                  <li><a class="category-link">ê½ƒë‹¤ë°œ</a></li>
-                  <li><a class="category-link">í™”ë³‘</a></li>
-                  <li><a class="category-link">ê·¸ë¦¼ ì•¡ì</a></li>
-                  <li><a class="category-link">ìº”ë“¤ ë””í“¨ì €</a></li>
-               </ul></li>
-            <li><a onclick="fnMoveaa('60')">ë°˜ë ¤ë™ë¬¼</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">í•˜ìš°ìŠ¤/ë°©ì„</a></li>
-                  <li><a class="category-link">ìº£íƒ€ì›Œ/ìŠ¤í¬ë˜ì³</a></li>
-                  <li><a class="category-link">ì•ˆì „ë¬¸/ìš¸íƒ€ë¦¬</a></li>
-                  <li><a class="category-link">ë°¥ê·¸ë¦‡/ê¸‰ì‹ê¸°</a></li>
-                  <li><a class="category-link">ìœ„ìƒìš©í’ˆ</a></li>
-               </ul></li>
-         </ul>
-      </div>
-
+			href="/product/storemain.do">½ºÅä¾î</a> <a class="bbb"
+			href="/community/main.do">Ä¿¹Â´ÏÆ¼</a> <a class="ccc" href="/used/main.do">Áß°íÀåÅÍ</a>
+		<div class="navi-wrap"> 
+			<ul id="header_navi">
+				<li id="login-button">
+					<a href="#" id="login-button-link">
+						<i class="fa-solid fa-door-open"></i>
+					</a>
+					<span class="fon" id="login-button-text"></span>
+				</li>
+				<li>
+					<a href="../join.do">
+						<i class="fa-solid fa-user-plus "></i>
+					</a>
+					<span class="fon">È¸¿ø°¡ÀÔ</span>
+				</li>
+				<li>
+					<a href="../mypage.do">
+						<i class="fa-solid fa-user "></i>
+					</a>
+					<span class="fon">¸¶ÀÌÆäÀÌÁö</span>
+				</li>
+				<li>
+					<a href="http://localhost:8080/scrapbook.do">
+						<i class="fa-solid fa-bookmark "></i>
+					</a>
+					<span></span>
+				</li>
+				<li>
+					<a>
+						<i class="fa-solid fa-bell "></i>
+					</a>
+					<span></span>
+				</li>
+				<li>
+					<a href="../product/cart.do">
+						<i class="fa fa-shopping-cart "></i>
+					</a>
+					<span></span>
+				</li>
+				<li>
+					<a href="" class="headerbtn" title="Button fade blue/green"class="button btnFade btnBlueGreen">Fade</a>
+				</li>
+			</ul>
 		</div>
+		<div class="nav1">
+			<div class="nav-left">
+				<button class="category-toggle" @mouseover="categoryFlg">
+					<span> <i class="fa-solid fa-bars" style="color: #47608a; font-size : 20px;"></i> <span class="category-title">Ä«Å×°í¸®</span></span>
+				</button> 
+				<span class="headerfont">
+					<a class="href">ÃßÃµ </a>
+					<a class="href">·©Å·</a>
+					<a class="href">Æ¯°¡</a> 
+					<a class="href">±âÈ¹Àü</a> 
+					<a class="href">ºê·£µå°ü</a>
+				</span>
+			</div>
+			<div class="search-container">
+				 <input type="text" id="search_input" placeholder="Á¦Ç°¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä">
+				 <a id="glass" class="glass"><i class="fa-solid fa-magnifying-glass"></i></a>
+				 <div id="recent_search" class="recent-search-container" style="display: none;"></div>
+			</div>
+			<div class="flow-container">
+		        <div class="flow-text">
+		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+		
+		
+		        </div>
+			</div>
+		</div>
+		
+		
 	</header>
-	<script>
+	<div class="categoryAllBox" v-if="flg" @mouseleave="flgout">
+			<div class="categoryAllBox2">
+				<div class="category1">
+					<div class="category-box" v-for="item in categoryList1" @mouseover="fnGetcategoryList2(item)">
+						<a  class="categoryBox" >
+							<span class="categoryNo">{{item.categoryName}}</span>
+						</a>
+					</div>
+				</div>
+				<div class="category2" v-if="categoryList2.length != 0" >
+					<div class="category-box" v-for="item in categoryList2">
+						<a class="categoryBox" @click="fnCategoryPage(item.categoryNo)">
+							<span  class="categoryNo">{{item.categoryName}}</span>					
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script src="../js/jquery.js"></script>
+<script>
+	var app = new Vue({   
+		el : '#app1',
+		data : {
+			flg : false,
+			product : {	//»óÇ° ¸Ê
+				productName : "",
+				productPrices : "",
+				manufacturer : "",
+				country : "",
+				discount : "",
+				category : "",
+				discountYn  : ""
+			},
+			category1No : "",
+			categoryList1 : [], //Ä«Å×°í¸® ´ëºĞ·ù
+			categoryList2 : [],
+			category2Name : "",
+		},// data
+		methods : {
+			fnGetcategoryList1(){
+				var self = this;
+				var nparmap = {};
+	            $.ajax({
+	                url : "../product/category.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	self.categoryList1 = data.list;	                	
+	                }
+	            });
+			},
+			fnGetcategoryList2(item){
+				var self = this;
+				var nparmap = {no : item.categoryNo};
+				self.category1Name = item.categoryName;
+				self.category1No = item.categoryNo;
+	            $.ajax({
+	                url : "../product/category2.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	self.categoryList2 = data.list;
+	                	self.product.category = '';
+	                	self.category2Name = '';
+	                }
+	            });
+			},
+			fnCategoryPage(item){
+				console.log(item);
+				$.pageChange("/category/product.do" , {categoryNo : item});
+				
+			},
+			categoryFlg(){
+				this.flg=true;
+			},
+			flgout(){
+				this.flg=false;
+			}
+		}, // methods
+		created : function() {
+			var self = this;
+			self.fnGetcategoryList1();
+		}// created
+	});
 	   var isLoggedIn = <%= isLoggedIn %>;
 	    console.log('isLoggedIn:', isLoggedIn);
 
 	    console.log('sessionNo:', '<%= sessionNo %>');
 
 	    $(document).ready(function(){
-	        // ë¡œê·¸ì¸ë˜ì–´ ìˆì§€ ì•Šì€ ê²½ìš° ë¡œê·¸ì¸ ë²„íŠ¼ ë° ì•„ì´ì½˜ì„ ì¡°ì‘í•©ë‹ˆë‹¤.
+	        // ·Î±×ÀÎµÇ¾î ÀÖÁö ¾ÊÀº °æ¿ì ·Î±×ÀÎ ¹öÆ° ¹× ¾ÆÀÌÄÜÀ» Á¶ÀÛÇÕ´Ï´Ù.
 	        if(!isLoggedIn) {
-	            $('#login-button-link').attr('href', '../login.do'); // ë¡œê·¸ì¸ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
-	            $('#login-button-text').text('ë¡œê·¸ì¸'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì¸"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+	            $('#login-button-link').attr('href', '../login.do'); // ·Î±×ÀÎ ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+	            $('#login-button-text').text('·Î±×ÀÎ'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×ÀÎ"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
 	            $('.fa-door-open').removeClass('fa-door-open').addClass('fa-door-closed');
-	            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ë‹«íŒ ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
-	        } else { // ë¡œê·¸ì¸ë˜ì–´ ìˆëŠ” ê²½ìš° ë¡œê·¸ì•„ì›ƒ ë²„íŠ¼ ë° ì•„ì´ì½˜ìœ¼ë¡œ ì¡°ì‘í•©ë‹ˆë‹¤.
-	            $('#login-button-link').attr('href', '../logout.do'); // ë¡œê·¸ì•„ì›ƒ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
-	            $('#login-button-text').text('ë¡œê·¸ì•„ì›ƒ'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì•„ì›ƒ"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+	            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ´İÈù ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+	        } else { // ·Î±×ÀÎµÇ¾î ÀÖ´Â °æ¿ì ·Î±×¾Æ¿ô ¹öÆ° ¹× ¾ÆÀÌÄÜÀ¸·Î Á¶ÀÛÇÕ´Ï´Ù.
+	            $('#login-button-link').attr('href', '../logout.do'); // ·Î±×¾Æ¿ô ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+	            $('#login-button-text').text('·Î±×¾Æ¿ô'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×¾Æ¿ô"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
 	            $('.fa-door-closed').removeClass('fa-door-closed').addClass('fa-door-open');
-	            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ì—´ë¦° ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+	            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ¿­¸° ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
 	        }
 	    });
 	
@@ -165,39 +319,39 @@
 	function saveRecentSearch(search) {
 		  if (!search) return;
 
-		  // ê²€ìƒ‰ì–´ ê¸°ë¡ì„ ê°€ì ¸ì˜µë‹ˆë‹¤.
+		  // °Ë»ö¾î ±â·ÏÀ» °¡Á®¿É´Ï´Ù.
 		  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 		  
 		  
-		  // ë™ì¼í•œ ê²€ìƒ‰ì–´ê°€ ìˆëŠ”ì§€ í™•ì¸í•˜ê³ , ìˆë‹¤ë©´ ì œê±°í•©ë‹ˆë‹¤.
+		  // µ¿ÀÏÇÑ °Ë»ö¾î°¡ ÀÖ´ÂÁö È®ÀÎÇÏ°í, ÀÖ´Ù¸é Á¦°ÅÇÕ´Ï´Ù.
 		  var index = recentSearches.indexOf(search);
 		  if (index > -1) recentSearches.splice(index, 1);
 
-		  // ìµœê·¼ ê²€ìƒ‰ì–´ ê¸°ë¡ì— ìƒˆë¡œìš´ ê²€ìƒ‰ì–´ë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
+		  // ÃÖ±Ù °Ë»ö¾î ±â·Ï¿¡ »õ·Î¿î °Ë»ö¾î¸¦ Ãß°¡ÇÕ´Ï´Ù.
 		  recentSearches.unshift(search);
 		  
-		  // ìµœê·¼ ê²€ìƒ‰ì–´ ëª©ë¡ì„ ìµœëŒ€ 10ê°œë¡œ ìœ ì§€í•©ë‹ˆë‹¤.
+		  // ÃÖ±Ù °Ë»ö¾î ¸ñ·ÏÀ» ÃÖ´ë 10°³·Î À¯ÁöÇÕ´Ï´Ù.
 		  recentSearches = recentSearches.slice(0, 6);
 
-		  // ë³€ê²½ëœ ê²€ìƒ‰ì–´ ê¸°ë¡ì„ ì €ì¥í•©ë‹ˆë‹¤.
+		  // º¯°æµÈ °Ë»ö¾î ±â·ÏÀ» ÀúÀåÇÕ´Ï´Ù.
 		  localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
 		  
-		  // í™”ë©´ì— ë³€ê²½ëœ ê²€ìƒ‰ì–´ ê¸°ë¡ì„ í‘œì‹œí•©ë‹ˆë‹¤.
+		  // È­¸é¿¡ º¯°æµÈ °Ë»ö¾î ±â·ÏÀ» Ç¥½ÃÇÕ´Ï´Ù.
 		  showRecentSearches();
 		}
 	function showRecentSearches() {
-		  // localStorageì—ì„œ ìµœê·¼ ê²€ìƒ‰ì–´ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
+		  // localStorage¿¡¼­ ÃÖ±Ù °Ë»ö¾î¸¦ °¡Á®¿É´Ï´Ù.
 		  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
-		  // ìµœê·¼ ê²€ìƒ‰ì–´ ëª©ë¡ì„ ë¹„ì›ë‹ˆë‹¤.
+		  // ÃÖ±Ù °Ë»ö¾î ¸ñ·ÏÀ» ºñ¿ó´Ï´Ù.
 		  $('#recent_search').empty();
 			
 		  if (recentSearches.length === 0) {
-			    // ìµœê·¼ ê²€ìƒ‰ì–´ê°€ ì—†ë‹¤ë©´ ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
-			    var message = $('<li>').text('ìµœê·¼ ê²€ìƒ‰ì–´ê°€ ì—†ìŠµë‹ˆë‹¤.');
+			    // ÃÖ±Ù °Ë»ö¾î°¡ ¾ø´Ù¸é ¸Ş½ÃÁö¸¦ Ãâ·ÂÇÕ´Ï´Ù.
+			    var message = $('<li>').text('ÃÖ±Ù °Ë»ö¾î°¡ ¾ø½À´Ï´Ù.');
 			    $('#recent_search').append(message);
 			  } else {
-		  // ëª©ë¡ì„ ìˆœíšŒí•˜ë©° í™”ë©´ì— ìµœê·¼ ê²€ìƒ‰ì–´ë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
+		  // ¸ñ·ÏÀ» ¼øÈ¸ÇÏ¸ç È­¸é¿¡ ÃÖ±Ù °Ë»ö¾î¸¦ Ãß°¡ÇÕ´Ï´Ù.
 		  for (var i = 0; i < recentSearches.length; i++) {
 		    var search = recentSearches[i];
 		    var li = $('<li class="recent-search-item"></li>').text(search);
@@ -214,16 +368,16 @@
 			      type: "POST",
 			      data: { categoryName: categoryName },
 			      success: function (products) {
-			          // ìƒí’ˆ ëª©ë¡ ì²˜ë¦¬ ì½”ë“œ (ì˜ˆ: ë¦¬ìŠ¤íŠ¸ ë Œë”ë§)
+			          // »óÇ° ¸ñ·Ï Ã³¸® ÄÚµå (¿¹: ¸®½ºÆ® ·»´õ¸µ)
 			      },
 			      error: function (error) {
-			          console.log("ì¹´í…Œê³ ë¦¬ ë³„ ìƒí’ˆ ëª©ë¡ì„ ê°€ì ¸ì˜¤ëŠ”ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤: ", error);
+			          console.log("Ä«Å×°í¸® º° »óÇ° ¸ñ·ÏÀ» °¡Á®¿À´Âµ¥ ½ÇÆĞÇß½À´Ï´Ù: ", error);
 			      }
 			  });
 			});
 
 		  function loadCategoryProducts(categoryName) {
-			  // ì„œë²„ì—ì„œ ì¹´í…Œê³ ë¦¬ë³„ ìƒí’ˆ ë°ì´í„°ë¥¼ ê°€ì ¸ì˜¤ëŠ” AJAX ìš”ì²­
+			  // ¼­¹ö¿¡¼­ Ä«Å×°í¸®º° »óÇ° µ¥ÀÌÅÍ¸¦ °¡Á®¿À´Â AJAX ¿äÃ»
 			  $.ajax({
 			    method: "POST",
 			    url: "/product/getProductsByCategory.dox",
@@ -236,7 +390,7 @@
 
 			      var data = response;
 
-			      // testcate.do í˜ì´ì§€ë¡œ ì´ë™í•˜ë©´ì„œ categoryì™€ list ë°ì´í„°ë¥¼ ì „ë‹¬í•©ë‹ˆë‹¤.
+			      // testcate.do ÆäÀÌÁö·Î ÀÌµ¿ÇÏ¸é¼­ category¿Í list µ¥ÀÌÅÍ¸¦ Àü´ŞÇÕ´Ï´Ù.
 			      var url = "/testcate.do";
 			      var params = "categoryName=" + encodeURIComponent(categoryName) + "&list=" + encodeURIComponent(JSON.stringify(data.list));
 
@@ -252,7 +406,7 @@
 			  $('.category-link').on('click', function() {
 			    var categoryName = $(this).text();
 
-			    loadCategoryProducts(categoryName); // ë°ì´í„°ë¥¼ AJAXë¡œ ê°€ì ¸ì™€ì„œ ë¡œì»¬ì—ì„œ ì²˜ë¦¬
+			    loadCategoryProducts(categoryName); // µ¥ÀÌÅÍ¸¦ AJAX·Î °¡Á®¿Í¼­ ·ÎÄÃ¿¡¼­ Ã³¸®
 			  });
 			});
 
@@ -279,32 +433,32 @@
 			});
 		$('body').on('click', '.recent-search-item .fa-xmark', function() {
 			$(document).ready(function(){
-		        var isLoggedIn = <%= isLoggedIn %>; // ë¡œê·¸ì¸ì´ ë˜ì–´ ìˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜ì…ë‹ˆë‹¤.
+		        var isLoggedIn = <%= isLoggedIn %>; // ·Î±×ÀÎÀÌ µÇ¾î ÀÖ´ÂÁö ¿©ºÎ¸¦ ³ªÅ¸³»´Â º¯¼öÀÔ´Ï´Ù.
 
-		        // ë¡œê·¸ì¸ë˜ì–´ ìˆì§€ ì•Šì€ ê²½ìš° ë¡œê·¸ì¸ ë²„íŠ¼ ë° ì•„ì´ì½˜ì„ ì¡°ì‘í•©ë‹ˆë‹¤.
+		        // ·Î±×ÀÎµÇ¾î ÀÖÁö ¾ÊÀº °æ¿ì ·Î±×ÀÎ ¹öÆ° ¹× ¾ÆÀÌÄÜÀ» Á¶ÀÛÇÕ´Ï´Ù.
 		        if(!isLoggedIn) {
-		            $('#login-button-link').attr('href', '../login.do'); // ë¡œê·¸ì¸ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
-		            $('#login-button-text').text('ë¡œê·¸ì¸'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì¸"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+		            $('#login-button-link').attr('href', '../login.do'); // ·Î±×ÀÎ ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+		            $('#login-button-text').text('·Î±×ÀÎ'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×ÀÎ"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
 		            $('.fa-door-open').removeClass('fa-door-open').addClass('fa-door-closed');
-		            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ë‹«íŒ ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
-		        } else { // ë¡œê·¸ì¸ë˜ì–´ ìˆëŠ” ê²½ìš° ë¡œê·¸ì•„ì›ƒ ë²„íŠ¼ ë° ì•„ì´ì½˜ìœ¼ë¡œ ì¡°ì‘í•©ë‹ˆë‹¤.
-		            $('#login-button-link').attr('href', '../logout.do'); // ë¡œê·¸ì•„ì›ƒ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
-		            $('#login-button-text').text('ë¡œê·¸ì•„ì›ƒ'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì•„ì›ƒ"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+		            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ´İÈù ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+		        } else { // ·Î±×ÀÎµÇ¾î ÀÖ´Â °æ¿ì ·Î±×¾Æ¿ô ¹öÆ° ¹× ¾ÆÀÌÄÜÀ¸·Î Á¶ÀÛÇÕ´Ï´Ù.
+		            $('#login-button-link').attr('href', '../logout.do'); // ·Î±×¾Æ¿ô ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+		            $('#login-button-text').text('·Î±×¾Æ¿ô'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×¾Æ¿ô"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
 		            $('.fa-door-closed').removeClass('fa-door-closed').addClass('fa-door-open');
-		            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ì—´ë¦° ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+		            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ¿­¸° ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
 		        }
 		    });
-			  // ì´ë²¤íŠ¸ ë²„ë¸”ë§ ìƒìœ„ ìš”ì†Œì— ì˜í–¥ì„ ì£¼ì§€ ì•Šë„ë¡ í•©ë‹ˆë‹¤.
+			  // ÀÌº¥Æ® ¹öºí¸µ »óÀ§ ¿ä¼Ò¿¡ ¿µÇâÀ» ÁÖÁö ¾Êµµ·Ï ÇÕ´Ï´Ù.
 			  return false;
 			});
 		
 	
-		// ì¹´í…Œê³ ë¦¬ í† ê¸€
+		// Ä«Å×°í¸® Åä±Û
 		$('.category-toggle').click(function() {
 			$('.category-list-container').slideToggle('fast');
 		});
 
-		// ì„œë¸Œ ì¹´í…Œê³ ë¦¬ í† ê¸€ ì´ë²¤íŠ¸
+		// ¼­ºê Ä«Å×°í¸® Åä±Û ÀÌº¥Æ®
 		$('.category-list > li > a').click(function(event) {
 			event.preventDefault();
 			$(this).siblings('.subcategory-list').slideToggle('fast');
@@ -320,16 +474,16 @@
 		    }).done(function(response) {
 		        console.log(response);
 
-		        // ì„¸ì…˜ ì •ë³´ì™€ ê²€ìƒ‰ì–´ë¥¼ í•¨ê»˜ ì €ì¥í•©ë‹ˆë‹¤.
+		        // ¼¼¼Ç Á¤º¸¿Í °Ë»ö¾î¸¦ ÇÔ²² ÀúÀåÇÕ´Ï´Ù.
 		        sessionStorage.setItem("searchResult", JSON.stringify(response));
 		        sessionStorage.setItem("searchKeyword", productName);
 
-		        // searchProduct.jspë¡œ ì´ë™í•©ë‹ˆë‹¤.
+		        // searchProduct.jsp·Î ÀÌµ¿ÇÕ´Ï´Ù.
 		        window.location.href = "/searchProduct.do?productName=" + encodeURIComponent(productName);
 		    });
 		    
 		}
-		// ê²€ìƒ‰ ì•„ì´ì½˜ í´ë¦­ ì‹œ ê²€ìƒ‰ì–´ë¥¼ ê°€ì§€ê³  searchProduct í•¨ìˆ˜ë¥¼ ì‹¤í–‰í•©ë‹ˆë‹¤.
+		// °Ë»ö ¾ÆÀÌÄÜ Å¬¸¯ ½Ã °Ë»ö¾î¸¦ °¡Áö°í searchProduct ÇÔ¼ö¸¦ ½ÇÇàÇÕ´Ï´Ù.
 		$('#glass').click(function() {
 		    var productName = $('#search_input').val();
 			
@@ -352,10 +506,10 @@
 		
 
 
-		/* //category ëˆŒë €ì„ë•Œ ë©”ë‰´ë³„ë¡œ ë°°ì—´í•´ì¤Œ
+		/* //category ´­·¶À»¶§ ¸Ş´ºº°·Î ¹è¿­ÇØÁÜ
 		 function fnMoveaa (item){
 		 var self = this;
-		 $.pageChange("storemain_byCategory.do",{no : item});//ë³´ë‚¼í•„ìš”ì—†ì„ë•Œ íŒŒë¼ë¯¸í„° ë¹ˆê°’ìœ¼ë¡œ{}
+		 $.pageChange("storemain_byCategory.do",{no : item});//º¸³¾ÇÊ¿ä¾øÀ»¶§ ÆÄ¶ó¹ÌÅÍ ºó°ªÀ¸·Î{}
 		 }
 		 */
-	</script>
+</script>

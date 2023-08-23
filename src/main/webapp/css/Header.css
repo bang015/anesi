@@ -15,9 +15,10 @@ header {
 }
 
 #header_navi {
-  position: absolute;
+   position: absolute;
   right: 50px;
-  bottom: 60px;
+  bottom: 40px;
+  top: 15px;
 }
 
 #header_navi li {
@@ -39,7 +40,7 @@ header {
 .headerbtn {
     position: absolute;
     top:40%;
-    background-color:#A782C3;
+    background-color:#A782C3; 
     text-align: center;
     color: #fff;
     border:none; 
@@ -183,14 +184,14 @@ header {
   width: 310px;
   position: absolute;
   left: 500px;
-  top: 118px;
+  top: 113px;
   font-weight: bold;
 }
 
 .glass{
 	position: absolute;
   left: 780px;
-  top: 125px;
+  top: 120px;
 font-size: 20px;
 opacity : 0.7;
 }
@@ -247,7 +248,6 @@ opacity : 0.7;
       transition: 0.3s;
       font-size: 0.8rem;
       color: #424242;
-      padding-top : 0.5rem;
   }
   .flow-text:hover {
     color: #A782C3;

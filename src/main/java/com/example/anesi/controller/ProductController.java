@@ -46,7 +46,7 @@ public class ProductController {
 	public String view(HttpSession session, HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 	    session.setAttribute("productNo", map.get("productNo"));
 	    request.setAttribute("map", map);
-	    System.out.println(map);
+	  
 	    return "/product_view";
 	}
 	//상품 상세 페이지
@@ -56,6 +56,13 @@ public class ProductController {
 		return "/naviBar";
 		
 	}
+	// 카테고리 선택 상품
+		@RequestMapping("/category/product.do")
+		public String cate(HttpSession session, HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		    request.setAttribute("map", map);
+		  
+		    return "/product_byCategory";
+		}
 	//상품 카테고리
 	  @RequestMapping(value = "/categorySearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	   @ResponseBody
@@ -63,7 +70,6 @@ public class ProductController {
 	       HashMap<String, Object> resultMap = new HashMap<String, Object>();
 	       List<Category> category = productService.searchCategory(map);
 	       resultMap.put("category", category);
-	       System.out.println(map);
 	       return new Gson().toJson(resultMap);
 	   }
 	
@@ -161,7 +167,6 @@ public class ProductController {
 				String ckValue = cookie.getValue();
 			    map.put("nonUserNo", ckValue);
 			    List<Product> list = productService.selectCartList(map);
-			    System.out.println(map);
 			    resultMap.put("list", list);
 			    return new Gson().toJson(resultMap);
 		  }
@@ -297,9 +302,19 @@ public class ProductController {
 			       HashMap<String, Object> resultMap = new HashMap<String, Object>();
 			       List<Cart> cartCheck = productService.searchCartCheck(map);
 			       resultMap.put("cartCheck", cartCheck);
-			       System.out.println(map);
 			       return new Gson().toJson(resultMap);
 			   }
-
+			// 카테고리 선택 상품
+			  @RequestMapping(value = "/categoryProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			   @ResponseBody
+			   public String review(Model model,  @RequestParam HashMap<String, Object> map) throws Exception {
+			       HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			       int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+			       int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+			       map.put("startNum", startNum);
+			       map.put("lastNum", lastNum);
+			       resultMap=productService.searchProduct2(map);
+			       return new Gson().toJson(resultMap);
+			   }
 
 }

@@ -99,6 +99,9 @@ public interface ProductMapper {
 	int coupon2(HashMap<String, Object> map);
 	// 회원 쿠폰 개수체크
 	int couponCnt(HashMap<String, Object> map);
-	
+	// 카테고리 선택 상품
+		List<Product>selectProductList2(HashMap<String, Object> map);
+		// 카테고리 선택 상품 카운트
+		int selectCnt2(HashMap<String, Object> map);
 	
 }
