@@ -236,3 +236,38 @@ opacity : 0.7;
     color: white; /* 호버 시 원하는 글자색으로 설정 */
   }
   
+  
+  
+ /*흐르는 공지부분*/ 
+  .flow-text {
+	  display: flex;
+      flex: 0 0 auto;
+      white-space: nowrap;
+      overflow: hidden;
+      transition: 0.3s;
+      font-size: 0.8rem;
+      color: #424242;
+      padding : 0.3rem;
+  }
+  .flow-text:hover {
+    color: #A782C3;
+  }
+  .flow-text:hover .flow-wrap {
+    animation-play-state: paused;
+    cursor: pointer;
+  }
+  .flow-wrap {
+    animation: textLoop 10s linear infinite;
+    padding-right: 1.4881vw;
+  }
+  
+  @keyframes textLoop {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
