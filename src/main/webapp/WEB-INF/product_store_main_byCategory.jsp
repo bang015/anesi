@@ -268,10 +268,10 @@ var app = new Vue({
 			var startNum = ((pageNum-1) * 12);
 			var lastNum = 12;
 			var nparmap = { order : self.order,
-					productNo : self.productNo,
-    				categoryNo : self.categoryNo, 
-    				startNum : startNum, 
-    				lastNum : lastNum};
+							productNo : self.productNo,
+		    				categoryNo : self.categoryNo, 
+		    				startNum : startNum, 
+		    				lastNum : lastNum};
 		 $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
