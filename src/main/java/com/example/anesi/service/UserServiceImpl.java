@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.anesi.mapper.LoginMapper;
 import com.example.anesi.mapper.ReviewMapper;
 import com.example.anesi.mapper.UserMapper;
+import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
@@ -127,6 +128,15 @@ public class UserServiceImpl implements UserService{
 		userMapper.deleteReviewImage(map);
 		reviewMapper.insertReviewImg(map);
 		return 1;
+	}
+	@Override
+	public List<Inquiry> searchInquiriesList(HashMap<String, Object> map) {
+		return userMapper.selectInquiryList(map);
+	}
+	@Override
+	public int removeInquiry(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.deleteInquiry(map);
 	}
 
 }

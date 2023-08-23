@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
@@ -51,4 +52,8 @@ public interface UserMapper {
 	int undateReview(HashMap<String, Object> map);
 	// 리뷰 이미지 삭제
 	int deleteReviewImage(HashMap<String, Object> map);
+	// 나의 문의
+	List<Inquiry> selectInquiryList(HashMap<String, Object> map);
+	// 문의 삭제
+	int deleteInquiry(HashMap<String, Object> map);
 }

@@ -3,6 +3,7 @@ package com.example.anesi.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
@@ -45,7 +46,10 @@ public interface UserService {
 	List<Review> searchMyReviewList(HashMap<String, Object> map);
 	// 리뷰 수정
 	int editReview(HashMap<String, Object> map);
-	
 	// 리뷰 이미지 수정
 	int editReviewImage(HashMap<String, Object> map);
+	// 나의 문의
+	List<Inquiry> searchInquiriesList(HashMap<String, Object> map);
+	// 문의 삭제
+	int removeInquiry(HashMap<String, Object> map);
 }

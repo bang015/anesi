@@ -164,7 +164,7 @@ li{
 <hr class="hrr">
 	<ul class="my_menu1">
 		<li class="my_li2"><a href="/mypage.do" class="my_a2_ch" style="color : #A782C3;">모두 보기</a></li>
-		<li class="my_li2"><a class="my_a2">나의 문의</a></li>
+		<li class="my_li2"><a class="my_a2" href="/mypage/myInquiry.do">나의 문의</a></li>
 		<li class="my_li2"><a href="/mypage/myBoard.do" class="my_a2">나의 게시글</a></li>
 		<li class="my_li2"><a href="/scrapbook.do" class="my_a2">스크랩북</a></li>
 	</ul>

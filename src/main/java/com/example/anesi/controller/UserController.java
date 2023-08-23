@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
 import com.example.anesi.model.User;
@@ -108,6 +109,13 @@ public class UserController {
     public String myReview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 
 		return "/myReview";
+    }
+	
+	// 나의 문의
+	@RequestMapping("mypage/myInquiry.do") 
+    public String myInquiry(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+
+		return "/myInquiry";
     }
 	
 	// 회원가입
@@ -259,6 +267,25 @@ public class UserController {
 	public String editReview(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("cnt", userService.editReview(map));
+		return new Gson().toJson(resultMap);
+	}
+	
+	//나의 리뷰 검색
+	@RequestMapping(value = "/mypage/searchInquiryList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchInquiryList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Inquiry> list = userService.searchInquiriesList(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//문의 삭제
+	@RequestMapping(value = "/mypage/removeInquiry.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String removeInquiry(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("cnt", userService.removeInquiry(map));
 		return new Gson().toJson(resultMap);
 	}
 }
