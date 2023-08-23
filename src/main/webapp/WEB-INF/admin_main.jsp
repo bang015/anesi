@@ -361,6 +361,32 @@ var app = new Vue({
 
 	},// data
 	methods : {
+		//상품 전체 검색
+		fnGetProduct(){
+			var self = this;
+			var nparmap = {};
+            $.ajax({
+                url : "/admin/productList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.soldOut = 0;
+                	self.stop = 0;
+                	self.end = 0;
+					self.productList = data.list;
+					for(let i = 0; i < self.productList.length; i++){
+						if(self.productList[i].stock == 0){
+							self.soldOut++;
+						} else if(self.productList[i].deleteYn == 'S'){
+							self.stop++;
+						} else if(self.productList[i].deleteYn == 'Y'){
+							self.end++;
+						}
+						
+					}
+                }
+            });
 		
 	}, // methods
 	created : function() {
