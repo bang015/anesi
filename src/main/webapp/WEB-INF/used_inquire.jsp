@@ -183,7 +183,7 @@ h1{
 			<div v-for="index in 5" :key="index" class="filebox">
 			    <label :for="'file' + index">파일첨부</label>
 			    <input type="file" :id="'file' + index" :name="'file' + index" @change="fnOnFileChange($event, index)">
-			    <input class="upload-name" :value="fileNames[index - 1]">
+			    <input class="upload-name" :value="fileNames[index]">
 			</div>
 			</div>
 			<div class="btnDIV">
@@ -236,14 +236,11 @@ var app = new Vue({
 		},
 		fnOnFileChange: function(event, index) {
 			var self = this;
-			self.errMsg2 = "";
 		    const file = event.target.files[0];	
 		    if (file) {
-	    	  self.fileList.splice(index,1);
-		      self.fileList.splice(index,0,file);
-		      self.imageList.splice(index,1);
-		      self.imageList.splice(index,0,URL.createObjectURL(file));
-		      console.log(self.fileList);
+		      self.fileNames.splice(index,0,file.name);
+	    	  self.photoList.splice(index,1);
+		      self.photoList.splice(index,0,file);
 		    }
         },
         formatNumber() {
@@ -321,22 +318,45 @@ var app = new Vue({
 			param.usedPrice = self.inquire.usedPrice.replace(/\D/g, '');
 	        param.usedSellPrice = self.inquire.usedSellPrice.replace(/\D/g, '');
 	        console.log(self.photoList);
-	        /*
 			$.ajax({
 				url : "/used/inquire.dox",
                 dataType:"json",	
                 type : "POST",
                 data : param,
                 success : function(data) { 
-                	alert("등록이 완료되었습니다.");
-                	location.href="purchase.do";
+                	let no = data.usedPNo
+                	console.log(no);
+                	console.log(self.photoList);
+                	for(let i = 0; i < self.photoList.length; i++){
+                    	var form = new FormData();
+                		form.append("file1", self.photoList[i]);
+    					form.append("usedPNo", no);
+    					self.upload(form);
+                	}
                 }
+				location.href="/purchase.do";
             });
-	        */
         },
         fnGoList(){
 			location.href="purchase.do"
-		}
+		},
+		upload(form) {
+			return new Promise((resolve, reject) => {
+				$.ajax({
+			      	url: "../usedPurchaseImgUpload.dox",
+			      	type: "POST",
+			      	processData: false,
+			      	contentType: false,
+			      	data: form,
+			      	success: function (response) {
+			      		resolve(response);
+			      	},
+			      	error: function (error) {
+			      		reject(error);
+			      	}
+		    	});
+			});
+		},
 	}, // methods
 	created : function() {
 		var self = this;

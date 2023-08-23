@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,8 +74,8 @@ public class UsedController {
 	@ResponseBody
 	public String inquireView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		UsedPurchase info = usedService.usedInquireView(map);
-		resultMap.put("info", info);
+		List<UsedPurchase> list = usedService.usedInquireView(map);
+		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
 	
@@ -83,8 +84,8 @@ public class UsedController {
 	@ResponseBody
 	public String inquire(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		usedService.insertUsedInquire(map);
-		System.out.println(map);
+		String no = usedService.insertUsedInquire(map).get("usedPNo").toString();
+		resultMap.put("usedPNo", no);
 		return new Gson().toJson(resultMap);
 	}
 	
@@ -108,17 +109,17 @@ public class UsedController {
             System.out.println("size : " + size);
             System.out.println("saveFileName : " + saveFileName);
             String path2 = System.getProperty("user.dir");
-            System.out.println("Working Directory = " + path2 + "\\src\\main\\webapp\\css\\image\\community");
+            System.out.println("Working Directory = " + path2 + "\\src\\main\\webapp\\css\\image\\used");
             if(!multi.isEmpty())
             {
-                File file = new File(path2 + "\\src\\main\\webapp\\css\\image\\community", saveFileName);
+                File file = new File(path2 + "\\src\\main\\webapp\\css\\image\\used", saveFileName);
                 multi.transferTo(file);
                 
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("usedPNo", usedPNo);
 	            map.put("pImgOrgName", originFilename);
 	            map.put("pImgName", saveFileName);
-	            map.put("pImgPath", "../css/image/community");
+	            map.put("pImgPath", "../css/image/used");
 	            map.put("pImgSize", size);
                 
                 // insert 쿼리 실행
@@ -127,29 +128,43 @@ public class UsedController {
                 model.addAttribute("filename", multi.getOriginalFilename());
                 model.addAttribute("uploadPath", file.getAbsolutePath());
                 
-                return "redirect:list.do";
+                return "";
             }
         }catch(Exception e) {
             System.out.println(e);
         }
-        return "redirect:list.do";
+        return "";
     }
 	
     // 현재 시간을 기준으로 파일 이름 생성
-    private String genSaveFileName(String extName) {
-        String fileName = "";
-        
-        Calendar calendar = Calendar.getInstance();
-        fileName += calendar.get(Calendar.YEAR);
-        fileName += calendar.get(Calendar.MONTH);
-        fileName += calendar.get(Calendar.DATE);
-        fileName += calendar.get(Calendar.HOUR);
-        fileName += calendar.get(Calendar.MINUTE);
-        fileName += calendar.get(Calendar.SECOND);
-        fileName += calendar.get(Calendar.MILLISECOND);
-        fileName += extName;
-        
-        return fileName;
-    }
+	private String genSaveFileName(String extName) {
+	    String fileName = "";
+	    
+	    Calendar calendar = Calendar.getInstance();
+	    fileName += calendar.get(Calendar.YEAR);
+	    fileName += calendar.get(Calendar.MONTH);
+	    fileName += calendar.get(Calendar.DATE);
+	    fileName += calendar.get(Calendar.HOUR);
+	    fileName += calendar.get(Calendar.MINUTE);
+	    fileName += calendar.get(Calendar.SECOND);
+	    fileName += calendar.get(Calendar.MILLISECOND);
+	    
+	    String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	    int randomStringLength = 2;
+	    
+	    Random random = new Random();
+	    StringBuilder randomString = new StringBuilder();
+	    for (int i = 0; i < randomStringLength; i++) {
+	        int randomIndex = random.nextInt(charset.length());
+	        randomString.append(charset.charAt(randomIndex));
+	    }
+	    fileName += randomString.toString();
+	    
+	    fileName += extName;
+	    
+
+	    
+	    return fileName;
+	}
 	
 }

@@ -15,5 +15,5 @@ public interface UsedService {
 	//중고 문의 사진 등록
 	int insertUsedInquireImg(HashMap<String, Object> map);
 	//문의글 뷰
-	UsedPurchase usedInquireView(HashMap<String, Object> map);
+	List<UsedPurchase> usedInquireView(HashMap<String, Object> map);
 }

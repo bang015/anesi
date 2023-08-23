@@ -28,8 +28,8 @@ public class UsedServiceImpl implements UsedService{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		int usedPNo = usedMapper.insertUsedInquire(map);
-		System.out.println(map.get("USED_P_NO"));
-		resultMap.put("usedPNo", map.get("USED_P_NO"));
+		System.out.println(map.get("usedPNo"));
+		resultMap.put("usedPNo", map.get("usedPNo"));
 		return resultMap;
 	}
 
@@ -39,9 +39,10 @@ public class UsedServiceImpl implements UsedService{
 		// TODO Auto-generated method stub
 		return usedMapper.insertUsedInquireImg(map);
 	}
-
+	
+	// 중고 문의 게시글 뷰
 	@Override
-	public UsedPurchase usedInquireView(HashMap<String, Object> map) {
+	public List<UsedPurchase> usedInquireView(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return usedMapper.usedInquireView(map);
 	}

@@ -137,6 +137,9 @@ h1{
     cursor: pointer;
     font-size: 16px;
 }
+.img{
+	width: 100%;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -153,54 +156,53 @@ h1{
 				<table>
 					<tr style="border-top:2px solid #A782C3;">
 						<td class="title">문의 번호</td>
-						<td>No.{{info.usedPNo}}</td>
+						<td>No.{{list[0].usedPNo}}</td>
 					</tr>
 					<tr>
 						<td class="title">이름</td>
-						<td>{{info.userName}}</td>
+						<td>{{list[0].userName}}</td>
 					</tr>
 					<tr>
 						<td class="title">전화번호</td>
-						<td>{{info.userPhone}}</td>
+						<td>{{list[0].userPhone}}</td>
 					</tr>
 					<tr>
 						<td class="title">제품명</td>
-						<td>{{info.usedPName}}</td>
+						<td>{{list[0].usedPName}}</td>
 					</tr>
 					<tr>
 						<td class="title">구매가격</td>
-						<td>{{info.usedPPrice.toLocaleString()}}원</td>
+						<td>{{list[0].usedPPrice.toLocaleString()}}원</td>
 					</tr>
 					<tr>
 						<td class="title">희망판매가격</td>
-						<td>{{info.usedPSellPrice.toLocaleString()}}원</td>
+						<td>{{list[0].usedPSellPrice.toLocaleString()}}원</td>
 					</tr>
 					<tr>
 						<td class="title">제조국</td>
-						<td>{{info.manufacturer}}</td>
+						<td>{{list[0].manufacturer}}</td>
 					</tr>
 					<tr>
 						<td class="title">사용기간</td>
-						<td v-if="info.usedtime==0">1년 미만</td>
-						<td v-if="info.usedtime>=1">{{info.usedtime}}년</td>
-						<td v-if="info.usedtime>=6">5년 이상</td>
+						<td v-if="list[0].usedtime==0">1년 미만</td>
+						<td v-if="list[0].usedtime>=1">{{list[0].usedtime}}년</td>
+						<td v-if="list[0].usedtime>=6">5년 이상</td>
 					</tr>
 					<tr style="border-bottom:2px solid #A782C3;">
 						<td class="title">제품상태</td>
-						<td v-if="info.grade=='A'">상</td>
-						<td v-if="info.grade=='B'">중</td>
-						<td v-if="info.grade=='C'">하</td>
+						<td v-if="list[0].grade=='A'">상</td>
+						<td v-if="list[0].grade=='B'">중</td>
+						<td v-if="list[0].grade=='C'">하</td>
 					</tr>
 				</table>
 				<div class="bottom">상세내용</div>
 				<hr class="hr1">
-				<div v-html="info.content" class="content"></div>
+				<div v-html="list[0].content" class="content"></div>
 				<hr class="hr2">
 				<div class="bottom">첨부사진</div>
 				<hr class="hr1">
 				<div class="content">
-					<img src="../css/image/profile.png">
-					<img src="../css/image/profile.png">
+					<img class="img" v-for="(item, index) in list" :src="item.pImgPath + '/' + item.pImgName">
 				</div>
 				<hr class="hr2">
 			</div>
@@ -222,7 +224,7 @@ var app = new Vue({
 		sessionNo : "${sessionNo}",
 		sessionStatus : "${sessionStatus}",
 		usedPNo : "${map.usedPNo}",
-		info : {}
+		list : []
 	},// data
 	methods : {
 		fnGetInfo : function(){
@@ -234,8 +236,8 @@ var app = new Vue({
                 type : "POST",
                 data : param,
                 success : function(data) { 
-                	self.info = data.info;
-                	console.log(self.info);
+                	self.list = data.list;
+                	console.log(self.list[0]);
                 }
             }); 
 		},
