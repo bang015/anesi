@@ -256,6 +256,7 @@ var app = new Vue({
                 	self.list = data.list;
                 	self.list2 = data.list2;
                 	self.cnt = data.cnt;
+                	console.log("cnt1 =>", self.cnt);
 	                self.pageCount = Math.ceil(self.cnt / 12);
                 }
             }); 
@@ -266,7 +267,11 @@ var app = new Vue({
 			self.selectPage = pageNum; 
 			var startNum = ((pageNum-1) * 12);
 			var lastNum = 12;
-			var nparmap = {startNum : startNum, lastNum : lastNum};
+			var nparmap = { order : self.order,
+					productNo : self.productNo,
+    				categoryNo : self.categoryNo, 
+    				startNum : startNum, 
+    				lastNum : lastNum};
 		 $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
@@ -277,6 +282,7 @@ var app = new Vue({
                 	self.list2 = data.list2;
 
 					self.cnt = data.cnt;
+					console.log("cnt2 =>", self.cnt);
 					self.pageCount = Math.ceil(self.cnt / 12);
 				}
 			});
