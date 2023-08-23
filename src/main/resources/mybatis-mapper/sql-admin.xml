@@ -221,10 +221,7 @@
 		UPDATE t3_tbl_user
 			SET
 			DELETE_YN = #{deleteYn}
-		WHERE USER_NO IN 
-		<foreach collection="list" close=")" open="(" item="item" separator=",">
-			#{item}
-		</foreach>
+		WHERE USER_NO = #{userNo}
 	</update>
 	
 	<update id="resetUser" parameterType="hashmap">
@@ -234,6 +231,15 @@
 		WHERE USER_NO = #{userNo}
 	</update>
 	
+	<update id="adminResetUserCnt" parameterType="hashmap">
+		UPDATE t3_tbl_user
+			SET
+			CNT = 0
+		WHERE USER_NO IN 
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</update>
 	
 	
 	

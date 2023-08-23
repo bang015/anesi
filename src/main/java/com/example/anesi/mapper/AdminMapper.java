@@ -51,5 +51,7 @@ public interface AdminMapper {
 	int updateUser(HashMap<String, Object> map);
 	//고객 삭제
 	int deleteUser(HashMap<String, Object> map);
+	// 고객 로그인 횟수 초기화
+	int adminResetUserCnt(HashMap<String, Object> map);
 	
 }

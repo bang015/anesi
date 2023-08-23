@@ -25,11 +25,14 @@ public class LoginServiceImpl implements LoginService{
 				resultMap.put("success", false);
 				resultMap.put("message", "5번 이상 실패했습니다. 관리자한테 문의해주세요.");
 			}else {
-				
-				loginMapper.reSetCnt(map);
-				resultMap.put("success", true);
-				resultMap.put("message", "환영합니다");
-				resultMap.put("user", user);
+				if(user.getDeleteYn().equals("Y")) {
+					resultMap.put("message", "계정이 정지되었습니다. 관리자한테 문의해주세요.");
+				} else {
+					loginMapper.reSetCnt(map);
+					resultMap.put("success", true);
+					resultMap.put("message", "환영합니다");
+					resultMap.put("user", user);
+				}
 			}
 		}else {
 			resultMap.put("success", false);

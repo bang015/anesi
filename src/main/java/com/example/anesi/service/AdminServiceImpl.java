@@ -124,6 +124,12 @@ public class AdminServiceImpl implements AdminService {
 	public int removeUser(HashMap<String, Object> map) {
 		return adminMapper.deleteUser(map);
 	}
+
+	@Override
+	public int adminResetUserCnt(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.adminResetUserCnt(map);
+	}
 	
 	
 	
