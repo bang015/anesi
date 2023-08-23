@@ -156,7 +156,7 @@ var app = new Vue({
 		fnAdd : function(){
 			var self = this;
 			if (!self.image1) {
-				alert("썸네일을 선택해주세요.");
+				alert("썸네일을 등록해주세요.");
 	            return;
 	        }
 			if(!confirm("게시글을 등록하시겠습니까?")){
@@ -229,6 +229,7 @@ var app = new Vue({
 	            contentType : false, 
 	            data : form, 
 	            success : function(response) { 
+	            	
 				}
 	           
 	       });

@@ -45,7 +45,7 @@ public class BoardServiceImpl implements BoardService{
 		resultMap.put("cnt", boardMapper.searchCnt(map));
 		return resultMap;
 	}
-	
+	//인기글
 	@Override
 	public List<Board> boardBest(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -62,11 +62,10 @@ public class BoardServiceImpl implements BoardService{
 		Board info = boardMapper.selectBoardView(map);
 		resultMap.put("info", info);
 		resultMap.put("cCnt", boardMapper.commentCnt(map));
-		//작성자 no
-		map.put("nick", info.getNick());
-		resultMap.put("userInfo", boardMapper.selectBoardViewUser(map));
 		return resultMap;
 	}
+	
+	//조회수
 	@Override
 	public int updateViewCnt(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -101,6 +100,7 @@ public class BoardServiceImpl implements BoardService{
 	public HashMap<String, Object> deleteBoard(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardMapper.deleteAllComment(map);
 		boardMapper.deleteBoardImage(map);
 		boardMapper.deleteBoard(map);
 		return resultMap;

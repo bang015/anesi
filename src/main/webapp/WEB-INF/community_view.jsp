@@ -259,7 +259,7 @@ img{
 			</div>
 			<div id="content-head">
 				<div><h2>{{info.title}}</h2></div>
-				<div><img class="profile" :src="uProfileImg.uImgPath+'/'+uProfileImg.uImgName"></div>
+				<div><img class="profile" :src="info.uImgPath+'/'+info.uImgName"></div>
 				<div class="time">{{postCalculateTime(info.cDateTime)}}<span v-if="info.cDateTime!=info.uDateTime"> · {{calculateTime(info.uDateTime)}} 수정</span></div>
 				<div class="nick">{{info.nick}}</div>
 			</div>
@@ -271,8 +271,8 @@ img{
 			<div class="stat"><!-- 좋아요 <span class="stat-detail">2</span> 　 -->댓글 <span class="stat-detail">{{cCnt}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
 			
 			<button class="btn2" @click="fnBack">목록으로</button>
-			<button class="btn2" @click="fnDelete" v-if="sessionNick==info.nick||sessionNick=='관리자'">삭제</button>
-			<button class="btn2" @click="fnEdit(bNo)" v-if="sessionNick==info.nick">수정</button>
+			<button class="btn2" @click="fnDelete" v-if="sessionNo==info.userNo||sessionStatus=='A'">삭제</button>
+			<button class="btn2" @click="fnEdit(bNo)" v-if="sessionNo==info.userNo">수정</button>
 			</div>
 			<hr class="hrr">
 			<div style="font-size:19px;">댓글 <span>{{cCnt}}</span></div>
@@ -298,10 +298,10 @@ img{
 					                </span>
 					            </div>
 					            <div class="cDate"><span>{{calculateTime(item.cCDateTime)}} </span><span v-if="item.cCDateTime!=item.cUDateTime"> · {{calculateTime(item.cUDateTime)}} 수정</span>
-					                <span v-if='sessionNick==item.cNick'>
+					                <span v-if='sessionNo==item.cUserNo'>
 					                     · <a @click="fnComEditOpen(item.commentNo)">수정</a>
 					                </span>
-					                <span v-if='sessionNick==item.cNick||sessionNick=="관리자"'>
+					                <span v-if='sessionNo==item.cUserNo||sessionStatus=="A"'>
 					                     · <a @click="fnComDelete(item.commentNo)">삭제</a>
 					                </span>
 					            </div>
@@ -337,6 +337,7 @@ var app = new Vue({
 	data : {
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
+		sessionStatus : "${sessionStatus}",
 		bNo : "${map.boardNo}",
 		userNo : "",
 		info : {},
@@ -365,13 +366,10 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	self.userInfo = data.userInfo;
-                	self.userNo = data.userInfo.userNo;
-                	self.fnGetUserProfile();
+                	console.log(self.info);
                 	self.cCnt = data.cCnt;
                 	self.imgPath = data.info.imgPath;
                 	self.imgName = data.info.imgName;
-                	console.log(self.info);
                 }
             });
 		},
@@ -569,19 +567,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.profileImg = data.img;
-                }
-			})
-		},
-		fnGetUserProfile(){
-			var self = this;
-			var nparmap = {userNo: self.userNo};
-			$.ajax({
-                url : "/profileImg.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {
-                	self.uProfileImg = data.img;
                 }
 			})
 		}

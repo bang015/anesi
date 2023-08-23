@@ -23,6 +23,24 @@ public class Board {
 	private String imgPath;
 	
 	
+	public String getcUDateTime() {
+		return cUDateTime;
+	}
+	public void setcUDateTime(String cUDateTime) {
+		this.cUDateTime = cUDateTime;
+	}
+	public String getImgName() {
+		return imgName;
+	}
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
+	}
+	public String getImgPath() {
+		return imgPath;
+	}
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
 	public int getCommentNo() {
 		return commentNo;
 	}

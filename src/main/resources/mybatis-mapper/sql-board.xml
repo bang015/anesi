@@ -99,13 +99,8 @@
 		SELECT *
 		FROM t3_tbl_board B
 		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
+		LEFT JOIN t3_tbl_profile_image P ON B.USER_NO = P.USER_NO
 		WHERE B.BOARD_NO = #{bNo}
-	</select>
-	
-	<select id="selectBoardViewUser" parameterType="hashmap">
-		SELECT USER_NO
-		FROM t3_tbl_user
-		WHERE NICK = #{nick}
 	</select>
 	
 	<!-- 작성자 프로필 -->
@@ -131,6 +126,12 @@
 	<!-- 게시글 삭제 -->
 	<delete id="deleteBoard" parameterType="hashmap">
 		DELETE FROM t3_tbl_board
+		WHERE BOARD_NO = #{bNo}
+	</delete>
+	
+	<!-- 댓글 전체 삭제 -->
+	<delete id="deleteAllComment" parameterType="hashmap">
+		DELETE FROM t3_tbl_board_comment
 		WHERE BOARD_NO = #{bNo}
 	</delete>
 	

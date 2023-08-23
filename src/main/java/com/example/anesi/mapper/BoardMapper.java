@@ -34,6 +34,8 @@ public interface BoardMapper {
 	int updateViewCnt(HashMap<String, Object> map);
 	// 게시글 삭제
 	int deleteBoard(HashMap<String, Object> map);
+	// 댓글 전체 삭제
+	int deleteAllComment(HashMap<String, Object> map);
 	// 게시글 이미지 삭제
 	int deleteBoardImage(HashMap<String, Object> map);
 	// 게시글 수정

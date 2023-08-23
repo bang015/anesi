@@ -2,11 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.anesi.mapper.UsedMapper">
-
+	
+	<!-- 중고 문의리스트 -->
 	<select id="purchaseList" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
 		SELECT *
 		FROM t3_tbl_used_purchase
 		ORDER BY USED_P_NO DESC
 	</select>
 	
+	<!-- 중고 문의 등록 -->
+	<insert id="insertUsedInquire" parameterType="hashmap" useGeneratedKeys="true" keyProperty="BOARD_NO" keyColumn="BOARD_NO">
+		INSERT INTO t3_tbl_used_purchase(USER_NO, USER_NAME, USER_PHONE, USED_P_NAME, USED_P_PRICE, USED_P_SELL_PRICE, MANUFACTURER, USEDTIME, GRADE, CONTENT)
+		VALUES(#{userNo}, #{userName}, #{phone}, #{usedName}, #{usedPrice}, #{usedSellPrice}, #{manufacturer}, #{usedtime}, #{grade}, #{content})
+	</insert>
+	
+	<!-- 중고 문의 사진 등록 -->
+	<insert id="insertUsedInquireImg" parameterType="hashmap">
+		INSERT INTO t3_tbl_used_purchase_image(USED_P_NO, P_IMG_ORG_NAME, P_IMG_NAME, P_IMG_PATH, P_IMG_SIZE)
+		VALUES(#{usedPNo}, #{imgOrgName}, #{imgName}, #{imgPath}, #{imgSize})
+	</insert>
+	
+	<select id="usedInquireView" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT * 
+		FROM t3_tbl_used_purchase
+		WHERE USED_P_NO = #{usedPNo}
+	</select>
 </mapper>

@@ -14,7 +14,7 @@
 </head>
 <style>
 #app{
-	margin-top : 170px;
+	margin-top : 180px;
 }
 #container{
 	margin : 10px auto;
@@ -110,7 +110,7 @@ h1{
 				</tr>
 				<tr v-for="(item, index) in list" class="tr2">
 					<td>{{item.usedPNo}}</td>
-					<td><a href="">{{item.usedName}}</a></td>
+					<td><a @click="fnUsedView(item.usedPNo)">{{item.usedPName}}</a></td>
 					<td v-if="item.purchase=='W'">대기</td>
 					<td v-else-if="item.purchase=='Y'" style="color:#A782C3;">완료</td>
 					<td v-else-if="item.purchase=='N'" style="color:#A782C3;">완료</td>
@@ -158,6 +158,10 @@ var app = new Vue({
         },
         fnInquire : function(){
 			location.href="/used/inquire.do";
+        },
+        fnUsedView : function(usedPNo){
+        	var self = this;
+			$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
         }
 	}, // methods
 	created : function() {

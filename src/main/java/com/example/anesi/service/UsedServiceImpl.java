@@ -22,4 +22,28 @@ public class UsedServiceImpl implements UsedService{
 		return usedMapper.purchaseList(map);
 	}
 	
+	// 중고 문의 등록
+	@Override
+	public HashMap<String, Object> insertUsedInquire(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int usedPNo = usedMapper.insertUsedInquire(map);
+		System.out.println(map.get("USED_P_NO"));
+		resultMap.put("usedPNo", map.get("USED_P_NO"));
+		return resultMap;
+	}
+
+	// 중고 문의 이미지 등록
+	@Override
+	public int insertUsedInquireImg(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.insertUsedInquireImg(map);
+	}
+
+	@Override
+	public UsedPurchase usedInquireView(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.usedInquireView(map);
+	}
+	
 }
