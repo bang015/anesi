@@ -8,6 +8,7 @@ public class UsedPurchase {
 	private String userPhone;
 	private String usedName;
 	private int usedPrice;
+	private int usedSellPrice;
 	private String manufacturer;
 	private int mfg;
 	private String grade;
@@ -100,6 +101,12 @@ public class UsedPurchase {
 	}
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
+	}
+	public int getUsedSellPrice() {
+		return usedSellPrice;
+	}
+	public void setUsedSellPrice(int usedSellPrice) {
+		this.usedSellPrice = usedSellPrice;
 	}
 	
 	

@@ -90,9 +90,6 @@ textarea{
     background-color: #A782C3;
     border: 1px solid #ffffff;
 }
-input:focus {
-	outline: none;
-}
 .pvImg{
 	width: 700px;
 }
@@ -104,13 +101,13 @@ input:focus {
 		<div>
 			<input class="title" v-model="info.title" placeholder="제목을 입력하세요.">
 		</div>
-		<div class="filebox"> 
-			<label for="file1">썸네일 업로드</label> 
-			<input type="file" id="file1" name="file1" @change="fnOnFileChange"> 
-			<input class="upload-name" value="파일선택">
-		</div>
-    	<div><img v-if="image1" :src="image1" alt="Image preview" class="pvImg" ref="image" required></div>
-    	<div v-if="info.imgPath!='' && !image1 && info.imgPath!=undefined"><img :src="info.imgPath+'/'+info.imgName" class="pvImg"></div>
+<div class="filebox"> 
+    <label for="file1">썸네일 업로드</label> 
+    <input type="file" id="file1" name="file1" @change="fnOnFileChange"> 
+    <input class="upload-name" :value="info.imgName ? info.imgName : '파일 선택'" readonly>
+</div>
+<div><img v-if="image1" :src="image1" alt="Image preview" class="pvImg" ref="image" required></div>
+<div v-if="info.imgPath!='' && !image1 && info.imgPath!=undefined"><img :src="info.imgPath+'/'+info.imgName" class="pvImg"></div>
 		<div>
 			<vue-editor v-model="info.content"></vue-editor>
 		</div>
@@ -124,14 +121,6 @@ input:focus {
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>
-$(document).ready(function(){ 
-	  var fileTarget = $('#file1'); 
-	  fileTarget.on('change', function(){ // 값이 변경되면
-	      var cur=$(".filebox input[type='file']").val();
-	    $(".upload-name").val(cur);
-	}); 
-}); 
-	
 console.log(Vue);
 Vue.use(Vue2Editor);
 const VueEditor = Vue2Editor.VueEditor;
@@ -245,13 +234,13 @@ var app = new Vue({
 	       });
 		},
 		fnOnFileChange(event) {
-	         var self = this;
-	          const file = event.target.files[0];   
-	          if (file) {
-	            self.image1 = URL.createObjectURL(file);
-	          }
-	    }
-
+            var self = this;
+            const file = event.target.files[0];   
+            if (file) {
+                self.image1 = URL.createObjectURL(file);
+                self.info.imgName = file.name;
+            }
+        }
 	}, // methods
 	created : function() {
 		var self = this;
