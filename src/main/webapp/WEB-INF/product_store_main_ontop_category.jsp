@@ -68,7 +68,9 @@ padding : 0px 0px 0px 0px;
 
   color: #A782C3;
 }
-
+.title1{
+	margin-left: 35px;
+}
 
 
 </style>
@@ -76,7 +78,7 @@ padding : 0px 0px 0px 0px;
 <!-- 주석 꼭 남겨주세요 -->
 <body>
 <div id="store-main-ontop-category__container">
-	<div><h1>카테고리</h1></div>
+	<div class="title1"><h1>카테고리</h1></div>
 	<ul id ="product-main-category__total">
 	
 		<li @click= "fnMoveaa('10')">

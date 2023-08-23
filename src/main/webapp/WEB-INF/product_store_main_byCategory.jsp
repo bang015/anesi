@@ -27,6 +27,13 @@
  #store_main_byCategory{
  	margin-bottom: 40px;
  }
+  .category-wrap{
+ 	font-size: 30px;
+ 	font-weight: bold;
+ }
+ .ca{
+ 	margin-left: 35px;
+ }
 </style>
 </head>
 <body>
@@ -37,8 +44,12 @@
 <div id="store_main_byCategory">
 		<div id="store_main_cont">
 			<div class="flex-container">
-				<span class="main-category__title">전체상품</span>
-				
+				<div class="ca">
+					<div class="category-wrap" v-for="(item,index) in category">
+						<span class="category-name1">{{item.categoryName}}</span> 
+						<span class="category-span" v-if="index !== category.length - 1"> <i class="fa-solid fa-chevron-right" style="color: #424242; font-size : 14px;"></i> </span>
+					</div>
+				</div>
 		 			<div class="selectBox2" @mouseover="showOptions" @mouseleave="hideOptions" :class="{ active: optionsVisible }">
 				      <button class="label">{{ selectedOption }}</button>
 				      <ul class="optionList">
@@ -236,7 +247,8 @@ var app = new Vue({
 	      { text: '최신순', value: '3' },
 	    ],
 	    optionsVisible: false,
-	    order : ""
+	    order : "",
+	    category : {},
 
 	},// data
 	methods : {
@@ -291,7 +303,20 @@ var app = new Vue({
 				}
 			});
 		},
-	
+		fnGetCategory : function(){
+			var self = this;
+            var nparmap = {categoryNo : self.categoryNo};	            
+            $.ajax({
+                url : "../categorySearch.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {                
+               		self.category = data.category;
+               		console.log(data.category);
+                }                
+            }); 
+		},
 	     formatPrice: function(price) {
 	            // 100의 자리까지 내림하여 표시하며 천 단위마다 쉼표(,)를 추가합니다.
 	            const truncatedPrice = Math.floor(price / 100) * 100;
@@ -517,6 +542,7 @@ var app = new Vue({
 		self.fnGetList();
 		self.fnaaa();
 		self.fnCheckScrap();
+		self.fnGetCategory();
 	}// created
 });
 
