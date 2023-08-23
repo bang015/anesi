@@ -1183,8 +1183,7 @@ var app = new Vue({
 				return;
 			}
 			if(self.selectedOptions.length > 0){
-				/* $.pageChange("../order/main.do" , {product : self.selectedOptions}); */
-				console.log(self.selectedOptions);
+				$.pageChange("../order/main.do" , {product : self.selectedOptions});
 			} 
 			},
 		clickImg : function(imgPath,imgName){
