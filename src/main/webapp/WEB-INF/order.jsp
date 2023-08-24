@@ -545,8 +545,6 @@ var app = new Vue({
 			    	}
 		    		self.fnOrrder2();
 		    	}
-		    	
-		    	
 		    },
 		    fnOrrder2(){
 		    	var self = this;
@@ -627,6 +625,8 @@ var app = new Vue({
 		 		    	 });
 	            	  }
 	            	  self.openScrapModal();
+	            	  self.fnInsertAlarm(2);
+	            	  
 	              } else {
 	                // 결제 실패 시 로직,
 	            	  self.finalAmount = self.finalAmount-self.deliveryfee-self.discount;
@@ -799,7 +799,27 @@ var app = new Vue({
 	            },
 	            numberWithCommas(number) {
 	                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	            }
+	            },
+	            
+       //결제완료알람
+       fnInsertAlarm : function(alarmType){
+		var self = this;
+		var nparmap = {userNo:self.addr.userNo, alarmType};
+       	console.log(self.addr.userNo);
+       	console.log(alarmType);
+
+		 $.ajax({
+                url : "../addAlarm.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	alert("알람인서트 완");
+                }
+           }); 
+	    			
+       }       
+	            
 	}, // methods
 	created : function() {
 		var self = this;

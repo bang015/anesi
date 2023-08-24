@@ -81,16 +81,18 @@
 	<div id="app">
 	<h2 class="title">새소식</h2>
 		<hr class="hrr">
-		<div class="content_cont">
-		    <div class="content" v-for="item in list" >
+		<div class="content_cont" >
+		    <div class="content" v-for="item in list" v-if="item.alarmNo !=''" >
 				<i :class="item.icon" class="iconA"></i>
 					<span class="nick" v-if="item.alarmType == 1 || item.alarmType ==4">{{item.nick}}님 </span>{{item.alarmContent}}
 					<span class="time"> {{item.cTime}}</span>
 				<i class="iconB fa-regular fa-circle-xmark" @click="fnDelete"></i>
 			</div>
-			
-			
+			<div class="contentA" v-else>최근 소식이 없습니다.</div>		
 		</div>
+		
+		
+		<button @click="fnInsertAlarm(1)">알람인서트</button>
 	</div>
 <jsp:include page="footer.jsp"></jsp:include>
 	
@@ -103,7 +105,7 @@ var app = new Vue({
 		list : [],
 		item : "",
 		userNo : '${sessionNo}',
-
+		
 
 	},// data
 	methods : {
@@ -122,8 +124,25 @@ var app = new Vue({
 	                	console.log(data.list);
 	                }
             }); 
+		},
+		fnInsertAlarm : function(alarmType){
+			var self = this;
+			var nparmap = {userNo:self.userNo, alarmType};
+        	console.log(alarmType);
+
+			 $.ajax({
+	                url : "addAlarm.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	alert("알람인서트 완");
+	                }
+            }); 
 			
 		}
+		
+		
 		
 		
 	}, // methods
