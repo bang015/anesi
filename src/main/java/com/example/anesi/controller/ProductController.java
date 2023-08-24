@@ -316,5 +316,6 @@ public class ProductController {
 			       resultMap=productService.searchProduct2(map);
 			       return new Gson().toJson(resultMap);
 			   }
+			
 
 }
