@@ -117,11 +117,12 @@
 .logo-wrap{
 	display: inline-block;
 	float: left;
+	margin-top: 12px;
 }
 .top-left{
 	display: inline-block;
 	float: left;
-	margin-top: 60px;
+	margin-top: 40px;
 }
 .top-wrap{
 	width: 100%;

@@ -26,29 +26,57 @@
 		<div id="container">
 			<div class="containerTitle cursorPointer" @click="fnReload">중고상품 관리</div>
 			<div class="containerCheckList">
-				<div class="checkList cursorPointer">
+				<div class="checkList cursorPointer" @click="fnChangFlg('')">
 					<div class="iconBack"><i class="fa-solid fa-border-all fa-2xl" style="color: #ffffff;"></i></div>
 					<div class="checkListText">
 						<div>전체</div>
-						<div><span class="numText">{{usedList.length}}</span>건</div> 
+						<div><span class="numText">{{usedW+usedY+usedN}}</span>건</div> 
 					</div>
 				</div>
-				<div class="checkList cursorPointer" @click="">
+				<div class="checkList cursorPointer" @click="fnChangFlg('W')">
 					<div class="iconBack"><i class="fa-solid fa-circle-up fa-2xl" style="color: #ffffff;"></i></div>
 					<div class="checkListText">
 						<div>등록신청</div>
-						<div><span class="numText"></span>건</div> 
+						<div><span class="numText">{{usedW}}</span>건</div> 
 					</div>
 				</div>
-				<div class="checkList cursorPointer" @click="">
+				<div class="checkList cursorPointer" @click="fnChangFlg('Y')">
 					<div class="iconBack"><i class="fa-solid fa-cart-shopping fa-2xl" style="color: #ffffff;"></i></div>
 					<div class="checkListText">
 						<div>판매중</div>
-						<div><span class="numText"></span>건</div> 
+						<div><span class="numText">{{usedY}}</span>건</div> 
+					</div>
+				</div>
+				<div class="checkList cursorPointer" @click="fnChangFlg('N')">
+						<div class="iconBack"><i class="fa-solid fa-ban fa-2xl" style="color: #ffffff;"></i></div>
+						<div class="checkListText">
+							<div>판매종료</div>
+							<div><span class="numText">{{usedN}}</span>건</div> 
+						</div>
+					</div>
+			</div>
+			<div class="containerInquiry">
+				<div class="tableBox">
+					<div class="table-container">	
+						<table>
+							<tr>
+								<th>접수일</th>
+								<th>상품번호</th>
+								<th>상품명</th>
+								<th>등록 유저</th>
+								<th>매입 여부</th>
+							</tr>
+							<tr v-for="(item,index) in usedList" v-if="usedflg == item.purchase || usedflg == ''">
+								<td>{{item.usedPCdatetime.substring(0, 11)}}</td>
+								<td>{{item.usedPNo}}</td>
+								<td @click="fnMove(item.usedPNo)" class="cursorPointer">{{item.usedPName}}</td>
+								<td>{{item.userName}}</td>
+								<td>{{item.purchaseName}}</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
-			
 		</div>
 	</div>
 </body>
@@ -61,9 +89,12 @@ var app = new Vue({
 		usedCnt : 0,
 		usedW : 0,
 		usedY : 0,
+		usedN : 0,
+		usedflg : '',
 	},// data
 	methods : {
 		fnGetUsedList(){
+			var self = this;
 			var nparmap = {};
 			$.ajax({
                 url : "/admin/searchUsedList.dox",
@@ -74,14 +105,31 @@ var app = new Vue({
                 	self.usedList = data.list;
                 	console.log(self.usedList);
                 	self.usedCnt = self.usedList.length;
-                	self.usedList.map()
-                	
+                	self.usedList.map(item =>{
+                		if(item.purchase == 'W'){
+                			self.usedW++;
+                			item.purchaseName = '신청';
+                		} else if(item.purchase == 'Y'){
+                			self.usedY++;
+                			item.purchaseName = '수락';
+                		} else{
+                			self.usedN++;
+                			item.purchaseName = '거부';
+                		}
+                	})
                 } 
 			})
 		},
 		fnReload(){
 			location.reload();
 		},
+		fnMove(usedPNo){
+			$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
+		},
+		fnChangFlg(type){
+			var self = this;
+			self.usedflg = type;
+		}
 	}, // methods
 	created : function() {
 		var self = this;
