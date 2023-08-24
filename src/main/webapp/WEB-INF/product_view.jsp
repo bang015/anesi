@@ -202,10 +202,9 @@
 																{{product.manufacturer}}
 															</div>
 										        			<div class="review-add-name">{{product.productName}}</div>
-										        			<span class="review-add-option" v-for="(item, index) in reviewUser">
-										        				{{item.optionName}}
-										        				<span v-if="index !== reviewUser.length - 1">+</span>	
-										        			</span>
+										        			<span class="review-add-option" v-for="(item, index) in uniqueOptions" :key="item">
+														      {{ item }}
+														    <span v-if="index !== uniqueOptions.length - 1">+</span>
 									        			</div>
 									        		</div>
 								        		</div>
@@ -561,11 +560,19 @@
 						</div>
 						<div class="modal noneDisplay" v-if="showScrapModal4" :class="{'showDisplay' : showScrapModal4}">
 							<div class="modal-card">
-						<h2>장바구니에 추가</h2>
-						<p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
-						<button @click="fnMedal" class="left_button">쇼핑계속하기</button>
-						<button @click="fnMoveCart" class="right_button">장바구니로 이동하기</button>
-					</div>	
+								<h2>장바구니에 추가</h2>
+								<p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
+								<button @click="fnMedal" class="left_button">쇼핑계속하기</button>
+								<button @click="fnMoveCart" class="right_button">장바구니로 이동하기</button>
+							</div>	
+						</div>
+						<div class="modal noneDisplay" v-if="showScrapModal5" :class="{'showDisplay' : showScrapModal5}">
+							<div class="modal-card">
+								<h2>리뷰 작성</h2>
+								<p>이미 작성한 리뷰가 있습니다. 수정하시겠습니까?</p>
+								<button @click="fnMedal" class="left_button">쇼핑계속하기</button>
+								<button @click="fnReviewEdit" class="right_button">수정하기</button>
+							</div>	
 						</div>
 						<div class="recently-viewed">
 						<div class="recently-box">
@@ -701,7 +708,9 @@ var app = new Vue({
 		showScrapModal2 : false,
 		showScrapModal3 : false,
 		showScrapModal4 : false,
+		showScrapModal5 : false,
 		helpList : [],
+		reviewCheck1 : 0,
 		/* 그래프 시작 */
 		series: [{
             data : []
@@ -742,6 +751,20 @@ var app = new Vue({
 	      return price.toLocaleString('ko-KR');
 	    },
 	  },
+	  computed: {
+		    uniqueOptions() {
+		      const uniqueSet = new Set();
+		      return this.reviewUser
+		        .map(item => item.optionName)
+		        .filter(option => {
+		          if (!uniqueSet.has(option)) {
+		            uniqueSet.add(option);
+		            return true;
+		          }
+		          return false;
+		        });
+		    }
+		  },
 	methods : {
 		fnLogin : function(){
             var self = this;
@@ -947,6 +970,7 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.reviewList = data.reviewList;
+	               		console.log(self.reviewList)
 	               		self.cnt = data.cnt;
 		                self.pageCount = Math.ceil(self.cnt / 5);
 		                
@@ -1002,20 +1026,28 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {
 	                	self.reviewUser = data.user	
+	                	console.log(self.reviewUser);
 	                	if(self.reviewUser.length==0){
 	                		self.purchaseYn = "N"
 	                	}else{
 	                		self.purchaseYn = "Y"
 	                	}
-	                	for (var i = 0; i < self.reviewUser.length; i++) {
-	                		  self.reviewPrice += self.reviewUser[i].orderPrice;
-	                		  self.optionName += self.reviewUser[i].optionName + ' + '; // 각 옵션 이름 누적
-	                		}
+	                	var optionSet = new Set();
+	                	var optionNames = [];
 
-	                		// 누적된 문자열 마지막에 있는 '+' 기호 제거
-	                		if (self.optionName.endsWith(' + ')) {
-	                		  self.optionName = self.optionName.slice(0, -3);
-	                		}
+	                	for (var i = 0; i < self.reviewUser.length; i++) {
+	                	  self.reviewPrice += self.reviewUser[i].orderPrice;
+	                	  optionSet.add(self.reviewUser[i].optionName);
+	                	  if(self.reviewUser[i].userNo == self.userNo){
+	                		  self.reviewCheck1 = 1;
+	                	  }
+	                	}
+
+	                	optionSet.forEach(option => {
+	                	  optionNames.push(option);
+	                	});
+
+	                	self.optionName = optionNames.join(" + ");
 	                }                
 	            })
 		},
@@ -1198,7 +1230,14 @@ var app = new Vue({
 			},
 		openScrapModal: function() {
 		    var self = this;
-		    self.showScrapModal = true;
+		    console.log(self.reviewCheck1);
+		    if(self.reviewCheck1 > 0){
+				self.showScrapModal5 = true;
+			} else{
+				console.log(self.showScrapModal5);
+			    self.showScrapModal = true;	
+			}
+		    
 		    },
 		openScrapModal2: function() {
 		    var self = this;
@@ -1526,7 +1565,10 @@ var app = new Vue({
 				               console.log(self.cartCheck);
 				           }
 				        });
-			    	}
+			    	},
+			    	fnReviewEdit(){
+			    		location.href="/mypage/myReview.do"
+			    	}	
 		           
 			     
 	}, // methods
