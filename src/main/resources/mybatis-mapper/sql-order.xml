@@ -101,6 +101,12 @@
 			PRODUCT_STOCK = PRODUCT_STOCK - #{cnt}
 		WHERE OPTION_NO = #{optionNo}			
 	</update>
+	<!-- 비회원 주문 조회 확인 -->
+	<select id="selectNonUserOrderCheck" parameterType="hashmap" resultType="int">
+		SELECT count(*)
+		FROM t3_tbl_nonuser_order 
+		WHERE PAYMENT_NO = #{paymentNo} AND ORDER_EMAIL = #{orderEmail}
+	</select>
 	<!-- 비회원 주문 조회 -->
 	<select id="selectNonUserOrder" parameterType="hashmap" resultType="com.example.anesi.model.NonUserOrder">
 		SELECT o.ORDER_NO, o.ORDER_PRICE,o.RECEIPT_NAME, o.RECEIPT_PHONE,o.CNT,p.PRODUCT_NAME,op.OPTION_NAME, i.IMG_PATH, i.IMG_NAME, a.ZIPCODE, a.ADDR, a.ADDR2, a.ADDR_KIND,a.ADDR_NO, o.DELIVERY_SIT

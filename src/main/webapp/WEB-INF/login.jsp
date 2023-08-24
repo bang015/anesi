@@ -69,7 +69,8 @@ var app = new Vue({
 		pwd : "",
 		hidden : false,
 		orderEmail : "",
-		paymentNo : ""
+		paymentNo : "",
+		nonUserOrderCheck : 0,
 	},// data
 	methods : {
 		fnLogin : function(){
@@ -97,8 +98,25 @@ var app = new Vue({
                 }                
             }); 
         },
+		fnNonUser : function(){
+            var self = this;
+            var nparmap = {paymentNo : self.paymentNo, orderEmail : self.orderEmail};
+            $.ajax({
+                url : "nonUserOrderCheck.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {                
+               		self.nonUserOrderCheck=data.nonUserOrderCheck
+               		console.log(self.nonUserOrderCheck);
+                }                
+            }); 
+        },
         selectNonUserOrder(){
         	var self = this;
+        	if(nonUserOrderCheck == 0){
+        		alert("구매한 내역이 없습니다. 주문번호 혹은 이메일을 확인해주세요.")
+        	}
         	$.pageChange("/nOrder.do" , {paymentNo : self.paymentNo, orderEmail : self.orderEmail});
         },
         fnClick : function(){
@@ -111,7 +129,7 @@ var app = new Vue({
         }
 	}, // methods
 	created : function() {
-		
+		self.fnNonUser();
 	}// created
 });
 </script>

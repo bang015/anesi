@@ -114,6 +114,11 @@ public class OrderServiceImpl implements OrderService{
 		orderMapper.updateNonUserOrderAddr(map);
 		return 0;
 	}
+	@Override
+	public int searchNonUserOrderCheck(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderMapper.selectNonUserOrderCheck(map);
+	}
 		
 	
 	

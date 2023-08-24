@@ -40,6 +40,8 @@ public interface OrderMapper {
 	int selectNonOrderCnt(HashMap<String, Object> map);
 	// 재고 업데이트
 	int updateOptionStock(HashMap<String, Object> map);
+	// 비회원 주문 조회 확인
+	int selectNonUserOrderCheck(HashMap<String, Object> map);
 	// 비회원 주문 조회
 	List<NonUserOrder> selectNonUserOrder(HashMap<String, Object> map);
 	// 비회원 주문 수정

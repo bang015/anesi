@@ -34,6 +34,12 @@ public class OrderController {
 //		System.out.println(map.get("product"));
         return "/order";
     }
+	@RequestMapping("/order/used.do") 
+	public String usedOrder(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
+//		System.out.println(map.get("product"));
+		return "/used_order";
+	}
 	
 	//쿠폰 검색
 	@RequestMapping(value = "/order/getCoupon.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -130,6 +136,15 @@ public class OrderController {
 	public String optionStock(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		orderService.editOptionStock(map);
+		return new Gson().toJson(resultMap);
+	}
+	// 비회원 주문 조회 확인
+	@RequestMapping(value = "/nonUserOrderCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String nonUserCheck(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int nonUserOrderCheck = orderService.searchNonUserOrderCheck(map);
+		resultMap.put("nonUserOrderCheck", nonUserOrderCheck);
 		return new Gson().toJson(resultMap);
 	}
 	// 비회원 주문 조회
