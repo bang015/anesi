@@ -79,7 +79,7 @@
     	font-size: 15px;
     	margin-top: 30px;
 	}
-	.inquiry-category-box .category-box{
+	.inquiry-category-box .inquiry-category-box1{
 	    flex-grow: 1;
 	    width: 33.3333333333%;
 	    box-sizing: border-box;
@@ -90,7 +90,7 @@
 	    color: #424242;
 	    cursor: pointer;
 	}
-	.category-box.active{
+	.inquiry-category-box1 .active{
 	    flex-grow: 1;
 	    width: 33.3333333333%;
 	    box-sizing: border-box;

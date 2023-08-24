@@ -208,10 +208,10 @@ opacity : 0.7;
   
   #recent_search{
 	  list-style: none;
-	  width: 300px;
+	  width: 309px;
 	  position: absolute;
-  left: 505px;
-  top: 155px;
+  left: 502px;
+  top: 47px;
   font-size: 15px; 
   font-weight: bold;
    cursor: pointer;
