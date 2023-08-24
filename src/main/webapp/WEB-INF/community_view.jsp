@@ -250,7 +250,7 @@ img{
 		<div class="move">
 			<div class="stat-out" v-if="greatList.includes(sessionNo)" @click="fnEditGreat('2')"><img class="stat-icon" src="../css/image/community/joahyo.png"></div>
 			<div class="stat-out" v-if="!greatList.includes(sessionNo)" @click="fnEditGreat('1')"><img class="stat-icon" src="../css/image/community/an-joahyo.png"></div>
-			<div class="stat-out"><img class="stat-icon" src="../css/image/community/comment.png" name="comment" @click="scrollToComment"></div>
+			<div class="stat-out"><img class="stat-icon" src="../css/image/community/comment.png" name="comment" @click="scrollUpFromSection('comment-head', 220)"></div>
 			<div class="stat-out" @click="copyAddress"><img class="stat-icon" src="../css/image/community/share.png"></div>
 		</div>
 		<div id="container">
@@ -264,7 +264,6 @@ img{
 				<div class="nick">{{info.nick}}</div>
 			</div>
 			<hr class="hrr">
-			<div id="comment"></div>
 			<div>
 			    <div v-html="info.content"></div>
 			</div>
@@ -456,12 +455,17 @@ var app = new Vue({
 		        return postTime.toLocaleString({ year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'});
 		    }
 		},
-        scrollToComment() {
-            const commentSection = document.getElementById('comment');
-            if (commentSection) {
-              commentSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        },
+		scrollUpFromSection(sectionId, amount) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+              const currentScrollPosition = section.getBoundingClientRect().top + window.scrollY;
+              const targetScrollPosition = currentScrollPosition - amount;
+              window.scrollTo({
+                top: targetScrollPosition,
+                behavior: "smooth"
+              });
+          }
+       },
         fnBack : function(){
 			location.href="main.do";
 		},

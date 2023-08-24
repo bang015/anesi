@@ -306,7 +306,7 @@ li{
 		               		<img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
 		               	</div>
 		               	<a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
-		               	<div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
+		               	<div class="view">좋아요 {{item.gCnt}} · 조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		           	</div>
 		        </div>
 			</div>
