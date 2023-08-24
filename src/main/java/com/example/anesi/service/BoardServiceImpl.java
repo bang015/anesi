@@ -105,7 +105,6 @@ public class BoardServiceImpl implements BoardService{
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		boardMapper.deleteAllComment(map);
 		boardMapper.deleteBoardImage(map);
-		boardMapper.deleteGreatList(map);
 		boardMapper.deleteBoard(map);
 		return resultMap;
 	}

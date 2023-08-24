@@ -269,9 +269,9 @@ opacity : 0.7;
     100% {
       -webkit-transform: translate3d(-100%, 0, 0);
       transform: translate3d(-100%, 0, 0);
-    }
+    } 
   }
-  
+  /**/
   .communityButton{
 	  position: absolute;
 	  inset: 0px auto auto 0px;

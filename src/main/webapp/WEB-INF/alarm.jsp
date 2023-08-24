@@ -39,9 +39,10 @@
 }
 
 .content_cont {
-    width: 1300px;
+	width : 1000px;
+    margin: 0 auto;
     min-height: 500px;
-   
+   	padding : 20px 0px;
     font-size: 20px;
     display: flex;
     justify-content: center;
@@ -53,7 +54,7 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 .content{
-	width: 900px;
+	width: 800px;
     height: 30px;
     background : #a782c369;
     margin : 10px;
@@ -102,14 +103,14 @@
 		    <div class="content" v-for="item in list" v-if="item.alarmNo !=''" >
 				<i :class="item.icon" class="iconA"></i>
 					<span class="nick" v-if="item.alarmType == 1 || item.alarmType ==4">{{item.nick}}님 </span>{{item.alarmContent}}
-					<span class="time"> {{item.cTime}}</span>
+					<span class="time"> {{item.cTime.substring(0,13)}}시</span>
 				<i class="iconB fa-regular fa-circle-xmark" @click="fnRemoveAlarm(item.alarmNo)"></i>
 			</div>
 				<div class="contentA"  v-if="list.length==0">최근 소식이 없습니다.</div>	
 		</div>
 		
 		
-		<button @click="fnInsertAlarm(1)">알람인서트테스트용 담에지울거임</button>
+		<button @click="fnInsertAlarm(6)">알람인서트테스트용 담에지울거임</button>
 	</div>
 <jsp:include page="footer.jsp"></jsp:include>
 	

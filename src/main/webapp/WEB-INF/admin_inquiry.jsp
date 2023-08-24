@@ -145,6 +145,8 @@ var app = new Vue({
                 			return {...item, inquiryYn : '´äº¯'};
                 		}
                 	})
+         
+
                 }
 			})
 		},

@@ -34,7 +34,7 @@ public interface AdminService {
 	// 문의 리스트 검색
 	List<Inquiry> searchAdminInquiriesList(HashMap<String, Object> map);
 	//문의 답변
-	int editAdminInquiry(HashMap<String, Object> map);
+	HashMap<String, Object> editAdminInquiry(HashMap<String, Object> map);
 	//리뷰 검색
 	List<Review> searchAdminReviewList(HashMap<String, Object> map);
 	//리뷰 삭제

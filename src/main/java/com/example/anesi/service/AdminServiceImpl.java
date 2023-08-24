@@ -89,9 +89,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int editAdminInquiry(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return adminMapper.updateAdminInquiry(map);
+	public HashMap<String, Object> editAdminInquiry(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("inquiry",adminMapper.updateAdminInquiry(map));
+		map.put("alarmType", 6);
+		resultMap.put("alarm",adminMapper.insertAlarm(map));
+		return resultMap;
 	}
 	
 	@Override

@@ -2,7 +2,7 @@ package com.example.anesi.model;
 
 
 public class Inquiry {
-	
+	private int userNo;
 	private String cDateTime;
 	private String content;
 	private String inquiryCategory;
@@ -79,5 +79,8 @@ public class Inquiry {
 	}
 	public void setNick(String nick) {
 		this.nick = nick;
+	}
+	public int getUserNo() {
+		return userNo;
 	}
 }
