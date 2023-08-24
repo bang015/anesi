@@ -118,7 +118,7 @@
 				</template>
 			</div>
 
-		<div class="modal" v-if="showCartModal">
+		<div class="modal noneDisplay" v-if="showCartModal" :class="{'showDisplay' : showCartModal}">
 			<div class="modal-card">
 				<h2>장바구니에 추가</h2>
 				<p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
@@ -127,7 +127,7 @@
 			</div>
 		</div>
 
-		<div class="modal" v-if="showScrapModal">
+		<div class="modal noneDisplay" v-if="showScrapModal" :class="{'showDisplay' : showScrapModal}">
 			<div class="modal-card" v-if="userId!=''">
 				<h2>스크랩북에 등록</h2>
 				<p>상품이 스크랩되었습니다.</p>
@@ -145,7 +145,7 @@
 			</div>
 		</div>
 
-		<div class="modal" v-if="showScrapDeleteModal">
+		<div class="modal noneDisplay" v-if="showScrapDeleteModal" :class="{'showDisplay' : showScrapDeleteModal}">
 			<div class="modal-card">
 				<h2>스크랩북에서 삭제되었습니다.</h2>
 				<button @click="closeModal" class="left_button">쇼핑계속하기</button>
@@ -154,7 +154,7 @@
 			</div>
 		</div>
 
-		<div class="modal" v-if="showScrapModalBan">
+		<div class="modal noneDisplay" v-if="showScrapModalBan" :class="{'showDisplay' : showScrapModalBan}">
 			<div class="modal-card">
 				<h2>이미 담긴상품입니다.</h2>
 				<p>스크랩북을 확인해주세요</p>
@@ -165,7 +165,7 @@
 		</div>
 
 		<!-- 로그인 페이지 -->
-		<div class="modal" v-if="showScrapModal3">
+		<div class="modal noneDisplay" v-if="showScrapModal3" :class="{'showDisplay' : showScrapModal3}">
 			<div class="container">
 				<div class="review-back">
 					<button class="back-btn" @click="closeScrapModal3()">

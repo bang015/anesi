@@ -425,3 +425,9 @@
 .cDateTime{
 	color: #8c8c8c;
 }
+.noneDisplay{
+	display: none !important;
+}
+.showDisplay{
+	display: flex !important;
+}

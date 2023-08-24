@@ -362,12 +362,12 @@
 													문의 유형
 												</div>
 												<div class="inquiry-category-box">
-													<div class="category-box active category-box1" @click="changeCategoryStyle('상품')">상품</div>
-													<div class="category-box category-box2" @click="changeCategoryStyle('배송')">배송</div>
-													<div class="category-box category-box3" @click="changeCategoryStyle('반품')">반품</div>
-													<div class="category-box category-box4" @click="changeCategoryStyle('교환')">교환</div>
-													<div class="category-box category-box5" @click="changeCategoryStyle('환불')">환불</div>
-													<div class="category-box category-box6" @click="changeCategoryStyle('기타')">기타</div>
+													<div class="inquiry-category-box1 active category-box1" @click="changeCategoryStyle('상품')">상품</div>
+													<div class="inquiry-category-box1 category-box2" @click="changeCategoryStyle('배송')">배송</div>
+													<div class="inquiry-category-box1 category-box3" @click="changeCategoryStyle('반품')">반품</div>
+													<div class="inquiry-category-box1 category-box4" @click="changeCategoryStyle('교환')">교환</div>
+													<div class="inquiry-category-box1 category-box5" @click="changeCategoryStyle('환불')">환불</div>
+													<div class="inquiry-category-box1 category-box6" @click="changeCategoryStyle('기타')">기타</div>
 												</div>											
 											</div>
 											<div class="inquiry-add-option">

@@ -201,7 +201,7 @@
 	<div><label><input type="checkbox" v-model="clause" value="sms"> 마케팅 활용 동의와 이벤트, 특가 등 메일 및 SMS 수신<span class="clause2">(선택)</span></label><a href="privacyMarketing.do" target="blank"><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
 	<hr>
 	<!-- 하단 -->
-	<div><button @click="fnJoin" class="btn">회원가입</button></div>
+	<div><button @click="fnJoin()" class="btn">회원가입</button></div>
 	<div id="login">이미 아이디가 있으신가요? <a href="login.do">로그인</a></div>
 	</div>
 </div>
@@ -483,7 +483,24 @@ var app = new Vue({
         // 로고 클릭시 메인 이동
         fnMain : function(){
         	location.href="main.do";
-        }
+        },
+        
+        fnInsertAlarm : function(alarmType){
+			var self = this;
+			var nparmap = {userNo:self.userNo, alarmType};
+        	console.log(alarmType);
+
+			 $.ajax({
+	                url : "../addAlarm.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	alert("알람인서트 완");
+	                }
+            }); 
+			
+		}
 	}, // methods
 	created : function() {
 		var self = this;

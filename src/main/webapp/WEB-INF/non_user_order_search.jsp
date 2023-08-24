@@ -40,17 +40,29 @@
     transition: background-color 0.3s;
     font-family: 'Pretendard-Regular';
 }
+.content{
+	width : 750px;
+	margin: 0 auto;
+	border: 1px solid;
+	margin-top: 200px;
+}
+.order-chekc-title1{
+	text-align: center;
+	font-size: 25px;
+	font-weight: bold;
+}
 </style>
 </head>
 <!-- 비회원 주문 조회페이지 -->
 <body>
+<jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
 		<div id="container">
 			<div class="content">
-				<div class="order-chekc-title">
+				<div class="order-chekc-title1">
 					주문 조회
 				</div>
-				<div class="order-chekc-title">
+				<div class="order-chekc-title2">
 					주문자 정보
 				</div>
 				<div class="table-wrap">

@@ -47,7 +47,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal" v-if="showScrapModal">
+		<div class="modal noneDisplay" v-if="showScrapModal" :class="{'showDisplay' : showScrapModal}">
 			<div class="review-add">
 		        <div class="review-back">
 					<button class="back-btn" @click="closeModal"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>

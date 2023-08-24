@@ -18,8 +18,8 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
 		<div id="container">
-			<div v-if="couponList.length == 0" class="nonCoupon">사용 가능한 쿠폰이 없습니다.</div>
 			<div class="couponTitle">쿠폰</div>
+			<div v-if="couponList.length == 0" class="nonCoupon">사용 가능한 쿠폰이 없습니다.</div>
 			<div class="couponList">
 				<div v-for="item in couponList" class="coupon">
 					<div>{{item.couponName}}</div>
