@@ -56,4 +56,10 @@ public interface BoardMapper {
 	int communityUpdate(HashMap<String, Object> map);
 	// 글 좋아요 리스트
 	List<Board> selectBoardGreatList(HashMap<String, Object> map);
+	// 좋아요
+	int insertGreat(HashMap<String, Object> map);
+	// 좋아요 취소
+	int deleteGreat(HashMap<String, Object> map);
+	// 게시글 좋아요 삭제
+	int deleteGreatList(HashMap<String, Object> map);
 }

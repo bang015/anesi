@@ -304,4 +304,13 @@ public class BoardController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
+	
+	// 게시글 좋아요
+	@RequestMapping(value = "/community/editGreat.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editGreat(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boardService.editGreat(map);
+		return new Gson().toJson(resultMap);
+	}
 }
