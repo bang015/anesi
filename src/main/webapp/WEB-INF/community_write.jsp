@@ -176,7 +176,6 @@ var app = new Vue({
 	       	        form.append( "file1",  $("#file1")[0].files[0] );
 	       	     	form.append( "bNo", data.bNo); // pk
 	           		self.fnThumbnail(form); 
-					location.href = "main.do";
 				}
 			}); 
 		},

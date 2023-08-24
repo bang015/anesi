@@ -578,10 +578,11 @@ var app = new Vue({
 		    	} else{
 		    		productName = self.productList[0].productName;
 		    	}
+		    	var paymentNo =  "ORD"+self.formatDate(new Date())+"-"+self.cnt
 	              IMP.request_pay({ // param
 	              pg: self.payment, //kakaopay.TC0ONETIME
 	              pay_method: "card",
-	              merchant_uid: "ORD"+self.formatDate(new Date())+"-"+self.cnt,
+	              merchant_uid:paymentNo,
 	              name: productName,
 	              amount: self.finalAmount,
 	              buyer_email: orderEmail,
@@ -593,7 +594,7 @@ var app = new Vue({
 	              if (rsp.success && rsp.paid_amount == self.finalAmount) {
 	            	  
 	            	  for(let i=0;i < self.productNoList.length;i++){
-	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity, paymentNo : "ORD"+self.formatDate(new Date())+"-"+self.cnt, nonUserNo : self.addr.nonUserNo};
+	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity, paymentNo, nonUserNo : self.addr.nonUserNo};
 		 		    	 $.ajax({
 		 		                url : "../order/order.dox",
 		 		                dataType:"json",	

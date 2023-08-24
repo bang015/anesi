@@ -106,12 +106,12 @@ public class BoardController {
                 model.addAttribute("filename", multi.getOriginalFilename());
                 model.addAttribute("uploadPath", file.getAbsolutePath());
                 
-                return "redirect:list.do";
+                return "redirect:main.do";
             }
         }catch(Exception e) {
             System.out.println(e);
         }
-        return "redirect:list.do";
+        return "redirect:main.do";
     }
     
 	@RequestMapping("/thumbfileUpdate.dox")
