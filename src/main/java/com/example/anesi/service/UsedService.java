@@ -9,7 +9,7 @@ import com.example.anesi.model.UsedPurchase;
 
 public interface UsedService {
 	//매입게시판 리스트
-	List<UsedPurchase> purchaseList(HashMap<String, Object> map);
+	HashMap<String, Object> purchaseList(HashMap<String, Object> map);
 	//문의 등록
 	HashMap<String, Object> insertUsedInquire(HashMap<String, Object> map);
 	//중고 문의 사진 등록
@@ -30,4 +30,6 @@ public interface UsedService {
 	int usedInquireAnsDelete(HashMap<String, Object> map);
 	//답변수정
 	int answerEdit(HashMap<String, Object> map);
+	//나의 매입게시판 리스트
+	List<UsedPurchase> myPurchaseList(HashMap<String, Object> map);
 }

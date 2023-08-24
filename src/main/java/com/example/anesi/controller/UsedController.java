@@ -64,7 +64,20 @@ public class UsedController {
 	@ResponseBody
 	public String purchaseList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<UsedPurchase> list = usedService.purchaseList(map);
+		int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+		int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+		map.put("startNum", startNum);
+		map.put("lastNum", lastNum);
+		resultMap = usedService.purchaseList(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//문의 리스트
+	@RequestMapping(value = "/used/myPurchaseList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String myPurchaseList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<UsedPurchase> list = usedService.myPurchaseList(map);
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}

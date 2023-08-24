@@ -172,6 +172,9 @@ h3{
     font-weight: 600;
     margin-right: 10px;
 }
+.btn1:hover{
+    background-color: #8966a3;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -217,15 +220,15 @@ h3{
 					<tr>
 						<td class="title">사용기간</td>
 						<td v-if="list[0].usedtime==0">1년 미만</td>
-						<td v-if="list[0].usedtime>=1">{{list[0].usedtime}}년</td>
-						<td v-if="list[0].usedtime>=6">5년 이상</td>
+						<td v-else-if="list[0].usedtime>=1 && list[0].usedtime<6">{{list[0].usedtime}}년</td>
+						<td v-else-if="list[0].usedtime>=6">5년 이상</td>
 					</tr>
 					<tr style="border-bottom:2px solid #A782C3;">
 						<td class="title">제품상태</td>
 						<td v-if="list[0].grade=='A'">상</td>
 						<td v-if="list[0].grade=='B'">중</td>
 						<td v-if="list[0].grade=='C'">하</td>
-					</tr>
+					</tr>	
 					
 				</table>
 				<div class="bottom">상세내용</div>

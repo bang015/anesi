@@ -11,6 +11,10 @@ import com.example.anesi.model.UsedPurchase;
 public interface UsedMapper {
 	//매입게시판 리스트
 	List<UsedPurchase> purchaseList(HashMap<String, Object> map);
+	//매입게시판 리스트 cnt
+	int selectPurchaseCnt(HashMap<String, Object> map);
+	//나의 매입게시판 리스트
+	List<UsedPurchase> myPurchaseList(HashMap<String, Object> map);
 	//중고 문의 등록
 	int insertUsedInquire(HashMap<String, Object> map);
 	//중고 문의 사진 등록

@@ -15,11 +15,15 @@ public class UsedServiceImpl implements UsedService{
 
 	@Autowired
 	UsedMapper usedMapper;
-
+	
+	//중고매입문의리스트
 	@Override
-	public List<UsedPurchase> purchaseList(HashMap<String, Object> map) {
+	public HashMap<String, Object> purchaseList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return usedMapper.purchaseList(map);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", usedMapper.purchaseList(map));
+		resultMap.put("cnt", usedMapper.selectPurchaseCnt(map));
+		return resultMap;
 	}
 	
 	// 중고 문의 등록
@@ -89,6 +93,13 @@ public class UsedServiceImpl implements UsedService{
 	public int answerEdit(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return usedMapper.answerEdit(map);
+	}
+
+	//내 중고 게시글 
+	@Override
+	public List<UsedPurchase> myPurchaseList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.myPurchaseList(map);
 	}
 	 
 	

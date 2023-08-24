@@ -272,6 +272,29 @@ li{
 .partName{
 	margin: 0 0 26px 25px;
 }
+table,td{
+	border-bottom: 1px solid #cdcdcd;
+	border-collapse: collapse;
+}
+table{
+	width: 95%;
+	text-align:center;
+    margin: 30px auto;
+}
+th,td{
+	padding : 12px;
+	font-size: 16px;
+}
+td{
+	text-align:center;
+	font-size:15px;
+}
+th{
+	border-bottom: 2px solid #c9b4d9;
+}
+.tr2:hover{
+	background : #fbfbfb;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -320,10 +343,32 @@ li{
 			    :prev-text="'〈'"
 			    :next-text="'〉'"
 			    :container-class="'pagination'"
-			    :page-class="'page-item'">
-			  </paginate>
-			  <hr class="hrr2">
-			<div><h2 class="partName">중고 <span></span></h2></div>
+			    :page-class="'page-item'" v-if="list.length > 0">
+			</paginate>
+			<hr class="hrr2">
+			
+			<div><h2 class="partName">중고 매입 문의 <span class="text1">{{usedList.length}}</span></h2></div>
+			<div>
+				<table v-if="usedList.leng > 0">
+				<tr>
+					<th>No.</th>
+					<th style="width: 400px;">물품</th>
+					<th>답변여부</th>
+					<th>작성자</th>
+					<th>작성일</th>
+				</tr>
+				<tr v-for="(item, index) in usedList" class="tr2">
+					<td>{{item.usedPNo}}</td>
+					<td><a @click="fnUsedView(item.usedPNo)">{{item.usedPName}}</a></td>
+					<td v-if="item.purchase=='W'">대기</td>
+					<td v-else-if="item.purchase=='Y'" style="color:#A782C3;">완료</td>
+					<td v-else-if="item.purchase=='N'" style="color:#A782C3;">완료</td>
+					<td>{{item.userName}}</td>
+					<td>{{item.usedPCdatetime}}</td>
+				</tr>
+			</table>
+			<div v-if="list.length < 1" class="text2">등록된 게시글이 없습니다.</div>
+			</div>
 		</div>	
 	</div>
 </div>
@@ -336,6 +381,7 @@ var app = new Vue({
 	el : '#app',
 	data : {
 		list : [],
+		usedList : [],
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
 		selectPage: 1,
@@ -359,7 +405,6 @@ var app = new Vue({
                 	self.list = data.list;
                 	self.cnt = data.cnt;
 	                self.pageCount = Math.ceil(self.cnt / 8);
-	                console.log(self.list);
                 }
             }); 
 		},
@@ -380,6 +425,20 @@ var app = new Vue({
 				}
 			});
 		},
+		fnGetUsedList : function(){
+			var self = this;
+			var param = {userNo : self.sessionNo};
+			$.ajax({
+				url : "/used/myPurchaseList.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.usedList = data.list;
+                	console.log(self.usedList);
+                }
+            }); 
+		},
 		fnView : function(boardNo){
 			var self = this;
 			$.pageChange("/community/view.do", {boardNo : boardNo});
@@ -390,11 +449,16 @@ var app = new Vue({
 			const diffInHours = (currentTime - postTime) / (1000 * 60 * 60);
 			
 			return diffInHours < 24;
-		}
+		},
+		fnUsedView : function(usedPNo){
+        	var self = this;
+			$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
+        }
 	}, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
+		self.fnGetUsedList();
 		console.log(self.sessionNick);
 	}// created
 });

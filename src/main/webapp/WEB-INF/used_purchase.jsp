@@ -86,6 +86,40 @@ h1{
     cursor: pointer;
     font-size: 16px;
 }
+.btn1:hover{
+    background-color: #8966a3;
+}
+.pagination {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 13px;
+    padding: 0;
+    margin-bottom: 50px;
+}
+.pagination li {
+    margin: 6px;
+    border-radius: 6px;
+    display: inline;
+    margin: 15px;
+    padding: 5px 9px;
+}
+.pagination li:hover {
+	background:#eee;
+}
+.page-item a {
+	color:#666;
+	text-decoration: none;
+}
+.pagination li.active {
+	color: #A782C3;
+    font-weight: bold;
+    border: 1px solid;
+    padding: 5px 9px;
+    border-radius: 6px;
+}
+.pagination li.active a{
+	color : #A782C3;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -119,6 +153,16 @@ h1{
 				</tr>
 			</table>
 		</div>
+		<paginate
+			    :page-count="pageCount"
+			    :page-range="3"
+			    :margin-pages="1"
+			    :click-handler="fnPageSearch"
+			    :prev-text="'〈'"
+			    :next-text="'〉'"
+			    :container-class="'pagination'"
+			    :page-class="'page-item'" v-if="list.length > 0">
+			</paginate>
 		<div class="btnDIV"><button class="btn1" @click="fnInquire">문의하기</button></div>
 	</div>
 </div>
@@ -126,15 +170,25 @@ h1{
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>
+Vue.component('paginate', VuejsPaginate)
 var app = new Vue({
 	el : '#app',
 	data : {
-		list : []
+		list : [],
+		sessionNick : "${sessionNick}",
+		sessionNo : "${sessionNo}",
+		selectPage: 1,
+		pageCount: 1,
+		cnt : 0,
+		searchCnt : 0,
+		searchPageCount : 1
 	},// data
 	methods : {
 		fnGetList : function(){
 			var self = this;
-			var param = {};
+			var startNum = ((self.selectPage-1) * 10);
+    		var lastNum = 10;
+			var param = {startNum : startNum, lastNum : lastNum};
 			$.ajax({
 				url : "/used/purchaseList.dox",
                 dataType:"json",	
@@ -142,9 +196,27 @@ var app = new Vue({
                 data : param,
                 success : function(data) { 
                 	self.list = data.list;
-                	console.log(self.list);
+                	self.cnt = data.cnt;
+                	self.pageCount = Math.ceil(self.cnt / 10);
                 }
             }); 
+		},
+		fnPageSearch : function(pageNum){
+			var self = this;
+			var startNum = ((pageNum-1) * 10);
+			var lastNum = 10;
+			var nparmap = {startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/used/purchaseList.dox",
+				dataType : "json",
+				type : "POST",
+				data : nparmap,
+				success : function(data) {
+					self.list = data.list;
+                	self.searchCnt = data.cnt;
+	                self.pageCount = Math.ceil(self.searchCnt / 10);
+				}
+			});
 		},
 		formatDate: function (dateString) {
             var date = new Date(dateString);

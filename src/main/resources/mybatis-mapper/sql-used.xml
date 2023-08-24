@@ -8,6 +8,20 @@
 		SELECT *
 		FROM t3_tbl_used_purchase
 		ORDER BY USED_P_NO DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	
+	<!-- 중고문의리스트 cnt -->
+	<select id="selectPurchaseCnt" resultType="int">
+		SELECT COUNT(*) FROM t3_tbl_used_purchase
+	</select>
+	
+	<!-- 내 중고 문의리스트 -->
+	<select id="myPurchaseList" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *
+		FROM t3_tbl_used_purchase
+		WHERE USER_NO = #{userNo}
+		ORDER BY USED_P_NO DESC
 	</select>
 	
 	<!-- 중고 문의 등록 -->
