@@ -145,5 +145,5 @@ public class AdminServiceImpl implements AdminService {
 	public int removeAlarm(HashMap<String, Object> map) {
 		return adminMapper.deleteAlarm(map);
 	}
-	
+
 }

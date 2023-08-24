@@ -79,14 +79,14 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
-	<h2 class="title">새소식</h2>
+	<h2 class="title">새소식({{list.length}})</h2>
 		<hr class="hrr">
 		<div class="content_cont" >
 		    <div class="content" v-for="item in list" v-if="item.alarmNo !=''" >
 				<i :class="item.icon" class="iconA"></i>
 					<span class="nick" v-if="item.alarmType == 1 || item.alarmType ==4">{{item.nick}}님 </span>{{item.alarmContent}}
 					<span class="time"> {{item.cTime}}</span>
-				<i class="iconB fa-regular fa-circle-xmark" @click="fnDelete"></i>
+				<i class="iconB fa-regular fa-circle-xmark" @click="fnRemoveAlarm(item.alarmNo)"></i>
 			</div>
 			<div class="contentA" v-else>최근 소식이 없습니다.</div>		
 		</div>
@@ -105,6 +105,7 @@ var app = new Vue({
 		list : [],
 		item : "",
 		userNo : '${sessionNo}',
+
 		
 
 	},// data
@@ -115,7 +116,7 @@ var app = new Vue({
         	console.log(self.userNo);
 
 			 $.ajax({
-	                url : "alarmList.dox",
+	                url : "../alarmList.dox",
 	                dataType:"json",	
 	                type : "POST", 
 	                data : nparmap,
@@ -136,13 +137,29 @@ var app = new Vue({
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) { 
-	                	alert("알람인서트 완");
-	                }
+	               }
             }); 
 			
+		},
+		
+		fnRemoveAlarm : function(alarmNo){
+			var self = this;
+			var nparmap = {userNo:self.userNo, alarmNo};
+			console.log(alarmNo);
+
+			 $.ajax({
+	                url : "removeAlarm.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) {
+	                	self.fnGetAlarm();
+	                	
+	               }
+           }); 
+			
 		}
-		
-		
+
 		
 		
 	}, // methods

@@ -43,11 +43,11 @@
 				</div>
 				<div id="hidden" v-if="true" class="non-user-hidden">
 					<div class="non-user-box">
-						<input placeholder="주문번호">
-						<input placeholder="이메일">
+						<input placeholder="주문번호" v-model="paymentNo">
+						<input placeholder="이메일" v-model="orderEmail">
 					</div>
 					<div class="non-user-btn">
-						<button class="btn" @click="">주문조회</button>
+						<button class="btn" @click="selectNonUserOrder">주문조회</button>
 					</div>
 				</div>
 			</div>
@@ -67,7 +67,9 @@ var app = new Vue({
 	data : {
 		userEmail : "",
 		pwd : "",
-		hidden : false
+		hidden : false,
+		orderEmail : "",
+		paymentNo : ""
 	},// data
 	methods : {
 		fnLogin : function(){
@@ -94,6 +96,10 @@ var app = new Vue({
                    	}
                 }                
             }); 
+        },
+        selectNonUserOrder(){
+        	var self = this;
+        	$.pageChange("/nOrder.do" , {paymentNo : self.paymentNo, orderEmail : self.orderEmail});
         },
         fnClick : function(){
         	if(self.hidden==false){

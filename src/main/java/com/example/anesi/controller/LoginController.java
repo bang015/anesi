@@ -43,7 +43,7 @@ public class LoginController {
 	//비회원 주문 조회
 	@RequestMapping("/nOrder.do") 
 	public String nOrder(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		
+		request.setAttribute("map", map);
 		return "/non_user_order_search";
 		
 	}

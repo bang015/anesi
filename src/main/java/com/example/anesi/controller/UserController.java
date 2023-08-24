@@ -129,7 +129,6 @@ public class UserController {
 	public String join(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("userNo", userService.userJoin(map));    
-		
 		return new Gson().toJson(resultMap);
 	}
 	

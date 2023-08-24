@@ -267,5 +267,6 @@ public class AdminController {
 		adminService.removeAlarm(map);
 		return new Gson().toJson(resultMap);
 	}
+	
 		
 }
