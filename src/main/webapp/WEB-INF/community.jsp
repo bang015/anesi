@@ -110,7 +110,7 @@
     font-size: 14px;
     margin-right : 7px;
 }
-.glass{
+.m-glass{
     width: 18px;
     float: right;
 	margin: 3px 10px 0px 5px;
@@ -179,7 +179,7 @@
 		                </div>
 		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
 		                <div class="nick"><img :src="item.uImgPath+'/'+item.uImgName" class="profile">{{item.nick}}</div>
-		                <div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
+		                <div class="view">좋아요 {{item.gCnt}} · 조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		            </div>
 		        </div>
 	    	</div>
@@ -188,7 +188,7 @@
 		<div id="board-body">
 			<div id="board-body-head"><h2>전체글<span class="text1"> {{cnt}}</span> <span class="text2" v-if="searchFlg==true">검색된 글 <span class="text1">{{searchCnt}}</span></span></h2></div>
 			<div class="searchbar">
-				<input type="text" class="search-input" @keyup.enter="fnSearch" v-model="keyword"><img class="glass" src="../css/image/community/m-glass.png">
+				<input type="text" class="search-input" @keyup.enter="fnSearch" v-model="keyword"><img class="m-glass" src="../css/image/community/m-glass.png">
 			</div>
 		</div>
 		<div class="part">
@@ -201,7 +201,7 @@
 		                </div>
 		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
 		                <div class="nick"><img :src="item.uImgPath+'/'+item.uImgName" class="profile">{{item.nick}}</div>
-		                <div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
+		                <div class="view">좋아요 {{item.gCnt}} · 조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		            </div>
 		        </div>
 			</div>

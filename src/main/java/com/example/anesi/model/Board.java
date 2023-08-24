@@ -21,6 +21,7 @@ public class Board {
 	private String userNo;
 	private String imgName;
 	private String imgPath;
+	private int gCnt;
 	
 	
 	public String getcUDateTime() {
@@ -148,6 +149,12 @@ public class Board {
 	}
 	public void setUserNo(String userNo) {
 		this.userNo = userNo;
+	}
+	public int getgCnt() {
+		return gCnt;
+	}
+	public void setgCnt(int gCnt) {
+		this.gCnt = gCnt;
 	}
 
 }

@@ -320,7 +320,7 @@ li{
 			    :prev-text="'〈'"
 			    :next-text="'〉'"
 			    :container-class="'pagination'"
-			    :page-class="'page-item'" v-if="list.length > 0">
+			    :page-class="'page-item'">
 			  </paginate>
 			  <hr class="hrr2">
 			<div><h2 class="partName">중고 <span></span></h2></div>
@@ -336,24 +336,20 @@ var app = new Vue({
 	el : '#app',
 	data : {
 		list : [],
-		bList : [],
-		keyword : "",
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
 		selectPage: 1,
 		pageCount: 1,
 		cnt : 0,
 		searchCnt : 0,
-		searchPageCount : 1,
-		boardFlg : true,
-		searchFlg : false
+		searchPageCount : 1
 	},// data
 	methods : {
 		fnGetList : function(){
 			var self = this;
             var startNum = ((self.selectPage-1) * 8);
     		var lastNum = 8;
-			var param = {startNum : startNum, lastNum : lastNum, nick : self.sessionNick};
+			var param = {startNum : startNum, lastNum : lastNum, uNo : self.sessionNo};
 			$.ajax({
 				url : "/community/myBoardList.dox",
                 dataType:"json",	
@@ -371,7 +367,7 @@ var app = new Vue({
 			var self = this;
 			var startNum = ((pageNum-1) * 8);
 			var lastNum = 8;
-			var nparmap = {startNum : startNum, lastNum : lastNum, nick : self.sessionNick};
+			var nparmap = {startNum : startNum, lastNum : lastNum, uNo : self.sessionNo};
 			$.ajax({
 				url : "/community/myBoardList.dox",
 				dataType : "json",
@@ -379,13 +375,10 @@ var app = new Vue({
 				data : nparmap,
 				success : function(data) {
 					self.list = data.list;
-                	self.cnt = data.cnt;
-	                self.pageCount = Math.ceil(self.cnt / 8);
+                	self.searchCnt = data.cnt;
+	                self.pageCount = Math.ceil(self.searchCnt / 8);
 				}
 			});
-		},
-		fnWrite : function(){
-			location.href="/community/write.do";
 		},
 		fnView : function(boardNo){
 			var self = this;
@@ -397,48 +390,6 @@ var app = new Vue({
 			const diffInHours = (currentTime - postTime) / (1000 * 60 * 60);
 			
 			return diffInHours < 24;
-		},
-        fnSearch : function(){
-        	var self = this;
-        	if(self.keyword==''){
-        		alert("검색어를 입력하세요.");
-        		return;
-        	}
-            var startNum = ((0) * 12);
-    		var lastNum = 12;
-            var nparmap = {keyword : self.keyword, startNum : startNum, lastNum : lastNum};
-            $.ajax({
-                url : "/community/search.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	self.list = data.sList;
-                	self.searchCnt = data.cnt;
-	                self.searchPageCount = Math.ceil(self.searchCnt / 12);
-	                self.searchFlg=true;
-					self.boardFlg=false;
-                }
-            }); 
-        },
-        fnSearchPageSearch : function(pageNum){
-			var self = this;
-			var startNum = ((pageNum-1) * 12);
-			var lastNum = 12;
-			var nparmap = {keyword : self.keyword, startNum : startNum, lastNum : lastNum};
-			$.ajax({
-				url : "/community/search.dox",
-				dataType : "json",
-				type : "POST",
-				data : nparmap,
-				success : function(data) {
-					self.list = data.sList;
-					self.searchCnt = data.cnt;
-					self.searchPageCount = Math.ceil(self.searchCnt / 12);
-					self.searchFlg=true;
-					self.boardFlg=false;
-				}
-			});
 		}
 	}, // methods
 	created : function() {
