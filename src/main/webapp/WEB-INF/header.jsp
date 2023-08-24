@@ -348,6 +348,7 @@
 			},
 			flgout(){
 				this.flg=false;
+				this.categoryList2 = [];
 			},
 			fnMoveCommunity(type){
 				var self = this;
