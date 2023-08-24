@@ -367,6 +367,14 @@ var app = new Vue({
 		},
 		fnAnswer(){
 			var self = this;
+			if(self.aInfo.aContent==""){
+				alert("답변을 작성해주세요.");
+				return;
+			}
+			if(self.list[0].purchase=='W'){
+				alert("매입 가능 여부를 선택해주세요.");
+				return;
+			}
 			if(!confirm("답변을 등록하시겠습니까?")){
 				return;
 			}
