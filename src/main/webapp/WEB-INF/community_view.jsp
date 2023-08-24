@@ -248,8 +248,8 @@ img{
 <div id="app">
 	<div id="app2">
 		<div class="move">
-			<div class="stat-out"><img class="stat-icon" src="../css/image/community/joahyo.png"></div>
-			<div class="stat-out"><img class="stat-icon" src="../css/image/community/an-joahyo.png"></div>
+			<div class="stat-out" v-if="greatList.includes(sessionNo)" @click="fnEditGreat('2')"><img class="stat-icon" src="../css/image/community/joahyo.png"></div>
+			<div class="stat-out" v-if="!greatList.includes(sessionNo)" @click="fnEditGreat('1')"><img class="stat-icon" src="../css/image/community/an-joahyo.png"></div>
 			<div class="stat-out"><img class="stat-icon" src="../css/image/community/comment.png" name="comment" @click="scrollToComment"></div>
 			<div class="stat-out" @click="copyAddress"><img class="stat-icon" src="../css/image/community/share.png"></div>
 		</div>
@@ -368,7 +368,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	console.log(self.info);
                 	self.cCnt = data.cCnt;
                 	self.imgPath = data.info.imgPath;
                 	self.imgName = data.info.imgName;
@@ -581,12 +580,26 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	self.greatList = data.list;
+                	self.greatList = data.list.map(item => {
+                		return item.userNo;
+                	});
                 	self.great = self.greatList.length; 
-                	console.log(self.greatList);
                 }
 			})
 			
+		},
+		fnEditGreat(type){
+			var self = this;
+			var nparmap = {bNo : self.bNo, userNo : self.sessionNo, type};
+			$.ajax({
+                url : "editGreat.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.fnGetBoardGreatList();
+                }
+			})
 		}
 	}, // methods
 	created : function() {

@@ -102,6 +102,7 @@ public class BoardServiceImpl implements BoardService{
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		boardMapper.deleteAllComment(map);
 		boardMapper.deleteBoardImage(map);
+		boardMapper.deleteGreatList(map);
 		boardMapper.deleteBoard(map);
 		return resultMap;
 	}
@@ -145,6 +146,18 @@ public class BoardServiceImpl implements BoardService{
 	public List<Board> searchBoardGreatList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return boardMapper.selectBoardGreatList(map);
+	}
+
+	@Override
+	public int editGreat(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+
+		if(map.get("type").equals("1")) {
+			boardMapper.insertGreat(map);
+		} else {
+			boardMapper.deleteGreat(map);
+		}
+		return 1;
 	}
 
 }
