@@ -222,7 +222,14 @@
 					<span></span>
 				</li>
 			</ul>
-			<button class="headerbtn">Fade</button>
+			<button class="headerbtn" @click="fnShowCommunityButton">글쓰기<i class="fa-solid fa-chevron-down fa-lg" style="color: #ffffff; margin-left: 5px"></i></button>
+			<div class="communityButton" :class="{ show: communityflg }">
+				<div class="btnBox11">
+					<a @click="fnMoveCommunity('1')"><img alt="" src="../css/image/communityAdd2.png" class="communityImg">커뮤니티 글쓰기</a>
+					<a @click="fnMoveCommunity('2')"><img alt="" src="../css/image/communityAdd.png" class="communityImg">상품 리뷰 쓰기</a>
+					<a @click="fnMoveCommunity('3')"><img alt="" src="../css/image/communityAdd3.png" class="communityImg">중고 물품 등록</a>
+				</div>
+			</div>
 		</div>
 		</div>
 		<div class="nav1">
@@ -296,6 +303,7 @@
 			categoryList1 : [], //카테고리 대분류
 			categoryList2 : [],
 			category2Name : "",
+			communityflg : false,
 		},// data
 		methods : {
 			fnGetcategoryList1(){
@@ -329,7 +337,6 @@
 	            });
 			},
 			fnCategoryPage(item){
-				console.log(item);
 				$.pageChange("/category/product.do" , {categoryNo : item});
 				
 			},
@@ -338,12 +345,25 @@
 			},
 			flgout(){
 				this.flg=false;
+			},
+			fnMoveCommunity(type){
+				var self = this;
+				if(type == '1'){
+					$.pageChange("http://localhost:8080/community/write.do" , {});
+				} else if(type == '2') {
+					$.pageChange("http://localhost:8080/mypage/myShopping.do" , {});
+				} else if(type == '3') {
+					$.pageChange("http://localhost:8080/used/inquire.do" , {});
+				}
+			},
+			fnShowCommunityButton(){
+				var self = this;
+				self.communityflg = !self.communityflg;
 			}
 		}, // methods
 		created : function() {
 			var self = this;
 			self.fnGetcategoryList1();
-			console.log(self.userNo);
 		}// created
 	});
 	   var isLoggedIn = <%= isLoggedIn %>;
