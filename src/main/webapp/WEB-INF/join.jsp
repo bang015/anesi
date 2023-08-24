@@ -241,7 +241,8 @@ var app = new Vue({
 		pw2Ms : "",
 		nameMs : "",
 		nickMs : "",
-		phoneMs : ""
+		phoneMs : "",
+		userNo : ""
 	},// data
 	methods : {
 		// 회원가입 버튼
@@ -354,6 +355,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	alert("회원가입이 완료되었습니다.");
+                	console.log(data.userNo);
+                	self.userNo=data.userNo;
+                	self.fnInsertAlarm(1);
                 	location.href="main.do";
                 }
             });
@@ -484,7 +488,7 @@ var app = new Vue({
         fnMain : function(){
         	location.href="main.do";
         },
-        
+        //회원가입알람
         fnInsertAlarm : function(alarmType){
 			var self = this;
 			var nparmap = {userNo:self.userNo, alarmType};

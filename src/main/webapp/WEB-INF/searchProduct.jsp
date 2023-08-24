@@ -126,7 +126,12 @@ border : 1px solid black;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
-
+.noneDisplay{
+	display: none !important;
+}
+.showDisplay{
+	display: flex !important;
+}
 
 
 
@@ -213,50 +218,51 @@ border : 1px solid black;
 	    
 	    
 	    
-    	<div class="modal" v-if="showCartModal" >
-		  <div class="modal-card">
-		    <h2>장바구니에 추가</h2>
-		    <p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveCart" >장바구니로 이동하기</button>
-		  </div>
+		<div class="modal noneDisplay" v-if="showCartModal" :class="{'showDisplay' : showCartModal}">
+			<div class="modal-card">
+				<h2>장바구니에 추가</h2>
+				<p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
+				<button @click="closeModal" class="left_button">쇼핑계속하기</button>
+				<button @click="fnMoveCart" class="right_button">장바구니로 이동하기</button>
+			</div>
 		</div>
-		
-    	<div class="modal" v-if="showScrapModal">
-		  <div class="modal-card"  v-if="userId!=''">
-		    <h2>스크랩북에 등록</h2>
-		    <p>상품이 스크랩되었습니다.</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveScrapbook">스크랩북으로 이동하기</button>
-		  </div>
-		  
-		  <div class="modal-card"  v-else>
-		    <h2>로그인후 사용 가능합니다.</h2>
-		    <p>로그인하시겠습니까?</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveLoginPage">로그인페이지로 이동하기</button>
-		  </div>
+
+		<div class="modal noneDisplay" v-if="showScrapModal" :class="{'showDisplay' : showScrapModal}">
+			<div class="modal-card" v-if="userId!=''">
+				<h2>스크랩북에 등록</h2>
+				<p>상품이 스크랩되었습니다.</p>
+				<button @click="closeModal" class="left_button">쇼핑계속하기</button>
+				<button @click="fnMoveScrapbook" class="right_button">스크랩북으로
+					이동하기</button>
+			</div>
+
+			<div class="modal-card" v-else>
+				<h2>로그인후 사용 가능합니다.</h2>
+				<p>로그인하시겠습니까?</p>
+				<button @click="closeModal" class="left_button">쇼핑계속하기</button>
+				<button @click="openScrapModal3" class="right_button">로그인페이지로
+					이동하기</button>
+			</div>
 		</div>
-		
-		
-	
-    	<div class="modal" v-if="showScrapDeleteModal">
-		  <div class="modal-card">
-		    <h2>스크랩북에서 삭제되었습니다.</h2>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveScrapbook">스크랩북으로 이동하기</button>
-		  </div>
-		  
+
+		<div class="modal noneDisplay" v-if="showScrapDeleteModal" :class="{'showDisplay' : showScrapDeleteModal}">
+			<div class="modal-card">
+				<h2>스크랩북에서 삭제되었습니다.</h2>
+				<button @click="closeModal" class="left_button">쇼핑계속하기</button>
+				<button @click="fnMoveScrapbook" class="right_button">스크랩북으로
+					이동하기</button>
+			</div>
 		</div>
-    	<div class="modal" v-if="showScrapModalBan">
-		  <div class="modal-card">
-		    <h2>이미 담긴상품입니다.</h2>
-		    <p>스크랩북을 확인해주세요</p>
-		    <button @click="closeModal">쇼핑계속하기</button>
-		    <button @click="fnMoveMyPage">스크랩북으로 이동하기</button>
-		  </div>
+
+		<div class="modal noneDisplay" v-if="showScrapModalBan" :class="{'showDisplay' : showScrapModalBan}">
+			<div class="modal-card">
+				<h2>이미 담긴상품입니다.</h2>
+				<p>스크랩북을 확인해주세요</p>
+				<button @click="closeModal" class="left_button">쇼핑계속하기</button>
+				<button @click="fnMoveMyPage" class="right_button">스크랩북으로
+					이동하기</button>
+			</div>
 		</div>
-	
 	    
     </div>
 <div id="app" data-session-product-name="<%=session.getAttribute("sessionProductName") %>"></div>

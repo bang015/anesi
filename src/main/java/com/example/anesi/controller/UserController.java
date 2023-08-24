@@ -32,7 +32,6 @@ public class UserController {
 	// 회원가입 페이지
 	@RequestMapping("/join.do") 
     public String test(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		
 		return "/join";
     }
 	// 이용약관 페이지
@@ -121,7 +120,6 @@ public class UserController {
 	// 내 쿠폰
 	@RequestMapping("mypage/myCoupon.do") 
     public String myCoupon(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-
 		return "/myCoupon";
     }
 	
@@ -130,7 +128,8 @@ public class UserController {
 	@ResponseBody
 	public String join(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		userService.userJoin(map);
+		resultMap.put("userNo", userService.userJoin(map));    
+		
 		return new Gson().toJson(resultMap);
 	}
 	
