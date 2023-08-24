@@ -31,6 +31,8 @@ public interface AdminMapper {
 	List<UserOrder> selectDeliveryList(HashMap<String, Object> map);
 	//배송상태 업데이트
 	int updateDelivery(HashMap<String, Object> map);
+	//배송상태 업데이트2
+	int updateNonDelivery(HashMap<String, Object> map);
 	//배송 검색
 	List<UserOrder> selectSearchList(HashMap<String, Object> map);
 	// 문의 내역 조회

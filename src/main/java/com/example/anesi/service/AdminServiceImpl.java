@@ -72,6 +72,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int editDelivery(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
+		adminMapper.updateNonDelivery(map);
 		return adminMapper.updateDelivery(map);
 	}
 

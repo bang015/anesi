@@ -96,7 +96,7 @@
 									<th>진행상태(최종처리일)</th>
 								</tr>
 								<tr v-for="item in orderList2" v-if="item.deliverySit == listNo || listNo == 0">
-									<td><input type="checkbox" v-model="checkList" :value="item.orderNo" @change="updateAllCheck"></td>
+									<td><input type="checkbox" v-model="checkList" :value="item.paymentNo" @change="updateAllCheck"></td>
 									<td>{{item.paymentNo}}</td>
 									<td>{{item.productName}}({{item.optionName}})</td>
 									<td>{{item.cnt}}</td>
@@ -158,7 +158,6 @@ var app = new Vue({
                 			 return { ...item, deliveryName: '배송완료' };
                 		}
                 	})
-                	console.log(self.orderList2);
                 	
                 }
             });
@@ -168,7 +167,7 @@ var app = new Vue({
 		    if (self.checkList.length === self.orderList2.length) {
 				self.checkList = [];
 		    } else {
-			    self.checkList = self.orderList2.map(item => item.orderNo);
+			    self.checkList = self.orderList2.map(item => item.paymentNo);
 		    }
 		},
 		// 체크박스 체크
@@ -217,14 +216,12 @@ var app = new Vue({
 			var self = this;
 			self.listNo = self.selectListNo;
 			var nparmap = {searchOption : self.searchOption, searchText : self.searchText};
-			console.log(nparmap);
 			$.ajax({
                 url : "/admin/searchList.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	console.log(data);
                 	self.orderList = data.list;
                 	self.orderList2 = [];
                 	self.orderList2 = self.orderList.map(item => {

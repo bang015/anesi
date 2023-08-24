@@ -87,7 +87,17 @@
 		UPDATE t3_tbl_user_order
 			SET
 			DELIVERY_SIT = #{sit}
-		WHERE ORDER_NO IN 
+		WHERE PAYMENT_NO IN 
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</update>
+	
+	<update id="updateNonDelivery" parameterType="hashmap">
+		UPDATE t3_tbl_nonuser_order
+			SET
+			DELIVERY_SIT = #{sit}
+		WHERE PAYMENT_NO IN 
 		<foreach collection="list" close=")" open="(" item="item" separator=",">
 			#{item}
 		</foreach>
