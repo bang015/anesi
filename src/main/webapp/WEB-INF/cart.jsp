@@ -369,12 +369,17 @@ new Vue({
 
   		    // 여기에서 order.do로 이동하면서 데이터를 넘겨줍니다.
   		    const productData = filteredItems.map(item => {
-  		      let selectedOption = this.selectedOptions.find(o => o.productNo === item.productNo);
+  		      let selectedOption = item.selectedOption;
   		      if (selectedOption === undefined) {
   		    	    selectedOption = {
   		    	      optionNo: item.optionNo,
-  		    	      optionPrice: item.optionPrice // 디폴트 옵션 가격을 0으로 설정하거나 다른 적절한 값으로 설정
+  		    	      optionPrice: 0 // 디폴트 옵션 가격을 0으로 설정하거나 다른 적절한 값으로 설정
   		    	    };
+  		    	  } else {
+  		    		selectedOption = {
+  	  		    	      optionNo: item.selectedOption,
+  	  		    	      optionPrice: item.optionPrice // 디폴트 옵션 가격을 0으로 설정하거나 다른 적절한 값으로 설정
+  	  		    	    };
   		    	  }
   		      return {
   		        productNo: item.productNo,
@@ -386,7 +391,7 @@ new Vue({
   		      
   		      };
   		    });
-				
+			console.log(productData);	
     		    
     		    // 쿼리 문자열을 만듭니다.
     		   let queryString = '';
