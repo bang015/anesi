@@ -338,4 +338,9 @@
 .pagination a{
 	padding: 4px 12px ;
 }
-
+.noneDisplay{
+	display: none !important;
+}
+.showDisplay{
+	display: flex !important;
+}

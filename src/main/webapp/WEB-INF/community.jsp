@@ -143,7 +143,6 @@
 .pagination li.active {
 	color: white;
     font-weight: bold;
-    border: 1px solid;
     padding: 8px 10px;
     border-radius: 6px;
     background: #A782C3;

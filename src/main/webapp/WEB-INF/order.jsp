@@ -250,7 +250,7 @@
 						</button>
 					</div>
 				</div>
-				<div class="modal" v-if="showScrapModal">
+			<div class="modal noneDisplay" v-if="showScrapModal" :class="{'showDisplay' : showScrapModal}">
 		        <div class="modal-card">
 		        	<div class="modalStyle1">주문완료</div>
 		        	<div class="modalStyle2">
