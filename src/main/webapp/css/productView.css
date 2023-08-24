@@ -366,3 +366,9 @@
 		height: 45px;
 		border-radius: 5px;
 	}
+	.noneDisplay{
+	display: none !important;
+	}
+	.showDisplay{
+		display: flex !important;
+	}

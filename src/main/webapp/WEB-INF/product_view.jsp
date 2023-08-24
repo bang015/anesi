@@ -183,7 +183,7 @@
 									<span class="review-text1">리뷰 </span><span class="review-text2" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span>
 									<button class="review-btn" @click="openScrapModal" v-if="reviewUser.length != 0">리뷰쓰기</button>
 								</div>
-								<div class="modal" v-if="showScrapModal">
+								<div class="modal noneDisplay" v-if="showScrapModal" :class="{'showDisplay' : showScrapModal}">
 									
 							        <div class="review-add">
 							        <div class="review-back">
@@ -348,7 +348,7 @@
 									<span class="review-text1">문의 </span><span class="review-text2" v-if="inquiryListCnt > 0"> {{inquiryListCnt}}</span>
 									<button class="review-btn" @click="openScrapModal2">문의하기</button>
 								</div>
-								<div class="modal" v-if="showScrapModal2">
+								<div class="modal noneDisplay" v-if="showScrapModal2" :class="{'showDisplay' : showScrapModal2}">
 									<div class="inquiry-add-wrap">
 										<div class="review-back">
 											<button class="back-btn" @click="closeScrapModal2()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
@@ -525,7 +525,7 @@
 						</div>
 						</div>
 						
-						<div class="modal" v-if="showScrapModal3">
+						<div class="modal noneDisplay" v-if="showScrapModal3" :class="{'showDisplay' : showScrapModal3}">
 							<div class="container">
 							<div class="review-back">
 								<button class="back-btn" @click="closeScrapModal3()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
@@ -559,7 +559,7 @@
 								</div>
 							</div>		
 						</div>
-						<div class="modal" v-if="showScrapModal4">
+						<div class="modal noneDisplay" v-if="showScrapModal4" :class="{'showDisplay' : showScrapModal4}">
 							<div class="modal-card">
 						<h2>장바구니에 추가</h2>
 						<p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
