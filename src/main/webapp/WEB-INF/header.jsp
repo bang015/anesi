@@ -211,7 +211,7 @@
 				</li>
 				<li class="icon2 alarm">
 					<span class="aCnt">{{alarmList.length}}</span>
-					<a href="http://localhost:8080/alarm.do">
+					<a href="http://localhost:8080/alarm.do" >
 						<i class="fa-solid fa-bell "></i>
 					</a>
 					<span></span>
