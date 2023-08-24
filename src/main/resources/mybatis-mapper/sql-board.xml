@@ -201,4 +201,11 @@
 			IMG_SIZE = #{imgSize}
 		WHERE BOARD_NO = #{bNo}			
 	</insert>
+	
+	<!-- 게시글 좋아요 리스트 -->
+	<select id="selectBoardGreatList" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT USER_NO
+		FROM t3_tbl_board_great
+		WHERE BOARD_NO = #{bNo}
+	</select>
 </mapper>

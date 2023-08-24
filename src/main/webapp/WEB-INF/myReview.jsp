@@ -292,6 +292,9 @@ var app = new Vue({
 	}, // methods
 	created : function() {
 		var self = this;
+		if(self.userNo == ''){
+			location.href="../login.do";
+		}
 		self.fnGetMyReview();
 	}// created
 });

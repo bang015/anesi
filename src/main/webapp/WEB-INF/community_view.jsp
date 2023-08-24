@@ -259,7 +259,7 @@ img{
 			</div>
 			<div id="content-head">
 				<div><h2>{{info.title}}</h2></div>
-				<div><img class="profile" :src="info.uImgPath+'/'+info.uImgName"></div>
+				<div><img class="profile" :src="info.uImgPath+'/'+info.uImgName" v-if="info.uImgPath != undefined"></div>
 				<div class="time">{{postCalculateTime(info.cDateTime)}}<span v-if="info.cDateTime!=info.uDateTime"> · {{calculateTime(info.uDateTime)}} 수정</span></div>
 				<div class="nick">{{info.nick}}</div>
 			</div>
@@ -268,7 +268,7 @@ img{
 			<div>
 			    <div v-html="info.content"></div>
 			</div>
-			<div class="stat"><!-- 좋아요 <span class="stat-detail">2</span> 　 -->댓글 <span class="stat-detail">{{cCnt}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
+			<div class="stat">좋아요 <span class="stat-detail">{{great}}</span> 　 댓글 <span class="stat-detail">{{cCnt}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
 			
 			<button class="btn2" @click="fnBack">목록으로</button>
 			<button class="btn2" @click="fnDelete" v-if="sessionNo==info.userNo||sessionStatus=='A'">삭제</button>
@@ -278,7 +278,7 @@ img{
 			<div style="font-size:19px;">댓글 <span>{{cCnt}}</span></div>
 			<div id="comment-head">
 				<div v-if="sessionNo!=''">
-					<img class="profile2" :src="profileImg.uImgPath+'/'+profileImg.uImgName"><input class="comment-input" type="text" v-model="content">
+					<img class="profile2" :src="profileImg.uImgPath+'/'+profileImg.uImgName" v-if="profileImg.uImgPath != undefined"><input class="comment-input" type="text" v-model="content">
 					<button class="btn1" @click="fnComInsert">입력</button>
 				</div>
 				<div v-else class="guide">로그인 후 댓글 입력 가능합니다.</div>
@@ -287,7 +287,7 @@ img{
 				<div v-for="(item, index) in commentList">
 					    <div class="comment-item">
 					        <div>
-					            <div class="cNick">{{item.cNick}}<img class="c-profile" :src="item.uImgPath+'/'+item.uImgName"></div>
+					            <div class="cNick">{{item.cNick}}<img class="c-profile" :src="item.uImgPath+'/'+item.uImgName" v-if="item.uImgPath != undefined"></div>
 					            <div class="cComm">
 					                <span v-if="item.commFlg==true">
 					                    <input v-model="item.comm" class="comment-edit-input" @keyup.enter="fnComEdit(item.commentNo, item.comm)">
@@ -353,7 +353,9 @@ var app = new Vue({
 		profileImg : {},
 		uProfileImg : {},
 		imgPath : "",
-		imgName : ""
+		imgName : "",
+		greatList : [],
+		great : 0,
 	},// data	
 	methods : {
 		fnGetInfo : function(){
@@ -569,6 +571,22 @@ var app = new Vue({
                 	self.profileImg = data.img;
                 }
 			})
+		},
+		fnGetBoardGreatList(){
+			var self = this;
+			var nparmap = {bNo : self.bNo};
+			$.ajax({
+                url : "searchBoardGreatList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.greatList = data.list;
+                	self.great = self.greatList.length; 
+                	console.log(self.greatList);
+                }
+			})
+			
 		}
 	}, // methods
 	created : function() {
@@ -576,6 +594,7 @@ var app = new Vue({
 		self.fnGetInfo();
 		self.fnGetProfile();
 		self.fnGetComment();
+		self.fnGetBoardGreatList();
 	}// created
 });
 </script>

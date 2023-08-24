@@ -39,5 +39,7 @@ public interface BoardService {
 	int communityUpload(HashMap<String, Object> map);
 	// 커뮤니티 썸네일 수정
 	int communityUpdate(HashMap<String, Object> map);
+	// 글 좋아요 리스트
+	List<Board> searchBoardGreatList(HashMap<String, Object> map);
 	
 }

@@ -141,4 +141,10 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.deleteBoardImage(map);
 	}
 
+	@Override
+	public List<Board> searchBoardGreatList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return boardMapper.selectBoardGreatList(map);
+	}
+
 }

@@ -9,7 +9,7 @@
 			   C.CATEGORY_NAME, 
 			   D.DISCOUNT_PRICE, 
 			   i.*, 
-			   COALESCE(R2.csatAvg, 4.5) AS csatAvg 
+			   COALESCE(R2.csatAvg, 0) AS csatAvg 
 		FROM t3_tbl_product AS P
 		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
 		LEFT JOIN (

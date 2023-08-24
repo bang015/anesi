@@ -245,6 +245,9 @@ var app = new Vue({
 	}, // methods
 	created : function() {
 		var self = this;
+		if(self.sessionNo == ''){
+			location.href="../login.do";
+		}
 		if(self.bNo != ""){
 			self.fnGetInfo();
 		}
