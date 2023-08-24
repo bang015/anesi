@@ -66,4 +66,6 @@ public interface AdminMapper {
 	// 알람 삭제
 	int deleteAlarm(HashMap<String, Object> map);
 	
+	//중고 물품 검색
+	List<Used> selectUsedList(HashMap<String, Object> map);
 }
