@@ -107,6 +107,13 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return orderMapper.selectNonUserOrder(map);
 	}
+	@Override
+	public int editNonUserOrder(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		orderMapper.updateNonUserOrder(map);
+		orderMapper.updateNonUserOrderAddr(map);
+		return 0;
+	}
 		
 	
 	

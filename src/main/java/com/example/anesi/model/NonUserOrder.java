@@ -14,6 +14,20 @@ public class NonUserOrder {
 	private String addr;
 	private String addr2;
 	private String addrKind;
+	private int addrNo;
+	private int deliverySit;
+	public int getDeliverySit() {
+		return deliverySit;
+	}
+	public void setDeliverySit(int deliverySit) {
+		this.deliverySit = deliverySit;
+	}
+	public int getAddrNo() {
+		return addrNo;
+	}
+	public void setAddrNo(int addrNo) {
+		this.addrNo = addrNo;
+	}
 	public int getZipCode() {
 		return zipCode;
 	}

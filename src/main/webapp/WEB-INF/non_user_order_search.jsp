@@ -145,10 +145,7 @@
 }
 .order-product{
 	display: flex;
-	border: 1px solid #dbdbdb ;
-	border-radius: 5px;
-	padding: 10px;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 .order-product-name{
 	font-size: 16px;
@@ -172,6 +169,36 @@
 .order-product-cnt{
 	font-size: 14px;
 	color: #828c94;
+}
+.btn1{
+	float: right;
+	margin-right: 10px;
+	width: 100%;
+	margin-bottom: 20px;
+}
+.btn1 button{
+	width: 100px;
+	height: 40px;
+	background-color: #fff;
+	color: #A782C3;
+	border: 1px solid #A782C3;
+	border-radius: 5px;
+	font-size: 15px;
+	font-weight: 600;
+}
+.btn1 span{
+	font-size: 14px;
+	color: #828c94;
+}
+.delivery{
+	border: 1px solid #dbdbdb ;
+	border-radius: 5px;
+	padding: 10px;
+}
+.deliverySit-chekc{
+	font-size: 16px;
+	font-weight: 600;
+	color: #A782C3;
 }
 </style>
 </head>
@@ -214,14 +241,14 @@
 						        </select>
 						    </div>
 						    <div class="orInputBox1">
-						        <input v-model="phone2" placeholder="입력해주세요" @input="fnCheck('adPhone')">
+						        <input v-model="phone2" placeholder="입력해주세요">
 						    </div>
 						</label>
 					</div>
 					<div class="user-flex2">
 						<label class="add-label">
 							<span>주소</span>
-							<button class="addrButton" >주소찾기</button><!-- @click="openAddressSearch" -->
+							<button class="addrButton" @click="fnSearchAddr">주소찾기</button>
 							<div class="orInputBox">
 						        <input v-model="zipCode" readonly class="inpRead">
 						    </div> 
@@ -237,24 +264,33 @@
 						    </div>
 						</label>
 					</div>
+					
+				</div>
+				<div class="btn1">
+					<button @click="fnAddrUpdate" v-if="deliverySit < 3">변경</button> <span>배송이 시작되면 배송지를 변경할 수 없습니다.</span>
 				</div>
 				<div class="order-product-wrap">
 					<div class="order-product-title">
 						주문상품
 					</div>
-					<div class="order-product" v-for="item in nonUserOrder">
-						<div class="product-img">
-							<img  :src="item.imgPath+'/'+item.imgName">
+					<div class="delivery">
+						<div class="deliverySit-chekc">
+							{{deliverySitCheck}}
 						</div>
-						<div class="order-content">
-							<div class="order-product-name">
-								{{item.productName}}
+						<div class="order-product" v-for="item in nonUserOrder">
+							<div class="product-img">
+								<img  :src="item.imgPath+'/'+item.imgName">
 							</div>
-							<div class="order-product-option">
-								{{item.optionName}}
-							</div>
-							<div class="order-product-price">
-								{{item.orderPrice | formatPrice}}원 <span class="order-product-cnt">| {{item.cnt}}개</span>
+							<div class="order-content">
+								<div class="order-product-name">
+									{{item.productName}}
+								</div>
+								<div class="order-product-option">
+									{{item.optionName}}
+								</div>
+								<div class="order-product-price">
+									{{item.orderPrice | formatPrice}}원 <span class="order-product-cnt">| {{item.cnt}}개</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -276,13 +312,13 @@ var app = new Vue({
 		nonUserOrder : [],
 		phone1 : "",
 		phone2 : "",	
-		addrDetail : "",
-		zipNo : "",
 		addrKind : "",
 		receiptName : "",
 		zipCode : "",
 		addr : "",
 		addr2 : "",
+		deliverySit : 0,
+		deliverySitCheck : "",
 	},// data
 	filters: {
 	    formatPrice(price) {
@@ -307,24 +343,50 @@ var app = new Vue({
                 	self.zipCode = self.nonUserOrder[0].zipCode;
                 	self.addr = self.nonUserOrder[0].addr;
                 	self.addr2 = self.nonUserOrder[0].addr2;
+                	self.deliverySit = self.nonUserOrder[0].deliverySit;
+                	if(self.deliverySit == 1){
+                		self.deliverySitCheck = "결제완료";
+                	}
+                	if(self.deliverySit == 2){
+                		self.deliverySitCheck = "배송준비";
+                	}
+                	if(self.deliverySit == 3){
+                		self.deliverySitCheck = "배송중";
+                	}
+                	if(self.deliverySit == 4){
+                		self.deliverySitCheck = "배송완료";
+                	}
+                	console.log(self.deliverySit)
                 }
             });
-		}
-		/* fnSearchAddr : function (){
+		},
+		fnSearchAddr : function (){
 			var self = this;
     		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
     		window.open("addr.do", "test", option);
 		},
 		fnResult : function(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
     		var self = this;
-    		self.user.addr = roadAddrPart1;
-    		self.user.addrDetail = addrDetail;
     		// 콘솔 통해 각 변수 값 찍어보고 필요한거 가져다 쓰면 됩니다.
-    		console.log(zipNo);
-    		console.log(roadAddrPart1);
-    		console.log(addrDetail);
-    		console.log(engAddr);
-    	} */
+    		self.zipCode=zipNo;
+    		self.addr=roadAddrPart1;
+    		self.addr2=addrDetail;
+    	},
+    	fnAddrUpdate(){
+    		var self = this;
+    		var phone=self.phone1+self.phone2;
+    		console.log(phone);
+			var nparmap = {paymentNo : self.paymentNo , addrKind : self.addrKind, phone : phone, receiptName : self.receiptName, zipCode : self.zipCode, addr : self.addr, addr2 : self.addr2, addrNo : self.nonUserOrder[0].addrNo};
+            $.ajax({
+                url : "../nonUserOrderUpdate.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) { 
+                	self.fnNonUserOrder();
+                }
+            });
+    	}
 	}, // methods
 	created : function() {
 		var self = this;

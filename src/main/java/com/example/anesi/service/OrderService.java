@@ -31,4 +31,6 @@ public interface OrderService {
 	int editOptionStock(HashMap<String, Object> map);
 	// 비회원 주문 조회
 	List<NonUserOrder> searchNonUserOrder(HashMap<String, Object> map);
+	// 비회원 주문 수정
+	int editNonUserOrder(HashMap<String, Object> map);
 }

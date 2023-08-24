@@ -42,4 +42,8 @@ public interface OrderMapper {
 	int updateOptionStock(HashMap<String, Object> map);
 	// 비회원 주문 조회
 	List<NonUserOrder> selectNonUserOrder(HashMap<String, Object> map);
+	// 비회원 주문 수정
+	int updateNonUserOrder(HashMap<String, Object> map);
+	// 비회원 주소 수정
+	int updateNonUserOrderAddr(HashMap<String, Object> map);
 }

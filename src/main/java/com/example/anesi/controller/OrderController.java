@@ -133,12 +133,20 @@ public class OrderController {
 		return new Gson().toJson(resultMap);
 	}
 	// 비회원 주문 조회
-		@RequestMapping(value = "/nonUserOrder.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-		@ResponseBody
-		public String nonUser(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception {
-			HashMap<String, Object> resultMap = new HashMap<String, Object>();
-			List<NonUserOrder> nonUserOrder = orderService.searchNonUserOrder(map);
-			resultMap.put("nonUserOrder", nonUserOrder);
-			return new Gson().toJson(resultMap);
-		}
+	@RequestMapping(value = "/nonUserOrder.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String nonUser(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<NonUserOrder> nonUserOrder = orderService.searchNonUserOrder(map);
+		resultMap.put("nonUserOrder", nonUserOrder);
+		return new Gson().toJson(resultMap);
+	}
+	//입력 주소 검색
+	@RequestMapping(value = "/nonUserOrderUpdate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String update(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		orderService.editNonUserOrder(map);
+		return new Gson().toJson(resultMap);
+	}
 }
