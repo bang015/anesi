@@ -194,11 +194,15 @@
 	border: 1px solid #dbdbdb ;
 	border-radius: 5px;
 	padding: 10px;
+	margin-bottom: 10px;
 }
 .deliverySit-chekc{
 	font-size: 16px;
 	font-weight: 600;
 	color: #A782C3;
+}
+.order-product-wrap{
+	
 }
 </style>
 </head>
@@ -273,11 +277,20 @@
 					<div class="order-product-title">
 						주문상품
 					</div>
-					<div class="delivery">
-						<div class="deliverySit-chekc">
-							{{deliverySitCheck}}
+					<div class="delivery"  v-for="item in nonUserOrder">
+						<div class="deliverySit-chekc" v-if="item.deliverySit == 1">
+							결제완료
 						</div>
-						<div class="order-product" v-for="item in nonUserOrder">
+						<div class="deliverySit-chekc" v-if="item.deliverySit == 2">
+							배송준비
+						</div>
+						<div class="deliverySit-chekc" v-if="item.deliverySit == 3">
+							배송중
+						</div>
+						<div class="deliverySit-chekc" v-if="item.deliverySit == 4">
+							배송완료
+						</div>
+						<div class="order-product">
 							<div class="product-img">
 								<img  :src="item.imgPath+'/'+item.imgName">
 							</div>
@@ -344,19 +357,7 @@ var app = new Vue({
                 	self.addr = self.nonUserOrder[0].addr;
                 	self.addr2 = self.nonUserOrder[0].addr2;
                 	self.deliverySit = self.nonUserOrder[0].deliverySit;
-                	if(self.deliverySit == 1){
-                		self.deliverySitCheck = "결제완료";
-                	}
-                	if(self.deliverySit == 2){
-                		self.deliverySitCheck = "배송준비";
-                	}
-                	if(self.deliverySit == 3){
-                		self.deliverySitCheck = "배송중";
-                	}
-                	if(self.deliverySit == 4){
-                		self.deliverySitCheck = "배송완료";
-                	}
-                	console.log(self.deliverySit)
+                	
                 }
             });
 		},
