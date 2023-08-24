@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.anesi.model.NonUserOrder;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
 import com.example.anesi.model.UserAddress;
@@ -39,4 +40,6 @@ public interface OrderMapper {
 	int selectNonOrderCnt(HashMap<String, Object> map);
 	// 재고 업데이트
 	int updateOptionStock(HashMap<String, Object> map);
+	// 비회원 주문 조회
+	List<NonUserOrder> selectNonUserOrder(HashMap<String, Object> map);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.anesi.mapper.AdminMapper;
 import com.example.anesi.mapper.OrderMapper;
+import com.example.anesi.model.NonUserOrder;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
 import com.example.anesi.model.UserAddress;
@@ -100,7 +101,13 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return orderMapper.updateOptionStock(map);
 	}
-	
+	// 비회원 주문 조회
+	@Override
+	public List<NonUserOrder> searchNonUserOrder(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderMapper.selectNonUserOrder(map);
+	}
+		
 	
 	
 	

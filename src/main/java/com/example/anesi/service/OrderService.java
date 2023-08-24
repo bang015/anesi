@@ -3,6 +3,7 @@ package com.example.anesi.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.anesi.model.NonUserOrder;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
 import com.example.anesi.model.UserAddress;
@@ -28,4 +29,6 @@ public interface OrderService {
 	int searchOrderCnt(HashMap<String, Object> map);
 	// 재고 업데이트
 	int editOptionStock(HashMap<String, Object> map);
+	// 비회원 주문 조회
+	List<NonUserOrder> searchNonUserOrder(HashMap<String, Object> map);
 }

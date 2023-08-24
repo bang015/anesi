@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
+import com.example.anesi.model.NonUserOrder;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
 import com.example.anesi.model.UserAddress;
 import com.example.anesi.service.OrderService;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import jakarta.servlet.http.Cookie;
@@ -133,4 +132,13 @@ public class OrderController {
 		orderService.editOptionStock(map);
 		return new Gson().toJson(resultMap);
 	}
+	// 비회원 주문 조회
+		@RequestMapping(value = "/nonUserOrder.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String nonUser(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			List<NonUserOrder> nonUserOrder = orderService.searchNonUserOrder(map);
+			resultMap.put("nonUserOrder", nonUserOrder);
+			return new Gson().toJson(resultMap);
+		}
 }
