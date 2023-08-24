@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.anesi.mapper.AdminMapper;
 import com.example.anesi.mapper.OrderMapper;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
@@ -16,6 +17,9 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Autowired
 	OrderMapper orderMapper;
+	
+	@Autowired
+	AdminMapper adminMapper;
 	
 	//쿠폰 리스트
 	@Override
@@ -61,6 +65,8 @@ public class OrderServiceImpl implements OrderService{
 		int no = 1;
 		if (!map.get("userNo").equals("")) {
 			no = orderMapper.insertOrder(map);
+			map.put("alarmType",2);
+			adminMapper.insertAlarm(map);
 		} else {
 			no = orderMapper.insertNonOrder(map);
 		}

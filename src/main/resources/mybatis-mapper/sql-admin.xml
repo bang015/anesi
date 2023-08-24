@@ -249,7 +249,7 @@
 	
 	
 	<!--알림인서트-->
-	<insert id="insertAlarm" parameterType="hashmap">
+	<insert id="insertAlarm" parameterType="hashmap" >
 		INSERT INTO t3_tbl_alarm
 		(USER_NO, ALARM_TYPE)
     	VALUES
@@ -264,6 +264,12 @@
 		WHERE USER_NO = #{userNo}
 	</update>
 	
+	<!--알림 개수-->
+	<select id="alarmCnt" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT COUNT(*) AS CNT
+		FROM t3_tbl_alarm 
+		WHERE USER_NO = #{userNo}
+	</select>
 	
 	
 	

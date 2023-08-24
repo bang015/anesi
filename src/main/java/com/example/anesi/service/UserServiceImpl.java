@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
 		map.put("userNo", user.getUserNo());
 		map.put("profile", user.getUserName());
 		userMapper.insertProfile(map);
-		return 1;
+		return user.getUserNo();
 	}
 	//이메일 중복체크
 	@Override
