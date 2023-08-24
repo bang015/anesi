@@ -20,6 +20,10 @@ public class TestController {
 	public String footer(Model model) throws Exception{
         return "/footer";
     }
+	@RequestMapping("customerService.do") 
+	public String cs(Model model) throws Exception{
+		return "/customerService";
+	}
 	@RequestMapping("modal.do") 
 	public String modal(Model model) throws Exception{
 		return "/modaltest";

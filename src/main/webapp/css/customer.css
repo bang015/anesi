@@ -1,0 +1,110 @@
+@charset "EUC-KR";
+
+.help{
+	margin-top: 300px;
+	margin-left: 100px;
+	list-style: none;
+}
+.qna{
+	font-size: 20px;
+	list-style: none;
+}
+.center{
+	position: absolute;
+	left: 1200px;
+	top: 300px;
+	width: 450px;
+	background-color:#F7F9FA;
+	text-align: center;
+	height: 300px;
+}
+.qnaList{
+	list-style: none;
+	width: 975px;
+	margin-left: 140px;
+	  font-size: 16px;
+	
+}
+
+
+.buttons{
+	margin-top: 180px;
+	text-align: center;
+}
+.btn{
+	width: auto;
+	height: 30px;
+	font-size: 12px;
+}
+.btn2{
+	width: 300px;
+	height: 30px;
+	font-size: 18px;
+	 border: none;
+    color: white;
+    background-color: #A782C3;
+    border-radius: 7px;
+    padding: 0px 9px;
+    margin: 10px 0px;
+	transition: background 0.3s;
+	cursor: pointer;
+}
+.btn3{
+	width: auto;
+	height: 30px;
+	font-size: 18px;
+	 border: none;
+    color: white;
+    background-color: #A782C3;
+    border-radius: 7px;
+    padding: 0px 9px;
+    margin: 10px 0px;
+	transition: background 0.3s;
+	cursor: pointer;
+}
+.btn4{
+	width: auto;
+	height: 30px;
+	font-size: 18px;
+	 border: none;
+    color: white;
+    background-color: #A782C3;
+    border-radius: 7px;
+    padding: 0px 9px;
+    margin: 10px 0px;
+	transition: background 0.3s;
+	cursor: pointer;
+}
+.btn2:hover{
+	background-color: #7c6191;
+}
+.btn3:hover{
+	background-color: #7c6191;
+}
+.btn4:hover{
+	background-color: #7c6191;
+}
+
+.answer {
+    width: auto;
+    background-color: rgb(228, 228, 228);
+    padding: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    display: none;
+}
+.qna .answer {
+    display: none;
+    width: 310px; /* 원하는 너비 설정 */
+    /* 그 외의 스타일 속성들 */
+}
+h2{
+	margin-left: 40px;
+}
+body{
+	 height: 100%;
+}

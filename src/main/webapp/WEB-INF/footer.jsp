@@ -191,6 +191,7 @@
 	           </div>
 	           <div>예금주 정선일</div>
 	           <div><a id="admin" href="http://localhost:8080/admin/main.do" target="_blank">관리자 페이지>></a></div>
+	         <div><a id="customer" href="http://localhost:8080/customerService.do" target="_blank" style="font-size: 20px;">고객센터>></a></div>
 	       </div>
 	   </div>
    	 
