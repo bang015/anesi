@@ -40,7 +40,8 @@
 
 .content_cont {
     width: 1300px;
-    height: 500px;
+    min-height: 500px;
+   
     font-size: 20px;
     display: flex;
     justify-content: center;
@@ -73,14 +74,30 @@
   	font-weight : bold;
 }
 
+.contentA{
+    width: 1300px;
+    height: 500px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-content: stretch;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+
+}
+
 </style>
 
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
-	<h2 class="title">새소식({{list.length}})</h2>
+	<h2 class="title" v-if="list.length!=''">새소식({{list.length}})</h2>
+	<h2 class="title" v-else>새소식</h2>
 		<hr class="hrr">
+		
+		
 		<div class="content_cont" >
 		    <div class="content" v-for="item in list" v-if="item.alarmNo !=''" >
 				<i :class="item.icon" class="iconA"></i>
@@ -88,11 +105,11 @@
 					<span class="time"> {{item.cTime}}</span>
 				<i class="iconB fa-regular fa-circle-xmark" @click="fnRemoveAlarm(item.alarmNo)"></i>
 			</div>
-			<div class="contentA" v-else>최근 소식이 없습니다.</div>		
+				<div class="contentA"  v-if="list.length==0">최근 소식이 없습니다.</div>	
 		</div>
 		
 		
-		<button @click="fnInsertAlarm(1)">알람인서트</button>
+		<button @click="fnInsertAlarm(1)">알람인서트테스트용 담에지울거임</button>
 	</div>
 <jsp:include page="footer.jsp"></jsp:include>
 	
