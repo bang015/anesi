@@ -56,9 +56,12 @@ public interface AdminMapper {
 	
 	// 알람 목록 불러오기
 	List<User> selectAlarmAll(HashMap<String, Object> map);
+	// 알람개수
+	int alarmCnt(HashMap<String, Object> map);
 	// 알람 등록
 	int insertAlarm(HashMap<String, Object> map);
 	// 알람 삭제
 	int deleteAlarm(HashMap<String, Object> map);
+	
 	
 }

@@ -17,7 +17,7 @@ header {
 #header_navi {
   position: absolute;
   right: 85px;
-  top: 40px;
+  top: 33px;
 }
 
 #header_navi li {
@@ -29,7 +29,7 @@ header {
 }
 
 #header_navi li span {
-  margin-left: 0;
+  margin-left: 5px;
   margin-top: 8px;
 }
 
@@ -44,7 +44,7 @@ header {
     min-height:10px; 
     min-width: 80px;
     right: 0;
-    top:50px;
+    top:45px;
     color: #fff;
 	background-color:#A782C3;
 	border-radius:4px;  
@@ -307,3 +307,21 @@ opacity : 0.7;
 	  display: flex;
       align-items: center;
   }
+  
+  
+ .alarm{
+	position: relative; 
+    top: -21px;
+  }
+  .aCnt{
+    border-radius: 50%;
+	 position: relative; 
+    background-color: rgb(255, 119, 119);
+    width: 18px;
+    height: 18px;
+    color: white;
+    text-align: center;
+    top: 10px;
+    left: 10px;
+   cursor: pointer;
+   }

@@ -32,7 +32,6 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		Object no = 1;
 		if (!map.get("userNo").equals("")) {
-			System.out.println(map);
 			orderMapper.insertAddr(map);
 			no = map.get("ADDR_NO");
 		} else {

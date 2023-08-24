@@ -58,5 +58,6 @@ public interface AdminService {
 	int addAlarm(HashMap<String, Object> map);
 	// 알람 삭제
 	int removeAlarm(HashMap<String, Object> map);
+	
 }
 

@@ -237,7 +237,6 @@
 	
 		
 	<!-- 알림-->
-	
 	<!--전체 알림 리스트 불러오기-->
 	<select id="selectAlarmAll" parameterType="hashmap" resultType="com.example.anesi.model.User">
 		SELECT A.*, T.ALARM_CONTENT,T.ICON, U.NICK
@@ -257,21 +256,11 @@
 	</insert>
 	
 	<!-- 알람삭제-->
-	<update id="deleteAlarm" parameterType="hashmap">
-		UPDATE t3_tbl_alarm
-			SET
-			DELETE_YN = 'Y'
-		WHERE USER_NO = #{userNo}
-	</update>
-	
-	<!--알림 개수-->
-	<select id="alarmCnt" parameterType="hashmap" resultType="com.example.anesi.model.User">
-		SELECT COUNT(*) AS CNT
-		FROM t3_tbl_alarm 
-		WHERE USER_NO = #{userNo}
-	</select>
-	
-	
+	<delete id="deleteAlarm" parameterType="hashmap">
+		DELETE 
+		FROM t3_tbl_alarm
+		WHERE ALARM_NO = #{alarmNo}
+	</delete>
 	
 	
 	

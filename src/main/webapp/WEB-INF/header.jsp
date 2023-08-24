@@ -128,13 +128,13 @@
 	height: 100px;
 }
 .icon1{
-	margin-right: 10px;
+	margin-right: 15px;
 }
 .icon2{
-	margin-right: 5px;
+	margin-right: 10px;
 }
 .icon3{
-	margin-right: 10px;
+	margin-right: 20px;
 }
 </style>
 </head>
@@ -209,7 +209,8 @@
 					</a>
 					<span></span>
 				</li>
-				<li class="icon2">
+				<li class="icon2 alarm">
+					<span class="aCnt">{{list.length}}</span>
 					<a href="http://localhost:8080/alarm.do">
 						<i class="fa-solid fa-bell "></i>
 					</a>
@@ -304,6 +305,7 @@
 			categoryList2 : [],
 			category2Name : "",
 			communityflg : false,
+			list : []
 		},// data
 		methods : {
 			fnGetcategoryList1(){
@@ -359,11 +361,27 @@
 			fnShowCommunityButton(){
 				var self = this;
 				self.communityflg = !self.communityflg;
-			}
+			},
+			
+			fnGetAlarm : function() {
+				var self = this;
+				var nparmap = {userNo : self.userNo};
+				console.log(self.userNo);
+				 $.ajax({
+		                url : "alarmList.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) { 
+		                	self.list = data.list;
+		                }
+	            }); 
+			},
 		}, // methods
 		created : function() {
 			var self = this;
 			self.fnGetcategoryList1();
+			self.fnGetAlarm();
 		}// created
 	});
 	   var isLoggedIn = <%= isLoggedIn %>;
@@ -573,6 +591,8 @@
 		        searchProduct(productName);
 		    }
 		});
+		
+		
 
 		
 
