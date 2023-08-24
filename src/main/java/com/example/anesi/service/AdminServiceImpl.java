@@ -20,6 +20,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	AdminMapper adminMapper;
+	//관리자 메인 전체다 불러오는거
 	
 	@Override
 	public List<Product> adminProductList(HashMap<String, Object> map) {
@@ -156,4 +157,6 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminMapper.selectUsedList(map);
 	}
+
+
 }

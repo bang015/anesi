@@ -76,6 +76,17 @@ public class AdminController {
 		return "/admin_used";
 	}
 	
+	//admin 관리자 메인
+	@RequestMapping(value = "/admin/mainList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String mainList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list1", adminService.selectDeliveryList(map));
+		resultMap.put("list2", adminService.searchAdminReviewList(map));
+		resultMap.put("list3", adminService.adminProductList(map));
+		resultMap.put("list4", adminService.searchAdminInquiriesList(map));
+		return new Gson().toJson(resultMap);
+	}
+	
 	//상품 전체 조회
 	@RequestMapping(value = "/admin/productList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody

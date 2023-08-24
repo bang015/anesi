@@ -227,13 +227,13 @@
 			
 			<i class="iconA fa-solid fa-gift"></i>
 				<ul class="deliveryA">
-					<li>결제대기</li>
+					<li>결제완료</li>
 					<li>신규주문</li>
 					<li>오늘출발</li>
 					<li>예약구매</li>
 				</ul>
 				<ul class="deliveryB">
-					<li>3건</li>
+					<li>{{}}건</li>
 					<li>1건</li>
 					<li>0건</li>
 					<li>0건</li>
@@ -246,7 +246,7 @@
 					<li>배송완료</li>
 				</ul>
 				<ul class="deliveryD">
-					<li>3건</li>
+					<li>{{deliveryList.length}}건</li>
 					<li>1건</li>
 					<li>0건</li>
 				</ul>
@@ -292,9 +292,9 @@
 					<li>평점낮은리뷰</li>
 					<li>리뷰이벤트</li>
 				</ul>
-				<ul class="deliveryB">
-					<li>70건</li>
-					<li>1건</li>
+				<ul class="deliveryB"  >
+					<li>{{reviewList.length}}건</li>
+					<li>{{reviewlow}}건</li>
 					<li>0건</li>
 				</ul>
 			
@@ -356,13 +356,40 @@
 var app = new Vue({
 	el : '#admin_first',
 	data : {
-
+		deliveryList:[],
+		reviewList:[],
+		productList:[],
+		inquiryList:[],
+		reviewlow : 0,
 	},// data
 	methods : {
+		fnGetList(){
+			var self = this;
+			var nparmap = {};
+			$.ajax({
+                url : "/admin/mainList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.deliveryList = data.list1;
+                	self.reviewList = data.list2;
+                	self.productList = data.list3;
+                	self.inquiryList = data.list4;
+                	self.reviewList.map(item => {
+                		if(item.csat < 4){
+                			self.reviewlow++;
+                		}
+                	})
+                	console.log(self.reviewList);
+                } 
+			})
+		},
 	
 	}, // methods
 	created : function() {
 		var self = this;
+		self.fnGetList();
 
 	}// created
 });

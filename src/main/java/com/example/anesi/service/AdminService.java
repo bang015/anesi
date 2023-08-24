@@ -11,7 +11,7 @@ import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 
 public interface AdminService {
-	
+
 	// 상품 검색
 	List<Product> adminProductList(HashMap<String, Object> map);
 	//상품 상세 검색
