@@ -226,14 +226,14 @@
 	
 	<!-- 게시글 좋아요 -->
 	<insert id="insertGreat" parameterType="hashmap">
-		INSERT INTO t3_tbl_board_great VALUES(#{bNo}, #{userNo})
+		INSERT INTO t3_tbl_board_great VALUES(#{bNo}, #{guserNo})
 	</insert>
 	
 	<!-- 게시글 좋아요 취소 -->
 	<delete id="deleteGreat" parameterType="hashmap">
 		DELETE
 		FROM t3_tbl_board_great
-		WHERE BOARD_NO = #{bNo} AND USER_NO = #{userNo}
+		WHERE BOARD_NO = #{bNo} AND USER_NO = #{guserNo}
 	</delete>
 	
 	<!-- 게시글 좋아요리스트 삭제 -->

@@ -598,12 +598,12 @@ var app = new Vue({
 			
 		},
 		fnEditGreat(type){
-			var self = this;
+	s		var self = this;
 			if(self.sessionNo==''||self.sessionNo==undefined){
 				alert("로그인 후 이용 가능합니다.");
 				return;
 			}
-			var nparmap = {bNo : self.bNo, userNo : self.sessionNo, type};
+			var nparmap = {bNo : self.bNo, guserNo : self.sessionNo, type,  userNo : self.info.userNo};
 			$.ajax({
                 url : "editGreat.dox",
                 dataType:"json",	

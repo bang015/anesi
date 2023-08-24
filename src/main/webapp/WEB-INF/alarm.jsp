@@ -123,9 +123,6 @@ var app = new Vue({
 		list : [],
 		item : "",
 		userNo : '${sessionNo}',
-
-		
-
 	},// data
 	methods : {
 		fnGetAlarm : function() {

@@ -42,6 +42,6 @@ public interface BoardService {
 	// 글 좋아요 리스트
 	List<Board> searchBoardGreatList(HashMap<String, Object> map);
 	// 글 좋아요 수정
-	int editGreat(HashMap<String, Object> map);
+	HashMap<String, Object> editGreat(HashMap<String, Object> map);
 	
 }

@@ -155,15 +155,17 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int editGreat(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-
+	public HashMap<String, Object> editGreat(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
 		if(map.get("type").equals("1")) {
-			boardMapper.insertGreat(map);
+			resultMap.put("great", boardMapper.insertGreat(map));
+			map.put("alarmType", 5);
+			resultMap.put("alarm", adminMapper.insertAlarm(map));
 		} else {
 			boardMapper.deleteGreat(map);
 		}
-		return 1;
+		return resultMap;
 	}
 
 }
