@@ -272,6 +272,11 @@
 		WHERE ALARM_NO = #{alarmNo}
 	</delete>
 	
+	<!-- 중고 물품 리스트 -->
+	<select id="selectUsedList" parameterType="hashmap" resultType="com.example.anesi.model.Used">
+		SELECT *
+		FROM t3_tbl_used_purchase
+	</select>
 	
 	
 </mapper>

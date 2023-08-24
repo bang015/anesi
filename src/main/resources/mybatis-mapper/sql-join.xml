@@ -114,6 +114,7 @@
 		<if test="deliverySit !=null and deliverySit != ''">
 			AND DELIVERY_SIT = #{deliverySit}
 		</if>
+		ORDER BY CREATEDATE DESC
 	</select>
 	<!-- 나의 리뷰 검색 -->
 	<select id="selectMyReviewList" parameterType="hashmap" resultType="com.example.anesi.model.Review">
@@ -163,6 +164,7 @@
 		INNER JOIN t3_tbl_product p
 			ON i.PRODUCT_NO = p.PRODUCT_NO
 		WHERE USER_NO = #{userNo}
+		ORDER BY CDATETIME DESC
 	</select>
 	
 	<!-- 문의 삭제 -->

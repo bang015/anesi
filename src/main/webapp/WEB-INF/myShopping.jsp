@@ -82,8 +82,8 @@
 					    	<div class="productPrice">{{numberWithCommas(item.productPrice)}}<span class="span1"> | </span><span class="span2">{{item.cnt}}개</span></div>
 					    </div>
 					    <div class="buttonBox">
-					    	<button @click="fnReOrder(item)" class="btn1">재구매</button>
-					    	<button @click="fnReviewMove(item.productNo)" class="btn2">리뷰작성</button>
+					    	<button @click="fnReOrder(item)" class="btn1" v-if="item.deliverySit == 4">재구매</button>
+					    	<button @click="fnReviewMove(item.productNo)" class="btn2" v-if="item.deliverySit == 4">리뷰작성</button>
 					    </div>
 					   </div>
 				    </div>
@@ -174,6 +174,24 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.orderList = data.list;
+                	for(let i = 0; i < self.orderList.length; i++){
+                		switch (self.orderList[i].deliverySit) {
+                	    case '1':
+                	        self.orderList[i].deliverySitName = '결제완료';
+                	        break;
+                	    case '2':
+                	        self.orderList[i].deliverySitName = '배송준비';
+                	        break;
+                	    case '3':
+                	        self.orderList[i].deliverySitName = '배송중';
+                	        break;
+                	    case '4':
+                	        self.orderList[i].deliverySitName = '배송완료';
+                	        break;
+                	    default:
+                	        break;
+               			}
+                	}
                 }
             });
 		},

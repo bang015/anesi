@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.Review;
+import com.example.anesi.model.Used;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 
@@ -64,6 +65,5 @@ public interface AdminMapper {
 	int insertAlarm(HashMap<String, Object> map);
 	// 알람 삭제
 	int deleteAlarm(HashMap<String, Object> map);
-	
 	
 }

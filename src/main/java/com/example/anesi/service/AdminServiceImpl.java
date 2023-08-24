@@ -11,6 +11,7 @@ import com.example.anesi.mapper.AdminMapper;
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.Review;
+import com.example.anesi.model.Used;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 
@@ -150,4 +151,9 @@ public class AdminServiceImpl implements AdminService {
 		return adminMapper.deleteAlarm(map);
 	}
 
+	@Override
+	public List<Used> searchUsedList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectUsedList(map);
+	}
 }

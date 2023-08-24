@@ -50,6 +50,7 @@
 								<th>접수일</th>
 								<th>처리상태</th>
 								<th>문의유형</th>
+								<th>상품번호</th>
 								<th>상품정보</th>
 								<th>문의내용</th>
 								<th>질문자</th>
@@ -60,7 +61,8 @@
 								<td>{{item.cDateTime}}</td>
 								<td>{{item.inquiryYn}}</td>
 								<td>{{item.inquiryCategory}}</td>
-								<td @click="fnMoveProduct(item.productNo)" class="productName1"><div class="productNo">{{item.productNo}}</div>{{item.productName}}</td>
+								<td>{{item.productNo}}</td>
+								<td @click="fnMoveProduct(item.productNo)" class="productName1">{{item.productName}}</td>
 								<td>{{item.content}}</td>
 								<td>{{item.userEmail}}</td>
 								<td v-if="item.inquiryYn == '답변'">{{item.udatetime}}</td>

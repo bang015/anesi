@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.Review;
+import com.example.anesi.model.Used;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 
@@ -58,6 +59,8 @@ public interface AdminService {
 	int addAlarm(HashMap<String, Object> map);
 	// 알람 삭제
 	int removeAlarm(HashMap<String, Object> map);
-	
+
+	// 중고 물품 검색
+	List<Used> searchUsedList(HashMap<String, Object> map);
 }
 
