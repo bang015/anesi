@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService{
 	//회원가입
 	@Override
 	public int userJoin(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		userMapper.userJoin(map);
 		User user = userMapper.searchNick(map);
 		map.put("userNo", user.getUserNo());

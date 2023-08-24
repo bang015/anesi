@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.anesi.mapper.AdminMapper;
 import com.example.anesi.mapper.BoardMapper;
 import com.example.anesi.model.Board;
 import com.example.anesi.model.BoardComment;
@@ -15,6 +16,8 @@ public class BoardServiceImpl implements BoardService{
 
 	@Autowired
 	BoardMapper boardMapper;
+	@Autowired
+	AdminMapper adminMapper;
 	
 	// 전체 게시글
 	@Override
@@ -111,13 +114,16 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.updateBoard(map);
 	}
 	@Override
-	public int insertComment(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return boardMapper.insertComment(map);
+	public HashMap<String, Object> insertComment(HashMap<String, Object> map) {
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("comment",boardMapper.insertComment(map));
+		map.put("alarmType", 4);
+		resultMap.put("alarm",adminMapper.insertAlarm(map));
+		return resultMap;
 	}
 	@Override
 	public HashMap<String, Object> selectComment(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("list", boardMapper.selectComment(map));
 		resultMap.put("cnt", boardMapper.commentCnt(map));

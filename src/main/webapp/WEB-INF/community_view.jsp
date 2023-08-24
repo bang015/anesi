@@ -356,6 +356,7 @@ var app = new Vue({
 		imgName : "",
 		greatList : [],
 		great : 0,
+		
 	},// data	
 	methods : {
 		fnGetInfo : function(){
@@ -487,7 +488,11 @@ var app = new Vue({
 		},
 		fnComInsert : function(){
 			var self = this;
-			var nparmap = {bNo : self.bNo, nick : self.sessionNick, cUserNo : self.sessionNo, content: self.content};
+			var nparmap = {bNo : self.bNo, 
+						   nick : self.sessionNick, 
+						   cUserNo : self.sessionNo, 
+						   content: self.content,
+						   userNo : self.info.userNo};
             $.ajax({
                 url : "/community/addComment.dox",
                 dataType:"json",	

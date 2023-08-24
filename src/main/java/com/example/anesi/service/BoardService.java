@@ -28,7 +28,7 @@ public interface BoardService {
 	// 게시글 수정
 	int updateBoard(HashMap<String, Object> map);
 	// 댓글 입력
-	int insertComment(HashMap<String, Object> map);
+	HashMap<String, Object>  insertComment(HashMap<String, Object> map);
 	// 댓글 리스트
 	HashMap<String, Object> selectComment(HashMap<String, Object> map);
 	// 댓글 삭제
