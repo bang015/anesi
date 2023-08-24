@@ -1,6 +1,5 @@
 package com.example.anesi.model;
 
-
 public class UsedPurchase {
 	private int usedPNo;
 	private int userNo;
@@ -21,7 +20,36 @@ public class UsedPurchase {
 	private String pImgName;
 	private String pImgPath;
 	private String pImgSize;
+	private String usedANo;
+	private String aContent;
+	private String ADeleteYn;
+	private String usedACDatetime;
+	private String usedACUatetime;
 		
+	public String getUsedANo() {
+		return usedANo;
+	}
+	public void setUsedANo(String usedANo) {
+		this.usedANo = usedANo;
+	}
+	public String getADeleteYn() {
+		return ADeleteYn;
+	}
+	public void setADeleteYn(String aDeleteYn) {
+		ADeleteYn = aDeleteYn;
+	}
+	public String getUsedACDatetime() {
+		return usedACDatetime;
+	}
+	public void setUsedACDatetime(String usedACDatetime) {
+		this.usedACDatetime = usedACDatetime;
+	}
+	public String getUsedACUatetime() {
+		return usedACUatetime;
+	}
+	public void setUsedACUatetime(String usedACUatetime) {
+		this.usedACUatetime = usedACUatetime;
+	}
 	public String getpImgOrgName() {
 		return pImgOrgName;
 	}
@@ -135,6 +163,12 @@ public class UsedPurchase {
 	}
 	public void setUsedPUdatetime(String usedPUdatetime) {
 		this.usedPUdatetime = usedPUdatetime;
+	}
+	public String getaContent() {
+		return aContent;
+	}
+	public void setaContent(String aContent) {
+		this.aContent = aContent;
 	}
 	
 	

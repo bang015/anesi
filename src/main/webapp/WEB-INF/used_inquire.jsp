@@ -311,6 +311,10 @@ var app = new Vue({
 		        });
 				return;
 			}
+        	if(self.photoList.length < 4){
+        		alert("첨부 사진을 4장 이상 올려주세요.");
+        		return;
+        	}
 			var param = self.inquire;
 			param.userNo = self.sessionNo;
 			param.userName = self.info.userName;
@@ -325,16 +329,15 @@ var app = new Vue({
                 data : param,
                 success : function(data) { 
                 	let no = data.usedPNo
-                	console.log(no);
-                	console.log(self.photoList);
                 	for(let i = 0; i < self.photoList.length; i++){
                     	var form = new FormData();
                 		form.append("file1", self.photoList[i]);
     					form.append("usedPNo", no);
     					self.upload(form);
                 	}
+                	alert("등록이 완료되었습니다.");
+                	location.href="/used/purchase.do";
                 }
-				location.href="/purchase.do";
             });
         },
         fnGoList(){

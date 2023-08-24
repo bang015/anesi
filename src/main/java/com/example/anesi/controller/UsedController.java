@@ -79,6 +79,16 @@ public class UsedController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	//문의 답변 뷰
+	@RequestMapping(value = "/used/answerView.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String answerView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		UsedPurchase aInfo = usedService.answerSelect(map);
+		resultMap.put("aInfo", aInfo);
+		return new Gson().toJson(resultMap);
+	}
+	
 	//문의 등록
 	@RequestMapping(value = "/used/inquire.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -87,6 +97,47 @@ public class UsedController {
 		String no = usedService.insertUsedInquire(map).get("usedPNo").toString();
 		resultMap.put("usedPNo", no);
 		return new Gson().toJson(resultMap);
+	}
+	
+	// 문의 답변 등록
+	@RequestMapping(value = "/used/answer.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody 
+	public String usedAnswer(Model model, @RequestParam	HashMap<String, Object> map) throws Exception { 
+		HashMap<String, Object>	resultMap = new HashMap<String, Object>(); 
+		usedService.answerInsert(map);
+		usedService.answerUpdate(map);
+		return new Gson().toJson(resultMap); 
+	}
+	
+	// 문의 삭제
+	@RequestMapping(value = "/used/delete.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody 
+	public String usedQDelete(Model model, @RequestParam	HashMap<String, Object> map) throws Exception { 
+		HashMap<String, Object>	resultMap = new HashMap<String, Object>(); 
+		usedService.usedInquireImgDelete(map);
+		usedService.usedInquireAnsDelete(map);
+		usedService.usedInquireDelete(map);
+		return new Gson().toJson(resultMap); 
+	}
+	
+	// 문의 답변 수정
+	@RequestMapping(value = "/used/answerEdit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody 
+	public String usedAnswerEdit(Model model, @RequestParam	HashMap<String, Object> map) throws Exception { 
+		HashMap<String, Object>	resultMap = new HashMap<String, Object>();
+		usedService.answerUpdate(map);
+		usedService.answerEdit(map);
+		return new Gson().toJson(resultMap); 
+	}
+	
+	// 문의 답변 삭제
+	@RequestMapping(value = "/used/answerDelete.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody 
+	public String usedAnswerDelete(Model model, @RequestParam	HashMap<String, Object> map) throws Exception { 
+		HashMap<String, Object>	resultMap = new HashMap<String, Object>();
+		usedService.usedInquireAnsDelete(map);
+		usedService.answerUpdate(map);
+		return new Gson().toJson(resultMap); 
 	}
 	
 	@RequestMapping("/usedPurchaseImgUpload.dox")

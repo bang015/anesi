@@ -46,5 +46,50 @@ public class UsedServiceImpl implements UsedService{
 		// TODO Auto-generated method stub
 		return usedMapper.usedInquireView(map);
 	}
+
+	// 답변등록
+	@Override public int answerInsert(HashMap<String, Object> map) { 
+		// TODO Auto-generated method stub
+		return usedMapper.answerInsert(map);
+	}
+	
+	// 답변여부
+	@Override
+	public int answerUpdate(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.answerUpdate(map);
+	}
+
+	// 답변정보
+	@Override
+	public UsedPurchase answerSelect(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.answerSelect(map);
+	}
+
+	@Override
+	public int usedInquireDelete(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.usedInquireDelete(map);
+	}
+
+	@Override
+	public int usedInquireImgDelete(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.usedInquireImgDelete(map);
+	}
+
+	@Override
+	public int usedInquireAnsDelete(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.usedInquireAnsDelete(map);
+	}
+
+	@Override
+	public int answerEdit(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.answerEdit(map);
+	}
+	 
 	
 }

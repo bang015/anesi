@@ -29,4 +29,53 @@
 		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
 		WHERE P.USED_P_NO = #{usedPNo}
 	</select>
+	
+	<!-- 중고문의사진삭제 -->
+	<delete id="usedInquireImgDelete" parameterType="hashmap">
+		DELETE FROM t3_tbl_used_purchase_image
+		WHERE USED_P_NO = #{usedPNo}
+	</delete>
+	
+	<!-- 중고문의답변삭제 -->
+	<delete id="usedInquireAnsDelete" parameterType="hashmap">
+		DELETE FROM t3_tbl_used_answer
+		WHERE USED_P_NO = #{usedPNo}
+	</delete>
+	
+	<!-- 중고문의삭제 -->
+	<delete id="usedInquireDelete" parameterType="hashmap">
+		DELETE FROM t3_tbl_used_purchase
+		WHERE USED_P_NO = #{usedPNo}
+	</delete>
+	
+	<!-- 중고문의답변 -->
+	<insert id="answerInsert" parameterType="hashmap">
+		INSERT INTO t3_tbl_used_answer(USED_P_NO, A_CONTENT)
+		VALUES(#{usedPNo}, #{aContent})
+	</insert>
+	
+	<!-- 답변여부업데이트 -->
+	<update id="answerUpdate" parameterType="hashmap">
+		UPDATE t3_tbl_used_purchase
+		SET
+			PURCHASE = #{purchase}
+		WHERE USED_P_NO = #{usedPNo}
+	</update>
+	
+	<!-- 답변정보 -->
+	<select id="answerSelect" parameterType="hashmap">
+		SELECT *
+		FROM t3_tbl_used_answer
+		WHERE USED_P_NO = #{usedPNo}
+	</select>
+	
+	<!-- 답변수정 -->
+	<update id="answerEdit" parameterType="hashmap">
+		UPDATE t3_tbl_used_answer
+		SET
+			A_CONTENT = #{aContent},
+			USED_A_UDATETIME = NOW()
+		WHERE USED_P_NO = #{usedPNo}
+	</update>
+	
 </mapper>

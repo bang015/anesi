@@ -273,7 +273,7 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 	
-	// 댓글 삭제
+	// 댓글 수정
 	@RequestMapping(value = "/community/editComm.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String editComm(Model model, @RequestParam HashMap<String, Object> map) throws Exception {

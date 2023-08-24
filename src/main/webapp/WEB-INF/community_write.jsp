@@ -101,13 +101,13 @@ textarea{
 		<div>
 			<input class="title" v-model="info.title" placeholder="제목을 입력하세요.">
 		</div>
-<div class="filebox"> 
-    <label for="file1">썸네일 업로드</label> 
-    <input type="file" id="file1" name="file1" @change="fnOnFileChange"> 
-    <input class="upload-name" :value="info.imgName ? info.imgName : '파일 선택'" readonly>
-</div>
-<div><img v-if="image1" :src="image1" alt="Image preview" class="pvImg" ref="image" required></div>
-<div v-if="info.imgPath!='' && !image1 && info.imgPath!=undefined"><img :src="info.imgPath+'/'+info.imgName" class="pvImg"></div>
+			<div class="filebox"> 
+			    <label for="file1">썸네일 업로드</label> 
+			    <input type="file" id="file1" name="file1" @change="fnOnFileChange"> 
+			    <input class="upload-name" :value="info.imgName ? info.imgName : '파일 선택'" readonly>
+			</div>
+			<div><img v-if="image1" :src="image1" alt="Image preview" class="pvImg" ref="image" required></div>
+			<div v-if="info.imgPath!='' && !image1 && info.imgPath!=undefined"><img :src="info.imgPath+'/'+info.imgName" class="pvImg"></div>
 		<div>
 			<vue-editor v-model="info.content"></vue-editor>
 		</div>
@@ -162,8 +162,8 @@ var app = new Vue({
 			if(!confirm("게시글을 등록하시겠습니까?")){
 				return;
 			}
-			var nparmap = self.info;   // { title : self.info.title, contents : self.info.contents } 
-			nparmap.nick = self.sessionNick; // { title : self.info.title, contents : self.info.contents, nick : self.nick }    
+			var nparmap = self.info;
+			nparmap.nick = self.sessionNick;    
 			nparmap.userNo = self.sessionNo;
 			$.ajax({
 				url : "/community/insert.dox",
