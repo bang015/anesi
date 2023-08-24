@@ -210,7 +210,7 @@
 					<span></span>
 				</li>
 				<li class="icon2 alarm">
-					<span class="aCnt">{{list.length}}</span>
+					<span class="aCnt">{{alarmList.length}}</span>
 					<a href="http://localhost:8080/alarm.do">
 						<i class="fa-solid fa-bell "></i>
 					</a>
@@ -305,7 +305,7 @@
 			categoryList2 : [],
 			category2Name : "",
 			communityflg : false,
-			list : []
+			alarmList : []
 		},// data
 		methods : {
 			fnGetcategoryList1(){
@@ -368,12 +368,12 @@
 				var nparmap = {userNo : self.userNo};
 				console.log(self.userNo);
 				 $.ajax({
-		                url : "alarmList.dox",
+		                url : "../alarmList.dox",
 		                dataType:"json",	
 		                type : "POST", 
 		                data : nparmap,
 		                success : function(data) { 
-		                	self.list = data.list;
+		                	self.alarmList = data.list;
 		                }
 	            }); 
 			},

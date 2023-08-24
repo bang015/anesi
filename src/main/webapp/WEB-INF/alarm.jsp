@@ -116,7 +116,7 @@ var app = new Vue({
         	console.log(self.userNo);
 
 			 $.ajax({
-	                url : "alarmList.dox",
+	                url : "../alarmList.dox",
 	                dataType:"json",	
 	                type : "POST", 
 	                data : nparmap,
