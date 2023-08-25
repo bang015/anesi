@@ -57,7 +57,7 @@
 
 .review span,
 .product span,
-.inquiry span{
+.inquiryTitle {
   font-size : 20px;
 }
 .review span span,
@@ -158,7 +158,7 @@
 }
 .revC button,
 .inquiry button{
-  margin: 0px 170px;
+  	margin: 0px 170px;
     width: 40%;
     height: 40px;
     font-family: 'Pretendard-Regular';
@@ -176,6 +176,7 @@
 }
 .inquiryB {
     width: 77%;
+    height : 28px;
     list-style: none;
     font-size: 17px;
     text-align: center;
@@ -184,8 +185,8 @@
 }
 
 .inquiryB:hover {
-  border-top : 3px solid #5E503F;
-  color : #5E503F;
+  background : #5E503F;
+  color :#fff;
 }
 
 .inquiryB:nth-child(1){
@@ -211,7 +212,20 @@
 	border-radius : 50%;
 	color : tomato;
 }
-
+.inquiryC{
+	font-size:20px;
+	height:20px;
+	margin-top:1px;
+	padding :10px;
+	margin-left : 10px;
+}
+.iTime{
+	font-size : 15px;
+	color : gray;
+}
+.inquiry button{
+   bottom : 10px;
+}
 
 </style>
 </head>
@@ -222,52 +236,52 @@
 	
 			
 		<div class="delivery">
-			<span>주문/배송</span>
+			<span>결제/배송/판매액</span>
 			<hr>
-			
-			<i class="iconA fa-solid fa-gift"></i>
+			<i class="iconA fa-solid fa-truck"></i>
 				<ul class="deliveryA">
 					<li>결제완료</li>
-					<li>신규주문</li>
-					<li>오늘출발</li>
-					<li>예약구매</li>
-				</ul>
-				<ul class="deliveryB">
-					<li>{{}}건</li>
-					<li>1건</li>
-					<li>0건</li>
-					<li>0건</li>
-				</ul>
-		
-			<i class="iconA fa-solid fa-truck"></i>
-				<ul class="deliveryC">
 					<li>배송중</li>
 					<li>배송준비</li>
 					<li>배송완료</li>
 				</ul>
-				<ul class="deliveryD">
+				<ul class="deliveryB">
+					<li>{{}}건</li>
 					<li>{{deliveryList.length}}건</li>
 					<li>1건</li>
 					<li>0건</li>
 				</ul>
-			
+			<i class="iconA fa-solid fa-won-sign"></i>
+				<ul class="deliveryC">
+					
+					<li>오늘판매금액</li>
+					<li>누적판매금액</li>
+					<li>오늘주문건수</li>
+					<li>누적주문건수</li>
+				</ul>
+				<ul class="deliveryD">
+					<li>1건</li>
+					<li>0건</li>
+					<li>0건</li>
+					<li>0건</li>
+				</ul>
 		
 		</div>
 		
 		<div class="delivery">
-			<span>취소요청/반품/교환</span>
+			<span>중고상품현황</span>
 			<hr>
-		
-    		<i class="iconA fa-solid fa-arrow-rotate-left"></i>
+    		<i class="iconA fa-solid fa-couch"></i>
 				<ul class="deliveryA">
-					<li>취소요청</li>
-					<li>반품요청</li>
-					<li>교환요청</li>
-					<li></li>
+					<li>전체</li>
+					<li>등록신청</li>
+					<li>판매중</li>
+					<li>매입거부</li>
 				</ul>
 				<ul class="deliveryB">
 					<li>3건</li>
 					<li>1건</li>
+					<li>0건</li>
 					<li>0건</li>
 				</ul>
 			
@@ -288,14 +302,16 @@
 				<hr>
 				<i class="iconA fa-solid fa-comments"></i>
 				<ul class="deliveryA">
+					<li>전체리뷰</li>
 					<li>새로 작성된 리뷰</li>
+					<li>평점높은리뷰</li>
 					<li>평점낮은리뷰</li>
-					<li>리뷰이벤트</li>
 				</ul>
 				<ul class="deliveryB"  >
 					<li>{{reviewList.length}}건</li>
-					<li>{{reviewlow}}건</li>
 					<li>0건</li>
+					<li>{{reviewlow}}건</li>
+					<li>{{reviewlow}}건</li>
 				</ul>
 			
 				<span class="revC">
@@ -331,18 +347,18 @@
 			</div>
 			
 			<div class="inquiry">
-				<span>미답변문의<span>최근 1주일기준</span></span>
+				<span class="inquiryTitle">미답변문의<span>최근 1주일기준</span></span>
 				<hr>
 				<i class="iconA fa-solid fa-file-circle-exclamation"></i>
 				<ul class="inquiryA">
-					<a class="inquiryB">상품/배송<span class="inquiryD">6</span></a>
-					<a class="inquiryB">환불/반품/교환<span class="inquiryD">4</span></a>
-					<a class="inquiryB">기타<span class="inquiryD">0</span></a>
+					<a class="inquiryB">상품/배송<span class="inquiryD">{{inquiryCnt1}}</span></a>
+					<a class="inquiryB">환불/반품/교환<span class="inquiryD">{{inquiryCnt2}}</span></a>
+					<a class="inquiryB">기타<span class="inquiryD">{{inquiryCnt3}}</span></a>
 				</ul>
 				
-				<div class="inquiryC">
-					<span>Q. 하단의 길이가 몇센티인가요?</span>
-					2023.02.05
+				<div class="inquiryC" v-for="inquiry in inquiryList">
+					<span >Q.{{inquiry.content}}</span>
+					<span class="iTime">{{inquiry.cDateTime}}</span>
 				</div>
 				<button>문의 관리 ></button>
 			</div>
@@ -356,11 +372,17 @@
 var app = new Vue({
 	el : '#admin_first',
 	data : {
+		list :[],
 		deliveryList:[],
 		reviewList:[],
 		productList:[],
 		inquiryList:[],
+		inquiryCnt:[],
 		reviewlow : 0,
+		inquiry:"",
+		inquiryCnt1:0,
+		inquiryCnt2:0,
+		inquiryCnt3:0
 	},// data
 	methods : {
 		fnGetList(){
@@ -372,16 +394,20 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	self.deliveryList = data.list1;
-                	self.reviewList = data.list2;
-                	self.productList = data.list3;
-                	self.inquiryList = data.list4;
-                	self.reviewList.map(item => {
-                		if(item.csat < 4){
-                			self.reviewlow++;
+                	self.inquiryList = data.list.inquiry;
+                	self.inquiryCnt = data.list.inquiryCnt;
+                	self.inquiryCnt.forEach(item => {
+                		if(item.inquiryCategory == '상품' || item.inquiryCategory == '배송' ){
+                			self.inquiryCnt1 += item.inqCnt;
+                		}else if(item.inquiryCategory == '환불' || item.inquiryCategory == '반품' || item.inquiryCategory == '교환'){
+                			self.inquiryCnt2 += item.inqCnt;
+                		}else{
+                			self.inquiryCnt3 += item.inqCnt;
                 		}
+                		
+                		
                 	})
-                	console.log(self.reviewList);
+                	
                 } 
 			})
 		},

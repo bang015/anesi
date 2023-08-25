@@ -78,7 +78,6 @@
     </div>
     <div class="swiper-slide">
    	   <img src="../css\image\Main\banner5.png">
-    
     </div>
     <div class="swiper-slide">
    	   <img src="../css\image\Main\banner6.png">

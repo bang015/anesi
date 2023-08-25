@@ -67,5 +67,8 @@ public interface AdminService {
 	Statistics searchStatisticsProduct(HashMap<String, Object> map);
 	// 주간 매출
 	List<Statistics> searchWeeklySales(HashMap<String, Object> map);
+	
+	//관리자페이지메인
+	HashMap<String, Object> adminMain(HashMap<String, Object> map);
 }
 

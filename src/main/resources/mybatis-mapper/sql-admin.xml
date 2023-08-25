@@ -387,4 +387,66 @@
 	ORDER BY 
 	    order_date;
 	</select>
+	
+	<!--프로젝트 메인-->
+	<!--결제/배송리스트-->
+	<select id="mainOrderList" resultType="com.example.anesi.model.UserOrder">
+		SELECT DELIVERY_SIT, SUM(COUNT) AS TOTAL_COUNT
+		FROM (
+		    SELECT COUNT(*) AS COUNT, DELIVERY_SIT
+		    FROM t3_tbl_nonuser_order
+		    GROUP BY DELIVERY_SIT
+		    
+		    UNION ALL
+		    
+		    SELECT COUNT(*) AS COUNT, DELIVERY_SIT
+		    FROM t3_tbl_user_order
+		    GROUP BY DELIVERY_SIT
+		) AS combined_data
+		GROUP BY DELIVERY_SIT;
+	</select>
+	<!--중고상품 리스트-->
+	<select id="mainUsedList" resultType="com.example.anesi.model.Used">
+		SELECT COUNT(*) AS CNT, PURCHASE
+		FROM t3_tbl_used_purchase
+		GROUP BY PURCHASE
+	</select>
+	<!--리뷰리스트-->
+	<select id="mainReviewList" resultType="com.example.anesi.model.Review">
+		SELECT COUNT(*), CSAT
+		FROM t3_tbl_user_review
+		
+		
+		WHERE CREATEDATE >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+		ORDER BY CREATEDATE;
+		
+		<!-- 
+		WHERE CSAT >3 
+		
+		GROUP BY CSAT-->
+	</select>
+	<!--상품리스트-->
+	<select id="mainProductDel" resultType="com.example.anesi.model.Product">
+		SELECT COUNT(*) AS DE,DELETE_YN
+		FROM t3_tbl_product
+		GROUP BY DELETE_YN
+	</select>
+	
+	<select id="mainProductDis" resultType="com.example.anesi.model.Product">
+		SELECT COUNT(*) AS DIS, DISCOUNT_YN 
+		FROM t3_tbl_product
+		WHERE DISCOUNT_YN='Y'
+	</select>
+	<!--문의리스트-->
+	<select id="mainInquiryCnt" resultType="com.example.anesi.model.Inquiry">
+		SELECT COALESCE(COUNT(*), 0) AS INQ_CNT, INQUIRY_CATEGORY
+		FROM t3_tbl_user_inquiry
+		WHERE REPLY IS NULL
+		GROUP BY INQUIRY_CATEGORY
+	</select>
+	<select id="mainInquiryList" resultType="com.example.anesi.model.Inquiry">
+		SELECT CONTENT, CDATETIME, INQUIRY_CATEGORY
+		FROM t3_tbl_user_inquiry
+	 	WHERE REPLY IS NULL
+	</select>
 </mapper>

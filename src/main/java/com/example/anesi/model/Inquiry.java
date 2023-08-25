@@ -16,7 +16,8 @@ public class Inquiry {
 	private String userEmail;
 	private String productName;
 	private int enquiryNo;
-	
+	private int inqCnt;
+
 	public int getEnquiryNo() {
 		return enquiryNo;
 	}
@@ -41,6 +42,7 @@ public class Inquiry {
 	public String getPurchaseYn() {
 		return purchaseYn;
 	}
+
 	public void setPurchaseYn(String purchaseYn) {
 		this.purchaseYn = purchaseYn;
 	}
@@ -82,5 +84,8 @@ public class Inquiry {
 	}
 	public int getUserNo() {
 		return userNo;
+	}
+	public int getInqCnt() {
+		return inqCnt;
 	}
 }

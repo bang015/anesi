@@ -86,10 +86,8 @@ public class AdminController {
 	@RequestMapping(value = "/admin/mainList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String mainList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("list1", adminService.selectDeliveryList(map));
-		resultMap.put("list2", adminService.searchAdminReviewList(map));
-		resultMap.put("list3", adminService.adminProductList(map));
-		resultMap.put("list4", adminService.searchAdminInquiriesList(map));
+	 	HashMap<String, Object>  list = adminService.adminMain(map);
+		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
 	

@@ -170,4 +170,17 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminMapper.selectWeeklySales(map);
 	}
+
+	@Override
+	public HashMap<String, Object> adminMain(HashMap<String, Object> map) {
+		HashMap<String, Object>	resultMap = new HashMap<String, Object>();
+		resultMap.put("order", adminMapper.mainOrderList(map));
+		resultMap.put("used", adminMapper.mainUsedList(map));
+		resultMap.put("review", adminMapper.mainReviewList(map));
+		resultMap.put("product1", adminMapper.mainProductDel(map));
+		resultMap.put("product2", adminMapper.mainProductDis(map));
+		resultMap.put("inquiryCnt", adminMapper.mainInquiryCnt(map));
+		resultMap.put("inquiry", adminMapper.mainInquiryList(map));
+		return resultMap;
+	}
 }

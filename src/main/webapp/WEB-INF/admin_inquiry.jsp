@@ -134,7 +134,7 @@ var app = new Vue({
                 success : function(data) {
                 	self.inquiryList = data.list;
                 	self.inquiryList.forEach(item => {
-                		if(item.reply == undefined){
+                		if(item.reply == undefined ){
                 			self.inquiryCnt++;
                 		} else{
                 			self.completeCnt++;

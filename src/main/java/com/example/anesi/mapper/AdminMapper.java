@@ -73,4 +73,18 @@ public interface AdminMapper {
 	Statistics selectStatisticsProduct(HashMap<String, Object> map);
 	// 주간 매출
 	List<Statistics> selectWeeklySales(HashMap<String, Object> map);
+	
+	
+	//관리자메인 오더리스트
+	List<UserOrder> mainOrderList (HashMap<String, Object> map);
+	//관리자메인 중고상품리스트
+	List<Used> mainUsedList (HashMap<String, Object> map);
+	//관리자메인 리뷰리스트
+	List<Review> mainReviewList (HashMap<String, Object> map);
+	//관리자메인 상품리스트
+	List<Product> mainProductDel (HashMap<String, Object> map);
+	List<Product> mainProductDis (HashMap<String, Object> map);
+	//관리자메인 문의리스트
+	List<Inquiry> mainInquiryCnt (HashMap<String, Object> map);
+	List<Inquiry> mainInquiryList (HashMap<String, Object> map);
 }
