@@ -44,12 +44,27 @@ public class UsedServiceImpl implements UsedService{
 		return usedMapper.insertUsedInquireImg(map);
 	}
 	
-	// 중고 문의 게시글 뷰
+	// 중고 문의 게시글 뷰 사진 포함
 	@Override
 	public List<UsedPurchase> usedInquireView(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return usedMapper.usedInquireView(map);
 	}
+	
+	//문의글 뷰
+	@Override
+	public UsedPurchase usedInquireView1(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.usedInquireView1(map);
+	}
+	
+	//문의글 뷰 사진
+	@Override
+	public List<UsedPurchase> usedInquireViewImg(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.usedInquireViewImg(map);
+	}
+	
 
 	// 답변등록
 	@Override public int answerInsert(HashMap<String, Object> map) { 
@@ -101,6 +116,18 @@ public class UsedServiceImpl implements UsedService{
 		// TODO Auto-generated method stub
 		return usedMapper.myPurchaseList(map);
 	}
-	 
+
+	@Override
+	public List<UsedPurchase> purchaseYList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.purchaseYList(map);
+	}
+
+	@Override
+	public int updatePurchaseInquire(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.updatePurchaseInquire(map);
+	}
+
 	
 }

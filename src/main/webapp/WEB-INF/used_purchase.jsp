@@ -177,6 +177,7 @@ var app = new Vue({
 		list : [],
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
+		sessionStatus : "${sessionStatus}",
 		selectPage: 1,
 		pageCount: 1,
 		cnt : 0,
@@ -233,8 +234,22 @@ var app = new Vue({
         },
         fnUsedView : function(usedPNo){
         	var self = this;
-			$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
-        }
+    		var param = {usedPNo : usedPNo};
+    		$.ajax({
+    			url : "/used/inquireView1.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	console.log(data.list);
+	                if(self.sessionStatus!='U'||self.sessionNo!=data.list.userNo){
+		            	alert("본인 또는 관리자만 조회 가능합니다.");
+	    	        	return;
+	              	}
+		            $.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
+               	}
+         	}); 
+		}
 	}, // methods
 	created : function() {
 		var self = this;

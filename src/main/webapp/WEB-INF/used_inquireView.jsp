@@ -240,7 +240,7 @@ h3{
 				<div class="content">
 					<img class="img" v-for="(item, index) in list" :src="item.pImgPath + '/' + item.pImgName">
 				</div>
-				<div class="btnDIV2"><button class="btn2" v-if="list[0].userNo==sessionNo">수정</button><button class="btn2" v-if="list[0].userNo==sessionNo || sessionStatus=='A'" @click="fnDelete()">삭제</button></div>
+				<div class="btnDIV2"><span class="text1" v-if="list[0].userNo==sessionNo && purchaseFlg==true">답변 후에는 수정이 불가능합니다. </span><button class="btn2" v-if="list[0].userNo==sessionNo && purchaseFlg==false" @click="fnEdit()">수정</button><button class="btn2" v-if="list[0].userNo==sessionNo || sessionStatus=='A'" @click="fnDelete()">삭제</button></div>
 				<hr class="hr2">
 				<div v-if="purchaseFlg==true">
 					<div><h1>문의 답변</h1></div>
@@ -313,8 +313,6 @@ var app = new Vue({
                 data : param,
                 success : function(data) { 
                 	self.list = data.list;
-                	console.log(self.list);
-                	console.log(self.list[0].purchase);
                 	if(self.list[0].purchase!='W'){
         				self.fnGetAInfo();
         				console.log(self.purchaseFlg);
@@ -364,6 +362,10 @@ var app = new Vue({
                 	location.href="purchase.do";
                 }
             }); 
+		},
+		fnEdit : function(){
+			var self = this;
+			$.pageChange("/used/inquire.do", {usedPNo : self.usedPNo});
 		},
 		fnAnswer(){
 			var self = this;

@@ -14,8 +14,12 @@ public interface UsedService {
 	HashMap<String, Object> insertUsedInquire(HashMap<String, Object> map);
 	//중고 문의 사진 등록
 	int insertUsedInquireImg(HashMap<String, Object> map);
-	//문의글 뷰
+	//문의글 뷰 사진 포함
 	List<UsedPurchase> usedInquireView(HashMap<String, Object> map);
+	//문의글 뷰
+	UsedPurchase usedInquireView1(HashMap<String, Object> map);
+	//문의글 뷰 사진
+	List<UsedPurchase> usedInquireViewImg(HashMap<String, Object> map);
 	//문의 답변 등록 
 	int answerInsert(HashMap<String, Object> map);
 	//문의 답변 여부
@@ -32,4 +36,8 @@ public interface UsedService {
 	int answerEdit(HashMap<String, Object> map);
 	//나의 매입게시판 리스트
 	List<UsedPurchase> myPurchaseList(HashMap<String, Object> map);
+	//매입 물품 리스트
+	List<UsedPurchase> purchaseYList(HashMap<String, Object> map);
+	//문의 수정
+	int updatePurchaseInquire(HashMap<String, Object> map);
 }

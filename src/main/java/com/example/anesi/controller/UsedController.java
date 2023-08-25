@@ -48,8 +48,15 @@ public class UsedController {
 	//중고 매입 문의
 	@RequestMapping("/used/inquire.do") 
 	public String inquire(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		
+	request.setAttribute("map", map);
 	return "/used_inquire";
+	}
+	
+	//중고 매입 사례
+	@RequestMapping("/used/purchaseEx.do") 
+	public String purchaseEx(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		
+	return "/used_purchaseEx";
 	}
 	
 	//중고 매입 문의 뷰
@@ -82,12 +89,32 @@ public class UsedController {
 		return new Gson().toJson(resultMap);
 	}
 	
-	//문의 뷰
+	//문의 뷰 사진포함
 	@RequestMapping(value = "/used/inquireView.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String inquireView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<UsedPurchase> list = usedService.usedInquireView(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//문의 뷰
+	@RequestMapping(value = "/used/inquireView1.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String inquireView1(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		UsedPurchase list = usedService.usedInquireView1(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//문의 뷰 사진
+	@RequestMapping(value = "/used/inquireViewImg.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String inquireViewImg(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<UsedPurchase> list = usedService.usedInquireViewImg(map);
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
@@ -150,6 +177,25 @@ public class UsedController {
 		HashMap<String, Object>	resultMap = new HashMap<String, Object>();
 		usedService.usedInquireAnsDelete(map);
 		usedService.answerUpdate(map);
+		return new Gson().toJson(resultMap); 
+	}
+	
+	// 문의 수정
+	@RequestMapping(value = "/used/purchaseUpdate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody 
+	public String purchaseUpdate(Model model, @RequestParam	HashMap<String, Object> map) throws Exception { 
+		HashMap<String, Object>	resultMap = new HashMap<String, Object>();
+		usedService.updatePurchaseInquire(map);
+		return new Gson().toJson(resultMap); 
+	}
+	
+	// 매입 리스트
+	@RequestMapping(value = "/used/purchaseYList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody 
+	public String purchaseYList(Model model, @RequestParam	HashMap<String, Object> map) throws Exception { 
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<UsedPurchase> list = usedService.purchaseYList(map);
+		resultMap.put("list", list);
 		return new Gson().toJson(resultMap); 
 	}
 	

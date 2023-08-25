@@ -27,7 +27,7 @@
 	<!-- 중고 문의 등록 -->
 	<insert id="insertUsedInquire" parameterType="hashmap" useGeneratedKeys="true" keyProperty="usedPNo" keyColumn="USED_P_NO">
 		INSERT INTO t3_tbl_used_purchase(USER_NO, USER_NAME, USER_PHONE, USED_P_NAME, USED_P_PRICE, USED_P_SELL_PRICE, MANUFACTURER, USEDTIME, GRADE, CONTENT)
-		VALUES(#{userNo}, #{userName}, #{phone}, #{usedName}, #{usedPrice}, #{usedSellPrice}, #{manufacturer}, #{usedtime}, #{grade}, #{content})
+		VALUES(#{userNo}, #{userName}, #{phone}, #{usedPName}, #{usedPPrice}, #{usedPSellPrice}, #{manufacturer}, #{usedtime}, #{grade}, #{content})
 	</insert>
 	
 	<!-- 중고 문의 사진 등록 -->
@@ -43,6 +43,36 @@
 		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
 		WHERE P.USED_P_NO = #{usedPNo}
 	</select>
+	
+	<!-- 중고 문의 게시글 뷰 -->
+	<select id="usedInquireView1" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT * 
+		FROM t3_tbl_used_purchase
+		WHERE USED_P_NO = #{usedPNo}
+	</select>
+	
+	<!-- 문의게시글사진 -->
+	<select id="usedInquireViewImg" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT * 
+		FROM t3_tbl_used_purchase_image
+		WHERE USED_P_NO = #{usedPNo}
+	</select>
+	
+	<!-- 문의 수정 -->
+	<update id="updatePurchaseInquire" parameterType="hashmap">
+		UPDATE t3_tbl_used_purchase
+		SET
+			USER_NAME = #{userName}, 
+			USER_PHONE = #{phone}, 
+			USED_P_NAME = #{usedPName}, 
+			USED_P_PRICE = #{usedPPrice}, 
+			USED_P_SELL_PRICE = #{usedPSellPrice}, 
+			MANUFACTURER = #{manufacturer}, 
+			USEDTIME = #{usedtime}, 
+			GRADE = #{grade}, 
+			CONTENT = #{content}
+		WHERE USED_P_NO = #{usedPNo}
+	</update>
 	
 	<!-- 중고문의사진삭제 -->
 	<delete id="usedInquireImgDelete" parameterType="hashmap">
@@ -92,4 +122,12 @@
 		WHERE USED_P_NO = #{usedPNo}
 	</update>
 	
+	<!-- 매입 물품 리스트 -->
+	<select id="purchaseYList" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *, P.USED_P_NO
+		FROM t3_tbl_used_purchase P
+		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
+		WHERE PURCHASE = 'Y'
+		GROUP BY P.USED_P_NO
+	</select>
 </mapper>

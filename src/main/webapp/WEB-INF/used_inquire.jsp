@@ -128,6 +128,10 @@ h1{
 	border-bottom:2px solid #A782C3;
 	margin-bottom: 41px;
 }
+.imgPrv{
+	width: 80%;
+	margin : 20px 0;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -149,12 +153,12 @@ h1{
 			<div class="right">
 			 	<div><input type="text" class="put" v-model="info.userName" autocomplete="nope" placeholder="이름" ref="nameInput"></div>
 			 	<div><input type="text" class="put" v-model="info.phone" autocomplete="nope" placeholder="전화번호" ref="phoneInput"></div>
-			 	<div><input type="text" class="put" v-model="inquire.usedName" ref="usedNameInput"></div>
-			 	<input type="text" class="put" id="numberInput" @input="formatNumber" v-model="inquire.usedPrice" ref="usedPriceInput">
-			 	<input type="text" class="put" @input="formatNumber" v-model="inquire.usedSellPrice" ref="usedSellPriceInput">
-			 	<div><input type="text" class="put" v-model="inquire.manufacturer" placeholder="알 수 없는 경우 '미상' 기재" ref="manufacturerInput"></div>
+			 	<div><input type="text" class="put" v-model="list.usedPName" ref="usedNameInput"></div>
+			 	<input type="text" class="put" id="numberInput" @input="formatNumber" v-model="list.usedPPrice" ref="usedPriceInput">
+			 	<input type="text" class="put" @input="formatNumber" v-model="list.usedPSellPrice" ref="usedSellPriceInput">
+			 	<div><input type="text" class="put" v-model="list.manufacturer" placeholder="알 수 없는 경우 '미상' 기재" ref="manufacturerInput"></div>
 			 	<div>
-			 		<select class="select" v-model="inquire.usedtime" ref="usedtimeInput">
+			 		<select class="select" v-model="list.usedtime" ref="usedtimeInput">
 			 			<option value="0">1년 미만</option>
 			 			<option value="1">1년</option>
 			 			<option value="2">2년</option>
@@ -165,7 +169,7 @@ h1{
 			 		</select>
 			 	</div>
 			 	<div>
-				 	<select class="select" v-model="inquire.grade" ref="gradeInput"> 
+				 	<select class="select" v-model="list.grade" ref="gradeInput"> 
 				 		<option value="A">상</option>
 				 		<option value="B">중</option>
 				 		<option value="C">하</option>
@@ -174,7 +178,7 @@ h1{
 			</div>
 			<div class="bottom">상세내용* <span class="text1">색상, 재질, 사이즈 등 상세한 제품 설명 기재 부탁드립니다.</span></div>
 			<div>
-				<vue-editor v-model="inquire.content"></vue-editor>
+				<vue-editor v-model="list.content"></vue-editor>
 			</div>
 			
 			<div>
@@ -184,10 +188,13 @@ h1{
 			    <label :for="'file' + index">파일첨부</label>
 			    <input type="file" :id="'file' + index" :name="'file' + index" @change="fnOnFileChange($event, index)">
 			    <input class="upload-name" :value="fileNames[index]">
+			    <div><img class="imgPrv" v-if="photoList[index]" :src="photoList[index]" alt="Image preview" class="pvImg" required></div>
+			    <div></div>
 			</div>
 			</div>
 			<div class="btnDIV">
-				<button class="btn1" @click="fnInquire()">문의 제출</button>
+				<button class="btn1" @click="fnPurchaseEdit()" v-if="usedPNo!=''">수정</button>
+				<button class="btn1" @click="fnInquire()" v-else>문의 제출</button>
 				<button class="btn1" @click="fnGoList()">취소</button>
 			</div>
 		</div>
@@ -206,18 +213,20 @@ var app = new Vue({
 	data : {
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
+		usedPNo : "${map.usedPNo}",
 		info : {},
-		fileNames: ['', '', '', '', ''],
-		inquire:{
-			usedPrice: '',
-			usedSellPrice: '',
-			usedName : "",
+		list : {
+			usedPName : "",
+			usedPPrice: "",
+			usedPSellPrice: "",
 			manufacturer : "",
 			usedtime : "",
 			grade : "",
 			content : ""
 		},
-		photoList : []
+		fileNames: ['', '', '', '', ''],
+		photoList : ['', '', '', '', ''],
+		imgList : []
 	},// data
 	components: {VueEditor},
 	methods : {
@@ -231,27 +240,74 @@ var app = new Vue({
                 data : param,
                 success : function(data) { 
                 	self.info = data.info;
+                	if(self.usedPNo!=""){
+            			self.fnGetPInfo();
+            			self.fnGetPImgInfo();
+            		}
+                }
+            }); 
+		},
+		fnGetPInfo : function(){
+			var self = this;
+			var param = {usedPNo : self.usedPNo};
+			$.ajax({
+				url : "/used/inquireView1.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.list = data.list;
+                	self.info.userName = self.list.userName;
+                	self.info.phone = self.list.userPhone;
+                	self.list.usedPPrice = String(self.list.usedPPrice);
+                	self.list.usedPSellPrice = String(self.list.usedPSellPrice);
+                }
+            }); 
+		},
+		fnGetPImgInfo : function(){
+			var self = this;
+			var param = {usedPNo : self.usedPNo};
+			$.ajax({
+				url : "/used/inquireViewImg.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.imgList = data.list;
+                	for(var i=0; i<self.imgList.length; i++){
+                		self.fileNames.splice(i+1,1);
+						self.fileNames.splice(i+1,0,self.imgList[i].pImgOrgName);
+                	}
                 }
             }); 
 		},
 		fnOnFileChange: function(event, index) {
 			var self = this;
 		    const file = event.target.files[0];	
-		    if (file) {
-		      self.fileNames.splice(index,0,file.name);
-	    	  self.photoList.splice(index,1);
-		      self.photoList.splice(index,0,file);
+		    console.log(event.target.files[0]);
+			if (file) {
+	            const reader = new FileReader();
+	            reader.onload = function(e) {
+	                self.photoList.splice(index, 1, e.target.result);
+	            };
+	            reader.readAsDataURL(file);
+	            
+		    	self.fileNames.splice(index,1);
+		      	self.fileNames.splice(index,0,file.name);
+	    	  	self.photoList.splice(index,1);
+		      	self.photoList.splice(index,0,file);
+		      	console.log(self.fileNames);
 		    }
         },
         formatNumber() {
             var self = this;
-            const inputNumber = self.inquire.usedPrice.replace(/\D/g, '');
+            const inputNumber = self.list.usedPPrice.replace(/\D/g, '');
             const formatted = Number(inputNumber).toLocaleString();
-            self.inquire.usedPrice = formatted;
+            self.list.usedPPrice = formatted;
             
-            const inputSellPrice = self.inquire.usedSellPrice.replace(/\D/g, '');
+            const inputSellPrice = self.list.usedPSellPrice.replace(/\D/g, '');
             const formattedSellPrice = Number(inputSellPrice).toLocaleString();
-            self.inquire.usedSellPrice = formattedSellPrice;
+            self.list.usedPSellPrice = formattedSellPrice;
         },
         fnInquire(){
         	var self = this;
@@ -269,42 +325,42 @@ var app = new Vue({
 		        });
 				return;
 			}
-        	if(self.inquire.usedName == ""){
+        	if(self.list.usedPName == ""){
 				alert("제품명을 입력해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.usedNameInput.focus();
 		        });
 				return;
 			}
-        	if(self.inquire.usedPrice == "" || self.inquire.usedPrice == 0){
+        	if(self.list.usedPPrice == "" || self.list.usedPPrice == 0){
 				alert("구매가격을 입력해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.usedPriceInput.focus();
 		        });
 				return;
 			}
-        	if(self.inquire.usedSellPrice == "" || self.inquire.usedSellPrice == 0){
+        	if(self.list.usedPSellPrice == "" || self.list.usedPSellPrice == 0){
 				alert("희망판매가격을 입력해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.usedSellPriceInput.focus();
 		        });
 				return;
 			}
-        	if(self.inquire.manufacturer == ""){
+        	if(self.list.manufacturer == ""){
 				alert("제조국을 입력해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.manufacturerInput.focus();
 		        });
 				return;
 			}
-        	if(self.inquire.usedtime == ""){
+        	if(self.list.usedtime == ""){
 				alert("사용기간을 입력해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.usedtimeInput.focus();
 		        });
 				return;
 			}
-        	if(self.inquire.grade == ""){
+        	if(self.list.grade == ""){
 				alert("제품상태를 입력해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.gradeInput.focus();
@@ -315,13 +371,12 @@ var app = new Vue({
         		alert("첨부 사진을 4장 이상 올려주세요.");
         		return;
         	}
-			var param = self.inquire;
+			var param = self.list;
 			param.userNo = self.sessionNo;
 			param.userName = self.info.userName;
 			param.phone = self.info.phone;
-			param.usedPrice = self.inquire.usedPrice.replace(/\D/g, '');
-	        param.usedSellPrice = self.inquire.usedSellPrice.replace(/\D/g, '');
-	        console.log(self.photoList);
+			param.usedPPrice = self.list.usedPPrice.replace(/\D/g, '');
+	        param.usedPSellPrice = self.list.usedPSellPrice.replace(/\D/g, '');
 			$.ajax({
 				url : "/used/inquire.dox",
                 dataType:"json",	
@@ -341,7 +396,7 @@ var app = new Vue({
             });
         },
         fnGoList(){
-			location.href="purchase.do"
+			location.href="purchase.do";
 		},
 		upload(form) {
 			return new Promise((resolve, reject) => {
@@ -360,6 +415,94 @@ var app = new Vue({
 		    	});
 			});
 		},
+		fnInquireEdit(){
+			var self = this;
+			var param = {usedPNo : self.usedPNo};
+			$.ajax({
+				url : "/used/inquireView1.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.list = data.list;
+                }
+            }); 
+		},
+		fnPurchaseEdit(){
+        	var self = this;
+        	if(self.info.userName == ""){
+				alert("이름을 입력해주세요.");
+				self.$nextTick(function() {
+		            self.$refs.nameInput.focus();
+		        });
+				return;
+			}
+        	if(self.info.phone == ""){
+				alert("전화번호를 입력해주세요.");
+				self.$nextTick(function() {
+		            self.$refs.phoneInput.focus();
+		        });
+				return;
+			}
+        	if(self.list.usedPName == ""){
+				alert("제품명을 입력해주세요.");
+				self.$nextTick(function() {
+		            self.$refs.usedNameInput.focus();
+		        });
+				return;
+			}
+        	if(self.list.usedPPrice == "" || self.list.usedPPrice == 0){
+				alert("구매가격을 입력해주세요.");
+				self.$nextTick(function() {
+		            self.$refs.usedPriceInput.focus();
+		        });
+				return;
+			}
+        	if(self.list.usedPSellPrice == "" || self.list.usedPSellPrice == 0){
+				alert("희망판매가격을 입력해주세요.");
+				self.$nextTick(function() {
+		            self.$refs.usedSellPriceInput.focus();
+		        });
+				return;
+			}
+        	if(self.list.manufacturer == ""){
+				alert("제조국을 입력해주세요.");
+				self.$nextTick(function() {
+		            self.$refs.manufacturerInput.focus();
+		        });
+				return;
+			}
+        	if(self.list.usedtime == ""){
+				alert("사용기간을 입력해주세요.");
+				self.$nextTick(function() {
+		            self.$refs.usedtimeInput.focus();
+		        });
+				return;
+			}
+        	if(self.list.grade == ""){
+				alert("제품상태를 입력해주세요.");
+				self.$nextTick(function() {
+		            self.$refs.gradeInput.focus();
+		        });
+				return;
+			}
+			var param = self.list;
+			param.userNo = self.sessionNo;
+			param.userName = self.info.userName;
+			param.phone = self.info.phone;
+			param.usedPPrice = self.list.usedPPrice.replace(/\D/g, '');
+	        param.usedPSellPrice = self.list.usedPSellPrice.replace(/\D/g, '');
+			$.ajax({
+				url : "/used/purchaseUpdate.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	alert("수정이 완료되었습니다.");
+                	location.href="/used/purchase.do";
+                }
+            });
+        },
 	}, // methods
 	created : function() {
 		var self = this;

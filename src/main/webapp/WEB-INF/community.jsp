@@ -28,6 +28,14 @@
     position: relative;
     margin-top: 12px;
 }
+.part2{
+	display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    text-align : center;
+    position: relative;
+    margin-top: 12px;
+}
 .board1{
     position: relative;
     display: flex;
@@ -35,8 +43,8 @@
 }
 .photo1{
 	position: relative;
-    width: 300px;
-    height: 200px;
+    width: 400px;
+    height: 300px;
     overflow: hidden;
     border-radius : 5px;
 }
@@ -44,8 +52,8 @@
 	position: absolute; 
     top: 0;
     left: 0;
-	width: 300px;
-    height: 200px;
+	width: 400px;
+    height: 300px;
     object-fit: cover;
     transition: opacity 0.3s, visibility 0.3s;
 }
@@ -55,15 +63,15 @@
 	cursor : pointer;
 }
 .board1_item{
-	width: 300px;
+	width: 400px;
 }
 .title{
 	margin : 14px 0px 10px 0px;
 	font-size: 17px;
 }
 .nick{
-	margin-bottom : 14px;
-	font-size : 14px;
+	margin-bottom: 15px;
+    font-size: 15px;
 }
 .view{
 	margin-bottom : 10px;
@@ -125,6 +133,7 @@
     text-align: center;
     margin-top: 65px;
     font-size:14px;
+    padding: 0;
 }
 .pagination li {
     margin: 6px;
@@ -151,13 +160,12 @@
 	color : white;
 }
 .profile{
-	width: 20px;
-    height: 20px;
+	width: 25px;
+    height: 25px;
     border-radius: 50%;
     object-fit: cover;
     position: relative;
-    align-items: center;
-    top: 4.5px;
+    top: 6.5px;
     left: -5px;
 }
 </style>
@@ -167,7 +175,7 @@
 <div id="app">
 	<div id="container">
 		<div><h2>인기글</h2></div>
-		<div class="part">
+		<div class="part2">
 			<div v-for="(item, index) in bList">
 		        <div class="board1">
 		            <div class="board1_item">
@@ -191,7 +199,7 @@
 				<input type="text" class="search-input" @keyup.enter="fnSearch" v-model="keyword"><img class="m-glass" src="../css/image/community/m-glass.png">
 			</div>
 		</div>
-		<div class="part">
+		<div class="part2">
 			<div v-for="(item, index) in list">
 		        <div class="board1">
 		            <div class="board1_item">
@@ -256,8 +264,8 @@ var app = new Vue({
 	methods : {
 		fnGetList : function(){
 			var self = this;
-            var startNum = ((self.selectPage-1) * 12);
-    		var lastNum = 12;
+            var startNum = ((self.selectPage-1) * 9);
+    		var lastNum = 9;
 			var param = {startNum : startNum, lastNum : lastNum};
 			$.ajax({
 				url : "/community/boardList.dox",
@@ -267,15 +275,15 @@ var app = new Vue({
                 success : function(data) { 
                 	self.list = data.list;
                 	self.cnt = data.cnt;
-	                self.pageCount = Math.ceil(self.cnt / 12);
+	                self.pageCount = Math.ceil(self.cnt / 9);
 	                console.log(self.list);
                 }
             }); 
 		},
 		fnPageSearch : function(pageNum){
 			var self = this;
-			var startNum = ((pageNum-1) * 12);
-			var lastNum = 12;
+			var startNum = ((pageNum-1) * 9);
+			var lastNum = 9;
 			var nparmap = {startNum : startNum, lastNum : lastNum};
 			$.ajax({
 				url : "/community/boardList.dox",
@@ -285,7 +293,7 @@ var app = new Vue({
 				success : function(data) {
 					self.list = data.list;
 					self.searchCnt = data.cnt;
-					self.pageCount = Math.ceil(self.searchCnt / 12);
+					self.pageCount = Math.ceil(self.searchCnt / 9);
 				}
 			});
 		},
