@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.anesi.model.NonUserOrder;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
+import com.example.anesi.model.UsedOrder;
 import com.example.anesi.model.UserAddress;
 
 @Mapper
@@ -48,4 +49,8 @@ public interface OrderMapper {
 	int updateNonUserOrder(HashMap<String, Object> map);
 	// 비회원 주소 수정
 	int updateNonUserOrderAddr(HashMap<String, Object> map);
+	// 중고 상품 정보
+	UsedOrder selectUsedOrder(HashMap<String, Object> map);
+	// 중고 상품 결제
+	int insertUsedOrder(HashMap<String, Object> map);
 }

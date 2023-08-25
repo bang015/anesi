@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.anesi.model.NonUserOrder;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
+import com.example.anesi.model.UsedOrder;
 import com.example.anesi.model.UserAddress;
 
 public interface OrderService {
@@ -35,4 +36,8 @@ public interface OrderService {
 	List<NonUserOrder> searchNonUserOrder(HashMap<String, Object> map);
 	// 비회원 주문 수정
 	int editNonUserOrder(HashMap<String, Object> map);
+	// 중고 상품 정보
+	UsedOrder searchUsedOrder(HashMap<String, Object> map);
+	// 중고 상품 결제
+	int addUsedOrder(HashMap<String, Object> map);
 }

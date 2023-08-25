@@ -15,6 +15,7 @@ import org.springframework.web.util.WebUtils;
 import com.example.anesi.model.NonUserOrder;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
+import com.example.anesi.model.UsedOrder;
 import com.example.anesi.model.UserAddress;
 import com.example.anesi.service.OrderService;
 import com.google.gson.Gson;
@@ -162,6 +163,23 @@ public class OrderController {
 	public String update(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		orderService.editNonUserOrder(map);
+		return new Gson().toJson(resultMap);
+	}
+	// 중고 상품 정보
+	@RequestMapping(value = "/selectUsedOrder.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String used(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		UsedOrder usedOrder= orderService.searchUsedOrder(map);
+		resultMap.put("usedOrder", usedOrder);
+		return new Gson().toJson(resultMap);
+	}
+	// 중고 상품 정보
+	@RequestMapping(value = "/order/usedOrder.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String addUsed(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		orderService.addUsedOrder(map);
 		return new Gson().toJson(resultMap);
 	}
 }

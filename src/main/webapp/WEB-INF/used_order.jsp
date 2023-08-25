@@ -26,11 +26,10 @@
 					<div class="amountBox">
 						<h2 class="moneyText">결제 금액</h2>
 						<div>
-							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{numberWithCommas(totalProductAmount)}}원</span></div>
+							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{usedList.usedPSellPrice}}원</span></div>
 							<div class="orNameText">배송비<span class="allMoneyText">3,000원</span></div>
-							<div class="orNameText">쿠폰 사용<span class="allMoneyText">{{numberWithCommas(discount)}}원</span></div>
 						</div>
-						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{numberWithCommas(finalAmount+deliveryfee+discount)}}</span> 원</span></div>
+						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{usedList.usedPSellPrice+3000}}</span> 원</span></div>
 					</div>
 					<div class="orTerms">
 						<div class="allTerms">
@@ -66,7 +65,7 @@
 						</div>
 					</div>
 				</div>
-				<button class="orBtuStyle" @click="fnOrder">{{finalAmount}}원 결제하기</button>
+				<button class="orBtuStyle" @click="fnOrder">{{usedList.usedPSellPrice+3000}}원 결제하기</button>
 			</div>
 			<div class="orInformation">
 				<div class="subheading">주문자</div>
@@ -192,12 +191,11 @@
 				<div class="orProductList">
 					<div class="subheading">주문상품 <span class="text">1건</span></div>
 					<div>
-						<div class="orProduct" v-for="item in productList">
-							<img alt="" :src="item.path+'/'+item.imgName">
+						<div class="orProduct">
+							<img alt="" :src="usedList.pImgPath+'/'+usedList.pImgName" v-if="usedList.pImgName != undefined || usedList.pImgPath !=undefined">
 							<div>
-								<div class="prProductName">{{item.productName}}</div>
-								<div class="prProductOption">{{item.optionName}}</div>
-								<div class="prProductPrice">{{numberWithCommas(item.productPrice)}}원 <span>| {{item.cnt}}개</span></div>
+								<div class="prProductName">{{usedList.usedPName}}</div>
+								<div class="prProductPrice">{{usedList.usedPSellPrice}}</div>
 							</div>
 						</div>
 					</div>
@@ -231,8 +229,8 @@
 		        	<div class="modalStyle2">
 		        		<div class="modalStyle4">결제정보</div>
 		        		<div class="modalStyle3">
-		        			<div>상품이름 : {{productList[0].productName}}</div>
-		        			<div>결제금액 : {{finalAmount}}원</div>
+		        			<div>상품이름 : {{usedList.usedPName}}</div>
+		        			<div>결제금액 : {{usedList.usedPSellPrice+3000}}원</div>
 		        		</div>
 		        	</div>
 		        	<div class="modalStyle2">
@@ -276,8 +274,8 @@ var app = new Vue({
 	data : {
 		totalProductAmount : 0,
 		finalAmount : 0,
-		productNoList : ${map.product},
-		productList : [],
+		usedPNo : 26,  /* ${map.usedPNo} */
+		usedList : {},
 		order : {
 			name : "",
 			email1 : "",
@@ -529,13 +527,9 @@ var app = new Vue({
 			        default:
 			            request = '';
 		   		 }
-		    	self.finalAmount = self.finalAmount+self.deliveryfee+self.discount
+		    	self.finalAmount = self.usedList.usedPSellPrice+3000
 		    	var productName = '';
-		    	if(self.productNoList.length > 1){
-		    		productName = self.productList[0].productName+"등 "+self.productNoList.length+"개";
-		    	} else{
-		    		productName = self.productList[0].productName;
-		    	}
+		    		productName = self.usedList.usedPName;
 		    	var paymentNo =  "ORD"+self.formatDate(new Date())+"-"+self.cnt
 	              IMP.request_pay({ // param
 	              pg: self.payment, //kakaopay.TC0ONETIME
@@ -550,44 +544,20 @@ var app = new Vue({
 	              buyer_postcode: "01181"
 	            }, rsp => { // callback
 	              if (rsp.success && rsp.paid_amount == self.finalAmount) {
-	            	  
-	            	  for(let i=0;i < self.productNoList.length;i++){
-	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity, paymentNo, nonUserNo : self.addr.nonUserNo};
-		 		    	 $.ajax({
-		 		                url : "../order/order.dox",
-		 		                dataType:"json",	
-		 		                type : "POST", 
-		 		                data : nparmap,
-		 		                success : function(data) {
-		 		                	
-		 		                	if(self.order.couponNo != ''){
-		 		                		var nparmap = {couponNo : self.order.couponNo};
-		 		                		 $.ajax({
-		 		     		                url : "../order/couponRemove.dox",
-		 		     		                dataType:"json",	
-		 		     		                type : "POST", 
-		 		     		                data : nparmap,
-		 		     		                success : function(data) {
-		 		     		                }
-		 		                		 });
-		 		                	}
-		 		                	var nparmap = {optionNo : self.productNoList[i].optionNo, cnt : self.productNoList[i].quantity};
-	 		                		 $.ajax({
-	 		     		                url : "../order/optionStock.dox",
-	 		     		                dataType:"json",	
-	 		     		                type : "POST", 
-	 		     		                data : nparmap,
-	 		     		                success : function(data) {
-	 		     		                }
-	 		                		 });
-		 		                }
-		 		    	 });
-	            	  }
-	            	  self.openScrapModal();
-	            	  
+	              	var nparmap = {usedPNo : self.usedPNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, paymentNo};
+		 		    $.ajax({
+		 		    	url : "../order/usedOrder.dox",
+		 		        dataType:"json",	
+		 		        type : "POST", 
+		 		       	data : nparmap,
+		 		        success : function(data) {
+		 		        
+		 		        }
+		 		    });
+	            	self.openScrapModal();
 	              } else {
 	                // 결제 실패 시 로직,
-	            	  self.finalAmount = self.finalAmount-self.deliveryfee-self.discount;
+	            	  self.finalAmount = self.usedList.usedPSellPrice+3000;
 	              }
 	            });
 		    	
@@ -641,43 +611,17 @@ var app = new Vue({
 		    },
 		    fnGetProduct(){
 		    	var self = this;
-		    	for(let i = 0; i < self.productNoList.length; i++){
-					var nparmap = {productNo : self.productNoList[i].productNo};
-		            $.ajax({
-		                url : "../productSearch.dox",
-		                dataType:"json",	
+				var nparmap = {usedPNo : self.usedPNo};
+		        	$.ajax({
+		            	url : "../selectUsedOrder.dox",
+		            	dataType:"json",	
 		                type : "POST", 
 		                data : nparmap,
 		                success : function(data) {
-		                	let productName1 = data.product.productName;
-		                	let productPrice1 = data.product.productPrice;
-		                	let optionName1 = '';
-		                	
-		                	if(data.product.discountYn == 'Y'){
-		                		productPrice1 = Math.floor( (productPrice1*((100-data.product.discount)/100)) / 100) * 100;
-		                	}
-		                	
-							var nparmap = {optionNo : self.productNoList[i].optionNo};	
-				            $.ajax({
-				                url : "../order/optionSearchInfo.dox",
-				                dataType:"json",	
-				                type : "POST", 
-				                data : nparmap,
-				                success : function(data) {
-				                	self.addr.nonUserNo = data.cookie;
-				                	self.fnCntOrder();
-				                	productPrice1 = productPrice1 + data.info.optionPrice;
-				                	optionName1 = data.info.optionName;
-						            self.productList.push({productName : productName1, productPrice : (productPrice1*self.productNoList[i].quantity), optionName : optionName1, cnt : self.productNoList[i].quantity, path : data.info.imgPath, imgName : data.info.imgName});
-						            self.finalAmount = self.finalAmount + (productPrice1*self.productNoList[i].quantity);
-						            self.totalProductAmount = self.totalProductAmount + (productPrice1*self.productNoList[i].quantity);
-				                }
-				            });
-				            
+		                	self.usedList = data.usedOrder;
+		                	console.log(self.usedList)
 		                }
-		            
 		            });
-		    	}
 		    	
 		    },
 		    formatDate(date) {
@@ -744,7 +688,6 @@ var app = new Vue({
 	}, // methods
 	created : function() {
 		var self = this;
-		self.fnGetCoupon();
 		self.fnGetAddrList();
 		self.fnGetProduct();
 		var IMP = window.IMP;

@@ -135,4 +135,25 @@
 		ADDR2 = #{addr2}
 		WHERE ADDR_NO = #{addrNo}			
 	</update>
+	<!-- 중고 상품 정보 -->
+	<select id="selectUsedOrder" parameterType="hashmap" resultType="com.example.anesi.model.UsedOrder">
+		SELECT p.USED_P_NO, p.USED_P_SELL_PRICE, p.USED_P_NAME,i.P_IMG_PATH, i.P_IMG_NAME
+		FROM t3_tbl_used_purchase p
+		INNER JOIN t3_tbl_used_purchase_image i ON p.USED_P_NO = i.USED_P_NO
+		WHERE p.USED_P_NO = 26
+		LIMIT 1;
+	</select>
+	<!-- 중고 상품 결제 -->
+	<insert id="insertUsedOrder" parameterType="hashmap">
+	    INSERT INTO t3_tbl_used_order (
+	        USED_NO, USER_NO, ADDR_NO, DELIVERY_SIT, REQUEST,
+	        ORDER_PRICE, ORDER_NAME, ORDER_EMAIL, ORDER_PHONE,
+	        RECEIPT_NAME, RECEIPT_PHONE, PAYMENT_NO
+	    )
+	    VALUES (
+	        #{usedPNo}, #{userNo}, #{addrNo}, '1', #{request},
+	        #{orderPrice}, #{orderName}, #{orderEmail}, #{orderPhone},
+	        #{receiptName}, #{receiptPhone}, #{paymentNo}
+	    )
+	</insert>
 </mapper>

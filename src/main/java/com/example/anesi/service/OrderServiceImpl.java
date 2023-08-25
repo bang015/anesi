@@ -11,6 +11,7 @@ import com.example.anesi.mapper.OrderMapper;
 import com.example.anesi.model.NonUserOrder;
 import com.example.anesi.model.Order;
 import com.example.anesi.model.ProductOption;
+import com.example.anesi.model.UsedOrder;
 import com.example.anesi.model.UserAddress;
 
 @Service
@@ -118,6 +119,17 @@ public class OrderServiceImpl implements OrderService{
 	public int searchNonUserOrderCheck(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return orderMapper.selectNonUserOrderCheck(map);
+	}
+	// 중고 상품 정보
+	@Override
+	public UsedOrder searchUsedOrder(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderMapper.selectUsedOrder(map);
+	}
+	@Override
+	public int addUsedOrder(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderMapper.insertUsedOrder(map);
 	}
 		
 	
