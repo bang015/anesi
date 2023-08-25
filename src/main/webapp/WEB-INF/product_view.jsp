@@ -1038,9 +1038,6 @@ var app = new Vue({
 	                	for (var i = 0; i < self.reviewUser.length; i++) {
 	                	  self.reviewPrice += self.reviewUser[i].orderPrice;
 	                	  optionSet.add(self.reviewUser[i].optionName);
-	                	  if(self.reviewUser[i].userNo == self.userNo){
-	                		  self.reviewCheck1 = 1;
-	                	  }
 	                	}
 
 	                	optionSet.forEach(option => {
@@ -1570,7 +1567,23 @@ var app = new Vue({
 			    	},
 			    	fnReviewEdit(){
 			    		location.href="/mypage/myReview.do"
-			    	}	
+			    	},
+			    	fnReviewCheck(){
+			    		var self = this;
+			            var nparmap = { userNo: self.userNo, productNo: self.productNo};
+			            $.ajax({
+			                url : "/selectReviewCheck.dox",
+			                dataType:"json",	
+			                type : "POST", 
+			                data : nparmap,
+			                success : function(data) {
+			                	console.log(data.reviewCheck);
+			                	if(data.reviewCheck > 0){
+			                		self.reviewCheck1 = 1;
+			                	}
+			                }
+			            });
+			    	}
 		           
 			     
 	}, // methods
@@ -1592,6 +1605,7 @@ var app = new Vue({
 		self.fnCheckScrap();
 		self.fnSelectHelp();
 		self.fnaaa();
+		self.fnReviewCheck();
 	}// created
 });
 </script>

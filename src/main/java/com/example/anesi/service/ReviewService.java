@@ -26,4 +26,6 @@ public interface ReviewService {
 		List<Review> searchHelpUser(HashMap<String, Object> map);
 		// 도움이 돼요 해제/삭제
 		int editHelp2(HashMap<String, Object> map);
+		// 리뷰 중복 체크
+		int searchReviewCheck(HashMap<String, Object> map);
 }

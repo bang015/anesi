@@ -104,9 +104,9 @@ li{
 	<div id="container">
 		<div class="part">
 			<div class="title"><h1>중고 판매</h1></div>
-			<div class="usedList">
-				<div class="usedProduct">
-					
+			<div class="usedList" v-for="item in list">
+				<div class="usedProductImg">
+					<img src="item.pImgPath+'/'+item.pImgName">
 				</div>
 			</div>
 		</div>

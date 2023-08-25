@@ -35,4 +35,6 @@ public interface ReviewMapper {
 		int updateHelp2(HashMap<String, Object> map);
 		// 도움이돼요 유저 삭제
 		int deleteHelp(HashMap<String, Object> map);
+		// 리뷰 중복 체크
+		int selectReviewCheck(HashMap<String, Object> map);
 }

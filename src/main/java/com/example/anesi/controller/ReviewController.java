@@ -93,6 +93,15 @@ public class ReviewController {
 				resultMap.put("help", help);
 				return new Gson().toJson(resultMap);
 			}
+		  // 리뷰 중복 체크
+		  @RequestMapping(value = "/selectReviewCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		  @ResponseBody
+		  public String review1(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			  HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			  int reviewCheck = reviewService.searchReviewCheck(map);
+			  resultMap.put("reviewCheck", reviewCheck);
+			  return new Gson().toJson(resultMap);
+		  }
 		// 도움이돼요! 중복체크
 		  @RequestMapping(value = "/reviewSelectHelp.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 			@ResponseBody

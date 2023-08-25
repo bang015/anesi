@@ -116,6 +116,12 @@ public class ReviewServiceImpl implements ReviewService{
 		reviewMapper.deleteHelp(map);
 		return reviewMapper.updateHelp2(map);
 	}
+
+	@Override
+	public int searchReviewCheck(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return reviewMapper.selectReviewCheck(map);
+	}
 	
 }
  
