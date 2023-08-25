@@ -117,6 +117,8 @@
 		<option value="hotmail.com">hotmail.com</option>
 		<option value="icloud.com">icloud.com</option>
 	</select>
+	      <button @click.prevent='sendVerificationCode'>인증 메일 보내기</button>
+    
 	</div>
 	<div><span class="red">{{emailMs}}</span></div>
 	</div>
@@ -208,12 +210,15 @@
 </body>
 </html>
 <script>
+
+
 var app = new Vue({
 	el : '#app',
 	data : {
 		user : {
 			userEmail1 : "",
 			userEmail2 : "",
+			 username: "",
 			email : "",
 			pw1 : "",
 			pw2 : "",
@@ -388,6 +393,32 @@ var app = new Vue({
                 }
             });
 		},
+		// https://sdy-study.tistory.com/269 참고사이트 
+		sendVerificationCode: function() {
+		      var self = this;
+		      var email = self.user.userEmail1 + '@' + self.user.userEmail2;
+
+		      var data = {
+		        email: email,
+		        username: "ㅎㅇ" // 사용자 이름은 적절한 방법으로 설정하세요.
+		      };
+		      console.log(data);
+		      $.ajax({
+		        url: "/register",
+		        dataType: "json",
+		        type: "POST", 
+		        data: data,
+		        success: function(response) {
+		          // 성공적으로 메일 전송 후의 처리 로직에 제공된 response 값으로 작성하세요.
+		          alert("Verification code sent to your email.");
+		        },
+		        error: function(error) {
+		          console.error(error);
+		          alert("Failed to send verification code.");
+		        }
+		      });
+		},
+
 		// 닉네임 중복체크 및 메세지
 		fnNickOverlap : function(){
 			var self = this;
