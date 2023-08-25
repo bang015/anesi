@@ -11,6 +11,7 @@ import com.example.anesi.mapper.AdminMapper;
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.Review;
+import com.example.anesi.model.Statistics;
 import com.example.anesi.model.Used;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
@@ -158,5 +159,15 @@ public class AdminServiceImpl implements AdminService {
 		return adminMapper.selectUsedList(map);
 	}
 
+	@Override
+	public Statistics searchStatisticsProduct(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectStatisticsProduct(map);
+	}
 
+	@Override
+	public List<Statistics> searchWeeklySales(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectWeeklySales(map);
+	}
 }

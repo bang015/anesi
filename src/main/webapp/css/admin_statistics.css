@@ -1,0 +1,58 @@
+@charset "EUC-KR";
+
+#container{
+	padding: 10px 20px;
+	width: 100%;
+}
+.containerTitle{
+	height: 50px;
+	line-height: 50px;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	border-radius: 4px;
+	padding-left: 20px;
+	font-size: 20px;
+}
+.cursorPointer{
+	cursor: pointer;
+}
+.flex-container1 {
+  display:grid;
+  grid-template-rows: 1fr !important;
+  grid-template-columns: 1fr 8fr !important;
+  }
+.containerstatistics{
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	border-radius: 4px;
+	padding: 15px 30px 30px 30px;
+	font-size: 16px;
+}
+.sales{
+	font-size: 19px;
+	margin-bottom: 15px;
+}
+.salesListBox{
+	display: flex;
+	align-items: center;
+    justify-content: center;
+}
+.salesListBox > div{
+	padding: 10px;
+	width: 220px;
+	text-align: center;
+}
+.salesSpan{
+	color: #A782C3;
+	font-size: 24px;
+}
+.salesTitle{
+	margin-bottom: 10px;
+}
+.containerWeeklySalesBox{
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px 0 #dbdbdb;
+	border-radius: 4px;
+	padding: 15px 30px 30px 30px;
+	font-size: 16px;
+}

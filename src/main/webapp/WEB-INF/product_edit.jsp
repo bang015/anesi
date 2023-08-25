@@ -101,7 +101,7 @@
 									<td>{{item.productNo}}</td>
 									<td>{{item.productName}}</td>
 									<td>{{item.deleteYn == 'N' ? '판매중' : '판매종료'}}</td>
-									<td>전시중</td>
+									<td>{{item.stock == '0' ? '일시 품절' : '전시중'}}</td>
 									<td>{{item.stock}}</td>
 									<td>{{item.productPrice}}</td>
 									<td>{{item.discount}}%</td>

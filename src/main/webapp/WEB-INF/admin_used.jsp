@@ -50,7 +50,7 @@
 				<div class="checkList cursorPointer" @click="fnChangFlg('N')">
 						<div class="iconBack"><i class="fa-solid fa-ban fa-2xl" style="color: #ffffff;"></i></div>
 						<div class="checkListText">
-							<div>판매종료</div>
+							<div>매입거부</div>
 							<div><span class="numText">{{usedN}}</span>건</div> 
 						</div>
 					</div>
