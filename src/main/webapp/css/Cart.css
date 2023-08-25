@@ -94,5 +94,49 @@
 	font-weight: bold;
 	
 }
-			
+
+.input-number {
+    width: 50px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 16px;
+    transition: border-color 0.2s ease-in-out;
+  }
+
+  .input-number:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+   .btn-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .minus-btn,
+  .plus-btn {
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .minus-btn {
+    color: #4c6794;
+    margin-right: 10px;
+  }
+
+  .plus-btn {
+    color: #4b638b;
+    margin-left: 10px;
+  }
+
+  .minus-btn:focus,
+  .plus-btn:focus {
+    outline: none;
+    color: #007bff;
+  }
 			
