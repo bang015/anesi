@@ -284,7 +284,8 @@
 	    today_orders.today_users + today_nonusers.today_nonusers AS today_orders,
 	    overall_total.total_order_price + overall_nonusers.total_order_price AS overall_total,
 	    overall_today.total_order_price + overall_today_nonusers.total_order_price AS overall_today
-	FROM
+	    
+		FROM
 	    (SELECT 
 	        COUNT(*) AS total_users 
 	    FROM 
@@ -403,33 +404,27 @@
 		    FROM t3_tbl_user_order
 		    GROUP BY DELIVERY_SIT
 		) AS combined_data
-		GROUP BY DELIVERY_SIT;
+		GROUP BY DELIVERY_SIT
+		ORDER BY DELIVERY_SIT 
 	</select>
 	<!--중고상품 리스트-->
 	<select id="mainUsedList" resultType="com.example.anesi.model.Used">
-		SELECT COUNT(*) AS CNT, PURCHASE
+		SELECT COUNT(*) AS ADMIN_CNT, PURCHASE
 		FROM t3_tbl_used_purchase
 		GROUP BY PURCHASE
+		ORDER BY PURCHASE
 	</select>
 	<!--리뷰리스트-->
 	<select id="mainReviewList" resultType="com.example.anesi.model.Review">
-		SELECT COUNT(*), CSAT
+		SELECT *
 		FROM t3_tbl_user_review
-		
-		
-		WHERE CREATEDATE >= DATE_SUB(NOW(), INTERVAL 1 DAY)
-		ORDER BY CREATEDATE;
-		
-		<!-- 
-		WHERE CSAT >3 
-		
-		GROUP BY CSAT-->
 	</select>
 	<!--상품리스트-->
 	<select id="mainProductDel" resultType="com.example.anesi.model.Product">
-		SELECT COUNT(*) AS DE,DELETE_YN
+		SELECT COUNT(*) AS DE, DELETE_YN
 		FROM t3_tbl_product
 		GROUP BY DELETE_YN
+		ORDER BY DELETE_YN
 	</select>
 	
 	<select id="mainProductDis" resultType="com.example.anesi.model.Product">
@@ -448,5 +443,18 @@
 		SELECT CONTENT, CDATETIME, INQUIRY_CATEGORY
 		FROM t3_tbl_user_inquiry
 	 	WHERE REPLY IS NULL
+	 	
+	 	<choose>
+			<when test="searchOption == 1">
+ 				  AND INQUIRY_CATEGORY IN ('상품','배송')
+			</when>
+			<when test="searchOption == 2">
+ 				  AND INQUIRY_CATEGORY IN ('환불','반품','교환') 
+			</when>
+			<when test="searchOption == 3">
+ 				  AND INQUIRY_CATEGORY = '기타' 
+			</when>
+		</choose>
+	 	LIMIT 6
 	</select>
 </mapper>

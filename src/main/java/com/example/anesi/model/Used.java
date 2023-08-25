@@ -19,6 +19,9 @@ public class Used {
 	private String usedPUdatetime;
 	private String userName;
 	
+	private int adminCnt;
+
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -66,6 +69,9 @@ public class Used {
 	}
 	public String getUsedPUdatetime() {
 		return usedPUdatetime;
+	}
+	public int getAdminCnt() {
+		return adminCnt;
 	}
 	
 	

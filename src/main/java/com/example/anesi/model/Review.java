@@ -18,6 +18,7 @@ public class Review {
 	private String productName;
 	private int productNo;
 	private String rImgOrgName;
+
 	
 	public String getrImgOrgName() {
 		return rImgOrgName;

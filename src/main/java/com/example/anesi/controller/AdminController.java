@@ -90,6 +90,22 @@ public class AdminController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
+	//admin 관리자 메인문의리스트
+	@RequestMapping(value = "/admin/mainInquiry.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+		public String mainInquiry(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Inquiry>  list = adminService.adminMainInquiry(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	//admin 관리자 리뷰
+	@RequestMapping(value = "/admin/mainReview.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+		public String mainReview(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Review>  list = adminService.adminMainReview(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
 	
 	//상품 전체 조회
 	@RequestMapping(value = "/admin/productList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

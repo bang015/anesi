@@ -31,6 +31,7 @@ public class UserOrder {
     private String zipcode;
     private String addr;
     private String addr2;
+    private int totalCount;
     
     
 	public String getZipcode() {
@@ -116,5 +117,8 @@ public class UserOrder {
 	}
 	public int getOptionPrice() {
 		return optionPrice;
+	}
+	public int getTotalCount() {
+		return totalCount;
 	}
 }

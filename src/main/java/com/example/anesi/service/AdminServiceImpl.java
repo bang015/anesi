@@ -176,11 +176,18 @@ public class AdminServiceImpl implements AdminService {
 		HashMap<String, Object>	resultMap = new HashMap<String, Object>();
 		resultMap.put("order", adminMapper.mainOrderList(map));
 		resultMap.put("used", adminMapper.mainUsedList(map));
-		resultMap.put("review", adminMapper.mainReviewList(map));
 		resultMap.put("product1", adminMapper.mainProductDel(map));
 		resultMap.put("product2", adminMapper.mainProductDis(map));
 		resultMap.put("inquiryCnt", adminMapper.mainInquiryCnt(map));
-		resultMap.put("inquiry", adminMapper.mainInquiryList(map));
 		return resultMap;
+	}
+
+	@Override
+	public List<Inquiry> adminMainInquiry(HashMap<String, Object> map) {
+		return adminMapper.mainInquiryList(map);
+	}
+	@Override
+	public List<Review> adminMainReview(HashMap<String, Object> map) {
+		return adminMapper.mainReviewList(map);
 	}
 }

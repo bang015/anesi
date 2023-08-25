@@ -70,5 +70,9 @@ public interface AdminService {
 	
 	//관리자페이지메인
 	HashMap<String, Object> adminMain(HashMap<String, Object> map);
+	//관리자페이지메인의 문의리스트
+	List<Inquiry> adminMainInquiry(HashMap<String, Object> map);
+	//관리자페이지메인의 리뷰
+	List<Review> adminMainReview(HashMap<String, Object> map);
 }
 

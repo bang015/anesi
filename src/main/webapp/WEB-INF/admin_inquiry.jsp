@@ -102,7 +102,7 @@
 			        			<button class="btn1 btn2" @click="fnUpdateInquiry">답변</button>
 			        			<button @click="closeModal" class="btn1 btn2 btn3">취소</button>
 		        			</span>
-		        		</div>
+		        	 </div>
 		        </div>
 	        </div>
 		</div>

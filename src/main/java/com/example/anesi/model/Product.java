@@ -32,6 +32,8 @@ public class Product {
 		private String imgOrgName;
 		
 		private int stock;
+		private int de;
+		private int dis;
 		
 		//페이징인덱스
 		private int idx;
@@ -253,6 +255,14 @@ public class Product {
 
 		public void setCnt(int cnt) {
 			this.cnt = cnt;
+		}
+
+		public int getDe() {
+			return de;
+		}
+
+		public int getDis() {
+			return dis;
 		}
 
 	
