@@ -56,8 +56,15 @@
 				</div>
 			</div>
 			<div class="containerWeeklySalesBox">
+				<div>주간 매출 통계</div>
 				<div id="chart">
-			    	<apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
+			    	<apexchart type="bar" height="400" :options="chartOptions" :series="series"></apexchart>
+			    </div>	
+			</div>
+			<div class="containerWeeklySalesBox">
+				<div>주간 주문 통계</div>
+				<div id="chart">
+			    	<apexchart type="bar" height="400"  :options="chartOptions2" :series="series2"></apexchart>
 			    </div>	
 			</div>
 		</div>
@@ -79,7 +86,7 @@ var app = new Vue({
           }],
           chartOptions: {
             chart: {
-              height: 300,
+              height: 350,
               type: 'bar',
             },
             plotOptions: {
@@ -93,7 +100,7 @@ var app = new Vue({
             dataLabels: {
               enabled: true,
               formatter: function (val) {
-                return val + "원";
+            	  return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
               },
               offsetY: -20,
               style: {
@@ -104,7 +111,7 @@ var app = new Vue({
             
             xaxis: {
               categories: [],
-              position: 'top',
+              position: 'bottom',
               axisBorder: {
                 show: false
               },
@@ -137,21 +144,82 @@ var app = new Vue({
               labels: {
                 show: false,
                 formatter: function (val) {
-                  return val + "원";
+                  return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
                 }
               }
             
             },
-            title: {
-              text: '주간 매출 통계',
-              floating: true,
-              offsetY: 330,
-              align: 'center',
-              style: {
-                color: '#444'
-              }
-            }
           },
+  		series2: [{
+            name: '주문',
+            data: []
+          }],
+          chartOptions2: {
+              chart: {
+                height: 350,
+                type: 'bar',
+              },
+              plotOptions: {
+                bar: {
+                  borderRadius: 4,
+                  dataLabels: {
+                    position: 'top', // top, center, bottom
+                  },
+                }
+              },
+              dataLabels: {
+                enabled: true,
+                formatter: function (val) {
+              	  return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "건";
+                },
+                offsetY: -20,
+                style: {
+                  fontSize: '12px',
+                  colors: ["#304758"]
+                }
+              },
+              
+              xaxis: {
+                categories: [],
+                position: 'bottom',
+                axisBorder: {
+                  show: false
+                },
+                axisTicks: {
+                  show: false
+                },
+                crosshairs: {
+                  fill: {
+                    type: 'gradient',
+                    gradient: {
+                      colorFrom: '#D8E3F0',
+                      colorTo: '#BED1E6',
+                      stops: [0, 100],
+                      opacityFrom: 0.4,
+                      opacityTo: 0.5,
+                    }
+                  }
+                },
+                tooltip: {
+                  enabled: true,
+                }
+              },
+              yaxis: {
+                axisBorder: {
+                  show: false
+                },
+                axisTicks: {
+                  show: false,
+                },
+                labels: {
+                  show: false,
+                  formatter: function (val) {
+                    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "건";
+                  }
+                }
+              
+              },
+            },
 	},// data
 	methods : {
 		fnReload(){
@@ -186,15 +254,24 @@ var app = new Vue({
                 	console.log(self.WeeklySalesList);
                 	var weeklyData = self.WeeklySalesList.map(item => ({
                         order_date: item.orderDate,
-                        total_order_amount: item.totalOrderAmount
+                        total_order_amount: item.totalOrderAmount,
+                        total_order_count: item.totalOrderCount
                     }));
                     self.chartOptions = {
                    		xaxis : {
                   			categories : weeklyData.map(item => item.order_date.substring(0,5)+'일')
                    		}
                  	};
+                    self.chartOptions2 = {
+                       		xaxis : {
+                      			categories : weeklyData.map(item => item.order_date.substring(0,5)+'일')
+                       		}
+                     	};
                     self.series = [{
                     	data : weeklyData.map(item => item.total_order_amount)
+                    }]
+                    self.series2 = [{
+                    	data : weeklyData.map(item => item.total_order_count)
                     }]
                     		
                 } 
