@@ -154,11 +154,11 @@
 		INNER JOIN t3_tbl_used_purchase_image i ON o.USED_NO = i.USED_P_NO
 		INNER JOIN t3_tbl_used_purchase p ON o.USED_NO = p.USED_P_NO
 		WHERE o.USER_NO = #{userNo}
-		GROUP BY PAYMENT_NO
 		AND o.CREATEDATE >= DATE_SUB(NOW(), INTERVAL IFNULL(#{month}, 1) MONTH)
 		<if test="deliverySit !=null and deliverySit != ''">
 			AND DELIVERY_SIT = #{deliverySit}
 		</if>
+		GROUP BY PAYMENT_NO
 		ORDER BY CREATEDATE DESC
 		LIMIT #{startNum}, #{lastNum}
 	</select>

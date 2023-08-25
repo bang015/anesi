@@ -185,7 +185,7 @@
 					    	<div class="name">{{item.usedPName}}</div>
 					    </div>
 					    <div class="optionName">
-					    	<div class="productPrice">{{item.orderPrice}}<span class="span1"> | </span><span class="span2">1°³</span></div>
+					    	<div class="productPrice">{{item.orderPrice| formatPrice}}<span class="span1"> | </span><span class="span2">1°³</span></div>
 					    </div>
 					   </div>
 				    </div>
@@ -243,6 +243,11 @@ var app = new Vue({
         ],
         optionsVisible: false
 	},// data
+	filters: {
+	    formatPrice(price) {
+	      return price.toLocaleString('ko-KR');
+	    },
+	  },
 	methods : {
 		fnGetOrderList(){
 			var self = this;
