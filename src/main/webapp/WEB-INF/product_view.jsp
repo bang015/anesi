@@ -1088,6 +1088,7 @@ var app = new Vue({
 		       			self.fnReviewCnt();
 		       			self.fnReviewUser();
 		       			self.fnAvg();
+		       			self.fnReviewCheck();
 	       	     	}
                 }
             });
