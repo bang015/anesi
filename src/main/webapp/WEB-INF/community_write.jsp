@@ -176,6 +176,7 @@ var app = new Vue({
 	       	        form.append( "file1",  $("#file1")[0].files[0] );
 	       	     	form.append( "bNo", data.bNo); // pk
 	           		self.fnThumbnail(form); 
+	       	     	
 				}
 			}); 
 		},
@@ -189,10 +190,15 @@ var app = new Vue({
 	            contentType : false, 
 	            data : form, 
 	            success : function(response) { 
-				}
+					self.fnMove();
+	            }
 	           
 	       });
 		},
+		fnMove(){
+			location.href="main.do";
+		}
+		,
 		fnBack(){
 			location.href = "main.do";
 		},

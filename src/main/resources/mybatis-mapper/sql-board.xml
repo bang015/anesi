@@ -111,7 +111,7 @@
 			GROUP BY BOARD_NO
 		) G ON G.BOARD_NO = B.BOARD_NO
 		ORDER BY VIEW DESC
-		LIMIT 4
+		LIMIT 3
 	</select>
 	
 	<!-- 게시글 보기 -->
