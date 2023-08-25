@@ -165,6 +165,7 @@
 /* 헤더 CSS*/
 .flex-container1 {
   display:grid;
+  grid-template-rows: 1fr !important;
   grid-template-columns: 1fr 8fr !important;
   }
     
