@@ -47,6 +47,25 @@
 	.pagination a{
 		padding: 4px 12px ;
 	}
+	.order_list1{
+		min-height: 100px;
+		padding: 20px;
+		display: flex;
+		border-radius: 4px;
+		box-shadow: 0 1px 3px 0 #dbdbdb;
+		width: 80%;
+		margin: 0px auto 0 auto;
+	    flex-direction: column;
+	}
+	.usedtitle{
+		font-size: 25px;
+		font-weight: bold;
+		color: #424242;
+		text-align : initial;
+		margin-top: 20px;
+		margin-bottom: 10px;
+		margin-left: 120px;
+	}
 </style>
 </head>
 <body>
@@ -139,10 +158,10 @@
 				
 			</div>
 			<!-- 중고 상품 -->
-			<div class="used">
-				중고 상품
+			<div class="usedtitle">
+				<span>중고 상품</span>
 			</div>
-			<div class="order_list">
+			<div class="order_list1">
 				<div class="optionListBox">
 					<div>
 					    <div class="selectBox2" @mouseover="showOptions" @mouseleave="hideOptions" :class="{ active: optionsVisible }">
@@ -162,10 +181,11 @@
 					   <div class="orderBox">
 					   	 <img alt="" :src="item.pImgPath+'/'+item.pImgName" class="imgBox">
 					    <div class="productName">
-					    	<div class="name" @click="fnReviewMove(item.productNo)">{{item.usedPName}}</div>
+					    	<div class="manufacturer">아네시 중고장터</div>
+					    	<div class="name">{{item.usedPName}}</div>
 					    </div>
 					    <div class="optionName">
-					    	<div class="productPrice">{{item.orderPrice}}</div>
+					    	<div class="productPrice">{{item.orderPrice}}<span class="span1"> | </span><span class="span2">1개</span></div>
 					    </div>
 					   </div>
 				    </div>
@@ -321,7 +341,7 @@ var app = new Vue({
                 	self.orderList2 = data.list2;
                 	self.cnt2 = data.cnt2;
 					self.pageCount2 = Math.ceil(self.cnt2 / 3);
-                	for(let i = 0; i < self.orderList.length; i++){
+                	for(let i = 0; i < self.orderList2.length; i++){
                 		switch (self.orderList2[i].deliverySit) {
                 	    case '1':
                 	        self.orderList2[i].deliverySitName = '결제완료';
@@ -338,10 +358,8 @@ var app = new Vue({
                 	    default:
                 	        break;
                 		}
-                		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
-                		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
                 	}
-                	console.log(self.orderList);
+                	console.log(self.orderList2);
                 }
             });
 		},
@@ -383,10 +401,7 @@ var app = new Vue({
 	                	    default:
 	                	        break;
 	                		}
-	                		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
-	                		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
 	                	}
-	                	console.log(self.orderList);
 	                }
 				});
 			},
@@ -441,19 +456,15 @@ var app = new Vue({
 	                		switch (self.usedDelivery[i].deliverySit) {
 	                	    case '1':
 	                	        self.deliverySit.order++;
-	                	        self.usedDelivery[i].deliverySitName = '결제완료';
 	                	        break;
 	                	    case '2':
 	                	        self.deliverySit.ready++;
-	                	        self.usedDelivery[i].deliverySitName = '배송준비';
 	                	        break;
 	                	    case '3':
 	                	        self.deliverySit.shipping++;
-	                	        self.usedDelivery[i].deliverySitName = '배송중';
 	                	        break;
 	                	    case '4':
 	                	        self.deliverySit.completed++;
-	                	        self.usedDelivery[i].deliverySitName = '배송완료';
 	                	        break;
 	                	    default:
 	                	        break;
@@ -504,6 +515,42 @@ var app = new Vue({
                 }
             });
 		},
+		fnUsedOrderList(){
+			var self = this;
+			var startNum = ((self.selectPage2-1) * 3);
+			var lastNum = 3;
+			var month = isNaN(Number(self.optionList[1].value)) ? 1 : Number(self.optionList[1].value);
+			var nparmap = {userNo : self.userNo, deliverySit : self.optionList[0].deliverySit, month,startNum : startNum, lastNum : lastNum};
+            $.ajax({
+                url : "searchUsedOrderList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.orderList2 = data.list2;
+                	self.cnt2 = data.cnt2;
+					self.pageCount2 = Math.ceil(self.cnt2 / 3);
+                	for(let i = 0; i < self.orderList2.length; i++){
+                		switch (self.orderList2[i].deliverySit) {
+                	    case '1':
+                	        self.orderList2[i].deliverySitName = '결제완료';
+                	        break;
+                	    case '2':
+                	        self.orderList2[i].deliverySitName = '배송준비';
+                	        break;
+                	    case '3':
+                	        self.orderList2[i].deliverySitName = '배송중';
+                	        break;
+                	    case '4':
+                	        self.orderList2[i].deliverySitName = '배송완료';
+                	        break;
+                	    default:
+                	        break;
+                		}
+                	}
+                }
+            });
+		},
 		fnOptionDel(index){
 			var self = this;
 			if(index == 0){
@@ -512,6 +559,7 @@ var app = new Vue({
 				self.optionList[1]= ({name : undefined, value : undefined});
 			}
 			self.fnOrderList();
+			self.fnUsedOrderList();
 		},
         handleSelect(value) {
 	          this.selectedOption = value ? this.options.find(option => option.value === value).text : '기간';
@@ -530,6 +578,7 @@ var app = new Vue({
 	        	  this.optionList[1] = ({name : month, value});
 	          }
 	          this.fnOrderList();
+	          this.fnUsedOrderList();
         },
         showOptions() {
             this.optionsVisible = true;
@@ -548,6 +597,7 @@ var app = new Vue({
 			}
 			this.optionList[0] = ({name : deliverySitName, deliverySit : deliverySit});
 			this.fnOrderList();
+			this.fnUsedOrderList();
         },
         numberWithCommas(number) {
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
