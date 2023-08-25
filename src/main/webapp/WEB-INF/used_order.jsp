@@ -324,7 +324,7 @@ var app = new Vue({
 	filters: {
 	    formatPrice(price) {
 	      return price.toLocaleString('ko-KR');
-	    }
+	    } 
 	  },
 	methods : {
 		fnAllCheck(){
