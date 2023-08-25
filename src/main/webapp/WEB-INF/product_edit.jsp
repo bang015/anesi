@@ -103,10 +103,10 @@
 									<td>{{item.deleteYn == 'N' ? '판매중' : '판매종료'}}</td>
 									<td>{{item.stock == '0' ? '일시 품절' : '전시중'}}</td>
 									<td>{{item.stock}}</td>
-									<td>{{item.productPrice}}</td>
+									<td>{{numberWithCommas(item.productPrice)}}</td>
 									<td>{{item.discount}}%</td>
 									<td>{{item.discountYn == 'Y' ? '할인중' : '정가'}}</td>
-									<td v-if="item.discountYn == 'Y'">{{(item.productPrice * ((100-item.discount)/100))}}</td>
+									<td v-if="item.discountYn == 'Y'">{{numberWithCommas((item.productPrice * ((100-item.discount)/100)))}}</td>
 									<td v-else></td>
 									<td>{{item.categoryName}}</td>
 									<td>{{item.manufacturer}}</td>
@@ -280,7 +280,7 @@ var app = new Vue({
 			} else{
 				discountYn = 'N';
 			}
-			var nparmap = {productNo : self.productNo, productName : self.producInfo[0].productName, productPrice : self.producInfo[0].productPrice, discount : self.producInfo[0].discount, discountYn, };
+			var nparmap = {productNo : self.productNo, productName : self.producInfo[0].productName, productPrice : self.removeCommas(self.producInfo[0].productPrice), discount : self.producInfo[0].discount, discountYn, };
 			$.ajax({
                 url : "/admin/productUpdate.dox",
                 dataType:"json",	
@@ -290,7 +290,7 @@ var app = new Vue({
                 }
             });
 			for(let i = 0; i < self.optionCnt; i++){
-				var nparmap2 = {optionNo : self.producInfo[i].optionNo, optionName : self.producInfo[i].optionName, optionPrice : self.producInfo[i].optionPrice, productStock : self.producInfo[i].productStock};
+				var nparmap2 = {optionNo : self.producInfo[i].optionNo, optionName : self.producInfo[i].optionName, optionPrice : self.removeCommas(self.producInfo[i].optionPrice), productStock : self.producInfo[i].productStock};
 				$.ajax({
 	                url : "/admin/optionUpdate.dox",
 	                dataType:"json",	
@@ -301,7 +301,7 @@ var app = new Vue({
 	            });
 			}
 			for(let i=self.optionCnt; i < self.optionCnt+self.addOptionCnt; i++){
-				var nparmap3 = {productNo : self.productNo, optionName : self.producInfo[i].optionName, optionPrice : self.producInfo[i].optionPrice, productStock : self.producInfo[i].productStock};
+				var nparmap3 = {productNo : self.productNo, optionName : self.producInfo[i].optionName, optionPrice : self.removeCommas(self.producInfo[i].optionPrice), productStock : self.producInfo[i].productStock};
 				$.ajax({
 	                url : "/admin/optionInsert.dox",
 	                dataType:"json",	
@@ -370,6 +370,15 @@ var app = new Vue({
 	            });
 			}
 		},
+		removeCommas(inputText){
+			  if (typeof inputText !== "string") {
+			        return inputText;
+			    }
+			    return inputText.replace(/,/g, '');
+		},
+		numberWithCommas(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
 	}, // methods
 	created : function() {
 		var self = this;

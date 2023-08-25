@@ -294,16 +294,6 @@ var app = new Vue({
 			}
 			self.errMsg1 = '';
 			const numericRegex = /^\d+$/;
-			if(!numericRegex.test(self.product.productPrices) || !numericRegex.test(self.product.discount)){
-				self.errMsg1 = '상품 가격과 할인율은 숫자만 입력해주세요';
-				var box = document.querySelector(".box");
-				var top = box.offsetTop;
-			  	window.scrollTo({
-			    	top: 200,
-			        behavior: 'smooth',
-			      });
-				return;
-			}
 			self.errMsg1 = '';
 			
 			if (self.optionList.length > 0) {
@@ -314,11 +304,7 @@ var app = new Vue({
 			        	 self.errMsg3 = '옵션을 채워주세요';
 			            foundInvalidOption = true;
 			            break;
-			        } else if (!numericRegex.test(self.optionList[i].productStock) || !numericRegex.test(self.optionList[i].optionPrice)) {
-			            foundInvalidOption = true;
-			            self.errMsg3 = '가격과 재고는 숫자만 입력해주세요';
-			            break;
-			        }
+			        } 
 			    }
 
 			    if (foundInvalidOption) {
@@ -372,7 +358,7 @@ var app = new Vue({
 				return;
 			}
 			self.errMsg4 = '';
-			
+			self.product.productPrices = self.removeCommas(self.product.productPrices);
 			self.fnAdd();
 		},
 		addProductAsync() {
@@ -468,7 +454,7 @@ var app = new Vue({
 		},
 	    fnAddOption(productNo, info){
 	    	var self = this;
-	    	var nparmap = {productNo, productStock : info.productStock, optionPrice : info.optionPrice, optionName : info.optionName}
+	    	var nparmap = {productNo, productStock : info.productStock, optionPrice : self.removeCommas(info.optionPrice), optionName : info.optionName}
 	    	$.ajax({
 		       url: "../addOption.dox",
 		       dataType: "json",
@@ -478,6 +464,12 @@ var app = new Vue({
 		      	},
 	    	});
 	    },
+		removeCommas(inputText){
+			  if (typeof inputText !== "string") {
+			        return inputText;
+			    }
+			    return inputText.replace(/,/g, '');
+		},
 	}, // methods
 	created : function() {
 		var self = this;
