@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
+import com.example.anesi.model.UsedOrder;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 import com.example.anesi.service.UserService;
@@ -251,8 +252,42 @@ public class UserController {
 	@ResponseBody
 	public String searchOrderList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<UserOrder> list = userService.searchOrderList(map);
-		resultMap.put("list", list);
+		int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+	    int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+	    map.put("startNum", startNum);
+	    map.put("lastNum", lastNum);
+		resultMap=userService.searchOrderList(map);
+		return new Gson().toJson(resultMap);
+	}
+	//주문 내역 주문상태
+	@RequestMapping(value = "/mypage/searchOrderDelivery.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchOrderDelivery(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<UserOrder> Delivery = userService.searchOrderDelivary(map);
+		resultMap.put("Delivery", Delivery);
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 중고 주문 내역 검색
+	@RequestMapping(value = "/mypage/searchUsedOrderList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String usedsearchOrderList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+		int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+		map.put("startNum", startNum);
+		map.put("lastNum", lastNum);
+		resultMap=userService.searchUsedOrderList(map);
+		return new Gson().toJson(resultMap);
+	}
+	// 중고 주문 내역 주문상태
+	@RequestMapping(value = "/mypage/searchUsedOrderDelivery.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String usedsearchOrderDelivery(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<UsedOrder> usedDelivery = userService.searchUsedOrderDelivary(map);
+		resultMap.put("usedDelivery", usedDelivery);
 		return new Gson().toJson(resultMap);
 	}
 	

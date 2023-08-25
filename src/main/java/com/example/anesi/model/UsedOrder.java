@@ -2,15 +2,37 @@ package com.example.anesi.model;
 
 public class UsedOrder {
 	private int usedPNo;
+	private int usedNo;
+	private int deliverySit;
+	private int orderPrice;
 	private int usedPSellPrice;
 	private String usedPName;
 	private String pImgPath;
 	private String pImgName;
-	public int getUsedPNo() {
-		return usedPNo;
+	
+	public int getUsedNo() {
+		return usedNo;
+	}
+	public void setUsedNo(int usedNo) {
+		this.usedNo = usedNo;
+	}
+	public int getDeliverySit() {
+		return deliverySit;
+	}
+	public void setDeliverySit(int deliverySit) {
+		this.deliverySit = deliverySit;
+	}
+	public int getOrderPrice() {
+		return orderPrice;
+	}
+	public void setOrderPrice(int orderPrice) {
+		this.orderPrice = orderPrice;
 	}
 	public void setUsedPNo(int usedPNo) {
 		this.usedPNo = usedPNo;
+	}
+	public int getUsedPNo() {
+		return usedPNo;
 	}
 	public int getUsedPSellPrice() {
 		return usedPSellPrice;

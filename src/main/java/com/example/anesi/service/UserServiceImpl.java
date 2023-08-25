@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.anesi.mapper.LoginMapper;
 import com.example.anesi.mapper.ReviewMapper;
 import com.example.anesi.mapper.UserMapper;
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Review;
 import com.example.anesi.model.Scrapbook;
+import com.example.anesi.model.UsedOrder;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
 
@@ -108,9 +108,12 @@ public class UserServiceImpl implements UserService{
 		return userMapper.withdrawal(map);
 	}
 	@Override
-	public List<UserOrder> searchOrderList(HashMap<String, Object> map) {
+	public HashMap<String, Object> searchOrderList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return userMapper.selectOrderList(map);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", userMapper.selectOrderList(map));
+		resultMap.put("cnt", userMapper.selectOrderListCnt(map));
+		return resultMap;
 	}
 	@Override
 	public List<Review> searchMyReviewList(HashMap<String, Object> map) {
@@ -136,6 +139,24 @@ public class UserServiceImpl implements UserService{
 	public int removeInquiry(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return userMapper.deleteInquiry(map);
+	}
+	@Override
+	public List<UserOrder> searchOrderDelivary(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.selectOrderDelivary(map);
+	}
+	@Override
+	public HashMap<String, Object> searchUsedOrderList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list2", userMapper.selectUsedOrderList(map));
+		resultMap.put("cnt2", userMapper.selectusedOrderListCnt(map));
+		return resultMap;
+	}
+	@Override
+	public List<UsedOrder> searchUsedOrderDelivary(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return userMapper.selectUsedOrderDelivary(map);
 	}
 
 }

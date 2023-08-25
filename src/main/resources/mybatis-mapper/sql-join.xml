@@ -115,6 +115,62 @@
 			AND DELIVERY_SIT = #{deliverySit}
 		</if>
 		ORDER BY CREATEDATE DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	<!-- 주문목록 주문 상태 -->
+	<select id="selectOrderDelivary" parameterType="hashmap" resultType="com.example.anesi.model.UserOrder">
+		SELECT o.*
+		FROM t3_tbl_user_order o
+		WHERE USER_NO = #{userNo}
+		AND o.CREATEDATE >= DATE_SUB(NOW(), INTERVAL IFNULL(#{month}, 1) MONTH)
+		<if test="deliverySit !=null and deliverySit != ''">
+			AND DELIVERY_SIT = #{deliverySit}
+		</if>
+	</select>
+	<!-- 주문목록 페이지 카운트 --> 
+	<select id="selectOrderListCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM t3_tbl_user_order
+		WHERE USER_NO = #{userNo}
+		AND CREATEDATE >= DATE_SUB(NOW(), INTERVAL IFNULL(#{month}, 1) MONTH)
+		<if test="deliverySit !=null and deliverySit != ''">
+			AND DELIVERY_SIT = #{deliverySit}
+		</if>
+	</select>
+	<!-- 중고 주문목록 주문 상태 -->
+	<select id="selectUsedOrderDelivary" parameterType="hashmap" resultType="com.example.anesi.model.UsedOrder">
+		SELECT o.*
+		FROM t3_tbl_used_order o
+		WHERE USER_NO = #{userNo}
+		AND o.CREATEDATE >= DATE_SUB(NOW(), INTERVAL IFNULL(#{month}, 1) MONTH)
+		<if test="deliverySit !=null and deliverySit != ''">
+			AND DELIVERY_SIT = #{deliverySit}
+		</if>
+	</select>
+	<!-- 중고 주문목록 -->
+	<select id="selectUsedOrderList" parameterType="hashmap" resultType="com.example.anesi.model.UsedOrder">
+		SELECT o.*, i.P_IMG_NAME, i.P_IMG_PATH, p.USED_P_NAME
+		FROM t3_tbl_used_order o
+		INNER JOIN t3_tbl_used_purchase_image i ON o.USED_NO = i.USED_P_NO
+		INNER JOIN t3_tbl_used_purchase p ON o.USED_NO = p.USED_P_NO
+		WHERE o.USER_NO = #{userNo}
+		GROUP BY PAYMENT_NO
+		AND o.CREATEDATE >= DATE_SUB(NOW(), INTERVAL IFNULL(#{month}, 1) MONTH)
+		<if test="deliverySit !=null and deliverySit != ''">
+			AND DELIVERY_SIT = #{deliverySit}
+		</if>
+		ORDER BY CREATEDATE DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	<!-- 중고 주문목록 페이지 카운트 --> 
+	<select id="selectusedOrderListCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM t3_tbl_used_order
+		WHERE USER_NO = #{userNo}
+		AND CREATEDATE >= DATE_SUB(NOW(), INTERVAL IFNULL(#{month}, 1) MONTH)
+		<if test="deliverySit !=null and deliverySit != ''">
+			AND DELIVERY_SIT = #{deliverySit}
+		</if>
 	</select>
 	<!-- 나의 리뷰 검색 -->
 	<select id="selectMyReviewList" parameterType="hashmap" resultType="com.example.anesi.model.Review">

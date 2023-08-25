@@ -11,6 +11,42 @@
 <meta charset="EUC-KR">
 <title>나의 쇼핑</title>
 <style>
+.pagination {
+        display: inline-flex;
+        margin-top: 40px;
+        margin-left: 270px;
+    }
+    ul {
+    }
+	.pagination li {
+	    min-width:32px;
+	    padding:2px 6px;
+	    text-align:center;
+	    margin:0 3px;
+	    border-radius: 6px;
+	    border:1px solid #eee;
+	    color:#666;
+	    display : inline;
+	}
+	.pagination li:hover {
+	    background: #E4DBD6;
+	}
+	.page-item a {
+	    color:#666;
+	    text-decoration: none;
+	    padding: 4px 12px ;
+	}
+	.pagination li.active {
+	    background-color : #A782C3;
+	    color:#fff;
+	}
+	.pagination li.active a {
+	    color:#fff;
+	    
+	}
+	.pagination a{
+		padding: 4px 12px ;
+	}
 </style>
 </head>
 <body>
@@ -88,6 +124,65 @@
 					   </div>
 				    </div>
 				</div>
+				<template v-if="pageCount > 1">
+					<paginate
+						:page-count="pageCount"
+						:page-range="5"
+						:margin-pages="2"
+						:click-handler="fnSearch"
+						:prev-text="'<'"
+						:next-text="'>'"
+						:container-class="'pagination'"
+						:page-class="'page-item'">
+					</paginate>
+				</template>
+				
+			</div>
+			<!-- 중고 상품 -->
+			<div class="used">
+				중고 상품
+			</div>
+			<div class="order_list">
+				<div class="optionListBox">
+					<div>
+					    <div class="selectBox2" @mouseover="showOptions" @mouseleave="hideOptions" :class="{ active: optionsVisible }">
+					      <button class="label">{{ selectedOption }}</button>
+					      <ul class="optionList">
+					        <li v-for="(option, index) in options" :key="index" class="optionItem" @click="handleSelect(option.value)">{{ option.text }}</li>
+					      </ul>
+					    </div>					
+					</div>
+					<div v-for="(item, index) in optionList">
+						<div class="optionBox" @click="fnOptionDel(index)" v-if="item.name != undefined">{{item.name}} <i class="fa-solid fa-circle-xmark" style="color: #ffffff;"></i></div>
+					</div>
+				</div>
+				<div>
+				    <div v-for="item in orderList2" class="box5">
+				    	<div class="deliverySitName">{{item.deliverySitName}}</div>
+					   <div class="orderBox">
+					   	 <img alt="" :src="item.pImgPath+'/'+item.pImgName" class="imgBox">
+					    <div class="productName">
+					    	<div class="name" @click="fnReviewMove(item.productNo)">{{item.usedPName}}</div>
+					    </div>
+					    <div class="optionName">
+					    	<div class="productPrice">{{item.orderPrice}}</div>
+					    </div>
+					   </div>
+				    </div>
+				</div>
+				<template v-if="pageCount2 > 1">
+					<paginate
+						:page-count="pageCount2"
+						:page-range="5"
+						:margin-pages="2"
+						:click-handler="fnSearch2"
+						:prev-text="'<'"
+						:next-text="'>'"
+						:container-class="'pagination'"
+						:page-class="'page-item'">
+					</paginate>
+				</template>
+				
 			</div>
 		</div>
 	</div>
@@ -95,17 +190,27 @@
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>
+Vue.component('paginate', VuejsPaginate)
 var app = new Vue({
 	el : '#app',
 	data : {
+		selectPage: 1,
+		pageCount: 1,
+		cnt : 0,
+		selectPage2: 1,
+		pageCount2: 1,
+		cnt2 : 0,
 		userNo : '${sessionNo}',
 		orderList : [],
+		orderList2 : [],
 		deliverySit : {
 			order : 0,
 			ready : 0,
 			shipping : 0,
 			completed : 0
 		},
+		Delivery : [],
+		usedDelivery : [],
 		optionList : [{},{}],
 		selectedOption: '기간',
         options: [
@@ -121,7 +226,9 @@ var app = new Vue({
 	methods : {
 		fnGetOrderList(){
 			var self = this;
-			var nparmap = {userNo : self.userNo};
+			var startNum = ((self.selectPage-1) * 3);
+			var lastNum = 3;
+			var nparmap = {userNo : self.userNo,startNum : startNum, lastNum : lastNum};
             $.ajax({
                 url : "searchOrderList.dox",
                 dataType:"json",	
@@ -129,27 +236,25 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.orderList = data.list;
+                	self.cnt = data.cnt;
+					self.pageCount = Math.ceil(self.cnt / 3);
                 	for(let i = 0; i < self.orderList.length; i++){
                 		switch (self.orderList[i].deliverySit) {
                 	    case '1':
-                	        self.deliverySit.order++;
                 	        self.orderList[i].deliverySitName = '결제완료';
                 	        break;
                 	    case '2':
-                	        self.deliverySit.ready++;
                 	        self.orderList[i].deliverySitName = '배송준비';
                 	        break;
                 	    case '3':
-                	        self.deliverySit.shipping++;
                 	        self.orderList[i].deliverySitName = '배송중';
                 	        break;
                 	    case '4':
-                	        self.deliverySit.completed++;
                 	        self.orderList[i].deliverySitName = '배송완료';
                 	        break;
                 	    default:
                 	        break;
-                	}
+                		}
                 		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
                 		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
                 	}
@@ -157,6 +262,206 @@ var app = new Vue({
                 }
             });
 		},
+		 fnSearch : function(pageNum){	
+				var self = this;
+				self.selectPage = pageNum;
+				var startNum = ((pageNum-1) * 3);
+				var lastNum = 3;
+				if(self.optionList[0].deliverySit  == undefined){
+					var nparmap = {userNo : self.userNo,startNum : startNum, lastNum : lastNum};
+				}else{
+					var month = isNaN(Number(self.optionList[1].value)) ? 1 : Number(self.optionList[1].value);
+					var nparmap = {userNo : self.userNo, deliverySit : self.optionList[0].deliverySit, month,startNum : startNum, lastNum : lastNum};
+				}
+				
+				$.ajax({
+					url : "searchOrderList.dox",
+					dataType : "json",
+					type : "POST",
+					data : nparmap,
+					success : function(data) {
+	                	self.orderList = data.list;
+	                	self.cnt = data.cnt;
+						self.pageCount = Math.ceil(self.cnt / 3);
+	                	for(let i = 0; i < self.orderList.length; i++){
+	                		switch (self.orderList[i].deliverySit) {
+	                	    case '1':
+	                	        self.orderList[i].deliverySitName = '결제완료';
+	                	        break;
+	                	    case '2':
+	                	        self.orderList[i].deliverySitName = '배송준비';
+	                	        break;
+	                	    case '3':
+	                	        self.orderList[i].deliverySitName = '배송중';
+	                	        break;
+	                	    case '4':
+	                	        self.orderList[i].deliverySitName = '배송완료';
+	                	        break;
+	                	    default:
+	                	        break;
+	                		}
+	                		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
+	                		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
+	                	}
+	                	console.log(self.orderList);
+	                }
+				});
+			},
+		fnGetUsedOrderList(){
+			var self = this;
+			var startNum = ((self.selectPage2-1) * 3);
+			var lastNum = 3;
+			var nparmap = {userNo : self.userNo,startNum : startNum, lastNum : lastNum};
+            $.ajax({
+                url : "searchUsedOrderList.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.orderList2 = data.list2;
+                	self.cnt2 = data.cnt2;
+					self.pageCount2 = Math.ceil(self.cnt2 / 3);
+                	for(let i = 0; i < self.orderList.length; i++){
+                		switch (self.orderList2[i].deliverySit) {
+                	    case '1':
+                	        self.orderList2[i].deliverySitName = '결제완료';
+                	        break;
+                	    case '2':
+                	        self.orderList2[i].deliverySitName = '배송준비';
+                	        break;
+                	    case '3':
+                	        self.orderList2[i].deliverySitName = '배송중';
+                	        break;
+                	    case '4':
+                	        self.orderList2[i].deliverySitName = '배송완료';
+                	        break;
+                	    default:
+                	        break;
+                		}
+                		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
+                		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
+                	}
+                	console.log(self.orderList);
+                }
+            });
+		},
+		 fnSearch2 : function(pageNum){	
+				var self = this;
+				self.selectPage = pageNum;
+				var startNum = ((pageNum-1) * 3);
+				var lastNum = 3;
+				if(self.optionList[0].deliverySit  == undefined){
+					var nparmap = {userNo : self.userNo,startNum : startNum, lastNum : lastNum};
+				}else{
+					var month = isNaN(Number(self.optionList[1].value)) ? 1 : Number(self.optionList[1].value);
+					var nparmap = {userNo : self.userNo, deliverySit : self.optionList[0].deliverySit, month,startNum : startNum, lastNum : lastNum};
+				}
+				
+				$.ajax({
+					url : "searchUsedOrderList.dox",
+					dataType : "json",
+					type : "POST",
+					data : nparmap,
+					success : function(data) {
+	                	self.orderList2 = data.list2;
+	                	self.cnt2 = data.cnt2;
+						self.pageCount2 = Math.ceil(self.cnt2 / 3);
+	                	for(let i = 0; i < self.orderList2.length; i++){
+	                		switch (self.orderList2[i].deliverySit) {
+	                	    case '1':
+	                	        self.orderList2[i].deliverySitName = '결제완료';
+	                	        break;
+	                	    case '2':
+	                	        self.orderList2[i].deliverySitName = '배송준비';
+	                	        break;
+	                	    case '3':
+	                	        self.orderList2[i].deliverySitName = '배송중';
+	                	        break;
+	                	    case '4':
+	                	        self.orderList2[i].deliverySitName = '배송완료';
+	                	        break;
+	                	    default:
+	                	        break;
+	                		}
+	                		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
+	                		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
+	                	}
+	                	console.log(self.orderList);
+	                }
+				});
+			},
+			fnDelivery(){
+				var self = this;
+				var nparmap = {userNo : self.userNo};
+				$.ajax({
+					url : "searchOrderDelivery.dox",
+					dataType : "json",
+					type : "POST",
+					data : nparmap,
+					success : function(data) {
+	                	self.Delivery = data.Delivery;
+	                	console.log(self.Delivery);
+	                	for(let i = 0; i < self.Delivery.length; i++){
+	                		switch (self.Delivery[i].deliverySit) {
+	                	    case '1':
+	                	        self.deliverySit.order++;
+	                	        self.Delivery[i].deliverySitName = '결제완료';
+	                	        break;
+	                	    case '2':
+	                	        self.deliverySit.ready++;
+	                	        self.Delivery[i].deliverySitName = '배송준비';
+	                	        break;
+	                	    case '3':
+	                	        self.deliverySit.shipping++;
+	                	        self.Delivery[i].deliverySitName = '배송중';
+	                	        break;
+	                	    case '4':
+	                	        self.deliverySit.completed++;
+	                	        self.Delivery[i].deliverySitName = '배송완료';
+	                	        break;
+	                	    default:
+	                	        break;
+	                	}
+	                	}
+	                }
+				});
+			},
+			fnUsedDelivery(){
+				var self = this;
+				var nparmap = {userNo : self.userNo};
+				$.ajax({
+					url : "searchUsedOrderDelivery.dox",
+					dataType : "json",
+					type : "POST",
+					data : nparmap,
+					success : function(data) {
+	                	self.usedDelivery = data.usedDelivery;
+	                	console.log(self.Delivery);
+	                	for(let i = 0; i < self.usedDelivery.length; i++){
+	                		switch (self.usedDelivery[i].deliverySit) {
+	                	    case '1':
+	                	        self.deliverySit.order++;
+	                	        self.usedDelivery[i].deliverySitName = '결제완료';
+	                	        break;
+	                	    case '2':
+	                	        self.deliverySit.ready++;
+	                	        self.usedDelivery[i].deliverySitName = '배송준비';
+	                	        break;
+	                	    case '3':
+	                	        self.deliverySit.shipping++;
+	                	        self.usedDelivery[i].deliverySitName = '배송중';
+	                	        break;
+	                	    case '4':
+	                	        self.deliverySit.completed++;
+	                	        self.usedDelivery[i].deliverySitName = '배송완료';
+	                	        break;
+	                	    default:
+	                	        break;
+	                	}
+	                	}
+	                }
+				});
+			},
 		fnReOrder(item){
 			$.pageChange("/order/main.do", {product : [{productNo : item.productNo, optionNo : item.optionNo, quantity : item.cnt}]} );
 		},
@@ -165,8 +470,10 @@ var app = new Vue({
 		},
 		fnOrderList(){
 			var self = this;
+			var startNum = ((self.selectPage-1) * 3);
+			var lastNum = 3;
 			var month = isNaN(Number(self.optionList[1].value)) ? 1 : Number(self.optionList[1].value);
-			var nparmap = {userNo : self.userNo, deliverySit : self.optionList[0].deliverySit, month};
+			var nparmap = {userNo : self.userNo, deliverySit : self.optionList[0].deliverySit, month,startNum : startNum, lastNum : lastNum};
             $.ajax({
                 url : "searchOrderList.dox",
                 dataType:"json",	
@@ -174,6 +481,8 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.orderList = data.list;
+                	self.cnt = data.cnt;
+					self.pageCount = Math.ceil(self.cnt / 3);
                 	for(let i = 0; i < self.orderList.length; i++){
                 		switch (self.orderList[i].deliverySit) {
                 	    case '1':
@@ -190,7 +499,7 @@ var app = new Vue({
                 	        break;
                 	    default:
                 	        break;
-               			}
+                		}
                 	}
                 }
             });
@@ -251,6 +560,9 @@ var app = new Vue({
 			location.href="../login.do";
 		}
 		self.fnGetOrderList();
+		self.fnDelivery();
+		self.fnGetUsedOrderList();
+		self.fnUsedDelivery();
 	}// created
 });
 </script>

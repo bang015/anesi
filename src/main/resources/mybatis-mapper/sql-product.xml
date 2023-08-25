@@ -22,6 +22,7 @@
 					SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
 					FROM t3_tbl_user_review R
 					JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
+					GROUP BY R.PRODUCT_NO
 				  ) R2 ON P.PRODUCT_NO = R2.PRODUCT_NO 
 		WHERE  i.THUMBNAIL_YN ='Y'
 		  	   AND P.DELETE_YN = 'N' 
