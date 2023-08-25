@@ -14,7 +14,7 @@
 </head>
 <style>
 #app{
-	margin-top : 180px;
+	margin-top : 130px;
 }
 #container{
 	margin : 10px auto;
@@ -32,7 +32,7 @@
     background-color: #A782C3;
     border-radius: 7px;
     padding: 0px 9px;
-    margin: 41px 0px;
+    margin: 10px 0px 40px 0px;
     transition: background 0.3s;
     cursor: pointer;
     width: 281px;
@@ -74,7 +74,7 @@ li{
 }
 .title{
 	text-align: center;
-	    margin: 50px 0;
+	margin: 50px 0;
 }
 .part{
 	margin : 60px 0;
@@ -83,7 +83,7 @@ li{
 	margin: 0 0 40px 0;
 }
 .text1{
-	font-size:16px;
+	font-size : 17px;
 }
 .text2{
 	text-align: right;
@@ -104,11 +104,7 @@ li{
 	<div id="container">
 		<div class="part">
 			<div class="title"><h1>중고 판매</h1></div>
-			<div class="usedList" v-for="item in list">
-				<div class="usedProductImg">
-					<img src="item.pImgPath+'/'+item.pImgName">
-				</div>
-			</div>
+			<div>중고 판매 리스트</div>
 		</div>
 		<hr>
 		<div class="part">
@@ -163,7 +159,10 @@ var app = new Vue({
 	el : '#app',
 	data : {
 		list : [],
-		inquireList : []
+		inquireList : [],
+		sessionNick : "${sessionNick}",
+		sessionNo : "${sessionNo}",
+		sessionStatus : "${sessionStatus}"
 	},// data
 	methods : {
 		fnPurchase:function(){
@@ -206,6 +205,28 @@ var app = new Vue({
 
             return formattedDate;
         },
+        fnUsedView : function(usedPNo){
+        	var self = this;
+    		var param = {usedPNo : usedPNo};
+    		$.ajax({
+    			url : "/used/inquireView1.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	console.log(data.list);
+                	console.log(self.sessionStatus);
+	                if(self.sessionStatus=='A'){
+						$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
+	                }else if(self.sessionNo!=data.list.userNo){
+	              		alert("본인 또는 관리자만 조회 가능합니다.");
+	    	        	return;
+	              	}else if(self.sessionStatus=='U' && self.sessionNo==data.list.userNo){
+	              		$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
+	              	}		           
+               	}
+         	}); 
+		}
 	}, // methods
 	created : function() {
 		var self = this;

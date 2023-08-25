@@ -35,29 +35,22 @@
 
 .category1{
 	width: 150px;
-	border-left: 1px solid #e8e8e8;
-	border-right: 1px solid #e8e8e8;
-	border-bottom: 1px solid #e8e8e8;
 	background-color: #fff;
 }
 .category2{
 	width: 150px;
-	border-right: 1px solid #e8e8e8;
-	border-bottom: 1px solid #e8e8e8;
 	background-color: #fff;
 }
 .categoryAllBox{
 	display: inline-block;
 	width: 300px;
 	position: absolute;
-	top: 155px;
+	top: 157px;
 	z-index: 1000;
 	position: fixed;
-	
 }
 .categoryAllBox2{
 	display: flex;
-	
 }
 .category-box{
 	font-size: 15px; 
@@ -66,6 +59,12 @@
 }
 .categoryBox{
 	padding: 10px 40px 10px 0;
+	margin:0px;
+	cursor : pointer;
+}
+.categoryBox:hover{
+	background : #A782C3;
+	color : white;
 }
 .categoryNo{
 	margin-left: 10px;
@@ -85,10 +84,10 @@
 	position: absolute;
 	left: 0;
 	top: 3px;
-	
 }
 .nav-left button{
 	height: 100%;
+    width: 115px;
 }
 .nav-mid{
 	display: inline-block;
@@ -98,11 +97,12 @@
 	float: left;
 }
 .category-title{
-	font-size: 16px;
-	font-weight: 600;
-	font-family:'Pretendard-Regular';
-	margin-left: 4px;
-	color: #424242;
+	font-size: 18px;
+    font-family: 'Pretendard-Regular';
+    color: #424242;
+    position: absolute;
+    top: 10px;
+    margin-left: 6px;
 }
 .navi-wrap{
 	position: relative;
@@ -126,7 +126,7 @@
 }
 .top-wrap{
 	width: 100%;
-	height: 100px;
+	height: 108px;
 }
 .icon1{
 	margin-right: 15px;
@@ -136,6 +136,9 @@
 }
 .icon3{
 	margin-right: 20px;
+}
+.hamburger{
+	width: 24px;
 }
 </style>
 </head>
@@ -237,7 +240,7 @@
 		<div class="nav1">
 			<div class="nav-left">
 				<button class="category-toggle" @mouseover="categoryFlg">
-					<span> <i class="fa-solid fa-bars" style="color: #47608a; font-size : 20px;"></i> <span class="category-title">카테고리</span></span>
+					<div><img class="hamburger" src="../css/image/Main/hamburger.png"> <span class="category-title">카테고리</span></div>
 				</button> 
 				
 			</div>
@@ -268,16 +271,16 @@
 			<div class="categoryAllBox2">
 				<div class="category1">
 					<div class="category-box" v-for="item in categoryList1" @mouseover="fnGetcategoryList2(item)">
-						<a  class="categoryBox" >
+						<div class="categoryBox">
 							<span class="categoryNo">{{item.categoryName}}</span>
-						</a>
+						</div>
 					</div>
 				</div>
 				<div class="category2" v-if="categoryList2.length != 0" >
 					<div class="category-box" v-for="item in categoryList2">
-						<a class="categoryBox" @click="fnCategoryPage(item.categoryNo)">
+						<div class="categoryBox" @click="fnCategoryPage(item.categoryNo)">
 							<span  class="categoryNo">{{item.categoryName}}</span>					
-						</a>
+						</div>
 					</div>
 				</div>
 			</div>

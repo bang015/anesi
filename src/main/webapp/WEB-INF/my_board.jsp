@@ -161,7 +161,7 @@ li{
 .part{
 	display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    gap: 30px;
     margin: 0px 0px 0px 23px;
 }
 .board1{
@@ -177,7 +177,7 @@ li{
     height: 200px;
     overflow: hidden;
     border-radius: 5px;
-	}
+}
 .photo2{
 	position: absolute;
     top: 0;
@@ -201,7 +201,7 @@ li{
 	font-size : 14px;
 }
 .view{
-	margin-bottom : 10px;
+	margin-bottom : 19px;
 	font-size : 12px;
 	color : #9b9b9b
 }
@@ -343,13 +343,13 @@ th{
 			    :prev-text="'〈'"
 			    :next-text="'〉'"
 			    :container-class="'pagination'"
-			    :page-class="'page-item'" v-if="list.length > 0">
+			    :page-class="'page-item'" v-if="list.length > 4">
 			</paginate>
 			<hr class="hrr2">
 			
 			<div><h2 class="partName">중고 매입 문의 <span class="text1">{{usedList.length}}</span></h2></div>
 			<div>
-				<table v-if="usedList.leng > 0">
+				<table v-if="usedList.length > 0">
 				<tr>
 					<th>No.</th>
 					<th style="width: 400px;">물품</th>

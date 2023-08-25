@@ -22,16 +22,8 @@
 }
 .part{
 	display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    text-align : center;
-    position: relative;
-    margin-top: 12px;
-}
-.part2{
-	display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 30px;
     text-align : center;
     position: relative;
     margin-top: 12px;
@@ -112,16 +104,17 @@
 	margin-top: 12px;
 }
 .search-input{
-    border: 1px solid #c5c5c5;
+	border: 1px solid #c5c5c5;
     border-radius: 5px;
     padding: 5px 9px;
     font-size: 14px;
-    margin-right : 7px;
+    margin: 15px 16px 0px 0;
 }
 .m-glass{
-    width: 18px;
+   	width: 15px;
     float: right;
-	margin: 3px 10px 0px 5px;
+    margin: 21px 0px 0px -39px;
+    position: absolute;
 }
 .new{
 	position: absolute;
@@ -175,7 +168,7 @@
 <div id="app">
 	<div id="container">
 		<div><h2>인기글</h2></div>
-		<div class="part2">
+		<div class="part">
 			<div v-for="(item, index) in bList">
 		        <div class="board1">
 		            <div class="board1_item">
@@ -199,7 +192,7 @@
 				<input type="text" class="search-input" @keyup.enter="fnSearch" v-model="keyword"><img class="m-glass" src="../css/image/community/m-glass.png">
 			</div>
 		</div>
-		<div class="part2">
+		<div class="part">
 			<div v-for="(item, index) in list">
 		        <div class="board1">
 		            <div class="board1_item">

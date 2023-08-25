@@ -242,11 +242,15 @@ var app = new Vue({
                 data : param,
                 success : function(data) { 
                 	console.log(data.list);
-	                if(self.sessionStatus!='U'||self.sessionNo!=data.list.userNo){
-		            	alert("본인 또는 관리자만 조회 가능합니다.");
+                	console.log(self.sessionStatus);
+	                if(self.sessionStatus=='A'){
+						$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
+	                }else if(self.sessionNo!=data.list.userNo){
+	              		alert("본인 또는 관리자만 조회 가능합니다.");
 	    	        	return;
-	              	}
-		            $.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
+	              	}else if(self.sessionStatus=='U' && self.sessionNo==data.list.userNo){
+	              		$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
+	              	}		           
                	}
          	}); 
 		}
