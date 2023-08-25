@@ -31,20 +31,17 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 
 <style>
-/* 드롭다운 메뉴를 오른쪽 정렬 */
-
 .category1{
-	width: 150px;
-	background-color: #fff;
+	width: 170px;
+	background-color: rgba(255, 255, 255, 0.9);
 }
 .category2{
-	width: 150px;
-	background-color: #fff;
+	width: 170px;
+	background-color: rgba(255, 255, 255, 0.9);
 }
 .categoryAllBox{
 	display: inline-block;
-	width: 300px;
-	position: absolute;
+	width: 350px;
 	top: 157px;
 	z-index: 1000;
 	position: fixed;
@@ -52,19 +49,34 @@
 .categoryAllBox2{
 	display: flex;
 }
-.category-box{
-	font-size: 15px; 
-	padding-bottom: 10px;
-	padding-top: 10px;
+.category-box1{
+	font-size: 16px; 
+	padding : 10px 0px 10px 0px;
+	width : 170px;
 }
-.categoryBox{
+.category-box2{
+	font-size: 16px; 
+	padding : 10px 0px 10px 0px;
+	width : 170px;
+}
+.categoryBox1{
 	padding: 10px 40px 10px 0;
-	margin:0px;
 	cursor : pointer;
 }
-.categoryBox:hover{
-	background : #A782C3;
-	color : white;
+.categoryBox2{
+	padding: 10px 40px 10px 0;
+	cursor : pointer;
+}
+.categoryAllBox:hover .category-box1 {
+    background: none;
+}
+.categoryAllBox:hover .category-box1:hover {
+    background: #A782C3;
+    color: white;
+}
+.categoryAllBox:hover .category-box2:hover {
+    background: #A782C3;
+    color: white;
 }
 .categoryNo{
 	margin-left: 10px;
@@ -83,7 +95,6 @@
 	margin-top: 5px;
 	position: absolute;
 	left: 0;
-	top: 3px;
 }
 .nav-left button{
 	height: 100%;
@@ -123,6 +134,7 @@
 	display: inline-block;
 	float: left;
 	margin-top: 40px;
+	margin-left: 10px;
 }
 .top-wrap{
 	width: 100%;
@@ -270,16 +282,16 @@
 	<div class="categoryAllBox" v-if="flg" @mouseleave="flgout">
 			<div class="categoryAllBox2">
 				<div class="category1">
-					<div class="category-box" v-for="item in categoryList1" @mouseover="fnGetcategoryList2(item)">
-						<div class="categoryBox">
+					<div class="category-box1" v-for="item in categoryList1" @mouseover="fnGetcategoryList2(item)">
+						<div class="categoryBox1">
 							<span class="categoryNo">{{item.categoryName}}</span>
 						</div>
 					</div>
 				</div>
 				<div class="category2" v-if="categoryList2.length != 0" >
-					<div class="category-box" v-for="item in categoryList2">
-						<div class="categoryBox" @click="fnCategoryPage(item.categoryNo)">
-							<span  class="categoryNo">{{item.categoryName}}</span>					
+					<div class="category-box2" v-for="item in categoryList2">
+						<div class="categoryBox2" @click="fnCategoryPage(item.categoryNo)">
+							<span class="categoryNo">{{item.categoryName}}</span>					
 						</div>
 					</div>
 				</div>
