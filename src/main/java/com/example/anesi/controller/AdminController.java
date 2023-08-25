@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.anesi.model.Inquiry;
 import com.example.anesi.model.Product;
 import com.example.anesi.model.Review;
+import com.example.anesi.model.Statistics;
 import com.example.anesi.model.Used;
 import com.example.anesi.model.User;
 import com.example.anesi.model.UserOrder;
@@ -74,6 +75,11 @@ public class AdminController {
 	@RequestMapping("/admin/used.do") 
 	public String used(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		return "/admin_used";
+	}
+	
+	@RequestMapping("/admin/statistics.do") 
+	public String statistics(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/admin_statistics";
 	}
 	
 	//admin 관리자 메인
@@ -290,5 +296,23 @@ public class AdminController {
 		List<Used> list = adminService.searchUsedList(map);
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
-	}	
+	}
+	
+	// 토탈 판매금액 + 판매수량, 금일 판매금액 + 판매수량
+	@RequestMapping(value = "/admin/searchStatisticsProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchStatisticsProduct(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		Statistics info = adminService.searchStatisticsProduct(map);
+		resultMap.put("info", info);
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 토탈 판매금액 + 판매수량, 금일 판매금액 + 판매수량
+	@RequestMapping(value = "/admin/searchWeeklySales.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchWeeklySales(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Statistics> list = adminService.searchWeeklySales(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
 }

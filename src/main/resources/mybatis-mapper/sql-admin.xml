@@ -278,5 +278,113 @@
 		FROM t3_tbl_used_purchase
 	</select>
 	
+	<select id="selectStatisticsProduct" parameterType="hashmap" resultType="com.example.anesi.model.Statistics">
+		SELECT 
+	    total_orders.total_users + total_nonusers.total_nonusers AS total_orders,
+	    today_orders.today_users + today_nonusers.today_nonusers AS today_orders,
+	    overall_total.total_order_price + overall_nonusers.total_order_price AS overall_total,
+	    overall_today.total_order_price + overall_today_nonusers.total_order_price AS overall_today
+	FROM
+	    (SELECT 
+	        COUNT(*) AS total_users 
+	    FROM 
+	        t3_tbl_user_order) AS total_orders,
+	    
+	    (SELECT 
+	        COUNT(*) AS total_nonusers 
+	    FROM 
+	        t3_tbl_nonuser_order) AS total_nonusers,
+	    
+	    (SELECT 
+	        COALESCE(SUM(subquery.total_order_price), 0) AS total_order_price
+	    FROM 
+	        (SELECT 
+	            PAYMENT_NO, SUM(ORDER_PRICE) AS total_order_price
+	        FROM 
+	            t3_tbl_user_order
+	        GROUP BY 
+	            PAYMENT_NO) AS subquery) AS overall_total,
+	    
+	    (SELECT 
+	        COALESCE(SUM(subquery.total_order_price), 0) AS total_order_price
+	    FROM 
+	        (SELECT 
+	            PAYMENT_NO, SUM(ORDER_PRICE) AS total_order_price
+	        FROM 
+	            t3_tbl_nonuser_order
+	        GROUP BY 
+	            PAYMENT_NO) AS subquery) AS overall_nonusers,
+	    
+	    (SELECT 
+	        COUNT(*) AS today_users 
+	    FROM 
+	        t3_tbl_user_order 
+	    WHERE 
+	        DATE(NOW()) = DATE(CREATEDATE)) AS today_orders,
+	    
+	    (SELECT 
+	        COUNT(*) AS today_nonusers 
+	    FROM 
+	        t3_tbl_nonuser_order 
+	    WHERE 
+	        DATE(NOW()) = DATE(CREATEDATE)) AS today_nonusers,
+	    
+	    (SELECT 
+	        COALESCE(SUM(subquery.total_order_price), 0) AS total_order_price
+	    FROM 
+	        (SELECT 
+	            PAYMENT_NO, SUM(ORDER_PRICE) AS total_order_price
+	        FROM 
+	            t3_tbl_user_order
+	        WHERE 
+	            DATE(NOW()) = DATE(CREATEDATE) 
+	        GROUP BY 
+	            PAYMENT_NO) AS subquery) AS overall_today,
+	    
+	    (SELECT 
+	        COALESCE(SUM(subquery.total_order_price), 0) AS total_order_price
+	    FROM 
+	        (SELECT 
+	            PAYMENT_NO, SUM(ORDER_PRICE) AS total_order_price
+	        FROM 
+	            t3_tbl_nonuser_order
+	        WHERE 
+	            DATE(NOW()) = DATE(CREATEDATE) 
+	        GROUP BY 
+	            PAYMENT_NO) AS subquery) AS overall_today_nonusers;
+	</select>
 	
+	<select id="selectWeeklySales" parameterType="hashmap" resultType="com.example.anesi.model.Statistics">
+		SELECT 
+	    order_date,
+	    SUM(order_count) AS total_order_count,
+	    SUM(total_order_amount) AS total_order_amount
+	FROM (
+	    SELECT 
+	        DATE(CREATEDATE) AS order_date,
+	        COUNT(*) AS order_count,
+	        COALESCE(SUM(ORDER_PRICE), 0) AS total_order_amount
+	    FROM 
+	        t3_tbl_user_order
+	    WHERE 
+	        DATE(CREATEDATE) >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY)
+	    GROUP BY 
+	        DATE(CREATEDATE)
+	    UNION ALL
+	    SELECT 
+	        DATE(CREATEDATE) AS order_date,
+	        COUNT(*) AS order_count,
+	        COALESCE(SUM(ORDER_PRICE), 0) AS total_order_amount
+	    FROM 
+	        t3_tbl_nonuser_order
+	    WHERE 
+	        DATE(CREATEDATE) >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY)
+	    GROUP BY 
+	        DATE(CREATEDATE)
+	) AS combined_orders
+	GROUP BY 
+	    order_date
+	ORDER BY 
+	    order_date;
+	</select>
 </mapper>
