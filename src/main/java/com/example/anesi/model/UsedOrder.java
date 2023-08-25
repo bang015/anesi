@@ -3,7 +3,7 @@ package com.example.anesi.model;
 public class UsedOrder {
 	private int usedPNo;
 	private int usedNo;
-	private int deliverySit;
+	private String deliverySit;
 	private int orderPrice;
 	private int usedPSellPrice;
 	private String usedPName;
@@ -16,10 +16,11 @@ public class UsedOrder {
 	public void setUsedNo(int usedNo) {
 		this.usedNo = usedNo;
 	}
-	public int getDeliverySit() {
+	
+	public String getDeliverySit() {
 		return deliverySit;
 	}
-	public void setDeliverySit(int deliverySit) {
+	public void setDeliverySit(String deliverySit) {
 		this.deliverySit = deliverySit;
 	}
 	public int getOrderPrice() {
