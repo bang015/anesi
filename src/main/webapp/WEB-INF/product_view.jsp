@@ -1260,8 +1260,10 @@ var app = new Vue({
 			var self = this;
 			self.showScrapModal2 = false;
 			self.characterCount2=0;
-			self.inquiryOption=0;
+			self.inquiryOption = 0;
 			self.inquiryText="";
+			self.inquiryCategory = "상품";
+			self.privateCheck = false;
 			},
 		closeScrapModal3: function() {
 			var self = this;
@@ -1301,13 +1303,13 @@ var app = new Vue({
 		changeCategoryStyle(category) {
 			// inquiryCategory 변수를 업데이트
 			this.inquiryCategory = category;
-			if(category =="상품"){
+			if(category =="상품" || this.inquiryCategory == "상품"){
 				this.privateCheck = false;
 			}else{
 				this.privateCheck = true;
 			}
 			// 선택된 요소의 active 클래스를 추가하고 나머지 요소의 active 클래스를 제거
-			const boxes = document.querySelectorAll('.category-box');
+			const boxes = document.querySelectorAll('.inquiry-category-box1');
 			boxes.forEach(box => box.classList.remove('active'));
 			event.target.classList.add('active');
 			},

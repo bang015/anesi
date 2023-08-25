@@ -104,7 +104,11 @@ li{
 	<div id="container">
 		<div class="part">
 			<div class="title"><h1>중고 판매</h1></div>
-			<div>중고 판매 리스트</div>
+			<div class="usedList">
+				<div class="usedProduct">
+					
+				</div>
+			</div>
 		</div>
 		<hr>
 		<div class="part">

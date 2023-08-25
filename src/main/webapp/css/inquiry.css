@@ -90,7 +90,7 @@
 	    color: #424242;
 	    cursor: pointer;
 	}
-	.inquiry-category-box1 .active{
+	.active{
 	    flex-grow: 1;
 	    width: 33.3333333333%;
 	    box-sizing: border-box;
@@ -98,7 +98,7 @@
 	    background-color: #A782C3;
 	    height: 40px;
 	    line-height: 40px;
-	    color: #fff;
+	    color: #fff !important;
 	    cursor: pointer;
 	}
 	.category-box1{
