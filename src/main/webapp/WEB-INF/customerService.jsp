@@ -275,15 +275,25 @@
 
 <script>
 
-const kakaoButton = document.getElementById('kakaoButton');
+const kakakoChatBtn = document.getElementById('kakao-talk-channel-chat-button');
 
-kakaoButton.addEventListener('click', () => {
-  // 카카오톡 딥 링크 URL
-  const kakaoDeepLink = "kakaoplus:http://pf.kakao.com/_xiVxdVG/chat";
-  
-  // 카카오톡 앱으로 링크 열기
-  window.location.href = kakaoDeepLink;
-});
+if (kakakoChatBtn) {
+    kakakoChatBtn.addEventListener('click', () => {
+        // 카카오톡 딥 링크 URL
+        const kakaoDeepLink = "kakaoplus:http://pf.kakao.com/_xiVxdVG/chat";
+
+        // 카카오톡 앱으로 링크 열기
+        window.location.href = kakaoDeepLink;
+    });
+
+    // 이전에 오류가 발생한 해당 코드를 수정된 if문 내부로 옮깁니다.
+    kakakoChatBtn.addEventListener('click', () => {
+        const kakaoDeepLink = "kakaoplus:http://pf.kakao.com/_xiVxdVG/chat";
+        window.location.href = kakaoDeepLink;
+    });
+} else {
+    console.log("'kakakoChatBtn' does not exist in the current HTML document.");
+}
 
 function scrollToRelatedQuestion(questionText) {
 	  const qnaList = document.querySelector('.qnaList');
