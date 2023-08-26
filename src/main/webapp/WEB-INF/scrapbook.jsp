@@ -123,6 +123,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	self.getSbList();
+                	self.checkSb = [];
+            		self.flg = false;
+
                 }
             });
 		},

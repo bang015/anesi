@@ -91,14 +91,16 @@
 				<a class="share_button" @click="shareSelectedOption()"><i
 					class="fa-solid fa-share-nodes fa-xl"></i></a>
 				<!-- 스크랩버튼-->
-				<a v-if="userId!=''" class="scrap_button"> <i
-					@click="fnInsertScrapbook(item)"
-					v-if="!(scrapbookList.includes(item.productNo))"
-					class="fa-regular fa-bookmark modal-toggle-button  fa-xl"></i> <i
-					@click="fnDeleteScrapbook(item)"
-					v-if="scrapbookList.includes(item.productNo)"
-					class="fa-regular fa-solid fa-bookmark  fa-xl "
-					style="color: #A782C3;"></i>
+				<a v-if="userId!=''" class="scrap_button"> 
+					<i
+				      @click="toggleScrap(item)"
+				      class="fa-regular"
+				      :class="{
+				        'fa-bookmark modal-toggle-button fa-xl': !scrapbookList.includes(item.productNo),
+				        'fa-solid fa-bookmark fa-xl': scrapbookList.includes(item.productNo),
+				        'fa-xl': true,
+				        'my-icon-color-class': scrapbookList.includes(item.productNo)
+				      }"></i>
 				</a> <a v-else class="scrap_button"> <i @click="openScrapModal"
 					class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
 				</a>
@@ -229,7 +231,7 @@ var app = new Vue({
 		nonuserNo : '${nonuserNo}',
 		productNo : "",
 		scrapbookList : [],
-		cartList : [],
+		cartList : [],AP
 		nonuserCartList : [],
 		nonuserNo : "",
 		userEmail : "",
@@ -265,7 +267,6 @@ var app = new Vue({
             				productNo : self.productNo,
             				startNum : startNum, 
             				lastNum : lastNum};
-            console.log(nparmap);
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
@@ -346,8 +347,7 @@ var app = new Vue({
 	      this.showScrapModal = false;
 	      this.showScrapModalBan = false;
 	      this.showScrapDeleteModal = false;
-	      location.reload();
-	    },
+		    },
 	    
 	    closeScrapModal3 : function(){
 	    	this.showScrapModal3 = false;
@@ -554,7 +554,15 @@ var app = new Vue({
         hideOptions() {
            this.optionsVisible = false;
         },
-
+        toggleScrap(item) {
+            if (this.scrapbookList.includes(item.productNo)) {
+              this.fnDeleteScrapbook(item);
+              this.scrapbookList = this.scrapbookList.filter(productNo => productNo !== item.productNo);
+            } else {
+              this.fnInsertScrapbook(item);
+              this.scrapbookList.push(item.productNo);
+            }
+          },
      }, // methods
 	created : function() {
 		var self = this;

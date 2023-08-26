@@ -77,8 +77,15 @@
 	            <a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes fa-xl"></i></a>
 	            <!-- ½ºÅ©·¦¹öÆ°-->
 	            <a v-if="userId!=''" class="scrap_button">
-	                <i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button  fa-xl"></i>
-	                <i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark  fa-xl " style="color:#A782C3;"></i>
+	                <i
+				      @click="toggleScrap(item)"
+				      class="fa-regular"
+				      :class="{
+				        'fa-bookmark modal-toggle-button fa-xl': !scrapbookList.includes(item.productNo),
+				        'fa-solid fa-bookmark fa-xl': scrapbookList.includes(item.productNo),
+				        'fa-xl': true,
+				        'my-icon-color-class': scrapbookList.includes(item.productNo)
+				      }"></i>
 	            </a>
 	            <a v-else class="scrap_button">
 	                <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
@@ -248,7 +255,9 @@ var app = new Vue({
 	      this.showScrapModal = false;
 	      this.showScrapModalBan = false;
 	      this.showScrapDeleteModal = false;
-	      location.reload();
+	      this.fnGetList();
+	      this.fnaaa();
+	      this.fnCheckScrap();
 	    },
 	    closeScrapModal3 : function(){
 	    	this.showScrapModal3 = false;
@@ -432,6 +441,18 @@ var app = new Vue({
                 }                
             }); 
         },
+        toggleScrap(item) {
+            if (this.scrapbookList.includes(item.productNo)) {
+              this.fnDeleteScrapbook(item);
+              this.scrapbookList = this.scrapbookList.filter(productNo => productNo !== item.productNo);
+            } else {
+              this.fnInsertScrapbook(item);
+              this.scrapbookList.push(item.productNo);
+            }
+          },
+	    fnMoveScrapbook : function() {
+        	location.href = "/scrapbook.do";
+	    },
 
   }, // methods
 	created : function() {
