@@ -98,7 +98,7 @@
 
 </style>
 </head>
-<body style="width :600px;">
+<body style="width:356.781px; height:444px;">
 	 <div id="pop" class="popup-wrapper">
         <div class="popup">
             <div class="popup-title1">ตü! 7ภฯ วัมค</div>
