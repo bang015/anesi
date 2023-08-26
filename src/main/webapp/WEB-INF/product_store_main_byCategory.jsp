@@ -22,7 +22,8 @@
 <style>
 
 .pagination {
-    margin-left : 40%;
+    margin-left : 0;
+    padding: 0;
  }
  #store_main_byCategory{
  	margin-bottom: 40px;

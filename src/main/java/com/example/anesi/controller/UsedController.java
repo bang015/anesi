@@ -65,7 +65,12 @@ public class UsedController {
 	request.setAttribute("map", map);
 	return "/used_inquireView";
 	}
-	
+	//중고 매입 문의 뷰
+	@RequestMapping("/used/view.do") 
+	public String usedView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+	request.setAttribute("map", map);
+	return "/used_productView";
+	}
 	//문의 리스트
 	@RequestMapping(value = "/used/purchaseList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -198,7 +203,27 @@ public class UsedController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap); 
 	}
-	
+	//판매 물품 리스트
+	@RequestMapping(value = "/used/purchaseList2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String purchaseList2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		int startNum = Integer.parseInt(String.valueOf(map.get("startNum")));
+		int lastNum = Integer.parseInt(String.valueOf(map.get("lastNum")));
+		map.put("startNum", startNum);
+		map.put("lastNum", lastNum);
+		resultMap = usedService.purchaseYList2(map);
+		return new Gson().toJson(resultMap);
+	}
+	// 판매 물품 상세 정보
+	@RequestMapping(value = "/usedProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody 
+	public String purchaseView(Model model, @RequestParam	HashMap<String, Object> map) throws Exception { 
+		HashMap<String, Object>	resultMap = new HashMap<String, Object>();
+		List<UsedPurchase> list = usedService.purchaseView(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap); 
+	}
 	@RequestMapping("/usedPurchaseImgUpload.dox")
     public String thumbfileUpload(@RequestParam("file1") MultipartFile multi, @RequestParam("usedPNo") int usedPNo, HttpServletRequest request,HttpServletResponse response, Model model)
     {

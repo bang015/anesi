@@ -40,4 +40,8 @@ public interface UsedService {
 	List<UsedPurchase> purchaseYList(HashMap<String, Object> map);
 	//문의 수정
 	int updatePurchaseInquire(HashMap<String, Object> map);
+	// 판매 물품 리스트
+	HashMap<String, Object> purchaseYList2(HashMap<String, Object> map);
+	// 판매 물품 상세 정보
+	List<UsedPurchase> purchaseView(HashMap<String, Object> map);
 }

@@ -274,7 +274,7 @@ var app = new Vue({
 	data : {
 		totalProductAmount : 0,
 		finalAmount : 0,
-		usedPNo : 26,  /* ${map.usedPNo} */
+		usedPNo : ${map.usedPNo},  
 		usedList : {},
 		order : {
 			name : "",
@@ -324,7 +324,9 @@ var app = new Vue({
 	},// data
 	filters: {
 	    formatPrice(price) {
-	      return price.toLocaleString('ko-KR');
+	    	if(price != undefined){
+	    		return price.toLocaleString('ko-KR');	
+	    	}
 	    } 
 	  },
 	methods : {

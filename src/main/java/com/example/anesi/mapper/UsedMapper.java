@@ -43,4 +43,10 @@ public interface UsedMapper {
 	List<UsedPurchase> purchaseYList(HashMap<String, Object> map);
 	//문의 수정
 	int updatePurchaseInquire(HashMap<String, Object> map);
+	// 판매 물품 리스트
+	List<UsedPurchase> purchaseYList2(HashMap<String, Object> map);
+	// 판매 물품 리스트 페이지
+	int purchaseYList2Cnt(HashMap<String, Object> map);
+	// 판매 물품 상세 정보
+	List<UsedPurchase> purchaseView(HashMap<String, Object> map);
 }

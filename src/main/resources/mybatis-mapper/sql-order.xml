@@ -140,7 +140,7 @@
 		SELECT p.USED_P_NO, p.USED_P_SELL_PRICE, p.USED_P_NAME,i.P_IMG_PATH, i.P_IMG_NAME
 		FROM t3_tbl_used_purchase p
 		INNER JOIN t3_tbl_used_purchase_image i ON p.USED_P_NO = i.USED_P_NO
-		WHERE p.USED_P_NO = 26
+		WHERE p.USED_P_NO = #{usedPNo}
 		LIMIT 1;
 	</select>
 	<!-- 중고 상품 결제 -->

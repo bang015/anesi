@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="js/jquery.js"></script>
+<script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
@@ -97,6 +97,73 @@ li{
 .gogo{
 	color : #757575 !important; 
 }
+.pa{
+clear: both;
+}
+.pagination {
+        display: inline-flex;
+        margin-top: 40px;
+        margin-left: 490px;
+        clear: both;
+    }
+    ul {
+    }
+	.pagination li {
+	    min-width:32px;
+	    padding:2px 6px;
+	    text-align:center;
+	    margin:0 3px;
+	    border-radius: 6px;
+	    border:1px solid #eee;
+	    color:#666;
+	    display : inline;
+	}
+	.pagination li:hover {
+	    background: #E4DBD6;
+	}
+	.page-item a {
+	    color:#666;
+	    text-decoration: none;
+	    padding: 4px 12px ;
+	}
+	.pagination li.active {
+	    background-color : #A782C3;
+	    color:#fff;
+	}
+	.pagination li.active a {
+	    color:#fff;
+	    
+	}
+	.pagination a{
+		padding: 4px 12px ;
+	}
+	.product-img img{
+		width: 250px;
+		height: 250px;
+		border-radius: 8px;
+	}
+	.usedProduct{
+		width: 250px;
+	    margin: 34px;
+	    float: left;
+	}
+	.product-name{
+		font-size: 18px;
+		font-weight: bold;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	.product-grade{
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
+	.product-grade span{
+		font-size: 14px;
+		font-weight: 500;
+	}
+	.product-price{
+		font-size: 17px;
+	}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -104,7 +171,34 @@ li{
 	<div id="container">
 		<div class="part">
 			<div class="title"><h1>중고 판매</h1></div>
-			<div>중고 판매 리스트</div>
+			<div class="usedProduct" v-for="item in list2">
+				<div class="product-img">
+					<a href="javascript:;" @click="fnUsedProductView(item.usedPNo)"><img :src="item.pImgPath+'/'+item.pImgName"></a>
+				</div>
+				<div class="product-name">
+					{{item.usedPName}}
+				</div>
+				<div class="product-grade">
+					{{item.grade}} <span>등급</span>
+				</div>
+				<div class="product-price">
+					{{item.usedPSellPrice | formatPrice}} <span>원</span>
+				</div>
+			</div>
+			<div class="pa">
+				<template v-if="pageCount > 1">
+					<paginate
+						:page-count="pageCount"
+						:page-range="5"
+						:margin-pages="2"
+						:click-handler="fnSearch"
+						:prev-text="'<'"
+						:next-text="'>'"
+						:container-class="'pagination'"
+						:page-class="'page-item'">
+					</paginate>
+				</template>
+			</div>
 		</div>
 		<hr>
 		<div class="part">
@@ -117,7 +211,7 @@ li{
 				<div class="flow-container1">
 					<div class="flow-text">
 						<div v-for="(item, index) in list">
-							<div class="flow-wrap"><img class="purchaseImg" :src="item.pImgPath+'/'+item.pImgName" style="border-radius:5px;"></div>
+							<div class="flow-wrap"><img class="purchaseImg" v-if="item.pImgPath !='' || item.pImgPath !=undefined" :src="item.pImgPath+'/'+item.pImgName" style="border-radius:5px;"></div>
 						</div>
 					</div>
 				</div>
@@ -155,6 +249,7 @@ li{
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>
+Vue.component('paginate', VuejsPaginate)
 var app = new Vue({
 	el : '#app',
 	data : {
@@ -162,8 +257,17 @@ var app = new Vue({
 		inquireList : [],
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
-		sessionStatus : "${sessionStatus}"
+		sessionStatus : "${sessionStatus}",
+		selectPage: 1,
+		pageCount: 1,
+		cnt : 0,
+		list2 : [],
 	},// data
+	filters: {
+	    formatPrice(price) {
+	      return price.toLocaleString('ko-KR');
+	    },
+	  },
 	methods : {
 		fnPurchase:function(){
 			location.href="/used/purchase.do";
@@ -178,6 +282,42 @@ var app = new Vue({
                 data : param,
                 success : function(data) { 
                 	self.list = data.list;
+                }
+            }); 
+		},
+		fnGetList2 : function(){
+			var self = this;
+			var startNum = ((self.selectPage-1) * 8);
+			var lastNum = 8;
+			var param = {startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/used/purchaseList2.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.list2 = data.list2;
+                	self.cnt = data.cnt;
+					self.pageCount = Math.ceil(self.cnt / 8);
+					console.log(self.list2);
+                }
+            }); 
+		},
+		fnSearch : function(pageNum){
+			var self = this;
+			self.selectPage = pageNum;
+			var startNum = ((pageNum-1) * 8);
+			var lastNum = 8;
+			var param = {startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/used/purchaseList2.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.list2 = data.list2;
+                	self.cnt = data.cnt;
+					self.pageCount = Math.ceil(self.cnt / 8);
                 }
             }); 
 		},
@@ -223,12 +363,16 @@ var app = new Vue({
 	              	}		           
                	}
          	}); 
+		},
+		fnUsedProductView(item){
+			$.pageChange("/used/view.do",{usedPNo : item});
 		}
 	}, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
 		self.fnGetInquireList();
+		self.fnGetList2();
 	}// created
 });
 </script>

@@ -128,5 +128,20 @@ public class UsedServiceImpl implements UsedService{
 		return usedMapper.updatePurchaseInquire(map);
 	}
 
+	@Override
+	public HashMap<String, Object> purchaseYList2(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list2", usedMapper.purchaseYList2(map));
+		resultMap.put("cnt", usedMapper.purchaseYList2Cnt(map));
+		return resultMap;
+	}
+
+	@Override
+	public List<UsedPurchase> purchaseView(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.purchaseView(map);
+	}
+
 	
 }
