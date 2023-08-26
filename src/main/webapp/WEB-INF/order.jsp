@@ -116,9 +116,9 @@
 				<div class="addr">
 					<label>
 					    <div class="orInputBox3" v-if="userNo != ''">
-					        <select @change="fnAddrChange" v-model="defaule">
-					        	<option v-for="item in addrList" :value="item.defaultYn">{{item.addrKind}} : {{item.addr}}</option>
-					        	<option> 流立涝仿 </option>
+					        <select @change="fnAddrChange" v-model="selectIndex">
+					        	<option v-for="(item, index) in addrList" :value="index">{{item.addrKind}} : {{item.addr}}</option>
+					        	<option value="-1"> 流立涝仿 </option>
 					        </select>
 					    </div>
 					</label>
@@ -347,7 +347,8 @@ var app = new Vue({
 		deliveryfee : 3000,
 		payment : '',
 		showScrapModal : false,
-		request : ''
+		request : '',
+		selectIndex : 0,
 	},// data
 	methods : {
 		fnAllCheck(){
@@ -655,6 +656,7 @@ var app = new Vue({
 								self.addr.zip= self.addrList[i].zipcode;
 								self.order.addrNo = self.addrList[i].addrNo;
 								self.addr.addrDefault = 'Y';
+								self.selectIndex = i;
 							}
 						}
 	                }
@@ -665,6 +667,10 @@ var app = new Vue({
 		    	self.addr.addrDefault = 'N';
 		    	 const selectedIndex = event.target.selectedIndex;
 		    	 const selectedItem = self.addrList[selectedIndex];
+		    	 self.selectIndex = selectedIndex;
+		    	 if(event.target.value == -1){
+		    		 self.selectIndex = -1;	 
+		    	 }
 		    	 if(selectedItem == undefined){
 		    		 	self.addr.addrName= '';
 						self.addr.addr1= '';
