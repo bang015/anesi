@@ -15,8 +15,8 @@
 
 .flex-container1 {
  	display:grid;
-    grid-template-rows: 1fr 1fr 2fr ;
-    grid-template-columns: 1fr 2fr 2fr 2fr 2fr;
+    grid-template-rows: 1fr ;
+    grid-template-columns: 1fr 8fr;
 }
 
 /*배너*/
@@ -265,15 +265,17 @@
 .cursor_pointer{
 	cursor :pointer
 }
-
+#admin_first{
+	display: grid;
+    grid-template-rows: 1fr ;
+    grid-template-columns: 0fr 2fr 2fr 2fr 2fr;
+}
 </style>
 </head>
 <body>
-	<div id="admin_first">
 	
 	 <jsp:include page="adminH.jsp"></jsp:include>
-	
-			
+	<div id="admin_first">
 		<div class="delivery">
 			<span>결제/배송/판매액</span>
 			<hr>
@@ -284,7 +286,7 @@
 					<li>배송준비</li>
 					<li>배송완료</li>
 				</ul>
-				<ul class="deliveryB">
+				<ul class="deliveryB" v-if="orderList[0] != undefined">
 					<li>{{orderList[0].totalCount}}건</li>
 					<li>{{orderList[1].totalCount}}건</li>
 					<li>{{orderList[2].totalCount}}건</li>
@@ -298,7 +300,7 @@
 					<li>오늘주문건수</li>
 					<li>누적주문건수</li>
 				</ul>
-				<ul class="deliveryD">
+				<ul class="deliveryD" v-if="StatisticsInfo.overallToday != undefined">
 					<li>{{numberWithCommas(StatisticsInfo.overallToday)}}원</li>
 					<li>{{numberWithCommas(StatisticsInfo.overallTotal)}}원</li>
 					<li>{{StatisticsInfo.todayOrders}}건</li>
@@ -317,7 +319,7 @@
 					<li>판매중</li>
 					<li>매입거부</li>
 				</ul>
-				<ul class="usedC">
+				<ul class="usedC" v-if="usedList[1] != undefined">
 					<li>{{usedList[1].adminCnt + usedList[2].adminCnt + usedList[0].adminCnt}}건</li>
 					<li>{{usedList[1].adminCnt}}건</li>
 					<li>{{usedList[2].adminCnt}}건</li>
@@ -357,7 +359,7 @@
 					<li>판매중</li>
 					<li>판매중지</li>
 				</ul>
-				<ul class="productB">
+				<ul class="productB" v-if="productList[0]!= undefined">
 					<li>{{productList[0].de}}건</li>
 					<li>{{productList[1].de}}건</li>
 				</ul>
@@ -365,7 +367,7 @@
 					<li>품절</li>
 					<li>할인중</li>
 				</ul>
-				<ul class="productB">
+				<ul class="productB" v-if="productList[0]!= undefined">
 					<li>{{productList[2].de}}건</li>
 					<li>{{productList2[0].dis}}건</li>
 				</ul>
