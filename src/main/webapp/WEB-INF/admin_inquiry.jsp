@@ -162,7 +162,7 @@ var app = new Vue({
 		closeModal: function() {
 			var self = this;
 			self.showScrapModal = false;
-			location.reload();
+			self.fnGetInquiryList();
 		},
 		fnUpdateInquiry(){
 			var self = this;

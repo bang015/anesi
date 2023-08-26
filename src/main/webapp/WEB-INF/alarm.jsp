@@ -109,8 +109,6 @@
 				<div class="contentA"  v-if="list.length==0">최근 소식이 없습니다.</div>	
 		</div>
 		
-		
-		<button @click="fnInsertAlarm(6)">알람인서트테스트용 담에지울거임</button>
 	</div>
 <jsp:include page="footer.jsp"></jsp:include>
 	

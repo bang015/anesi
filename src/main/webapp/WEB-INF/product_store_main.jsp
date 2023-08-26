@@ -231,7 +231,7 @@ var app = new Vue({
 		nonuserNo : '${nonuserNo}',
 		productNo : "",
 		scrapbookList : [],
-		cartList : [],AP
+		cartList : [],
 		nonuserCartList : [],
 		nonuserNo : "",
 		userEmail : "",

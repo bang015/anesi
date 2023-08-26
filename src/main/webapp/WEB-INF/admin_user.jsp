@@ -213,7 +213,7 @@ var app = new Vue({
 		closeModal: function() {
 			var self = this;
 			self.showViewModal = false;
-			location.reload();
+			self.fnGetUser();
 		},
 		
 		

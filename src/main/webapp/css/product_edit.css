@@ -204,3 +204,8 @@
 	width: 100px;
 	height: 100px;
 }
+
+.err{
+	color: #ff7777 !important;
+	border-color: #ff7777 !important;
+}

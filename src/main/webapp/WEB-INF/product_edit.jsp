@@ -126,30 +126,30 @@
 			        		<span>{{producInfo[0].productNo}}</span>
 			        	</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">상품명</span>
-			        		<span><input v-model="producInfo[0].productName" class="inputStyle inputStyle2"></span>
+			        		<span class="modalSpan1" :class="{'err' : productNameflg}">상품명</span>
+			        		<span><input v-model="producInfo[0].productName" class="inputStyle inputStyle2" :class="{'err' : productNameflg}"></span>
 			        	</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">가격</span>
-			        		<span><input v-model="producInfo[0].productPrice" class="inputStyle inputStyle2"></span>
+			        		<span class="modalSpan1" :class="{'err' : productPriceflg}">가격</span>
+			        		<span><input v-model="producInfo[0].productPrice" class="inputStyle inputStyle2" :class="{'err' : productPriceflg}"></span>
 			        	</div>
 			        	<div class="modalStyle1">
-			        		<span class="modalSpan1">할인율</span>
-			        		<span><input v-model="producInfo[0].discount" class="inputStyle inputStyle2"></span>
+			        		<span class="modalSpan1" :class="{'err' : discountflg}">할인율</span>
+			        		<span><input v-model="producInfo[0].discount" class="inputStyle inputStyle2" :class="{'err' : discountflg}"></span>
 			        	</div>
 			        	<div class="modalStyle1 modalStyle2">
 			        		<span class="modalSpan1">옵션</span>
 		        			<div v-if="producInfo.length != 0">
-		        				<table class="modalTable">
+		        				<table class="modalTable" :class="{'err' : optionflg}">
 		        					<tr>
 		        						<th class="modalTdTr">옵션이름</th>
 		        						<th class="modalTdTr">옵션 가격 증가량</th>
 		        						<th class="modalTdTr">옵션 재고 수량</th>
 		        					</tr>
 		        					<tr v-for="item in producInfo">
-		        						<td class="modalTdTr"><input v-model="item.optionName"  class="modalSpan2 inputStyle"></td>
-		        						<td class="modalTdTr"><input v-model="item.optionPrice" class="modalSpan2 inputStyle"></td>
-		        						<td class="modalTdTr"><input v-model="item.productStock" class="inputStyle"></td>
+		        						<td class="modalTdTr"><input v-model="item.optionName"  class="modalSpan2 inputStyle" :class="{'err' : optionflg}"></td>
+		        						<td class="modalTdTr"><input v-model="item.optionPrice" class="modalSpan2 inputStyle" :class="{'err' : optionflg}"></td>
+		        						<td class="modalTdTr"><input v-model="item.productStock" class="inputStyle" :class="{'err' : optionflg}"></td>
 		        					</tr>
 		        				</table>
 		        			</div>
@@ -161,7 +161,7 @@
 		        				<span>(최소 1개 최대 5개)</span>
 		        			</span>
 		        			<span>
-			        			<button class="btn1 btn2" @click="fnUpdateProduct">저장</button>
+			        			<button class="btn1 btn2" @click="fnUpdateProductCheck">저장</button>
 			        			<button @click="closeModal" class="btn1 btn2 btn3">취소</button>
 		        			</span>
 		        		</div>
@@ -188,6 +188,10 @@ var app = new Vue({
 		productNo : 0,
 		addOptionCnt : 0,
 		delectOption : [],
+		productNameflg : false,
+		productPriceflg : false,
+		optionflg : false,
+		discountflg : false,
 	},// data
 	methods : {
 		//상품 전체 검색
@@ -280,7 +284,7 @@ var app = new Vue({
 			} else{
 				discountYn = 'N';
 			}
-			var nparmap = {productNo : self.productNo, productName : self.producInfo[0].productName, productPrice : self.removeCommas(self.producInfo[0].productPrice), discount : self.producInfo[0].discount, discountYn, };
+			var nparmap = {productNo : self.productNo, productName : self.producInfo[0].productName, productPrice : self.removeCommas(self.producInfo[0].productPrice), discount : self.removePercentage(self.producInfo[0].discount), discountYn, };
 			$.ajax({
                 url : "/admin/productUpdate.dox",
                 dataType:"json",	
@@ -375,8 +379,57 @@ var app = new Vue({
 			    return inputText.replace(/,/g, '');
 		},
 		numberWithCommas(number) {
+		 	 if (typeof number !== "string") {
+		        return number;
+		    }
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
+        removePercentage(inputString) {
+	 		  if (typeof inputString !== "string") {
+		      	return inputString;
+	    	  }
+        	  return inputString.replace(/%/g, "");
+        },
+        fnUpdateProductCheck() {
+            var self = this;
+
+            if (self.producInfo[0].productName === '') {
+                self.productNameflg = true;
+                return;
+            }
+            self.productNameflg = false;
+
+            const regex1 = /[0-9]+/g;
+            const productPrice = self.removeCommas(self.producInfo[0].productPrice);
+
+            if (productPrice <= 0 || productPrice === '' || !regex1.test(productPrice)) {
+                self.productPriceflg = true;
+                return;
+            }
+            self.productPriceflg = false;
+
+            const regex = /[0-9%]+/g;
+            const discount = self.removePercentage(self.producInfo[0].discount);
+
+            if (discount < 0 || !regex.test(self.producInfo[0].discount)) {
+                self.discountflg = true;
+                return;
+            }
+            self.discountflg = false;
+
+            const regex2 = /[0-9,]+/g;
+            if (
+                self.producInfo.some(item => item.optionName === '') ||
+                self.producInfo.some(item => !regex2.test(item.optionPrice)) ||
+                self.producInfo.some(item => self.removeCommas(item.optionPrice) < 0)
+            ) {
+                self.optionflg = true;
+                return;
+            }
+            self.optionflg = false;
+
+            self.fnUpdateProduct();
+        }
 	}, // methods
 	created : function() {
 		var self = this;
