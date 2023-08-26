@@ -624,7 +624,6 @@ var app = new Vue({
 		                data : nparmap,
 		                success : function(data) {
 		                	self.usedList = data.usedOrder;
-		                	console.log(self.usedList)
 		                }
 		            });
 		    	

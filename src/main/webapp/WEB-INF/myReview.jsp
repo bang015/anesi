@@ -161,7 +161,6 @@ var app = new Vue({
 			self.info = item;
 			self.fnGetProductInfo(item.productNo);
 			self.fnThumbnailImg(item.productNo);
-			console.log(item);
 			self.selectedRating = item.csat;
 			self.characterCount1 = item.content.length;
 			self.imgName = item.rImgOrgName;

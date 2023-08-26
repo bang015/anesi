@@ -22,10 +22,8 @@ $(document).ready(function() {
     var categoryNo = $(this).closest('ul.subcategory-list').data('category-no');
 
     // 콘솔에 categoryNo 값을 출력합니다.
-    console.log('카테고리 번호:', categoryNo);
 
     var categoryName = $(this).text();
-    console.log('categoryName:', categoryName);
   });
 });
 </script>

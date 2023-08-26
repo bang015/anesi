@@ -269,7 +269,6 @@ var app = new Vue({
                 	self.list = data.list;
                 	self.cnt = data.cnt;
 	                self.pageCount = Math.ceil(self.cnt / 9);
-	                console.log(self.list);
                 }
             }); 
 		},
@@ -361,7 +360,6 @@ var app = new Vue({
 		var self = this;
 		self.fnGetList();
 		self.fnGetBestList();
-		console.log(self.sessionNick);
 	}// created
 });
 </script>

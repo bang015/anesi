@@ -120,7 +120,6 @@ var app = new Vue({
 	             data : nparmap,
 	             success : function(data) {                
 	               	self.email = data.emailCheck;
-	               	console.log(self.email);
 	             }                
 	         }); 
 		},
@@ -143,15 +142,12 @@ var app = new Vue({
                 success : function(data) {                
                		self.emailSelect = data.emailSelect;
                		self.emailSelectYn = true;
-               		console.log(self.emailSelect);
-               		console.log(self.emailSelectYn);
                 }                
             });
 		},
 		reset : function(){
 			var self=this
 			self.email="";
-			console.log(self.email);
 		},
 		searchPwd : function(){
 			var self = this;

@@ -184,8 +184,6 @@ var app = new Vue({
                 	if(self.info.smsYn == 'N'){
                 		self.info.smsYn = ''
                 	}
-                	console.log(self.info);
-                	console.log(self.info.smsYn);
                 }
             });
 		},
@@ -197,7 +195,6 @@ var app = new Vue({
 				self.info.smsYn = 'Y';
 			}
 			var nparmap = {no : self.sessionNo, smsYn : self.info.smsYn == '' ? 'N' : 'Y'};
-			console.log(self.info.smsYn);
 			$.ajax({
                 url : "/mypage/smsYn_edit.dox",
                 dataType:"json",	

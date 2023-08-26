@@ -283,7 +283,6 @@ var app = new Vue({
                 		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
                 		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
                 	}
-                	console.log(self.orderList);
                 }
             });
 		},
@@ -328,7 +327,6 @@ var app = new Vue({
 	                		self.orderList[i].productPrice = self.orderList[i].productPrice * ((100-self.orderList[i].discount)/100) + self.orderList[i].optionPrice;
 	                		self.orderList[i].productPrice = Math.floor( self.orderList[i].productPrice / 100) * 100
 	                	}
-	                	console.log(self.orderList);
 	                }
 				});
 			},
@@ -364,7 +362,6 @@ var app = new Vue({
                 	        break;
                 		}
                 	}
-                	console.log(self.orderList2);
                 }
             });
 		},
@@ -420,7 +417,6 @@ var app = new Vue({
 					data : nparmap,
 					success : function(data) {
 	                	self.Delivery = data.Delivery;
-	                	console.log(self.Delivery);
 	                	for(let i = 0; i < self.Delivery.length; i++){
 	                		switch (self.Delivery[i].deliverySit) {
 	                	    case '1':
@@ -456,7 +452,6 @@ var app = new Vue({
 					data : nparmap,
 					success : function(data) {
 	                	self.usedDelivery = data.usedDelivery;
-	                	console.log(self.Delivery);
 	                	for(let i = 0; i < self.usedDelivery.length; i++){
 	                		switch (self.usedDelivery[i].deliverySit) {
 	                	    case '1':

@@ -159,8 +159,6 @@ new Vue({
       },
       methods: {
     	  calculateTotalPriceWithCount(item) {
-    		    console.log('item:', item); // 아이템의 전체 객체를 확인
-    		    console.log('item.cnt:', item.cnt);
     		    const discountPrice = this.discountedPrice(item);
     		    const optionPrice =
     		      (item.selectedOption &&
@@ -214,7 +212,6 @@ new Vue({
             	    dataType: "json",
             	    data: { userNo: userNo },
             	    success: function (response) {
-            	      console.log(response);
             	      
 
             	      // 중복 상품 제거
@@ -244,7 +241,6 @@ new Vue({
 }
 
             	              // item 객체 출력 (옵션 로드 완료)
-            	              console.log("Item with options:", item);
 
             	              resolve();
             	            });
@@ -278,7 +274,6 @@ new Vue({
 
     			  
     			  const selectedOption = item.options.find(opt => opt.optionNo === item.selectedOption);
-    			  console.log(selectedOption);
     			  if (selectedOption) {
     			    this.addToSelectedOptions(item); // 새롭게 추가된 메소드 호출
     			  }
@@ -295,7 +290,6 @@ new Vue({
     	        productNo: item.productNo,
     	        userNo: '${sessionNo}'
     	    };
-    	    console.log(requestData);
     	  
     	    $.ajax({
     	        url: "/product/deleteCartlist.dox",
@@ -328,7 +322,6 @@ new Vue({
     	    const requestData = {
     	        userNo: '${sessionNo}'
     	    };
-    	    console.log(requestData);
 
     	    $.ajax({
     	        url: "/product/deleteAllCartItems.dox",
@@ -391,7 +384,6 @@ new Vue({
   		      
   		      };
   		    });
-			console.log(productData);	
     		    
     		    // 쿼리 문자열을 만듭니다.
     		   let queryString = '';
@@ -401,7 +393,6 @@ new Vue({
 
     		    // 쿼리 문자열을 이용해서 order/main.do로 이동
     		    const queryParams = encodeURI(`?startNum=${startNum}&lastNum=${lastNum}${queryString}`);
-    		    console.log(productData);
     		    $.pageChange("/order/main.do", { product: productData });
 
     		  } else {

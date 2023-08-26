@@ -48,7 +48,6 @@ var adminH = new Vue({
 	},// data
 	created : function() {
 		var self = this;
-		console.log(self.sessionStatus);
 		if(self.sessionStatus != 'A'){
 			location.href="/main.do";
 		}

@@ -284,7 +284,6 @@ var app = new Vue({
             				categoryNo : self.categoryNo, 
             				startNum : startNum, 
             				lastNum : lastNum};
-            console.log(nparmap);
             $.ajax({
                 url : "/categoryProduct.dox",
                 dataType:"json",	
@@ -292,7 +291,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	self.list = data.productList;
-                	console.log(data.productList);
                 	self.cnt = data.cnt;
 	                self.pageCount = Math.ceil(self.cnt / 12);
                 }
@@ -407,11 +405,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	/* alert("등록완"); */
-                   console.log(self.userNo);
                 }
             }); 
             self.openCartModal();
-            console.log(self.showCartModal);
 		}, 
 	    fnUpdateUserCart : function(item) {
 	    	var self = this;
@@ -426,7 +422,6 @@ var app = new Vue({
                 }
             }); 
             self.openCartModal();
-            console.log(self.showCartModal);
 
 		}, 
 		fnCheckScrap : function(item) {
@@ -459,7 +454,6 @@ var app = new Vue({
                 }
             }); 
             self.openScrapModal();
-            console.log(self.showScrapModal);
 		},
 	    fnDeleteScrapbook : function(item) {
 	    	var self = this;
@@ -474,7 +468,6 @@ var app = new Vue({
                 }
             }); 
             self.openScrapDeleteModal();
-            console.log(self.showScrapModal);
 		},
 		//'제품상세보기' 페이지 이동
 		fnProductView : function(productNo){
@@ -513,7 +506,6 @@ var app = new Vue({
                 }
             }); 
             self.openCartModal();
-            console.log(self.showCartModal);
 		},
 		
 		fnLogin : function(){

@@ -103,7 +103,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.usedList = data.list;
-                	console.log(self.usedList);
                 	self.usedCnt = self.usedList.length;
                 	self.usedList.map(item =>{
                 		if(item.purchase == 'W'){

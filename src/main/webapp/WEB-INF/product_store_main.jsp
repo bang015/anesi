@@ -274,7 +274,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	self.list = data.list;
-                	console.log(data);
                 	self.list2=data.list2;
                 	self.cnt = data.cnt;
 	                self.pageCount = Math.ceil(self.cnt / 12);

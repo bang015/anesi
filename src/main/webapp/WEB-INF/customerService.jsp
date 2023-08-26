@@ -292,7 +292,6 @@ if (kakakoChatBtn) {
         window.location.href = kakaoDeepLink;
     });
 } else {
-    console.log("'kakakoChatBtn' does not exist in the current HTML document.");
 }
 
 function scrollToRelatedQuestion(questionText) {

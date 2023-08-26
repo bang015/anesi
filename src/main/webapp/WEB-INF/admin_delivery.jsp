@@ -143,7 +143,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.orderList = data.list;
-                	console.log(self.orderList);
                 	self.paymentList = self.orderList.filter(item => item.deliverySit == 1);
                 	self.waitList = self.orderList.filter(item => item.deliverySit == 2);
                 	self.shippingList = self.orderList.filter(item => item.deliverySit == 3);
@@ -173,7 +172,6 @@ var app = new Vue({
 			    		self.checkList.push(item.paymentNo);
 			    	}
 		    	});
-			    console.log(self.checkList);
 		    }
 		},
 		// 체크박스 체크

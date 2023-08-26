@@ -80,7 +80,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.inquiryList = data.list;
-                	console.log(self.inquiryList);
                 }
 			})
 		},

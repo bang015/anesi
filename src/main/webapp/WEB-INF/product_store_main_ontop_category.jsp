@@ -131,7 +131,6 @@
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) { 
-	                	console.log(data);
 	                	self.list = data.list;
 	                }
 	            });  */

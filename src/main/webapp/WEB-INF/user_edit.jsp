@@ -345,7 +345,6 @@ var app = new Vue({
 		 	if(self.bYear=="연" || self.bMonth=="월" || self.bDay=="일"){
 		 		self.info.birthday = "";
 		 	}
-		 	console.log("1");
 		 	var nparmap = {nick : self.info.nick, phone : self.info.phone, birthday : self.info.birthday, gender : self.info.gender, no:self.sessionNo}
             $.ajax({
                 url : "userEdit.dox",
@@ -377,7 +376,6 @@ var app = new Vue({
         				self.nickMs = "닉네임은 특수문자 제외하고 사용가능합니다."
         				self.nickFlg = false;
         			}else if(data.cnt > 0){
-        				console.log(self.info.nick);
                 		self.nickMs = "중복된 닉네임입니다.";
                 		self.nickFlg = false;
                 	} else {

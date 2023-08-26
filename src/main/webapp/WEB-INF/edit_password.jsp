@@ -227,7 +227,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	console.log(self.info.userPwd);
                 }
             });
 		},

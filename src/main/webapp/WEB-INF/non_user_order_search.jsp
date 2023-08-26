@@ -377,7 +377,6 @@ var app = new Vue({
     	fnAddrUpdate(){
     		var self = this;
     		var phone=self.phone1+self.phone2;
-    		console.log(phone);
 			var nparmap = {paymentNo : self.paymentNo , addrKind : self.addrKind, phone : phone, receiptName : self.receiptName, zipCode : self.zipCode, addr : self.addr, addr2 : self.addr2, addrNo : self.nonUserOrder[0].addrNo};
             $.ajax({
                 url : "../nonUserOrderUpdate.dox",

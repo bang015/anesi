@@ -131,7 +131,6 @@ var app = new Vue({
         	}else{
         		self.hidden=false;
         	}
-        	console.log(self.hidden);
         }
 	}, // methods
 	created : function() {

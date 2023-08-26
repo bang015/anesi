@@ -251,7 +251,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.WeeklySalesList = data.list;
-                	console.log(self.WeeklySalesList);
                 	var weeklyData = self.WeeklySalesList.map(item => ({
                         order_date: item.orderDate,
                         total_order_amount: item.totalOrderAmount,

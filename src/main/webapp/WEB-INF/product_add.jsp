@@ -222,7 +222,6 @@ var app = new Vue({
 		      self.fileList.splice(index,0,file);
 		      self.imageList.splice(index,1);
 		      self.imageList.splice(index,0,URL.createObjectURL(file));
-		      console.log(self.fileList);
 		    }
 		},
 		fnGetcategoryList1(){

@@ -360,7 +360,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	alert("회원가입이 완료되었습니다.");
-                	console.log(data.userNo);
                 	self.userNo=data.userNo;
                 	self.fnInsertAlarm(1);
                 	location.href="main.do";
@@ -402,7 +401,6 @@ var app = new Vue({
 		        email: email,
 		        username: "ㅎㅇ" // 사용자 이름은 적절한 방법으로 설정하세요.
 		      };
-		      console.log(data);
 		      $.ajax({
 		        url: "/register",
 		        dataType: "json",
@@ -523,7 +521,6 @@ var app = new Vue({
         fnInsertAlarm : function(alarmType){
 			var self = this;
 			var nparmap = {userNo:self.userNo, alarmType};
-        	console.log(alarmType);
 
 			 $.ajax({
 	                url : "../addAlarm.dox",

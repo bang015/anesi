@@ -281,7 +281,6 @@ h3{
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>
-console.log(Vue);
 Vue.use(Vue2Editor);
 const VueEditor = Vue2Editor.VueEditor;
 
@@ -315,7 +314,6 @@ var app = new Vue({
                 	self.list = data.list;
                 	if(self.list[0].purchase!='W'){
         				self.fnGetAInfo();
-        				console.log(self.purchaseFlg);
         			}
                 	
                 }
@@ -330,9 +328,7 @@ var app = new Vue({
                 type : "POST",
                 data : param,
                 success : function(data) { 
-                	console.log(data);
                 	self.aInfo = data.aInfo;
-                	console.log(self.aInfo);
                 	if(self.aInfo!=undefined){
                 		self.purchaseFlg = true;
                 	}

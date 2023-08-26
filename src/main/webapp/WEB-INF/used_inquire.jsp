@@ -204,7 +204,6 @@ h1{
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>
-console.log(Vue);
 Vue.use(Vue2Editor);
 const VueEditor = Vue2Editor.VueEditor;
 
@@ -284,7 +283,6 @@ var app = new Vue({
 		fnOnFileChange: function(event, index) {
 			var self = this;
 		    const file = event.target.files[0];	
-		    console.log(event.target.files[0]);
 			if (file) {
 	            const reader = new FileReader();
 	            reader.onload = function(e) {
@@ -296,7 +294,6 @@ var app = new Vue({
 		      	self.fileNames.splice(index,0,file.name);
 	    	  	self.photoList.splice(index,1);
 		      	self.photoList.splice(index,0,file);
-		      	console.log(self.fileNames);
 		    }
         },
         formatNumber() {

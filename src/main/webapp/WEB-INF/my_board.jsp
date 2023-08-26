@@ -435,7 +435,6 @@ var app = new Vue({
                 data : param,
                 success : function(data) { 
                 	self.usedList = data.list;
-                	console.log(self.usedList);
                 }
             }); 
 		},
@@ -459,7 +458,6 @@ var app = new Vue({
 		var self = this;
 		self.fnGetList();
 		self.fnGetUsedList();
-		console.log(self.sessionNick);
 	}// created
 });
 </script>

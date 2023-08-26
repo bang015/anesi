@@ -128,8 +128,6 @@ var app = new Vue({
 		fnGetAlarm : function() {
 			var self = this;
 			var nparmap = {userNo : self.userNo};
-        	console.log(self.userNo);
-
 			 $.ajax({
 	                url : "../alarmList.dox",
 	                dataType:"json",	
@@ -137,14 +135,12 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) { 
 	                	self.list = data.list;
-	                	console.log(data.list);
 	                }
             }); 
 		},
 		fnInsertAlarm : function(alarmType){
 			var self = this;
 			var nparmap = {userNo:self.userNo, alarmType};
-        	console.log(alarmType);
 
 			 $.ajax({
 	                url : "addAlarm.dox",
@@ -160,7 +156,6 @@ var app = new Vue({
 		fnRemoveAlarm : function(alarmNo){
 			var self = this;
 			var nparmap = {userNo:self.userNo, alarmNo};
-			console.log(alarmNo);
 
 			 $.ajax({
 	                url : "removeAlarm.dox",

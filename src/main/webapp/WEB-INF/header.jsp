@@ -383,7 +383,6 @@
 			fnGetAlarm : function() {
 				var self = this;
 				var nparmap = {userNo : self.userNo};
-				console.log(self.userNo);
 				 $.ajax({
 		                url : "../alarmList.dox",
 		                dataType:"json",	
@@ -402,9 +401,6 @@
 		}// created
 	});
 	   var isLoggedIn = <%= isLoggedIn %>;
-	    console.log('isLoggedIn:', isLoggedIn);
-
-	    console.log('sessionNo:', '<%= sessionNo %>');
 
 	    /* $(document).ready(function(){
 	        // 로그인되어 있지 않은 경우 로그인 버튼 및 아이콘을 조작합니다.
@@ -491,8 +487,6 @@
 			      categoryName: categoryName
 			    },
 			    success: function(response) {
-			      console.log("Full response data:", response);
-			      console.log("Products list:", response.list);
 
 			      var data = response;
 
@@ -578,7 +572,6 @@
 		            productName: productName,
 		        },
 		    }).done(function(response) {
-		        console.log(response);
 
 		        // 세션 정보와 검색어를 함께 저장합니다.
 		        sessionStorage.setItem("searchResult", JSON.stringify(response));
@@ -593,7 +586,6 @@
 		$('#glass').click(function() {
 		    var productName = $('#search_input').val();
 			
-		    console.log("productName:", productName);
 		    saveRecentSearch(productName);
 		    searchProduct(productName);
 		});
@@ -603,7 +595,6 @@
 		    if (e.keyCode === 13) {
 		        var productName = $(this).val();
 
-		        console.log("productName:", productName);
 		        saveRecentSearch(productName);
 		        searchProduct(productName);
 		    }

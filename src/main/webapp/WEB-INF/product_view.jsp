@@ -970,7 +970,6 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {                
 	               		self.reviewList = data.reviewList;
-	               		console.log(self.reviewList)
 	               		self.cnt = data.cnt;
 		                self.pageCount = Math.ceil(self.cnt / 5);
 		                
@@ -1026,7 +1025,6 @@ var app = new Vue({
 	                data : nparmap,
 	                success : function(data) {
 	                	self.reviewUser = data.user	
-	                	console.log(self.reviewUser);
 	                	if(self.reviewUser.length==0){
 	                		self.purchaseYn = "N"
 	                	}else{
@@ -1228,11 +1226,9 @@ var app = new Vue({
 			},
 		openScrapModal: function() {
 		    var self = this;
-		    console.log(self.reviewCheck1);
 		    if(self.reviewCheck1 > 0){
 				self.showScrapModal5 = true;
 			} else{
-				console.log(self.showScrapModal5);
 			    self.showScrapModal = true;	
 			}
 		    
@@ -1508,7 +1504,6 @@ var app = new Vue({
 				                type : "POST", 
 				                data : nparmap,
 				                success : function(data) {
-				                	  console.log("응답 데이터:", nparmap );
 				                	self.showScrapModal4 = true;
 				                	 self.selectedNparmap = nparmap;
 				                	 // 넘겨받은 nparmap 값을 LocalStorage에 저장
@@ -1548,11 +1543,9 @@ var app = new Vue({
 			    	var self = this;			    	
 			    	if(self.userNo!=""||self.userNo!=null){			    		
 			    		var nparmap = { userNo: self.userNo, productNo: self.productNo};
-			    		console.log(nparmap)
 			    	}
 			    	if(self.userNo==""||self.userNo==null){
 			    		var nparmap = { nonUserNo: self.nonuserNo, productNo: self.productNo};
-			    		console.log(nparmap)
 			    	}	
 			    	
 				    $.ajax({
@@ -1562,7 +1555,6 @@ var app = new Vue({
 				              data : nparmap,
 				           success : function(data) {
 				               self.cartCheck=data.cartCheck
-				               console.log(self.cartCheck);
 				           }
 				        });
 			    	},
@@ -1578,7 +1570,6 @@ var app = new Vue({
 			                type : "POST", 
 			                data : nparmap,
 			                success : function(data) {
-			                	console.log(data.reviewCheck);
 			                	if(data.reviewCheck > 0){
 			                		self.reviewCheck1 = 1;
 			                	}

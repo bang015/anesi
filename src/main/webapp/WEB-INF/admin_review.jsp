@@ -89,7 +89,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.reviewList = data.list;
-                	console.log(self.reviewList);
                 } 
 			})
 		},

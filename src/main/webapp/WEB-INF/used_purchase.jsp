@@ -241,8 +241,6 @@ var app = new Vue({
                 type : "POST",
                 data : param,
                 success : function(data) { 
-                	console.log(data.list);
-                	console.log(self.sessionStatus);
 	                if(self.sessionStatus=='A'){
 						$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
 	                }else if(self.sessionNo!=data.list.userNo){

@@ -54,7 +54,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.couponList = data.list;
-                	console.log(self.couponList);
                 }
 			})
 		},

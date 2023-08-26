@@ -330,7 +330,6 @@ var app = new Vue({
 		//옵션 추가
 		fnOptionAdd(){
 			var self = this
-			console.log();
 			if(self.producInfo.length < 5){
 				self.producInfo.push({productNo : self.productNo, optionName : '', productStock : 0, optionPrice : 0});
 				self.addOptionCnt++;
@@ -345,7 +344,6 @@ var app = new Vue({
 				} else {
 					self.optionCnt--;
 					self.delectOption.push(self.producInfo[self.producInfo.length-1].optionNo);
-					console.log(self.delectOption);
 				}
 				self.producInfo.pop();
 			}

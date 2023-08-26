@@ -216,7 +216,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.profileImg = data.img;
-                	console.log(self.profileImg);
                 }
 			})
 		}
@@ -227,7 +226,6 @@ var app = new Vue({
 			location.href="login.do";
 		}
 		self.fnGetProfile();
-		console.log(self.sessionNick);
 	}// created
 });
 </script>

@@ -121,7 +121,6 @@ textarea{
 <jsp:include page="footer.jsp"></jsp:include>
 </html>
 <script>
-console.log(Vue);
 Vue.use(Vue2Editor);
 const VueEditor = Vue2Editor.VueEditor;
 
@@ -149,7 +148,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	console.log(self.info);
                 }
             });
 		},
@@ -171,7 +169,6 @@ var app = new Vue({
 	 			type : "POST", 
 				data : nparmap,
 				success : function(data) {
-					console.log(data.bNo);
 	           		var form = new FormData();
 	       	        form.append( "file1",  $("#file1")[0].files[0] );
 	       	     	form.append( "bNo", data.bNo); // pk
@@ -182,7 +179,6 @@ var app = new Vue({
 		},
 	    fnThumbnail : function(form){
 			var self = this;
-			console.log(form);
 	         $.ajax({
 	            url : "/thumbfileUpload.dox", 
 	            type : "POST", 
@@ -209,7 +205,6 @@ var app = new Vue({
 	        }
 	        var nparmap = self.info; 
 	        nparmap.bNo = self.bNo;
-	        console.log(nparmap);
 	        $.ajax({
 				url : "/community/edit.dox",
 				dataType:"json",
