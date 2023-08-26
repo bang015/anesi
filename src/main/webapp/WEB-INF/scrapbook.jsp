@@ -108,6 +108,9 @@ var app = new Vue({
 		},
 		delScrapbook(){
 			var self = this;
+			if(self.checkSb.length == 0){
+				return;
+			}
 			if(!confirm("선택한 상품을 스크랩북에서 삭제하시겠습니까?")){
 				return;
 			}

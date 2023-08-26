@@ -100,7 +100,7 @@
 									<td><button class="btn1" @click="fnProductEdit(item.productNo)">수정</button></td>
 									<td>{{item.productNo}}</td>
 									<td>{{item.productName}}</td>
-									<td>{{item.deleteYn == 'N' ? '판매중' : '판매종료'}}</td>
+									<td>{{item.deleteYn == 'N' ? '판매중' : item.deleteYn == 'Y' ? '판매종료' : '판매중지'}}</td>
 									<td>{{item.stock == '0' ? '일시 품절' : '전시중'}}</td>
 									<td>{{item.stock}}</td>
 									<td>{{numberWithCommas(item.productPrice)}}</td>

@@ -143,6 +143,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.orderList = data.list;
+                	console.log(self.orderList);
                 	self.paymentList = self.orderList.filter(item => item.deliverySit == 1);
                 	self.waitList = self.orderList.filter(item => item.deliverySit == 2);
                 	self.shippingList = self.orderList.filter(item => item.deliverySit == 3);
@@ -167,7 +168,12 @@ var app = new Vue({
 		    if (self.checkList.length === self.orderList2.length) {
 				self.checkList = [];
 		    } else {
-			    self.checkList = self.orderList2.map(item => item.paymentNo);
+			    self.orderList2.forEach(item => {
+			    	if(self.listNo == item.deliverySit || self.listNo == ''){
+			    		self.checkList.push(item.paymentNo);
+			    	}
+		    	});
+			    console.log(self.checkList);
 		    }
 		},
 		// 체크박스 체크
@@ -183,6 +189,8 @@ var app = new Vue({
 			var self = this;
 			self.listNo = Number(num);
 			self.selectListNo = Number(num);
+			self.checkList = [];
+			self.allChecked = false;
 		},
 		fnReload(){
 			location.reload();

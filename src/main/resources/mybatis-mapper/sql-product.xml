@@ -151,10 +151,10 @@
 	<!-- 스크랩북 등록 -->
 	<insert id="insertScrapbook" parameterType="hashmap">
 		INSERT INTO t3_tbl_user_scrapbook 
-		(USER_NO, PRODUCT_NO, CNT)
+		(USER_NO, PRODUCT_NO)
 		
 		<if test="userNo!='' and userNo !=null">
-		VALUES (#{userNo}, #{productNo}, 1)
+		VALUES (#{userNo}, #{productNo})
 		</if>
 	</insert>
 	<select id="selectScrapbookList" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">

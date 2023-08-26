@@ -392,27 +392,38 @@
 	<!--프로젝트 메인-->
 	<!--결제/배송리스트-->
 	<select id="mainOrderList" resultType="com.example.anesi.model.UserOrder">
-		SELECT DELIVERY_SIT, SUM(COUNT) AS TOTAL_COUNT
+		SELECT delivery_sit_values.DELIVERY_SIT, COALESCE(TOTAL_COUNT, 0) AS TOTAL_COUNT
 		FROM (
-		    SELECT COUNT(*) AS COUNT, DELIVERY_SIT
-		    FROM t3_tbl_nonuser_order
+		    SELECT 1 AS DELIVERY_SIT UNION ALL
+		    SELECT 2 AS DELIVERY_SIT UNION ALL
+		    SELECT 3 AS DELIVERY_SIT UNION ALL
+		    SELECT 4 AS DELIVERY_SIT
+		) AS delivery_sit_values
+		LEFT JOIN (
+		    SELECT DELIVERY_SIT, COUNT(*) AS TOTAL_COUNT
+		    FROM (
+		        SELECT DELIVERY_SIT FROM t3_tbl_nonuser_order
+		        UNION ALL
+		        SELECT DELIVERY_SIT FROM t3_tbl_user_order
+		    ) AS combined_data
 		    GROUP BY DELIVERY_SIT
-		    
-		    UNION ALL
-		    
-		    SELECT COUNT(*) AS COUNT, DELIVERY_SIT
-		    FROM t3_tbl_user_order
-		    GROUP BY DELIVERY_SIT
-		) AS combined_data
-		GROUP BY DELIVERY_SIT
-		ORDER BY DELIVERY_SIT 
+		) AS counts ON delivery_sit_values.DELIVERY_SIT = counts.DELIVERY_SIT
+		ORDER BY delivery_sit_values.DELIVERY_SIT;
 	</select>
 	<!--중고상품 리스트-->
 	<select id="mainUsedList" resultType="com.example.anesi.model.Used">
-		SELECT COUNT(*) AS ADMIN_CNT, PURCHASE
-		FROM t3_tbl_used_purchase
-		GROUP BY PURCHASE
-		ORDER BY PURCHASE
+		SELECT COALESCE(counts.ADMIN_CNT, 0) AS ADMIN_CNT, VALUES1.PURCHASE
+		FROM (
+		    SELECT 'W' AS PURCHASE UNION ALL
+		    SELECT 'Y' AS PURCHASE UNION ALL
+		    SELECT 'N' AS PURCHASE
+		) AS VALUES1
+		LEFT JOIN (
+		    SELECT COUNT(*) AS ADMIN_CNT, PURCHASE
+		    FROM t3_tbl_used_purchase
+		    GROUP BY PURCHASE
+		) AS counts ON VALUES1.PURCHASE = counts.PURCHASE
+		ORDER BY VALUES1.PURCHASE;
 	</select>
 	<!--리뷰리스트-->
 	<select id="mainReviewList" resultType="com.example.anesi.model.Review">
@@ -421,10 +432,19 @@
 	</select>
 	<!--상품리스트-->
 	<select id="mainProductDel" resultType="com.example.anesi.model.Product">
-		SELECT COUNT(*) AS DE, DELETE_YN
-		FROM t3_tbl_product
-		GROUP BY DELETE_YN
-		ORDER BY DELETE_YN
+		SELECT VALUES1.DELETE_YN, COALESCE(counts.DE, 0) AS DE
+		FROM(
+			SELECT 'N' DELETE_YN UNION ALL
+			SELECT 'S' DELETE_YN UNION ALL
+			SELECT 'Y' DELETE_YN
+		) AS VALUES1
+		LEFT JOIN (
+				SELECT COUNT(*) AS DE, DELETE_YN
+				FROM t3_tbl_product
+				GROUP BY DELETE_YN
+		
+		) AS counts ON counts.DELETE_YN = VALUES1.DELETE_YN
+		ORDER BY VALUES1.DELETE_YN
 	</select>
 	
 	<select id="mainProductDis" resultType="com.example.anesi.model.Product">
