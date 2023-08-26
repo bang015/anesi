@@ -102,7 +102,8 @@
 		<div class="content_cont" >
 		    <div class="content" v-for="item in list" v-if="item.alarmNo !=''" >
 				<i :class="item.icon" class="iconA"></i>
-					<span class="nick" v-if="item.alarmType == 1 || item.alarmType ==4">{{item.nick}}´Ô </span>{{item.alarmContent}}
+					<span class="nick" v-if="item.alarmType == 1 || item.alarmType ==4
+					|| item.alarmType == 5">{{item.nick}}´Ô </span>{{item.alarmContent}}
 					<span class="time"> {{item.cTime.substring(0,13)}}½Ã</span>
 				<i class="iconB fa-regular fa-circle-xmark" @click="fnRemoveAlarm(item.alarmNo)"></i>
 			</div>

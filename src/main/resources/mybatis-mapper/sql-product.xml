@@ -39,6 +39,15 @@
             <when test="order == 3">
                 ORDER BY P.CDATETIME DESC
             </when>
+            <when test="order == 4">
+                ORDER BY P.DISCOUNT DESC
+            </when>
+            <when test="order == 5">
+                ORDER BY P.PRODUCT_NAME
+            </when>
+            <when test="order == 6">
+                ORDER BY P.MANUFACTURER
+            </when>
             <otherwise>
                 <!-- 기본 정렬 -->
                 ORDER BY P.PRODUCT_NO DESC

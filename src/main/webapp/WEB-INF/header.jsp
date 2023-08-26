@@ -263,7 +263,11 @@
 			</div>
 			<div class="flow-container">
 		        <div class="flow-text">
-		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+		        <!--     <div class="flow-wrap">행복을 만드는 우리집, ANESI </div>
+		            <div class="flow-wrap">미래를 담은 클래식한 디자인 </div>
+		            <div class="flow-wrap">#ANESI로 꾸민 우리집 </div>
+		            <div class="flow-wrap">집에서 실천하는 에너지 절약</div> -->
+		            <div class="flow-wrap">우리집 고양이 망치도 좋아하는 ANESI </div>
 		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
 		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
 		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>

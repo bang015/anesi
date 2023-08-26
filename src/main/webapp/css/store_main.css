@@ -60,6 +60,7 @@
 	margin: 10px 10px;
 	font-size: 18px;
 	font-weight: bold;
+	min-height:65px;
 }
 .brand_name:hover{
 	text-decoration: underline;
@@ -110,7 +111,7 @@
 
 .production-item__content{
 	width:250px;
-	height:420px;
+	height:470px;
 	margin : 35px;
 	float: left;
 }

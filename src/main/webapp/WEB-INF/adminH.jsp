@@ -34,8 +34,6 @@
 				<div onclick="location.href='inquiry.do'" class="inquiry2">문의관리</div>
 				<div onclick="location.href='delivery.do'" class="delivery2">배송관리</div>
 				<div onclick="location.href='user.do'" class="user">고객관리</div>
-				<div>혜택관리(X)</div>
-				<div>알림관리(X)</div>
 		</div>
 </body>
 </html>

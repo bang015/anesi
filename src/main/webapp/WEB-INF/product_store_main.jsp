@@ -248,14 +248,12 @@ var app = new Vue({
           { text: '낮은가격순', value: '1' },
           { text: '높은가격순', value: '2' },
           { text: '최신순', value: '3' },
+          { text: '할인률높은순', value: '4' },
+          { text: '상품명 가나다순', value: '5' },
+          { text: '제조사 가나다순', value: '6' },
         ],
         optionsVisible: false,
         order : ""
-
- 
-
-     
-
 	},// data
 	methods : {
 		fnGetList : function(){
