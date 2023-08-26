@@ -12,9 +12,8 @@
 <body>
 	<div id="adminH">
 		<header class="admin_header">
-		  <h1>관리자센터</h1>
+		  <a href="/admin/main.do"><h1>관리자센터</h1></a>
 		  	<nav>
-		  		<a href="/admin/main.do">홈으로</a>
 				<a href="../login.do" v-if="sessionNo == ''">로그인</a>
 				<a href="../logout.do" v-if="sessionNo != ''">로그아웃</a>
 				<a>도움말</a>

@@ -154,6 +154,7 @@
 			ON i.PRODUCT_NO = p.PRODUCT_NO
 		LEFT JOIN t3_tbl_product_option o
 			ON i.OPTION_NO = o.OPTION_NO
+		ORDER BY CASE WHEN i.REPLY IS NULL THEN 0 ELSE 1 END, i.REPLY 
 	</select>
 	
 	<update id="updateAdminInquiry" parameterType="hashmap">
