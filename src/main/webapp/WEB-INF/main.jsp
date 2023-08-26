@@ -140,7 +140,7 @@ var swiper = new Swiper(".mySwiper", {
     if(Cookies.get("popupCheck") !== "no"){
       window.open("popup.do", 
         "tap",
-        "width=370px,height=450px,resizable,status=1")
+        "width=500px,height=450px,resizable,status=1")
     }
 }
 </script>

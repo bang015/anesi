@@ -375,7 +375,7 @@
 		WHERE  i.THUMBNAIL_YN ='Y' AND P.DELETE_YN = 'N' 
 	</select>
 	
-	<!-- 팜업쿠폰-->
+	<!-- 팝업쿠폰-->
 	<insert id="coupon" parameterType="hashmap">
 		<if test="userNo != '' and userNo != null">
 		 	INSERT INTO t3_tbl_user_coupon

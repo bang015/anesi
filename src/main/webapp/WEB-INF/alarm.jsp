@@ -28,6 +28,8 @@
 	box-sizing :border-box;
 	font-size : 20px;
 	color : #A782C3;
+	cursor:pointer;
+
 }
 
 .title {
@@ -100,14 +102,17 @@
 		
 		
 		<div class="content_cont" >
-		    <div class="content" v-for="item in list" v-if="item.alarmNo !=''" >
-				<i :class="item.icon" class="iconA"></i>
-					<span class="nick" v-if="item.alarmType == 1 || item.alarmType ==4
-					|| item.alarmType == 5">{{item.nick}}님 </span>{{item.alarmContent}}
-					<span class="time"> {{item.cTime.substring(0,13)}}시</span>
-				<i class="iconB fa-regular fa-circle-xmark" @click="fnRemoveAlarm(item.alarmNo)"></i>
+			<div v-if="item.alarmNo !=''"  v-for="item in list">
+				<i class="iconB fa-regular fa-circle-xmark" v-if="list.length!=''"  @click="fnRemoveAlarm(item.alarmNo)"></i>
+			    <div class="content"  @click="fnMove(item)">
+					<i :class="item.icon" class="iconA"></i>
+						<span class="nick" v-if="item.alarmType == 1 || item.alarmType ==4
+						|| item.alarmType == 5">{{item.nick}}님 </span>{{item.alarmContent}}
+						<span class="time"> {{item.cTime.substring(0,13)}}시</span>
+				</div>
 			</div>
 				<div class="contentA"  v-if="list.length==0">최근 소식이 없습니다.</div>	
+			
 		</div>
 		
 	</div>
@@ -166,6 +171,26 @@ var app = new Vue({
 	                	
 	               }
            }); 
+			
+		},
+		fnMove : function(item) {
+			var self = this;
+			var alarmType=item.alarmType;
+			var alarmNo=item.alarmNo;
+			self.fnRemoveAlarm(alarmNo);
+			if(alarmType==6){
+				self.fnRemoveAlarm(alarmNo);
+				location.href="/mypage/myInquiry.do"
+			}else if(alarmType==5 || alarmType==4){
+				self.fnRemoveAlarm(alarmNo);
+				location.href="/community/main.do"
+			}else if(alarmType==2 || alarmType==3){
+				self.fnRemoveAlarm(alarmNo);
+				location.href="/mypage/myShopping.do"
+			}else if(alarmType==1){
+				self.fnRemoveAlarm(alarmNo);
+				location.href="/mypage/myCoupon.do"
+			}
 			
 		}
 

@@ -145,11 +145,6 @@ var app = new Vue({
 			                type : "POST", 
 			                data : nparmap,
 			                success : function(data) {
-			                	if(data.success){
-				        			alert(data.success.message);
-			                	}else{
-				        			alert(data.message);
-			                	}
 			                }
 			            }); 
 				} else{

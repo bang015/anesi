@@ -362,6 +362,7 @@ var app = new Vue({
                 	alert("회원가입이 완료되었습니다.");
                 	self.userNo=data.userNo;
                 	self.fnInsertAlarm(1);
+                	self.fnCoupon('회원가입 감사 10% 할인쿠폰','B','10')
                 	location.href="main.do";
                 }
             });
@@ -528,11 +529,28 @@ var app = new Vue({
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) { 
-	                	alert("알람인서트 완");
 	                }
             }); 
 			
-		}
+		},
+		
+		fnCoupon(couponName, disFlg, discount){
+			var self = this;
+			
+				var nparmap = {userNo:self.userNo,
+							   couponName,
+							   disFlg,
+							   discount};
+				   $.ajax({
+		                url : "coupon.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+		                	
+		                }
+		            }); 
+		},
 	}, // methods
 	created : function() {
 		var self = this;
