@@ -32,7 +32,6 @@ public class UsedServiceImpl implements UsedService{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		int usedPNo = usedMapper.insertUsedInquire(map);
-		System.out.println(map.get("usedPNo"));
 		resultMap.put("usedPNo", map.get("usedPNo"));
 		return resultMap;
 	}

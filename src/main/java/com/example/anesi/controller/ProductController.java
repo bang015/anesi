@@ -209,7 +209,6 @@ public class ProductController {
 		  @RequestMapping(value = "/product/deleteAllCartItems.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 		  @ResponseBody
 		  public String deleteAllCart(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		    System.out.println("전달 된 매개 변수: " + map); // 파라미터를 확인
 		    HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		    productService.deleteAllCartItems(map);
 		    resultMap.put("success", "삭제완료");
@@ -254,7 +253,6 @@ public class ProductController {
 
 			    HashMap<String, Object> resultMap = new HashMap<>();
 			    resultMap.put("products", productList);
-			    System.out.println("세션에서 가져온 검색어: " + session.getAttribute("searchKeyword"));
 			    return new Gson().toJson(resultMap);
 			}
 			@RequestMapping(value = "/selectLatest.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
