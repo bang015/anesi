@@ -87,4 +87,8 @@ public interface AdminMapper {
 	//관리자메인 문의리스트
 	List<Inquiry> mainInquiryCnt (HashMap<String, Object> map);
 	List<Inquiry> mainInquiryList (HashMap<String, Object> map);
+	//관리자메인 상품차트
+	List<Statistics> mainChart (HashMap<String, Object> map);
+	//관리자메인 만족도 차트
+	List<Statistics> mainChartCsat (HashMap<String, Object> map);
 }

@@ -10,6 +10,11 @@ public class Statistics {
 	private Date orderDate;
 	private int totalOrderCount;
 	private int totalOrderAmount;
+	private String CategoryGroup;
+	private int TotalCount;
+	private String csatGroup;
+	private int csatCount;
+	
 	
 	public int getTotalOrders() {
 		return totalOrders;

@@ -329,4 +329,20 @@ public class AdminController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
+	// 관리자메인 상품차트
+	@RequestMapping(value = "/admin/productChart.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String productChart(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Statistics> list = adminService.mainChart(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	// 관리자메인 상품차트
+	@RequestMapping(value = "/admin/csatChart.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String csatChart(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Statistics> list = adminService.csatChart(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
 }

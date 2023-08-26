@@ -190,4 +190,15 @@ public class AdminServiceImpl implements AdminService {
 	public List<Review> adminMainReview(HashMap<String, Object> map) {
 		return adminMapper.mainReviewList(map);
 	}
+
+	@Override
+	public List<Statistics> mainChart(HashMap<String, Object> map) {
+		return adminMapper.mainChart(map);
+	}
+
+	@Override
+	public List<Statistics> csatChart(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminMapper.mainChartCsat(map);
+	}
 }

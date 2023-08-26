@@ -95,6 +95,7 @@ var app = new Vue({
                 dataLabels: {
                   position: 'top', // top, center, bottom
                 },
+              
               }
             },
             dataLabels: {

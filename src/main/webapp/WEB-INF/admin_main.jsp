@@ -5,6 +5,8 @@
 <head>
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/adminH.css" rel="stylesheet">
@@ -141,7 +143,7 @@
   grid-row-end: 3; 
   grid-column-start: 2;
   grid-column-end: 6;
-  width: 97%;
+  width: 96%;
   
 }
 .product{
@@ -186,11 +188,19 @@
   margin-bottom : 5%;
   margin-top: 1%;
 }
-.revC button,
 .inquiry button{
   	margin: 0px 170px;
     width: 40%;
     height: 40px;
+    font-family: 'Pretendard-Regular';
+    background: #5E503F;
+    color: white;
+    border-radius: 4px;
+}
+.review_button{
+  	margin: 0px 20px 0px 692px;
+    width: 20%;
+    height: 30px;
     font-family: 'Pretendard-Regular';
     background: #5E503F;
     color: white;
@@ -328,7 +338,7 @@
 			
 		</div>
 			<div class="review">
-				<span>리뷰<span class="iTime">최근 1주일기준</span></span>
+				<span>리뷰<span class="iTime">최근 1주일기준</span> <button @click="fnMoveReview" class="cursor_pointer review_button">전체 리뷰 보기 ></button></span>
 				<hr>
 				<i class="iconA fa-solid fa-comments"></i>
 				<ul class="deliveryA">
@@ -345,9 +355,10 @@
 				</ul>
 			
 				<span class="revC">
-					<li>리뷰 평점 비율</li>
-					<img src="\css\image\Admin\review_chart.png">
-					<button @click="fnMoveReview" class="cursor_pointer">전체 리뷰 보기 ></button>
+					<!-- <li>리뷰 평점 비율</li> -->
+					<div id="chart">
+				        <apexchart type="bar" height="150" :options="chartOptions2" :series="series2"></apexchart>
+				    </div>
 				</span>
 			</div>
 			
@@ -371,9 +382,10 @@
 					<li>{{productList[2].de}}건</li>
 					<li>{{productList2[0].dis}}건</li>
 				</ul>
-				<br><br><br><br><br><br><br>
-				<div>상품현황차트</div>
-				<div>카테고리별(6) 판매 차트</div>
+				<div id="chart">
+			        <apexchart type="bar" height="270" :options="chartOptions" :series="series"></apexchart>
+		       </div>
+		       
 			</div>
 			
 			<div class="inquiry">
@@ -387,7 +399,7 @@
 				</ul>
 				<div class="inquiryC_cont">
 					<div class="inquiryC" v-for="inquiry in inquiryList">
-						<span> <i class="fa-solid fa-circle-question" style="color:#5E503F;"></i>{{inquiry.content}}</span>
+						<span> <i class="fa-solid fa-circle-question" style="color:#5E503F;"></i> {{inquiry.content}}</span>
 						<span class="iTime">{{inquiry.cDateTime}}</span>
 					</div>
 				</div>
@@ -402,6 +414,9 @@
 <script>
 var app = new Vue({
 	el : '#admin_first',
+	components: {
+      apexchart: VueApexCharts,
+    },
 	data : {
 		list :[],
 		orderList:[],
@@ -422,7 +437,90 @@ var app = new Vue({
 		reviewCnt2 : 0,
 		reviewCnt3 : 0,
 		StatisticsInfo : {},
-
+		//상품차트
+		productChart : [],
+		series: [{data: []}],
+      	chartOptions: {
+        chart: {
+          type: 'bar',
+          height: 270
+         },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            horizontal: true,
+            
+          }
+        },
+        dataLabels: {
+       	  enabled: true,
+             offsetY: 0,
+             style: {
+               fontSize: '15px',
+               colors: ["#304758"]
+             }
+           },
+        xaxis: {
+          categories: [],
+        }},
+        //만족도차트
+        csatChart : [],
+        series2: [{
+            name: '1',
+            data: [44]
+          }, {
+            name: '2',
+            data: [53]
+          }, {
+            name: '3',
+            data: [12]
+          }, {
+            name: '4',
+            data: [9]
+          }, {
+            name: '5',
+            data: [25]
+          }],
+         chartOptions2: {
+            chart: {
+              type: 'bar',
+              height: 350,
+              stacked: true,
+              
+            },
+            plotOptions: {
+              bar: {
+                horizontal: true,
+              },
+            },
+            stroke: {
+              width: 1,
+              colors: ['#fff']
+            },
+           
+            xaxis: {
+              categories: ['리뷰평점비율'],
+            },
+            tooltip: {
+              y: {
+                formatter: function (val) {
+                  return val + "K"
+                }
+              }
+            },
+            fill: {
+              opacity: 1
+            
+            },
+            legend: {
+              position: 'bottom',
+              horizontalAlign: 'left',
+              offsetX: 90
+            }
+          },
+          
+       
+		        
 	
 		
 		
@@ -516,6 +614,57 @@ var app = new Vue({
                 } 
 			})
 		},
+		//상품차트
+		fnProductChart(){
+			var self = this;
+			var nparmap = {};
+			$.ajax({
+                url : "/admin/productChart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.productChart = data.list;
+                	var productData = self.productChart.map(item => ({
+                        CategoryGroup: item.CategoryGroup,
+                        TotalCount: item.TotalCount
+                    }));
+                	
+               		 self.chartOptions = {
+                       		xaxis : {
+                      			categories : productData.map(item => item.CategoryGroup)
+                       		}
+                   	 };
+               		 
+               		self.series = [{
+                    	data : productData.map(item => item.TotalCount)
+                    }]
+               	
+                	
+                } 
+			})
+		},
+		//만족도 차트
+		fnCsatChart(){
+			var self = this;
+			var nparmap = {};
+			$.ajax({
+                url : "/admin/csatChart.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.csatChart = data.list;
+                	var csatData = self.csatChart.map(item => ({
+                        csatGroup: item.csatGroup,
+                        csatCount: item.csatCount
+                    }));
+                	
+                } 
+			})
+		},
+		
+		
 		numberWithCommas(number) {
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
@@ -539,6 +688,8 @@ var app = new Vue({
 		self.fnInquiry();
 		self.fnReview();
 		self.fnGetStatisticsProduct();
+		self.fnProductChart();
+		self.fnCsatChart();
 
 	
 

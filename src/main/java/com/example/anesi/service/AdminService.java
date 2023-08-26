@@ -74,5 +74,9 @@ public interface AdminService {
 	List<Inquiry> adminMainInquiry(HashMap<String, Object> map);
 	//관리자페이지메인의 리뷰
 	List<Review> adminMainReview(HashMap<String, Object> map);
+	//관리자메인 상품차트
+	List<Statistics> mainChart (HashMap<String, Object> map);
+	//관리자메인 만족도차트
+	List<Statistics> csatChart (HashMap<String, Object> map);
 }
 

@@ -50,9 +50,9 @@ public class TestController {
 	public String popup(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		return "/popup";
 	}
-	@RequestMapping("alarm.do") 
-	public String alarm(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		return "/alarm";
+	@RequestMapping("chartTest.do") 
+	public String chartTest(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/chartTest";
 	}
 	
 	

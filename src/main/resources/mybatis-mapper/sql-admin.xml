@@ -479,4 +479,36 @@
 		</choose>
 	 	LIMIT 6
 	</select>
+	<!-- 차트리스트 -->
+	
+	<select id="mainChart" resultType="com.example.anesi.model.Statistics">
+		SELECT 
+		    CASE 
+		        WHEN CATEGORY_NO LIKE '1%' THEN '가구'
+		        WHEN CATEGORY_NO LIKE '2%' THEN '조명'
+	     	 	WHEN CATEGORY_NO LIKE '3%' THEN '패브릭'
+	     	    WHEN CATEGORY_NO LIKE '4%' THEN '가전'
+	     	    WHEN CATEGORY_NO LIKE '5%' THEN '데코/식물'
+	     	    WHEN CATEGORY_NO LIKE '6%' THEN '반려동물'
+		        ELSE 'C7'
+		    END AS CategoryGroup,
+		    COUNT(*) AS TotalCount
+		FROM t3_tbl_product
+		GROUP BY CategoryGroup;
+	</select>
+	<select id="mainChartCsat" resultType="com.example.anesi.model.Statistics">
+		SELECT 
+		    CASE 
+		        WHEN CSAT LIKE 1 THEN '1'
+		        WHEN CSAT LIKE 2 THEN '2'
+		        WHEN CSAT LIKE 3 THEN '3'
+		        WHEN CSAT LIKE 4 THEN '4'
+		        WHEN CSAT LIKE 5 THEN '5'
+		  
+		    END AS csatGroup,
+		    COUNT(*) AS csatCount
+		FROM t3_tbl_user_review
+		GROUP BY csatGroup
+		ORDER BY csatGroup
+	</select>
 </mapper>
