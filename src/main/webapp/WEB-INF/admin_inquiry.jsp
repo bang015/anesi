@@ -51,7 +51,8 @@
 								<th>처리상태</th>
 								<th>문의유형</th>
 								<th>상품번호</th>
-								<th>상품정보</th>
+								<th>상품이름</th>
+								<th>옵션이름</th>
 								<th>문의내용</th>
 								<th>질문자</th>
 								<th>처리일</th>
@@ -63,6 +64,7 @@
 								<td>{{item.inquiryCategory}}</td>
 								<td>{{item.productNo}}</td>
 								<td @click="fnMoveProduct(item.productNo)" class="productName1">{{item.productName}}</td>
+								<td>{{item.optionName}}</td>
 								<td>{{item.content}}</td>
 								<td>{{item.userEmail}}</td>
 								<td v-if="item.inquiryYn == '답변'">{{item.udatetime}}</td>
@@ -133,6 +135,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.inquiryList = data.list;
+                	console.log(self.inquiryList);
                 	self.inquiryList.forEach(item => {
                 		if(item.reply == undefined ){
                 			self.inquiryCnt++;

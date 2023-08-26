@@ -204,6 +204,12 @@
 .order-product-wrap{
 	
 }
+.inpMargin{
+	margin-left: 0px !important;
+}
+.orInputBox3{
+	width: 70px;
+}
 </style>
 </head>
 <!-- 비회원 주문 조회페이지 -->
@@ -223,18 +229,18 @@
 						<label>
 						    <span>배송지명</span>
 						    <div class="orInputBox">
-						        <input v-model="addrKind">
+						        <input v-model="addrKind" :readonly="!(deliverySit <= 2)" :class="{'inpRead' : !(deliverySit <= 2)}">
 						    </div>
 						</label>
 						<label>
 						    <span>받는 사람</span>
 						    <div class="orInputBox">
-						        <input v-model="receiptName">
+						        <input v-model="receiptName" :readonly="!(deliverySit <= 2)" :class="{'inpRead' : !(deliverySit <= 2)}">
 						    </div>
 						</label>
 						<label>
 						    <span>휴대전화</span>
-						    <div class="orSelectBox">
+						    <div class="orSelectBox" v-if="deliverySit <= 2">
 						        <select v-model="phone1">
 						            <option value="010">010</option>
 						            <option value="011">011</option>
@@ -244,17 +250,20 @@
 						            <option value="019">019</option>
 						        </select>
 						    </div>
+						    <div class="orInputBox orInputBox3" v-else>
+						        	<input readonly="readonly" class="inpRead" v-model="phone1">
+				        		</div>
 						    <div class="orInputBox1">
-						        <input v-model="phone2" placeholder="입력해주세요">
+						        <input v-model="phone2" placeholder="입력해주세요" :readonly="!(deliverySit <= 2)" :class="{'inpRead' : !(deliverySit <= 2)}">
 						    </div>
 						</label>
 					</div>
 					<div class="user-flex2">
 						<label class="add-label">
 							<span>주소</span>
-							<button class="addrButton" @click="fnSearchAddr">주소찾기</button>
+							<button class="addrButton" @click="fnSearchAddr" v-if="deliverySit <= 2">주소찾기</button>
 							<div class="orInputBox">
-						        <input v-model="zipCode" readonly class="inpRead">
+						        <input v-model="zipCode" readonly class="inpRead" :class="{'inpMargin' : !(deliverySit <= 2)}">
 						    </div> 
 						</label>
 						<label>
@@ -264,7 +273,7 @@
 						</label>
 						<label>
 							<div class="orInputBox2 addr2">
-						        <input v-model="addr2" placeholder="상세주소 입력">
+						        <input v-model="addr2" placeholder="상세주소 입력" :readonly="!(deliverySit <= 2)" :class="{'inpRead' : !(deliverySit <= 2)}">
 						    </div>
 						</label>
 					</div>

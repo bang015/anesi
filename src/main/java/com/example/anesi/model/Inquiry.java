@@ -17,7 +17,11 @@ public class Inquiry {
 	private String productName;
 	private int enquiryNo;
 	private int inqCnt;
+	private String optionName;
 
+	public String getOptionName() {
+		return optionName;
+	}
 	public int getEnquiryNo() {
 		return enquiryNo;
 	}

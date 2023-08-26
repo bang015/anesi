@@ -361,8 +361,8 @@
 													문의 유형
 												</div>
 												<div class="inquiry-category-box">
-													<div class="inquiry-category-box1 active category-box1" @click="changeCategoryStyle('상품')">상품</div>
-													<div class="inquiry-category-box1 category-box2" @click="changeCategoryStyle('배송')">배송</div>
+													<div class="inquiry-category-box1 active category-box11" @click="changeCategoryStyle('상품')">상품</div>
+													<div class="inquiry-category-box1 category-box21" @click="changeCategoryStyle('배송')">배송</div>
 													<div class="inquiry-category-box1 category-box3" @click="changeCategoryStyle('반품')">반품</div>
 													<div class="inquiry-category-box1 category-box4" @click="changeCategoryStyle('교환')">교환</div>
 													<div class="inquiry-category-box1 category-box5" @click="changeCategoryStyle('환불')">환불</div>
@@ -380,7 +380,7 @@
 															{{item.optionName}}
 														</option>
 													</select>
-													<div class="option-not-check">
+													<div class="option-not-check" v-if="inquiryOption == 0">
 														<label class="styled-checkbox">																												
 															<input class="inquiry-checkbox" type="checkbox" id="optionYnCheckbox" @click="optionCheckYn">														    														
 															<span class="inquiry-span">선택안함</span>
