@@ -160,7 +160,7 @@
 							<div class="product-a"><a href="javascript:;" @click="scrollUpFromSection('product', 160)">상품정보</a></div>
 							<div class="review-a"><a href="javascript:;" @click="scrollUpFromSection('review', 240)">리뷰  <span class="review-span" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span></a></div>
 							<div class="inquiry-a"><a href="javascript:;" @click="scrollUpFromSection('inquiry', 240)">문의 <span class="review-span" v-if="inquiryListCnt > 0">{{inquiryListCnt}}</span></a></div>
-							<div class="product-a"><a href="javascript:;" @click="scrollUpFromSection('Etc', 0 )">배송/환불</a></div>
+							<div class="product-a"><a href="javascript:;" @click="scrollUpFromSection('Etc', 250 )">배송/환불</a></div>
 						</div>
 					</div>
 					
