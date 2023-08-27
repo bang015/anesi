@@ -343,7 +343,7 @@ th{
 			    :prev-text="'〈'"
 			    :next-text="'〉'"
 			    :container-class="'pagination'"
-			    :page-class="'page-item'" v-if="list.length > 4">
+			    :page-class="'page-item'" v-if="cnt > 4">
 			</paginate>
 			<hr class="hrr2">
 			
@@ -367,7 +367,7 @@ th{
 					<td>{{item.usedPCdatetime}}</td>
 				</tr>
 			</table>
-			<div v-if="list.length < 1" class="text2">등록된 게시글이 없습니다.</div>
+			<div v-if="usedList.length < 1" class="text2">등록된 게시글이 없습니다.</div>
 			</div>
 		</div>	
 	</div>
@@ -393,8 +393,8 @@ var app = new Vue({
 	methods : {
 		fnGetList : function(){
 			var self = this;
-            var startNum = ((self.selectPage-1) * 8);
-    		var lastNum = 8;
+            var startNum = ((self.selectPage-1) * 4);
+    		var lastNum = 4;
 			var param = {startNum : startNum, lastNum : lastNum, uNo : self.sessionNo};
 			$.ajax({
 				url : "/community/myBoardList.dox",
@@ -404,14 +404,14 @@ var app = new Vue({
                 success : function(data) { 
                 	self.list = data.list;
                 	self.cnt = data.cnt;
-	                self.pageCount = Math.ceil(self.cnt / 8);
+	                self.pageCount = Math.ceil(self.cnt / 4);
                 }
             }); 
 		},
 		fnPageSearch : function(pageNum){
 			var self = this;
-			var startNum = ((pageNum-1) * 8);
-			var lastNum = 8;
+			var startNum = ((pageNum-1) * 4);
+			var lastNum = 4;
 			var nparmap = {startNum : startNum, lastNum : lastNum, uNo : self.sessionNo};
 			$.ajax({
 				url : "/community/myBoardList.dox",
@@ -421,7 +421,7 @@ var app = new Vue({
 				success : function(data) {
 					self.list = data.list;
                 	self.searchCnt = data.cnt;
-	                self.pageCount = Math.ceil(self.searchCnt / 8);
+	                self.pageCount = Math.ceil(self.searchCnt / 4);
 				}
 			});
 		},

@@ -14,38 +14,12 @@
 </head>
 <style>
 #app{
-	margin-top : 180px;
+	margin-top : 185px;
 }
 #container{
 	margin : 10px auto;
-	width: 1200px;
-	padding : 10px 0px;
-}
-table,td{
-	border-bottom: 1px solid #cdcdcd;
-	border-collapse: collapse;
-}
-table{
 	width: 1000px;
-	text-align:center;
-    margin: 30px auto;
-}
-th,td{
-	padding : 12px;
-	font-size: 16px;
-}
-td{
-	text-align:center;
-	font-size:15px;
-}
-th{
-	border-bottom: 2px solid #c9b4d9;
-}
-.tr2:hover{
-	background : #fbfbfb;
-}
-li{
-	list-style : none;
+	padding : 10px 0px;
 }
 .used_menu{
 	display : flex;
@@ -53,24 +27,28 @@ li{
 	border-bottom: 1px solid gainsboro;
 }
 .used_menu_li {
-    font-size: 17px;
-    padding: 15px 35px;
+	font-size: 17px;
     border-right: 1px solid #ededed;
     border-bottom: 4px solid white;
     transition: background-color 0.3s;
+    width: 145px;
+    text-align: center;
+    padding: 15px 0px 0 0;
 }
 .used_menu_li:hover {
     background-color: #f7f7f7; 
 }
 .used_menu_li_ch{
     font-size: 17px;
-    padding: 15px 35px;
+    width: 145px;
+	text-align: center;
+    padding: 15px 0px 15px 0;
     border-right: 1px solid #ededed;
     border-bottom: 4px solid #A782C3;
 }
 h1{
 	text-align: center;
-	padding: 20px 0px 30px 0px;
+	padding: 20px 0px 0px 0px;
 }
 .btnDIV{
 	text-align:center;
@@ -120,6 +98,43 @@ h1{
 .pagination li.active a{
 	color : #A782C3;
 }
+.purchaseImg{
+	border-radius: 5px;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+.part{
+	display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    text-align: center;
+    position: relative;
+    margin-top: 12px;
+}
+.title{
+	margin: 10px 0;
+    font-size: 17px;
+}
+.part-in{
+	width : 300px;
+}
+.text1DIV{
+	margin: 0 0 63px 0;
+    text-align: center;
+    font-size: 16px;
+}
+.bottom{
+	margin: 60px 0 10px 0;
+}
+.bottom-in{
+	margin : 40px 0;
+}
+.text1{
+	font-size: 14px;
+    font-weight: 100;
+    color: #8f8f8f;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -127,15 +142,30 @@ h1{
 <div>
 	<div class="used_menu">
 		<div class="used_menu_li" style="border-left: 1px solid #ededed;"><a href="">중고 판매</a></div>
-		<div class="used_menu_li"><a href="purchase.do" >중고 매입</a></div>
-		<div class="used_menu_li_ch"><a href="" style="color:#A782C3;">중고 매입사례</a></div>
+		<div class="used_menu_li"><a href="purchase.do">중고 매입</a></div>
+		<div class="used_menu_li_ch"><a href="purchaseEx.do" style="color:#A782C3;">중고 매입 사례</a></div>
 	</div>
 </div>
 	<div id="container">
 		<div>
-		<div><h1>중고 매입 사례</h1></div>
-			<div></div>
-			<div><button>등록</button></div>
+			<div><h1>중고 매입 사례</h1></div>
+			<div class="text1DIV"><span class="text1">🏡 상담부터 수거까지, 편안하고 편리한 아네시의 중고 장터 🚛</span></div>
+			<div class="part">
+				<div v-for="(item, index) in list" class="part-in">
+					<div><a @click="fnView(item.usedPNo)"><img class="purchaseImg" :src="item.pImgPath+'/'+item.pImgName"></a></div>
+					<div class="title"><a @click="fnView(item.usedPNo)">{{item.usedPName}}</a></div>
+				</div>
+			</div>
+			<div v-if="sessionStatus=='A'" class="bottom">
+			<hr class="hrr">
+				<div class="bottom-in"><h2>판매 미등록 상품 <span class="text1">관리자 전용, 매입 확인된 상품 등록바랍니다.</span></h2></div>
+				<div class="part">
+					<div v-for="(item, index) in nList" class="part-in">
+							<div><a @click="fnAdd(item.usedPNo)"><img class="purchaseImg" :src="item.pImgPath+'/'+item.pImgName"></a></div>
+						<div class="title"><a @click="fnAdd(item.usedPNo)">{{item.usedPName}}</a></div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<!-- <paginate
 			    :page-count="pageCount"
@@ -147,7 +177,6 @@ h1{
 			    :container-class="'pagination'"
 			    :page-class="'page-item'" v-if="list.length > 0">
 			</paginate> -->
-		<div class="btnDIV"><button class="btn1" @click="fnInquire">문의하기</button></div>
 	</div>
 </div>
 </body>
@@ -159,8 +188,10 @@ var app = new Vue({
 	el : '#app',
 	data : {
 		list : [],
+		nList : [],
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
+		sessionStatus : "${sessionStatus}",
 		selectPage: 1,
 		pageCount: 1,
 		cnt : 0,
@@ -170,59 +201,41 @@ var app = new Vue({
 	methods : {
 		fnGetList : function(){
 			var self = this;
-			/* var startNum = ((self.selectPage-1) * 10);
-    		var lastNum = 10; */
-			var param = {startNum : startNum, lastNum : lastNum};
+			var param = {};
 			$.ajax({
-				url : "/used/purchaseList.dox",
+				url : "/used/usedSellYList.dox",
                 dataType:"json",	
                 type : "POST",
                 data : param,
                 success : function(data) { 
                 	self.list = data.list;
-                	/* self.cnt = data.cnt;
-                	self.pageCount = Math.ceil(self.cnt / 10); */
                 }
             }); 
 		},
-		fnPageSearch : function(pageNum){
+		fnGetNList : function(){
 			var self = this;
-			var startNum = ((pageNum-1) * 10);
-			var lastNum = 10;
-			var nparmap = {startNum : startNum, lastNum : lastNum};
+			var param = {};
 			$.ajax({
-				url : "/used/purchaseList.dox",
-				dataType : "json",
-				type : "POST",
-				data : nparmap,
-				success : function(data) {
-					self.list = data.list;
-                	self.searchCnt = data.cnt;
-	                self.pageCount = Math.ceil(self.searchCnt / 10);
-				}
-			});
+				url : "/used/usedSellNList.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.nList = data.list;
+                }
+            }); 
 		},
-		formatDate: function (dateString) {
-            var date = new Date(dateString);
-            var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-            var formattedDate = date.toLocaleDateString(undefined, options);
-
-            // 마지막 점 제거
-            formattedDate = formattedDate.replace(/\.$/, '');
-
-            return formattedDate;
-        },
-        fnInquire : function(){
-			location.href="/used/inquire.do";
-        },
-        fnUsedView : function(usedPNo){
-        	var self = this;
-			$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
-        }
+		fnView(usedPNo){
+			$.pageChange("/used/purchaseExView.do", {usedPNo : usedPNo});
+		},
+		fnAdd(usedPNo){
+			$.pageChange("/used/purchaseExAdd.do", {usedPNo : usedPNo});
+		}
 	}, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
+		self.fnGetNList();
 	}// created
 });
 </script>

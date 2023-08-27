@@ -143,5 +143,29 @@ public class UsedServiceImpl implements UsedService{
 		return usedMapper.purchaseView(map);
 	}
 
+	@Override
+	public List<UsedPurchase> usedSellNList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.usedSellNList(map);
+	}
+
+	@Override
+	public List<UsedPurchase> usedSellYList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.usedSellYList(map);
+	}
+
+	@Override
+	public UsedPurchase usedSellAdd(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.usedSellAdd(map);
+	}
+
+	@Override
+	public int addPurchaseEx(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return usedMapper.addPurchaseEx(map);
+	}
+
 	
 }

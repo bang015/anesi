@@ -14,7 +14,7 @@
 </head>
 <style>
 #app{
-	margin-top : 180px;
+	margin-top : 185px;
 }
 #container{
 	margin : 10px auto;
@@ -53,18 +53,22 @@ li{
 	border-bottom: 1px solid gainsboro;
 }
 .used_menu_li {
-    font-size: 17px;
-    padding: 15px 35px;
+	font-size: 17px;
     border-right: 1px solid #ededed;
     border-bottom: 4px solid white;
     transition: background-color 0.3s;
+    width: 145px;
+    text-align: center;
+    padding: 15px 0px 0 0;
 }
 .used_menu_li:hover {
     background-color: #f7f7f7; 
 }
 .used_menu_li_ch{
     font-size: 17px;
-    padding: 15px 35px;
+    width: 145px;
+	text-align: center;
+    padding: 15px 0px 15px 0;
     border-right: 1px solid #ededed;
     border-bottom: 4px solid #A782C3;
 }
@@ -127,8 +131,8 @@ h1{
 <div>
 	<div class="used_menu">
 		<div class="used_menu_li" style="border-left: 1px solid #ededed;"><a href="">중고 판매</a></div>
-		<div class="used_menu_li_ch"><a href="" style="color:#A782C3;">중고 매입</a></div>
-		<div class="used_menu_li"><a href="">중고 매입사례</a></div>
+		<div class="used_menu_li_ch"><a href="purchase.do" style="color:#A782C3;">중고 매입</a></div>
+		<div class="used_menu_li"><a href="purchaseEx.do">중고 매입 사례</a></div>
 	</div>
 </div>
 	<div id="container">

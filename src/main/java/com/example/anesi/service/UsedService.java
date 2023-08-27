@@ -44,4 +44,12 @@ public interface UsedService {
 	HashMap<String, Object> purchaseYList2(HashMap<String, Object> map);
 	// 판매 물품 상세 정보
 	List<UsedPurchase> purchaseView(HashMap<String, Object> map);
+	// 판매등록리스트
+	List<UsedPurchase> usedSellYList(HashMap<String, Object> map);
+	// 판매미등록리스트
+	List<UsedPurchase> usedSellNList(HashMap<String, Object> map);
+	// 중고매입사례등록
+	UsedPurchase usedSellAdd(HashMap<String, Object> map);
+	// 매입사례등록
+	int addPurchaseEx(HashMap<String, Object> map);
 }

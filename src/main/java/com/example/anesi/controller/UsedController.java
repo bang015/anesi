@@ -65,12 +65,28 @@ public class UsedController {
 	request.setAttribute("map", map);
 	return "/used_inquireView";
 	}
-	//중고 매입 문의 뷰
+	
+	//중고 판매 뷰
 	@RequestMapping("/used/view.do") 
 	public String usedView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 	request.setAttribute("map", map);
 	return "/used_productView";
 	}
+	
+	//중고 매입 사례 뷰
+	@RequestMapping("/used/purchaseExView.do") 
+	public String purchaseExView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+	request.setAttribute("map", map);
+	return "/used_purchaseEx_view";
+	}
+	
+	//중고 매입 사례 등록
+	@RequestMapping("/used/purchaseExAdd.do") 
+	public String purchaseExAdd(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+	request.setAttribute("map", map);
+	return "/used_purchaseEx_add";
+	}
+	
 	//문의 리스트
 	@RequestMapping(value = "/used/purchaseList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -111,6 +127,25 @@ public class UsedController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		UsedPurchase list = usedService.usedInquireView1(map);
 		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 중고 매입 사례 등록 인포
+	@RequestMapping(value = "/used/usedSellAdd.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String usedSellAdd(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		UsedPurchase list = usedService.usedSellAdd(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 중고 매입 사례 등록
+	@RequestMapping(value = "/used/addPurchaseEx.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String addPurchaseEx(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		usedService.addPurchaseEx(map);
 		return new Gson().toJson(resultMap);
 	}
 	
@@ -203,6 +238,27 @@ public class UsedController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap); 
 	}
+	
+	// 판매 미등록 리스트
+	@RequestMapping(value = "/used/usedSellYList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody 
+	public String usedSellYList(Model model, @RequestParam	HashMap<String, Object> map) throws Exception { 
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<UsedPurchase> list = usedService.usedSellYList(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap); 
+	}
+	
+	// 판매 미등록 리스트
+	@RequestMapping(value = "/used/usedSellNList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody 
+	public String usedSellNList(Model model, @RequestParam	HashMap<String, Object> map) throws Exception { 
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<UsedPurchase> list = usedService.usedSellNList(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap); 
+	}
+	
 	//판매 물품 리스트
 	@RequestMapping(value = "/used/purchaseList2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -215,6 +271,7 @@ public class UsedController {
 		resultMap = usedService.purchaseYList2(map);
 		return new Gson().toJson(resultMap);
 	}
+	
 	// 판매 물품 상세 정보
 	@RequestMapping(value = "/usedProduct.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody 
@@ -224,6 +281,7 @@ public class UsedController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap); 
 	}
+	
 	@RequestMapping("/usedPurchaseImgUpload.dox")
     public String thumbfileUpload(@RequestParam("file1") MultipartFile multi, @RequestParam("usedPNo") int usedPNo, HttpServletRequest request,HttpServletResponse response, Model model)
     {

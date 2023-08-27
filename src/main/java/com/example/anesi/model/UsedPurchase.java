@@ -25,6 +25,8 @@ public class UsedPurchase {
 	private String ADeleteYn;
 	private String usedACDatetime;
 	private String usedACUatetime;
+	private int uSellPrice;
+	private String sellContent;
 		
 	public String getUsedANo() {
 		return usedANo;
@@ -169,6 +171,18 @@ public class UsedPurchase {
 	}
 	public void setaContent(String aContent) {
 		this.aContent = aContent;
+	}
+	public int getuSellPrice() {
+		return uSellPrice;
+	}
+	public void setuSellPrice(int uSellPrice) {
+		this.uSellPrice = uSellPrice;
+	}
+	public String getSellContent() {
+		return sellContent;
+	}
+	public void setSellContent(String sellContent) {
+		this.sellContent = sellContent;
 	}
 	
 	

@@ -176,14 +176,14 @@ h1{
 				 	</select>
 			 	</div>
 			</div>
-			<div class="bottom">상세내용* <span class="text1">색상, 재질, 사이즈 등 상세한 제품 설명 기재 부탁드립니다.</span></div>
+			<div class="bottom">상세내용 <span class="text1">색상, 재질, 사이즈 등 상세한 제품 설명 기재 부탁드립니다.</span></div>
 			<div>
 				<vue-editor v-model="list.content"></vue-editor>
 			</div>
 			
 			<div>
-			<div class="bottom">사진 첨부*</div>
-			<div class="text2">앞, 뒤, 양옆 등 사진을 첨부해주세요. (최소 4장)</div>
+			<div class="bottom">사진 첨부</div>
+			<div class="text2">앞, 뒤, 양옆 등 사진을 첨부해주세요.</div>
 			<div v-for="index in 5" :key="index" class="filebox">
 			    <label :for="'file' + index">파일첨부</label>
 			    <input type="file" :id="'file' + index" :name="'file' + index" @change="fnOnFileChange($event, index)">
@@ -364,10 +364,6 @@ var app = new Vue({
 		        });
 				return;
 			}
-        	if(self.photoList.length < 4){
-        		alert("첨부 사진을 4장 이상 올려주세요.");
-        		return;
-        	}
 			var param = self.list;
 			param.userNo = self.sessionNo;
 			param.userName = self.info.userName;

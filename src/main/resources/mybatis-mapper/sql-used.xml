@@ -36,7 +36,7 @@
 		VALUES(#{usedPNo}, #{pImgOrgName}, #{pImgName}, #{pImgPath}, #{pImgSize})
 	</insert>
 	
-	<!-- 중고 문의 게시글 뷰 -->
+	<!-- 중고 문의 게시글 뷰 사진 포함 -->
 	<select id="usedInquireView" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
 		SELECT * 
 		FROM t3_tbl_used_purchase P
@@ -129,7 +129,34 @@
 		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
 		WHERE PURCHASE = 'Y'
 		GROUP BY P.USED_P_NO
+		ORDER BY USED_P_CDATETIME DESC
 	</select>
+	
+	<!-- 매입 물품 판매 등록 리스트 -->
+	<select id="usedSellYList" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *, P.USED_P_NO
+		FROM t3_tbl_used_purchase P
+		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
+		WHERE PURCHASE = 'Y' AND SELL_YN = 'Y'
+		GROUP BY P.USED_P_NO
+		ORDER BY USED_P_CDATETIME DESC
+	</select>
+	
+	<!-- 매입 물품 판매 미등록 리스트 -->
+	<select id="usedSellNList" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *, P.USED_P_NO
+		FROM t3_tbl_used_purchase P
+		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
+		WHERE PURCHASE = 'Y' AND SELL_YN = 'N'
+		GROUP BY P.USED_P_NO
+	</select>
+	
+	<select id="usedSellAdd" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *
+		FROM t3_tbl_used_purchase P
+		WHERE PURCHASE = 'Y' AND SELL_YN = 'N' AND USED_P_NO = #{usedPNo}
+	</select>
+	
 	<!-- 판매 물품 리스트 -->
 	<select id="purchaseYList2" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
 		SELECT *
@@ -140,6 +167,7 @@
 		ORDER BY p.USED_P_CDATETIME DESC 
 		LIMIT #{startNum}, #{lastNum}
 	</select>
+	
 	<!-- 판매 물품 리스트 페이지 -->
 	<select id="purchaseYList2Cnt" resultType="int">
 		SELECT COUNT(*) 
@@ -154,4 +182,19 @@
 		INNER JOIN t3_tbl_used_purchase_image i ON p.USED_P_NO = i.USED_P_NO
 		WHERE p.USED_P_NO = #{usedPNo}
 	</select>
+	
+	<!-- 중고 매입 사례 등록 -->
+	<update id="addPurchaseEx" parameterType="hashmap">
+		UPDATE t3_tbl_used_purchase
+		SET
+			USED_P_NAME = #{usedPName},
+			MANUFACTURER = #{manufacturer},
+			USEDTIME = #{usedtime},
+			GRADE = #{grade},
+			USED_P_SELL_PRICE = #{usedPSellPrice},
+			U_SELL_PRICE = #{uSellPrice},
+			SELL_CONTENT = #{sellContent},
+			SELL_YN = 'Y'
+		WHERE USED_P_NO = #{usedPNo}
+	</update>
 </mapper>

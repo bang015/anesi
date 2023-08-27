@@ -96,6 +96,10 @@ li{
 }
 .gogo{
 	color : #757575 !important; 
+	font-size : 18px;
+}
+.gogo:hover{
+	color : #A782C3 !important; 
 }
 .pa{
 clear: both;
@@ -217,7 +221,7 @@ clear: both;
 				</div>
 				
 			</div>
-			<div class="text2"><a class="gogo" href="">매입 사례 보러 가기 🏃‍♂️💨💨💨</a></div>
+			<div class="text2"><a class="gogo" href="purchaseEx.do">매입 사례 보러 가기 🏃‍♂️💨💨💨</a></div>
 			</div>
 			<div class="part">
 			<div>
