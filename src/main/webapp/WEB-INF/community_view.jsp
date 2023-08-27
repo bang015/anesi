@@ -277,7 +277,7 @@ img{
 			<div style="font-size:19px;">댓글 <span>{{cCnt}}</span></div>
 			<div id="comment-head">
 				<div v-if="sessionNo!=''">
-					<img class="profile2" :src="profileImg.uImgPath+'/'+profileImg.uImgName" v-if="profileImg.uImgPath != undefined"><input class="comment-input" type="text" v-model="content">
+					<img class="profile2" :src="profileImg.uImgPath+'/'+profileImg.uImgName" v-if="profileImg.uImgPath != undefined"><input class="comment-input" type="text" v-model="content" @keyup.enter="fnComInsert">
 					<button class="btn1" @click="fnComInsert">입력</button>
 				</div>
 				<div v-else class="guide">로그인 후 댓글 입력 가능합니다.</div>

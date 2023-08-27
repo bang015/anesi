@@ -150,9 +150,12 @@ public class UsedServiceImpl implements UsedService{
 	}
 
 	@Override
-	public List<UsedPurchase> usedSellYList(HashMap<String, Object> map) {
+	public HashMap<String, Object> usedSellYList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return usedMapper.usedSellYList(map);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", usedMapper.usedSellYList(map));
+		resultMap.put("cnt", usedMapper.usedSellYCnt(map));
+		return resultMap;
 	}
 
 	@Override

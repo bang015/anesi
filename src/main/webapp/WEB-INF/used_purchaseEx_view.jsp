@@ -249,7 +249,8 @@ var app = new Vue({
 		sessionNo : "${sessionNo}",
 		sessionStatus : "${sessionStatus}",
 		usedPNo : "${map.usedPNo}",
-		list : []
+		list : [],
+		imgList : []
 	},// data
 	methods : {
 		fnGetInfo : function(){
@@ -285,6 +286,7 @@ var app = new Vue({
 	created : function() {
 		var self = this;
 		self.fnGetInfo();
+		self.fnGetImgList();
 	}// created
 });
 </script>

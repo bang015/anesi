@@ -135,6 +135,12 @@ h1{
     font-weight: 100;
     color: #8f8f8f;
 }
+.text2{
+	font-size: 15px;
+    font-weight: 100;
+    color: #9b9b9b;
+    margin-left: 3px;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -150,12 +156,25 @@ h1{
 		<div>
 			<div><h1>중고 매입 사례</h1></div>
 			<div class="text1DIV"><span class="text1">🏡 상담부터 수거까지, 편안하고 편리한 아네시의 중고 장터 🚛</span></div>
+			<div><h3>등록된 사례 <span class="text2">{{cnt}}</span></h3></div>
 			<div class="part">
 				<div v-for="(item, index) in list" class="part-in">
 					<div><a @click="fnView(item.usedPNo)"><img class="purchaseImg" :src="item.pImgPath+'/'+item.pImgName"></a></div>
 					<div class="title"><a @click="fnView(item.usedPNo)">{{item.usedPName}}</a></div>
 				</div>
 			</div>
+			
+			<paginate
+			    :page-count="pageCount"
+			    :page-range="3"
+			    :margin-pages="1"
+			    :click-handler="fnPageSearch"
+			    :prev-text="'〈'"
+			    :next-text="'〉'"
+			    :container-class="'pagination'"
+			    :page-class="'page-item'" v-if="list.length > 0">
+			</paginate>
+			
 			<div v-if="sessionStatus=='A'" class="bottom">
 			<hr class="hrr">
 				<div class="bottom-in"><h2>판매 미등록 상품 <span class="text1">관리자 전용, 매입 확인된 상품 등록바랍니다.</span></h2></div>
@@ -167,16 +186,6 @@ h1{
 				</div>
 			</div>
 		</div>
-		<!-- <paginate
-			    :page-count="pageCount"
-			    :page-range="3"
-			    :margin-pages="1"
-			    :click-handler="fnPageSearch"
-			    :prev-text="'〈'"
-			    :next-text="'〉'"
-			    :container-class="'pagination'"
-			    :page-class="'page-item'" v-if="list.length > 0">
-			</paginate> -->
 	</div>
 </div>
 </body>
@@ -201,7 +210,9 @@ var app = new Vue({
 	methods : {
 		fnGetList : function(){
 			var self = this;
-			var param = {};
+			var startNum = ((self.selectPage-1) * 9);
+    		var lastNum = 9;
+			var param = {startNum : startNum, lastNum : lastNum};
 			$.ajax({
 				url : "/used/usedSellYList.dox",
                 dataType:"json",	
@@ -209,8 +220,27 @@ var app = new Vue({
                 data : param,
                 success : function(data) { 
                 	self.list = data.list;
+                	self.cnt = data.cnt;
+					self.pageCount = Math.ceil(self.cnt / 9);
                 }
             }); 
+		},
+		fnPageSearch : function(pageNum){
+			var self = this;
+			var startNum = ((pageNum-1) * 9);
+			var lastNum = 9;
+			var nparmap = {startNum : startNum, lastNum : lastNum};
+			$.ajax({
+				url : "/used/usedSellYList.dox",
+				dataType : "json",
+				type : "POST",
+				data : nparmap,
+				success : function(data) {
+					self.list = data.list;
+                	self.searchCnt = data.cnt;
+	                self.pageCount = Math.ceil(self.searchCnt / 9);
+				}
+			});
 		},
 		fnGetNList : function(){
 			var self = this;

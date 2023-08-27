@@ -140,6 +140,14 @@
 		WHERE PURCHASE = 'Y' AND SELL_YN = 'Y'
 		GROUP BY P.USED_P_NO
 		ORDER BY USED_P_CDATETIME DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	
+	<!-- 매입 물품 판매 등록 리스트 cnt -->
+	<select id="usedSellYCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM t3_tbl_used_purchase
+		WHERE PURCHASE = 'Y' AND SELL_YN = 'Y'
 	</select>
 	
 	<!-- 매입 물품 판매 미등록 리스트 -->

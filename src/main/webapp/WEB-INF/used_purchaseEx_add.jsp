@@ -250,7 +250,7 @@ var app = new Vue({
 		        });
 				return;
 			}
-        	if(self.list.usedtime == ""){
+        	if(self.list.usedtime == "" && self.list.usedtime != '0'){
 				alert("사용기간을 입력해주세요.");
 				self.$nextTick(function() {
 		            self.$refs.usedtimeInput.focus();
@@ -287,7 +287,7 @@ var app = new Vue({
                 type : "POST",
                 data : param,
                 success : function(data) { 
-                	alert("등록이 완료되었습니다.");
+                	alert("매입 사례 / 판매 등록이 완료되었습니다.");
                 }
             });
         },
