@@ -168,6 +168,29 @@ clear: both;
 	.product-price{
 		font-size: 17px;
 	}
+	.defined{
+		text-align: center;
+		margin-top: 80px;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.selectBar{
+		height: 30px;
+		margin-left: 35px;
+		border-radius: 5px;
+		border: 1px solid #c5c5c5;
+		padding-left: 5px;
+	}
+	.select1{
+		position: relative;
+	}
+	.select-img{
+		widows: 17px;
+		height: 17px;
+		position: absolute;
+		left: 188px;
+		top: 8px;
+	}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -175,7 +198,11 @@ clear: both;
 	<div id="container">
 		<div class="part">
 			<div class="title"><h1>중고 판매</h1></div>
-			<div class="usedProduct" v-for="item in list2">
+			<div class="select1">
+				<input class="selectBar" v-model="select" @keyup.enter="fnGetList2" placeholder="검색어를 입력해주세요.">
+				<img src="../css/image/community/m-glass.png" class="select-img">
+			</div>
+			<div class="usedProduct" v-for="item in list2" v-if="list2.length > 0">
 				<div class="product-img">
 					<a href="javascript:;" @click="fnUsedProductView(item.usedPNo)"><img :src="item.pImgPath+'/'+item.pImgName"></a>
 				</div>
@@ -188,6 +215,9 @@ clear: both;
 				<div class="product-price">
 					{{item.usedPSellPrice | formatPrice}} <span>원</span>
 				</div>
+			</div>
+			<div class="defined" v-if="list2.length <= 0">
+				등록된 물품이 없습니다.
 			</div>
 			<div class="pa">
 				<template v-if="pageCount > 1">
@@ -223,6 +253,7 @@ var app = new Vue({
 		pageCount: 1,
 		cnt : 0,
 		list2 : [],
+		select : "",
 	},// data
 	filters: {
 	    formatPrice(price) {
@@ -237,7 +268,7 @@ var app = new Vue({
 			var self = this;
 			var startNum = ((self.selectPage-1) * 12);
 			var lastNum = 12;
-			var param = {startNum : startNum, lastNum : lastNum};
+			var param = {startNum : startNum, lastNum : lastNum, select : self.select};
 			$.ajax({
 				url : "/used/purchaseList2.dox",
                 dataType:"json",	
@@ -256,7 +287,7 @@ var app = new Vue({
 			self.selectPage = pageNum;
 			var startNum = ((pageNum-1) * 12);
 			var lastNum = 12;
-			var param = {startNum : startNum, lastNum : lastNum};
+			var param = {startNum : startNum, lastNum : lastNum, select : self.select};
 			$.ajax({
 				url : "/used/purchaseList2.dox",
                 dataType:"json",	
@@ -271,7 +302,7 @@ var app = new Vue({
 		},
 		fnUsedProductView(item){
 			$.pageChange("/used/view.do",{usedPNo : item});
-		}
+		},
 	}, // methods
 	created : function() {
 		var self = this;

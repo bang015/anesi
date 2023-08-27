@@ -171,6 +171,9 @@
 		FROM t3_tbl_used_purchase p
 		INNER JOIN t3_tbl_used_purchase_image i ON p.USED_P_NO = i.USED_P_NO
 		WHERE p.PURCHASE = 'Y'
+		<if test="select !='' and select != null">
+			AND p.USED_P_NAME LIKE CONCAT('%', #{select}, '%')
+		</if>
 		GROUP BY p.USED_P_NO
 		ORDER BY p.USED_P_CDATETIME DESC 
 		LIMIT #{startNum}, #{lastNum}
@@ -181,7 +184,9 @@
 		SELECT COUNT(*) 
 		FROM t3_tbl_used_purchase
 		WHERE PURCHASE = 'Y'
-		
+		<if test="select !='' and select != null">
+			AND USED_P_NAME LIKE CONCAT('%', #{select}, '%')
+		</if>
 	</select>
 	<!-- 판매 물품 상세 정보 -->
 	<select id="purchaseView" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
