@@ -147,7 +147,7 @@ h1{
 <div id="app">
 <div>
 	<div class="used_menu">
-		<div class="used_menu_li" style="border-left: 1px solid #ededed;"><a href="">중고 판매</a></div>
+		<div class="used_menu_li" style="border-left: 1px solid #ededed;"><a href="../usedSell.do">중고 판매</a></div>
 		<div class="used_menu_li"><a href="purchase.do">중고 매입</a></div>
 		<div class="used_menu_li_ch"><a href="purchaseEx.do" style="color:#A782C3;">중고 매입 사례</a></div>
 	</div>

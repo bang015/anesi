@@ -63,6 +63,12 @@
 							<div class="usedText1">
 								상태 : {{usedGrade}}
 							</div>
+							<div class="usedText1" v-if="usedtime > 0">
+								사용기간 : {{usedtime}} 월
+							</div>
+							<div class="usedText1" v-if="usedtime == 0">
+								사용기간 : 미사용
+							</div>
 							<div class="usedText1">
 								배송비 : 배송비 별도
 							</div>
@@ -144,6 +150,7 @@ var app = new Vue({
 		usedGrade : "",
 		showScrapModal3 : false,
 		content : "",
+		usedtime : "",
 	},// data
 	filters: {
 	    formatPrice(price) {
@@ -162,10 +169,11 @@ var app = new Vue({
                 success : function(data) {                
                		self.list = data.list
                		self.mainImg = self.list[0].pImgPath + "/" + self.list[0].pImgName;
-               		self.price = self.list[0].usedPSellPrice;
+               		self.price = self.list[0].uSellPrice;
                		self.usedName = self.list[0].usedPName;
                		self.usedGrade = self.list[0].grade;
-               		self.content = self.list[0].content;
+               		self.content = self.list[0].sellContent;
+               		self.usedtime = self.list[0].usedtime;
                		console.log(self.list);
                 }                
             }); 

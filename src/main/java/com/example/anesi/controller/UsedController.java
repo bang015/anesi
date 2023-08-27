@@ -79,7 +79,11 @@ public class UsedController {
 	request.setAttribute("map", map);
 	return "/used_purchaseEx_view";
 	}
-	
+	//중고 매입 사례 등록
+	@RequestMapping("/usedSell.do") 
+	public String purchaseSell(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+	return "/usedSellMain";
+	}
 	//중고 매입 사례 등록
 	@RequestMapping("/used/purchaseExAdd.do") 
 	public String purchaseExAdd(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
