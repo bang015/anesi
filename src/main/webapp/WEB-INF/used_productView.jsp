@@ -20,6 +20,14 @@
     border-radius: 5px;
     font-size: 17px;
 }
+.usedText1{
+	margin-top: 10px;
+	font-size: 17px;
+	
+}
+.a-wrap{
+	margin-bottom: 20px;
+}
 </style>
 </head>
 <!-- 주석 꼭 남겨주세요 -->
@@ -52,6 +60,12 @@
 							<div class="main-price2">
 									{{price | formatPrice}}원
 							</div>
+							<div class="usedText1">
+								상태 : {{usedGrade}}
+							</div>
+							<div class="usedText1">
+								배송비 : 배송비 별도
+							</div>
 							<div class="total-price">
 							    <div class="total-title">주문금액</div>
 							    <div class="total-price1">
@@ -72,6 +86,9 @@
 									<div>판매자를 사칭하여 현금 입금 유도하는 소비자 피해 사례가 늘고 있습니다.</div>
 									<div>판매자와 문자/카톡으로 소통하실 때, 고객분들의 주의를 부탁드리며,</div>
 									<div>의심되는 경우 아네시 고객센터로 신고해 주시기 바랍니다.</div>
+								</div>
+								<div>
+									<pre v-html="content"></pre>
 								</div>
 							</div>
 						</div>
@@ -126,6 +143,7 @@ var app = new Vue({
 		usedName : "",
 		usedGrade : "",
 		showScrapModal3 : false,
+		content : "",
 	},// data
 	filters: {
 	    formatPrice(price) {
@@ -147,6 +165,7 @@ var app = new Vue({
                		self.price = self.list[0].usedPSellPrice;
                		self.usedName = self.list[0].usedPName;
                		self.usedGrade = self.list[0].grade;
+               		self.content = self.list[0].content;
                		console.log(self.list);
                 }                
             }); 
