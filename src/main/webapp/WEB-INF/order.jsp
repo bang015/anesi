@@ -504,6 +504,7 @@ var app = new Vue({
 		    	        top: 0,
 		    	        behavior: "smooth"
 		    	      });
+		    		alert('주문자 정보를 채워주세요');
 		    		return;
 		    	}
 		    	self.fnCheck('addrName');
@@ -515,6 +516,7 @@ var app = new Vue({
 		    	        top: 300,
 		    	        behavior: "smooth"
 		    	      });
+		    		alert('배송지 정보를 채워주세요');
 		    		return;
 		    	}
 		    	if(self.checkAm.length != 2){
