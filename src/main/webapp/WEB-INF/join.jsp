@@ -10,90 +10,141 @@
 <meta charset="UTF-8">
 <title>ANESI 회원가입😎</title>
 <style>
-	#container {
-		margin : 10px auto;
-		width : 400px;
-		line-height: 30px;
-	}
-	#logo{
-		width : 200px;
-		margin: 20px 0px 0px 100px;
-	}
-	.put{
-	    border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 380px;
-	    height: 30px;
-	    padding: 10px;
-	}
-	.email{
-		border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 167px;
-	    height: 30px;
-	    padding: 10px;
-	}
-	.email2{
-		border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 190px;
-	    height: 52px;
-	    padding: 8px;
-	}
-	#login{
-		text-align: center;
-		margin-bottom : 80px;
-	}
-	hr{
-		margin : 30px 0px;
-	}
-	.btn{
-	    border: none;
-	    color: white;
-	    background-color: #A782C3;
-	    border-radius: 7px;
-	    padding: 0px 9px;
-	    width: 400px;
-	    height: 50px;
-	    font-size: 20px;
-	    margin: 10px 0px;
-  		transition: background 0.3s;
-  		cursor: pointer;
-	}
-	.btn:hover{
-		background-color: #7c6191;
-	}
-	.clause1{
-		color : #A782C3;
-	}
-	.clause2{
-		color : #999;
-	}
-	.select{
-		border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 130px;
-	    height: 50px;
-	    padding: 8px;
-	}
-	.part{
-		margin : 20px 0px;
-	}
-	.red{
-		color : #ff9797;
-	}
-	h2{
-		font-weight : 100;
-		margin : 10px 0px;
-	}
-	i{
-		float : right;
-		margin-top: 10px;
-		margin-right : 5px;
-	}
-	img:hover{
-		cursor: pointer;
-	}
+#container {
+	margin: 10px auto;
+	width: 400px;
+	line-height: 30px;
+}
+
+#logo {
+	width: 200px;
+	margin: 20px 0px 0px 100px;
+}
+
+.put {
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 380px;
+	height: 30px;
+	padding: 10px;
+}
+
+.email {
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 167px;
+	height: 30px;
+	padding: 10px;
+}
+
+.email2 {
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 190px;
+	height: 52px;
+	padding: 8px;
+}
+
+#login {
+	text-align: center;
+	margin-bottom: 80px;
+}
+
+hr {
+	margin: 30px 0px;
+}
+
+.btn {
+	border: none;
+	color: white;
+	background-color: #A782C3;
+	border-radius: 7px;
+	padding: 0px 9px;
+	width: 400px;
+	height: 50px;
+	font-size: 20px;
+	margin: 10px 0px;
+	transition: background 0.3s;
+	cursor: pointer;
+}
+
+.btn:hover {
+	background-color: #7c6191;
+}
+
+.clause1 {
+	color: #A782C3;
+}
+
+.clause2 {
+	color: #999;
+}
+
+.select {
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 130px;
+	height: 50px;
+	padding: 8px;
+}
+
+.part {
+	margin: 20px 0px;
+}
+
+.red {
+	color: #ff9797;
+}
+
+h2 {
+	font-weight: 100;
+	margin: 10px 0px;
+}
+
+i {
+	float: right;
+	margin-top: 10px;
+	margin-right: 5px;
+}
+
+.gender-radio-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gender-radio {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.custom-radio {
+  position: absolute;
+  opacity: 0;
+}
+
+.radio-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.custom-radio:checked + .radio-button {
+  background-color: #A782C3;
+}
+
+.radio-text {
+  color: #333;
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -185,12 +236,29 @@
 	</div>
 	<!-- 성별 -->
 	<div class="part">
-	<div><h2>성별</h2></div> 
-	<div>
-		선택 안 함 <input type="radio" v-model="user.gender" value="N">　　　
-		여성 <input type="radio" v-model="user.gender" value="F">　　　
-		남성 <input type="radio" v-model="user.gender" value="M">
-	</div>
+	  <div>
+    <h2>성별</h2>
+    <div class="gender-radio-group">
+      <label class="gender-radio">
+        <input type="radio" v-model="user.gender" value="N" class="custom-radio">
+        <div class="radio-button">
+          <span class="radio-text">선택 안 함</span>
+        </div>
+      </label>
+      <label class="gender-radio">
+        <input type="radio" v-model="user.gender" value="F" class="custom-radio">
+        <div class="radio-button">
+          <span class="radio-text">여성</span>
+        </div>
+      </label>
+      <label class="gender-radio">
+        <input type="radio" v-model="user.gender" value="M" class="custom-radio">
+        <div class="radio-button">
+          <span class="radio-text">남성</span>
+        </div>
+      </label>
+    </div>
+</div>
 	<!-- 약관동의 -->
 	</div>
 	<hr>
@@ -266,6 +334,7 @@ var app = new Vue({
 		        });
 				return;
 			}
+			
 			if(!self.emailFlg){
 				alert("이미 가입된 이메일입니다.");
 				self.$nextTick(function() {
