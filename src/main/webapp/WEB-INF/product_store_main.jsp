@@ -41,7 +41,6 @@
 				    </div>		
 			</div>
 		
-		
 			<div class="production-item__content" v-for="item in list">
 				<div class="production-item-header" @click="addRecentProduct(item)">
 					<a class="production-item-thumnail">
@@ -70,14 +69,15 @@
 						<span class="production-item-price__sell2" v-else>{{
 							formatPrice(item.productPrice) }}</span>
 					</div>
-				</div>
-	
-				<!--  production-item-rating : 별점-->
+					<!--  production-item-rating : 별점-->
 				<div class="production-item-rating">
 					<!-- 별모양-->
 					<i class="fa-solid fa-star" style="color: #A782C3;"></i> <span
 						class="production-item-rating__score ">{{item.csatAvg}}</span>
 				</div>
+				</div>
+	
+				
 				<div class="item-bottom-btn">
 					<!-- 장바구니버튼-->
 					<a class="cart_button"> <i
@@ -111,7 +111,7 @@
 			<!-- 페이징 -->
 			<div class="pa">
 				<template v-if="pageCount > 1">
-					<paginate :page-count="pageCount" :page-range="3" :margin-pages="2"
+					<paginate :page-count="pageCount" :page-range="2" :margin-pages="1"
 						:click-handler="fnSearch" :prev-text="'<'" :next-text="'>'"
 						:container-class="'pagination'" :page-class="'page-item'">
 					</paginate>

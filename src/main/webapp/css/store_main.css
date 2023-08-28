@@ -58,11 +58,10 @@
 
 }
 .brand_name{
-	margin: 10px 0px 10px 0px;
+	margin: 10px 0px 5px 0px;
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 1px;
-    min-height: 38px;
 }
 .brand_name:hover{
 	text-decoration: underline;
@@ -310,39 +309,6 @@
 .selectBox2 .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
 .selectBox2 .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}
 
-.pagination {
-        display: inline-flex;
-        margin-top: 80px;
-    }
-.pagination li {
-    min-width:32px;
-    padding:2px 6px;
-    text-align:center;
-    margin:0 3px;
-    border-radius: 6px;
-    border:1px solid #eee;
-    color:#666;
-    display : inline;
-}
-.pagination li:hover {
-    background: #E4DBD6;
-}
-.page-item a {
-    color:#666;
-    text-decoration: none;
-    padding: 4px 12px ;
-}
-.pagination li.active {
-    background-color : #A782C3;
-    color:#fff;
-}
-.pagination li.active a {
-    color:#fff;
-    
-}
-.pagination a{
-	padding: 4px 12px ;
-}
 .noneDisplay{
 	display: none !important;
 }
@@ -355,4 +321,34 @@
 .item-bottom-btn{
 	position: absolute;
     bottom: 0px;
+}
+.pagination {
+    text-align: center;
+    margin-top: 65px;
+    font-size:14px;
+}
+.pagination li {
+    margin: 6px;
+    border-radius: 6px;
+    display: inline;
+    margin: 15px;
+    padding: 8px 10px;
+}
+.pagination li:hover {
+	background:#eee;
+}
+.page-item a {
+	color:#666;
+	text-decoration: none;
+}
+.pagination li.active {
+	color: white;
+    font-weight: bold;
+    border: 1px solid;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: #A782C3;
+}
+.pagination li.active a{
+	color : white;
 }
