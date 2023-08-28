@@ -188,7 +188,7 @@ clear: both;
     grid-template-columns: repeat(4, 1fr);
     position: relative;
     margin-top: 12px;
-	}
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -228,7 +228,7 @@ clear: both;
 				<div class="flow-container1">
 					<div class="flow-text">
 						<div v-for="(item, index) in list">
-							<div class="flow-wrap"><img class="purchaseImg" v-if="item.pImgPath !='' || item.pImgPath !=undefined" :src="item.pImgPath+'/'+item.pImgName" style="border-radius:5px;"></div>
+							<div class="flow-wrap"><img class="purchaseImg" v-if="item.pImgPath !='' || item.pImgPath !=undefined" :src="item.pImgPath+'/'+item.pImgName" style="border-radius:5px; cursor: auto;"></div>
 						</div>
 					</div>
 				</div>
