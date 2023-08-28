@@ -91,7 +91,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {                
                		if(data.success){                		
-                       	location.href="/product/storemain.do";	                	
+                       	location.href="/main.do";	                	
                    	} else {	
                    		alert(data.message);
                    	}
