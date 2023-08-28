@@ -235,7 +235,7 @@
 				<span class="aCnt" v-if="alarmList.length != 0">{{alarmList.length}}</span>
 					<a href="http://localhost:8080/alarm.do" >
 						<i class="fa-solid fa-bell "></i>
-					</a>마진으로 간격을 띄워봐요
+					</a>
 					
 				</li>
 				<li class="icon3">

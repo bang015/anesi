@@ -50,16 +50,6 @@ iframe {
     height : calc(100vh - (40px *2));
 }
 
-.flow-text {
-	  display: flex;
-      flex: 0 0 auto;
-      white-space: nowrap;
-      overflow: hidden;
-      transition: 0.3s;
-      font-size: 2.5rem;
- 
-      color: #9D9993;
-  }
   .flow-text:hover {
     color: #000;
   }
