@@ -60,6 +60,7 @@ hr{
 
 /* modal 스타일 */
 .modal {
+	z-index:1000;
   position: fixed;
   top: 0;
   left: 0;
@@ -69,7 +70,7 @@ hr{
   display: flex;
   align-items: center;
   justify-content: center;
-    z-index:1000;
+
   
 }
 

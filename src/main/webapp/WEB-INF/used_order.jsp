@@ -364,7 +364,7 @@ var app = new Vue({
 		            self.flgName = false;
 		        }
 		    }
-		    const regex = /^[a-z0-9]+$/;
+		    const regex = /^[a-zA-Z0-9._%+-]+/;
 		    if (text === 'email1') {
 		        if (self.order.email1.trim() === '' || self.order.email1 !== self.order.email1.trim()) {
 		            self.flgEmail1 = true;

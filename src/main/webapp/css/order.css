@@ -452,3 +452,6 @@
 .showDisplay{
 	display: flex !important;
 }
+.modal{
+	z-index :1000;
+}

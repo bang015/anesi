@@ -146,15 +146,6 @@
 }
 .icon2{
 	margin-right: 10px;
-	display: inline-block !important;
-	position: relative;
-}
-.aCnt{
-	position: absolute;
-	top: -15px;
-	left: 5px;
-	font-size: 13px;
-	line-height: 18px;
 }
 .icon3{
 	margin-right: 20px;
