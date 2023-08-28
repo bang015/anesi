@@ -5,13 +5,13 @@
 </head>
 <body>
 
-<div id="myModal" class="modal">
+
+<div id="myModal" class="momo">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <span class="momoclose">&times;</span>
     <iframe id="youtubeFrame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
   </div>
 </div>
-
 <script>
 var kkeys = [], konami = "38,38,40,40,37,39,37,39,66,65";
 $(document).keydown(function(e) {
@@ -45,7 +45,7 @@ function openModal(videoUrl) {
 </script>
 
 <style>
-.modal {
+.momo {
   display: none;
   position: fixed;
   z-index: 1;
@@ -57,7 +57,7 @@ function openModal(videoUrl) {
   background-color: rgba(0,0,0,0.8);
 }
 
-.modal-content {
+.momo-content {
   margin: auto;
   width: 80%;
   max-width: 720px;
@@ -66,7 +66,7 @@ function openModal(videoUrl) {
   transform: translateY(-50%);
 }
 
-.close {
+.momoclose {
   position: absolute;
   top: 10px;
   right: 20px;
@@ -76,7 +76,7 @@ function openModal(videoUrl) {
   cursor: pointer;
 }
 
-iframe {
+#youtubeFrame {
   width: 100%;
   height: 100%;
 }
