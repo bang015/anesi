@@ -32,7 +32,7 @@
 				<button class="btn4 btn5 btn6" :class="{'on2' : selectType == 0}" @click="fnSetSelectType('0')">최신순</button>
 			</div>	
 			<div class="reviewListBox">
-				<div v-for="item in reviewList" class="reviewBox">
+				<div v-for="item in sliceReviewList" class="reviewBox">
 					<div>
 						<div class="title1">{{item.productName}}</div>
 						<div class="optionName1">{{item.optionName}}</div>
@@ -46,6 +46,7 @@
 					</div>
 				</div>
 			</div>
+			<button @click="fnIncreaseDisplayed" v-if="reviewList.length > maxInquiry && reviewList.length > 0" class="btn4 btn5 btn6 btn7 btn8">더보기</button>
 		</div>
 		<div class="modal noneDisplay" v-if="showScrapModal" :class="{'showDisplay' : showScrapModal}">
 			<div class="review-add">
@@ -136,6 +137,8 @@ var app = new Vue({
 	    imgName : '',
 	    fileEditflg : false,
 	    content : '',
+	    sliceReviewList : [],
+		maxInquiry : 4,
 	},// data
 	methods : {
 		fnGetMyReview(){
@@ -148,6 +151,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.reviewList = data.list;
+                	self.sliceReviewList = self.reviewList.slice(0, 4);
                 }
 			})
 		},
@@ -287,6 +291,11 @@ var app = new Vue({
 				      	}
 			    	});
 				});
+		},
+		fnIncreaseDisplayed(){
+			var self = this;
+			self.maxInquiry += 4;
+			self.sliceReviewList = self.reviewList.slice(0, self.maxInquiry);
 		}
 	}, // methods
 	created : function() {
