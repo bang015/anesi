@@ -125,7 +125,7 @@
 			<div class="inquiry">
 				<span class="inquiryTitle">미답변문의<span class="iTime">최근 1주일기준</span></span>
 				<hr>
-				<i class="iconA fa-solid fa-file-circle-exclamation cursor_pointer" @click="fnInquiry()"></i>
+				<i class="iconA fa-solid fa-file-circle-exclamation cursor_pointer" @click="fnInquiry()" style="padding : 11px 20px;"></i>
 				<ul class="inquiryA">
 					<a class="inquiryB"  @click="fnInquiry(1)">상품/배송<span class="inquiryD">{{inquiryCnt1}}</span></a>
 					<a class="inquiryB"  @click="fnInquiry(2)">환불/반품/교환<span class="inquiryD">{{inquiryCnt2}}</span></a>
@@ -173,7 +173,10 @@ var app = new Vue({
 		StatisticsInfo : {},
 		//상품차트
 		productChart : [],
-		series: [{data: []}],
+		series: [{
+			name: [],
+			data: []
+		}],
       	chartOptions: {
         chart: {
           type: 'bar',
@@ -202,7 +205,7 @@ var app = new Vue({
         //만족도차트
         csatChart : [],
         series2: [{
-            name: '1',
+            name: '1점',
             data: []
           }, {
             name: '2',
@@ -373,7 +376,10 @@ var app = new Vue({
                        		xaxis : {
                       			categories : productData.map(item => item.CategoryGroup)
                        		}
-                   	 };
+                   	 }
+               		self.series = {
+                      	name : productData.map(item => item.CategoryGroup)
+                   	 }
                		 
                		self.series = [{
                     	data : productData.map(item => item.TotalCount)
