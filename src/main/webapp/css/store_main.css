@@ -73,6 +73,9 @@
 	font-size: 14px;
 }
 
+.production-item-price{
+	min-height: 65px;
+}
 .production-item-price__orginal{
 }
 

@@ -137,6 +137,7 @@ li{
     cursor: pointer;
     margin: 30px 10px;
     width: 236px;
+    font-family : 'Pretendard-Regular';
 }
 .btn1:hover{
 	background-color : #A782C3;
