@@ -49,6 +49,8 @@ header {
     color: #fff;
 	background-color:#A782C3;
 	border-radius:4px;  
+	cursor:pointer;
+	 font-family: 'Pretendard-Regular';
   }
   .headerbtn:hover {
       background-color:#7c6191;
@@ -185,6 +187,7 @@ header {
     position: absolute;
     left: 500px;
     top: 8px;
+    font-family: 'Pretendard-Regular';
 }
 
 .glass{
