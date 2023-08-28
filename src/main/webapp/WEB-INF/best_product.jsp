@@ -26,7 +26,7 @@
 <body>
 
 <div id="store_main_best" style="margin-bottom : 50px;">
-<h1>베스트상품</h1>
+<h1 style="margin: 27px 0px 0px 35px;">베스트상품</h1>
 <!-- 상품 정렬하는 버튼-->	
 	<div class="production-item__content" v-for="item in list" >
 			<div class="production-item-header"  @click="fnProductView(item.productNo)">
@@ -55,14 +55,15 @@
                     <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
                     <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
                 </div>
-            </div>
-            
-		         <!--  production-item-rating : 별점-->
+                   <!--  production-item-rating : 별점-->
             <div class="production-item-rating">
                 <!-- 별모양-->
                 <i class="fa-solid fa-star" style="color: #A782C3;"></i>
                 <span class="production-item-rating__score ">{{item.csatAvg}}</span>
             </div>
+            </div>
+            
+		      <div class="item-bottom-btn">
 	           <!-- 장바구니버튼-->
 	             <a class="cart_button">
 				    <i
@@ -88,7 +89,7 @@
 	                <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
 	            </a>
     	    </div> <!-- class="production-item__content" 끝-->
-	    
+	    	</div>
 	    
     	<div class="modal" v-if="showCartModal" >
 		  <div class="modal-card">

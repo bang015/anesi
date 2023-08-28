@@ -77,7 +77,6 @@
 				</div>
 				</div>
 	
-				
 				<div class="item-bottom-btn">
 					<!-- 장바구니버튼-->
 					<a class="cart_button"> <i
