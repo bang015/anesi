@@ -40,10 +40,7 @@
             		<span class="production-item-header__brand">{{item.manufacturer}}</span>
                 	<span class="production-item-header__name">{{item.productName}}</span>
             	</div>
-                <div class="category_country">
-                    <span class="production-item-header__kind">{{item.categoryName}},</span>
-                    <span class="production-item-header__country">{{item.country}}</span>
-                </div>
+                
 		    </div>
 			 
            <div class="production-item-price">

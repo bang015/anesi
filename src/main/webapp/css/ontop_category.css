@@ -1,17 +1,15 @@
 @charset "EUC-KR";
 	
+
+
+
 #product-main-category__total{
-padding : 0px 0px 0px 0px;
+		padding : 0px 0px 0px 0px;
+	    margin-top: -25px;
 }
-
-
-
 #store-main-ontop-category__container{
-	margin-top: 200px;
-	
+		margin-top: 200px;
 }
-
-
 
 
 #product-main-category__total > li {

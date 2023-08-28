@@ -58,8 +58,8 @@
 							<div class="main-title" >
 								<span class="product-title">{{product.productName}}</span>
 								<div class="scrapbook">
-									<i @click="fnInsertScrapbook()" v-if="scrapbookList.length == 0" class="fa-regular fa-bookmark modal-toggle-button"></i>
-               						<i @click="fnDeleteScrapbook()" v-if="scrapbookList.length != 0"class="fa-regular fa-solid fa-bookmark" style="color:#A782C3;"></i>
+									<i @click="fnInsertScrapbook()" v-if="scrapbookList.length == 0" class="fa-regular fa-bookmark modal-toggle-button" style="cursor:pointer;"></i>
+               						<i @click="fnDeleteScrapbook()" v-if="scrapbookList.length != 0"class="fa-regular fa-solid fa-bookmark" style="color:#A782C3; cursor:pointer;"></i>
                						<a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes"></i></a>
 								</div>
 							</div>
