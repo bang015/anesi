@@ -14,11 +14,12 @@
 #product-main-category__total{
 	padding : 0px 0px 0px 0px;
     margin-top: -25px;
+    margin-left:80px;
 }
 #store-main-ontop-category__container{
 	margin-top: 200px;
 
-#product-main-category__total > li {
+# product-main-category__total > li {
         display: inline-block;
         position: relative;
         top: 10px;
@@ -137,7 +138,7 @@ var app = new Vue({
         },
         
 
-    //이미지 마우스 오버했을때 pulse 애니메이션
+    	//이미지 마우스 오버했을때 pulse 애니메이션
        addPulseAnimation: function(index) {
        	 this.categories[index].animated = true;
        },
@@ -147,7 +148,7 @@ var app = new Vue({
        
        
      
-    //category 눌렀을때 메뉴별로 배열해줌
+   	 	//category 눌렀을때 메뉴별로 배열해줌
       fnMoveaa : function(item){
             var self = this;
          $.pageChange("/product/storemain_byCategory.do",{no : item});//보낼필요없을때 파라미터 빈값으로{}
