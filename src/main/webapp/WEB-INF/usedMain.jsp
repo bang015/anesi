@@ -38,6 +38,7 @@
     width: 281px;
     height: 67px;
     font-size: 17px;
+    font-family: 'Pretendard-Regular';
 }
 .btnDIV{
 	text-align : center;

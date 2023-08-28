@@ -89,7 +89,6 @@
 				</ul>
 			
 				<span class="revC">
-					<!-- <li>리뷰 평점 비율</li> -->
 					<div id="chart2">
 				        <apexchart type="bar" height="150"  :options="chartOptions2" :series="series2" ></apexchart>
 				    </div>
