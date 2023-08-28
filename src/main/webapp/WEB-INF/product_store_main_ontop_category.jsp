@@ -14,12 +14,12 @@
 #product-main-category__total{
 	padding : 0px 0px 0px 0px;
     margin-top: -25px;
-    margin-left:80px;
+
 }
 #store-main-ontop-category__container{
 	margin-top: 200px;
-
-# product-main-category__total > li {
+}
+#product-main-category__total > li {
         display: inline-block;
         position: relative;
         top: 10px;
