@@ -38,6 +38,7 @@
 .category2{
 	width: 170px;
 	background-color: rgba(255, 255, 255, 0.9);
+	border-left: 1px solid #e8e8e8;
 }
 .categoryAllBox{
 	display: inline-block;
@@ -70,13 +71,13 @@
 .categoryAllBox:hover .category-box1 {
     background: none;
 }
-.categoryAllBox:hover .category-box1:hover {
-    background: #A782C3;
-    color: white;
+.categoryAllBox:hover .category-box1.hovered {
+  background: #B795D2;
+  color: white;
 }
 .categoryAllBox:hover .category-box2:hover {
-    background: #A782C3;
-    color: white;
+    background: #C8B0DB;
+    color: #fff;
 }
 .categoryNo{
 	margin-left: 10px;
@@ -151,6 +152,10 @@
 }
 .hamburger{
 	width: 24px;
+}
+.over{
+	background: #A782C3;
+    color: white;
 }
 </style>
 </head>
@@ -287,7 +292,7 @@
 	<div class="categoryAllBox" v-if="flg" @mouseleave="flgout">
 			<div class="categoryAllBox2">
 				<div class="category1">
-					<div class="category-box1" :class="categoryStyle" v-for="item in categoryList1" @mouseover="fnGetcategoryList2(item)">
+					<div class="category-box1" :class="{ 'hovered': item.hovered }" v-for="item in categoryList1" @mouseover="fnGetcategoryList2(item)">
 						<div class="categoryBox1">
 							<span class="categoryNo">{{item.categoryName}}</span>
 						</div>
@@ -313,7 +318,6 @@
 			userNo : '${sessionNo}',
 			sessionStatus : '${sessionStatus}',
 			flg : false,
-			categoryStyle : "",
 			product : {	//상품 맵				
 				productName : "",
 				productPrices : "",
@@ -350,8 +354,13 @@
 				var nparmap = {no : item.categoryNo};
 				self.category1Name = item.categoryName;
 				self.category1No = item.categoryNo;
-				
-				
+				this.categoryList1.forEach(category => {
+			        if (category === item) {
+			          category.hovered = true;
+			        } else {
+			          category.hovered = false;
+			        }
+			      });
 	            $.ajax({
 	                url : "../product/category2.dox",
 	                dataType:"json",	
