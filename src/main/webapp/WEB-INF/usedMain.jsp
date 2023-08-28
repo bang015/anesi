@@ -76,6 +76,10 @@ li{
 	text-align: center;
 	margin: 50px 0;
 }
+.title2{
+	text-align: center;
+	margin: 50px 0;
+}
 .part{
 	margin : 60px 0;
 }
@@ -96,10 +100,14 @@ li{
 }
 .gogo{
 	color : #757575 !important; 
-	font-size : 18px;
+	font-size : 16px;
 }
 .gogo:hover{
 	color : #A782C3 !important; 
+}
+.gogo2{
+	color : #757575 !important; 
+	font-size : 14px;
 }
 .pa{
 clear: both;
@@ -169,10 +177,16 @@ clear: both;
 		font-size: 17px;
 	}
 	.more{
-		float: right;
-		margin-right: 50px;
-		font-size: 16px;
-		font-weight: 600;
+	float: right;
+    margin-right: 43px;
+    font-size: 15px;
+    margin-top: 10px;
+	}
+	.usedProduct_container{
+	display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: relative;
+    margin-top: 12px;
 	}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
@@ -182,26 +196,28 @@ clear: both;
 		<div class="part">
 			<div class="title"><h1>중고 판매</h1>
 				<div class="more">
-					<a href="../usedSell.do">더보기</a>
+					<a href="../usedSell.do" class="gogo2">판매 상품 더 보러 가기 🏃💨💨</a>
 				</div>
 			</div>
-			<div class="usedProduct" v-for="item in list2">
-				<div class="product-img">
-					<a href="javascript:;" @click="fnUsedProductView(item.usedPNo)"><img :src="item.pImgPath+'/'+item.pImgName"></a>
-				</div>
-				<div class="product-name">
-					{{item.usedPName}}
-				</div>
-				<div class="product-grade">
-					{{item.grade}} <span>등급</span>
-				</div>
-				<div class="product-price">
-					{{item.usedPSellPrice | formatPrice}} <span>원</span>
+			<div class="usedProduct_container">
+				<div class="usedProduct" v-for="item in list2">
+					<div class="product-img">
+						<a href="javascript:;" @click="fnUsedProductView(item.usedPNo)"><img :src="item.pImgPath+'/'+item.pImgName"></a>
+					</div>
+					<div class="product-name">
+						{{item.usedPName}}
+					</div>
+					<div class="product-grade">
+						{{item.grade}} <span>등급</span>
+					</div>
+					<div class="product-price">
+						{{item.usedPSellPrice | formatPrice}} <span>원</span>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="part">
-			<div class="title"><h1>중고 매입</h1>
+			<div class="title2"><h1>중고 매입</h1>
 			<div class="text1DIV"><span class="text1">🏡 상담부터 수거까지, 편안하고 편리한 아네시의 중고 장터 🚛</span></div>
 			</div>
 			<div> 
@@ -216,8 +232,8 @@ clear: both;
 				</div>
 				
 			</div>
-			<div class="text2"><a class="gogo" href="purchaseEx.do">매입 사례 보러 가기 🏃‍♂️💨💨💨</a></div>
-			</div>
+			<div class="text2"><a class="gogo" href="purchaseEx.do">매입 사례 보러 가기🏃‍♂️💨💨💨</a></div>
+		</div>
 			<div class="part">
 			<div>
 				<div class="title"><h2>중고 매입 문의 게시판</h2></div>
