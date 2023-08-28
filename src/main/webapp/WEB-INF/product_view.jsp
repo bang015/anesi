@@ -175,7 +175,7 @@
 									<div>의심되는 경우 아네시 고객센터로 신고해 주시기 바랍니다.</div>
 								</div>
 							</div>
-							<div class="content-img-box" :style="{overflow : contentImgBoxflg ? 'hidden' : 'visible'}">
+							<div class="content-img-box" :style="{overflow : contentImgBoxflg ? 'hidden' : 'visible', display : contentImgBoxflg ? 'block' : 'initial'}">
 								<div class="content-img" v-for="item in imgList2">
 									<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
 								</div>
@@ -1594,6 +1594,14 @@ var app = new Vue({
 			    	},
 			    	fnToggleContentImgBoxFlg(){
 			    		this.contentImgBoxflg = !this.contentImgBoxflg;
+			    		const section = document.getElementById('product');
+				    	  if (section) {
+				    	    const currentScrollPosition = section.getBoundingClientRect().top + window.scrollY;
+				    	    const targetScrollPosition = currentScrollPosition + 300;
+				    	    window.scrollTo({
+				    	      top: targetScrollPosition,
+				    	    });
+				    	}
 			    	},
 			    
 			     
