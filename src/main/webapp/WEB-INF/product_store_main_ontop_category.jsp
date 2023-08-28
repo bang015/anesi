@@ -78,9 +78,6 @@ var app = new Vue({
 			{ id: '50', name: '데코/식물', image: '../css/image/productMain/productMain_category5.png', animated: false },
 			{ id: '60', name: '반려동물', image: '../css/image/productMain/productMain_category6.png', animated: false },
 		]
->>>>>>> branch 'master' of https://github.com/Jeongseonil/anesi.git
-		
-<<<<<<< HEAD
 	}
 	#product-main-category__total > li {
 	        display: inline-block;
@@ -95,9 +92,6 @@ var app = new Vue({
 	    width: 100px;
 	    height: 130px;
 	}
-	/* #product-main-category__total > li > a > img {
-	  width:150px; height:150px; border-radius : 50%; border : 1px solid #424242; box-shadow: 5px 5px 5px #000;
-	} */
 	#product-main-category__total > li > a > span {
 		position: absolute;
 	    bottom: 19px;
