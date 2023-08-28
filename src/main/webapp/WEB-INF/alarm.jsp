@@ -15,7 +15,7 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
-	<h2 class="title" v-if="list.length!=''">새소식({{list.length}})</h2>
+	<h2 class="title" v-if="list.length!=''">새소식 <span class="new"> {{list.length}}</span></h2>
 	<h2 class="title" v-else>새소식</h2>
 		<hr class="hrr">
 		
@@ -25,9 +25,10 @@
 				<i class="iconB fa-regular fa-circle-xmark" v-if="list.length!=''"  @click="fnRemoveAlarm(item.alarmNo)"></i>
 			    <div class="content"  @click="fnMove(item)">
 					<i :class="item.icon" class="iconA"></i>
-						<span class="nick" v-if="item.alarmType == 1 || item.alarmType ==4
-						|| item.alarmType == 5">{{item.nick}}님 </span>{{item.alarmContent}}
+						<div style="margin-top:5px;">
+						<span class="nick" v-if="item.alarmType == 1 || item.alarmType ==4 || item.alarmType == 5">{{item.nick}}님 </span>{{item.alarmContent}}
 						<span class="time"> {{item.cTime.substring(0,13)}}시</span>
+						</div>
 				</div>
 			</div>
 				<div class="contentA"  v-if="list.length==0">최근 소식이 없습니다.</div>	
