@@ -171,7 +171,7 @@ clear: both;
 	.more{
 		float: right;
 		margin-right: 50px;
-		font-size: 17px;
+		font-size: 16px;
 		font-weight: 600;
 	}
 </style>
