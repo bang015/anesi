@@ -270,8 +270,8 @@
 		        	<div class="modalStyle2">
 		        		<div class="modalStyle4">배송지</div>
 		        		<div class="modalStyle3">
-		        			<div>{{addr.name}}</div>
-		        			<div>{{addr.phone1 +addr.phone2}}</div>
+		        			<div>받는분 : {{addr.name}}</div>
+		        			<div>전화번호 : {{addr.phone1 +addr.phone2}}</div>
 		        			<div>{{addr.addr1}}</div>
 		        			<div>{{addr.addr2}}</div>
 		        			<div>({{addr.zip}})</div>
@@ -282,8 +282,9 @@
 		        		<div class="modalStyle3">택배</div>
 		        	</div>
 		        	<div class="modalStyle2">
-		        		<div>배송 요청사항</div>
-		        		<div class="modalStyle3">{{request}}</div>
+		        		<div class="modalStyle4">배송 요청사항</div>
+		        		<div class="modalStyle3" v-if="addr.deliveryRq == '5'">{{addr.customDeliveryRq}}</div>
+		        		<div class="modalStyle3" v-else>{{request}}</div>
 		        	</div>
 		        	<div class="modalButBox">
 		        		<button class="modalBut" onclick="location.href='../main.do'">메인페이지</button>
