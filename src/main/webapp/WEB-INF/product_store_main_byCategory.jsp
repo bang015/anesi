@@ -349,8 +349,11 @@ var app = new Vue({
 	    fnMoveCart : function() {
         	location.href = "/product/cart.do";
 	    },
-	    fnMoveMyPage : function() {
-        	location.href = "/mypage.do";
+	    fnMoveScrapbook : function() {
+        	location.href = "/scrapbook.do";
+	    },
+	    fnMoveLoginPage : function() {
+        	location.href = "/login.do";
 	    },
 	  	    
 	    fnCheckCart : function() {
