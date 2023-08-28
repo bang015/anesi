@@ -12,12 +12,6 @@
 <title>Footer</title>
 <style>
 
-
-#footer_hr{
-	margin-bottom : 30px;
-}
-
-
 #f_img{
 	margin-left : 70px;
 	margin-right : 30px;
@@ -29,8 +23,6 @@
 #container_footer{
 	font-size : 12px;
 	height: 150px;
-	padding : 30px 20px;
-	
 }
 
 #anesi_info{
@@ -107,17 +99,38 @@
 	opacity: 0.7;
 	
 }
+.hrr {
+	margin : 30px 0px;
+	border: none; 
+	border-top: 1px solid #eee; 
+}
+.btnCenter{
+	border : none;
+	border: 1px solid #A782C3;
+    color: #A782C3;
+    background-color: white;
+    border-radius: 4px;
+    margin: 10px 0px;
+    transition: background 0.3s;
+    cursor: pointer;
+    padding: 5px 10px;
+    box-shadow: 1px 2px 5px -2px gainsboro;
+}
+.btnCenter:hover{
+	border: 1px solid white;
+	background-color: #A782C3;
+	color: white;
+}
 </style>
 </head>
 <!-- 주석 꼭 남겨주세요 넹 -->
 <body>
 
-
 	<div id="container_footer">
 	<!-- 로고 클릭시 main화면으로 전환 또는, 제일 상단으로-->
 	<!-- 이미지를 포함 모든 링크는 href="javascript:;"-->
 	
-	<hr id="footer_hr">
+	<hr class="hrr">
 	<a href="../main.do">
     <img id="f_img" src="../css/image/anesilogo.png" >
     </a>
@@ -151,14 +164,12 @@
            	<span class="content_bold">개인정보보호책임자</span>
          	<span>최인경</span>
            </div>
-           
        </div>
-       
        
        <div id="f_part2">
      	<span class="pt2_content"><a href="javascript:;">회사소개</a></span>
-     	<span class="pt2_content"><a href="../usepolicy.do" target="blank">이용약관</a></span>
-     	<span class="pt2_content"><a href="../privacy.do" target="blank">개인정보처리방침</a></span>
+     	<span class="pt2_content"><a href="../usepolicy.do">이용약관</a></span>
+     	<span class="pt2_content"><a href="../privacy.do">개인정보처리방침</a></span>
      	<span class="pt2_content"><a href="javascript:;">이용안내</a></span>
    		</div>
    </div>
@@ -190,7 +201,7 @@
 	           <span>신한은행 110-409-609660</span>
 	           </div>
 	           <div>예금주 정선일</div>
-	         <div><a id="customer" href="http://localhost:8080/customerService.do" target="_blank" style="font-size: 20px;">고객센터>></a></div>
+	         <div style="margin-top:15px;"><a id="customer" href="http://localhost:8080/customerService.do"><button class="btnCenter">고객센터 바로가기</button></a></div>
 	       </div>
 	   </div>
    	 
