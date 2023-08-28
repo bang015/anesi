@@ -54,7 +54,7 @@
 			</div>
 		</div>
 	</div>
-
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
 <script src="../js/jquery.js"></script>
