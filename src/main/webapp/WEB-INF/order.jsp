@@ -30,7 +30,7 @@
 							<div class="orNameText">배송비<span class="allMoneyText">3,000원</span></div>
 							<div class="orNameText">쿠폰 사용<span class="allMoneyText">{{numberWithCommas(discount)}}원</span></div>
 						</div>
-						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{numberWithCommas(finalAmount+deliveryfee+discount)}}</span> 원</span></div>
+						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{numberWithCommas(totalProductAmount+deliveryfee+discount)}}</span> 원</span></div>
 					</div>
 					<div class="orTerms">
 						<div class="allTerms">
@@ -66,7 +66,7 @@
 						</div>
 					</div>
 				</div>
-				<button class="orBtuStyle" @click="fnOrder">{{finalAmount}}원 결제하기</button>
+				<button class="orBtuStyle" @click="fnOrder">{{numberWithCommas(totalProductAmount+deliveryfee+discount)}}원 결제하기</button>
 			</div>
 			<div class="orInformation">
 				<div class="subheading">주문자</div>
@@ -257,12 +257,15 @@
 		        		<div class="modalStyle4">결제정보</div>
 		        		<div class="modalStyle3">
 		        			<div>상품이름 : {{productList[0].productName}}</div>
-		        			<div>결제금액 : {{finalAmount}}원</div>
 		        		</div>
 		        	</div>
 		        	<div class="modalStyle2">
 		        		<div class="modalStyle4">주문번호</div>
 		        		<div class="modalStyle3">{{"ORD"+formatDate(new Date())+"-"+cnt}}</div>
+		        	</div>
+		        	<div class="modalStyle2">
+		        		<div class="modalStyle4">결제금액</div>
+		        		<div class="modalStyle3">{{numberWithCommas(finalAmount)}}</div>
 		        	</div>
 		        	<div class="modalStyle2">
 		        		<div class="modalStyle4">배송지</div>
@@ -385,7 +388,7 @@ var app = new Vue({
 		            self.flgName = false;
 		        }
 		    }
-		    const regex = /^[a-z0-9]+$/;
+		    const regex = /^[a-zA-Z0-9._%+-]+/;
 		    if (text === 'email1') {
 		        if (self.order.email1.trim() === '' || self.order.email1 !== self.order.email1.trim()) {
 		            self.flgEmail1 = true;
