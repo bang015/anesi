@@ -9,7 +9,13 @@ public class UsedOrder {
 	private String usedPName;
 	private String pImgPath;
 	private String pImgName;
-	
+	private int uSellPrice;
+	public int getuSellPrice() {
+		return uSellPrice;
+	}
+	public void setuSellPrice(int uSellPrice) {
+		this.uSellPrice = uSellPrice;
+	}
 	public int getUsedNo() {
 		return usedNo;
 	}

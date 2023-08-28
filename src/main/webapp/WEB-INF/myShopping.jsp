@@ -66,6 +66,11 @@
 		margin-bottom: 10px;
 		margin-left: 120px;
 	}
+	.noList{
+		font-size: 17px;
+		font-weight: 500;
+		margin-top: 40px;
+	}
 </style>
 </head>
 <body>
@@ -163,20 +168,12 @@
 			</div>
 			<div class="order_list1">
 				<div class="optionListBox">
-					<div>
-					    <div class="selectBox2" @mouseover="showOptions" @mouseleave="hideOptions" :class="{ active: optionsVisible }">
-					      <button class="label">{{ selectedOption }}</button>
-					      <ul class="optionList">
-					        <li v-for="(option, index) in options" :key="index" class="optionItem" @click="handleSelect(option.value)">{{ option.text }}</li>
-					      </ul>
-					    </div>					
-					</div>
 					<div v-for="(item, index) in optionList">
 						<div class="optionBox" @click="fnOptionDel(index)" v-if="item.name != undefined">{{item.name}} <i class="fa-solid fa-circle-xmark" style="color: #ffffff;"></i></div>
 					</div>
 				</div>
 				<div>
-				    <div v-for="item in orderList2" class="box5">
+				    <div v-for="item in orderList2" class="box5" v-if="orderList2.length > 0">
 				    	<div class="deliverySitName">{{item.deliverySitName}}</div>
 					   <div class="orderBox">
 					   	 <img alt="" :src="item.pImgPath+'/'+item.pImgName" class="imgBox">
@@ -189,6 +186,7 @@
 					    </div>
 					   </div>
 				    </div>
+				    <div class="noList" v-if="orderList2.length == 0">구매내역이 없습니다.</div>
 				</div>
 				<template v-if="pageCount2 > 1">
 					<paginate

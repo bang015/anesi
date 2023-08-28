@@ -172,6 +172,7 @@
 			<a class="aaa1" href="/product/storemain.do">스토어</a>
 			<a class="bbb" href="/community/main.do">커뮤니티</a>
 			<a class="ccc" href="/used/main.do">중고장터</a>
+			<a class="ccc" v-if="sessionStatus == 'A'" href="http://localhost:8080/admin/main.do" target="_blank">관리자페이지</a>
 		</div>
 		<div class="navi-wrap"> 
 			<ul id="header_navi" v-if="userNo==''">
@@ -286,7 +287,7 @@
 	<div class="categoryAllBox" v-if="flg" @mouseleave="flgout">
 			<div class="categoryAllBox2">
 				<div class="category1">
-					<div class="category-box1" v-for="item in categoryList1" @mouseover="fnGetcategoryList2(item)">
+					<div class="category-box1" :class="categoryStyle" v-for="item in categoryList1" @mouseover="fnGetcategoryList2(item)">
 						<div class="categoryBox1">
 							<span class="categoryNo">{{item.categoryName}}</span>
 						</div>
@@ -310,7 +311,9 @@
 		el : '#app1',
 		data : {
 			userNo : '${sessionNo}',
+			sessionStatus : '${sessionStatus}',
 			flg : false,
+			categoryStyle : "",
 			product : {	//상품 맵				
 				productName : "",
 				productPrices : "",
@@ -318,7 +321,7 @@
 				country : "",
 				discount : "",
 				category : "",
-				discountYn  : ""
+				discountYn  : "",
 			},
 			category1No : "",
 			categoryList1 : [], //카테고리 대분류
@@ -337,7 +340,8 @@
 	                type : "POST", 
 	                data : nparmap,
 	                success : function(data) { 
-	                	self.categoryList1 = data.list;	                	
+	                	self.categoryList1 = data.list;	 
+	                	console.log(self.categoryList1);
 	                }
 	            });
 			},
@@ -346,6 +350,8 @@
 				var nparmap = {no : item.categoryNo};
 				self.category1Name = item.categoryName;
 				self.category1No = item.categoryNo;
+				
+				
 	            $.ajax({
 	                url : "../product/category2.dox",
 	                dataType:"json",	

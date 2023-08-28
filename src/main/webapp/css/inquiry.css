@@ -200,7 +200,7 @@
 		margin-top : 20px;
 		width: 580px;
 		border-radius: 5px;
-		line-height: 10px;
+		line-height: 20px;
 		padding: 10px;
 		font-weight: 500;
 		resize: none;
@@ -211,7 +211,7 @@
 		width: 580px;
 		border-radius: 5px;
 		border-color : #f77;
-		line-height: 10px;
+		line-height: 20px;
 		padding: 10px;
 		font-weight: 500;
 		resize: none;

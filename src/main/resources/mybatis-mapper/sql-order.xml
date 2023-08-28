@@ -137,7 +137,7 @@
 	</update>
 	<!-- 중고 상품 정보 -->
 	<select id="selectUsedOrder" parameterType="hashmap" resultType="com.example.anesi.model.UsedOrder">
-		SELECT p.USED_P_NO, p.USED_P_SELL_PRICE, p.USED_P_NAME,i.P_IMG_PATH, i.P_IMG_NAME
+		SELECT p.USED_P_NO, p.USED_P_SELL_PRICE, p.USED_P_NAME,i.P_IMG_PATH, i.P_IMG_NAME, p.U_SELL_PRICE
 		FROM t3_tbl_used_purchase p
 		INNER JOIN t3_tbl_used_purchase_image i ON p.USED_P_NO = i.USED_P_NO
 		WHERE p.USED_P_NO = #{usedPNo}

@@ -26,10 +26,10 @@
 					<div class="amountBox">
 						<h2 class="moneyText">결제 금액</h2>
 						<div>
-							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{usedList.usedPSellPrice | formatPrice}}원</span></div>
+							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{usedList.uSellPrice | formatPrice}}원</span></div>
 							<div class="orNameText">배송비<span class="allMoneyText">3,000원</span></div>
 						</div>
-						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{usedList.usedPSellPrice+3000 | formatPrice}}</span> 원</span></div>
+						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{usedList.uSellPrice+3000 | formatPrice}}</span> 원</span></div>
 					</div>
 					<div class="orTerms">
 						<div class="allTerms">
@@ -65,7 +65,7 @@
 						</div>
 					</div>
 				</div>
-				<button class="orBtuStyle" @click="fnOrder">{{usedList.usedPSellPrice+3000 | formatPrice}}원 결제하기</button>
+				<button class="orBtuStyle" @click="fnOrder">{{usedList.uSellPrice+3000 | formatPrice}}원 결제하기</button>
 			</div>
 			<div class="orInformation">
 				<div class="subheading">주문자</div>
@@ -195,7 +195,7 @@
 							<img alt="" :src="usedList.pImgPath+'/'+usedList.pImgName" v-if="usedList.pImgName != undefined || usedList.pImgPath !=undefined">
 							<div>
 								<div class="prProductName">{{usedList.usedPName}}</div>
-								<div class="prProductPrice">{{usedList.usedPSellPrice | formatPrice}}</div>
+								<div class="prProductPrice">{{usedList.uSellPrice | formatPrice}}</div>
 							</div>
 						</div>
 					</div>
@@ -535,7 +535,7 @@ var app = new Vue({
 			        default:
 			            request = '';
 		   		 }
-		    	self.finalAmount = self.usedList.usedPSellPrice+3000
+		    	self.finalAmount = self.usedList.uSellPrice+3000
 		    	var productName = '';
 		    		productName = self.usedList.usedPName;
 		    	var paymentNo =  "ORD"+self.formatDate(new Date())+"-"+self.cnt
@@ -565,7 +565,7 @@ var app = new Vue({
 	            	self.openScrapModal();
 	              } else {
 	                // 결제 실패 시 로직,
-	            	  self.finalAmount = self.usedList.usedPSellPrice+3000;
+	            	  self.finalAmount = self.usedList.uSellPrice+3000;
 	              }
 	            });
 		    	
@@ -631,6 +631,7 @@ var app = new Vue({
 		                data : nparmap,
 		                success : function(data) {
 		                	self.usedList = data.usedOrder;
+		                	console.log(self.usedList);
 		                }
 		            });
 		    	

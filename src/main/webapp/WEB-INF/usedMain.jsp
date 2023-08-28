@@ -211,7 +211,7 @@ clear: both;
 						{{item.grade}} <span>등급</span>
 					</div>
 					<div class="product-price">
-						{{item.usedPSellPrice | formatPrice}} <span>원</span>
+						{{item.uSellPrice  | formatPrice}} <span>원</span>
 					</div>
 				</div>
 			</div>
