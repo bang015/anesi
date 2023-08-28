@@ -58,8 +58,8 @@
 							<div class="main-title" >
 								<span class="product-title">{{product.productName}}</span>
 								<div class="scrapbook">
-									<i @click="fnInsertScrapbook()" v-if="scrapbookList.length == 0" class="fa-regular fa-bookmark modal-toggle-button" style="cursor:pointer;"></i>
-               						<i @click="fnDeleteScrapbook()" v-if="scrapbookList.length != 0"class="fa-regular fa-solid fa-bookmark" style="color:#A782C3; cursor:pointer;"></i>
+									<i @click="fnInsertScrapbook()" v-if="scrapbookList.length == 0" class="fa-regular fa-bookmark modal-toggle-button"></i>
+               						<i @click="fnDeleteScrapbook()" v-if="scrapbookList.length != 0"class="fa-regular fa-solid fa-bookmark" style="color:#A782C3;"></i>
                						<a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes"></i></a>
 								</div>
 							</div>
@@ -93,12 +93,12 @@
 							        </template>
 							      </span>
 							    </div>
-								{{csat.csatAvg}}({{csat.csatCnt}})
+								{{csat.csatAvg}} <span class="text5">({{csat.csatCnt}})</span>
 								
 							</div>
 							<div v-if="product.discount > 0">
 								<div class="main-discount">
-									{{product.discount}}% <span class="price">{{product.productPrice | formatPrice}}원</span>
+									<span class="price">{{product.productPrice | formatPrice}}원</span> <span class="dis">{{product.discount}}% </span>
 								</div>
 								<div class="discount-price">
 									{{discountPrice | formatPrice}}원
@@ -122,7 +122,7 @@
 							       <li v-for="(selectedOption, index) in selectedOptions" :key="index">
 							        <span>{{ selectedOption.optionName }}</span>
 							        <button class="del-btn"  @click="removeSelectedOption(index)">
-							        	<i class="fa-solid fa-x" style="color: #6e86af;"></i>
+							        	<i class="fa-solid fa-x"></i>
 							        </button> 
 							        <div class="option-stock">
 							        	 <div class="quantity-box">
@@ -561,8 +561,8 @@
 						<div class="modal noneDisplay" v-if="showScrapModal4" :class="{'showDisplay' : showScrapModal4}">
 							<div class="modal-card">
 								<h2>장바구니에 추가</h2>
-								<p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
-								<button @click="fnMedal" class="left_button">쇼핑계속하기</button>
+								<p>상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?</p>
+								<button @click="fnMedal" class="left_button">쇼핑계속하기</button> 
 								<button @click="fnMoveCart" class="right_button">장바구니로 이동하기</button>
 							</div>	
 						</div>
