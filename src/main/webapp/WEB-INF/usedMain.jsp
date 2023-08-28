@@ -181,7 +181,7 @@ clear: both;
     margin-right: 43px;
     font-size: 15px;
     margin-top: 10px;
-	}
+	} 
 	.usedProduct_container{
 	display: grid;
     grid-template-columns: repeat(4, 1fr);
