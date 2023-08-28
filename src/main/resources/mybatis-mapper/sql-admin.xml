@@ -66,6 +66,44 @@
 			#{item}
 		</foreach>
 	</delete>
+	<!--중고상품결제배송리스트-->
+	<select id="selectUsedDeliveryList" resultType="com.example.anesi.model.Used">
+		SELECT o.*, p.USED_P_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+		FROM t3_tbl_used_order o
+		INNER JOIN t3_tbl_used_purchase p ON p.USED_P_NO = o.USED_NO
+		INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
+		
+	</select>
+	<!--중고상품결제배송리스트 조회-->
+	<select id="selectUsedSearch" parameterType="hashmap" resultType="com.example.anesi.model.Used">
+	  	SELECT o.*, p.USED_P_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+		FROM t3_tbl_used_order o
+		INNER JOIN t3_tbl_used_purchase p ON p.USED_P_NO = o.USED_NO
+		INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
+	    
+	    WHERE
+	        <choose>
+	            <when test="searchOption == 'PAYMENT_NO'">
+	                o.PAYMENT_NO LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'USED_P_NAME'">
+	                p.USED_P_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'RECEIPT_NAME'">
+	                o.RECEIPT_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	        </choose>
+	</select>
+	<!-- 중고물품 배송상태변경-->
+	<update id="updateUsedDelivery" parameterType="hashmap">
+		UPDATE t3_tbl_used_order
+			SET
+			DELIVERY_SIT = #{sit}
+		WHERE PAYMENT_NO IN 
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</update>
 	
 	<select id="selectDeliveryList" resultType="com.example.anesi.model.UserOrder">
 		SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2

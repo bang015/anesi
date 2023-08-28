@@ -31,6 +31,7 @@ public interface AdminMapper {
 	int adminDeleteOption(HashMap<String, Object> map);
 	//주문 검색
 	List<UserOrder> selectDeliveryList(HashMap<String, Object> map);
+	
 	//배송상태 업데이트
 	int updateDelivery(HashMap<String, Object> map);
 	//배송상태 업데이트2
@@ -91,4 +92,12 @@ public interface AdminMapper {
 	List<Statistics> mainChart (HashMap<String, Object> map);
 	//관리자메인 만족도 차트
 	List<Statistics> mainChartCsat (HashMap<String, Object> map);
+	
+	//중고주문 리스트
+	List<Used> selectUsedDeliveryList(HashMap<String, Object> map);
+	//중고주문검색
+	List<Used> selectUsedSearch(HashMap<String, Object> map);
+	//중고배송상태변경
+	int updateUsedDelivery(HashMap<String, Object> map);
+
 }

@@ -78,5 +78,12 @@ public interface AdminService {
 	List<Statistics> mainChart (HashMap<String, Object> map);
 	//관리자메인 만족도차트
 	List<Statistics> csatChart (HashMap<String, Object> map);
+	
+	// 중고 주문 리스트
+	List<Used> selectUsedDeliveryList(HashMap<String, Object> map);
+	// 중고 주문 정보 검색
+	List<Used> selectUsedSearch(HashMap<String, Object> map);
+	// 중고배송상태 변경
+	int editUsedDelivery(HashMap<String, Object> map);
 }
 

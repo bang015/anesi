@@ -20,7 +20,19 @@ public class Used {
 	private String userName;
 	
 	private int adminCnt;
+	private String paymentNo;
+	private int deliverySit;
+	private int orderPrice;
+	private String orderName;
+	private String createdate;
+	private String receiptName;
+	private String zipcode;
+    private String addr;
+    private String addr2;
+    private String addrKind;
+    private String receiptPhone;
 
+	
 	
 	public String getUserName() {
 		return userName;

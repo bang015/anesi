@@ -48,6 +48,11 @@ public class AdminController {
 		
 		return "/admin_delivery";
 	}
+	@RequestMapping("/admin/usedDelivery.do") 
+	public String usedDelivery(Model model) throws Exception{
+		
+		return "/admin_usedDelivery";
+	}
 	
 	@RequestMapping("/admin/add.do") 
 	public String login(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
@@ -175,6 +180,7 @@ public class AdminController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
+	
 	//배송 상태 업데이트
 	@RequestMapping(value = "/admin/editDelivery.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -345,4 +351,33 @@ public class AdminController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
+	
+	//중고배송 전체
+	@RequestMapping(value = "/admin/usedDelivery.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+		public String usedDelivery(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Used> list = adminService.selectUsedDeliveryList(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	//중고배송 검색
+	@RequestMapping(value = "/admin/usedDeliverySearch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+		public String usedDeliverySearch(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<Used> list = adminService.selectUsedSearch(map);
+		resultMap.put("list", list);
+		return new Gson().toJson(resultMap);
+	}
+	
+	//배송 상태 업데이트
+	@RequestMapping(value = "/admin/editUsedDelivery.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String editUsedDelivery(Model model, @RequestParam HashMap<String, Object> map) throws Exception {HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		String json = map.get("checkList").toString();
+		ObjectMapper mapper = new ObjectMapper();
+		List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+		map.put("list", list);
+		resultMap.put("cnt", adminService.editUsedDelivery(map));
+		return new Gson().toJson(resultMap);
+		}
 }

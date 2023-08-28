@@ -81,7 +81,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<UserOrder> searchSearchList(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		return adminMapper.selectSearchList(map);
 	}
 
@@ -201,4 +200,22 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminMapper.mainChartCsat(map);
 	}
+
+	
+	//중고 주문리스트 조회
+	@Override
+	public List<Used> selectUsedDeliveryList(HashMap<String, Object> map) {
+		return adminMapper.selectUsedDeliveryList(map);
+	}
+	//중고주문리스트 검색
+	@Override
+	public List<Used> selectUsedSearch(HashMap<String, Object> map) {
+		return adminMapper.selectUsedSearch(map);
+	}
+
+	@Override
+	public int editUsedDelivery(HashMap<String, Object> map) {
+		return adminMapper.updateUsedDelivery(map);
+	}
+
 }

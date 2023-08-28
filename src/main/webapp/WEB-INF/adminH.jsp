@@ -32,6 +32,7 @@
 				<div onclick="location.href='review.do'" class="review2">리뷰관리</div>
 				<div onclick="location.href='inquiry.do'" class="inquiry2">문의관리</div>
 				<div onclick="location.href='delivery.do'" class="delivery2">배송관리</div>
+				<div onclick="location.href='usedDelivery.do'" class="delivery3">중고배송관리</div>
 				<div onclick="location.href='user.do'" class="user">고객관리</div>
 		</div>
 </body>
