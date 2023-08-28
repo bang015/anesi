@@ -209,19 +209,19 @@
   background-color: #fff;
   border: 2px solid  #A782C3;
  font-family: 'Pretendard-Regular';
- width: 150px;
+ width: 170px;
  height: 50px;
  border-radius: 5px;
-
+color: #A782C3;
 }
 .modal-card .right_button{
   background-color: #A782C3;
    border: none;
  font-family: 'Pretendard-Regular';
-  width: 150px;
+  width: 170px;
  height: 50px;
   border-radius: 5px;
-
+color: #fff;
 
 
 }

@@ -107,13 +107,6 @@
 		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
 		    <button @click="fnMoveScrapbook" class="right_button">스크랩북으로 이동하기</button>
 		  </div>
-		  
-		  <div class="modal-card"  v-else>
-		    <h2>로그인후 사용 가능합니다.</h2>
-		    <p>로그인하시겠습니까?</p>
-		    <button @click="closeModal" class="left_button">쇼핑계속하기</button>
-		    <button @click="openScrapModal3" class="right_button">로그인페이지로 이동하기</button>
-		  </div>
 		</div>
 		
     	<div class="modal" v-if="showScrapDeleteModal">
@@ -136,37 +129,45 @@
 		
 			
 		<!-- 로그인 페이지로 이동-->
-		<div class="modal" v-if="showScrapModal3">
-              <div class="container">
-	              <div class="review-back">
-	                 <button @click="closeScrapModal3"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
-	              </div>
-                 <div class="content1">
-                    <div class="logo2">
-                       <a href="main.do"><img alt="logo" src="../css/image/footer_img.png" ></a>
-                    </div>
-                    <div class="login-wrap">
-                       <div class="login-title">
-                          <span class="title1">로그인</span>
-                       </div>
-                       <div class="login-box"> <!-- 로그인 입력 박스 -->
-                          <input class="login-input" v-model="userEmail" placeholder="이메일" @keyup.enter="fnLogin">
-                          <input class="login-input" type="password" v-model="pwd" placeholder="패스워드" @keyup.enter="fnLogin">
-                       </div>
-                       <div class="login-btn">
-                          <button class="loginBtn btn" @click="fnLogin">로그인</button>
-                       </div>
-                    </div>
-                    <div class="a-wrap"> <!-- 기타등등 -->
-                       <a href="/selectEmail.do" class="a a1">아이디찾기</a>
-                       <a href="/join.do" class="a a2">회원가입</a>
-                    </div>
-                    <div class="non-user-wrap1"> <!-- 비회원 주문 조회 -->
-                       <button class="loginBtn1 btn" @click="">비회원 구매하기</button>
-                    </div>
-                 </div>
-              </div>      
-          </div>
+		<div class="modal noneDisplay" v-if="showScrapModal3" :class="{'showDisplay' : showScrapModal3}">
+			<div class="container">
+				<div class="review-back">
+					<button class="back-btn" @click="closeScrapModal3()">
+						<i class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i>
+					</button>
+				</div>
+				<div class="content1">
+					<div class="logo2">
+						<a href="main.do"><img alt="logo"
+							src="../css/image/footer_img.png"></a>
+					</div>
+					<div class="login-wrap">
+						<div class="login-title">
+							<span class="title1">로그인</span>
+						</div>
+						<div class="login-box">
+							<!-- 로그인 입력 박스 -->
+							<input class="login-input" v-model="userEmail" placeholder="이메일"
+								@keyup.enter="fnLogin"> <input class="login-input"
+								type="password" v-model="pwd" placeholder="패스워드"
+								@keyup.enter="fnLogin">
+						</div>
+						<div class="login-btn">
+							<button class="loginBtn btn" @click="fnLogin">로그인</button>
+						</div>
+					</div>
+					<div class="a-wrap">
+						<!-- 기타등등 -->
+						<a href="/selectEmail.do" class="a a1">아이디찾기</a> <a
+							href="/join.do" class="a a2">회원가입</a>
+					</div>
+					<div class="non-user-wrap1">
+						<!-- 비회원 주문 조회 -->
+						<button class="loginBtn1 btn" @click="closeModal">쇼핑계속하기</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 		
 	
@@ -237,7 +238,11 @@ var app = new Vue({
 	    },
 	    openScrapModal: function() {
 	       var self = this;
-	       self.showScrapModal = true;
+	       if(self.userId==''){
+	    	   self.showScrapModal3 = true;
+	       }else{
+	    	   self.showScrapModal = true;
+	       }
 	    },
 	    openScrapDeleteModal: function() {
 	       var self = this;
@@ -253,6 +258,7 @@ var app = new Vue({
 	      this.showScrapModal = false;
 	      this.showScrapModalBan = false;
 	      this.showScrapDeleteModal = false;
+	      this.showScrapModal3 = false;
 	      this.fnGetList();
 	      this.fnaaa();
 	      this.fnCheckScrap();
