@@ -132,7 +132,7 @@
 		<div class="modal noneDisplay" v-if="showScrapModal3" :class="{'showDisplay' : showScrapModal3}">
 			<div class="container">
 				<div class="review-back">
-					<button class="back-btn" @click="closeScrapModal3()">
+					<button class="back-btn" @click="closeScrapModal3()" >
 						<i class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i>
 					</button>
 				</div>

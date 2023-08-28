@@ -137,14 +137,7 @@
 				<button @click="fnMoveScrapbook" class="right_button">스크랩북으로
 					이동하기</button>
 			</div>
-
-			<div class="modal-card" v-else>
-				<h2>로그인후 사용 가능합니다.</h2>
-				<p>로그인하시겠습니까?</p>
-				<button @click="closeModal" class="left_button">쇼핑계속하기</button>
-				<button @click="openScrapModal3" class="right_button">로그인페이지로
-					이동하기</button>
-			</div>
+			
 		</div>
 
 		<div class="modal noneDisplay" v-if="showScrapDeleteModal" :class="{'showDisplay' : showScrapDeleteModal}">
@@ -328,8 +321,12 @@ var app = new Vue({
           self.showCartModal = true;
 	    },
 	    openScrapModal: function() {
-          var self = this;
-          self.showScrapModal = true;
+    	  var self = this;
+	       if(self.userId==''){
+	    	   self.showScrapModal3 = true;
+	       }else{
+	    	   self.showScrapModal = true;
+	       }
 	    },
 	    openScrapDeleteModal: function() {
           var self = this;

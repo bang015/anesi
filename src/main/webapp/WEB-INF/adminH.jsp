@@ -29,10 +29,10 @@
 				<div onclick="location.href='product_edit.do'" class="product_edit">상품조회/수정</div>
 				<div onclick="location.href='used.do'" class="used">중고관리</div>
 				<div onclick="location.href='statistics.do'" class="statistics">판매통계</div>
-				<div onclick="location.href='review.do'" class="review2">리뷰관리</div>
-				<div onclick="location.href='inquiry.do'" class="inquiry2">문의관리</div>
 				<div onclick="location.href='delivery.do'" class="delivery2">배송관리</div>
 				<div onclick="location.href='usedDelivery.do'" class="delivery3">중고배송관리</div>
+				<div onclick="location.href='review.do'" class="review2">리뷰관리</div>
+				<div onclick="location.href='inquiry.do'" class="inquiry2">문의관리</div>
 				<div onclick="location.href='user.do'" class="user">고객관리</div>
 		</div>
 </body>
