@@ -143,7 +143,6 @@ i {
 
 .radio-text {
   color: #333;
-  font-weight: bold;
 }
 </style>
 </head>
