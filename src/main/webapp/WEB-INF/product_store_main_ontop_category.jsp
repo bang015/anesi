@@ -11,48 +11,44 @@
 	<meta charset="EUC-KR">
 	<title>스토어메인카테고리</title>
 	<style>
-	
 	#product-main-category__total{
-	padding : 0px 0px 0px 0px;
+		padding : 0px 0px 0px 0px;
+	    margin-top: -25px;
 	}
-	
-	
-	
 	#store-main-ontop-category__container{
 		margin-top: 200px;
 		
 	}
-	
-	
-	
-	
 	#product-main-category__total > li {
 	        display: inline-block;
 	        position: relative;
 	        top: 10px;
-	    
 	}
 	#product-main-category__total > li > a {
-	  display:block; position:relative; padding-bottom:30px;
-	  margin: 50px; width:100px; height:130px;
+		display: block;
+	    position: relative;
+	    padding-bottom: 30px;
+	    margin: 33px 58px;
+	    width: 100px;
+	    height: 130px;
 	}
-	#product-main-category__total > li > a > img {
+	/* #product-main-category__total > li > a > img {
 	  width:150px; height:150px; border-radius : 50%; border : 1px solid #424242; box-shadow: 5px 5px 5px #000;
-	}
+	} */
 	#product-main-category__total > li > a > span {
-	  position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0);
-	  text-shadow:-4px 3px 10px black; color : white;
-	  
+		position: absolute;
+	    bottom: 19px;
+	    left: 50%;
+	    color: #666;
+	    line-height: 1.462em;
+	    white-space: nowrap;
+	    transform: translate(-50%, 0);
+	    font-size: 15px;
 	}
-	
-	
 	.aaa {
 	  color: #A782C3; 
 	  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
 	}
-	
-	
-	
 	.category_name{
 	
 	    font-size: 20px;
@@ -71,8 +67,6 @@
 	.title1{
 		margin-left: 35px;
 	}
-	
-	
 	</style>
 	</head>
 	<!-- 주석 꼭 남겨주세요 -->
@@ -87,7 +81,6 @@
 	        </a>
 	      </li>
 		</ul>
-		
 	</div>
 	</body>
 	</html>
@@ -111,12 +104,12 @@
 			userId : '${sessionId}',
 			userNick : '${sessionNick}',
 			categories : [
-				{ id: '10', name: '가구', image: '../css/image/productMain/productMain_category1.png', animated: false },
-				{ id: '20', name: '조명', image: '../css/image/productMain/productMain_category2.png', animated: false },
-				{ id: '30', name: '패브릭', image: '../css/image/productMain/productMain_category3.png', animated: false },
-				{ id: '40', name: '가전', image: '../css/image/productMain/productMain_category4.png', animated: false },
-				{ id: '50', name: '데코/식물', image: '../css/image/productMain/productMain_category5.png', animated: false },
-				{ id: '60', name: '반려동물', image: '../css/image/productMain/productMain_category6.png', animated: false },
+				{ id: '10', name: '가구', image: '../css/image/productMain/furniture.png', animated: false },
+				{ id: '20', name: '조명', image: '../css/image/productMain/light.png', animated: false },
+				{ id: '30', name: '패브릭', image: '../css/image/productMain/pillows.png', animated: false },
+				{ id: '40', name: '가전', image: '../css/image/productMain/washing-machine2.png', animated: false },
+				{ id: '50', name: '데코/식물', image: '../css/image/productMain/plant2.png', animated: false },
+				{ id: '60', name: '반려동물', image: '../css/image/productMain/pet.png', animated: false },
 			]
 			
 	
