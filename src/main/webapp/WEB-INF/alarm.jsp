@@ -15,7 +15,7 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 	<div id="app">
-	<h2 class="title" v-if="list.length!=''">货家侥 <span class="new"> {{list.length}}</span></h2>
+	<h2 class="title" v-if="list.length!=''">货家侥 <span class="new">{{list.length}}</span></h2>
 	<h2 class="title" v-else>货家侥</h2>
 		<hr class="hrr">
 		
