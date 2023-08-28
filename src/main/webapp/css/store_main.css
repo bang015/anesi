@@ -112,7 +112,7 @@
 
 .production-item__content{
 	width: 250px;
-    height: 440px;
+    height: 433px;
     margin: 35px;
     float: left;
     position: relative;
@@ -180,6 +180,7 @@
 
 .aaa {
   color: #A782C3; /* 원하는 색상 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
 }
 
 /*모달부분*/
