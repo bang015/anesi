@@ -20,6 +20,11 @@
 		) C ON B.BOARD_NO = C.BOARD_NO
 		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
 		LEFT JOIN t3_tbl_profile_image P ON B.USER_NO = P.USER_NO
+		LEFT JOIN (
+			SELECT COUNT(*) AS G_CNT,BOARD_NO
+			FROM t3_tbl_board_great
+			GROUP BY BOARD_NO
+		) G ON G.BOARD_NO = B.BOARD_NO
 		ORDER BY B.BOARD_NO DESC
 		LIMIT #{startNum}, #{lastNum}
 	</select>
@@ -34,7 +39,12 @@
 			GROUP BY BOARD_NO
 		) C ON B.BOARD_NO = C.BOARD_NO
 		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
-		WHERE NICK = #{nick}
+		LEFT JOIN (
+			SELECT COUNT(*) AS G_CNT,BOARD_NO
+			FROM t3_tbl_board_great
+			GROUP BY BOARD_NO
+		) G ON G.BOARD_NO = B.BOARD_NO
+		WHERE USER_NO = #{uNo}
 		ORDER BY B.BOARD_NO DESC
 		LIMIT #{startNum}, #{lastNum}
 	</select>
@@ -50,6 +60,11 @@
 		) C ON B.BOARD_NO = C.BOARD_NO
 		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
 		LEFT JOIN t3_tbl_profile_image P ON B.USER_NO = P.USER_NO
+		LEFT JOIN (
+			SELECT COUNT(*) AS G_CNT,BOARD_NO
+			FROM t3_tbl_board_great
+			GROUP BY BOARD_NO
+		) G ON G.BOARD_NO = B.BOARD_NO
 		WHERE 1=1  
 		<if test="keyword != '' and keyword != null"> 
 			AND (TITLE LIKE CONCAT('%', #{keyword}, '%')
@@ -67,7 +82,7 @@
 	<!-- 내 게시글 cnt -->
 	<select id="mySelectCnt" resultType="int">
 		SELECT COUNT(*) FROM t3_tbl_board
-		WHERE NICK = #{nick}
+		WHERE USER_NO = #{uNo}
 	</select>
 	
 	<select id="searchCnt" resultType="int">
@@ -90,8 +105,13 @@
 		) C ON B.BOARD_NO = C.BOARD_NO
 		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
 		LEFT JOIN t3_tbl_profile_image P ON B.USER_NO = P.USER_NO
+		LEFT JOIN (
+			SELECT COUNT(*) AS G_CNT,BOARD_NO
+			FROM t3_tbl_board_great
+			GROUP BY BOARD_NO
+		) G ON G.BOARD_NO = B.BOARD_NO
 		ORDER BY VIEW DESC
-		LIMIT 4
+		LIMIT 3
 	</select>
 	
 	<!-- 게시글 보기 -->
@@ -99,13 +119,8 @@
 		SELECT *
 		FROM t3_tbl_board B
 		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
+		LEFT JOIN t3_tbl_profile_image P ON B.USER_NO = P.USER_NO
 		WHERE B.BOARD_NO = #{bNo}
-	</select>
-	
-	<select id="selectBoardViewUser" parameterType="hashmap">
-		SELECT USER_NO
-		FROM t3_tbl_user
-		WHERE NICK = #{nick}
 	</select>
 	
 	<!-- 작성자 프로필 -->
@@ -131,6 +146,12 @@
 	<!-- 게시글 삭제 -->
 	<delete id="deleteBoard" parameterType="hashmap">
 		DELETE FROM t3_tbl_board
+		WHERE BOARD_NO = #{bNo}
+	</delete>
+	
+	<!-- 댓글 전체 삭제 -->
+	<delete id="deleteAllComment" parameterType="hashmap">
+		DELETE FROM t3_tbl_board_comment
 		WHERE BOARD_NO = #{bNo}
 	</delete>
 	
@@ -200,4 +221,48 @@
 			IMG_SIZE = #{imgSize}
 		WHERE BOARD_NO = #{bNo}			
 	</insert>
+	
+	<!-- 게시글 좋아요 리스트 -->
+	<select id="selectBoardGreatList" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT USER_NO
+		FROM t3_tbl_board_great
+		WHERE BOARD_NO = #{bNo}
+	</select>
+	
+	<!-- 게시글 좋아요 -->
+	<insert id="insertGreat" parameterType="hashmap">
+		INSERT INTO t3_tbl_board_great VALUES(#{bNo}, #{guserNo})
+	</insert>
+	
+	<!-- 게시글 좋아요 취소 -->
+	<delete id="deleteGreat" parameterType="hashmap">
+		DELETE
+		FROM t3_tbl_board_great
+		WHERE BOARD_NO = #{bNo} AND USER_NO = #{guserNo}
+	</delete>
+	
+	<!-- 게시글 좋아요리스트 삭제 -->
+	<delete id="deleteGreatList" parameterType="hashmap">
+		DELETE
+		FROM t3_tbl_board_great
+		WHERE BOARD_NO = #{bNo}
+	</delete>
+	
+	<!-- 좋아요 게시글 리스트 -->
+	<select id="myGreatBoard" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT *
+		FROM t3_tbl_board B
+		LEFT JOIN t3_tbl_board_great G ON B.BOARD_NO = G.BOARD_NO
+		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
+		WHERE G.USER_NO = #{uNo}
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	
+	<!-- 좋아요 게시글 cnt -->
+	<select id="selectGreatCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM t3_tbl_board B
+		LEFT JOIN t3_tbl_board_great G ON B.BOARD_NO = G.BOARD_NO
+		WHERE G.USER_NO = #{uNo}
+	</select>
 </mapper>

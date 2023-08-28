@@ -26,7 +26,7 @@
 <body>
 
 <div id="store_main_best" style="margin-bottom : 50px;">
-<h1>베스트상품</h1>
+<h1 style="margin: 27px 0px 0px 35px;">베스트상품</h1>
 <!-- 상품 정렬하는 버튼-->	
 	<div class="production-item__content" v-for="item in list" >
 			<div class="production-item-header"  @click="fnProductView(item.productNo)">
@@ -40,10 +40,7 @@
             		<span class="production-item-header__brand">{{item.manufacturer}}</span>
                 	<span class="production-item-header__name">{{item.productName}}</span>
             	</div>
-                <div class="category_country">
-                    <span class="production-item-header__kind">{{item.categoryName}},</span>
-                    <span class="production-item-header__country">{{item.country}}</span>
-                </div>
+                
 		    </div>
 			 
            <div class="production-item-price">
@@ -58,14 +55,15 @@
                     <span class="production-item-price__sell2" v-if="item.discountPrice!=''">{{formatPrice(item.discountPrice)}}</span>
                     <span class="production-item-price__sell2" v-else>{{ formatPrice(item.productPrice) }}</span>
                 </div>
-            </div>
-            
-		         <!--  production-item-rating : 별점-->
+                   <!--  production-item-rating : 별점-->
             <div class="production-item-rating">
                 <!-- 별모양-->
                 <i class="fa-solid fa-star" style="color: #A782C3;"></i>
-                <span class="production-item-rating__score ">{{item.csatAvg}}.5</span>
+                <span class="production-item-rating__score ">{{item.csatAvg}}</span>
             </div>
+            </div>
+            
+		      <div class="item-bottom-btn">
 	           <!-- 장바구니버튼-->
 	             <a class="cart_button">
 				    <i
@@ -77,14 +75,21 @@
 	            <a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes fa-xl"></i></a>
 	            <!-- 스크랩버튼-->
 	            <a v-if="userId!=''" class="scrap_button">
-	                <i @click="fnInsertScrapbook(item)" v-if="!(scrapbookList.includes(item.productNo))" class="fa-regular fa-bookmark modal-toggle-button  fa-xl"></i>
-	                <i @click="fnDeleteScrapbook(item)" v-if="scrapbookList.includes(item.productNo)"class="fa-regular fa-solid fa-bookmark  fa-xl " style="color:#A782C3;"></i>
+	                <i
+				      @click="toggleScrap(item)"
+				      class="fa-regular"
+				      :class="{
+				        'fa-bookmark modal-toggle-button fa-xl': !scrapbookList.includes(item.productNo),
+				        'fa-solid fa-bookmark fa-xl': scrapbookList.includes(item.productNo),
+				        'fa-xl': true,
+				        'my-icon-color-class': scrapbookList.includes(item.productNo)
+				      }"></i>
 	            </a>
 	            <a v-else class="scrap_button">
 	                <i @click="openScrapModal"class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
 	            </a>
     	    </div> <!-- class="production-item__content" 끝-->
-	    
+	    	</div>
 	    
     	<div class="modal" v-if="showCartModal" >
 		  <div class="modal-card">
@@ -248,7 +253,9 @@ var app = new Vue({
 	      this.showScrapModal = false;
 	      this.showScrapModalBan = false;
 	      this.showScrapDeleteModal = false;
-	      location.reload();
+	      this.fnGetList();
+	      this.fnaaa();
+	      this.fnCheckScrap();
 	    },
 	    closeScrapModal3 : function(){
 	    	this.showScrapModal3 = false;
@@ -295,11 +302,9 @@ var app = new Vue({
              data : nparmap,
              success : function(data) { 
              	/* alert("등록완"); */
-                console.log(self.userNo);
              }
          }); 
          self.openCartModal();
-         console.log(self.showCartModal);
 		}, 
 		
 	    fnUpdateUserCart : function(item) {
@@ -315,7 +320,6 @@ var app = new Vue({
              }
          }); 
          self.openCartModal();
-         console.log(self.showCartModal);
 
 		}, 
 		fnCheckScrap : function(item) {
@@ -348,7 +352,6 @@ var app = new Vue({
              }
          }); 
          self.openScrapModal();
-         console.log(self.showScrapModal);
 		},
 		
 	    fnDeleteScrapbook : function(item) {
@@ -364,7 +367,6 @@ var app = new Vue({
              }
          }); 
          self.openScrapDeleteModal();
-         console.log(self.showScrapModal);
 		},
 		//'제품상세보기' 페이지 이동
 		fnProductView : function(productNo){
@@ -394,7 +396,6 @@ var app = new Vue({
 	    	var self = this;
          var nparmap = 
          	{nonuserNo: self.nonuserNo, productNo: item.productNo}
-         console.log(self.nonuserNo);
          $.ajax({
              url : "/product/addNonUserCart.dox",
              dataType:"json",	
@@ -404,7 +405,6 @@ var app = new Vue({
              }
          }); 
          self.openCartModal();
-         console.log(self.showCartModal);
 		},
 		
 		fnLogin : function(){
@@ -432,6 +432,18 @@ var app = new Vue({
                 }                
             }); 
         },
+        toggleScrap(item) {
+            if (this.scrapbookList.includes(item.productNo)) {
+              this.fnDeleteScrapbook(item);
+              this.scrapbookList = this.scrapbookList.filter(productNo => productNo !== item.productNo);
+            } else {
+              this.fnInsertScrapbook(item);
+              this.scrapbookList.push(item.productNo);
+            }
+          },
+	    fnMoveScrapbook : function() {
+        	location.href = "/scrapbook.do";
+	    },
 
   }, // methods
 	created : function() {

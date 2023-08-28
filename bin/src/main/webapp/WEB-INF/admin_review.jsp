@@ -6,14 +6,15 @@
 <script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link href="../css/mainCss.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="../css/product_edit.css" rel="stylesheet">
 <link href="../../css/adminH.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>리뷰 관리</title>
 <style>
 
 
-.review{
+.review2{
 	background: white;
 	color: #5E503F;
 	border-radius: 10px 0px 0px 10px;
@@ -89,7 +90,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.reviewList = data.list;
-                	console.log(self.reviewList);
                 } 
 			})
 		},

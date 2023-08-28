@@ -154,8 +154,6 @@ var app = new Vue({
                 	if(self.info.smsYn == 'N'){
                 		self.info.smsYn = ''
                 	}
-                	console.log(self.info);
-                	console.log(self.info.smsYn);
                 }
             });
 		},

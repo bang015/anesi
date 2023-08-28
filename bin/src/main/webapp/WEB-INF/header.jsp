@@ -1,13 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!--ÀÚµ¿°Ë»ö±â´É  -->
-<meta charset="EUC-KR">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
+<script src="https://unpkg.com/vuejs-paginate@latest"></script>
+<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<!--ìë™ê²€ìƒ‰ê¸°ëŠ¥  -->
+<meta charset="UTF-8">
 <title>Insert title here</title>
 
 <link rel="stylesheet"
@@ -26,7 +31,132 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 
 <style>
-/* µå·Ó´Ù¿î ¸Ş´º¸¦ ¿À¸¥ÂÊ Á¤·Ä */
+.category1{
+	width: 170px;
+	background-color: rgba(255, 255, 255, 0.9);
+}
+.category2{
+	width: 170px;
+	background-color: rgba(255, 255, 255, 0.9);
+	border-left: 1px solid #e8e8e8;
+}
+.categoryAllBox{
+	display: inline-block;
+	width: 350px;
+	top: 157px;
+	z-index: 1000;
+	position: fixed;
+}
+.categoryAllBox2{
+	display: flex;
+}
+.category-box1{
+	font-size: 16px; 
+	padding : 10px 0px 10px 0px;
+	width : 170px;
+}
+.category-box2{
+	font-size: 16px; 
+	padding : 10px 0px 10px 0px;
+	width : 170px;
+}
+.categoryBox1{
+	padding: 10px 40px 10px 0;
+	cursor : pointer;
+}
+.categoryBox2{
+	padding: 10px 40px 10px 0;
+	cursor : pointer;
+}
+.categoryAllBox:hover .category-box1 {
+    background: none;
+}
+.categoryAllBox:hover .category-box1.hovered {
+  background: #B795D2;
+  color: white;
+}
+.categoryAllBox:hover .category-box2:hover {
+    background: #C8B0DB;
+    color: #fff;
+}
+.categoryNo{
+	margin-left: 10px;
+	font-family:'Pretendard-Regular';
+}
+.nav1{
+	position : relative;
+	width: 100%;
+	height: 75px;
+	border-bottom: 1px solid #e8e8e8;
+	border-top: 1px solid #e8e8e8;
+}
+.nav-left{
+	display: inline-block;
+	height: 40px;
+	margin-top: 5px;
+	position: absolute;
+	left: 0;
+}
+.nav-left button{
+	height: 100%;
+    width: 115px;
+}
+.nav-mid{
+	display: inline-block;
+}
+.search-container{
+	display: inline-block;
+	float: left;
+}
+.category-title{
+	font-size: 18px;
+    font-family: 'Pretendard-Regular';
+    color: #424242;
+    position: absolute;
+    top: 10px;
+    margin-left: 6px;
+}
+.navi-wrap{
+	position: relative;
+	width: 500px;
+	float: right;
+	height: 100px;
+}
+.flow-container{
+	margin-top: 55px;
+	clear: both;
+}
+.logo-wrap{
+	display: inline-block;
+	float: left;
+	margin-top: 12px;
+}
+.top-left{
+	display: inline-block;
+	float: left;
+	margin-top: 40px;
+	margin-left: 10px;
+}
+.top-wrap{
+	width: 100%;
+	height: 108px;
+}
+.icon1{
+	margin-right: 15px;
+}
+.icon2{
+	margin-right: 10px;
+}
+.icon3{
+	margin-right: 20px;
+}
+.hamburger{
+	width: 24px;
+}
+.over{
+	background: #A782C3;
+    color: white;
+}
 </style>
 </head>
 <body>
@@ -37,157 +167,312 @@
         isLoggedIn = true;
     }
 %>
-
+<div id="app1">
 	<header>
-		<span> <a href="/main.do"><img class="logo"
-				src="../css/image/anesilogo.png" /> </a></span> <a class="aaa"
-			href="/product/storemain.do">½ºÅä¾î</a> <a class="bbb"
-			href="/community/main.do">Ä¿¹Â´ÏÆ¼</a> <a class="ccc" href="/used/main.do">Áß°íÀåÅÍ</a>
-
-		<ul id="header_navi">
-			<li id="login-button"><a href="#" id="login-button-link"><i class="fa-solid fa-door-open"></i></a><span
-				class="fon" id="login-button-text"></span></li>
-			<li><a href="../join.do"><i class="fa-solid fa-user-plus "></i></a><span
-				class="fon">È¸¿ø°¡ÀÔ</span></li>
-			<li><a href="../mypage.do"><i class="fa-solid fa-user "></i></a><span
-				class="fon">¸¶ÀÌÆäÀÌÁö</span></li>
-			<li><a href="http://localhost:8080/scrapbook.do"><i class="fa-solid fa-bookmark "></i></a><span></span></li>
-			<li><a><i class="fa-solid fa-bell "></i></a><span></span></li>
-			<li><a href="../product/cart.do"><i
-					class="fa fa-shopping-cart "></i></a><span></span></li>
-			<li><a href="" class="headerbtn" title="Button fade blue/green"
-				class="button btnFade btnBlueGreen">Fade</a></li>
-		</ul>
-		<hr>
-		<span>
-			<button class="category-toggle">
-				<span> <i class="fa-solid fa-grip-lines"></i>Ä«Å×°í¸® 
-			</button> <span class="headerfont"> <a class="href">ÃßÃµ </a> <a
-				class="href">·©Å·</a> <a class="href">Æ¯°¡</a> <a class="href">±âÈ¹Àü</a> <a
-				class="href">ºê·£µå°ü</a>
-		</span> <span>
-	<div class="search-container">
-  <input type="text" id="search_input" placeholder="Á¦Ç°¸íÀ» ÀÔ·ÂÇÏ¼¼¿ä">
-  <a id="glass" class="glass"><i class="fa-solid fa-magnifying-glass"></i></a>
-  <div id="recent_search" class="recent-search-container" style="display: none;"></div>
-</div>
-
-		</span>
-		</span>
-
-		<hr>
-
-			 <div class="category-list-container" style="display: none;">
-         <ul class="category-list">
-
-            <li><a onclick="fnMoveaa('10')">°¡±¸</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">Ä§´ë</a></li>
-                  <li><a class="category-link">¼ÒÆÄ</a></li>
-                  <li><a class="category-link">¼ö³³Àå</a></li>
-                  <li><a class="category-link">ÀÇÀÚ</a></li>
-                  <li><a class="category-link">½ÄÅ¹</a></li>
-               </ul></li>
-            <li><a onclick="fnMoveaa('20')">Á¶¸í</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">Àå½ºÅÄµå</a></li>
-                  <li><a class="category-link">´Ü½ºÅÄµå</a></li>
-                  <li><a class="category-link">¹«µåµî</a></li>
-                  <li><a class="category-link">ÃµÀåµî</a></li>
-               </ul></li>
-            <li><a onclick="fnMoveaa('30')">ÆĞºê¸¯</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">Ä§±¸</a></li>
-                  <li><a class="category-link">Ä¿Æ°</a></li>
-                  <li><a class="category-link">·¯±×</a></li>
-               </ul></li>
-            <li><a onclick="fnMoveaa('40')">°¡Àü</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">³ÃÀå°í</a></li>
-                  <li><a class="category-link">TV</a></li>
-                  <li><a class="category-link">¼¼Å¹±â</a></li>
-                  <li><a class="category-link">À½Çâ ¿µ»ó°¡Àü</a></li>
-                  <li><a class="category-link">Ã»¼Ò °¡Àü</a></li>
-               </ul></li>
-            <li><a onclick="fnMoveaa('50')">µ¥ÄÚ/½Ä¹°</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">Á¶È­</a></li>
-                  <li><a class="category-link">²É´Ù¹ß</a></li>
-                  <li><a class="category-link">È­º´</a></li>
-                  <li><a class="category-link">±×¸² ¾×ÀÚ</a></li>
-                  <li><a class="category-link">Äµµé µğÇ»Àú</a></li>
-               </ul></li>
-            <li><a onclick="fnMoveaa('60')">¹İ·Áµ¿¹°</a>
-               <ul class="subcategory-list" style="display: none;">
-                  <li><a class="category-link">ÇÏ¿ì½º/¹æ¼®</a></li>
-                  <li><a class="category-link">Ä¹Å¸¿ö/½ºÅ©·¡ÃÄ</a></li>
-                  <li><a class="category-link">¾ÈÀü¹®/¿ïÅ¸¸®</a></li>
-                  <li><a class="category-link">¹ä±×¸©/±Ş½Ä±â</a></li>
-                  <li><a class="category-link">À§»ı¿ëÇ°</a></li>
-               </ul></li>
-         </ul>
-      </div>
-
+		<div class="top-wrap">
+		<div class="logo-wrap">
+			<a href="/main.do"><img class="logo"src="../css/image/anesilogo.png" /> </a>
 		</div>
+		<div class="top-left"> 
+			<a class="aaa1" href="/product/storemain.do">ìŠ¤í† ì–´</a>
+			<a class="bbb" href="/community/main.do">ì»¤ë®¤ë‹ˆí‹°</a>
+			<a class="ccc" href="/used/main.do">ì¤‘ê³ ì¥í„°</a>
+			<a class="ccc" v-if="sessionStatus == 'A'" href="http://localhost:8080/admin/main.do" target="_blank">ê´€ë¦¬ìí˜ì´ì§€</a>
+		</div>
+		<div class="navi-wrap"> 
+			<ul id="header_navi" v-if="userNo==''">
+				<li id="login-button">
+					<a href="../login.do" id="login-button-link">
+						<i class="fa-solid fa-door-open"></i>
+					</a>
+					<span class="fon" id="login-button-text">ë¡œê·¸ì¸</span>
+				</li>
+				<li>
+					<a href="../join.do">
+						<i class="fa-solid fa-user-plus "></i>
+					</a>
+					<span class="fon">íšŒì›ê°€ì…</span>
+				</li>
+				<li class="icon1">
+					<a href="http://localhost:8080/scrapbook.do">
+						<i class="fa-solid fa-bookmark "></i>
+					</a>
+					<span></span>
+				</li>
+				<li class="icon2">
+					<a href="http://localhost:8080/alarm.do">
+						<i class="fa-solid fa-bell "></i>
+					</a>
+					<span></span>
+				</li>
+				<li class="icon3">
+					<a href="../product/cart.do">
+						<i class="fa fa-shopping-cart "></i>
+					</a>
+					<span></span>
+				</li>
+			</ul>
+			<ul id="header_navi" v-if="userNo !=''">
+				<li id="login-button">
+					<a href="../logout.do" id="login-button-link">
+						<i class="fa-solid fa-door-closed"></i>
+					</a>
+					<span class="fon" id="login-button-text">ë¡œê·¸ì•„ì›ƒ</span>
+				</li>
+				<li>
+					<a href="../mypage.do">
+						<i class="fa-solid fa-user "></i>
+					</a>
+					<span class="fon">ë§ˆì´í˜ì´ì§€</span>
+				</li>
+				<li class="icon1">
+					<a href="http://localhost:8080/scrapbook.do">
+						<i class="fa-solid fa-bookmark "></i>
+					</a>
+					<span></span>
+				</li>
+				<li class="icon2 alarm">
+					<span class="aCnt">{{alarmList.length}}</span>
+					<a href="http://localhost:8080/alarm.do" >
+						<i class="fa-solid fa-bell "></i>
+					</a>
+					<span></span>
+				</li>
+				<li class="icon3">
+					<a href="../product/cart.do">
+						<i class="fa fa-shopping-cart "></i>
+					</a>
+					<span></span>
+				</li>
+			</ul>
+			<button class="headerbtn" @click="fnShowCommunityButton">ê¸€ì“°ê¸°<i class="fa-solid fa-chevron-down fa-lg" style="color: #ffffff; margin-left: 5px"></i></button>
+			<div class="communityButton" :class="{ show: communityflg }">
+				<div class="btnBox11">
+					<a @click="fnMoveCommunity('1')"><img alt="" src="../css/image/communityAdd2.png" class="communityImg">ì»¤ë®¤ë‹ˆí‹° ê¸€ì“°ê¸°</a>
+					<a @click="fnMoveCommunity('2')"><img alt="" src="../css/image/communityAdd.png" class="communityImg">ìƒí’ˆ ë¦¬ë·° ì“°ê¸°</a>
+					<a @click="fnMoveCommunity('3')"><img alt="" src="../css/image/communityAdd3.png" class="communityImg">ì¤‘ê³  ë¬¼í’ˆ ë“±ë¡</a>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="nav1">
+			<div class="nav-left">
+				<button class="category-toggle" @mouseover="categoryFlg">
+					<div><img class="hamburger" src="../css/image/Main/hamburger.png"> <span class="category-title">ì¹´í…Œê³ ë¦¬</span></div>
+				</button> 
+				
+			</div>
+			<div class="search-container">
+				 <input type="text" id="search_input" placeholder="ì œí’ˆëª…ì„ ì…ë ¥í•˜ì„¸ìš”">
+				 <a id="glass" class="glass"><i class="fa-solid fa-magnifying-glass"></i></a>
+				 <div id="recent_search" class="recent-search-container" style="display: none;"></div>
+			</div>
+			<div class="flow-container">
+		        <div class="flow-text">
+		        <!--     <div class="flow-wrap">í–‰ë³µì„ ë§Œë“œëŠ” ìš°ë¦¬ì§‘, ANESI </div>
+		            <div class="flow-wrap">ë¯¸ë˜ë¥¼ ë‹´ì€ í´ë˜ì‹í•œ ë””ìì¸ </div>
+		            <div class="flow-wrap">#ANESIë¡œ ê¾¸ë¯¼ ìš°ë¦¬ì§‘ </div>
+		            <div class="flow-wrap">ì§‘ì—ì„œ ì‹¤ì²œí•˜ëŠ” ì—ë„ˆì§€ ì ˆì•½</div> -->
+		            <div class="flow-wrap">ìš°ë¦¬ì§‘ ê³ ì–‘ì´ ë§ì¹˜ë„ ì¢‹ì•„í•˜ëŠ” ANESI </div>
+		            <div class="flow-wrap">#ë¯¸ë˜ë¥¼ ë‹´ì€ í´ë˜ì‹í•œ ë””ìì¸,ANESI </div>
+		            <div class="flow-wrap"># í–‰ë³µì„ ë§Œë“œëŠ” ë„ˆì™€ë‚˜ì˜ì§‘, ANESI </div>
+		            <div class="flow-wrap"># ê°€ì„ë§ì´ ìƒˆë¡œìš´ Moodë¡œì˜ ë³€í™”ì£¼ê¸° </div>
+		            <div class="flow-wrap">ë¶ˆê°€ëŠ¥í–ˆë˜ ê³µê°„ì˜ ì§œì” ìˆ˜ë‚©ì˜ ê°€ëŠ¥ì„± </div>
+		            <div class="flow-wrap">ì¤‘ê³ ë¼ ì ê³  ìƒˆë¡œìš´ íŠ¸ë Œë“œë¼ ì½ëŠ”ë‹¤! </div>
+		            <div class="flow-wrap">ë‚˜ë„ MZì„¸ëŒ€ ì‹ì§‘ì‚¬! ë°˜ë ¤ì‹ë¬¼ êµ¬ê²½ì™€:)</div>
+		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+		
+		
+		        </div>
+			</div>
+		</div>
+		
+		
 	</header>
-	<script>
+	<div class="categoryAllBox" v-if="flg" @mouseleave="flgout">
+			<div class="categoryAllBox2">
+				<div class="category1">
+					<div class="category-box1" :class="{ 'hovered': item.hovered }" v-for="item in categoryList1" @mouseover="fnGetcategoryList2(item)">
+						<div class="categoryBox1">
+							<span class="categoryNo">{{item.categoryName}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="category2" v-if="categoryList2.length != 0" >
+					<div class="category-box2" v-for="item in categoryList2">
+						<div class="categoryBox2" @click="fnCategoryPage(item.categoryNo)">
+							<span class="categoryNo">{{item.categoryName}}</span>					
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script src="../js/jquery.js"></script>
+<script>
+	var app = new Vue({   
+		el : '#app1',
+		data : {
+			userNo : '${sessionNo}',
+			sessionStatus : '${sessionStatus}',
+			flg : false,
+			product : {	//ìƒí’ˆ ë§µ				
+				productName : "",
+				productPrices : "",
+				manufacturer : "",
+				country : "",
+				discount : "",
+				category : "",
+				discountYn  : "",
+			},
+			category1No : "",
+			categoryList1 : [], //ì¹´í…Œê³ ë¦¬ ëŒ€ë¶„ë¥˜
+			categoryList2 : [],
+			category2Name : "",
+			communityflg : false,
+			alarmList : []
+		},// data
+		methods : {
+			fnGetcategoryList1(){
+				var self = this;
+				var nparmap = {};
+	            $.ajax({
+	                url : "../product/category.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	self.categoryList1 = data.list;	 
+	                	console.log(self.categoryList1);
+	                }
+	            });
+			},
+			fnGetcategoryList2(item){
+				var self = this;
+				var nparmap = {no : item.categoryNo};
+				self.category1Name = item.categoryName;
+				self.category1No = item.categoryNo;
+				this.categoryList1.forEach(category => {
+			        if (category === item) {
+			          category.hovered = true;
+			        } else {
+			          category.hovered = false;
+			        }
+			      });
+	            $.ajax({
+	                url : "../product/category2.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                	self.categoryList2 = data.list;
+	                	self.product.category = '';
+	                	self.category2Name = '';
+	                }
+	            });
+			},
+			fnCategoryPage(item){
+				$.pageChange("/category/product.do" , {categoryNo : item});
+				
+			},
+			categoryFlg(){
+				this.flg=true;
+			},
+			flgout(){
+				this.flg=false;
+				this.categoryList2 = [];
+			},
+			fnMoveCommunity(type){
+				var self = this;
+				if(type == '1'){
+					$.pageChange("http://localhost:8080/community/write.do" , {});
+				} else if(type == '2') {
+					$.pageChange("http://localhost:8080/mypage/myShopping.do" , {});
+				} else if(type == '3') {
+					$.pageChange("http://localhost:8080/used/inquire.do" , {});
+				}
+			},
+			fnShowCommunityButton(){
+				var self = this;
+				self.communityflg = !self.communityflg;
+			},
+			
+			fnGetAlarm : function() {
+				var self = this;
+				var nparmap = {userNo : self.userNo};
+				 $.ajax({
+		                url : "../alarmList.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) { 
+		                	self.alarmList = data.list;
+		                }
+	            }); 
+			},
+		}, // methods
+		created : function() {
+			var self = this;
+			self.fnGetcategoryList1();
+			self.fnGetAlarm();
+		}// created
+	});
 	   var isLoggedIn = <%= isLoggedIn %>;
-	    console.log('isLoggedIn:', isLoggedIn);
 
-	    console.log('sessionNo:', '<%= sessionNo %>');
-
-	    $(document).ready(function(){
-	        // ·Î±×ÀÎµÇ¾î ÀÖÁö ¾ÊÀº °æ¿ì ·Î±×ÀÎ ¹öÆ° ¹× ¾ÆÀÌÄÜÀ» Á¶ÀÛÇÕ´Ï´Ù.
+	    /* $(document).ready(function(){
+	        // ë¡œê·¸ì¸ë˜ì–´ ìˆì§€ ì•Šì€ ê²½ìš° ë¡œê·¸ì¸ ë²„íŠ¼ ë° ì•„ì´ì½˜ì„ ì¡°ì‘í•©ë‹ˆë‹¤.
 	        if(!isLoggedIn) {
-	            $('#login-button-link').attr('href', '../login.do'); // ·Î±×ÀÎ ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-	            $('#login-button-text').text('·Î±×ÀÎ'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×ÀÎ"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+	            $('#login-button-link').attr('href', '../login.do'); // ë¡œê·¸ì¸ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+	            $('#login-button-text').text('ë¡œê·¸ì¸'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì¸"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 	            $('.fa-door-open').removeClass('fa-door-open').addClass('fa-door-closed');
-	            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ´İÈù ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
-	        } else { // ·Î±×ÀÎµÇ¾î ÀÖ´Â °æ¿ì ·Î±×¾Æ¿ô ¹öÆ° ¹× ¾ÆÀÌÄÜÀ¸·Î Á¶ÀÛÇÕ´Ï´Ù.
-	            $('#login-button-link').attr('href', '../logout.do'); // ·Î±×¾Æ¿ô ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-	            $('#login-button-text').text('·Î±×¾Æ¿ô'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×¾Æ¿ô"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+	            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ë‹«íŒ ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+	        } else { // ë¡œê·¸ì¸ë˜ì–´ ìˆëŠ” ê²½ìš° ë¡œê·¸ì•„ì›ƒ ë²„íŠ¼ ë° ì•„ì´ì½˜ìœ¼ë¡œ ì¡°ì‘í•©ë‹ˆë‹¤.
+	            $('#login-button-link').attr('href', '../logout.do'); // ë¡œê·¸ì•„ì›ƒ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+	            $('#login-button-text').text('ë¡œê·¸ì•„ì›ƒ'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì•„ì›ƒ"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 	            $('.fa-door-closed').removeClass('fa-door-closed').addClass('fa-door-open');
-	            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ¿­¸° ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+	            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ì—´ë¦° ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 	        }
-	    });
+	    }); */
 	
 	
 	function saveRecentSearch(search) {
 		  if (!search) return;
 
-		  // °Ë»ö¾î ±â·ÏÀ» °¡Á®¿É´Ï´Ù.
+		  // ê²€ìƒ‰ì–´ ê¸°ë¡ì„ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 		  
 		  
-		  // µ¿ÀÏÇÑ °Ë»ö¾î°¡ ÀÖ´ÂÁö È®ÀÎÇÏ°í, ÀÖ´Ù¸é Á¦°ÅÇÕ´Ï´Ù.
+		  // ë™ì¼í•œ ê²€ìƒ‰ì–´ê°€ ìˆëŠ”ì§€ í™•ì¸í•˜ê³ , ìˆë‹¤ë©´ ì œê±°í•©ë‹ˆë‹¤.
 		  var index = recentSearches.indexOf(search);
 		  if (index > -1) recentSearches.splice(index, 1);
 
-		  // ÃÖ±Ù °Ë»ö¾î ±â·Ï¿¡ »õ·Î¿î °Ë»ö¾î¸¦ Ãß°¡ÇÕ´Ï´Ù.
+		  // ìµœê·¼ ê²€ìƒ‰ì–´ ê¸°ë¡ì— ìƒˆë¡œìš´ ê²€ìƒ‰ì–´ë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 		  recentSearches.unshift(search);
 		  
-		  // ÃÖ±Ù °Ë»ö¾î ¸ñ·ÏÀ» ÃÖ´ë 10°³·Î À¯ÁöÇÕ´Ï´Ù.
+		  // ìµœê·¼ ê²€ìƒ‰ì–´ ëª©ë¡ì„ ìµœëŒ€ 10ê°œë¡œ ìœ ì§€í•©ë‹ˆë‹¤.
 		  recentSearches = recentSearches.slice(0, 6);
 
-		  // º¯°æµÈ °Ë»ö¾î ±â·ÏÀ» ÀúÀåÇÕ´Ï´Ù.
+		  // ë³€ê²½ëœ ê²€ìƒ‰ì–´ ê¸°ë¡ì„ ì €ì¥í•©ë‹ˆë‹¤.
 		  localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
 		  
-		  // È­¸é¿¡ º¯°æµÈ °Ë»ö¾î ±â·ÏÀ» Ç¥½ÃÇÕ´Ï´Ù.
+		  // í™”ë©´ì— ë³€ê²½ëœ ê²€ìƒ‰ì–´ ê¸°ë¡ì„ í‘œì‹œí•©ë‹ˆë‹¤.
 		  showRecentSearches();
 		}
 	function showRecentSearches() {
-		  // localStorage¿¡¼­ ÃÖ±Ù °Ë»ö¾î¸¦ °¡Á®¿É´Ï´Ù.
+		  // localStorageì—ì„œ ìµœê·¼ ê²€ìƒ‰ì–´ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
-		  // ÃÖ±Ù °Ë»ö¾î ¸ñ·ÏÀ» ºñ¿ó´Ï´Ù.
+		  // ìµœê·¼ ê²€ìƒ‰ì–´ ëª©ë¡ì„ ë¹„ì›ë‹ˆë‹¤.
 		  $('#recent_search').empty();
 			
 		  if (recentSearches.length === 0) {
-			    // ÃÖ±Ù °Ë»ö¾î°¡ ¾ø´Ù¸é ¸Ş½ÃÁö¸¦ Ãâ·ÂÇÕ´Ï´Ù.
-			    var message = $('<li>').text('ÃÖ±Ù °Ë»ö¾î°¡ ¾ø½À´Ï´Ù.');
+			    // ìµœê·¼ ê²€ìƒ‰ì–´ê°€ ì—†ë‹¤ë©´ ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
+			    var message = $('<li>').text('ìµœê·¼ ê²€ìƒ‰ì–´ê°€ ì—†ìŠµë‹ˆë‹¤.');
 			    $('#recent_search').append(message);
 			  } else {
-		  // ¸ñ·ÏÀ» ¼øÈ¸ÇÏ¸ç È­¸é¿¡ ÃÖ±Ù °Ë»ö¾î¸¦ Ãß°¡ÇÕ´Ï´Ù.
+		  // ëª©ë¡ì„ ìˆœíšŒí•˜ë©° í™”ë©´ì— ìµœê·¼ ê²€ìƒ‰ì–´ë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 		  for (var i = 0; i < recentSearches.length; i++) {
 		    var search = recentSearches[i];
 		    var li = $('<li class="recent-search-item"></li>').text(search);
@@ -204,16 +489,16 @@
 			      type: "POST",
 			      data: { categoryName: categoryName },
 			      success: function (products) {
-			          // »óÇ° ¸ñ·Ï Ã³¸® ÄÚµå (¿¹: ¸®½ºÆ® ·»´õ¸µ)
+			          // ìƒí’ˆ ëª©ë¡ ì²˜ë¦¬ ì½”ë“œ (ì˜ˆ: ë¦¬ìŠ¤íŠ¸ ë Œë”ë§)
 			      },
 			      error: function (error) {
-			          console.log("Ä«Å×°í¸® º° »óÇ° ¸ñ·ÏÀ» °¡Á®¿À´Âµ¥ ½ÇÆĞÇß½À´Ï´Ù: ", error);
+			          console.log("ì¹´í…Œê³ ë¦¬ ë³„ ìƒí’ˆ ëª©ë¡ì„ ê°€ì ¸ì˜¤ëŠ”ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤: ", error);
 			      }
 			  });
 			});
 
 		  function loadCategoryProducts(categoryName) {
-			  // ¼­¹ö¿¡¼­ Ä«Å×°í¸®º° »óÇ° µ¥ÀÌÅÍ¸¦ °¡Á®¿À´Â AJAX ¿äÃ»
+			  // ì„œë²„ì—ì„œ ì¹´í…Œê³ ë¦¬ë³„ ìƒí’ˆ ë°ì´í„°ë¥¼ ê°€ì ¸ì˜¤ëŠ” AJAX ìš”ì²­
 			  $.ajax({
 			    method: "POST",
 			    url: "/product/getProductsByCategory.dox",
@@ -221,12 +506,10 @@
 			      categoryName: categoryName
 			    },
 			    success: function(response) {
-			      console.log("Full response data:", response);
-			      console.log("Products list:", response.list);
 
 			      var data = response;
 
-			      // testcate.do ÆäÀÌÁö·Î ÀÌµ¿ÇÏ¸é¼­ category¿Í list µ¥ÀÌÅÍ¸¦ Àü´ŞÇÕ´Ï´Ù.
+			      // testcate.do í˜ì´ì§€ë¡œ ì´ë™í•˜ë©´ì„œ categoryì™€ list ë°ì´í„°ë¥¼ ì „ë‹¬í•©ë‹ˆë‹¤.
 			      var url = "/testcate.do";
 			      var params = "categoryName=" + encodeURIComponent(categoryName) + "&list=" + encodeURIComponent(JSON.stringify(data.list));
 
@@ -242,7 +525,7 @@
 			  $('.category-link').on('click', function() {
 			    var categoryName = $(this).text();
 
-			    loadCategoryProducts(categoryName); // µ¥ÀÌÅÍ¸¦ AJAX·Î °¡Á®¿Í¼­ ·ÎÄÃ¿¡¼­ Ã³¸®
+			    loadCategoryProducts(categoryName); // ë°ì´í„°ë¥¼ AJAXë¡œ ê°€ì ¸ì™€ì„œ ë¡œì»¬ì—ì„œ ì²˜ë¦¬
 			  });
 			});
 
@@ -269,32 +552,32 @@
 			});
 		$('body').on('click', '.recent-search-item .fa-xmark', function() {
 			$(document).ready(function(){
-		        var isLoggedIn = <%= isLoggedIn %>; // ·Î±×ÀÎÀÌ µÇ¾î ÀÖ´ÂÁö ¿©ºÎ¸¦ ³ªÅ¸³»´Â º¯¼öÀÔ´Ï´Ù.
+		        var isLoggedIn = <%= isLoggedIn %>; // ë¡œê·¸ì¸ì´ ë˜ì–´ ìˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜ì…ë‹ˆë‹¤.
 
-		        // ·Î±×ÀÎµÇ¾î ÀÖÁö ¾ÊÀº °æ¿ì ·Î±×ÀÎ ¹öÆ° ¹× ¾ÆÀÌÄÜÀ» Á¶ÀÛÇÕ´Ï´Ù.
+		        // ë¡œê·¸ì¸ë˜ì–´ ìˆì§€ ì•Šì€ ê²½ìš° ë¡œê·¸ì¸ ë²„íŠ¼ ë° ì•„ì´ì½˜ì„ ì¡°ì‘í•©ë‹ˆë‹¤.
 		        if(!isLoggedIn) {
-		            $('#login-button-link').attr('href', '../login.do'); // ·Î±×ÀÎ ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-		            $('#login-button-text').text('·Î±×ÀÎ'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×ÀÎ"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+		            $('#login-button-link').attr('href', '../login.do'); // ë¡œê·¸ì¸ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+		            $('#login-button-text').text('ë¡œê·¸ì¸'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì¸"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 		            $('.fa-door-open').removeClass('fa-door-open').addClass('fa-door-closed');
-		            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ´İÈù ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
-		        } else { // ·Î±×ÀÎµÇ¾î ÀÖ´Â °æ¿ì ·Î±×¾Æ¿ô ¹öÆ° ¹× ¾ÆÀÌÄÜÀ¸·Î Á¶ÀÛÇÕ´Ï´Ù.
-		            $('#login-button-link').attr('href', '../logout.do'); // ·Î±×¾Æ¿ô ¸µÅ©¸¦ ¼³Á¤ÇÕ´Ï´Ù.
-		            $('#login-button-text').text('·Î±×¾Æ¿ô'); // ·Î±×ÀÎ ¹öÆ°ÀÇ ÅØ½ºÆ®¸¦ "·Î±×¾Æ¿ô"À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+		            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ë‹«íŒ ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+		        } else { // ë¡œê·¸ì¸ë˜ì–´ ìˆëŠ” ê²½ìš° ë¡œê·¸ì•„ì›ƒ ë²„íŠ¼ ë° ì•„ì´ì½˜ìœ¼ë¡œ ì¡°ì‘í•©ë‹ˆë‹¤.
+		            $('#login-button-link').attr('href', '../logout.do'); // ë¡œê·¸ì•„ì›ƒ ë§í¬ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+		            $('#login-button-text').text('ë¡œê·¸ì•„ì›ƒ'); // ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í…ìŠ¤íŠ¸ë¥¼ "ë¡œê·¸ì•„ì›ƒ"ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 		            $('.fa-door-closed').removeClass('fa-door-closed').addClass('fa-door-open');
-		            // ·Î±×ÀÎ ¾ÆÀÌÄÜÀÇ Å¬·¡½º¸¦ º¯°æÇÏ¿© ¿­¸° ¹® ¸ğ¾çÀ¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+		            // ë¡œê·¸ì¸ ì•„ì´ì½˜ì˜ í´ë˜ìŠ¤ë¥¼ ë³€ê²½í•˜ì—¬ ì—´ë¦° ë¬¸ ëª¨ì–‘ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 		        }
 		    });
-			  // ÀÌº¥Æ® ¹öºí¸µ »óÀ§ ¿ä¼Ò¿¡ ¿µÇâÀ» ÁÖÁö ¾Êµµ·Ï ÇÕ´Ï´Ù.
+			  // ì´ë²¤íŠ¸ ë²„ë¸”ë§ ìƒìœ„ ìš”ì†Œì— ì˜í–¥ì„ ì£¼ì§€ ì•Šë„ë¡ í•©ë‹ˆë‹¤.
 			  return false;
 			});
 		
 	
-		// Ä«Å×°í¸® Åä±Û
+		// ì¹´í…Œê³ ë¦¬ í† ê¸€
 		$('.category-toggle').click(function() {
 			$('.category-list-container').slideToggle('fast');
 		});
 
-		// ¼­ºê Ä«Å×°í¸® Åä±Û ÀÌº¥Æ®
+		// ì„œë¸Œ ì¹´í…Œê³ ë¦¬ í† ê¸€ ì´ë²¤íŠ¸
 		$('.category-list > li > a').click(function(event) {
 			event.preventDefault();
 			$(this).siblings('.subcategory-list').slideToggle('fast');
@@ -308,22 +591,20 @@
 		            productName: productName,
 		        },
 		    }).done(function(response) {
-		        console.log(response);
 
-		        // ¼¼¼Ç Á¤º¸¿Í °Ë»ö¾î¸¦ ÇÔ²² ÀúÀåÇÕ´Ï´Ù.
+		        // ì„¸ì…˜ ì •ë³´ì™€ ê²€ìƒ‰ì–´ë¥¼ í•¨ê»˜ ì €ì¥í•©ë‹ˆë‹¤.
 		        sessionStorage.setItem("searchResult", JSON.stringify(response));
 		        sessionStorage.setItem("searchKeyword", productName);
 
-		        // searchProduct.jsp·Î ÀÌµ¿ÇÕ´Ï´Ù.
+		        // searchProduct.jspë¡œ ì´ë™í•©ë‹ˆë‹¤.
 		        window.location.href = "/searchProduct.do?productName=" + encodeURIComponent(productName);
 		    });
 		    
 		}
-		// °Ë»ö ¾ÆÀÌÄÜ Å¬¸¯ ½Ã °Ë»ö¾î¸¦ °¡Áö°í searchProduct ÇÔ¼ö¸¦ ½ÇÇàÇÕ´Ï´Ù.
+		// ê²€ìƒ‰ ì•„ì´ì½˜ í´ë¦­ ì‹œ ê²€ìƒ‰ì–´ë¥¼ ê°€ì§€ê³  searchProduct í•¨ìˆ˜ë¥¼ ì‹¤í–‰í•©ë‹ˆë‹¤.
 		$('#glass').click(function() {
 		    var productName = $('#search_input').val();
 			
-		    console.log("productName:", productName);
 		    saveRecentSearch(productName);
 		    searchProduct(productName);
 		});
@@ -333,19 +614,14 @@
 		    if (e.keyCode === 13) {
 		        var productName = $(this).val();
 
-		        console.log("productName:", productName);
 		        saveRecentSearch(productName);
 		        searchProduct(productName);
 		    }
 		});
+		
+		
 
 		
 
 
-		/* //category ´­·¶À»¶§ ¸Ş´ºº°·Î ¹è¿­ÇØÁÜ
-		 function fnMoveaa (item){
-		 var self = this;
-		 $.pageChange("storemain_byCategory.do",{no : item});//º¸³¾ÇÊ¿ä¾øÀ»¶§ ÆÄ¶ó¹ÌÅÍ ºó°ªÀ¸·Î{}
-		 }
-		 */
-	</script>
+</script>

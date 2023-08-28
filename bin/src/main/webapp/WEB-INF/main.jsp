@@ -62,9 +62,8 @@
 
 </style>
 <jsp:include page="header.jsp"></jsp:include>
-<body>
+<body onload="javascript:popUp()">
 <div id="app">
- 
  <!-- 슬라이드 전체 감싸는 컨테이너 -->
 <div class="swiper mySwiper">
   <!-- wrapper 추가 필수 -->
@@ -79,7 +78,6 @@
     </div>
     <div class="swiper-slide">
    	   <img src="../css\image\Main\banner5.png">
-    
     </div>
     <div class="swiper-slide">
    	   <img src="../css\image\Main\banner6.png">
@@ -133,8 +131,52 @@ var swiper = new Swiper(".mySwiper", {
     
     // 옵션 끝 부분
   });
-
-  
-
-
 </script>
+<!--팝업-->
+<!--쿠키 cdn-->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script type="text/javascript">
+  function popUp(){
+    if(Cookies.get("popupCheck") !== "no"){
+      window.open("popup.do", 
+        "tap",
+        "width=500px,height=450px,resizable,status=1")
+    }
+}
+</script>
+<script type="text/javascript">
+    function closePopup(){
+      if(document.getElementById("check").value){
+        Cookies.set('popupCheck', 'no', { expires: 24 });
+      }
+      //자기 자신을 닫는 dom method
+      self.close();
+    }
+    
+    console.log
+    (`.             |
+    		 　╲　　　　　　　　　　　╱
+    		  　　　　　　　　/
+    		  　　　╲　　　　　　　　╱
+    		  -　-　　　　저기요　　　-　-
+    		  　　╱　   　　　　　　╲
+    		  　╱　　/             .
+    		  　　╱　　　　　　　　╲
+    		  　　　　　/　|　　　
+    		  　　　　　　　.
+    		         
+    		.           |
+    		　╲　　　　　　　　　　　╱
+    		　　　　　　　　　/
+    		　　　╲　　　　　　　　╱
+    		　　╲　　    설마...　　　╱
+    		-　-　　　제 목소리가　　-　-　-
+    		　　╱　   들리시나요?　　╲
+    		　╱　　/               .
+    		　　╱　　　　　　　　╲
+    		　　　　　/　|　　　
+    		　　　　　　　.`);
+</script>
+       
+
+

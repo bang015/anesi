@@ -1,0 +1,60 @@
+@charset "EUC-KR";
+	
+
+
+
+#product-main-category__total{
+		padding : 0px 0px 0px 0px;
+	    margin-top: -25px;
+}
+#store-main-ontop-category__container{
+		margin-top: 200px;
+}
+
+
+#product-main-category__total > li {
+        display: inline-block;
+        position: relative;
+        top: 10px;
+    
+}
+#product-main-category__total > li > a {
+  display:block; position:relative; padding-bottom:30px;
+  margin: 50px; width:100px; height:130px;
+}
+#product-main-category__total > li > a > img {
+  width:150px; height:150px; border-radius : 50%; border : 1px solid #424242; box-shadow: 5px 5px 5px #000;
+}
+#product-main-category__total > li > a > span {
+  position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0);
+  text-shadow:-4px 3px 10px black; color : white;
+  
+}
+
+
+.aaa {
+  color: #A782C3; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
+}
+
+
+
+.category_name{
+
+    font-size: 20px;
+    font-weight: bold;
+    color: #A782C3; /* 원하는 색상 */
+}
+#c_name1:hover,
+#c_name2:hover,
+#c_name3:hover,
+#c_name4:hover,
+#c_name5:hover,
+#c_name6:hover{
+
+  color: #A782C3;
+}
+.title1{
+	margin-left: 35px;
+}
+

@@ -22,7 +22,7 @@
 	top: 209px;
 	float: right;
 	width: 366px;
-	height: 400px;
+	height: 465px;
 }
 .orBtuStyle{
 	width: 100%;
@@ -399,10 +399,10 @@
 	border-bottom: 1px #ccc solid;
 }
 .modalStyle2{
-	margin-top: 10px;
+	margin-top: 20px;
 	display: flex;
 	font-size: 18px;
-	padding-bottom: 30px;
+	padding-bottom: 20px;
 	border-bottom: 1px #ccc solid;
 	text-align: center;
 }
@@ -445,4 +445,10 @@
 	font-size: 17px;
 	cursor: pointer;
 	
+}
+.noneDisplay{
+	display: none !important;
+}
+.showDisplay{
+	display: flex !important;
 }

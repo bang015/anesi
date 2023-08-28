@@ -10,6 +10,7 @@
 <style>
 	#container{
 		margin : 10px auto;
+		margin-top : 180px;
 		width: 800px;
 		line-height: 30px;
 		font-weight : 100;

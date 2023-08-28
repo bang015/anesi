@@ -101,4 +101,59 @@
 			PRODUCT_STOCK = PRODUCT_STOCK - #{cnt}
 		WHERE OPTION_NO = #{optionNo}			
 	</update>
+	<!-- 비회원 주문 조회 확인 -->
+	<select id="selectNonUserOrderCheck" parameterType="hashmap" resultType="int">
+		SELECT count(*)
+		FROM t3_tbl_nonuser_order 
+		WHERE PAYMENT_NO = #{paymentNo} AND ORDER_EMAIL = #{orderEmail}
+	</select>
+	<!-- 비회원 주문 조회 -->
+	<select id="selectNonUserOrder" parameterType="hashmap" resultType="com.example.anesi.model.NonUserOrder">
+		SELECT o.ORDER_NO, o.ORDER_PRICE,o.RECEIPT_NAME, o.RECEIPT_PHONE,o.CNT,p.PRODUCT_NAME,op.OPTION_NAME, i.IMG_PATH, i.IMG_NAME, a.ZIPCODE, a.ADDR, a.ADDR2, a.ADDR_KIND,a.ADDR_NO, o.DELIVERY_SIT
+		FROM t3_tbl_nonuser_order o
+		INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
+		INNER JOIN t3_tbl_product_option op ON o.OPTION_NO = op.OPTION_NO
+		INNER JOIN t3_tbl_product_image i ON p.PRODUCT_NO = i.PRODUCT_NO
+		INNER JOIN t3_tbl_nonuser_address a ON o.ADDR_NO = a.ADDR_NO
+		WHERE PAYMENT_NO = #{paymentNo} AND ORDER_EMAIL = #{orderEmail} AND i.THUMBNAIL_YN ='Y'
+	</select>
+	<!-- 비회원 주문 수정 -->
+	<update id="updateNonUserOrder" parameterType="hashmap">
+		UPDATE t3_tbl_nonuser_order
+		SET
+		RECEIPT_NAME = #{receiptName},
+		RECEIPT_PHONE = #{phone}
+		WHERE PAYMENT_NO = #{paymentNo}			
+	</update>
+	<!-- 비회원 주문 주소 수정 -->
+	<update id="updateNonUserOrderAddr" parameterType="hashmap">
+		UPDATE t3_tbl_nonuser_address
+		SET
+		ADDR_KIND = #{addrKind},
+		ZIPCODE = #{zipCode},
+		ADDR = #{addr},
+		ADDR2 = #{addr2}
+		WHERE ADDR_NO = #{addrNo}			
+	</update>
+	<!-- 중고 상품 정보 -->
+	<select id="selectUsedOrder" parameterType="hashmap" resultType="com.example.anesi.model.UsedOrder">
+		SELECT p.USED_P_NO, p.USED_P_SELL_PRICE, p.USED_P_NAME,i.P_IMG_PATH, i.P_IMG_NAME, p.U_SELL_PRICE
+		FROM t3_tbl_used_purchase p
+		INNER JOIN t3_tbl_used_purchase_image i ON p.USED_P_NO = i.USED_P_NO
+		WHERE p.USED_P_NO = #{usedPNo}
+		LIMIT 1;
+	</select>
+	<!-- 중고 상품 결제 -->
+	<insert id="insertUsedOrder" parameterType="hashmap">
+	    INSERT INTO t3_tbl_used_order (
+	        USED_NO, USER_NO, ADDR_NO, DELIVERY_SIT, REQUEST,
+	        ORDER_PRICE, ORDER_NAME, ORDER_EMAIL, ORDER_PHONE,
+	        RECEIPT_NAME, RECEIPT_PHONE, PAYMENT_NO
+	    )
+	    VALUES (
+	        #{usedPNo}, #{userNo}, #{addrNo}, '1', #{request},
+	        #{orderPrice}, #{orderName}, #{orderEmail}, #{orderPhone},
+	        #{receiptName}, #{receiptPhone}, #{paymentNo}
+	    )
+	</insert>
 </mapper>

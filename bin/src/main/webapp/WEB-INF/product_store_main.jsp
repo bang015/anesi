@@ -41,7 +41,6 @@
 				    </div>		
 			</div>
 		
-		
 			<div class="production-item__content" v-for="item in list">
 				<div class="production-item-header" @click="addRecentProduct(item)">
 					<a class="production-item-thumnail">
@@ -52,10 +51,6 @@
 					<div class="brand_name">
 						<span class="production-item-header__brand">{{item.manufacturer}}</span>
 						<span class="production-item-header__name">{{item.productName}}</span>
-					</div>
-					<div class="category_country">
-						<span class="production-item-header__kind">{{item.categoryName}},</span>
-						<span class="production-item-header__country">{{item.country}}</span>
 					</div>
 				</div>
 	
@@ -74,50 +69,55 @@
 						<span class="production-item-price__sell2" v-else>{{
 							formatPrice(item.productPrice) }}</span>
 					</div>
-				</div>
-	
-				<!--  production-item-rating : 별점-->
+					<!--  production-item-rating : 별점-->
 				<div class="production-item-rating">
 					<!-- 별모양-->
 					<i class="fa-solid fa-star" style="color: #A782C3;"></i> <span
 						class="production-item-rating__score ">{{item.csatAvg}}</span>
 				</div>
-				<!-- 장바구니버튼-->
-				<a class="cart_button"> <i
-					@click="userId ? (cartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnInsertUserCart(item)) : (nonuserCartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnAddNonUserCart(item))"
-					class="fa-solid fa-cart-shopping fa-xl"></i>
-				</a>
-				<!-- 공유하기버튼-->
-				<a class="share_button" @click="shareSelectedOption()"><i
-					class="fa-solid fa-share-nodes fa-xl"></i></a>
-				<!-- 스크랩버튼-->
-				<a v-if="userId!=''" class="scrap_button"> <i
-					@click="fnInsertScrapbook(item)"
-					v-if="!(scrapbookList.includes(item.productNo))"
-					class="fa-regular fa-bookmark modal-toggle-button  fa-xl"></i> <i
-					@click="fnDeleteScrapbook(item)"
-					v-if="scrapbookList.includes(item.productNo)"
-					class="fa-regular fa-solid fa-bookmark  fa-xl "
-					style="color: #A782C3;"></i>
-				</a> <a v-else class="scrap_button"> <i @click="openScrapModal"
-					class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
-				</a>
-			</div>
+				</div>
+	
+				<div class="item-bottom-btn">
+					<!-- 장바구니버튼-->
+					<a class="cart_button"> <i
+						@click="userId ? (cartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnInsertUserCart(item)) : (nonuserCartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnAddNonUserCart(item))"
+						class="fa-solid fa-cart-shopping fa-xl"></i>
+					</a>
+					<!-- 공유하기버튼-->
+					<a class="share_button" @click="shareSelectedOption()"><i
+						class="fa-solid fa-share-nodes fa-xl"></i></a>
+					<!-- 스크랩버튼-->
+					<a v-if="userId!=''" class="scrap_button"> 
+						<i
+					      @click="toggleScrap(item)"
+					      class="fa-regular"
+					      :class="{
+					        'fa-bookmark modal-toggle-button fa-xl': !scrapbookList.includes(item.productNo),
+					        'fa-solid fa-bookmark fa-xl': scrapbookList.includes(item.productNo),
+					        'fa-xl': true,
+					        'my-icon-color-class': scrapbookList.includes(item.productNo)
+					      }"></i>
+					</a> <a v-else class="scrap_button"> <i @click="openScrapModal"
+						class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
+					</a>
+					</div>
+				</div>
 			<!-- class="production-item__content" 끝-->
 	
 		
 			
 			</div><!-- store_main_cont 끝-->
 			<!-- 페이징 -->
-			<template>
-				<paginate :page-count="pageCount" :page-range="3" :margin-pages="2"
-					:click-handler="fnSearch" :prev-text="'<'" :next-text="'>'"
-					:container-class="'pagination'" :page-class="'page-item'">
-				</paginate>
-			</template>
+			<div class="pa">
+				<template v-if="pageCount > 1">
+					<paginate :page-count="pageCount" :page-range="2" :margin-pages="1"
+						:click-handler="fnSearch" :prev-text="'<'" :next-text="'>'"
+						:container-class="'pagination'" :page-class="'page-item'">
+					</paginate>
+				</template>
+			</div>
 
-
-		<div class="modal" v-if="showCartModal">
+		<div class="modal noneDisplay" v-if="showCartModal" :class="{'showDisplay' : showCartModal}">
 			<div class="modal-card">
 				<h2>장바구니에 추가</h2>
 				<p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
@@ -126,7 +126,7 @@
 			</div>
 		</div>
 
-		<div class="modal" v-if="showScrapModal">
+		<div class="modal noneDisplay" v-if="showScrapModal" :class="{'showDisplay' : showScrapModal}">
 			<div class="modal-card" v-if="userId!=''">
 				<h2>스크랩북에 등록</h2>
 				<p>상품이 스크랩되었습니다.</p>
@@ -144,7 +144,7 @@
 			</div>
 		</div>
 
-		<div class="modal" v-if="showScrapDeleteModal">
+		<div class="modal noneDisplay" v-if="showScrapDeleteModal" :class="{'showDisplay' : showScrapDeleteModal}">
 			<div class="modal-card">
 				<h2>스크랩북에서 삭제되었습니다.</h2>
 				<button @click="closeModal" class="left_button">쇼핑계속하기</button>
@@ -153,7 +153,7 @@
 			</div>
 		</div>
 
-		<div class="modal" v-if="showScrapModalBan">
+		<div class="modal noneDisplay" v-if="showScrapModalBan" :class="{'showDisplay' : showScrapModalBan}">
 			<div class="modal-card">
 				<h2>이미 담긴상품입니다.</h2>
 				<p>스크랩북을 확인해주세요</p>
@@ -164,7 +164,7 @@
 		</div>
 
 		<!-- 로그인 페이지 -->
-		<div class="modal" v-if="showScrapModal3">
+		<div class="modal noneDisplay" v-if="showScrapModal3" :class="{'showDisplay' : showScrapModal3}">
 			<div class="container">
 				<div class="review-back">
 					<button class="back-btn" @click="closeScrapModal3()">
@@ -210,6 +210,8 @@
 </html>
 <script>
 
+
+
 <!--페이징 -->
 Vue.component('paginate', VuejsPaginate)
 var app = new Vue({
@@ -245,14 +247,12 @@ var app = new Vue({
           { text: '낮은가격순', value: '1' },
           { text: '높은가격순', value: '2' },
           { text: '최신순', value: '3' },
+          { text: '할인률높은순', value: '4' },
+          { text: '상품명 가나다순', value: '5' },
+          { text: '제조사 가나다순', value: '6' },
         ],
         optionsVisible: false,
         order : ""
-
- 
-
-     
-
 	},// data
 	methods : {
 		fnGetList : function(){
@@ -264,7 +264,6 @@ var app = new Vue({
             				productNo : self.productNo,
             				startNum : startNum, 
             				lastNum : lastNum};
-            console.log(nparmap);
             $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	
@@ -344,8 +343,7 @@ var app = new Vue({
 	      this.showScrapModal = false;
 	      this.showScrapModalBan = false;
 	      this.showScrapDeleteModal = false;
-	      location.reload();
-	    },
+		    },
 	    
 	    closeScrapModal3 : function(){
 	    	this.showScrapModal3 = false;
@@ -535,8 +533,7 @@ var app = new Vue({
                 success : function(data) {                
                      if(data.success){                      
                         location.reload();                      
-                      } else {   
-                      }
+                      } 
                 }                
             }); 
         },
@@ -553,8 +550,18 @@ var app = new Vue({
         hideOptions() {
            this.optionsVisible = false;
         },
-
+        toggleScrap(item) {
+            if (this.scrapbookList.includes(item.productNo)) {
+              this.fnDeleteScrapbook(item);
+              this.scrapbookList = this.scrapbookList.filter(productNo => productNo !== item.productNo);
+            } else {
+              this.fnInsertScrapbook(item);
+              this.scrapbookList.push(item.productNo);
+            }
+          },
      }, // methods
+     
+     
 	created : function() {
 		var self = this;
 		self.fnGetList();
@@ -563,5 +570,23 @@ var app = new Vue({
 
 	}// created
 });
+console.log(`
+		＼　　ヽ　　　　i　　|　　　　 /　　　/　
+			＼　
+			 버그 나지 마라!
+			　　　　　　　　　　　;' ':;,　　 　　　 ,;'':;,
+			　　　　　　　　　　;'　　 ':;,.,..,,,;'　　　';,
+			ー　　　　　　　　 ,:'　　　　　　　　 　　　　::::::::､
+			_＿　　　　　　　　,:' ／ 　 　　　　＼ 　　　　　::::::::',
+			　　二　　　　:'　 ●　　　　　 ●　 　　　　　　::::::::i.
+			￣　　　　　　　i　'''　(_人__)　　''''　　 ::::::::::i
+			　-‐　　　　　 :　 　　　　　　　　　 　　　　　::::::::i
+			　　　　　　　　\`:,､ 　　　　　 　 　　　 :::::::::: /
+			　／　　　　　　 ,:'　　　　　　　 : ::::::::::::｀:､
+			　　　　　　　　 ,:'　　　　　　　　 : : ::::::::::｀:､
+			         );
+		`);
+
+
 </script>
 

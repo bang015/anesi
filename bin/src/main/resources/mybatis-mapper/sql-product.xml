@@ -5,8 +5,11 @@
 <mapper namespace="com.example.anesi.mapper.ProductMapper">
 		<!-- 상품데이터 가져오는 쿼리 -->
 	<select id="selectProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
-		SELECT P.*, C.CATEGORY_NAME, D.DISCOUNT_PRICE, i.*
-		<!-- , csatAvg -->
+		SELECT P.*, 
+			   C.CATEGORY_NAME, 
+			   D.DISCOUNT_PRICE, 
+			   i.*, 
+			   COALESCE(R2.csatAvg, 0) AS csatAvg 
 		FROM t3_tbl_product AS P
 		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
 		LEFT JOIN (
@@ -15,11 +18,12 @@
 		    WHERE DISCOUNT_YN = 'Y'
 		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
 		JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
-		<!--JOIN (
-			SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
-			FROM t3_tbl_user_review R
-			JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
-		) AS R2 ON P.PRODUCT_NO = R2.PRODUCT_NO -->
+		LEFT JOIN (
+					SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
+					FROM t3_tbl_user_review R
+					JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
+					GROUP BY R.PRODUCT_NO
+				  ) R2 ON P.PRODUCT_NO = R2.PRODUCT_NO 
 		WHERE  i.THUMBNAIL_YN ='Y'
 		  	   AND P.DELETE_YN = 'N' 
 			    <if test="categoryNo != '' and categoryNo != null">
@@ -35,6 +39,15 @@
             <when test="order == 3">
                 ORDER BY P.CDATETIME DESC
             </when>
+            <when test="order == 4">
+                ORDER BY P.DISCOUNT DESC
+            </when>
+            <when test="order == 5">
+                ORDER BY P.PRODUCT_NAME
+            </when>
+            <when test="order == 6">
+                ORDER BY P.MANUFACTURER
+            </when>
             <otherwise>
                 <!-- 기본 정렬 -->
                 ORDER BY P.PRODUCT_NO DESC
@@ -44,7 +57,8 @@
 	</select>
 	
 	<select resultType="int" id="selectCnt" parameterType="hashmap">
-		SELECT COUNT(*) FROM t3_tbl_product AS P
+		SELECT COUNT(*) 
+		FROM t3_tbl_product AS P
 		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
 		LEFT JOIN (
 		    SELECT PRODUCT_NO, PRODUCT_PRICE * (100 - DISCOUNT) / 100 AS DISCOUNT_PRICE
@@ -52,26 +66,16 @@
 		    WHERE DISCOUNT_YN = 'Y'
 		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
 		JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
+		LEFT JOIN (
+					SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
+					FROM t3_tbl_user_review R
+					JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
+				  ) R2 ON P.PRODUCT_NO = R2.PRODUCT_NO 
 		WHERE  i.THUMBNAIL_YN ='Y'
-		  	   AND P.DELETE_YN = 'N'
-	    <if test="categoryNo != '' and categoryNo != null">
-	       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
-	    </if>
-	     <choose>
-            <when test="order == 1">
-                ORDER BY P.PRODUCT_PRICE ASC
-            </when>
-            <when test="order == 2">
-                ORDER BY P.PRODUCT_PRICE DESC
-            </when>
-            <when test="order == 3">
-                ORDER BY P.CDATETIME DESC
-            </when>
-            <otherwise>
-                <!-- 기본 정렬 -->
-                ORDER BY P.PRODUCT_NO DESC
-            </otherwise>
-        </choose>
+		  	   AND P.DELETE_YN = 'N' 
+			    <if test="categoryNo != '' and categoryNo != null">
+			       AND P.CATEGORY_NO LIKE CONCAT((#{categoryNo}/10), '%')
+			    </if>
 	</select>
 	
 	
@@ -156,10 +160,10 @@
 	<!-- 스크랩북 등록 -->
 	<insert id="insertScrapbook" parameterType="hashmap">
 		INSERT INTO t3_tbl_user_scrapbook 
-		(USER_NO, PRODUCT_NO, CNT)
+		(USER_NO, PRODUCT_NO)
 		
 		<if test="userNo!='' and userNo !=null">
-		VALUES (#{userNo}, #{productNo}, 1)
+		VALUES (#{userNo}, #{productNo})
 		</if>
 	</insert>
 	<select id="selectScrapbookList" parameterType="hashmap" resultType="com.example.anesi.model.Scrapbook">
@@ -174,13 +178,15 @@
 	<!-- 스크랩북 삭제 -->
 	<delete id="deleteScrapbook" parameterType="hashmap">
 		DELETE FROM t3_tbl_user_scrapbook 
-		WHERE USER_NO=#{userNo} AND PRODUCT_NO = #{productNo} AND CNT>=1
+		WHERE USER_NO=#{userNo} AND PRODUCT_NO = #{productNo}
 	</delete>
 
 	<!--장바구니 삭제-->
 	<delete id="deleteCartlist" parameterType="hashmap">
 		 DELETE FROM t3_tbl_user_cart
-		 WHERE PRODUCT_NO = #{productNo} AND USER_NO = #{userNo}
+		 WHERE PRODUCT_NO = #{productNo} 
+		 <if test="userNo != '' and userNo != null">AND USER_NO = #{userNo}</if>
+      	 	<if test="nonuserNo != '' and nonuserNo != null">AND NONUSER_NO = #{nonuserNo}</if>
 	</delete>
 	<!--장바구니 모두삭제-->
 	<delete id="deleteAllCartItems" parameterType="hashmap">
@@ -191,7 +197,7 @@
 	<select id="selectCartList" parameterType="hashmap" resultType="com.example.anesi.model.Product">
 	    SELECT
 	        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
-	        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO, product.DISCOUNT_YN, product.DISCOUNT
+	        user.USER_NO, o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO, product.DISCOUNT_YN, product.DISCOUNT, cart.CNT
 	    FROM
 	        t3_tbl_product product
 	    INNER JOIN
@@ -209,7 +215,7 @@
 		<select id="selectNonCartList" parameterType="hashmap" resultType="com.example.anesi.model.Product">
 		    SELECT
 		        product.PRODUCT_NO, product.PRODUCT_NAME, image.IMG_NAME, image.IMG_PATH, product.MANUFACTURER, product.COUNTRY, product.PRODUCT_PRICE,
-		        o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO, cart.NONUSER_NO
+		        o.OPTION_NAME, o.OPTION_PRICE ,o.OPTION_NO, cart.NONUSER_NO, product.DISCOUNT_YN, product.DISCOUNT, cart.CNT
 		    FROM
 		        t3_tbl_product product
 		    INNER JOIN
@@ -310,9 +316,9 @@
     SELECT *
     FROM t3_tbl_product_image
     WHERE PRODUCT_NO = #{productNo}
-</select>
-<!-- 장바구니 구매버튼 -->
-<select id="selectCate" parameterType="hashmap" resultType="com.example.anesi.model.Category">
+	</select>
+	<!-- 장바구니 구매버튼 -->
+	<select id="selectCate" parameterType="hashmap" resultType="com.example.anesi.model.Category">
 		SELECT *
 		FROM t3_tbl_product_category
 		WHERE CATEGORY_NAME = #{categoryName}
@@ -328,6 +334,111 @@
 		 	VALUES(#{productNo}, #{nonUserNo}, #{optionNo}, #{cnt})
 	 	</if>
 	 </insert>
+	  <!-- 장바구니 중복체크 -->
+	 <select id="selectCartCheck" parameterType="hashmap" resultType="com.example.anesi.model.Cart">
+	 	SELECT *
+		FROM t3_tbl_user_cart
+		<if test="userNo != '' and userNo != null">
+			WHERE USER_NO= #{userNo} AND PRODUCT_NO= #{productNo}
+		</if>
+		<if test="nonUserNo != '' and nonUserNo != null">
+		 	WHERE NONUSER_NO= #{nonUserNo} AND PRODUCT_NO= #{productNo}
+	 	</if>
+	 </select> 
+<!--베스트상품메인-->
+ 	<select id="bestProduct" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+		SELECT P.*, 
+			   C.CATEGORY_NAME, 
+			   D.DISCOUNT_PRICE, 
+			   i.*, 
+			   COALESCE(R2.csatAvg, 0) AS csatAvg 
+		FROM t3_tbl_product P
+		JOIN t3_tbl_product_category C ON P.CATEGORY_NO = C.CATEGORY_NO
+		LEFT JOIN (
+				    SELECT PRODUCT_NO, PRODUCT_PRICE * (100 - DISCOUNT) / 100 AS DISCOUNT_PRICE
+				    FROM t3_tbl_product
+				    WHERE DISCOUNT_YN = 'Y'
+				  ) D ON P.PRODUCT_NO = D.PRODUCT_NO
+		JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
+		LEFT JOIN (
+					SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
+					FROM t3_tbl_user_review R
+					JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
+					GROUP BY R.PRODUCT_NO
+				  ) R2 ON P.PRODUCT_NO = R2.PRODUCT_NO 
+		JOIN(	
+			  SELECT COUNT(*) AS BESTCNT, PRODUCT_NO
+			  FROM t3_tbl_user_order
+			  GROUP BY PRODUCT_NO
+			  ORDER BY BESTCNT DESC
+			  LIMIT 4
+			) B ON P.PRODUCT_NO=B.PRODUCT_NO
+		WHERE  i.THUMBNAIL_YN ='Y' AND P.DELETE_YN = 'N' 
+	</select>
+	
+	<!-- 팝업쿠폰-->
+	<insert id="coupon" parameterType="hashmap">
+		<if test="userNo != '' and userNo != null">
+		 	INSERT INTO t3_tbl_user_coupon
+			(USER_NO, COUPON_NAME, DIS_FLG, DISCOUNT)
+			VALUES
+			(#{userNo}, #{couponName}, #{disFlg}, #{discount})
+	 	</if>
+	 </insert>
+	 <select id="couponCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM t3_tbl_user_coupon
+		WHERE USER_NO = #{userNo} AND COUPON_NAME=#{couponName}
+	</select>
+	<!-- 카테고리 선택 상품 -->
+	<select id="selectProductList2" parameterType="hashmap" resultType="com.example.anesi.model.Product">
+		SELECT P.*, 
+			   C.CATEGORY_NAME, 
+			   D.DISCOUNT_PRICE, 
+			   i.*, 
+			   COALESCE(R2.csatAvg, 0) AS csatAvg 
+		FROM t3_tbl_product AS P
+		JOIN t3_tbl_product_category AS C ON P.CATEGORY_NO = C.CATEGORY_NO
+		LEFT JOIN (
+		    SELECT PRODUCT_NO, PRODUCT_PRICE * (100 - DISCOUNT) / 100 AS DISCOUNT_PRICE
+		    FROM t3_tbl_product
+		    WHERE DISCOUNT_YN = 'Y'
+		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
+		JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
+		LEFT JOIN (
+					SELECT R.PRODUCT_NO, ROUND(AVG(CSAT), 1) AS csatAvg
+					FROM t3_tbl_user_review R
+					JOIN t3_tbl_product P2 ON R.PRODUCT_NO=P2.PRODUCT_NO
+					GROUP BY R.PRODUCT_NO
+				  ) R2 ON P.PRODUCT_NO = R2.PRODUCT_NO
+		WHERE  i.THUMBNAIL_YN ='Y'
+		  	   AND P.DELETE_YN = 'N' 
+			    <if test="categoryNo != '' and categoryNo != null">
+			       AND P.CATEGORY_NO = #{categoryNo}
+			    </if>
+			    <choose>
+            <when test="order == 1">
+                ORDER BY P.PRODUCT_PRICE ASC
+            </when>
+            <when test="order == 2">
+                ORDER BY P.PRODUCT_PRICE DESC
+            </when>
+            <when test="order == 3">
+                ORDER BY P.CDATETIME DESC
+            </when>
+            <otherwise>
+                <!-- 기본 정렬 -->
+                ORDER BY P.PRODUCT_NO DESC
+            </otherwise>
+        </choose>
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	<!-- 리뷰 페이지 카운트 --> 
+	<select id="selectCnt2" resultType="int">
+		SELECT COUNT(*) 
+		FROM t3_tbl_product_category
+		WHERE CATEGORY_NO = #{categoryNo}
+	</select>
 </mapper>
 
 	

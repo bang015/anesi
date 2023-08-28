@@ -57,7 +57,6 @@ var recentProductsApp = new Vue({
       var self = this;
         
       // 썸네일 클릭 시 실행될 코드를 이곳에서 정의하실 수 있습니다.
-      console.log("썸네일 클릭됨: ", productNo);
       
       $.pageChange("/product/view.do",{no : productNo}); //보낼 필요없을때 파라미터 빈값으로 {}	   
     }

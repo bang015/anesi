@@ -56,14 +56,12 @@ var app = new Vue({
 		fnAdd : function(){
             var self = this;
             var nparmap = {title : self.title, content : self.content};
-            console.log( self.content );
             $.ajax({
                 url:"/add.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	console.log(data.idx);
 	           		var form = new FormData();
 	       	        form.append( "file1",  $("#file1")[0].files[0] );
 	       	     	form.append( "idx",  data.idx); // pk

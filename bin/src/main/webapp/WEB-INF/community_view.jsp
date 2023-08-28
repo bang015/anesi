@@ -248,9 +248,9 @@ img{
 <div id="app">
 	<div id="app2">
 		<div class="move">
-			<div class="stat-out"><img class="stat-icon" src="../css/image/community/joahyo.png"></div>
-			<div class="stat-out"><img class="stat-icon" src="../css/image/community/an-joahyo.png"></div>
-			<div class="stat-out"><img class="stat-icon" src="../css/image/community/comment.png" name="comment" @click="scrollToComment"></div>
+			<div class="stat-out" v-if="greatList.includes(sessionNo)" @click="fnEditGreat('2')"><img class="stat-icon" src="../css/image/community/joahyo.png"></div>
+			<div class="stat-out" v-if="!greatList.includes(sessionNo)" @click="fnEditGreat('1')"><img class="stat-icon" src="../css/image/community/an-joahyo.png"></div>
+			<div class="stat-out"><img class="stat-icon" src="../css/image/community/comment.png" name="comment" @click="scrollUpFromSection('comment-head', 220)"></div>
 			<div class="stat-out" @click="copyAddress"><img class="stat-icon" src="../css/image/community/share.png"></div>
 		</div>
 		<div id="container">
@@ -259,26 +259,25 @@ img{
 			</div>
 			<div id="content-head">
 				<div><h2>{{info.title}}</h2></div>
-				<div><img class="profile" :src="uProfileImg.uImgPath+'/'+uProfileImg.uImgName"></div>
+				<div><img class="profile" :src="info.uImgPath+'/'+info.uImgName" v-if="info.uImgPath != undefined"></div>
 				<div class="time">{{postCalculateTime(info.cDateTime)}}<span v-if="info.cDateTime!=info.uDateTime"> · {{calculateTime(info.uDateTime)}} 수정</span></div>
 				<div class="nick">{{info.nick}}</div>
 			</div>
 			<hr class="hrr">
-			<div id="comment"></div>
 			<div>
 			    <div v-html="info.content"></div>
 			</div>
-			<div class="stat"><!-- 좋아요 <span class="stat-detail">2</span> 　 -->댓글 <span class="stat-detail">{{cCnt}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
+			<div class="stat">좋아요 <span class="stat-detail">{{great}}</span> 　 댓글 <span class="stat-detail">{{cCnt}}</span> 　조회 <span class="stat-detail">{{info.view}}</span>
 			
 			<button class="btn2" @click="fnBack">목록으로</button>
-			<button class="btn2" @click="fnDelete" v-if="sessionNick==info.nick||sessionNick=='관리자'">삭제</button>
-			<button class="btn2" @click="fnEdit(bNo)" v-if="sessionNick==info.nick">수정</button>
+			<button class="btn2" @click="fnDelete" v-if="sessionNo==info.userNo||sessionStatus=='A'">삭제</button>
+			<button class="btn2" @click="fnEdit(bNo)" v-if="sessionNo==info.userNo">수정</button>
 			</div>
 			<hr class="hrr">
 			<div style="font-size:19px;">댓글 <span>{{cCnt}}</span></div>
 			<div id="comment-head">
 				<div v-if="sessionNo!=''">
-					<img class="profile2" :src="profileImg.uImgPath+'/'+profileImg.uImgName"><input class="comment-input" type="text" v-model="content">
+					<img class="profile2" :src="profileImg.uImgPath+'/'+profileImg.uImgName" v-if="profileImg.uImgPath != undefined"><input class="comment-input" type="text" v-model="content" @keyup.enter="fnComInsert">
 					<button class="btn1" @click="fnComInsert">입력</button>
 				</div>
 				<div v-else class="guide">로그인 후 댓글 입력 가능합니다.</div>
@@ -287,7 +286,7 @@ img{
 				<div v-for="(item, index) in commentList">
 					    <div class="comment-item">
 					        <div>
-					            <div class="cNick">{{item.cNick}}<img class="c-profile" :src="item.uImgPath+'/'+item.uImgName"></div>
+					            <div class="cNick">{{item.cNick}}<img class="c-profile" :src="item.uImgPath+'/'+item.uImgName" v-if="item.uImgPath != undefined"></div>
 					            <div class="cComm">
 					                <span v-if="item.commFlg==true">
 					                    <input v-model="item.comm" class="comment-edit-input" @keyup.enter="fnComEdit(item.commentNo, item.comm)">
@@ -298,10 +297,10 @@ img{
 					                </span>
 					            </div>
 					            <div class="cDate"><span>{{calculateTime(item.cCDateTime)}} </span><span v-if="item.cCDateTime!=item.cUDateTime"> · {{calculateTime(item.cUDateTime)}} 수정</span>
-					                <span v-if='sessionNick==item.cNick'>
+					                <span v-if='sessionNo==item.cUserNo'>
 					                     · <a @click="fnComEditOpen(item.commentNo)">수정</a>
 					                </span>
-					                <span v-if='sessionNick==item.cNick||sessionNick=="관리자"'>
+					                <span v-if='sessionNo==item.cUserNo||sessionStatus=="A"'>
 					                     · <a @click="fnComDelete(item.commentNo)">삭제</a>
 					                </span>
 					            </div>
@@ -325,6 +324,8 @@ img{
 			</div>
 		</div>
 		
+		
+		
 	</div>
 </div>
 </body>
@@ -337,6 +338,7 @@ var app = new Vue({
 	data : {
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
+		sessionStatus : "${sessionStatus}",
 		bNo : "${map.boardNo}",
 		userNo : "",
 		info : {},
@@ -352,7 +354,10 @@ var app = new Vue({
 		profileImg : {},
 		uProfileImg : {},
 		imgPath : "",
-		imgName : ""
+		imgName : "",
+		greatList : [],
+		great : 0,
+		
 	},// data	
 	methods : {
 		fnGetInfo : function(){
@@ -365,13 +370,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.info = data.info;
-                	self.userInfo = data.userInfo;
-                	self.userNo = data.userInfo.userNo;
-                	self.fnGetUserProfile();
                 	self.cCnt = data.cCnt;
                 	self.imgPath = data.info.imgPath;
                 	self.imgName = data.info.imgName;
-                	console.log(self.info);
                 }
             });
 		},
@@ -456,12 +457,17 @@ var app = new Vue({
 		        return postTime.toLocaleString({ year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'});
 		    }
 		},
-        scrollToComment() {
-            const commentSection = document.getElementById('comment');
-            if (commentSection) {
-              commentSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        },
+		scrollUpFromSection(sectionId, amount) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+              const currentScrollPosition = section.getBoundingClientRect().top + window.scrollY;
+              const targetScrollPosition = currentScrollPosition - amount;
+              window.scrollTo({
+                top: targetScrollPosition,
+                behavior: "smooth"
+              });
+          }
+       },
         fnBack : function(){
 			location.href="main.do";
 		},
@@ -487,7 +493,11 @@ var app = new Vue({
 		},
 		fnComInsert : function(){
 			var self = this;
-			var nparmap = {bNo : self.bNo, nick : self.sessionNick, cUserNo : self.sessionNo, content: self.content};
+			var nparmap = {bNo : self.bNo, 
+						   nick : self.sessionNick, 
+						   cUserNo : self.sessionNo, 
+						   content: self.content,
+						   userNo : self.info.userNo};
             $.ajax({
                 url : "/community/addComment.dox",
                 dataType:"json",	
@@ -572,16 +582,37 @@ var app = new Vue({
                 }
 			})
 		},
-		fnGetUserProfile(){
+		fnGetBoardGreatList(){
 			var self = this;
-			var nparmap = {userNo: self.userNo};
+			var nparmap = {bNo : self.bNo};
 			$.ajax({
-                url : "/profileImg.dox",
+                url : "searchBoardGreatList.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	self.uProfileImg = data.img;
+                	self.greatList = data.list.map(item => {
+                		return item.userNo;
+                	});
+                	self.great = self.greatList.length; 
+                }
+			})
+			
+		},
+		fnEditGreat(type){
+			var self = this;
+			if(self.sessionNo==''||self.sessionNo==undefined){
+				alert("로그인 후 이용 가능합니다.");
+				return;
+			}
+			var nparmap = {bNo : self.bNo, guserNo : self.sessionNo, type,  userNo : self.info.userNo};
+			$.ajax({
+                url : "editGreat.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.fnGetBoardGreatList();
                 }
 			})
 		}
@@ -591,6 +622,7 @@ var app = new Vue({
 		self.fnGetInfo();
 		self.fnGetProfile();
 		self.fnGetComment();
+		self.fnGetBoardGreatList();
 	}// created
 });
 </script>

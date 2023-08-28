@@ -9,7 +9,7 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/scrapbook.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>스크랩북</title>
 <style>
 </style>
 </head>
@@ -54,7 +54,7 @@
 			</div>
 		</div>
 	</div>
-
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
 <script src="../js/jquery.js"></script>
@@ -108,6 +108,9 @@ var app = new Vue({
 		},
 		delScrapbook(){
 			var self = this;
+			if(self.checkSb.length == 0){
+				return;
+			}
 			if(!confirm("선택한 상품을 스크랩북에서 삭제하시겠습니까?")){
 				return;
 			}
@@ -120,6 +123,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	self.getSbList();
+                	self.checkSb = [];
+            		self.flg = false;
+
                 }
             });
 		},
@@ -145,6 +151,9 @@ var app = new Vue({
 	}, // methods
 	created : function() {
 		var self = this;
+		if(self.userNo == ''){
+			location.href="login.do";
+		}
 		self.getSbList();
 		self.fnGetProfile();
 	}// created

@@ -58,8 +58,8 @@
 							<div class="main-title" >
 								<span class="product-title">{{product.productName}}</span>
 								<div class="scrapbook">
-									<i @click="fnInsertScrapbook()" v-if="scrapbookList.length == 0" class="fa-regular fa-bookmark modal-toggle-button"></i>
-               						<i @click="fnDeleteScrapbook()" v-if="scrapbookList.length != 0"class="fa-regular fa-solid fa-bookmark" style="color:#A782C3;"></i>
+									<i @click="fnInsertScrapbook()" v-if="scrapbookList.length == 0" class="fa-regular fa-bookmark modal-toggle-button" style="cursor:pointer"></i>
+               						<i @click="fnDeleteScrapbook()" v-if="scrapbookList.length != 0"class="fa-regular fa-solid fa-bookmark" style="color:#A782C3; cursor:pointer;"></i>
                						<a class="share_button" @click="shareSelectedOption()"><i class="fa-solid fa-share-nodes"></i></a>
 								</div>
 							</div>
@@ -93,12 +93,12 @@
 							        </template>
 							      </span>
 							    </div>
-								{{csat.csatAvg}}({{csat.csatCnt}})
+								{{csat.csatAvg}} <span class="text5">({{csat.csatCnt}})</span>
 								
 							</div>
 							<div v-if="product.discount > 0">
 								<div class="main-discount">
-									{{product.discount}}% <span class="price">{{product.productPrice | formatPrice}}원</span>
+									<span class="price">{{product.productPrice | formatPrice}}원</span> <span class="dis">{{product.discount}}% </span>
 								</div>
 								<div class="discount-price">
 									{{discountPrice | formatPrice}}원
@@ -122,7 +122,7 @@
 							       <li v-for="(selectedOption, index) in selectedOptions" :key="index">
 							        <span>{{ selectedOption.optionName }}</span>
 							        <button class="del-btn"  @click="removeSelectedOption(index)">
-							        	<i class="fa-solid fa-x" style="color: #6e86af;"></i>
+							        	<i class="fa-solid fa-x"></i>
 							        </button> 
 							        <div class="option-stock">
 							        	 <div class="quantity-box">
@@ -160,7 +160,7 @@
 							<div class="product-a"><a href="javascript:;" @click="scrollUpFromSection('product', 160)">상품정보</a></div>
 							<div class="review-a"><a href="javascript:;" @click="scrollUpFromSection('review', 240)">리뷰  <span class="review-span" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span></a></div>
 							<div class="inquiry-a"><a href="javascript:;" @click="scrollUpFromSection('inquiry', 240)">문의 <span class="review-span" v-if="inquiryListCnt > 0">{{inquiryListCnt}}</span></a></div>
-							<div class="product-a"><a href="javascript:;" @click="scrollUpFromSection('Etc', 0 )">배송/환불</a></div>
+							<div class="product-a"><a href="javascript:;" @click="scrollUpFromSection('Etc', 250 )">배송/환불</a></div>
 						</div>
 					</div>
 					
@@ -175,15 +175,18 @@
 									<div>의심되는 경우 아네시 고객센터로 신고해 주시기 바랍니다.</div>
 								</div>
 							</div>
-							<div class="content-img" v-for="item in imgList2">
-								<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
+							<div class="content-img-box" :style="{overflow : contentImgBoxflg ? 'hidden' : 'visible', display : contentImgBoxflg ? 'block' : 'initial'}">
+								<div class="content-img" v-for="item in imgList2">
+									<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
+								</div>
+								<button v-if="contentImgBoxflg" @click="fnToggleContentImgBoxFlg">이미지 로드</button>
 							</div>
 							<div class="content-review" id="review">
 								<div class="review-title2" >
 									<span class="review-text1">리뷰 </span><span class="review-text2" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span>
 									<button class="review-btn" @click="openScrapModal" v-if="reviewUser.length != 0">리뷰쓰기</button>
 								</div>
-								<div class="modal" v-if="showScrapModal">
+								<div class="modal noneDisplay" v-if="showScrapModal" :class="{'showDisplay' : showScrapModal}">
 									
 							        <div class="review-add">
 							        <div class="review-back">
@@ -202,10 +205,9 @@
 																{{product.manufacturer}}
 															</div>
 										        			<div class="review-add-name">{{product.productName}}</div>
-										        			<span class="review-add-option" v-for="(item, index) in reviewUser">
-										        				{{item.optionName}}
-										        				<span v-if="index !== reviewUser.length - 1">+</span>	
-										        			</span>
+										        			<span class="review-add-option" v-for="(item, index) in uniqueOptions" :key="item">
+														      {{ item }}
+														    <span v-if="index !== uniqueOptions.length - 1">+</span>
 									        			</div>
 									        		</div>
 								        		</div>
@@ -348,7 +350,7 @@
 									<span class="review-text1">문의 </span><span class="review-text2" v-if="inquiryListCnt > 0"> {{inquiryListCnt}}</span>
 									<button class="review-btn" @click="openScrapModal2">문의하기</button>
 								</div>
-								<div class="modal" v-if="showScrapModal2">
+								<div class="modal noneDisplay" v-if="showScrapModal2" :class="{'showDisplay' : showScrapModal2}">
 									<div class="inquiry-add-wrap">
 										<div class="review-back">
 											<button class="back-btn" @click="closeScrapModal2()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
@@ -362,12 +364,12 @@
 													문의 유형
 												</div>
 												<div class="inquiry-category-box">
-													<div class="category-box active category-box1" @click="changeCategoryStyle('상품')">상품</div>
-													<div class="category-box category-box2" @click="changeCategoryStyle('배송')">배송</div>
-													<div class="category-box category-box3" @click="changeCategoryStyle('반품')">반품</div>
-													<div class="category-box category-box4" @click="changeCategoryStyle('교환')">교환</div>
-													<div class="category-box category-box5" @click="changeCategoryStyle('환불')">환불</div>
-													<div class="category-box category-box6" @click="changeCategoryStyle('기타')">기타</div>
+													<div class="inquiry-category-box1 active category-box11" @click="changeCategoryStyle('상품')">상품</div>
+													<div class="inquiry-category-box1 category-box21" @click="changeCategoryStyle('배송')">배송</div>
+													<div class="inquiry-category-box1 category-box3" @click="changeCategoryStyle('반품')">반품</div>
+													<div class="inquiry-category-box1 category-box4" @click="changeCategoryStyle('교환')">교환</div>
+													<div class="inquiry-category-box1 category-box5" @click="changeCategoryStyle('환불')">환불</div>
+													<div class="inquiry-category-box1 category-box6" @click="changeCategoryStyle('기타')">기타</div>
 												</div>											
 											</div>
 											<div class="inquiry-add-option">
@@ -381,7 +383,7 @@
 															{{item.optionName}}
 														</option>
 													</select>
-													<div class="option-not-check">
+													<div class="option-not-check" v-if="inquiryOption == 0">
 														<label class="styled-checkbox">																												
 															<input class="inquiry-checkbox" type="checkbox" id="optionYnCheckbox" @click="optionCheckYn">														    														
 															<span class="inquiry-span">선택안함</span>
@@ -525,7 +527,7 @@
 						</div>
 						</div>
 						
-						<div class="modal" v-if="showScrapModal3">
+						<div class="modal noneDisplay" v-if="showScrapModal3" :class="{'showDisplay' : showScrapModal3}">
 							<div class="container">
 							<div class="review-back">
 								<button class="back-btn" @click="closeScrapModal3()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
@@ -559,13 +561,21 @@
 								</div>
 							</div>		
 						</div>
-						<div class="modal" v-if="showScrapModal4">
+						<div class="modal noneDisplay" v-if="showScrapModal4" :class="{'showDisplay' : showScrapModal4}">
 							<div class="modal-card">
-						<h2>장바구니에 추가</h2>
-						<p>상품을 장바구니에 담았습니다.장바구니로 이동하시겠습니까?</p>
-						<button @click="fnMedal" class="left_button">쇼핑계속하기</button>
-						<button @click="fnMoveCart" class="right_button">장바구니로 이동하기</button>
-					</div>	
+								<h2>장바구니에 추가</h2>
+								<p>상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?</p>
+								<button @click="fnMedal" class="left_button">쇼핑계속하기</button> 
+								<button @click="fnMoveCart" class="right_button">장바구니로 이동하기</button>
+							</div>	
+						</div>
+						<div class="modal noneDisplay" v-if="showScrapModal5" :class="{'showDisplay' : showScrapModal5}">
+							<div class="modal-card">
+								<h2>리뷰 작성</h2>
+								<p>이미 작성한 리뷰가 있습니다. 수정하시겠습니까?</p>
+								<button @click="fnMedal" class="left_button">쇼핑계속하기</button>
+								<button @click="fnReviewEdit" class="right_button">수정하기</button>
+							</div>	
 						</div>
 						<div class="recently-viewed">
 						<div class="recently-box">
@@ -612,7 +622,7 @@
 							    </div>
 							</div>
 							<div class="main-btn-wrap">
-								<button class="btn1">장바구니</button>
+								<button class="btn1" @click="fnCart">장바구니</button>
 								<button class="btn2" @click="fnPay">바로구매</button>
 							</div>
 							</div>
@@ -628,6 +638,18 @@
 <script src="../js/jquery.js"></script>
 <script>
 Vue.component('paginate', VuejsPaginate)
+function adjustHeight() {
+    const recentlyViewed = document.querySelector('.recently-viewed');
+    const windowHeight = window.innerHeight;
+
+    // 사용자 높이를 기준으로 높이 조절
+    const adjustedHeight = windowHeight - 270; // 220px는 top 속성 값
+
+    recentlyViewed.style.height = adjustedHeight + 'px';
+    recentlyViewed.style.height = adjustedHeight + 'px';
+}
+window.addEventListener('DOMContentLoaded', adjustHeight);
+window.addEventListener('resize', adjustHeight);
 var app = new Vue({
 	el : '#app',
 	components: {
@@ -701,7 +723,10 @@ var app = new Vue({
 		showScrapModal2 : false,
 		showScrapModal3 : false,
 		showScrapModal4 : false,
+		showScrapModal5 : false,
 		helpList : [],
+		reviewCheck1 : 0,
+		contentImgBoxflg : true,
 		/* 그래프 시작 */
 		series: [{
             data : []
@@ -742,6 +767,20 @@ var app = new Vue({
 	      return price.toLocaleString('ko-KR');
 	    },
 	  },
+	  computed: {
+		    uniqueOptions() {
+		      const uniqueSet = new Set();
+		      return this.reviewUser
+		        .map(item => item.optionName)
+		        .filter(option => {
+		          if (!uniqueSet.has(option)) {
+		            uniqueSet.add(option);
+		            return true;
+		          }
+		          return false;
+		        });
+		    }
+		  },
 	methods : {
 		fnLogin : function(){
             var self = this;
@@ -1007,15 +1046,19 @@ var app = new Vue({
 	                	}else{
 	                		self.purchaseYn = "Y"
 	                	}
-	                	for (var i = 0; i < self.reviewUser.length; i++) {
-	                		  self.reviewPrice += self.reviewUser[i].orderPrice;
-	                		  self.optionName += self.reviewUser[i].optionName + ' + '; // 각 옵션 이름 누적
-	                		}
+	                	var optionSet = new Set();
+	                	var optionNames = [];
 
-	                		// 누적된 문자열 마지막에 있는 '+' 기호 제거
-	                		if (self.optionName.endsWith(' + ')) {
-	                		  self.optionName = self.optionName.slice(0, -3);
-	                		}
+	                	for (var i = 0; i < self.reviewUser.length; i++) {
+	                	  self.reviewPrice += self.reviewUser[i].orderPrice;
+	                	  optionSet.add(self.reviewUser[i].optionName);
+	                	}
+
+	                	optionSet.forEach(option => {
+	                	  optionNames.push(option);
+	                	});
+
+	                	self.optionName = optionNames.join(" + ");
 	                }                
 	            })
 		},
@@ -1059,6 +1102,7 @@ var app = new Vue({
 		       			self.fnReviewCnt();
 		       			self.fnReviewUser();
 		       			self.fnAvg();
+		       			self.fnReviewCheck();
 	       	     	}
                 }
             });
@@ -1183,8 +1227,7 @@ var app = new Vue({
 				return;
 			}
 			if(self.selectedOptions.length > 0){
-				/* $.pageChange("../order/main.do" , {product : self.selectedOptions}); */
-				console.log(self.selectedOptions);
+				$.pageChange("../order/main.do" , {product : self.selectedOptions});
 			} 
 			},
 		clickImg : function(imgPath,imgName){
@@ -1199,7 +1242,12 @@ var app = new Vue({
 			},
 		openScrapModal: function() {
 		    var self = this;
-		    self.showScrapModal = true;
+		    if(self.reviewCheck1 > 0){
+				self.showScrapModal5 = true;
+			} else{
+			    self.showScrapModal = true;	
+			}
+		    
 		    },
 		openScrapModal2: function() {
 		    var self = this;
@@ -1222,8 +1270,10 @@ var app = new Vue({
 			var self = this;
 			self.showScrapModal2 = false;
 			self.characterCount2=0;
-			self.inquiryOption=0;
+			self.inquiryOption = 0;
 			self.inquiryText="";
+			self.inquiryCategory = "상품";
+			self.privateCheck = false;
 			},
 		closeScrapModal3: function() {
 			var self = this;
@@ -1263,13 +1313,13 @@ var app = new Vue({
 		changeCategoryStyle(category) {
 			// inquiryCategory 변수를 업데이트
 			this.inquiryCategory = category;
-			if(category =="상품"){
+			if(category =="상품" || this.inquiryCategory == "상품"){
 				this.privateCheck = false;
 			}else{
 				this.privateCheck = true;
 			}
 			// 선택된 요소의 active 클래스를 추가하고 나머지 요소의 active 클래스를 제거
-			const boxes = document.querySelectorAll('.category-box');
+			const boxes = document.querySelectorAll('.inquiry-category-box1');
 			boxes.forEach(box => box.classList.remove('active'));
 			event.target.classList.add('active');
 			},
@@ -1447,6 +1497,9 @@ var app = new Vue({
 			    },
 			    fnCart(){
 			    	var self = this;
+			    	if(self.selectedOptions.length == 0){
+			    		alert("상품을 선택해주세요.")
+			    	}
 			    	self.selectedOptions.forEach(selectedOption => {
 			    		  const item = self.cartCheck.find(cartItem => cartItem.optionNo === selectedOption.optionNo);
 			    		  if (item) {
@@ -1467,7 +1520,6 @@ var app = new Vue({
 				                type : "POST", 
 				                data : nparmap,
 				                success : function(data) {
-				                	  console.log("응답 데이터:", nparmap );
 				                	self.showScrapModal4 = true;
 				                	 self.selectedNparmap = nparmap;
 				                	 // 넘겨받은 nparmap 값을 LocalStorage에 저장
@@ -1507,11 +1559,9 @@ var app = new Vue({
 			    	var self = this;			    	
 			    	if(self.userNo!=""||self.userNo!=null){			    		
 			    		var nparmap = { userNo: self.userNo, productNo: self.productNo};
-			    		console.log(nparmap)
 			    	}
 			    	if(self.userNo==""||self.userNo==null){
 			    		var nparmap = { nonUserNo: self.nonuserNo, productNo: self.productNo};
-			    		console.log(nparmap)
 			    	}	
 			    	
 				    $.ajax({
@@ -1521,11 +1571,39 @@ var app = new Vue({
 				              data : nparmap,
 				           success : function(data) {
 				               self.cartCheck=data.cartCheck
-				               console.log(self.cartCheck);
 				           }
 				        });
-			    	}
-		           
+			    	},
+			    	fnReviewEdit(){
+			    		location.href="/mypage/myReview.do"
+			    	},
+			    	fnReviewCheck(){
+			    		var self = this;
+			            var nparmap = { userNo: self.userNo, productNo: self.productNo};
+			            $.ajax({
+			                url : "/selectReviewCheck.dox",
+			                dataType:"json",	
+			                type : "POST", 
+			                data : nparmap,
+			                success : function(data) {
+			                	if(data.reviewCheck > 0){
+			                		self.reviewCheck1 = 1;
+			                	}
+			                }
+			            });
+			    	},
+			    	fnToggleContentImgBoxFlg(){
+			    		this.contentImgBoxflg = !this.contentImgBoxflg;
+			    		const section = document.getElementById('product');
+				    	  if (section) {
+				    	    const currentScrollPosition = section.getBoundingClientRect().top + window.scrollY;
+				    	    const targetScrollPosition = currentScrollPosition + 300;
+				    	    window.scrollTo({
+				    	      top: targetScrollPosition,
+				    	    });
+				    	}
+			    	},
+			    
 			     
 	}, // methods
 	created : function() {
@@ -1546,6 +1624,7 @@ var app = new Vue({
 		self.fnCheckScrap();
 		self.fnSelectHelp();
 		self.fnaaa();
+		self.fnReviewCheck();
 	}// created
 });
 </script>

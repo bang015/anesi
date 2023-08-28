@@ -11,7 +11,7 @@
 <link href="../css/order.css" rel="stylesheet">
 <link href="../css/checkbox.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>결제 페이지</title>
 <style>
 </style>
 </head>
@@ -26,11 +26,11 @@
 					<div class="amountBox">
 						<h2 class="moneyText">결제 금액</h2>
 						<div>
-							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{totalProductAmount}}원</span></div>
-							<div class="orNameText">배송비<span class="allMoneyText">3000원</span></div>
-							<div class="orNameText">쿠폰 사용<span class="allMoneyText">{{discount}}원</span></div>
+							<div class="orNameText">총 상품 금액<span class="allMoneyText">{{numberWithCommas(totalProductAmount)}}원</span></div>
+							<div class="orNameText">배송비<span class="allMoneyText">3,000원</span></div>
+							<div class="orNameText">쿠폰 사용<span class="allMoneyText">{{numberWithCommas(discount)}}원</span></div>
 						</div>
-						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{finalAmount+deliveryfee+discount}}</span> 원</span></div>
+						<div class="FinalPaymentAmount">최종 결제 금액<span class="allMoneyText"><span>{{numberWithCommas(totalProductAmount+deliveryfee+discount)}}</span> 원</span></div>
 					</div>
 					<div class="orTerms">
 						<div class="allTerms">
@@ -66,7 +66,7 @@
 						</div>
 					</div>
 				</div>
-				<button class="orBtuStyle" @click="fnOrder">{{finalAmount}}원 결제하기</button>
+				<button class="orBtuStyle" @click="fnOrder">{{numberWithCommas(totalProductAmount+deliveryfee+discount)}}원 결제하기</button>
 			</div>
 			<div class="orInformation">
 				<div class="subheading">주문자</div>
@@ -116,9 +116,9 @@
 				<div class="addr">
 					<label>
 					    <div class="orInputBox3" v-if="userNo != ''">
-					        <select @change="fnAddrChange" v-model="defaule">
-					        	<option v-for="item in addrList" :value="item.defaultYn">{{item.addrKind}} : {{item.addr}}</option>
-					        	<option> 직접입력 </option>
+					        <select @change="fnAddrChange" v-model="selectIndex">
+					        	<option v-for="(item, index) in addrList" :value="index">{{item.addrKind}} : {{item.addr}}</option>
+					        	<option value="-1"> 직접입력 </option>
 					        </select>
 					    </div>
 					</label>
@@ -197,7 +197,7 @@
 							<div>
 								<div class="prProductName">{{item.productName}}</div>
 								<div class="prProductOption">{{item.optionName}}</div>
-								<div class="prProductPrice">{{item.productPrice}}원 <span>| {{item.cnt}}개</span></div>
+								<div class="prProductPrice">{{numberWithCommas(item.productPrice)}}원 <span>| {{item.cnt}}개</span></div>
 							</div>
 						</div>
 					</div>
@@ -250,14 +250,13 @@
 						</button>
 					</div>
 				</div>
-				<div class="modal" v-if="showScrapModal">
+			<div class="modal noneDisplay" v-if="showScrapModal" :class="{'showDisplay' : showScrapModal}">
 		        <div class="modal-card">
 		        	<div class="modalStyle1">주문완료</div>
 		        	<div class="modalStyle2">
 		        		<div class="modalStyle4">결제정보</div>
 		        		<div class="modalStyle3">
 		        			<div>상품이름 : {{productList[0].productName}}</div>
-		        			<div>결제금액 : {{finalAmount}}원</div>
 		        		</div>
 		        	</div>
 		        	<div class="modalStyle2">
@@ -265,10 +264,14 @@
 		        		<div class="modalStyle3">{{"ORD"+formatDate(new Date())+"-"+cnt}}</div>
 		        	</div>
 		        	<div class="modalStyle2">
+		        		<div class="modalStyle4">결제금액</div>
+		        		<div class="modalStyle3">{{numberWithCommas(finalAmount)}}</div>
+		        	</div>
+		        	<div class="modalStyle2">
 		        		<div class="modalStyle4">배송지</div>
 		        		<div class="modalStyle3">
-		        			<div>{{addr.name}}</div>
-		        			<div>{{addr.phone1 +addr.phone2}}</div>
+		        			<div>받는분 : {{addr.name}}</div>
+		        			<div>전화번호 : {{addr.phone1 +addr.phone2}}</div>
 		        			<div>{{addr.addr1}}</div>
 		        			<div>{{addr.addr2}}</div>
 		        			<div>({{addr.zip}})</div>
@@ -279,8 +282,9 @@
 		        		<div class="modalStyle3">택배</div>
 		        	</div>
 		        	<div class="modalStyle2">
-		        		<div>배송 요청사항</div>
-		        		<div class="modalStyle3">{{request}}</div>
+		        		<div class="modalStyle4">배송 요청사항</div>
+		        		<div class="modalStyle3" v-if="addr.deliveryRq == '5'">{{addr.customDeliveryRq}}</div>
+		        		<div class="modalStyle3" v-else>{{request}}</div>
 		        	</div>
 		        	<div class="modalButBox">
 		        		<button class="modalBut" onclick="location.href='../main.do'">메인페이지</button>
@@ -347,7 +351,8 @@ var app = new Vue({
 		deliveryfee : 3000,
 		payment : '',
 		showScrapModal : false,
-		request : ''
+		request : '',
+		selectIndex : 0,
 	},// data
 	methods : {
 		fnAllCheck(){
@@ -384,7 +389,7 @@ var app = new Vue({
 		            self.flgName = false;
 		        }
 		    }
-		    const regex = /^[a-z0-9]+$/;
+		    const regex = /^[a-zA-Z0-9._%+-]+/;
 		    if (text === 'email1') {
 		        if (self.order.email1.trim() === '' || self.order.email1 !== self.order.email1.trim()) {
 		            self.flgEmail1 = true;
@@ -545,8 +550,6 @@ var app = new Vue({
 			    	}
 		    		self.fnOrrder2();
 		    	}
-		    	
-		    	
 		    },
 		    fnOrrder2(){
 		    	var self = this;
@@ -580,10 +583,11 @@ var app = new Vue({
 		    	} else{
 		    		productName = self.productList[0].productName;
 		    	}
+		    	var paymentNo =  "ORD"+self.formatDate(new Date())+"-"+self.cnt
 	              IMP.request_pay({ // param
 	              pg: self.payment, //kakaopay.TC0ONETIME
 	              pay_method: "card",
-	              merchant_uid: "ORD"+self.formatDate(new Date())+"-"+self.cnt,
+	              merchant_uid:paymentNo,
 	              name: productName,
 	              amount: self.finalAmount,
 	              buyer_email: orderEmail,
@@ -595,7 +599,7 @@ var app = new Vue({
 	              if (rsp.success && rsp.paid_amount == self.finalAmount) {
 	            	  
 	            	  for(let i=0;i < self.productNoList.length;i++){
-	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity, paymentNo : "ORD"+self.formatDate(new Date())+"-"+self.cnt, nonUserNo : self.addr.nonUserNo};
+	            	  	 var nparmap = {productNo : self.productNoList[i].productNo, optionNo : self.productNoList[i].optionNo, userNo : self.userNo, addrNo : self.order.addrNo, request : self.request, orderPrice : self.finalAmount, orderName : self.order.name, orderEmail : orderEmail, orderPhone : orderPhone, receiptName : self.addr.name, receiptPhone : receiptPhone, cnt : self.productNoList[i].quantity, paymentNo, nonUserNo : self.addr.nonUserNo};
 		 		    	 $.ajax({
 		 		                url : "../order/order.dox",
 		 		                dataType:"json",	
@@ -627,6 +631,7 @@ var app = new Vue({
 		 		    	 });
 	            	  }
 	            	  self.openScrapModal();
+	            	  
 	              } else {
 	                // 결제 실패 시 로직,
 	            	  self.finalAmount = self.finalAmount-self.deliveryfee-self.discount;
@@ -655,6 +660,7 @@ var app = new Vue({
 								self.addr.zip= self.addrList[i].zipcode;
 								self.order.addrNo = self.addrList[i].addrNo;
 								self.addr.addrDefault = 'Y';
+								self.selectIndex = i;
 							}
 						}
 	                }
@@ -665,6 +671,10 @@ var app = new Vue({
 		    	self.addr.addrDefault = 'N';
 		    	 const selectedIndex = event.target.selectedIndex;
 		    	 const selectedItem = self.addrList[selectedIndex];
+		    	 self.selectIndex = selectedIndex;
+		    	 if(event.target.value == -1){
+		    		 self.selectIndex = -1;	 
+		    	 }
 		    	 if(selectedItem == undefined){
 		    		 	self.addr.addrName= '';
 						self.addr.addr1= '';
@@ -797,7 +807,10 @@ var app = new Vue({
 	              location.reload();
 
 	            },
-
+	            numberWithCommas(number) {
+	                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	            },
+	            
 	}, // methods
 	created : function() {
 		var self = this;

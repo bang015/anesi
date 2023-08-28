@@ -11,7 +11,7 @@
 <title>회원정보수정🧐</title>
 <style>
 #app{
-	margin-top : 160px;
+	margin-top : 180px;
 }
 #container{
 	margin : 30px auto;
@@ -167,6 +167,40 @@ img:hover{
 	position: absolute;
     left: -9999px;
 }
+.gender-radio-group {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.gender-radio {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.custom-radio {
+  position: absolute;
+  opacity: 0;
+}
+
+.radio-button {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 128px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.custom-radio:checked + .radio-button {
+  background-color: #A782C3;
+  color : white;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -245,23 +279,43 @@ img:hover{
 					</select>
 				</div>
 			</div>
+			<!-- 성별 -->
 			<div class="part">
-				<div class="edit_title">성별</div> 
-					<div>
-						선택 안 함 <input type="radio" v-model="info.gender" value="N" name="gender">　　　
-						여성 <input type="radio" v-model="info.gender" value="F" name="gender">　　　
-						남성 <input type="radio" v-model="info.gender" value="M" name="gender">
-					</div>
+				<div>
+				    <h2>성별</h2>
+				    <div class="gender-radio-group">
+				      <label class="gender-radio">
+				        <input type="radio" v-model="info.gender" value="N" class="custom-radio">
+				        <div class="radio-button">
+				          <span class="radio-text">선택 안 함</span>
+				        </div>
+				      </label>
+				      <label class="gender-radio">
+				        <input type="radio" v-model="info.gender" value="F" class="custom-radio">
+				        <div class="radio-button">
+				          <span class="radio-text">여성</span>
+				        </div>
+				      </label>
+				      <label class="gender-radio">
+				        <input type="radio" v-model="info.gender" value="M" class="custom-radio">
+				        <div class="radio-button">
+				          <span class="radio-text">남성</span>
+				        </div>
+				      </label>
+				    </div>
+				</div>
+			</div>
+			
 			<div class="part">
 				<div class="edit_title">프로필 이미지</div>
 				<label v-if="profileImg.uImgPath != undefined">
 					<img :src="profileImg.uImgPath+'/'+profileImg.uImgName" style="object-fit: cover; width:200px; height:200px; border:1px solid #eee; margin : 10px 0px">
 					<input type="file" id="file1" name="file1" class="inputFile" @change="fnProfileChange">
 				</label>
+				<div class="span1">프로필 이미지를 수정하려면 사진을 클릭해주세요.</div>
 			</div>				
 	</div>
 	<button class="btn" @click="fnEdit">회원정보수정</button>
-</div>
 </div>
 </div>
 </body>
@@ -345,7 +399,6 @@ var app = new Vue({
 		 	if(self.bYear=="연" || self.bMonth=="월" || self.bDay=="일"){
 		 		self.info.birthday = "";
 		 	}
-		 	console.log("1");
 		 	var nparmap = {nick : self.info.nick, phone : self.info.phone, birthday : self.info.birthday, gender : self.info.gender, no:self.sessionNo}
             $.ajax({
                 url : "userEdit.dox",
@@ -377,7 +430,6 @@ var app = new Vue({
         				self.nickMs = "닉네임은 특수문자 제외하고 사용가능합니다."
         				self.nickFlg = false;
         			}else if(data.cnt > 0){
-        				console.log(self.info.nick);
                 		self.nickMs = "중복된 닉네임입니다.";
                 		self.nickFlg = false;
                 	} else {

@@ -11,7 +11,7 @@
 <title>마이페이지😏</title>
 <style>
 #app{
-	margin-top : 160px;
+	margin-top : 180px;
 }
 #container{
 	margin : 30px auto;
@@ -131,12 +131,12 @@ li{
 	border : 1px solid #A782C3;
     border-radius: 7px;
     padding: 13px 9px;
-    margin: 10px 0px;
     background-color : white;
     transition: background 0.3s;
     cursor: pointer;
     margin: 30px 10px;
     width: 236px;
+    font-family : 'Pretendard-Regular';
 }
 .btn1:hover{
 	background-color : #A782C3;
@@ -147,6 +147,9 @@ li{
 }
 .icon_label:hover{
 	opacity: 0.7; 
+}
+.btnDIV{
+	text-align:center;
 }
 </style>
 <jsp:include page="header.jsp"></jsp:include>
@@ -164,7 +167,7 @@ li{
 <hr class="hrr">
 	<ul class="my_menu1">
 		<li class="my_li2"><a href="/mypage.do" class="my_a2_ch" style="color : #A782C3;">모두 보기</a></li>
-		<li class="my_li2"><a class="my_a2">나의 문의</a></li>
+		<li class="my_li2"><a class="my_a2" href="/mypage/myInquiry.do">나의 문의</a></li>
 		<li class="my_li2"><a href="/mypage/myBoard.do" class="my_a2">나의 게시글</a></li>
 		<li class="my_li2"><a href="/scrapbook.do" class="my_a2">스크랩북</a></li>
 	</ul>
@@ -178,15 +181,14 @@ li{
 		<div class="profile_right">	
 		<ul class="profile_list">
 			<li><label class="icon_label"><a href="scrapbook.do"><img src="../css/image/bookmark.png" class="icon" style="margin: 0px 65px 10px 10px; width: 52px;"><br><span class="comment" style="margin-left: 13px;">스크랩북</span></a></label></li>
-			<li><label class="icon_label"><a href=""><img src="../css/image/coupon.png" class="icon" style="margin : 6px 65px 18px 10px; width: 50px;"><br><span class="comment" style="margin-left:15px;">내 쿠폰</span></a></label></li>
-			<li><label class="icon_label"><a href=""><img src="../css/image/qna.png" class="icon" style="margin: 0px 65px 9px 10px; width: 52px;"><br><span class="comment" style="margin-left: 16px;">내 문의</span></a></label></li>
-			<li><label class="icon_label"><a href="/mypage/myBoard.do"><img src="../css/image/post.png" class="icon" style="margin: 0px 10px 10px 10px; width: 50px;"><br><span class="comment" style="margin-left: 7px;">내 게시글</span></a></label></li>
+			<li><label class="icon_label"><a href="/mypage/myCoupon.do"><img src="../css/image/coupon.png" class="icon" style="margin : 6px 65px 18px 10px; width: 50px;"><br><span class="comment" style="margin-left:9px;">나의 쿠폰</span></a></label></li>
+			<li><label class="icon_label"><a href="/mypage/myInquiry.do"><img src="../css/image/qna.png" class="icon" style="margin: 0px 65px 9px 10px; width: 52px;"><br><span class="comment" style="margin-left: 11px;">나의 문의</span></a></label></li>
+			<li><label class="icon_label"><a href="/mypage/myBoard.do"><img src="../css/image/post.png" class="icon" style="margin: 0px 6px 10px; width: 50px;"><br><span class="comment" style="margin-left: -2px;">나의 게시글</span></a></label></li>
 		</ul>
+		<div class="btnDIV">
 			<button class="btn1" @click="fnEdit">회원정보수정</button>
-			<button class="btn1">로그아웃</button>
+			<button class="btn1" @click="fnLogout">로그아웃</button>
 		</div>
-		<div>
-			
 		</div>
 	</div>
 </div>
@@ -216,15 +218,19 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.profileImg = data.img;
-                	console.log(self.profileImg);
                 }
 			})
+		},
+		fnLogout(){
+			location.href="/logout.do";
 		}
 	}, // methods
 	created : function() {
 		var self = this;
+		if(self.sessionNo == ''){
+			location.href="login.do";
+		}
 		self.fnGetProfile();
-		console.log(self.sessionNick);
 	}// created
 });
 </script>

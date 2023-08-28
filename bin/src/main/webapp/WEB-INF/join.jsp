@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,90 +9,137 @@
 <meta charset="UTF-8">
 <title>ANESI 회원가입😎</title>
 <style>
-	#container {
-		margin : 10px auto;
-		width : 400px;
-		line-height: 30px;
-	}
-	#logo{
-		width : 200px;
-		margin: 20px 0px 0px 100px;
-	}
-	.put{
-	    border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 380px;
-	    height: 30px;
-	    padding: 10px;
-	}
-	.email{
-		border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 167px;
-	    height: 30px;
-	    padding: 10px;
-	}
-	.email2{
-		border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 190px;
-	    height: 52px;
-	    padding: 8px;
-	}
-	#login{
-		text-align: center;
-		margin-bottom : 80px;
-	}
-	hr{
-		margin : 30px 0px;
-	}
-	.btn{
-	    border: none;
-	    color: white;
-	    background-color: #A782C3;
-	    border-radius: 7px;
-	    padding: 0px 9px;
-	    width: 400px;
-	    height: 50px;
-	    font-size: 20px;
-	    margin: 10px 0px;
-  		transition: background 0.3s;
-  		cursor: pointer;
-	}
-	.btn:hover{
-		background-color: #7c6191;
-	}
-	.clause1{
-		color : #A782C3;
-	}
-	.clause2{
-		color : #999;
-	}
-	.select{
-		border-radius: 4px;
-	    border: 1px solid #ccc;
-	    width: 130px;
-	    height: 50px;
-	    padding: 8px;
-	}
-	.part{
-		margin : 20px 0px;
-	}
-	.red{
-		color : #ff9797;
-	}
-	h2{
-		font-weight : 100;
-		margin : 10px 0px;
-	}
-	i{
-		float : right;
-		margin-top: 10px;
-		margin-right : 5px;
-	}
-	img:hover{
-		cursor: pointer;
-	}
+#container {
+	margin: 10px auto;
+	width: 400px;
+	line-height: 30px;
+}
+
+#logo {
+	width: 200px;
+	margin: 20px 0px 0px 100px;
+}
+
+.put {
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 380px;
+	height: 30px;
+	padding: 10px;
+}
+
+.email {
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 167px;
+	height: 30px;
+	padding: 10px;
+}
+
+.email2 {
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 190px;
+	height: 52px;
+	padding: 8px;
+}
+
+#login {
+	text-align: center;
+	margin-bottom: 80px;
+}
+
+hr {
+	margin: 30px 0px;
+}
+
+.btn {
+	border: none;
+	color: white;
+	background-color: #A782C3;
+	border-radius: 7px;
+	padding: 0px 9px;
+	width: 400px;
+	height: 50px;
+	font-size: 20px;
+	margin: 10px 0px;
+	transition: background 0.3s;
+	cursor: pointer;
+}
+
+.btn:hover {
+	background-color: #7c6191;
+}
+
+.clause1 {
+	color: #A782C3;
+}
+
+.clause2 {
+	color: #999;
+}
+
+.select {
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 130px;
+	height: 50px;
+	padding: 8px;
+}
+
+.part {
+	margin: 20px 0px;
+}
+
+.red {
+	color: #ff9797;
+}
+
+h2 {
+	font-weight: 100;
+	margin: 10px 0px;
+}
+
+i {
+	float: right;
+	margin-top: 10px;
+	margin-right: 5px;
+}
+
+.gender-radio-group {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.gender-radio {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.custom-radio {
+  position: absolute;
+  opacity: 0;
+}
+
+.radio-button {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 128px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.custom-radio:checked + .radio-button {
+  background-color: #A782C3;
+  color : white;
+}
 </style>
 </head>
 <body>
@@ -117,6 +163,7 @@
 		<option value="hotmail.com">hotmail.com</option>
 		<option value="icloud.com">icloud.com</option>
 	</select>
+    
 	</div>
 	<div><span class="red">{{emailMs}}</span></div>
 	</div>
@@ -184,14 +231,31 @@
 	</div>
 	<!-- 성별 -->
 	<div class="part">
-	<div><h2>성별</h2></div> 
-	<div>
-		선택 안 함 <input type="radio" v-model="user.gender" value="N">　　　
-		여성 <input type="radio" v-model="user.gender" value="F">　　　
-		남성 <input type="radio" v-model="user.gender" value="M">
+		<div>
+		    <h2>성별</h2>
+		    <div class="gender-radio-group">
+		      <label class="gender-radio">
+		        <input type="radio" v-model="user.gender" value="N" class="custom-radio">
+		        <div class="radio-button">
+		          <span class="radio-text">선택 안 함</span>
+		        </div>
+		      </label>
+		      <label class="gender-radio">
+		        <input type="radio" v-model="user.gender" value="F" class="custom-radio">
+		        <div class="radio-button">
+		          <span class="radio-text">여성</span>
+		        </div>
+		      </label>
+		      <label class="gender-radio">
+		        <input type="radio" v-model="user.gender" value="M" class="custom-radio">
+		        <div class="radio-button">
+		          <span class="radio-text">남성</span>
+		        </div>
+		      </label>
+		    </div>
+		</div>
 	</div>
 	<!-- 약관동의 -->
-	</div>
 	<hr>
 	<div><h2>약관동의</h2></div>
 	<div><label><input type="checkbox" @click="fnAll" v-model="clause"> 전체동의</label></div>
@@ -201,19 +265,22 @@
 	<div><label><input type="checkbox" v-model="clause" value="sms"> 마케팅 활용 동의와 이벤트, 특가 등 메일 및 SMS 수신<span class="clause2">(선택)</span></label><a href="privacyMarketing.do" target="blank"><i class="fa-solid fa-chevron-right" style="color: #000000;"></i></a></div>
 	<hr>
 	<!-- 하단 -->
-	<div><button @click="fnJoin" class="btn">회원가입</button></div>
+	<div><button @click="fnJoin()" class="btn">회원가입</button></div>
 	<div id="login">이미 아이디가 있으신가요? <a href="login.do">로그인</a></div>
 	</div>
 </div>
 </body>
 </html>
 <script>
+
+
 var app = new Vue({
 	el : '#app',
 	data : {
 		user : {
 			userEmail1 : "",
 			userEmail2 : "",
+			 username: "",
 			email : "",
 			pw1 : "",
 			pw2 : "",
@@ -241,7 +308,8 @@ var app = new Vue({
 		pw2Ms : "",
 		nameMs : "",
 		nickMs : "",
-		phoneMs : ""
+		phoneMs : "",
+		userNo : ""
 	},// data
 	methods : {
 		// 회원가입 버튼
@@ -261,6 +329,7 @@ var app = new Vue({
 		        });
 				return;
 			}
+			
 			if(!self.emailFlg){
 				alert("이미 가입된 이메일입니다.");
 				self.$nextTick(function() {
@@ -354,6 +423,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	alert("회원가입이 완료되었습니다.");
+                	self.userNo=data.userNo;
+                	self.fnInsertAlarm(1);
+                	self.fnCoupon('회원가입 감사 10% 할인쿠폰','B','10')
                 	location.href="main.do";
                 }
             });
@@ -384,6 +456,31 @@ var app = new Vue({
                 }
             });
 		},
+		// https://sdy-study.tistory.com/269 참고사이트 
+		sendVerificationCode: function() {
+		      var self = this;
+		      var email = self.user.userEmail1 + '@' + self.user.userEmail2;
+
+		      var data = {
+		        email: email,
+		        username: "ㅎㅇ" // 사용자 이름은 적절한 방법으로 설정하세요.
+		      };
+		      $.ajax({
+		        url: "/register",
+		        dataType: "json",
+		        type: "POST", 
+		        data: data,
+		        success: function(response) {
+		          // 성공적으로 메일 전송 후의 처리 로직에 제공된 response 값으로 작성하세요.
+		          alert("Verification code sent to your email.");
+		        },
+		        error: function(error) {
+		          console.error(error);
+		          alert("Failed to send verification code.");
+		        }
+		      });
+		},
+
 		// 닉네임 중복체크 및 메세지
 		fnNickOverlap : function(){
 			var self = this;
@@ -483,7 +580,38 @@ var app = new Vue({
         // 로고 클릭시 메인 이동
         fnMain : function(){
         	location.href="main.do";
-        }
+        },
+        //회원가입알람
+        fnInsertAlarm : function(alarmType){
+			var self = this;
+			var nparmap = {userNo:self.userNo, alarmType};
+
+			 $.ajax({
+	                url : "../addAlarm.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	                }
+            }); 
+		},
+		fnCoupon(couponName, disFlg, discount){
+			var self = this;
+			
+				var nparmap = {userNo:self.userNo,
+							   couponName,
+							   disFlg,
+							   discount};
+				   $.ajax({
+		                url : "coupon.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+		                	
+		                }
+		            }); 
+		},
 	}, // methods
 	created : function() {
 		var self = this;

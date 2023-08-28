@@ -54,17 +54,34 @@
 						</div>
 
 						<button v-on:click="goToPurchasePage([item.productNo])"
-							class="btn btn-sm btn-danger">구매하기</button>
-						<div class="col-md-3">
-							<button class="btn btn-sm btn-danger"
-								v-on:click="deleteItem(item)">
-								<i class="fas fa-trash-alt" aria-hidden="true" id="delete"></i>
-								삭제
-							</button>
+							  class="btn btn-sm btn-danger">구매하기</button>
+							<div class="col-md-3">
+							  <button class="btn btn-sm btn-danger"
+							    v-on:click="deleteItem(item)">
+							    <i class="fas fa-trash-alt" aria-hidden="true" id="delete"></i>
+							    삭제
+							  </button>
+							</div>
+						<div class="product-item__action">
+						  <div class="quantity-box">
+						    <button class="minus-btn" @click="decrementCount(item)">
+						      <i class="fa-solid fa-minus" style="color: #4c6794;"></i>
+						    </button>
+						    <input min="1" class="input-number" v-model="item.cnt" @input="inputCount(item, $event)">
+
+
+						    <button class="plus-btn" @click="incrementCount(item)">
+						      <i class="fa-solid fa-plus" style="color: #4b638b;"></i>
+						    </button>
+						  </div>
+						  <div class="option-stock-price">
+						    {{ calculateTotalPriceWithCount(item) | formatPrice }}원
+						  </div>
 						</div>
-					</div>
+
 				</div>
 			</div>
+		</div>
 
 
 
@@ -77,7 +94,6 @@
 					class="btn btn-primary"
 					style="width: 300px; float: right; height: 30px">전체 구매하기</button>
 			</div>
-		</div>
 	</div>
 	</div>
 
@@ -104,10 +120,13 @@ new Vue({
 	    selectedOptions: [],
 	    selectPage: 1,
 	    pageCount: 1,
-	    cnt: 0, // 선택된 옵션 정보를 저장할 배열
+	    cnt: "", // 선택된 옵션 정보를 저장할 배열
 	    productList: [],
 	    productNoList: [],
-	    totalPrice: 0
+	    totalPrice: 0,
+	    productNo : "",
+	    optionNo : ""
+	    
 	  
 	  },
     computed: {
@@ -117,11 +136,11 @@ new Vue({
     		      return this.cartItems.find(item => item.productNo === pno);
     		    });
     		  },
-    		  discountedPrice() {
+    		  discountedAmount() {
     			    if (this.cartItems.length > 0 && this.cartItems[0].discountYn === 'Y') {
     			      return Math.floor((this.cartItems[0].productPrice * ((100 - this.cartItems[0].discount) / 100)) / 100) * 100;
     			    }
-    			    return 50;
+    			    return 0;
     			  },
     	
     	
@@ -133,75 +152,107 @@ new Vue({
       this.loadCartList();
     },
     
-    methods: {
-    	loadCartList() {
-    		  const selectedNparmapString = localStorage.getItem("selectedNparmap");
-    		  let selectedNparmap = null;
-    		  if (selectedNparmapString) {
-    		    selectedNparmap = JSON.parse(selectedNparmapString);
-    		  }
+    filters: {
+        formatPrice(value) {
+          return value.toLocaleString();
+        },
+      },
+      methods: {
+    	  calculateTotalPriceWithCount(item) {
+    		    const discountPrice = this.discountedPrice(item);
+    		    const optionPrice =
+    		      (item.selectedOption &&
+    		        item.options.find(
+    		          (option) => option.optionNo === item.selectedOption
+    		        )?.optionPrice) ||
+    		      0;
+    		    const count = item.cnt || 1;
 
-    		  const self = this;
-    		  const userNo = "${sessionNo}";
-    		  $.ajax({
-    		    url: "/product/viewCartList.dox",
-    		    method: "POST",
-    		    dataType: "json",
-    		    data: { userNo: userNo },
-    		    success: function (response) {
-    		      console.log(response);
-    		      
-    		      
-					
-    		        
-    		        
-    		        // 선택된 nparmap에 따라 상품 목록 필터링
-    		        if (self.selectedNparmap && self.selectedNparmap.optionNo) {
-    		            const filteredList = response.list.filter(
-    		              (item) => item.optionNo === self.selectedNparmap.optionNo
-    		            );
-    		            response.list = filteredList;
-    		          }
+    		   
 
-    		       
-    		        
-    		        // 중복 상품 제거
-    		        const uniqueItemsMap = new Map();
-    		        response.list.forEach(item => {
-    		          if (!uniqueItemsMap.has(item.productNo)) {
-    		            uniqueItemsMap.set(item.productNo, item);
-    		          }
-    		        });
+    		    return (discountPrice + optionPrice) * count;
+    		  },
+    		  
+    		  discountedPrice(item) {
+    		    if (item && item.discountYn === 'Y') {
+    		      return Math.floor((item.productPrice * ((100 - item.discount) / 100)) / 100) * 100;
+    		    }
+    		    return item.productPrice || 0;
+    		  },
 
-    		        const uniqueItems = Array.from(uniqueItemsMap.values());
-
-    		        // 상품별로 옵션 가져오기
-    		            Promise.all(
-       			 uniqueItems.map((item) => {
- 				return new Promise((resolve) => {
-            if (!self.options || Object.keys(self.options).length === 0) {
-              self.options = [];
+        incrementCount(item) {
+            item.cnt += 1;
+          },
+          decrementCount(item) {
+            if (item.cnt > 1) {
+              item.cnt -= 1;
             }
-            self.fnOption(item.productNo, (options) => {
-              // 각 상품의 옵션을 추가
-              item.options = [{ optionNo: "", optionName: "상품을 선택하세요.", optionPrice: 0 }].concat(options);
+          },
+          inputCount(item, event) {
+              const inputValue = parseInt(event.target.value);
+              
+              if (isNaN(inputValue) || inputValue < 1) {
+                item.cnt = 1;
+              } else {
+                item.cnt = inputValue;
+              }
+            },
+    	
+            loadCartList() {
+            	  const selectedNparmapString = localStorage.getItem("selectedNparmap");
+            	  const selectedNparmap = selectedNparmapString ? JSON.parse(selectedNparmapString) : null;
+					
 
-              // 옵션 배열에 해당 상품의 옵션들을 추가
-              self.options = self.options.concat(options);
+            	  const self = this;
+            	  const userNo = "${sessionNo}";
+            	  
+            	  $.ajax({
+            	    url: "/product/viewCartList.dox",
+            	    method: "POST",
+            	    dataType: "json",
+            	    data: { userNo: userNo },
+            	    success: function (response) {
+            	      
 
-              if (selectedNparmap && selectedNparmap.optionNo && item.productNo === selectedNparmap.productNo) {
-            	  item.selectedOption = item.options.find((option) => option.optionNo === selectedNparmap.optionNo).optionNo;
-            	} else {
-            	  item.selectedOption = options.length > 0 ? options[0].optionNo : "";
-            	}
+            	          if ( response.list.length  === 0) {
+            	            window.location.href = '/nullCart.do'; // nullCart로 페이지 이동
+            	          }
 
-             	 resolve();
-       		   });
-    		    });
-    		     })
-    				).then(() => {
-    		        		  // 모든 상품의 옵션이 로드된 후에 cartItems 할당
-    		       self.cartItems = uniqueItems;
+            	      // 중복 상품 제거
+            	      const cartItemsMap = new Map();
+            	      response.list.forEach(item => {
+            	        if (!cartItemsMap.has(item.productNo)) {
+            	          cartItemsMap.set(item.productNo, item);
+            	        }
+            	      });
+
+            	      const cartItems = Array.from(cartItemsMap.values());
+
+            	      // 상품별로 옵션 가져오기
+            	      Promise.all(
+            	        cartItems.map((item) => {
+            	          return new Promise((resolve) => {
+            	            self.fnOption(item.productNo, (options) => {
+            	              // 각 상품에 옵션 배열 추가
+            	             if (selectedNparmap && selectedNparmap.optionNo && item.productNo === selectedNparmap.productNo) {
+  item.options = options;
+  const selectedOption = item.options.find((option) => option.optionNo === selectedNparmap.optionNo);
+  item.selectedOption = selectedOption ? selectedOption.optionNo : "";
+} else {
+  // 옵션 배열 초기화 및 등록
+  item.options = [{ optionNo: "", optionName: "상품을 선택하세요.", optionPrice: 0 }].concat(options);
+  item.selectedOption = options.length > 0 ? options[0].optionNo : "";
+}
+
+            	              // item 객체 출력 (옵션 로드 완료)
+
+            	              resolve();
+            	            });
+            	          });
+            	        })
+            	      ).then(() => {
+            	        // 모든 상품의 옵션이 로드된 후 cartItems 할당
+            	        self.cartItems = cartItems;
     		         });
 
     		      }
@@ -227,10 +278,8 @@ new Vue({
 
     			  
     			  const selectedOption = item.options.find(opt => opt.optionNo === item.selectedOption);
-    			  console.log(selectedOption);
     			  if (selectedOption) {
     			    this.addToSelectedOptions(item); // 새롭게 추가된 메소드 호출
-    			    this.calculateTotalPrice(); // 추가된 부분. 총 가격을 계산하기 위함.
     			  }
     			},
     		
@@ -245,7 +294,6 @@ new Vue({
     	        productNo: item.productNo,
     	        userNo: '${sessionNo}'
     	    };
-    	    console.log(requestData);
     	  
     	    $.ajax({
     	        url: "/product/deleteCartlist.dox",
@@ -278,7 +326,6 @@ new Vue({
     	    const requestData = {
     	        userNo: '${sessionNo}'
     	    };
-    	    console.log(requestData);
 
     	    $.ajax({
     	        url: "/product/deleteAllCartItems.dox",
@@ -302,48 +349,61 @@ new Vue({
     	
 
     	goToPurchasePage(productNoList) {
-    		  const self = this;
+  		  const self = this;
 
-    		  const startNum = ((self.selectPage - 1) * 2);
-    		  const lastNum = 10;
+  		  const startNum = ((self.selectPage - 1) * 2);
+  		  const lastNum = 10;
 
-    		  // 선택된 옵션 값을 저장하는 배열
-    		  const selectedOptions = [];
+  		  // 선택된 옵션 값을 저장하는 배열
+  		  const selectedOptions = [];
 
-    		  // 선택된 옵션 값을 selectedOptions 배열에 추가하는 코드를 추가합니다.
+  		  // 선택된 옵션 값을 selectedOptions 배열에 추가하는 코드를 추가합니다.
 
-    		  if (this.cartItems.length > 0) {
-    		    // 상품 데이터를 필터 합니다: productNoList에 포함된 상품만 포함되도록 합니다.
-    		    const filteredItems = this.cartItems.filter(item => productNoList.includes(item.productNo));
-    		    sessionStorage.setItem('cartItems', JSON.stringify(filteredItems));
+  		  if (this.cartItems.length > 0) {
+  		    // 상품 데이터를 필터 합니다: productNoList에 포함된 상품만 포함되도록 합니다.
+  		    const filteredItems = this.cartItems.filter(item => productNoList.includes(item.productNo));
+  		    sessionStorage.setItem('cartItems', JSON.stringify(filteredItems));
 
-    		    // 여기에서 order.do로 이동하면서 데이터를 넘겨줍니다.
-    		    const productData = filteredItems.map(item => {
-  					const selectedOption = this.selectedOptions.find(
-   					 o => o.productNo === item.productNo
-				 ); 
- 				 return {
-				    productNo: item.productNo,
-				    productName: item.productName,
-				    productPrice: item.productPrice,
-				    optionNo: selectedOption?.optionNo, // 선택한 옵션 값 사용
-				    quantity: 1
- 				};
-			});
+  		    // 여기에서 order.do로 이동하면서 데이터를 넘겨줍니다.
+  		    const productData = filteredItems.map(item => {
+  		      let selectedOption = item.selectedOption;
+  		      if (selectedOption === undefined) {
+  		    	    selectedOption = {
+  		    	      optionNo: item.optionNo,
+  		    	      optionPrice: 0 // 디폴트 옵션 가격을 0으로 설정하거나 다른 적절한 값으로 설정
+  		    	    };
+  		    	  } else {
+  		    		selectedOption = {
+  	  		    	      optionNo: item.selectedOption,
+  	  		    	      optionPrice: item.optionPrice // 디폴트 옵션 가격을 0으로 설정하거나 다른 적절한 값으로 설정
+  	  		    	    };
+  		    	  }
+  		      return {
+  		        productNo: item.productNo,
+  		        productName: item.productName,
+  		        productPrice: item.productPrice,
+  		        optionNo: selectedOption.optionNo, // 선택한 옵션 값 사용
+  		        optionPrice: selectedOption?.optionPrice, // 선택한 옵션 가격 값 사용 // 선택한 옵션 값 사용
+  		        quantity: item.cnt // 'cnt' 값을 사용
+  		      
+  		      };
+  		    });
+    		    
+    		    // 쿼리 문자열을 만듭니다.
+    		   let queryString = '';
+				productData.forEach(item => {
+				  queryString += `&productData[]=${JSON.stringify(item)}`;
+				});
 
-    		    let queryString = '';
-    		    productData.forEach(item => {
-    		      queryString += `&productData[]=${JSON.stringify(item)}`;
-    		    });
-
+    		    // 쿼리 문자열을 이용해서 order/main.do로 이동
     		    const queryParams = encodeURI(`?startNum=${startNum}&lastNum=${lastNum}${queryString}`);
-    		    console.log(productData);
     		    $.pageChange("/order/main.do", { product: productData });
 
     		  } else {
     		    alert('장바구니에 상품이 없습니다. 상품을 추가한 후 다시 시도해주세요.');
     		  }
     		}, //goToPurchasePage 메서드 종료
+
     		
     		onOptionSelect(productNo, optionNo) {
     		    const selectedOptionIndex = this.selectedOptions.findIndex(

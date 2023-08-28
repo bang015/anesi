@@ -10,9 +10,9 @@
 <link href="../css/product_edit.css" rel="stylesheet">
 <link href="../../css/adminH.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>문의 관리</title>
 <style>
-.inquiry{
+.inquiry2{
 	background: white;
 	color: #5E503F;
 	border-radius: 10px 0px 0px 10px;
@@ -50,7 +50,9 @@
 								<th>접수일</th>
 								<th>처리상태</th>
 								<th>문의유형</th>
-								<th>상품정보</th>
+								<th>상품번호</th>
+								<th>상품이름</th>
+								<th>옵션이름</th>
 								<th>문의내용</th>
 								<th>질문자</th>
 								<th>처리일</th>
@@ -60,7 +62,9 @@
 								<td>{{item.cDateTime}}</td>
 								<td>{{item.inquiryYn}}</td>
 								<td>{{item.inquiryCategory}}</td>
-								<td @click="fnMoveProduct(item.productNo)" class="productName1"><div class="productNo">{{item.productNo}}</div>{{item.productName}}</td>
+								<td>{{item.productNo}}</td>
+								<td @click="fnMoveProduct(item.productNo)" class="productName1">{{item.productName}}</td>
+								<td>{{item.optionName}}</td>
 								<td>{{item.content}}</td>
 								<td>{{item.userEmail}}</td>
 								<td v-if="item.inquiryYn == '답변'">{{item.udatetime}}</td>
@@ -100,7 +104,7 @@
 			        			<button class="btn1 btn2" @click="fnUpdateInquiry">답변</button>
 			        			<button @click="closeModal" class="btn1 btn2 btn3">취소</button>
 		        			</span>
-		        		</div>
+		        	 </div>
 		        </div>
 	        </div>
 		</div>
@@ -131,8 +135,9 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.inquiryList = data.list;
+                	console.log(self.inquiryList);
                 	self.inquiryList.forEach(item => {
-                		if(item.reply == undefined){
+                		if(item.reply == undefined ){
                 			self.inquiryCnt++;
                 		} else{
                 			self.completeCnt++;
@@ -145,6 +150,8 @@ var app = new Vue({
                 			return {...item, inquiryYn : '답변'};
                 		}
                 	})
+         
+
                 }
 			})
 		},
@@ -158,7 +165,7 @@ var app = new Vue({
 		closeModal: function() {
 			var self = this;
 			self.showScrapModal = false;
-			location.reload();
+			self.fnGetInquiryList();
 		},
 		fnUpdateInquiry(){
 			var self = this;

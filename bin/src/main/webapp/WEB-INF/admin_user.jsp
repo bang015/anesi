@@ -29,8 +29,7 @@
 					
 					<div class="update_cont">
 						<div class="btnBox">
-							<button class="btn1 btn2 btn3" @click="fnDelete('Y')">선택계정 정지</button>
-							<!-- <button class="btn1 btn2 btn3" @click="fnReset">선택계정 로그인횟수 초기화</button> -->
+							<button class="btn1 btn2 btn3" @click="fnReset">로그인횟수 <div>초기화</div></button>
 						</div>
 						<div class="search_cont">
 							<span>상세검색</span>
@@ -80,6 +79,7 @@
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">고객번호</span>
 			        		<span>{{info.userNo}}</span>
+			        		<button class="btn1 btn2 btn3" @click="fnDelete(info)"><span v-if="info.deleteYn == 'N'">계정 정지</span><span v-else>정지 해제</span></button>
 			        	</div>
 			        	<div class="modalStyle1">
 			        		<span class="modalSpan1">고객아이디</span>
@@ -190,7 +190,6 @@ var app = new Vue({
 		fnUpdateUser(info){
 			var self = this;
 			var nparmap = info;
-			console.log(info);
 
 			$.ajax({
                 url : "/admin/editUser.dox",
@@ -198,7 +197,6 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-	             	console.log(data);
 
                 }
             });
@@ -215,37 +213,34 @@ var app = new Vue({
 		closeModal: function() {
 			var self = this;
 			self.showViewModal = false;
-			location.reload();
+			self.fnGetUser();
 		},
 		
 		
 		//고객 삭제
-		fnDelete(deleteYn){
+		fnDelete(info){
 			var self = this;
-			console.log(self.userNo);
-
-			if(self.checkList.length > 0){
-				var checkList = JSON.stringify(self.checkList);
-				var nparmap = {checkList, deleteYn};
-				$.ajax({
-	                url : "/admin/removeUser.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap,
-	                success : function(data) {
-	                	alert(data.cnt+"개 업데이트");
-	        	        self.checkList = []
-	                	self.fnGetUser();
-	                	self.allChecked = false;
-                	}
-            	});
+			let deleteYn = info.deleteYn;
+			if(deleteYn == 'Y'){
+				deleteYn = 'N';
+			} else{
+				deleteYn = 'Y';
 			}
+			var nparmap = {userNo : info.userNo, deleteYn };
+			$.ajax({
+                url : "/admin/removeUser.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.fnUserInfo(info.userNo);
+               	}
+           	});
 		},
 		//검색
 		fnSearch(){
 			var self = this;
 			var nparmap = {searchOption : self.searchOption, searchText : self.searchText};
-			console.log(nparmap);
 			$.ajax({
                 url : "/admin/userList.dox",
                 dataType:"json",	
@@ -253,6 +248,22 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.list = data.list;
+                }
+			});
+		},
+		fnReset(){
+			var self = this;
+			var checkList = JSON.stringify(self.checkList);
+			var nparmap = {checkList};
+			$.ajax({
+                url : "/admin/userResetCnt.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	alert("초기화 완료");
+                	self.checkList = [];
+                	self.allChecked = false;
                 }
 			});
 		}

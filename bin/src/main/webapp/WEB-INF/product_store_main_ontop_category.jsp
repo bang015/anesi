@@ -11,48 +11,41 @@
 <meta charset="EUC-KR">
 <title>스토어메인카테고리</title>
 <style>
-
 #product-main-category__total{
-padding : 0px 0px 0px 0px;
+	padding : 0px 0px 0px 0px;
+    margin-top: -25px;
+
 }
-
-
-
 #store-main-ontop-category__container{
 	margin-top: 200px;
-	
 }
-
-
-
-
 #product-main-category__total > li {
         display: inline-block;
         position: relative;
         top: 10px;
-    
 }
 #product-main-category__total > li > a {
-  display:block; position:relative; padding-bottom:30px;
-  margin: 50px; width:100px; height:130px;
-}
-#product-main-category__total > li > a > img {
-  width:150px; height:150px; border-radius : 50%; border : 1px solid #424242; box-shadow: 5px 5px 5px #000;
+	display: block;
+    position: relative;
+    padding-bottom: 30px;
+    margin: 33px 58px;
+    width: 100px;
+    height: 130px;
 }
 #product-main-category__total > li > a > span {
-  position:absolute; bottom:0; left:50%; color:#666; line-height:1.462em; white-space:nowrap; transform:translate(-50%, 0);
-  text-shadow:-4px 3px 10px black; color : white;
-  
+	position: absolute;
+    bottom: 19px;
+    left: 50%;
+    color: #666;
+    line-height: 1.462em;
+    white-space: nowrap;
+    transform: translate(-50%, 0);
+    font-size: 15px;
 }
-
-
 .aaa {
   color: #A782C3; 
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
 }
-
-
-
 .category_name{
 
     font-size: 20px;
@@ -68,68 +61,23 @@ padding : 0px 0px 0px 0px;
 
   color: #A782C3;
 }
-
-
-
+.title1{
+	margin-left: 35px;
+}
 </style>
 </head>
 <!-- 주석 꼭 남겨주세요 -->
 <body>
 <div id="store-main-ontop-category__container">
-	<div><h1>카테고리</h1></div>
+	<div class="title1"><h1>카테고리</h1></div>
 	<ul id ="product-main-category__total">
-	
-		<li @click= "fnMoveaa('10')">
-			<a class="category_container">
-				<img src="../css/image/productMain/productMain_category1.png"
-				class=" animate__animated animate__pulse"
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span class="category_name" id="c_name1">가구</span>
-	    	</a> 
-  	    	</li>
-		<li @click="fnMoveaa('20')">
-			<a class="category_container">
-				<img src="../css/image/productMain/productMain_category2.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span class="category_name" id="c_name2">조명</span>
-	    	</a>
-    	</li>
-		<li @click="fnMoveaa('30')">
-			<a class="category_container">
-				<img src="../css/image/productMain/productMain_category3.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span class="category_name" id="c_name3">패브릭</span>
-	    	</a>
-    	</li>
-		<li @click="fnMoveaa('40')">
-			<a  class="category_container">
-				<img src="../css/image/productMain/productMain_category4.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span class="category_name" id="c_name6">가전</span>
-	    	</a>
-    	</li>
-		<li @click="fnMoveaa('50')">
-			<a  class="category_container">
-				<img src="../css/image/productMain/productMain_category5.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span class="category_name" id="c_name5">데코/식물</span>
-	    	</a>
-    	</li>
-		<li @click="fnMoveaa('60')">
-			<a class="category_container">
-				<img src="../css/image/productMain/productMain_category6.png"
-				class="animate__animated animate__pulse" 
-			    @mouseover="addPulseAnimation" @mouseleave="removePulseAnimation">
-			    <span class="category_name" id="c_name6">반려동물</span>
-	    	</a>
-    	</li>
-		
+	 <li v-for="(category, index) in categories" :key="category.id" @click="fnMoveaa(category.id)">
+        <a @click="addPulseAnimation(index)">
+          <img :src="category.image" :class="{ 'animate__animated': category.animated, 'animate__pulse' : category.animated}" @mouseover="addPulseAnimation(index)" @mouseleave="removePulseAnimation(index)">
+          <span :class="{ 'aaa': category.animated }">{{ category.name }}</span>
+        </a>
+      </li>
 	</ul>
-	
 </div>
 </body>
 </html>
@@ -151,8 +99,15 @@ var app = new Vue({
 		showCartModal: false,
 		showScrapModal: false,
 		userId : '${sessionId}',
-		userNick : '${sessionNick}'
-		
+		userNick : '${sessionNick}',
+		categories : [
+			{ id: '10', name: '가구', image: '../css/image/productMain/furniture.png', animated: false },
+			{ id: '20', name: '조명', image: '../css/image/productMain/light.png', animated: false },
+			{ id: '30', name: '패브릭', image: '../css/image/productMain/pillows.png', animated: false },
+			{ id: '40', name: '가전', image: '../css/image/productMain/washing-machine2.png', animated: false },
+			{ id: '50', name: '데코/식물', image: '../css/image/productMain/plant2.png', animated: false },
+			{ id: '60', name: '반려동물', image: '../css/image/productMain/pet.png', animated: false },
+		]
 		
 
 	},// data
@@ -166,7 +121,6 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	console.log(data);
                 	self.list = data.list;
                 }
             });  */
@@ -176,27 +130,36 @@ var app = new Vue({
 
 	      
 	    //이미지 마우스 오버했을때 pulse 애니메이션
-        addPulseAnimation: function(event) {
-            event.currentTarget.classList.add('animate__animated', 'animate__pulse');
+        addPulseAnimation: function(index) {
+        	 this.categories[index].animated = true;
         },
-        removePulseAnimation: function(event) {
-            event.currentTarget.classList.remove('animate__animated', 'animate__pulse');
+        removePulseAnimation: function(index) {
+        	 this.categories[index].animated = false;
         },
         
+
+    	//이미지 마우스 오버했을때 pulse 애니메이션
+       addPulseAnimation: function(index) {
+       	 this.categories[index].animated = true;
+       },
+       removePulseAnimation: function(index) {
+       	 this.categories[index].animated = false;
+       },
+       
+       
+     
+   	 	//category 눌렀을때 메뉴별로 배열해줌
+      fnMoveaa : function(item){
+            var self = this;
+         $.pageChange("/product/storemain_byCategory.do",{no : item});//보낼필요없을때 파라미터 빈값으로{}
+      }
+
+    
+ 
         
-      
-	    //category 눌렀을때 메뉴별로 배열해줌
-	      fnMoveaa : function(item){
-	            var self = this;
-	         $.pageChange("/product/storemain_byCategory.do",{no : item});//보낼필요없을때 파라미터 빈값으로{}
-	      }
-	
-	    
-	 
-	        
-	    
-	        
-     }, // methods
+    
+        
+    }, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();

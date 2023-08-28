@@ -13,7 +13,7 @@
 <title>나의 게시글📚</title>
 <style>
 #app{
-	margin-top : 160px;
+	margin-top : 180px;
 }
 #container{
 	margin : 30px auto;
@@ -161,7 +161,7 @@ li{
 .part{
 	display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    gap: 30px;
     margin: 0px 0px 0px 23px;
 }
 .board1{
@@ -177,7 +177,7 @@ li{
     height: 200px;
     overflow: hidden;
     border-radius: 5px;
-	}
+}
 .photo2{
 	position: absolute;
     top: 0;
@@ -201,7 +201,7 @@ li{
 	font-size : 14px;
 }
 .view{
-	margin-bottom : 10px;
+	margin-bottom : 19px;
 	font-size : 12px;
 	color : #9b9b9b
 }
@@ -242,7 +242,7 @@ li{
 }
 .pagination {
     text-align: center;
-    margin-top: 65px;
+    margin-top: 30px;
     font-size : 13px;
 }
 .pagination li {
@@ -272,6 +272,29 @@ li{
 .partName{
 	margin: 0 0 26px 25px;
 }
+table,td{
+	border-bottom: 1px solid #cdcdcd;
+	border-collapse: collapse;
+}
+table{
+	width: 95%;
+	text-align:center;
+    margin: 30px auto;
+}
+th,td{
+	padding : 12px;
+	font-size: 16px;
+}
+td{
+	text-align:center;
+	font-size:15px;
+}
+th{
+	border-bottom: 2px solid #c9b4d9;
+}
+.tr2:hover{
+	background : #fbfbfb;
+}
 </style>
 </head>
 <jsp:include page="header.jsp"></jsp:include>
@@ -280,15 +303,15 @@ li{
 	<div class="top_menu">
 		<ul class="my_menu1">
 			<li class="my_li1"><a href="/mypage.do" class="my_a1_ch" style="color : #A782C3;">프로필</a></li>
-			<li class="my_li1"><a href="/myShopping.do" class="my_a1">나의 쇼핑</a></li>
-			<li class="my_li1"><a class="my_a1">나의 리뷰</a></li>
+			<li class="my_li1"><a href="myShopping.do" class="my_a1">나의 쇼핑</a></li>
+			<li class="my_li1"><a class="my_a1" href="myReview.do" >나의 리뷰</a></li>
 			<li class="my_li1"><a href="user_edit.do" class="my_a1">설정 </a></li>
 		</ul>
 	</div>
 	<hr class="hrr">
 		<ul class="my_menu1">
 			<li class="my_li2"><a href="/mypage.do" class="my_a2">모두 보기</a></li>
-			<li class="my_li2"><a class="my_a2">나의 문의</a></li>
+			<li class="my_li2"><a class="my_a2" href="/mypage/myInquiry.do">나의 문의</a></li>
 			<li class="my_li2"><a href="/mypage/myBoard.do" class="my_a2_ch" style="color : #A782C3;">나의 게시글</a></li>
 			<li class="my_li2"><a href="/scrapbook.do" class="my_a2">스크랩북</a></li>
 		</ul>
@@ -306,7 +329,7 @@ li{
 		               		<img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
 		               	</div>
 		               	<a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
-		               	<div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
+		               	<div class="view">좋아요 {{item.gCnt}} · 조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		           	</div>
 		        </div>
 			</div>
@@ -320,10 +343,60 @@ li{
 			    :prev-text="'〈'"
 			    :next-text="'〉'"
 			    :container-class="'pagination'"
-			    :page-class="'page-item'" v-if="list.length > 0">
-			  </paginate>
-			  <hr class="hrr2">
-			<div><h2 class="partName">중고 <span></span></h2></div>
+			    :page-class="'page-item'" v-if="cnt > 4">
+			</paginate>
+			<hr class="hrr2">
+			
+			<div>
+				<div><h2 class="partName">좋아하는 게시글 <span class="text1">{{cnt}}</span></h2></div>
+				<div class="part">
+				<div v-for="(item, index) in gList">
+			        <div class="board1">
+			            <div class="board1_item">
+			                <div class="photo1">
+			                   	<a @click="fnView(item.boardNo)"><img class="photo2" :src="item.imgPath+'/'+item.imgName"></a>
+			               		<img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
+			               	</div>
+			               	<a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
+			               	<div class="view">좋아요 {{item.gCnt}} · 조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
+			           	</div>
+			        </div>
+				</div>
+				</div>
+				<paginate
+			    :page-count="gpageCount"
+			    :page-range="3"
+			    :margin-pages="1"
+			    :click-handler="fngPageSearch"
+			    :prev-text="'〈'"
+			    :next-text="'〉'"
+			    :container-class="'pagination'"
+			    :page-class="'page-item'" v-if="gCnt > 4">
+			</paginate>
+			</div>
+			<hr class="hrr2">
+			<div><h2 class="partName">중고 매입 문의 <span class="text1">{{usedList.length}}</span></h2></div>
+			<div>
+				<table v-if="usedList.length > 0">
+				<tr>
+					<th>No.</th>
+					<th style="width: 400px;">물품</th>
+					<th>답변여부</th>
+					<th>작성자</th>
+					<th>작성일</th>
+				</tr>
+				<tr v-for="(item, index) in usedList" class="tr2">
+					<td>{{item.usedPNo}}</td>
+					<td><a @click="fnUsedView(item.usedPNo)">{{item.usedPName}}</a></td>
+					<td v-if="item.purchase=='W'">대기</td>
+					<td v-else-if="item.purchase=='Y'" style="color:#A782C3;">완료</td>
+					<td v-else-if="item.purchase=='N'" style="color:#A782C3;">완료</td>
+					<td>{{item.userName}}</td>
+					<td>{{item.usedPCdatetime}}</td>
+				</tr>
+			</table>
+			<div v-if="usedList.length < 1" class="text2">등록된 게시글이 없습니다.</div>
+			</div>
 		</div>	
 	</div>
 </div>
@@ -336,8 +409,8 @@ var app = new Vue({
 	el : '#app',
 	data : {
 		list : [],
-		bList : [],
-		keyword : "",
+		usedList : [],
+		gList : [],
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
 		selectPage: 1,
@@ -345,15 +418,18 @@ var app = new Vue({
 		cnt : 0,
 		searchCnt : 0,
 		searchPageCount : 1,
-		boardFlg : true,
-		searchFlg : false
+		gselectPage: 1,
+		gpageCount: 1,
+		gCnt : 0,
+		gsearchCnt : 0,
+		gsearchPageCount : 1
 	},// data
 	methods : {
 		fnGetList : function(){
 			var self = this;
-            var startNum = ((self.selectPage-1) * 8);
-    		var lastNum = 8;
-			var param = {startNum : startNum, lastNum : lastNum, nick : self.sessionNick};
+            var startNum = ((self.selectPage-1) * 4);
+    		var lastNum = 4;
+			var param = {startNum : startNum, lastNum : lastNum, uNo : self.sessionNo};
 			$.ajax({
 				url : "/community/myBoardList.dox",
                 dataType:"json",	
@@ -362,16 +438,15 @@ var app = new Vue({
                 success : function(data) { 
                 	self.list = data.list;
                 	self.cnt = data.cnt;
-	                self.pageCount = Math.ceil(self.cnt / 8);
-	                console.log(self.list);
+	                self.pageCount = Math.ceil(self.cnt / 4);
                 }
             }); 
 		},
 		fnPageSearch : function(pageNum){
 			var self = this;
-			var startNum = ((pageNum-1) * 8);
-			var lastNum = 8;
-			var nparmap = {startNum : startNum, lastNum : lastNum, nick : self.sessionNick};
+			var startNum = ((pageNum-1) * 4);
+			var lastNum = 4;
+			var nparmap = {startNum : startNum, lastNum : lastNum, uNo : self.sessionNo};
 			$.ajax({
 				url : "/community/myBoardList.dox",
 				dataType : "json",
@@ -379,13 +454,57 @@ var app = new Vue({
 				data : nparmap,
 				success : function(data) {
 					self.list = data.list;
-                	self.cnt = data.cnt;
-	                self.pageCount = Math.ceil(self.cnt / 8);
+                	self.searchCnt = data.cnt;
+	                self.pageCount = Math.ceil(self.searchCnt / 4);
 				}
 			});
 		},
-		fnWrite : function(){
-			location.href="/community/write.do";
+		fnGetgList : function(){
+			var self = this;
+			var startNum = ((self.selectPage-1) * 4);
+	    	var lastNum = 4;
+			var param = {startNum : startNum, lastNum : lastNum, uNo : self.sessionNo};
+			$.ajax({
+				url : "/community/myGreatBoard.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.gList = data.list;
+                	self.gCnt = data.cnt;
+                	self.gpageCount = Math.ceil(self.gCnt / 4);
+                }
+            }); 
+		},
+		fngPageSearch : function(pageNum){
+			var self = this;
+			var startNum = ((pageNum-1) * 4);
+			var lastNum = 4;
+			var nparmap = {startNum : startNum, lastNum : lastNum, uNo : self.sessionNo};
+			$.ajax({
+				url : "/community/myGreatBoard.dox",
+				dataType : "json",
+				type : "POST",
+				data : nparmap,
+				success : function(data) {
+					self.gList = data.list;
+                	self.gsearchCnt = data.cnt;
+	                self.gpageCount = Math.ceil(self.gsearchCnt / 4);
+				}
+			});
+		},
+		fnGetUsedList : function(){
+			var self = this;
+			var param = {userNo : self.sessionNo};
+			$.ajax({
+				url : "/used/myPurchaseList.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.usedList = data.list;
+                }
+            }); 
 		},
 		fnView : function(boardNo){
 			var self = this;
@@ -398,53 +517,16 @@ var app = new Vue({
 			
 			return diffInHours < 24;
 		},
-        fnSearch : function(){
+		fnUsedView : function(usedPNo){
         	var self = this;
-        	if(self.keyword==''){
-        		alert("검색어를 입력하세요.");
-        		return;
-        	}
-            var startNum = ((0) * 12);
-    		var lastNum = 12;
-            var nparmap = {keyword : self.keyword, startNum : startNum, lastNum : lastNum};
-            $.ajax({
-                url : "/community/search.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) { 
-                	self.list = data.sList;
-                	self.searchCnt = data.cnt;
-	                self.searchPageCount = Math.ceil(self.searchCnt / 12);
-	                self.searchFlg=true;
-					self.boardFlg=false;
-                }
-            }); 
-        },
-        fnSearchPageSearch : function(pageNum){
-			var self = this;
-			var startNum = ((pageNum-1) * 12);
-			var lastNum = 12;
-			var nparmap = {keyword : self.keyword, startNum : startNum, lastNum : lastNum};
-			$.ajax({
-				url : "/community/search.dox",
-				dataType : "json",
-				type : "POST",
-				data : nparmap,
-				success : function(data) {
-					self.list = data.sList;
-					self.searchCnt = data.cnt;
-					self.searchPageCount = Math.ceil(self.searchCnt / 12);
-					self.searchFlg=true;
-					self.boardFlg=false;
-				}
-			});
-		}
+			$.pageChange("/used/inquireView.do", {usedPNo : usedPNo});
+        }
 	}, // methods
 	created : function() {
 		var self = this;
 		self.fnGetList();
-		console.log(self.sessionNick);
+		self.fnGetUsedList();
+		self.fnGetgList();
 	}// created
 });
 </script>

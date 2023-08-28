@@ -2,11 +2,212 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.anesi.mapper.UsedMapper">
-
+	
+	<!-- 중고 문의리스트 -->
 	<select id="purchaseList" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
 		SELECT *
 		FROM t3_tbl_used_purchase
 		ORDER BY USED_P_NO DESC
+		LIMIT #{startNum}, #{lastNum}
 	</select>
 	
+	<!-- 중고문의리스트 cnt -->
+	<select id="selectPurchaseCnt" resultType="int">
+		SELECT COUNT(*) FROM t3_tbl_used_purchase
+	</select>
+	
+	<!-- 내 중고 문의리스트 -->
+	<select id="myPurchaseList" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *
+		FROM t3_tbl_used_purchase
+		WHERE USER_NO = #{userNo}
+		ORDER BY USED_P_NO DESC
+	</select>
+	
+	<!-- 중고 문의 등록 -->
+	<insert id="insertUsedInquire" parameterType="hashmap" useGeneratedKeys="true" keyProperty="usedPNo" keyColumn="USED_P_NO">
+		INSERT INTO t3_tbl_used_purchase(USER_NO, USER_NAME, USER_PHONE, USED_P_NAME, USED_P_PRICE, USED_P_SELL_PRICE, MANUFACTURER, USEDTIME, GRADE, CONTENT)
+		VALUES(#{userNo}, #{userName}, #{phone}, #{usedPName}, #{usedPPrice}, #{usedPSellPrice}, #{manufacturer}, #{usedtime}, #{grade}, #{content})
+	</insert>
+	
+	<!-- 중고 문의 사진 등록 -->
+	<insert id="insertUsedInquireImg" parameterType="hashmap">
+		INSERT INTO t3_tbl_used_purchase_image(USED_P_NO, P_IMG_ORG_NAME, P_IMG_NAME, P_IMG_PATH, P_IMG_SIZE)
+		VALUES(#{usedPNo}, #{pImgOrgName}, #{pImgName}, #{pImgPath}, #{pImgSize})
+	</insert>
+	
+	<!-- 중고 문의 게시글 뷰 사진 포함 -->
+	<select id="usedInquireView" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT * 
+		FROM t3_tbl_used_purchase P
+		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
+		WHERE P.USED_P_NO = #{usedPNo}
+	</select>
+	
+	<!-- 중고 문의 게시글 뷰 -->
+	<select id="usedInquireView1" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT * 
+		FROM t3_tbl_used_purchase
+		WHERE USED_P_NO = #{usedPNo}
+	</select>
+	
+	<!-- 문의게시글사진 -->
+	<select id="usedInquireViewImg" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT * 
+		FROM t3_tbl_used_purchase_image
+		WHERE USED_P_NO = #{usedPNo}
+	</select>
+	
+	<!-- 문의 수정 -->
+	<update id="updatePurchaseInquire" parameterType="hashmap">
+		UPDATE t3_tbl_used_purchase
+		SET
+			USER_NAME = #{userName}, 
+			USER_PHONE = #{phone}, 
+			USED_P_NAME = #{usedPName}, 
+			USED_P_PRICE = #{usedPPrice}, 
+			USED_P_SELL_PRICE = #{usedPSellPrice}, 
+			MANUFACTURER = #{manufacturer}, 
+			USEDTIME = #{usedtime}, 
+			GRADE = #{grade}, 
+			CONTENT = #{content}
+		WHERE USED_P_NO = #{usedPNo}
+	</update>
+	
+	<!-- 중고문의사진삭제 -->
+	<delete id="usedInquireImgDelete" parameterType="hashmap">
+		DELETE FROM t3_tbl_used_purchase_image
+		WHERE USED_P_NO = #{usedPNo}
+	</delete>
+	
+	<!-- 중고문의답변삭제 -->
+	<delete id="usedInquireAnsDelete" parameterType="hashmap">
+		DELETE FROM t3_tbl_used_answer
+		WHERE USED_P_NO = #{usedPNo}
+	</delete>
+	
+	<!-- 중고문의삭제 -->
+	<delete id="usedInquireDelete" parameterType="hashmap">
+		DELETE FROM t3_tbl_used_purchase
+		WHERE USED_P_NO = #{usedPNo}
+	</delete>
+	
+	<!-- 중고문의답변 -->
+	<insert id="answerInsert" parameterType="hashmap">
+		INSERT INTO t3_tbl_used_answer(USED_P_NO, A_CONTENT)
+		VALUES(#{usedPNo}, #{aContent})
+	</insert>
+	
+	<!-- 답변여부업데이트 -->
+	<update id="answerUpdate" parameterType="hashmap">
+		UPDATE t3_tbl_used_purchase
+		SET
+			PURCHASE = #{purchase}
+		WHERE USED_P_NO = #{usedPNo}
+	</update>
+	
+	<!-- 답변정보 -->
+	<select id="answerSelect" parameterType="hashmap">
+		SELECT *
+		FROM t3_tbl_used_answer
+		WHERE USED_P_NO = #{usedPNo}
+	</select>
+	
+	<!-- 답변수정 -->
+	<update id="answerEdit" parameterType="hashmap">
+		UPDATE t3_tbl_used_answer
+		SET
+			A_CONTENT = #{aContent},
+			USED_A_UDATETIME = NOW()
+		WHERE USED_P_NO = #{usedPNo}
+	</update>
+	
+	<!-- 매입 물품 리스트 -->
+	<select id="purchaseYList" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *, P.USED_P_NO
+		FROM t3_tbl_used_purchase P
+		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
+		WHERE PURCHASE = 'Y'
+		GROUP BY P.USED_P_NO
+		ORDER BY USED_P_CDATETIME DESC
+	</select>
+	
+	<!-- 매입 물품 판매 등록 리스트 -->
+	<select id="usedSellYList" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *, P.USED_P_NO
+		FROM t3_tbl_used_purchase P
+		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
+		WHERE PURCHASE = 'Y' AND SELL_YN = 'Y'
+		GROUP BY P.USED_P_NO
+		ORDER BY USED_P_CDATETIME DESC
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	
+	<!-- 매입 물품 판매 등록 리스트 cnt -->
+	<select id="usedSellYCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM t3_tbl_used_purchase
+		WHERE PURCHASE = 'Y' AND SELL_YN = 'Y'
+	</select>
+	
+	<!-- 매입 물품 판매 미등록 리스트 -->
+	<select id="usedSellNList" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *, P.USED_P_NO
+		FROM t3_tbl_used_purchase P
+		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
+		WHERE PURCHASE = 'Y' AND SELL_YN = 'N'
+		GROUP BY P.USED_P_NO
+	</select>
+	
+	<select id="usedSellAdd" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *
+		FROM t3_tbl_used_purchase P
+		WHERE PURCHASE = 'Y' AND SELL_YN = 'N' AND USED_P_NO = #{usedPNo}
+	</select>
+	
+	<!-- 판매 물품 리스트 -->
+	<select id="purchaseYList2" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT *
+		FROM t3_tbl_used_purchase p
+		INNER JOIN t3_tbl_used_purchase_image i ON p.USED_P_NO = i.USED_P_NO
+		WHERE p.PURCHASE = 'Y'
+		<if test="select !='' and select != null">
+			AND p.USED_P_NAME LIKE CONCAT('%', #{select}, '%')
+		</if>
+		GROUP BY p.USED_P_NO
+		ORDER BY p.USED_P_CDATETIME DESC 
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	
+	<!-- 판매 물품 리스트 페이지 -->
+	<select id="purchaseYList2Cnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM t3_tbl_used_purchase
+		WHERE PURCHASE = 'Y'
+		<if test="select !='' and select != null">
+			AND USED_P_NAME LIKE CONCAT('%', #{select}, '%')
+		</if>
+	</select>
+	<!-- 판매 물품 상세 정보 -->
+	<select id="purchaseView" parameterType="hashmap" resultType="com.example.anesi.model.UsedPurchase">
+		SELECT * 
+		FROM t3_tbl_used_purchase p
+		INNER JOIN t3_tbl_used_purchase_image i ON p.USED_P_NO = i.USED_P_NO
+		WHERE p.USED_P_NO = #{usedPNo}
+	</select>
+	
+	<!-- 중고 매입 사례 등록 -->
+	<update id="addPurchaseEx" parameterType="hashmap">
+		UPDATE t3_tbl_used_purchase
+		SET
+			USED_P_NAME = #{usedPName},
+			MANUFACTURER = #{manufacturer},
+			USEDTIME = #{usedtime},
+			GRADE = #{grade},
+			USED_P_SELL_PRICE = #{usedPSellPrice},
+			U_SELL_PRICE = #{uSellPrice},
+			SELL_CONTENT = #{sellContent},
+			SELL_YN = 'Y'
+		WHERE USED_P_NO = #{usedPNo}
+	</update>
 </mapper>

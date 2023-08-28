@@ -22,8 +22,8 @@
 }
 .part{
 	display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
     text-align : center;
     position: relative;
     margin-top: 12px;
@@ -35,8 +35,8 @@
 }
 .photo1{
 	position: relative;
-    width: 300px;
-    height: 200px;
+    width: 400px;
+    height: 300px;
     overflow: hidden;
     border-radius : 5px;
 }
@@ -44,8 +44,8 @@
 	position: absolute; 
     top: 0;
     left: 0;
-	width: 300px;
-    height: 200px;
+	width: 400px;
+    height: 300px;
     object-fit: cover;
     transition: opacity 0.3s, visibility 0.3s;
 }
@@ -55,15 +55,15 @@
 	cursor : pointer;
 }
 .board1_item{
-	width: 300px;
+	width: 400px;
 }
 .title{
 	margin : 14px 0px 10px 0px;
 	font-size: 17px;
 }
 .nick{
-	margin-bottom : 14px;
-	font-size : 14px;
+	margin-bottom: 15px;
+    font-size: 15px;
 }
 .view{
 	margin-bottom : 10px;
@@ -104,16 +104,17 @@
 	margin-top: 12px;
 }
 .search-input{
-    border: 1px solid #c5c5c5;
+	border: 1px solid #c5c5c5;
     border-radius: 5px;
     padding: 5px 9px;
     font-size: 14px;
-    margin-right : 7px;
+    margin: 15px 16px 0px 0;
 }
-.glass{
-    width: 18px;
+.m-glass{
+   	width: 15px;
     float: right;
-	margin: 3px 10px 0px 5px;
+    margin: 21px 0px 0px -39px;
+    position: absolute;
 }
 .new{
 	position: absolute;
@@ -125,6 +126,7 @@
     text-align: center;
     margin-top: 65px;
     font-size:14px;
+    padding: 0;
 }
 .pagination li {
     margin: 6px;
@@ -143,7 +145,6 @@
 .pagination li.active {
 	color: white;
     font-weight: bold;
-    border: 1px solid;
     padding: 8px 10px;
     border-radius: 6px;
     background: #A782C3;
@@ -152,13 +153,12 @@
 	color : white;
 }
 .profile{
-	width: 20px;
-    height: 20px;
+	width: 25px;
+    height: 25px;
     border-radius: 50%;
     object-fit: cover;
     position: relative;
-    align-items: center;
-    top: 4.5px;
+    top: 6.5px;
     left: -5px;
 }
 </style>
@@ -180,7 +180,7 @@
 		                </div>
 		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
 		                <div class="nick"><img :src="item.uImgPath+'/'+item.uImgName" class="profile">{{item.nick}}</div>
-		                <div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
+		                <div class="view">좋아요 {{item.gCnt}} · 조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		            </div>
 		        </div>
 	    	</div>
@@ -189,8 +189,7 @@
 		<div id="board-body">
 			<div id="board-body-head"><h2>전체글<span class="text1"> {{cnt}}</span> <span class="text2" v-if="searchFlg==true">검색된 글 <span class="text1">{{searchCnt}}</span></span></h2></div>
 			<div class="searchbar">
-				<button class="btn" @click="fnWrite">글쓰기(임시)</button>
-				<input type="text" class="search-input" @keyup.enter="fnSearch" v-model="keyword"><img class="glass" src="../css/image/community/m-glass.png">
+				<input type="text" class="search-input" @keyup.enter="fnSearch" v-model="keyword"><img class="m-glass" src="../css/image/community/m-glass.png">
 			</div>
 		</div>
 		<div class="part">
@@ -203,7 +202,7 @@
 		                </div>
 		                <a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
 		                <div class="nick"><img :src="item.uImgPath+'/'+item.uImgName" class="profile">{{item.nick}}</div>
-		                <div class="view">조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
+		                <div class="view">좋아요 {{item.gCnt}} · 조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
 		            </div>
 		        </div>
 			</div>
@@ -258,8 +257,8 @@ var app = new Vue({
 	methods : {
 		fnGetList : function(){
 			var self = this;
-            var startNum = ((self.selectPage-1) * 12);
-    		var lastNum = 12;
+            var startNum = ((self.selectPage-1) * 9);
+    		var lastNum = 9;
 			var param = {startNum : startNum, lastNum : lastNum};
 			$.ajax({
 				url : "/community/boardList.dox",
@@ -269,15 +268,14 @@ var app = new Vue({
                 success : function(data) { 
                 	self.list = data.list;
                 	self.cnt = data.cnt;
-	                self.pageCount = Math.ceil(self.cnt / 12);
-	                console.log(self.list);
+	                self.pageCount = Math.ceil(self.cnt / 9);
                 }
             }); 
 		},
 		fnPageSearch : function(pageNum){
 			var self = this;
-			var startNum = ((pageNum-1) * 12);
-			var lastNum = 12;
+			var startNum = ((pageNum-1) * 9);
+			var lastNum = 9;
 			var nparmap = {startNum : startNum, lastNum : lastNum};
 			$.ajax({
 				url : "/community/boardList.dox",
@@ -287,7 +285,7 @@ var app = new Vue({
 				success : function(data) {
 					self.list = data.list;
 					self.searchCnt = data.cnt;
-					self.pageCount = Math.ceil(self.searchCnt / 12);
+					self.pageCount = Math.ceil(self.searchCnt / 9);
 				}
 			});
 		},
@@ -303,9 +301,6 @@ var app = new Vue({
         			self.bList = data.bList;
                 }
             });
-		},
-		fnWrite : function(){
-			location.href="/community/write.do";
 		},
 		fnView : function(boardNo){
 			var self = this;
@@ -365,7 +360,6 @@ var app = new Vue({
 		var self = this;
 		self.fnGetList();
 		self.fnGetBestList();
-		console.log(self.sessionNick);
 	}// created
 });
 </script>

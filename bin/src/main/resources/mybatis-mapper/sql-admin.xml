@@ -66,6 +66,44 @@
 			#{item}
 		</foreach>
 	</delete>
+	<!--중고상품결제배송리스트-->
+	<select id="selectUsedDeliveryList" resultType="com.example.anesi.model.Used">
+		SELECT o.*, p.USED_P_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+		FROM t3_tbl_used_order o
+		INNER JOIN t3_tbl_used_purchase p ON p.USED_P_NO = o.USED_NO
+		INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
+		
+	</select>
+	<!--중고상품결제배송리스트 조회-->
+	<select id="selectUsedSearch" parameterType="hashmap" resultType="com.example.anesi.model.Used">
+	  	SELECT o.*, p.USED_P_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+		FROM t3_tbl_used_order o
+		INNER JOIN t3_tbl_used_purchase p ON p.USED_P_NO = o.USED_NO
+		INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
+	    
+	    WHERE
+	        <choose>
+	            <when test="searchOption == 'PAYMENT_NO'">
+	                o.PAYMENT_NO LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'USED_P_NAME'">
+	                p.USED_P_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'RECEIPT_NAME'">
+	                o.RECEIPT_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	        </choose>
+	</select>
+	<!-- 중고물품 배송상태변경-->
+	<update id="updateUsedDelivery" parameterType="hashmap">
+		UPDATE t3_tbl_used_order
+			SET
+			DELIVERY_SIT = #{sit}
+		WHERE PAYMENT_NO IN 
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</update>
 	
 	<select id="selectDeliveryList" resultType="com.example.anesi.model.UserOrder">
 		SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
@@ -73,45 +111,88 @@
 		INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
 		INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
 		INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
+		
+		UNION
+		
+		SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+		FROM t3_tbl_nonuser_order o
+		INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
+		INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
+		INNER JOIN t3_tbl_nonuser_address a ON o.ADDR_NO = a.ADDR_NO
 	</select>
 	
 	<update id="updateDelivery" parameterType="hashmap">
 		UPDATE t3_tbl_user_order
 			SET
 			DELIVERY_SIT = #{sit}
-		WHERE ORDER_NO IN 
+		WHERE PAYMENT_NO IN 
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</update>
+	
+	<update id="updateNonDelivery" parameterType="hashmap">
+		UPDATE t3_tbl_nonuser_order
+			SET
+			DELIVERY_SIT = #{sit}
+		WHERE PAYMENT_NO IN 
 		<foreach collection="list" close=")" open="(" item="item" separator=",">
 			#{item}
 		</foreach>
 	</update>
 	
 	<select id="selectSearchList" parameterType="hashmap" resultType="com.example.anesi.model.UserOrder">
-		SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
-		FROM t3_tbl_user_order o
-		INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
-		INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
-		INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
-		WHERE
-			<choose>
-				<when test="searchOption == 'PAYMENT_NO'">
-					PAYMENT_NO LIKE CONCAT('%',#{searchText},'%')
-				</when>
-				<when test="searchOption == 'PRODUCT_NAME'">
-					PRODUCT_NAME LIKE CONCAT('%',#{searchText},'%')
-				</when>
-				<when test="searchOption == 'RECEIPT_NAME'">
-					RECEIPT_NAME LIKE CONCAT('%',#{searchText},'%')
-				</when>
-			</choose>
+	    SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+	    FROM t3_tbl_user_order o
+	    INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
+	    INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
+	    INNER JOIN t3_tbl_user_address a ON o.ADDR_NO = a.ADDR_NO
+	    
+	    WHERE
+	        <choose>
+	            <when test="searchOption == 'PAYMENT_NO'">
+	                o.PAYMENT_NO LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'PRODUCT_NAME'">
+	                p.PRODUCT_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'RECEIPT_NAME'">
+	                o.RECEIPT_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	        </choose>
+	    
+	    UNION
+	    
+	    SELECT o.*, p.PRODUCT_NAME, ot.OPTION_NAME, a.ZIPCODE, a.ADDR, a.ADDR2
+	    FROM t3_tbl_nonuser_order o
+	    INNER JOIN t3_tbl_product p ON o.PRODUCT_NO = p.PRODUCT_NO
+	    INNER JOIN t3_tbl_product_option ot ON o.OPTION_NO = ot.OPTION_NO
+	    INNER JOIN t3_tbl_nonuser_address a ON o.ADDR_NO = a.ADDR_NO
+	    
+	    WHERE
+	        <choose>
+	            <when test="searchOption == 'PAYMENT_NO'">
+	                o.PAYMENT_NO LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'PRODUCT_NAME'">
+	                p.PRODUCT_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	            <when test="searchOption == 'RECEIPT_NAME'">
+	                o.RECEIPT_NAME LIKE CONCAT('%',#{searchText},'%')
+	            </when>
+	        </choose>
 	</select>
 	
 	<select id="selectAdminInquiryList" parameterType="hashmap" resultType="com.example.anesi.model.Inquiry">
-		SELECT i.*, u.USER_EMAIL, p.PRODUCT_NAME
+		SELECT i.*, u.USER_EMAIL, p.PRODUCT_NAME, COALESCE(o.OPTION_NAME, '-') AS OPTION_NAME
 		FROM t3_tbl_user_inquiry i
 		INNER JOIN t3_tbl_user u
 			ON i.USER_NO = u.USER_NO
 		INNER JOIN t3_tbl_product p
 			ON i.PRODUCT_NO = p.PRODUCT_NO
+		LEFT JOIN t3_tbl_product_option o
+			ON i.OPTION_NO = o.OPTION_NO
+		ORDER BY CASE WHEN i.REPLY IS NULL THEN 0 ELSE 1 END, i.REPLY 
 	</select>
 	
 	<update id="updateAdminInquiry" parameterType="hashmap">
@@ -142,13 +223,6 @@
 			#{item}
 		</foreach>
 	</delete>
-	
-	
-	
-	
-	
-	
-	
 	
 	<!--고객관리-->
 	<select id="selectUserList" parameterType="hashmap" resultType="com.example.anesi.model.User">
@@ -191,10 +265,7 @@
 		UPDATE t3_tbl_user
 			SET
 			DELETE_YN = #{deleteYn}
-		WHERE USER_NO IN 
-		<foreach collection="list" close=")" open="(" item="item" separator=",">
-			#{item}
-		</foreach>
+		WHERE USER_NO = #{userNo}
 	</update>
 	
 	<update id="resetUser" parameterType="hashmap">
@@ -204,11 +275,279 @@
 		WHERE USER_NO = #{userNo}
 	</update>
 	
+	<update id="adminResetUserCnt" parameterType="hashmap">
+		UPDATE t3_tbl_user
+			SET
+			CNT = 0
+		WHERE USER_NO IN 
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</update>
 	
 	
+		
+	<!-- 알림-->
+	<!--전체 알림 리스트 불러오기-->
+	<select id="selectAlarmAll" parameterType="hashmap" resultType="com.example.anesi.model.User">
+		SELECT A.*, T.ALARM_CONTENT,T.ICON, U.NICK
+		FROM t3_tbl_alarm A
+		JOIN t3_tbl_alarm_text T ON A.ALARM_TYPE=T.ALARM_TYPE 
+		JOIN t3_tbl_user U ON A.USER_NO=U.USER_NO
+		WHERE U.USER_NO = #{userNo}
+	</select>
 	
 	
+	<!--알림인서트-->
+	<insert id="insertAlarm" parameterType="hashmap" >
+		INSERT INTO t3_tbl_alarm
+		(USER_NO, ALARM_TYPE)
+    	VALUES
+    	(#{userNo}, #{alarmType})
+	</insert>
 	
+	<!-- 알람삭제-->
+	<delete id="deleteAlarm" parameterType="hashmap">
+		DELETE 
+		FROM t3_tbl_alarm
+		WHERE ALARM_NO = #{alarmNo}
+	</delete>
 	
+	<!-- 중고 물품 리스트 -->
+	<select id="selectUsedList" parameterType="hashmap" resultType="com.example.anesi.model.Used">
+		SELECT *
+		FROM t3_tbl_used_purchase
+	</select>
 	
+	<select id="selectStatisticsProduct" parameterType="hashmap" resultType="com.example.anesi.model.Statistics">
+		SELECT 
+	    total_orders.total_users + total_nonusers.total_nonusers AS total_orders,
+	    today_orders.today_users + today_nonusers.today_nonusers AS today_orders,
+	    overall_total.total_order_price + overall_nonusers.total_order_price AS overall_total,
+	    overall_today.total_order_price + overall_today_nonusers.total_order_price AS overall_today
+	    
+		FROM
+	    (SELECT 
+	        COUNT(*) AS total_users 
+	    FROM 
+	        t3_tbl_user_order) AS total_orders,
+	    
+	    (SELECT 
+	        COUNT(*) AS total_nonusers 
+	    FROM 
+	        t3_tbl_nonuser_order) AS total_nonusers,
+	    
+	    (SELECT 
+	        COALESCE(SUM(subquery.total_order_price), 0) AS total_order_price
+	    FROM 
+	        (SELECT 
+	            PAYMENT_NO, SUM(ORDER_PRICE) AS total_order_price
+	        FROM 
+	            t3_tbl_user_order
+	        GROUP BY 
+	            PAYMENT_NO) AS subquery) AS overall_total,
+	    
+	    (SELECT 
+	        COALESCE(SUM(subquery.total_order_price), 0) AS total_order_price
+	    FROM 
+	        (SELECT 
+	            PAYMENT_NO, SUM(ORDER_PRICE) AS total_order_price
+	        FROM 
+	            t3_tbl_nonuser_order
+	        GROUP BY 
+	            PAYMENT_NO) AS subquery) AS overall_nonusers,
+	    
+	    (SELECT 
+	        COUNT(*) AS today_users 
+	    FROM 
+	        t3_tbl_user_order 
+	    WHERE 
+	        DATE(NOW()) = DATE(CREATEDATE)) AS today_orders,
+	    
+	    (SELECT 
+	        COUNT(*) AS today_nonusers 
+	    FROM 
+	        t3_tbl_nonuser_order 
+	    WHERE 
+	        DATE(NOW()) = DATE(CREATEDATE)) AS today_nonusers,
+	    
+	    (SELECT 
+	        COALESCE(SUM(subquery.total_order_price), 0) AS total_order_price
+	    FROM 
+	        (SELECT 
+	            PAYMENT_NO, SUM(ORDER_PRICE) AS total_order_price
+	        FROM 
+	            t3_tbl_user_order
+	        WHERE 
+	            DATE(NOW()) = DATE(CREATEDATE) 
+	        GROUP BY 
+	            PAYMENT_NO) AS subquery) AS overall_today,
+	    
+	    (SELECT 
+	        COALESCE(SUM(subquery.total_order_price), 0) AS total_order_price
+	    FROM 
+	        (SELECT 
+	            PAYMENT_NO, SUM(ORDER_PRICE) AS total_order_price
+	        FROM 
+	            t3_tbl_nonuser_order
+	        WHERE 
+	            DATE(NOW()) = DATE(CREATEDATE) 
+	        GROUP BY 
+	            PAYMENT_NO) AS subquery) AS overall_today_nonusers;
+	</select>
+	
+	<select id="selectWeeklySales" parameterType="hashmap" resultType="com.example.anesi.model.Statistics">
+		SELECT 
+	    order_date,
+	    SUM(order_count) AS total_order_count,
+	    SUM(total_order_amount) AS total_order_amount
+	FROM (
+	    SELECT 
+	        DATE(CREATEDATE) AS order_date,
+	        COUNT(*) AS order_count,
+	        COALESCE(SUM(ORDER_PRICE), 0) AS total_order_amount
+	    FROM 
+	        t3_tbl_user_order
+	    WHERE 
+	        DATE(CREATEDATE) >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY)
+	    GROUP BY 
+	        DATE(CREATEDATE)
+	    UNION ALL
+	    SELECT 
+	        DATE(CREATEDATE) AS order_date,
+	        COUNT(*) AS order_count,
+	        COALESCE(SUM(ORDER_PRICE), 0) AS total_order_amount
+	    FROM 
+	        t3_tbl_nonuser_order
+	    WHERE 
+	        DATE(CREATEDATE) >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY)
+	    GROUP BY 
+	        DATE(CREATEDATE)
+	) AS combined_orders
+	GROUP BY 
+	    order_date
+	ORDER BY 
+	    order_date;
+	</select>
+	
+	<!--프로젝트 메인-->
+	<!--결제/배송리스트-->
+	<select id="mainOrderList" resultType="com.example.anesi.model.UserOrder">
+		SELECT delivery_sit_values.DELIVERY_SIT, COALESCE(TOTAL_COUNT, 0) AS TOTAL_COUNT
+		FROM (
+		    SELECT 1 AS DELIVERY_SIT UNION ALL
+		    SELECT 2 AS DELIVERY_SIT UNION ALL
+		    SELECT 3 AS DELIVERY_SIT UNION ALL
+		    SELECT 4 AS DELIVERY_SIT
+		) AS delivery_sit_values
+		LEFT JOIN (
+		    SELECT DELIVERY_SIT, COUNT(*) AS TOTAL_COUNT
+		    FROM (
+		        SELECT DELIVERY_SIT FROM t3_tbl_nonuser_order
+		        UNION ALL
+		        SELECT DELIVERY_SIT FROM t3_tbl_user_order
+		    ) AS combined_data
+		    GROUP BY DELIVERY_SIT
+		) AS counts ON delivery_sit_values.DELIVERY_SIT = counts.DELIVERY_SIT
+		ORDER BY delivery_sit_values.DELIVERY_SIT;
+	</select>
+	<!--중고상품 리스트-->
+	<select id="mainUsedList" resultType="com.example.anesi.model.Used">
+		SELECT COALESCE(counts.ADMIN_CNT, 0) AS ADMIN_CNT, VALUES1.PURCHASE
+		FROM (
+		    SELECT 'W' AS PURCHASE UNION ALL
+		    SELECT 'Y' AS PURCHASE UNION ALL
+		    SELECT 'N' AS PURCHASE
+		) AS VALUES1
+		LEFT JOIN (
+		    SELECT COUNT(*) AS ADMIN_CNT, PURCHASE
+		    FROM t3_tbl_used_purchase
+		    GROUP BY PURCHASE
+		) AS counts ON VALUES1.PURCHASE = counts.PURCHASE
+		ORDER BY VALUES1.PURCHASE;
+	</select>
+	<!--리뷰리스트-->
+	<select id="mainReviewList" resultType="com.example.anesi.model.Review">
+		SELECT *
+		FROM t3_tbl_user_review
+	</select>
+	<!--상품리스트-->
+	<select id="mainProductDel" resultType="com.example.anesi.model.Product">
+		SELECT VALUES1.DELETE_YN, COALESCE(counts.DE, 0) AS DE
+		FROM(
+			SELECT 'N' DELETE_YN UNION ALL
+			SELECT 'S' DELETE_YN UNION ALL
+			SELECT 'Y' DELETE_YN
+		) AS VALUES1
+		LEFT JOIN (
+				SELECT COUNT(*) AS DE, DELETE_YN
+				FROM t3_tbl_product
+				GROUP BY DELETE_YN
+		
+		) AS counts ON counts.DELETE_YN = VALUES1.DELETE_YN
+		ORDER BY VALUES1.DELETE_YN
+	</select>
+	
+	<select id="mainProductDis" resultType="com.example.anesi.model.Product">
+		SELECT COUNT(*) AS DIS, DISCOUNT_YN 
+		FROM t3_tbl_product
+		WHERE DISCOUNT_YN='Y'
+	</select>
+	<!--문의리스트-->
+	<select id="mainInquiryCnt" resultType="com.example.anesi.model.Inquiry">
+		SELECT COALESCE(COUNT(*), 0) AS INQ_CNT, INQUIRY_CATEGORY
+		FROM t3_tbl_user_inquiry
+		WHERE REPLY IS NULL
+		GROUP BY INQUIRY_CATEGORY
+	</select>
+	<select id="mainInquiryList" resultType="com.example.anesi.model.Inquiry">
+		SELECT CONTENT, CDATETIME, INQUIRY_CATEGORY
+		FROM t3_tbl_user_inquiry
+	 	WHERE REPLY IS NULL
+	 	
+	 	<choose>
+			<when test="searchOption == 1">
+ 				  AND INQUIRY_CATEGORY IN ('상품','배송')
+			</when>
+			<when test="searchOption == 2">
+ 				  AND INQUIRY_CATEGORY IN ('환불','반품','교환') 
+			</when>
+			<when test="searchOption == 3">
+ 				  AND INQUIRY_CATEGORY = '기타' 
+			</when>
+		</choose>
+	 	LIMIT 6
+	</select>
+	<!-- 차트리스트 -->
+	
+	<select id="mainChart" resultType="com.example.anesi.model.Statistics">
+		SELECT 
+		    CASE 
+		        WHEN CATEGORY_NO LIKE '1%' THEN '가구'
+		        WHEN CATEGORY_NO LIKE '2%' THEN '조명'
+	     	 	WHEN CATEGORY_NO LIKE '3%' THEN '패브릭'
+	     	    WHEN CATEGORY_NO LIKE '4%' THEN '가전'
+	     	    WHEN CATEGORY_NO LIKE '5%' THEN '데코/식물'
+	     	    WHEN CATEGORY_NO LIKE '6%' THEN '반려동물'
+		        ELSE 'C7'
+		    END AS CategoryGroup,
+		    COUNT(*) AS TotalCount
+		FROM t3_tbl_product
+		GROUP BY CategoryGroup;
+	</select>
+	<select id="mainChartCsat" resultType="com.example.anesi.model.Statistics">
+		SELECT 
+		    CASE 
+		        WHEN CSAT LIKE 1 THEN '1'
+		        WHEN CSAT LIKE 2 THEN '2'
+		        WHEN CSAT LIKE 3 THEN '3'
+		        WHEN CSAT LIKE 4 THEN '4'
+		        WHEN CSAT LIKE 5 THEN '5'
+		  
+		    END AS csatGroup,
+		    COUNT(*) AS csatCount
+		FROM t3_tbl_user_review
+		GROUP BY csatGroup
+		ORDER BY csatGroup
+	</select>
 </mapper>
