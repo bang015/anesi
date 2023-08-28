@@ -17,6 +17,22 @@
 <meta charset="EUC-KR">
 <title>상품 상세 페이지</title>
 <style>
+.modal{
+	z-index: 10000 !important;
+}
+.review-back1{
+	position: absolute;
+	top: 20px;
+	right: 50px;
+	
+}
+.review-back1 i{
+	font-size: 50px;
+}
+.review-back1 button{
+	background-color: rgba(0, 0, 0, 0);
+    border: 0;
+}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
@@ -300,7 +316,7 @@
 								<div class="review-wrap">
 									<div class="review-box" v-if="reviewList.length > 0" v-for="item in reviewList">
 										<div class="user-profile">
-												<img class="user-profileImg" alt="프로필이미지" :src="item.uImgPath+'/'+item.uImgName">
+											<img class="user-profileImg" alt="프로필이미지" :src="item.uImgPath+'/'+item.uImgName">
 										</div>
 										<div class="review-user">
 											
@@ -315,7 +331,7 @@
 											<span class="review-optionName1">{{item.optionName}}</span>
 										</div>
 										<div class="review-img-box" v-if="item.rImgName !=undefined">
-											<img class="review-img" alt="리뷰이미지" :src="item.rImgPath+'/'+item.rImgName">
+											<a href="javascript:;" @click="zoomImg(item.rImgPath,item.rImgName)"><img class="review-img" alt="리뷰이미지" :src="item.rImgPath+'/'+item.rImgName"></a>
 										</div>
 										<div class="review-content">
 											{{item.content}}
@@ -441,9 +457,20 @@
 										<span class="rock-icon">
 											<i class="fa-solid fa-lock" style="color: rgb(175, 175, 175);"></i>
 										</span>
-										<span class="private-text">
+										<span class="private-text" v-if="userNo == item.userNo || status == 'A'">
+											{{item.content}}
+										</span>
+										<span class="private-text" v-else>
 											비밀글입니다.
 										</span>
+										<div  class="inquiry-answer" v-if="userNo == item.userNo || status == 'A'">
+										<span class="a-icon" v-if="item.reply != undefined">
+											<i  class="fa-solid fa-a" style="color: #A782C3;"></i>
+										</span>
+										<span class="inquiry-reply" v-if="item.reply!=undefined">
+											{{item.reply}}
+										</span>
+									</div>
 									</div>
 								</div>
 								<div v-if="inquiryListCnt == 0" class="non-inquiry-cnt">
@@ -577,6 +604,14 @@
 								<button @click="fnReviewEdit" class="right_button">수정하기</button>
 							</div>	
 						</div>
+						<div @click="closeScrapModal3()" class="modal noneDisplay" v-if="showScrapModal6" :class="{'showDisplay' : showScrapModal6}">
+							<div class="review-back1">
+									<button class="back-btn" @click="closeScrapModal3()"><i  class="fa-solid fa-x fa-2x" style="color: #bdbdbd;"></i></button>
+							</div>
+								<div>
+									<img :src="zoomInImg">
+								</div>
+						</div>
 						<div class="recently-viewed">
 						<div class="recently-box">
 						<div class="recently-box2">
@@ -613,7 +648,7 @@
 							       </li>
 							    </ul>    
 							</div>
-							
+
 							</div>
 							<div class="total-price">
 							    <div class="total-title">주문금액</div>
@@ -656,6 +691,7 @@ var app = new Vue({
         apexchart: VueApexCharts,
       },
 	data : {
+		status : '${sessionStatus}',
 		cartCheck : [],
 		nonuserNo : "",
 		selectHelp : [],
@@ -724,6 +760,8 @@ var app = new Vue({
 		showScrapModal3 : false,
 		showScrapModal4 : false,
 		showScrapModal5 : false,
+		showScrapModal6 : false,
+		zoomInImg : "",
 		helpList : [],
 		reviewCheck1 : 0,
 		contentImgBoxflg : true,
@@ -1278,6 +1316,7 @@ var app = new Vue({
 		closeScrapModal3: function() {
 			var self = this;
 			self.showScrapModal3 = false;
+			self.showScrapModal6 = false;
 			self.nonUserScrapbook = false;
 			},
 		starClass(index) {
@@ -1603,7 +1642,11 @@ var app = new Vue({
 				    	    });
 				    	}
 			    	},
-			    
+			    	zoomImg(path,name){
+			    		this.showScrapModal6 = true;
+			    		this.zoomInImg=path+"/"+name;
+			    		console.log(this.zoomInImg);
+			    	}
 			     
 	}, // methods
 	created : function() {

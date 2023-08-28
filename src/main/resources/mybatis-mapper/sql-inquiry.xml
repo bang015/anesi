@@ -5,7 +5,7 @@
 <mapper namespace="com.example.anesi.mapper.InquiryMapper">	
 	<!-- 문의 리스트 -->
 	<select id="selectInqiryList" parameterType="hashmap" resultType="com.example.anesi.model.Inquiry">
-		SELECT SUBSTR(i.CdateTIME,1,16) as CdateTIME, i.CONTENT, i.REPLY, i.OPENYN, i.INQUIRY_CATEGORY, u.NICK,i.PURCHASE_YN
+		SELECT SUBSTR(i.CdateTIME,1,16) as CdateTIME, i.CONTENT, i.REPLY, i.OPENYN, i.INQUIRY_CATEGORY, u.NICK,i.PURCHASE_YN, i.USER_NO
 		FROM t3_tbl_user_inquiry i 
 		INNER JOIN t3_tbl_user u ON i.USER_NO = u.USER_NO
 		WHERE PRODUCT_NO = #{productNo}
