@@ -62,4 +62,8 @@ public interface BoardMapper {
 	int deleteGreat(HashMap<String, Object> map);
 	// 게시글 좋아요 삭제
 	int deleteGreatList(HashMap<String, Object> map);
+	// 좋아요한 게시글
+	List<Board> myGreatBoard(HashMap<String, Object> map);
+	// 좋아요게시글cnt
+	int selectGreatCnt(HashMap<String, Object> map);
 }

@@ -242,7 +242,7 @@ li{
 }
 .pagination {
     text-align: center;
-    margin-top: 65px;
+    margin-top: 30px;
     font-size : 13px;
 }
 .pagination li {
@@ -347,6 +347,34 @@ th{
 			</paginate>
 			<hr class="hrr2">
 			
+			<div>
+				<div><h2 class="partName">좋아하는 게시글 <span class="text1">{{cnt}}</span></h2></div>
+				<div class="part">
+				<div v-for="(item, index) in gList">
+			        <div class="board1">
+			            <div class="board1_item">
+			                <div class="photo1">
+			                   	<a @click="fnView(item.boardNo)"><img class="photo2" :src="item.imgPath+'/'+item.imgName"></a>
+			               		<img class="new" v-if="isNew(item.cDateTime)" src="../css/image/community/new.png">
+			               	</div>
+			               	<a class="title_a" @click="fnView(item.boardNo)"><div class="title">{{item.title}}</div></a>
+			               	<div class="view">좋아요 {{item.gCnt}} · 조회 {{item.view}} · 댓글 {{item.commCnt}}</div>
+			           	</div>
+			        </div>
+				</div>
+				</div>
+				<paginate
+			    :page-count="gpageCount"
+			    :page-range="3"
+			    :margin-pages="1"
+			    :click-handler="fngPageSearch"
+			    :prev-text="'〈'"
+			    :next-text="'〉'"
+			    :container-class="'pagination'"
+			    :page-class="'page-item'" v-if="gCnt > 4">
+			</paginate>
+			</div>
+			<hr class="hrr2">
 			<div><h2 class="partName">중고 매입 문의 <span class="text1">{{usedList.length}}</span></h2></div>
 			<div>
 				<table v-if="usedList.length > 0">
@@ -382,13 +410,19 @@ var app = new Vue({
 	data : {
 		list : [],
 		usedList : [],
+		gList : [],
 		sessionNick : "${sessionNick}",
 		sessionNo : "${sessionNo}",
 		selectPage: 1,
 		pageCount: 1,
 		cnt : 0,
 		searchCnt : 0,
-		searchPageCount : 1
+		searchPageCount : 1,
+		gselectPage: 1,
+		gpageCount: 1,
+		gCnt : 0,
+		gsearchCnt : 0,
+		gsearchPageCount : 1
 	},// data
 	methods : {
 		fnGetList : function(){
@@ -425,6 +459,40 @@ var app = new Vue({
 				}
 			});
 		},
+		fnGetgList : function(){
+			var self = this;
+			var startNum = ((self.selectPage-1) * 4);
+	    	var lastNum = 4;
+			var param = {startNum : startNum, lastNum : lastNum, uNo : self.sessionNo};
+			$.ajax({
+				url : "/community/myGreatBoard.dox",
+                dataType:"json",	
+                type : "POST",
+                data : param,
+                success : function(data) { 
+                	self.gList = data.list;
+                	self.gCnt = data.cnt;
+                	self.gpageCount = Math.ceil(self.gCnt / 4);
+                }
+            }); 
+		},
+		fngPageSearch : function(pageNum){
+			var self = this;
+			var startNum = ((pageNum-1) * 4);
+			var lastNum = 4;
+			var nparmap = {startNum : startNum, lastNum : lastNum, uNo : self.sessionNo};
+			$.ajax({
+				url : "/community/myGreatBoard.dox",
+				dataType : "json",
+				type : "POST",
+				data : nparmap,
+				success : function(data) {
+					self.gList = data.list;
+                	self.gsearchCnt = data.cnt;
+	                self.gpageCount = Math.ceil(self.gsearchCnt / 4);
+				}
+			});
+		},
 		fnGetUsedList : function(){
 			var self = this;
 			var param = {userNo : self.sessionNo};
@@ -458,6 +526,7 @@ var app = new Vue({
 		var self = this;
 		self.fnGetList();
 		self.fnGetUsedList();
+		self.fnGetgList();
 	}// created
 });
 </script>

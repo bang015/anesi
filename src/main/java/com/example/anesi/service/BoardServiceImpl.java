@@ -168,4 +168,13 @@ public class BoardServiceImpl implements BoardService{
 		return resultMap;
 	}
 
+	@Override
+	public HashMap<String, Object> myGreatBoard(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", boardMapper.myGreatBoard(map));
+		resultMap.put("cnt", boardMapper.selectGreatCnt(map));
+		return resultMap;
+	}
+
 }

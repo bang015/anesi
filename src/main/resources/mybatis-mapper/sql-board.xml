@@ -247,4 +247,22 @@
 		FROM t3_tbl_board_great
 		WHERE BOARD_NO = #{bNo}
 	</delete>
+	
+	<!-- 좋아요 게시글 리스트 -->
+	<select id="myGreatBoard" parameterType="hashmap" resultType="com.example.anesi.model.Board">
+		SELECT *
+		FROM t3_tbl_board B
+		LEFT JOIN t3_tbl_board_great G ON B.BOARD_NO = G.BOARD_NO
+		LEFT JOIN t3_tbl_board_image I ON B.BOARD_NO = I.BOARD_NO
+		WHERE G.USER_NO = #{uNo}
+		LIMIT #{startNum}, #{lastNum}
+	</select>
+	
+	<!-- 좋아요 게시글 cnt -->
+	<select id="selectGreatCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM t3_tbl_board B
+		LEFT JOIN t3_tbl_board_great G ON B.BOARD_NO = G.BOARD_NO
+		WHERE G.USER_NO = #{uNo}
+	</select>
 </mapper>
