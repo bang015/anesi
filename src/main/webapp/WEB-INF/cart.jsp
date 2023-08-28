@@ -214,6 +214,10 @@ new Vue({
             	    success: function (response) {
             	      
 
+            	          if (self.cartItems.length === 0) {
+            	            window.location.href = '/nullCart.do'; // nullCart로 페이지 이동
+            	          }
+
             	      // 중복 상품 제거
             	      const cartItemsMap = new Map();
             	      response.list.forEach(item => {

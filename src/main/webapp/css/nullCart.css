@@ -1,9 +1,9 @@
 @charset "EUC-KR";
 
 .nullCartBtn {
-  position: fixed;
-  top: 65%;
-  left: 50%;
+  position: absolute;
+  top: 75%;
+  left: 49%;
   transform: translate(-50%, -50%);
   background-color:#A782C3;
   text-align: center;
@@ -21,7 +21,7 @@
   }
   .nullCart{
 	   position: fixed;
-  top: 23%;
+  top: 33%;
   left: 39.5%;
   width: 400px;
   }

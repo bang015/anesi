@@ -117,7 +117,6 @@
 		<option value="hotmail.com">hotmail.com</option>
 		<option value="icloud.com">icloud.com</option>
 	</select>
-	      <button @click.prevent='sendVerificationCode'>인증 메일 보내기</button>
     
 	</div>
 	<div><span class="red">{{emailMs}}</span></div>

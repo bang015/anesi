@@ -59,6 +59,10 @@ public class TestController {
 	public String chartTest(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		return "/chartTest";
 	}
+	@RequestMapping("nullCart.do") 
+	public String carttest(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/nullCart";
+	}
 	
 	
 	
