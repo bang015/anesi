@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,13 +109,13 @@ i {
 .gender-radio-group {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 3px;
 }
 
 .gender-radio {
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
 }
 
@@ -126,23 +125,20 @@ i {
 }
 
 .radio-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  height: 40px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  position: relative;
-  transition: background-color 0.3s ease;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 128px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
 .custom-radio:checked + .radio-button {
   background-color: #A782C3;
-}
-
-.radio-text {
-  color: #333;
+  color : white;
 }
 </style>
 </head>
@@ -235,31 +231,31 @@ i {
 	</div>
 	<!-- 성별 -->
 	<div class="part">
-	  <div>
-    <h2>성별</h2>
-    <div class="gender-radio-group">
-      <label class="gender-radio">
-        <input type="radio" v-model="user.gender" value="N" class="custom-radio">
-        <div class="radio-button">
-          <span class="radio-text">선택 안 함</span>
-        </div>
-      </label>
-      <label class="gender-radio">
-        <input type="radio" v-model="user.gender" value="F" class="custom-radio">
-        <div class="radio-button">
-          <span class="radio-text">여성</span>
-        </div>
-      </label>
-      <label class="gender-radio">
-        <input type="radio" v-model="user.gender" value="M" class="custom-radio">
-        <div class="radio-button">
-          <span class="radio-text">남성</span>
-        </div>
-      </label>
-    </div>
-</div>
-	<!-- 약관동의 -->
+		<div>
+		    <h2>성별</h2>
+		    <div class="gender-radio-group">
+		      <label class="gender-radio">
+		        <input type="radio" v-model="user.gender" value="N" class="custom-radio">
+		        <div class="radio-button">
+		          <span class="radio-text">선택 안 함</span>
+		        </div>
+		      </label>
+		      <label class="gender-radio">
+		        <input type="radio" v-model="user.gender" value="F" class="custom-radio">
+		        <div class="radio-button">
+		          <span class="radio-text">여성</span>
+		        </div>
+		      </label>
+		      <label class="gender-radio">
+		        <input type="radio" v-model="user.gender" value="M" class="custom-radio">
+		        <div class="radio-button">
+		          <span class="radio-text">남성</span>
+		        </div>
+		      </label>
+		    </div>
+		</div>
 	</div>
+	<!-- 약관동의 -->
 	<hr>
 	<div><h2>약관동의</h2></div>
 	<div><label><input type="checkbox" @click="fnAll" v-model="clause"> 전체동의</label></div>
@@ -598,9 +594,7 @@ var app = new Vue({
 	                success : function(data) { 
 	                }
             }); 
-			
 		},
-		
 		fnCoupon(couponName, disFlg, discount){
 			var self = this;
 			
