@@ -635,6 +635,18 @@
 <script src="../js/jquery.js"></script>
 <script>
 Vue.component('paginate', VuejsPaginate)
+function adjustHeight() {
+    const recentlyViewed = document.querySelector('.recently-viewed');
+    const windowHeight = window.innerHeight;
+
+    // 사용자 높이를 기준으로 높이 조절
+    const adjustedHeight = windowHeight - 270; // 220px는 top 속성 값
+
+    recentlyViewed.style.height = adjustedHeight + 'px';
+    recentlyViewed.style.height = adjustedHeight + 'px';
+}
+window.addEventListener('DOMContentLoaded', adjustHeight);
+window.addEventListener('resize', adjustHeight);
 var app = new Vue({
 	el : '#app',
 	components: {
@@ -1575,8 +1587,8 @@ var app = new Vue({
 			                	}
 			                }
 			            });
-			    	}
-		           
+			    	},
+			    
 			     
 	}, // methods
 	created : function() {
