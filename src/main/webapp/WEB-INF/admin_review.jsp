@@ -63,7 +63,7 @@
 			</div>
 		</div>
 		<div class="modal cursorPointer" v-if="showScrapModal" @click="closeModal">
-        	<img alt="" :src="imgPath" >
+        	<img alt="" :src="imgPath" class="imgSize2">
         </div>
 	</div>
 </body>
