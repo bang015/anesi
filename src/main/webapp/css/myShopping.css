@@ -431,3 +431,9 @@
 .showDisplay{
 	display: flex !important;
 }
+.btn8{
+	width: 100%;
+    height: 50px;
+    margin-top: 0px;
+    font-size: 19px;
+}

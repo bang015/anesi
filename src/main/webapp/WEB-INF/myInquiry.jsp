@@ -34,7 +34,7 @@
 		<div id="container2">
 			<div v-if="inquiryList.length == 0" class="nonInquiry">아직 문의한 내역이 없습니다.</div>
 			<div>
-				<div v-for="item in inquiryList" class="inquiryBox">
+				<div v-for="item in sliceInquiryList" class="inquiryBox">
 					<div class="replyBox1">
 						<span class="replyflgBox">{{item.reply == undefined ? '미답변' : '답변완료'}}</span>
 						<span class="cDateTime">{{item.cDateTime.substring(0,11)}}</span>
@@ -56,6 +56,7 @@
 					</div>
 				</div>
 			</div>
+			<button @click="fnIncreaseDisplayed" v-if="inquiryList.length > maxInquiry && inquiryList.length > 0" class="btn4 btn5 btn6 btn7 btn8">더보기</button>
 		</div>
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>	
@@ -67,7 +68,8 @@ var app = new Vue({
 	data : {
 		userNo : '${sessionNo}',
 		inquiryList : [],
-		
+		sliceInquiryList : [],
+		maxInquiry : 4,
 	},// data
 	methods : {
 		fnGetInquiry(){
@@ -80,6 +82,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.inquiryList = data.list;
+                	self.sliceInquiryList = self.inquiryList.slice(0, self.maxInquiry);
                 }
 			})
 		},
@@ -101,6 +104,11 @@ var app = new Vue({
                 	self.fnGetInquiry();
                 }
 			})
+		},
+		fnIncreaseDisplayed(){
+			var self = this;
+			self.maxInquiry += 4;
+			self.sliceInquiryList = self.inquiryList.slice(0, self.maxInquiry);
 		}
 	}, // methods
 	created : function() {
