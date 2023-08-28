@@ -99,7 +99,7 @@
 	opacity: 0.7;
 	
 }
-.hrr {
+.hr_1 {
 	margin : 30px 0px;
 	border: none; 
 	border-top: 1px solid #eee; 
@@ -130,7 +130,7 @@
 	<!-- 로고 클릭시 main화면으로 전환 또는, 제일 상단으로-->
 	<!-- 이미지를 포함 모든 링크는 href="javascript:;"-->
 	
-	<hr class="hrr">
+	<hr class="hr_1">
 	<a href="../main.do">
     <img id="f_img" src="../css/image/anesilogo.png" >
     </a>
