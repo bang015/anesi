@@ -115,6 +115,7 @@
     cursor: pointer;
     padding: 5px 10px;
     box-shadow: 1px 2px 5px -2px gainsboro;
+    font-family: 'Pretendard-Regular';
 }
 .btnCenter:hover{
 	border: 1px solid white;
@@ -177,7 +178,7 @@
    
    
 	   <div id="f_part3">
-	       <div class="pt_title"> 고객센터주문정보</div>
+	       <div class="pt_title"> 고객센터</div>
 	       <div class="내용">
 	           <div>상담/주문전화 1588-2222
 	           </div>

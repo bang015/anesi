@@ -223,6 +223,7 @@ var app = new Vue({
               
               },
               colors:['#A782C3']
+              
             },
 	},// data
 	methods : {

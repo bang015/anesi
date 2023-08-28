@@ -177,7 +177,8 @@ var app = new Vue({
       	chartOptions: {
         chart: {
           type: 'bar',
-          height: 270
+          height: 270,
+          fontFamily: 'Pretendard-Regular'
          },
         plotOptions: {
           bar: {
@@ -195,7 +196,9 @@ var app = new Vue({
            },
         xaxis: {
           categories: [],
-        }},
+        },
+           colors:['#A782C3']
+      	},
         //만족도차트
         csatChart : [],
         series2: [{
@@ -221,7 +224,8 @@ var app = new Vue({
               type: 'bar',
               height: 350,
               stacked: true,
-              stackType: '100%'
+              stackType: '100%',
+              fontFamily: 'Pretendard-Regular'
 
               
             },
@@ -238,6 +242,9 @@ var app = new Vue({
             xaxis: {
               categories: ['리뷰평점비율'],
             },
+            
+            colors:['#b0a2bb','#A782C3','#834683','#6e4091','#3f2951',],
+            
             tooltip: {
               y: {
                 formatter: function (val) {
@@ -255,11 +262,6 @@ var app = new Vue({
               offsetX: 90
             }
           },
-          
-       
-		        
-	
-		
 		
 	},// data
 	methods : {
