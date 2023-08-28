@@ -118,6 +118,7 @@ h1{
 }
 .part-in{
 	width : 300px;
+	position: relative;
 }
 .text1DIV{
 	margin: 0 0 63px 0;
@@ -141,6 +142,12 @@ h1{
     color: #9b9b9b;
     margin-left: 3px;
 }
+.new{
+	position: absolute;
+    width: 50px;
+    top: 8px;
+    left: 8px;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -159,7 +166,8 @@ h1{
 			<div><h3>등록된 사례 <span class="text2">{{cnt}}</span></h3></div>
 			<div class="part">
 				<div v-for="(item, index) in list" class="part-in">
-					<div><a @click="fnView(item.usedPNo)"><img class="purchaseImg" :src="item.pImgPath+'/'+item.pImgName"></a></div>
+					<div></div>
+					<div><img class="new" v-if="isNew(item.usedPUdatetime)" src="../css/image/community/new.png"><a @click="fnView(item.usedPNo)"><img class="purchaseImg" :src="item.pImgPath+'/'+item.pImgName"></a></div>
 					<div class="title"><a @click="fnView(item.usedPNo)">{{item.usedPName}}</a></div>
 				</div>
 			</div>
@@ -260,6 +268,13 @@ var app = new Vue({
 		},
 		fnAdd(usedPNo){
 			$.pageChange("/used/purchaseExAdd.do", {usedPNo : usedPNo});
+		},
+		isNew: function(cDateTime) {
+			const currentTime = new Date();
+			const postTime = new Date(cDateTime);
+			const diffInHours = (currentTime - postTime) / (1000 * 60 * 60);
+			
+			return diffInHours < 24;
 		}
 	}, // methods
 	created : function() {

@@ -348,7 +348,7 @@ th{
 			<hr class="hrr2">
 			
 			<div>
-				<div><h2 class="partName">좋아하는 게시글 <span class="text1">{{cnt}}</span></h2></div>
+				<div><h2 class="partName">좋아하는 게시글 <span class="text1">{{gCnt}}</span></h2></div>
 				<div class="part">
 				<div v-for="(item, index) in gList">
 			        <div class="board1">

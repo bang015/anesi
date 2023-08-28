@@ -139,7 +139,7 @@
 		LEFT JOIN t3_tbl_used_purchase_image I ON P.USED_P_NO = I.USED_P_NO
 		WHERE PURCHASE = 'Y' AND SELL_YN = 'Y'
 		GROUP BY P.USED_P_NO
-		ORDER BY USED_P_CDATETIME DESC
+		ORDER BY USED_P_UDATETIME DESC
 		LIMIT #{startNum}, #{lastNum}
 	</select>
 	
@@ -207,7 +207,8 @@
 			USED_P_SELL_PRICE = #{usedPSellPrice},
 			U_SELL_PRICE = #{uSellPrice},
 			SELL_CONTENT = #{sellContent},
-			SELL_YN = 'Y'
+			SELL_YN = 'Y',
+			USED_P_UDATETIME = NOW()
 		WHERE USED_P_NO = #{usedPNo}
 	</update>
 </mapper>
