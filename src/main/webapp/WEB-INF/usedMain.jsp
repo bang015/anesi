@@ -195,6 +195,7 @@ clear: both;
 	<div id="container">
 		<div class="part">
 			<div class="title"><h1>중고 판매</h1>
+			<div class="text1DIV"><span class="text1">🤗 원하는 상품을 저렴한 가격으로 구매하기 🎁</span></div>
 				<div class="more">
 					<a href="../usedSell.do" class="gogo2">판매 상품 더 보러 가기 🏃💨💨</a>
 				</div>

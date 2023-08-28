@@ -7,6 +7,7 @@
 	right: 150px;
 	top: 400px;
 	padding-top: 15px;
+	padding-bottom: 15px;
 }
 .navi-item-thumnail__image{
 	width: 80px;
@@ -16,7 +17,7 @@
 }
 
 .just{
-	 	width: 112px;
+	width: 112px;
 	height: 50px;
 	background-color: #A782C3;
 	position: fixed;
@@ -26,6 +27,7 @@
 	padding-top: 10px;
 	font-size: 16px;
 	color: white;
+	border-radius: 5px;
 	}
 #recentProductsApp{
 	display: inline-block;

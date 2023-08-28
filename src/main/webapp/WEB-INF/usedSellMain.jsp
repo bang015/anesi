@@ -14,7 +14,7 @@
 </head>
 <style>
 #app{
-	margin-top : 130px;
+	margin-top : 185px;
 }
 #container{
 	margin : 10px auto;
@@ -73,8 +73,8 @@ li{
 	list-style : none;
 }
 .title{
-	text-align: center;
-	margin: 50px 0;
+    text-align: center;
+    margin: -38px 0 -8px 0;
 }
 .part{
 	margin : 60px 0;
@@ -83,7 +83,7 @@ li{
 	margin: 0 0 40px 0;
 }
 .text1{
-	font-size : 17px;
+	font-size : 15px;
 }
 .text2{
 	text-align: right;
@@ -191,13 +191,50 @@ clear: both;
 		left: 188px;
 		top: 8px;
 	}
+.text1DIV{
+	margin: 0 0 40px 0;
+	text-align: center;
+}
+.used_menu{
+	display : flex;
+	justify-content: center;
+	border-bottom: 1px solid gainsboro;
+}
+.used_menu_li {
+	font-size: 17px;
+    border-right: 1px solid #ededed;
+    border-bottom: 4px solid white;
+    transition: background-color 0.3s;
+    width: 145px;
+    text-align: center;
+    padding: 15px 0px 0 0;
+}
+.used_menu_li:hover {
+    background-color: #f7f7f7; 
+}
+.used_menu_li_ch{
+    font-size: 17px;
+    width: 145px;
+	text-align: center;
+    padding: 15px 0px 15px 0;
+    border-right: 1px solid #ededed;
+    border-bottom: 4px solid #A782C3;
+}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
 <div id="app">
+<div>
+	<div class="used_menu">
+		<div class="used_menu_li_ch" style="border-left: 1px solid #ededed;"><a href="../usedSell.do" style="color:#A782C3;">중고 판매</a></div>
+		<div class="used_menu_li"><a href="/used/purchase.do" >중고 매입</a></div>
+		<div class="used_menu_li"><a href="/used/purchaseEx.do">중고 매입 사례</a></div>
+	</div>
+</div>
 	<div id="container">
 		<div class="part">
 			<div class="title"><h1>중고 판매</h1></div>
+			<div class="text1DIV"><span class="text1">🤗 원하는 상품을 저렴한 가격으로 구매하기 🎁</span></div>
 			<div class="select1">
 				<input class="selectBar" v-model="select" @keyup.enter="fnGetList2" placeholder="검색어를 입력해주세요.">
 				<img src="../css/image/community/m-glass.png" class="select-img">
