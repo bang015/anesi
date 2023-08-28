@@ -280,6 +280,15 @@
     grid-template-rows: 1fr ;
     grid-template-columns: 0fr 2fr 2fr 2fr 2fr;
 }
+.apexcharts-text tspan{
+    font-size: 13px;
+    font-weight : bold;
+ }
+ 
+ #chart2{
+ 	margin-left : 30px;
+ 	width : 570px
+ }
 </style>
 </head>
 <body>
@@ -347,7 +356,7 @@
 					<li>평점높은리뷰</li>
 					<li>평점낮은리뷰</li>
 				</ul>
-				<ul class="deliveryB" >
+				<ul class="deliveryB" style="width : 10%" >
 					<li>{{reviewList.length}}건</li>
 					<li>{{reviewCnt1}}건</li>
 					<li>{{reviewCnt2}}건</li>
@@ -356,8 +365,8 @@
 			
 				<span class="revC">
 					<!-- <li>리뷰 평점 비율</li> -->
-					<div id="chart">
-				        <apexchart type="bar" height="150" :options="chartOptions2" :series="series2"></apexchart>
+					<div id="chart2">
+				        <apexchart type="bar" height="150"  :options="chartOptions2" :series="series2" ></apexchart>
 				    </div>
 				</span>
 			</div>
@@ -382,8 +391,8 @@
 					<li>{{productList[2].de}}건</li>
 					<li>{{productList2[0].dis}}건</li>
 				</ul>
-				<div id="chart">
-			        <apexchart type="bar" height="270" :options="chartOptions" :series="series"></apexchart>
+				<div id="chart" >
+			        <apexchart type="bar" height="270" :options="chartOptions" :series="series" ></apexchart>
 		       </div>
 		       
 			</div>
@@ -467,25 +476,29 @@ var app = new Vue({
         csatChart : [],
         series2: [{
             name: '1',
-            data: [44]
+            data: []
           }, {
             name: '2',
-            data: [53]
+            data: []
           }, {
             name: '3',
-            data: [12]
+            data: []
           }, {
             name: '4',
-            data: [9]
+            data: []
           }, {
             name: '5',
-            data: [25]
+            data: []
           }],
          chartOptions2: {
+        	 
+       	 	
             chart: {
               type: 'bar',
               height: 350,
               stacked: true,
+              stackType: '100%'
+
               
             },
             plotOptions: {
@@ -655,10 +668,28 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) {
                 	self.csatChart = data.list;
+                	
                 	var csatData = self.csatChart.map(item => ({
-                        csatGroup: item.csatGroup,
                         csatCount: item.csatCount
                     }));
+                
+                
+                   self.series2 = [{
+                	   name : '1',
+                	   data : [csatData[0].csatCount]
+                   },{
+                	   name : '2',
+                	   data : [csatData[1].csatCount]
+                   },{
+                	   name : '3',
+                	   data : [csatData[2].csatCount]
+                   },{
+                	   name : '4',
+                	   data : [csatData[3].csatCount]
+                   },{
+                	   name : '5',
+                	   data : [csatData[4].csatCount]
+                   }]; 
                 	
                 } 
 			})
