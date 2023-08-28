@@ -151,6 +151,7 @@ var app = new Vue({
               }
             
             },
+            colors:['#A782C3']
           },
   		series2: [{
             name: '¡÷πÆ',
@@ -221,6 +222,7 @@ var app = new Vue({
                 }
               
               },
+              colors:['#A782C3']
             },
 	},// data
 	methods : {

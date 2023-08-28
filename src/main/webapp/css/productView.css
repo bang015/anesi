@@ -400,3 +400,18 @@
 	.modal-card{
 		letter-spacing: 1px;
 	}
+	.content-img-box{
+	    height: 1000px;
+	    overflow: hidden;
+	    position: relative;
+	}
+	.content-img-box > button{
+		position: absolute;
+	    bottom: 15px;
+	    left: 269px;
+	    padding: 15px;
+	    background: #fffffff5;
+	    border: 1px solid #fffffff5;
+	    width: 300px;
+	    border-radius: 4px;
+	}

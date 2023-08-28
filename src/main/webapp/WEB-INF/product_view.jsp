@@ -175,8 +175,11 @@
 									<div>의심되는 경우 아네시 고객센터로 신고해 주시기 바랍니다.</div>
 								</div>
 							</div>
-							<div class="content-img" v-for="item in imgList2">
-								<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
+							<div class="content-img-box" :style="{overflow : contentImgBoxflg ? 'hidden' : 'visible'}">
+								<div class="content-img" v-for="item in imgList2">
+									<img alt="콘텐츠이미지" :src="item.imgPath+'/'+item.imgName">
+								</div>
+								<button v-if="contentImgBoxflg" @click="fnToggleContentImgBoxFlg">이미지 로드</button>
 							</div>
 							<div class="content-review" id="review">
 								<div class="review-title2" >
@@ -723,6 +726,7 @@ var app = new Vue({
 		showScrapModal5 : false,
 		helpList : [],
 		reviewCheck1 : 0,
+		contentImgBoxflg : true,
 		/* 그래프 시작 */
 		series: [{
             data : []
@@ -1587,6 +1591,9 @@ var app = new Vue({
 			                	}
 			                }
 			            });
+			    	},
+			    	fnToggleContentImgBoxFlg(){
+			    		this.contentImgBoxflg = !this.contentImgBoxflg;
 			    	},
 			    
 			     
