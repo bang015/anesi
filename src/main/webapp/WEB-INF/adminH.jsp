@@ -15,9 +15,9 @@
 		  <a href="/admin/main.do"><h1>관리자센터</h1></a>
 		  	<nav>
 				<a href="../login.do" v-if="sessionNo == ''">로그인</a>
-				<a href="../logout.do" v-if="sessionNo != ''">로그아웃</a>
-				<a>도움말</a>
-				<a href="../main.do">아네시 홈페이지</a>
+				<a href="../logout.do" v-if="sessionNo != ''"><i class="fa-solid fa-door-open"></i> 로그아웃</a>
+				<a href="#" onClick="top.location='javascript:location.reload()'"><i class="fa-solid fa-rotate-right" ></i>새로고침</a>
+				<a href="../main.do"><i class="fa-solid fa-house"></i> 아네시 홈페이지</a>
 			</nav>
 		</header>
 	</div>	
