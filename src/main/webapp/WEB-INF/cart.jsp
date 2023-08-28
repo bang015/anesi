@@ -214,7 +214,7 @@ new Vue({
             	    success: function (response) {
             	      
 
-            	          if (self.cartItems.length === 0) {
+            	          if ( response.list.length  === 0) {
             	            window.location.href = '/nullCart.do'; // nullCart로 페이지 이동
             	          }
 
