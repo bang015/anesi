@@ -188,8 +188,8 @@ h1{
 			    <label :for="'file' + index">파일첨부</label>
 			    <input type="file" :id="'file' + index" :name="'file' + index" @change="fnOnFileChange($event, index)">
 			    <input class="upload-name" :value="fileNames[index]">
-			    <div><img class="imgPrv" v-if="photoList[index]" :src="photoList[index]" alt="Image preview" class="pvImg" required></div>
-			    <div></div>
+			    <!-- <div><img class="imgPrv" v-if="photoList[index]" :src="photoList[index]" alt="Image preview" class="pvImg" required></div>
+			    <div><img :src="'image' + index" alt="Image preview" class="pvImg" ref="image" required></div> -->
 			</div>
 			</div>
 			<div class="btnDIV">
@@ -224,8 +224,10 @@ var app = new Vue({
 			content : ""
 		},
 		fileNames: ['', '', '', '', ''],
-		photoList : ['', '', '', '', ''],
-		imgList : []
+		photoList : [],
+		imgList : [],
+		image1 : "",
+		image2 : ""
 	},// data
 	components: {VueEditor},
 	methods : {
@@ -284,12 +286,6 @@ var app = new Vue({
 			var self = this;
 		    const file = event.target.files[0];	
 			if (file) {
-	            const reader = new FileReader();
-	            reader.onload = function(e) {
-	                self.photoList.splice(index, 1, e.target.result);
-	            };
-	            reader.readAsDataURL(file);
-	            
 		    	self.fileNames.splice(index,1);
 		      	self.fileNames.splice(index,0,file.name);
 	    	  	self.photoList.splice(index,1);
@@ -377,16 +373,20 @@ var app = new Vue({
                 data : param,
                 success : function(data) { 
                 	let no = data.usedPNo
+                	console.log(self.photoList);
                 	for(let i = 0; i < self.photoList.length; i++){
-                    	var form = new FormData();
-                		form.append("file1", self.photoList[i]);
-    					form.append("usedPNo", no);
-    					self.upload(form);
+                		var form = new FormData();
+                   		form.append("file1", self.photoList[i]);
+       					form.append("usedPNo", no);
+       					self.upload(form);
                 	}
                 	alert("등록이 완료되었습니다.");
-                	location.href="/used/purchase.do";
+                	self.fnMove();
                 }
             });
+        },
+        fnMove(){
+        	location.href="/used/purchase.do";
         },
         fnGoList(){
 			location.href="purchase.do";

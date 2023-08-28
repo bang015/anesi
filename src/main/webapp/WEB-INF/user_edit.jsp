@@ -313,9 +313,11 @@ img:hover{
 					<input type="file" id="file1" name="file1" class="inputFile" @change="fnProfileChange">
 				</label>
 				<div class="span1">프로필 이미지를 수정하려면 사진을 클릭해주세요.</div>
-			</div>				
+				
+			</div>		
+			<button class="btn" @click="fnEdit">회원정보수정</button>		
 	</div>
-	<button class="btn" @click="fnEdit">회원정보수정</button>
+	
 </div>
 </div>
 </body>

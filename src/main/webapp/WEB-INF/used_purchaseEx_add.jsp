@@ -288,6 +288,7 @@ var app = new Vue({
                 data : param,
                 success : function(data) { 
                 	alert("매입 사례 / 판매 등록이 완료되었습니다.");
+                	location.href="purchaseEx.do";
                 }
             });
         },

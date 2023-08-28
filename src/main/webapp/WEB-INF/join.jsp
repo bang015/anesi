@@ -182,7 +182,7 @@ i {
 	<!-- 이름 입력 -->
 	<div class="part">
 	<div><h2>이름<span class="clause1"> *</span></h2></div>
-	<div><input class="put" ref="nameInput" type="text" v-model="user.userName" placeholder="이름" @click="fnNameCheck" @keyup="fnNameCheck"></div>
+	<div><input class="put" ref="nameInput" type="text" v-model="user.userName" placeholder="실명을 입력해주세요." @click="fnNameCheck" @keyup="fnNameCheck"></div>
 	<div><span class="red">{{nameMs}}</span></div>
 	</div>
 	<!-- 닉네임 입력 -->
