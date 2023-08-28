@@ -53,10 +53,6 @@
 						<span class="production-item-header__brand">{{item.manufacturer}}</span>
 						<span class="production-item-header__name">{{item.productName}}</span>
 					</div>
-					<div class="category_country">
-						<span class="production-item-header__kind">{{item.categoryName}},</span>
-						<span class="production-item-header__country">{{item.country}}</span>
-					</div>
 				</div>
 	
 				<div class="production-item-price">
@@ -82,29 +78,31 @@
 					<i class="fa-solid fa-star" style="color: #A782C3;"></i> <span
 						class="production-item-rating__score ">{{item.csatAvg}}</span>
 				</div>
-				<!-- 장바구니버튼-->
-				<a class="cart_button"> <i
-					@click="userId ? (cartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnInsertUserCart(item)) : (nonuserCartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnAddNonUserCart(item))"
-					class="fa-solid fa-cart-shopping fa-xl"></i>
-				</a>
-				<!-- 공유하기버튼-->
-				<a class="share_button" @click="shareSelectedOption()"><i
-					class="fa-solid fa-share-nodes fa-xl"></i></a>
-				<!-- 스크랩버튼-->
-				<a v-if="userId!=''" class="scrap_button"> 
-					<i
-				      @click="toggleScrap(item)"
-				      class="fa-regular"
-				      :class="{
-				        'fa-bookmark modal-toggle-button fa-xl': !scrapbookList.includes(item.productNo),
-				        'fa-solid fa-bookmark fa-xl': scrapbookList.includes(item.productNo),
-				        'fa-xl': true,
-				        'my-icon-color-class': scrapbookList.includes(item.productNo)
-				      }"></i>
-				</a> <a v-else class="scrap_button"> <i @click="openScrapModal"
-					class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
-				</a>
-			</div>
+				<div class="item-bottom-btn">
+					<!-- 장바구니버튼-->
+					<a class="cart_button"> <i
+						@click="userId ? (cartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnInsertUserCart(item)) : (nonuserCartList.includes(item.productNo) ? fnUpdateUserCart(item) : fnAddNonUserCart(item))"
+						class="fa-solid fa-cart-shopping fa-xl"></i>
+					</a>
+					<!-- 공유하기버튼-->
+					<a class="share_button" @click="shareSelectedOption()"><i
+						class="fa-solid fa-share-nodes fa-xl"></i></a>
+					<!-- 스크랩버튼-->
+					<a v-if="userId!=''" class="scrap_button"> 
+						<i
+					      @click="toggleScrap(item)"
+					      class="fa-regular"
+					      :class="{
+					        'fa-bookmark modal-toggle-button fa-xl': !scrapbookList.includes(item.productNo),
+					        'fa-solid fa-bookmark fa-xl': scrapbookList.includes(item.productNo),
+					        'fa-xl': true,
+					        'my-icon-color-class': scrapbookList.includes(item.productNo)
+					      }"></i>
+					</a> <a v-else class="scrap_button"> <i @click="openScrapModal"
+						class="fa-regular fa-bookmark modal-toggle-button fa-xl"></i>
+					</a>
+					</div>
+				</div>
 			<!-- class="production-item__content" 끝-->
 	
 		
