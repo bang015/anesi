@@ -168,13 +168,23 @@ clear: both;
 	.product-price{
 		font-size: 17px;
 	}
+	.more{
+		float: right;
+		margin-right: 50px;
+		font-size: 17px;
+		font-weight: 600;
+	}
 </style>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
 <div id="app">
 	<div id="container">
 		<div class="part">
-			<div class="title"><h1>중고 판매</h1></div>
+			<div class="title"><h1>중고 판매</h1>
+				<div class="more">
+					<a href="../usedSell.do">더보기</a>
+				</div>
+			</div>
 			<div class="usedProduct" v-for="item in list2">
 				<div class="product-img">
 					<a href="javascript:;" @click="fnUsedProductView(item.usedPNo)"><img :src="item.pImgPath+'/'+item.pImgName"></a>
@@ -189,22 +199,7 @@ clear: both;
 					{{item.usedPSellPrice | formatPrice}} <span>원</span>
 				</div>
 			</div>
-			<div class="pa">
-				<template v-if="pageCount > 1">
-					<paginate
-						:page-count="pageCount"
-						:page-range="5"
-						:margin-pages="2"
-						:click-handler="fnSearch"
-						:prev-text="'<'"
-						:next-text="'>'"
-						:container-class="'pagination'"
-						:page-class="'page-item'">
-					</paginate>
-				</template>
-			</div>
 		</div>
-		<hr>
 		<div class="part">
 			<div class="title"><h1>중고 매입</h1>
 			<div class="text1DIV"><span class="text1">🏡 상담부터 수거까지, 편안하고 편리한 아네시의 중고 장터 🚛</span></div>
@@ -291,8 +286,8 @@ var app = new Vue({
 		},
 		fnGetList2 : function(){
 			var self = this;
-			var startNum = ((self.selectPage-1) * 8);
-			var lastNum = 8;
+			var startNum = ((self.selectPage-1) * 4);
+			var lastNum = 4;
 			var param = {startNum : startNum, lastNum : lastNum};
 			$.ajax({
 				url : "/used/purchaseList2.dox",
@@ -302,26 +297,8 @@ var app = new Vue({
                 success : function(data) { 
                 	self.list2 = data.list2;
                 	self.cnt = data.cnt;
-					self.pageCount = Math.ceil(self.cnt / 8);
+					self.pageCount = Math.ceil(self.cnt / 4);
 					console.log(self.list2);
-                }
-            }); 
-		},
-		fnSearch : function(pageNum){
-			var self = this;
-			self.selectPage = pageNum;
-			var startNum = ((pageNum-1) * 8);
-			var lastNum = 8;
-			var param = {startNum : startNum, lastNum : lastNum};
-			$.ajax({
-				url : "/used/purchaseList2.dox",
-                dataType:"json",	
-                type : "POST",
-                data : param,
-                success : function(data) { 
-                	self.list2 = data.list2;
-                	self.cnt = data.cnt;
-					self.pageCount = Math.ceil(self.cnt / 8);
                 }
             }); 
 		},
