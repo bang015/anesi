@@ -152,6 +152,30 @@ var swiper = new Swiper(".mySwiper", {
       //자기 자신을 닫는 dom method
       self.close();
     }
+    
+    console.log
+    (`.             |
+    		 　╲　　　　　　　　　　　╱
+    		  　　　　　　　　/
+    		  　　　╲　　　　　　　　╱
+    		  -　-　　　　저기요　　　-　-
+    		  　　╱　   　　　　　　╲
+    		  　╱　　/             .
+    		  　　╱　　　　　　　　╲
+    		  　　　　　/　|　　　
+    		  　　　　　　　.
+    		         
+    		.           |
+    		　╲　　　　　　　　　　　╱
+    		　　　　　　　　　/
+    		　　　╲　　　　　　　　╱
+    		　　╲　　    설마...　　　╱
+    		-　-　　　제 목소리가　　-　-　-
+    		　　╱　   들리시나요?　　╲
+    		　╱　　/               .
+    		　　╱　　　　　　　　╲
+    		　　　　　/　|　　　
+    		　　　　　　　.`);
 </script>
        
 

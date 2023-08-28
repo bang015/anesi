@@ -211,6 +211,8 @@
 </html>
 <script>
 
+
+
 <!--페이징 -->
 Vue.component('paginate', VuejsPaginate)
 var app = new Vue({
@@ -559,6 +561,8 @@ var app = new Vue({
             }
           },
      }, // methods
+     
+     
 	created : function() {
 		var self = this;
 		self.fnGetList();
@@ -567,5 +571,23 @@ var app = new Vue({
 
 	}// created
 });
+console.log(`
+		＼　　ヽ　　　　i　　|　　　　 /　　　/　
+			＼　
+			 버그 나지 마라!
+			　　　　　　　　　　　;' ':;,　　 　　　 ,;'':;,
+			　　　　　　　　　　;'　　 ':;,.,..,,,;'　　　';,
+			ー　　　　　　　　 ,:'　　　　　　　　 　　　　::::::::､
+			_＿　　　　　　　　,:' ／ 　 　　　　＼ 　　　　　::::::::',
+			　　二　　　　:'　 ●　　　　　 ●　 　　　　　　::::::::i.
+			￣　　　　　　　i　'''　(_人__)　　''''　　 ::::::::::i
+			　-‐　　　　　 :　 　　　　　　　　　 　　　　　::::::::i
+			　　　　　　　　\`:,､ 　　　　　 　 　　　 :::::::::: /
+			　／　　　　　　 ,:'　　　　　　　 : ::::::::::::｀:､
+			　　　　　　　　 ,:'　　　　　　　　 : : ::::::::::｀:､
+			         );
+		`);
+
+
 </script>
 
