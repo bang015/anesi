@@ -70,7 +70,7 @@
 			</div>
 			
 		<div class="production-item__content" v-for="item in list">
-				<div class="production-item-header" @click="addRecentProduct(item)">
+				<div class="production-item-header" @click="fnProductView(item.productNo)">
 					<a class="production-item-thumnail">
 						<div class="production-item-thumnail__overlay"></div> <img
 						class="production-item-thumnail__image " alt="½æ³×ÀÏ"

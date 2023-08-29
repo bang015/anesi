@@ -165,7 +165,7 @@
 					</label>
 					<label>
 						<div class="orInputBox addr2">
-					        <input v-model="addr.addr2" placeholder="상세주소 입력" :class="{'inpRead' : addr.addr2 != ''}" :class="!flgAddr ? '' : 'orRed'" :readonly="addr.addr2 != ''">
+					        <input v-model="addr.addr2" placeholder="상세주소 입력" :class="{'inpRead' : addr.addr2 != '' && selectIndex != -1}" :class="!flgAddr ? '' : 'orRed'" :readonly="addr.addr2 != '' && selectIndex != -1">
 					    </div>
 					</label>
 					<div class='addr3' v-if="userNo != ''">
@@ -262,7 +262,7 @@
 		        	</div>
 		        	<div class="modalStyle2">
 		        		<div class="modalStyle4">주문번호</div>
-		        		<div class="modalStyle3">{{"ORD"+formatDate(new Date())+"-"+cnt}}</div>
+		        		<div class="modalStyle3">{{paymentNo}}</div>
 		        	</div>
 		        	<div class="modalStyle2">
 		        		<div class="modalStyle4">결제금액</div>
@@ -354,6 +354,7 @@ var app = new Vue({
 		showScrapModal : false,
 		request : '',
 		selectIndex : 0,
+		paymentNo : '',
 	},// data
 	methods : {
 		fnAllCheck(){
@@ -587,6 +588,7 @@ var app = new Vue({
 		    		productName = self.productList[0].productName;
 		    	}
 		    	var paymentNo =  "ORD"+self.formatDate(new Date())+"-"+self.cnt
+		    	self.paymentNo = paymentNo;
 	              IMP.request_pay({ // param
 	              pg: self.payment, //kakaopay.TC0ONETIME
 	              pay_method: "card",
