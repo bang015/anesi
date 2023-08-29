@@ -118,6 +118,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int removeAdminReview(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
+		adminMapper.deleteAdminReviewImg(map);
 		return adminMapper.deleteAdminReview(map);
 	}
 

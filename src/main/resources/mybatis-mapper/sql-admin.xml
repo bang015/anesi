@@ -224,6 +224,15 @@
 		</foreach>
 	</delete>
 	
+	<delete id="deleteAdminReviewImg" parameterType="hashmap">
+		DELETE
+		FROM t3_tbl_review_image
+		WHERE R_NO IN
+		<foreach collection="list" close=")" open="(" item="item" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
 	<!--고객관리-->
 	<select id="selectUserList" parameterType="hashmap" resultType="com.example.anesi.model.User">
 		SELECT *

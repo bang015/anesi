@@ -46,6 +46,8 @@ public interface AdminMapper {
 	List<Review> selectAdminReviewList(HashMap<String, Object> map);
 	// 리뷰 삭제
 	int deleteAdminReview(HashMap<String, Object> map);
+	// 리뷰 이미지 삭제
+	int deleteAdminReviewImg(HashMap<String, Object> map);
 	
 	
 	//고객 리스트검색

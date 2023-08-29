@@ -138,7 +138,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {
-                	self.fnReload();
+                	self.fnGetReviewList();
                 }
             });
 		},
