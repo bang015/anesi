@@ -88,7 +88,7 @@
 							        <template v-else-if="rating +0.3 >= star">
 							         <span style="display: inline-block; position: relative;">
 							            <i class="fa-solid fa-star" style="color: #ababab;"></i> <!-- 반채워진 별표 -->
-							            <i class="fa-solid fa-star" style="color: #A782C3; position: absolute; left: 0; top:1.5px; width: 65%; overflow: hidden;"></i>
+							            <i class="fa-solid fa-star" style="color: #A782C3; position: absolute; left: 0; top:1.4px; width: 65%; overflow: hidden;"></i>
 							          </span>
 							        </template>
 							        <template v-else-if="rating + 0.5 >= star">
