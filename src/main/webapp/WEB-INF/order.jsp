@@ -852,10 +852,12 @@ var app = new Vue({
 	}, // methods
 	created : function() {
 		var self = this;
-		self.fnGetCoupon();
-		self.fnGetAddrList();
+		if(self.userNo != ''){
+			self.fnGetCoupon();
+			self.fnGetAddrList();
+			self.fnGetUserInfo();
+		}
 		self.fnGetProduct();
-		self.fnGetUserInfo();
 		var IMP = window.IMP;
 		IMP.init('imp41836047');
 		window.jusoCallBack = self.handleAddressCallback;
