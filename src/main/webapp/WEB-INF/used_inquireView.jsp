@@ -397,13 +397,16 @@ var app = new Vue({
 				return;
 			}
 			self.purchase = self.list[0].purchase;
-			var param = {usedPNo : self.usedPNo, aContent : self.aInfo.aContent, purchase : self.purchase};
+			var param = {usedPNo : self.usedPNo, 
+						 aContent : self.aInfo.aContent, 
+						 purchase : self.purchase};
 			$.ajax({
 				url : "/used/answerEdit.dox",
                 dataType:"json",	
                 type : "POST",
                 data : param,
                 success : function(data) { 
+                	self.fnInsertAlarm(7);
                 	alert("답변이 수정되었습니다.");
                 	location.reload();
                 }
@@ -426,7 +429,22 @@ var app = new Vue({
                 	location.reload();
                 }
             }); 
-		}
+		},
+		
+		fnInsertAlarm : function(alarmType){
+			var self = this;
+			var nparmap = {userNo:self.userNo, alarmType};
+
+			 $.ajax({
+	                url : "addAlarm.dox",
+	                dataType:"json",	
+	                type : "POST", 
+	                data : nparmap,
+	                success : function(data) { 
+	               }
+            }); 
+			
+		},
 	}, // methods
 	created : function() {
 		var self = this;
