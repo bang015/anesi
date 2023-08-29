@@ -108,6 +108,8 @@
     padding: 5px 9px;
     font-size: 14px;
     margin: 15px 16px 0px 0;
+  	font-family: 'Pretendard-Regular';
+    
 }
 .m-glass{
    	width: 15px;
@@ -188,7 +190,7 @@
 		<div id="board-body">
 			<div id="board-body-head"><h2>전체글<span class="text1"> {{cnt}}</span> <span class="text2" v-if="searchFlg==true">검색된 글 <span class="text1">{{searchCnt}}</span></span></h2></div>
 			<div class="searchbar">
-				<input type="text" class="search-input" @keyup.enter="fnSearch" v-model="keyword"><img class="m-glass" src="../css/image/community/m-glass.png">
+				<input type="text" class="search-input" placeholder="내용을 검색하세요." @keyup.enter="fnSearch" v-model="keyword"><img class="m-glass" src="../css/image/community/m-glass.png">
 			</div>
 		</div>
 		<div class="part">
