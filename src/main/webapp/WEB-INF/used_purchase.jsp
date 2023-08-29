@@ -234,6 +234,11 @@ var app = new Vue({
             return formattedDate;
         },
         fnInquire : function(){
+        	var self = this;
+        	if(self.sessionNo==""){
+        		alert("로그인 후 이용 가능합니다.");
+        		return;
+        	}
 			location.href="/used/inquire.do";
         },
         fnUsedView : function(usedPNo){
