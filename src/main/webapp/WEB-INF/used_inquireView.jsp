@@ -102,6 +102,7 @@ td{
     transition: background 0.3s;
     cursor: pointer;
     font-size: 16px;
+	font-family: 'Pretendard-Regular';
 }
 h1{
 	margin: 20px 0px 20px 12px;

@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
 
+
+
 .logo{
   width: 90px;
   height: 90px;
@@ -22,6 +24,7 @@ header {
 #header_navi li {
   display: inline-flex;
   align-items: center;
+
   margin-bottom: 20px;
   flex-direction: column;
 }
@@ -177,16 +180,14 @@ header {
 }
 
 #search_input{
-	border-radius: 5px;
+    border-radius: 5px;
     border: 1px solid #ccc;
-    padding: 10px 19px;
-    width: 293px;
+    padding: 10px;
+    width: 310px;
     position: absolute;
     left: 500px;
     top: 8px;
     font-family: 'Pretendard-Regular';
-    letter-spacing: 2px;
-    font-size: 15px;
 }
 
 .glass{
@@ -205,20 +206,21 @@ opacity : 0.7;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
-        color: #a2a2a2;
+    color: #a2a2a2;
     font-weight: 100;
   }
   
   #recent_search{
 	list-style: none;
-    width: 310px;
-    position: absolute;
-    left: 500px;
-    top: 51px;
-    font-size: 14px;
-    cursor: pointer;
+	width: 309px;
+	position: absolute;
+	left: 501px;
+	top: 47px;
+	font-size: 14px; 
+	cursor: pointer;
     justify-content: space-between;
   }
+
 
 
   .recent-search-item i {
@@ -227,15 +229,14 @@ opacity : 0.7;
   }
 
   .recent-search-item {
-	display: flex;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: background-color 0.5s, color 0.3s;
-    padding: 10px;
+    transition: background-color 0.5s, color 0.3s; /* 이 부분을 추가하여 배경 및 색상 전환 효과 설정 */
   }
   
   .recent-search-item:hover {
-    background-color: rgb(182, 150, 205); /* 호버 시 원하는 배경색으로 설정 */
+    background-color: #A782C3; /* 호버 시 원하는 배경색으로 설정 */
     color: white; /* 호버 시 원하는 글자색으로 설정 */
   }
   
