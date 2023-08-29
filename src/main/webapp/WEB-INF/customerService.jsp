@@ -13,6 +13,9 @@
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/customer.css" rel="stylesheet">
 <title>Insert title here</title>
+
+
+
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>

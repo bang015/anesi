@@ -339,6 +339,7 @@ color: #fff;
 .page-item a {
 	color:#666;
 	text-decoration: none;
+		
 }
 .pagination li.active {
 	color: white;
@@ -350,4 +351,4 @@ color: #fff;
 }
 .pagination li.active a{
 	color : white;
-}
+	}
