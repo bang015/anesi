@@ -465,27 +465,42 @@
 		  // 화면에 변경된 검색어 기록을 표시합니다.
 		  showRecentSearches();
 		}
-	function showRecentSearches() {
-		  // localStorage에서 최근 검색어를 가져옵니다.
-		  var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+	    function showRecentSearches() {
+	        // localStorage에서 최근 검색어를 가져옵니다.
+	        var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
-		  // 최근 검색어 목록을 비웁니다.
-		  $('#recent_search').empty();
-			
-		  if (recentSearches.length === 0) {
-			    // 최근 검색어가 없다면 메시지를 출력합니다.
-			    var message = $('<li>').text('최근 검색어가 없습니다.');
-			    $('#recent_search').append(message);
-			  } else {
-		  // 목록을 순회하며 화면에 최근 검색어를 추가합니다.
-		  for (var i = 0; i < recentSearches.length; i++) {
-		    var search = recentSearches[i];
-		    var li = $('<li class="recent-search-item"></li>').text(search);
-		    var deleteIcon = $('<i class="fa-solid fa-xmark"></i>');
-		    li.append(deleteIcon);
-		    $('#recent_search').append(li);
-		  }
-		  
+	        // 최근 검색어 목록을 비웁니다.
+	        $('#recent_search').empty();
+	        
+	        if (recentSearches.length === 0) {
+	            // 최근 검색어가 없다면 메시지를 출력합니다.
+	            var message = $('<li>').text('최근 검색어가 없습니다.');
+	            $('#recent_search').append(message);
+	        } else {
+	            // 목록을 순회하며 화면에 최근 검색어를 추가합니다.
+	            for (var i = 0; i < recentSearches.length; i++) {
+	                var search = recentSearches[i];
+	                var li = $('<li class="recent-search-item"></li>').text(search);
+	                var deleteIcon = $('<i class="fa-solid fa-xmark"></i>');
+
+	                // Delete icon에 클릭 이벤트 핸들러 등록
+	                deleteIcon.click(function() {
+	                    // 클릭한 아이템의 텍스트(검색어) 가져오기
+	                    var searchText = $(this).parent().text();
+
+	                    // localStorage에서 해당 텍스트(검색어) 제거
+	                    var indexToRemove = recentSearches.indexOf(searchText);
+	                    if (indexToRemove > -1) {
+	                        recentSearches.splice(indexToRemove, 1);
+	                        localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+	                        
+	                        showRecentSearches();  // 리스트 업데이트
+	                    }
+	                });
+
+	                li.append(deleteIcon);
+	                $('#recent_search').append(li);
+	            }		  
 		  $('.category-link').on('click', function () {
 			  var categoryName = $(this).text();
 
