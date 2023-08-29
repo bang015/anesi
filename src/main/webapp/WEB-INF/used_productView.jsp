@@ -124,7 +124,7 @@
 										<a href="/selectEmail.do" class="a a1">아이디찾기</a>
 										<a href="/join.do" class="a a2">회원가입</a>
 									</div>
-									<div class="non-user-wrap1" v-if="nonUserScrapbook"> <!-- 비회원 주문 조회 -->
+									<div class="non-user-wrap1"> <!-- 비회원 주문 조회 -->
 										<button class="loginBtn1 btn" @click="closeScrapModal3()">쇼핑 계속하기</button>
 									</div>
 								</div>
@@ -151,6 +151,8 @@ var app = new Vue({
 		showScrapModal3 : false,
 		content : "",
 		usedtime : "",
+		pwd : "",
+		userEmail : "",
 	},// data
 	filters: {
 	    formatPrice(price) {
