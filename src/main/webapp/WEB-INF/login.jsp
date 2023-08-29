@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="js/jquery.js"></script>
+<script src="../js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <link href="../css/mainCss.css" rel="stylesheet">
 <link href="../css/login.css" rel="stylesheet">
