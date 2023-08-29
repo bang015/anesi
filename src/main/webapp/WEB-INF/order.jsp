@@ -670,7 +670,6 @@ var app = new Vue({
 		    },
 		    fnAddrChange(event){
 		    	var self = this;
-		    	self.addr.addrDefault = 'N';
 		    	 const selectedIndex = event.target.selectedIndex;
 		    	 const selectedItem = self.addrList[selectedIndex];
 		    	 self.selectIndex = selectedIndex;
@@ -691,6 +690,11 @@ var app = new Vue({
 				self.addr.addr2= selectedItem.addr2;
 				self.addr.zip= selectedItem.zipcode;
 				self.order.addrNo = selectedItem.addrNo;
+				if(selectedItem.defaultYn == 'Y'){
+					self.addr.addrDefault = 'Y';
+				} else{
+					self.addr.addrDefault = 'N';
+				}
 				self.addrAdd = false;
 		    },
 		    fnGetProduct(){
@@ -812,6 +816,24 @@ var app = new Vue({
 	            numberWithCommas(number) {
 	                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	            },
+	            fnGetUserInfo(){
+	            	var self = this;
+					var nparmap = {no : self.userNo};
+		            $.ajax({
+		                url : "../mypage/user_info.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+		                	console.log(data);
+		                	self.order.name = data.info.userName;
+		                	self.order.email1 = data.info.userEmail.split('@')[0];
+		                	self.order.email2 = data.info.userEmail.split('@')[1];
+		                	self.order.phone2 = data.info.phone.substring(3);
+		                }
+		            });
+	            	
+	            }
 	            
 	}, // methods
 	created : function() {
@@ -819,6 +841,7 @@ var app = new Vue({
 		self.fnGetCoupon();
 		self.fnGetAddrList();
 		self.fnGetProduct();
+		self.fnGetUserInfo();
 		var IMP = window.IMP;
 		IMP.init('imp41836047');
 		window.jusoCallBack = self.handleAddressCallback;
