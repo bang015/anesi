@@ -70,7 +70,7 @@
 		    </div>
 			 
            <div class="production-item-price">
-                <div class="production-item-price__orginal" v-if="item.discountPrice!=''">정가
+                <div class="production-item-price__orginal" v-if="item.discountPrice!='' && item.discountYn == 'Y'">정가
                     <span class="won_icon">￦</span>
                     <span class="production-item-price__orginal2">{{ formatPrice(item.productPrice) }}</span>
                     <span class="production-item-price__percent">{{ item.discount }}%</span>
