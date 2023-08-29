@@ -152,7 +152,8 @@
 					</label>
 					<label>
 						<span :class="!flgAddr ? '' : 'orRed'">林家</span>
-						<button class="addrButton" @click="openAddressSearch">林家茫扁</button>
+						<button class="addrButton" @click="openAddressSearch" v-if="addr.zip == ''">林家茫扁</button>
+						<!-- <button class="addrButton" @click="deleteAddress" v-if="selectIndex != '-1'">林家昏力</button> -->
 						<div class="orInputBox">
 					        <input v-model="addr.zip" readonly class="inpRead" :class="!flgAddr ? '' : 'orRed'">
 					    </div>
@@ -164,7 +165,7 @@
 					</label>
 					<label>
 						<div class="orInputBox addr2">
-					        <input v-model="addr.addr2" placeholder="惑技林家 涝仿" :class="!flgAddr ? '' : 'orRed'">
+					        <input v-model="addr.addr2" placeholder="惑技林家 涝仿" :class="{'inpRead' : addr.addr2 != ''}" :class="!flgAddr ? '' : 'orRed'" :readonly="addr.addr2 != ''">
 					    </div>
 					</label>
 					<div class='addr3' v-if="userNo != ''">
@@ -833,6 +834,19 @@ var app = new Vue({
 		                }
 		            });
 	            	
+	            },
+	            deleteAddress(){
+	            	var self = this;
+					var nparmap = {addrNo : self.order.addrNo};
+		            $.ajax({
+		                url : "delectAddress.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+		                	self.fnGetAddrList();
+		                }
+		            });
 	            }
 	            
 	}, // methods

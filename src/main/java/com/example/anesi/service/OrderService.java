@@ -40,4 +40,6 @@ public interface OrderService {
 	UsedOrder searchUsedOrder(HashMap<String, Object> map);
 	// 중고 상품 결제
 	int addUsedOrder(HashMap<String, Object> map);
+	//주소 제거
+	int removeAddress(HashMap<String, Object> map);
 }

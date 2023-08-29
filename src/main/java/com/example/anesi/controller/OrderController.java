@@ -182,4 +182,12 @@ public class OrderController {
 		orderService.addUsedOrder(map);
 		return new Gson().toJson(resultMap);
 	}
+	// 주소 삭제
+	@RequestMapping(value = "/order/delectAddress.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String delectAddress(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		orderService.removeAddress(map);
+		return new Gson().toJson(resultMap);
+	}
 }

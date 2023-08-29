@@ -53,4 +53,6 @@ public interface OrderMapper {
 	UsedOrder selectUsedOrder(HashMap<String, Object> map);
 	// 중고 상품 결제
 	int insertUsedOrder(HashMap<String, Object> map);
+	// 주소 제거
+	int deleteAddress(HashMap<String, Object> map);
 }

@@ -131,6 +131,11 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return orderMapper.insertUsedOrder(map);
 	}
+	@Override
+	public int removeAddress(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderMapper.deleteAddress(map);
+	}
 		
 	
 	

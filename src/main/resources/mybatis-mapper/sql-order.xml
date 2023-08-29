@@ -156,4 +156,10 @@
 	        #{receiptName}, #{receiptPhone}, #{paymentNo}
 	    )
 	</insert>
+	
+	<delete id="deleteAddress" parameterType="hashmap">
+		DELETE
+		FROM t3_tbl_user_address
+		WHERE ADDR_NO = #{addrNo}
+	</delete>
 </mapper>
