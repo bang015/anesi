@@ -39,6 +39,8 @@
 		height: 30px;
 		margin-left: 40px;
 		margin-top: 5px;
+		font-family: 'Pretendard-Regular';
+   	    padding-left: 14px;
 	} 
 	.login-btn .loginBtn{
 		width: 82%;
@@ -94,7 +96,9 @@
 		height: 30px;
 		margin-left:40px;
 		margin-top: 5px;
-	}
+		font-family: 'Pretendard-Regular';
+   		padding-left: 14px;
+}
 	.non-user-btn .btn{
 		width: 82%;
 		height : 40px;
