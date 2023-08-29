@@ -30,8 +30,9 @@ header {
 }
 
 #header_navi li span {
-  margin-left: 5px;
-  margin-top: 8px;
+    margin-left: 3px;
+    margin-top: 8px;
+    margin-right: 3px;
 }
 
 #header_navi li i {
@@ -327,4 +328,8 @@ opacity : 0.7;
     top: 10px;
     left: 10px;
    cursor: pointer;
+   }
+   
+   .icon1, .icon2, .icon3 { 
+	   margin: 0px 10px;
    }

@@ -226,7 +226,7 @@
 					<a href="../logout.do" id="login-button-link">
 						<i class="fa-solid fa-door-closed"></i>
 					</a>
-					<span class="fon" id="login-button-text">로그아웃</span>
+					<span class="fon" id="login-button-text" style="margin-left : 3px; margin-right : 3px;">로그아웃</span>
 				</li>
 				<li>
 					<a href="../mypage.do">
