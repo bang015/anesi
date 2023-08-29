@@ -219,10 +219,7 @@
 	margin-right: 5px;
 	font-size: 14px;
 }
-.btn3{
-	background-color: #fff;
-	color: #5E503F;
-}
+
 .modalStyle4{
 	display: flex;
     justify-content: space-between;
@@ -358,10 +355,11 @@
     margin: 0px;
 }
 .btn3{
-	background-color: #fff;
-	color: #5E503F;
+	background-color: #5E503F;
+	color:#fff;
 	margin-left: 20px;
-}
+ 	font-family: 'Pretendard-Regular';
+ }
 
 .small{
 	font-size: 14px;	margin-left: 20px;
