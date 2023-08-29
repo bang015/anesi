@@ -133,17 +133,7 @@ h1{
 .btnDIV2{
 	text-align: right;
 }
-.btn1{
-	border: none;
-    color: white;
-    background-color: #A782C3;
-    border-radius: 7px;
-    padding: 14px 45px;
-    margin: 30px 0px;
-    transition: background 0.3s;
-    cursor: pointer;
-    font-size: 16px;
-}
+
 .btn2{
     color: #494949;
     background-color: #f9f9f9;
@@ -156,6 +146,8 @@ h1{
     height: 23px;
     border: 1px solid #c9c9c9;
     font-size: 12px;
+    font-family: 'Pretendard-Regular';
+    
 }
 .btn2:hover{
 	color: #ffffff;
