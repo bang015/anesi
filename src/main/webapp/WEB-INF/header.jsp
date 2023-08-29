@@ -277,7 +277,7 @@
 				 <div id="recent_search" class="recent-search-container" style="display: none;"></div>
 			</div>
 			<div class="flow-container">
-		        <div class="flow-text">
+		        <div class="flow-text" >
 		            <div class="flow-wrap">우리집 고양이 망치도 좋아하는 ANESI </div>
 		            <div class="flow-wrap">#미래를 담은 클래식한 디자인,ANESI </div>
 		            <div class="flow-wrap"># 행복을 만드는 너와나의집, ANESI </div>
@@ -286,6 +286,8 @@
 		            <div class="flow-wrap">중고라 적고 새로운 트렌드라 읽는다! </div>
 		            <div class="flow-wrap">나도 MZ세대 식집사! 반려식물 구경와:)</div>
 		            <div class="flow-wrap">Hello! Welcome to our ANESI </div>
+    		        <div class="flow-wrap">우리집 고양이 망치도 좋아하는 ANESI </div>
+		            
 		
 		
 		        </div>

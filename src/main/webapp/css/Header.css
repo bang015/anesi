@@ -249,7 +249,7 @@ opacity : 0.7;
       flex: 0 0 auto;
       white-space: nowrap;
       overflow: hidden;
-      transition: 0.3s;
+      transition: 0.0001s;
       font-size: 0.8rem;
       color: #424242;
   }
@@ -266,14 +266,12 @@ opacity : 0.7;
   }
   
   @keyframes textLoop {
-    0% {
-      -webkit-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0);
+      0% {
+        transform: translateX(0); /* 초기 위치를 왼쪽으로 이동 */
     }
     100% {
-      -webkit-transform: translate3d(-100%, 0, 0);
-      transform: translate3d(-100%, 0, 0);
-    } 
+        transform: translateX(-100%); /* 왼쪽으로 계속 이동하여 반복 */
+    }
   }
   /**/
   .communityButton{
