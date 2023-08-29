@@ -56,7 +56,7 @@
 	
 				<div class="production-item-price">
 					<div class="production-item-price__orginal"
-						v-if="item.discountPrice!=''">
+						v-if="item.discountPrice!='' && item.discountYn == 'Y'">
 						정가 <span class="won_icon">￦</span> <span
 							class="production-item-price__orginal2">{{
 							formatPrice(item.productPrice) }}</span> <span
@@ -277,7 +277,8 @@ var app = new Vue({
 			self.selectPage = pageNum; 
 			var startNum = ((pageNum-1) * 12);
 			var lastNum = 12;
-			var nparmap = {startNum : startNum, lastNum : lastNum};
+			var nparmap = {order : self.order,
+    				productNo : self.productNo,startNum : startNum, lastNum : lastNum};
 		 $.ajax({
                 url : "/product/store_main.dox",
                 dataType:"json",	

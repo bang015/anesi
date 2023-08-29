@@ -15,7 +15,7 @@
 		LEFT JOIN (
 		    SELECT PRODUCT_NO, PRODUCT_PRICE * (100 - DISCOUNT) / 100 AS DISCOUNT_PRICE
 		    FROM t3_tbl_product
-		    WHERE DISCOUNT_YN = 'Y'
+		    
 		) AS D ON P.PRODUCT_NO = D.PRODUCT_NO
 		JOIN t3_tbl_product_image i ON P.PRODUCT_NO = i.PRODUCT_NO
 		LEFT JOIN (

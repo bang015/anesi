@@ -102,9 +102,11 @@ var app = new Vue({
             var self = this;
             if(self.paymentNo == ""){
             	alert("주문번호를 입력하세요.")
+            	return;
             }
             if(self.orderEmail == ""){
             	alert("이메일을 입력하세요.")
+            	return;
             }
             var nparmap = {paymentNo : self.paymentNo, orderEmail : self.orderEmail};
             $.ajax({
@@ -115,6 +117,7 @@ var app = new Vue({
                 success : function(data) {                
                		if(data.nonUserOrderCheck == 0){
                			alert("주문 내역이 없습니다, 주문 번호 혹은 이메일을 확인해주세요.")
+               			return;
                		}else{
                			self.selectNonUserOrder();
                		}
