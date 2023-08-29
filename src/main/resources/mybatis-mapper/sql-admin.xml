@@ -212,7 +212,8 @@
 		INNER JOIN t3_tbl_product p
 			ON p.PRODUCT_NO = r.PRODUCT_NO
 		INNER JOIN t3_tbl_user u
-			ON u.USER_NO = r.USER_NO		
+			ON u.USER_NO = r.USER_NO
+		ORDER BY UDATETIME DESC	
 	</select>
 	
 	<delete id="deleteAdminReview" parameterType="hashmap">
