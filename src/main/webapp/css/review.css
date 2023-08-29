@@ -158,6 +158,9 @@
 	    border:1px solid #eee;
 	    color:#666;
 	    display : inline;
+	    display: flex;
+	    align-items: center;
+    	justify-content: center;
 	}
 	.pagination li:hover {
 	    background: #E4DBD6;
