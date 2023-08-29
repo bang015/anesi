@@ -380,6 +380,7 @@ var app = new Vue({
                 type : "POST",
                 data : param,
                 success : function(data) { 
+                	self.fnInsertAlarm(7);
                 	alert("답변이 등록되었습니다.");
                 	location.href="purchase.do";
                 }
@@ -406,8 +407,8 @@ var app = new Vue({
                 type : "POST",
                 data : param,
                 success : function(data) { 
-                	self.fnInsertAlarm(7);
-                	alert("답변이 수정되었습니다.");
+                	self.fnInsertAlarm(8);
+                    alert("답변이 수정되었습니다.");
                 	location.reload();
                 }
             }); 
@@ -433,10 +434,10 @@ var app = new Vue({
 		
 		fnInsertAlarm : function(alarmType){
 			var self = this;
-			var nparmap = {userNo:self.userNo, alarmType};
+			var nparmap = {userNo:self.list[0].userNo, alarmType};
 
 			 $.ajax({
-	                url : "addAlarm.dox",
+	                url : "../addAlarm.dox",
 	                dataType:"json",	
 	                type : "POST", 
 	                data : nparmap,
