@@ -180,6 +180,7 @@ clear: both;
 		border-radius: 5px;
 		border: 1px solid #c5c5c5;
 		padding-left: 5px;
+		font-family: 'Pretendard-Regular';
 	}
 	.select1{
 		position: relative;

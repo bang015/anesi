@@ -33,6 +33,9 @@
 	background-color: rgba(0, 0, 0, 0);
     border: 0;
 }
+.category-wrap{
+	margin : 30px 0;
+}
 </style>
 </head>
 <!-- 상품 상세 페이지 -->
