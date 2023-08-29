@@ -108,3 +108,7 @@ h2{
 body{
 	 height: 100%;
 }
+
+li{
+	cursor: pointer;
+}
