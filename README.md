@@ -2,7 +2,7 @@
   <h1>ANESI</h1>
 </div>
 <div align="center">
-  ![KakaoTalk_20230830_112904649](https://github.com/Jeongseonil/anesi/assets/77383087/8048538b-e7af-4b1c-b94f-0d8ed54dca8f)
+![KakaoTalk_20230830_112904649](https://github.com/Jeongseonil/anesi/assets/77383087/8048538b-e7af-4b1c-b94f-0d8ed54dca8f)
 </div>
 <div align="center">
   <img src="https://img.shields.io/badge/Html5-E34F26?style=flat&logo=html5&logoColor=white"/>
