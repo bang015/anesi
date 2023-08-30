@@ -5,7 +5,7 @@
 <img src="https://github.com/Jeongseonil/anesi/assets/77383087/ab1be8b5-48fc-4b49-a696-27cfe76a60a7" width="300" height="300"/>
 </div>
 
-<h2>📃 프로젝트 정보</h2>
+<h2>🔎 프로젝트 정보</h2>
 <div>2023.08.09 ~ 2023.08.28</div>
 <div>더조은컴퓨터아카데미 수강 첫 번째 단체 프로젝트.</div>
 <br>
@@ -45,8 +45,5 @@
 </div>
 <br>
 <br>
-
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anesi)](https://github.com/anesi/github-readme-stats)
-
 
 ![Footer](https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=footer)
