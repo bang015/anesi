@@ -46,3 +46,8 @@
 </div>
 <br>
 <br>
+
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anesi)](https://github.com/anesi/github-readme-stats)
+
+
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=footer)
