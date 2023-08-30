@@ -1,6 +1,5 @@
-<div align="center">
 <img src="https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=header&text=project_ANESI&fontSize=50&fontColor=fff" />
-</div>
+
 
 <div align="center">
 <img src="https://github.com/Jeongseonil/anesi/assets/77383087/ab1be8b5-48fc-4b49-a696-27cfe76a60a7" width="300" height="300"/>
