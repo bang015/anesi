@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=header&text=project_ANESI&fontSize=50&fontColor=fff" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=header&text=&fontSize=50&fontColor=fff" />
 
 
 <div align="center">
