@@ -12,7 +12,7 @@
 <link href="../css/adminH.css" rel="stylesheet">
 <link href="../css/admin_main.css" rel="stylesheet">
 <meta charset="UTF-8">
-<title>관리자센터</title>
+<title>관리자센터 :: 메인</title>
 <style>
 </style>
 </head>

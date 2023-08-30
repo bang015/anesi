@@ -10,7 +10,7 @@
 <link href="../../css/adminH.css" rel="stylesheet">
 <link href="../css/product_edit.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>중고 관리</title>
+<title>관리자센터 :: 중고관리</title>
 <style>
 .used{
 	background: white;

@@ -11,7 +11,7 @@
 <link href="../../css/adminH.css" rel="stylesheet">
 
 <meta charset="UTF-8">
-<title>고객관리</title>
+<title>관리자센터 :: 고객관리</title>
 
 </head>
 <!-- 주석 꼭 남겨주세요 -->

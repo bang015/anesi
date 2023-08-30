@@ -10,7 +10,7 @@
 <link href="../css/product_edit.css" rel="stylesheet">
 <link href="../../css/adminH.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>문의 관리</title>
+<title>관리자센터 :: 문의관리</title>
 <style>
 .inquiry2{
 	background: white;

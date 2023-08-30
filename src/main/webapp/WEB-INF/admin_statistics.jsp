@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>관리자센터 :: 판매통계</title>
 <style>
 .statistics{
 	background: white;

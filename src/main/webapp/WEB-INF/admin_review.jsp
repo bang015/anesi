@@ -10,7 +10,7 @@
 <link href="../css/product_edit.css" rel="stylesheet">
 <link href="../../css/adminH.css" rel="stylesheet">
 <meta charset="EUC-KR">
-<title>리뷰 관리</title>
+<title>관리자센터 :: 리뷰관리</title>
 <style>
 
 
