@@ -80,7 +80,7 @@
   <li>통계를 통한 매출확인</li>
 </ul>
 <br>
-<div> ⭐ 기능구성도 : https://app.diagrams.net/#G1y-01uktdRTbNTj9PdYa_tDSTxb3xG23s  </div>
+<div> ⭐ 기능구성도 : https://drive.google.com/file/d/1y-01uktdRTbNTj9PdYa_tDSTxb3xG23s/view?usp=sharing  </div>
 
 <br>
 <br>
