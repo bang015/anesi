@@ -80,6 +80,9 @@
   <li>통계를 통한 매출확인</li>
 </ul>
 <br>
+<div> ⭐ 기능구성도 : https://app.diagrams.net/#G1y-01uktdRTbNTj9PdYa_tDSTxb3xG23s  </div>
+
+<br>
 <br>
 <h2>📺 시연 영상 </h2>
 <div>영상이 들어갈 예정입니다.</div>
