@@ -420,7 +420,6 @@ var app = new Vue({
             const regex2 = /[0-9,]+/g;
             if (
                 self.producInfo.some(item => item.optionName === '') ||
-                self.producInfo.some(item => !regex2.test(item.optionPrice)) ||
                 self.producInfo.some(item => self.removeCommas(item.optionPrice) < 0)
             ) {
                 self.optionflg = true;

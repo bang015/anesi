@@ -103,7 +103,7 @@
 			:click-handler="goToPurchasePage" :container-class="'pagination'"
 			:page-class="'page-item'"> </paginate>
 	</template>
-
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
 <script src="../js/jquery.js"></script>
