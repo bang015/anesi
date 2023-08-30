@@ -85,8 +85,8 @@
 <br>
 <br>
 <h2>📺 시연 영상 </h2>
-<div> 🎁 고객 시점 시연 영상 : https://youtu.be/_UXwgNDWhh4 </div>
-<div> 📢 관리자 시점 시연 영상 : https://youtu.be/Lr98-rdsHdE </div>
+<div> 🎁 고객 관점 시연 영상 : https://youtu.be/_UXwgNDWhh4 </div>
+<div> 📢 관리자 관점 시연 영상 : https://youtu.be/Lr98-rdsHdE </div>
 <br>
 
 ![Footer](https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=footer)
