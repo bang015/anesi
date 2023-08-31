@@ -88,5 +88,8 @@
 <div> 🎁 고객 관점 시연 영상 : https://youtu.be/_UXwgNDWhh4 </div>
 <div> 📢 관리자 관점 시연 영상 : https://youtu.be/Lr98-rdsHdE </div>
 <br>
+<br>
+<h2>Mysql sql문</h2>
+<div>https://drive.google.com/file/d/1T2jiJK0sL0aJMeJlV7YU0oKtgyodR3D8/view?usp=sharing</div>
 
 ![Footer](https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=footer)
