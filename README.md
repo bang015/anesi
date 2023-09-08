@@ -90,6 +90,6 @@
 <br>
 <br>
 <h2>Mysql sql문</h2>
-<div>[https://drive.google.com/file/d/1T2jiJK0sL0aJMeJlV7YU0oKtgyodR3D8/view?usp=sharing](https://drive.google.com/file/d/1rmM8AHz5vv3P9UWlfg1ExZRXg8wCWYjy/view?usp=sharing)</div>
+<div>https://drive.google.com/file/d/1rmM8AHz5vv3P9UWlfg1ExZRXg8wCWYjy/view?usp=sharing</div>
 
 ![Footer](https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=footer)
