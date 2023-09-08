@@ -1,6 +1,6 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=header&text=&fontSize=50&fontColor=fff" />
 <div align="center">
-<img src="https://github.com/Jeongseonil/anesi/assets/77383087/ab1be8b5-48fc-4b49-a696-27cfe76a60a7" width="300" height="300"/>
+<img src="https://github.com/Jeongseonil/anesi/assets/77383087/0c0b7abe-b643-4d47-acda-8242134a29de" width="300" height="300"/>
 </div>
 <h2>🔎 프로젝트 정보</h2>
 <div><b>📆 2023.08.09 ~ 2023.08.28 (22일)</b></div>
