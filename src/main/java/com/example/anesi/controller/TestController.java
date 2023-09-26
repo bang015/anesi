@@ -31,7 +31,7 @@ public class TestController {
 	
 	@RequestMapping("main.do") 
 	public String main(Model model) throws Exception{
-		return "/main";
+		return "main";
 	}
 	@RequestMapping("test.do") 
 	public String test1(HttpServletRequest request,Model model, @RequestParam HashMap<String, Object> map) throws Exception{
