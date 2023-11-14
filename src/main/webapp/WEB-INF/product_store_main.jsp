@@ -191,7 +191,7 @@
 					</div>
 					<div class="non-user-wrap1">
 						<!-- 비회원 주문 조회 -->
-						<button class="loginBtn1 btn" @click="">비회원 구매하기</button>
+						<button class="loginBtn1 btn" @click="closeModal">쇼핑계속하기</button>
 					</div>
 				</div>
 			</div>
