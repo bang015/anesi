@@ -200,7 +200,7 @@
 							<div class="content-review" id="review">
 								<div class="review-title2" >
 									<span class="review-text1">¸®ºä </span><span class="review-text2" v-if="csat.csatCnt > 0"> {{csat.csatCnt}}</span>
-									<button class="review-btn" @click="openScrapModal" v-if="reviewUser.length != 0">¸®ºä¾²±â</button>
+									<button class="review-btn" @click="openScrapModal" >¸®ºä¾²±â</button>
 								</div>
 								<div class="modal noneDisplay" v-if="showScrapModal" :class="{'showDisplay' : showScrapModal}">
 									
