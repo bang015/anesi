@@ -263,12 +263,12 @@ var app = new Vue({
                     }));
                     self.chartOptions = {
                    		xaxis : {
-                  			categories : weeklyData.map(item => item.order_date.substring(0,5)+'老')
+                  			categories : weeklyData.map(item => item.order_date.replaceAll(',', '').substring(0,6)+'老')
                    		}
                  	};
                     self.chartOptions2 = {
                        		xaxis : {
-                      			categories : weeklyData.map(item => item.order_date.substring(0,5)+'老')
+                      			categories : weeklyData.map(item => item.order_date.replaceAll(',', '').substring(0,6)+'老')
                        		}
                      	};
                     self.series = [{
