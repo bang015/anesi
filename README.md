@@ -1,7 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=header&text=&fontSize=50&fontColor=fff" />
-<div align="center">
-<img src="https://github.com/Jeongseonil/anesi/assets/77383087/0c0b7abe-b643-4d47-acda-8242134a29de" width="300" height="300"/>
-</div>
+
 <h2>🔎 프로젝트 정보</h2>
 <div><b>📆 2023.08.09 ~ 2023.08.28 (22일)</b></div>
 <div>더조은컴퓨터아카데미 수강 첫 번째 단체 프로젝트.</div>
@@ -12,32 +9,7 @@
 <br>
 <div>이름으로 정해진 anesi는 현대 그리스어로 ανεση(anesi) "안식"이라는 뜻입니다.</div>
 <div>쇼핑몰의 주체가 되는 "집"이라는 단어에 맞게 편안한 느낌을 표현하고자 anesi라는 이름을 선택하게 되었습니다. :) </div>
-<br>
-<br>
-<h2>💁‍♂️ 팀원 소개</h2>
-<table>
-  <tr>
-    <th>✨팀장✨ 정선일 😎</th>
-    <th>방대혁 😐</th>
-    <th>　이승준 🤔　</th>
-    <th>이지나 🤭</th>
-    <th>최인경 🤗</th>
-  </tr>
-  <tr>
-    <td><b>담당 부분</b> <br>
-      상품 등록, 주문 & 결제, 주문내역 조회, 스크랩북, 상품관리, 배송관리, 문의 & 리뷰 관리, 판매 통계, 나의 쿠폰, 나의 문의, 나의 리뷰</td>
-    <td><b>담당 부분</b> <br> 
-      로그인, 상품 상세페이지, 리뷰, 문의, 아이디 & 비밀번호 찾기, 중고 상품 판매, 중고 상품 상세페이지, 비회원 주문 조회</td>
-    <td><b>담당 부분</b> <br>
-      헤더, 장바구니, 검색, 최근 검색어, 최근 본 상품, 고객센터</td>
-    <td><b>담당 부분</b> <br>
-      회원가입, 마이페이지, 회원탈퇴, 커뮤니티, 중고 상품 등록, 회원 정보 수정, 나의 게시글, 비밀번호 변경, 알림 설정</td>
-    <td><b>담당 부분</b> <br>
-      푸터, 상품 메인, 메인, 관리자 메인, 고객 관리, 공지사항, 알림, 쿠폰, 팝업, 중고상품배송관리</td>
-  </tr>
-</table>
-<br>
-<br>
+
 <h2>🛠 Stacks</h2>
 <div>
   <img src="https://img.shields.io/badge/Html5-E34F26?style=flat&logo=html5&logoColor=white"/>
