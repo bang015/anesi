@@ -28,12 +28,13 @@
   <li>상품의 리뷰와 문의를 작성하거나 볼 수 있습니다.</li>
 </ul>
 
-![ezgif com-video-to-gif](https://github.com/bang015/anesi/assets/137017329/8194e9aa-3865-4e60-88cc-d602e442ed79)
+
 
 
 <br>
 <div> ⭐ 기능구성도 : https://drive.google.com/file/d/1y-01uktdRTbNTj9PdYa_tDSTxb3xG23s/view?usp=sharing  </div>
 
+![ezgif com-video-to-gif (1)](https://github.com/bang015/anesi/assets/137017329/8e2b4a12-63d3-409a-a19f-c973d81c673e)
 
 <br>
 <br>
