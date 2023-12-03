@@ -27,7 +27,9 @@
   <li>구매하고자 하는 옵션과 개수를 선택하여 구매 또는 장바구니에 담을 수 있습니다.</li>
   <li>상품의 리뷰와 문의를 작성하거나 볼 수 있습니다.</li>
 </ul>
+
 ![ezgif com-video-to-gif](https://github.com/bang015/bang015/assets/137017329/fce79b7b-bc11-4d17-b242-db498df19240)
+
 <br>
 <div> ⭐ 기능구성도 : https://drive.google.com/file/d/1y-01uktdRTbNTj9PdYa_tDSTxb3xG23s/view?usp=sharing  </div>
 
