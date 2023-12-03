@@ -28,7 +28,8 @@
   <li>상품의 리뷰와 문의를 작성하거나 볼 수 있습니다.</li>
 </ul>
 
-![ezgif com-video-to-gif](https://github.com/bang015/bang015/assets/137017329/fce79b7b-bc11-4d17-b242-db498df19240)
+![ezgif com-video-to-gif](https://github.com/bang015/anesi/assets/137017329/8194e9aa-3865-4e60-88cc-d602e442ed79)
+
 
 <br>
 <div> ⭐ 기능구성도 : https://drive.google.com/file/d/1y-01uktdRTbNTj9PdYa_tDSTxb3xG23s/view?usp=sharing  </div>
