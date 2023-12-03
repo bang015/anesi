@@ -4,11 +4,10 @@
 <div>더조은컴퓨터아카데미 수강 첫 번째 단체 프로젝트.</div>
 <br>
 <br>
-<h2>✨ 프로젝트 소개</h2>
-<div>쇼핑몰이라는 주제 중, 1인 가구의 증가로 홈데코의 수요가 증가함에 따라 일반 마켓에 더해 중고매입과 판매를 더한 합리적인 쇼핑몰과 개개인의 인테리어를 공유할 수 있는 소셜 커뮤니티를 제공하고자 포괄적인 홈데코 용품을 판매하는 쇼핑몰을 선정하게 되었습니다.</div>
-<br>
-<div>이름으로 정해진 anesi는 현대 그리스어로 ανεση(anesi) "안식"이라는 뜻입니다.</div>
-<div>쇼핑몰의 주체가 되는 "집"이라는 단어에 맞게 편안한 느낌을 표현하고자 anesi라는 이름을 선택하게 되었습니다. :) </div>
+<h2>✨ 담당 파트 소개</h2>
+<div>이 글은 제가 담당한 파트를 소개하는 글 입니다.</div>
+<div>프로젝트의 전체적인 설명은 팀 README에서 확인해주세요!</div>
+<div><b>팀 README : https://github.com/Jeongseonil/anesi/blob/master/README.md</b></div>
 
 <h2>🛠 Stacks</h2>
 <div>
@@ -21,38 +20,17 @@
   <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=springboot&logoColor=white"/>
 </div>
 <br>
-<br>
-
-<h2>⚙ 주요 기능</h2>
-<h3>📌 스토어</h3>
+<h2>⚙ 담당 파트 상세 설명</h2>
+<h3>[상품 상세 페이지]</h3>
 <ul>
-  <li>각각의 상품 상세페이지 제공</li>
-  <li>리뷰와 문의 지원</li>
+  <li>스토어에서 선택한 상품의 상세 정보를 제공합니다.</li>
+  <li>구매하고자 하는 옵션과 개수를 선택하여 구매 또는 장바구니에 담을 수 있습니다.</li>
+  <li>상품의 리뷰와 문의를 작성하거나 볼 수 있습니다.</li>
 </ul>
-<h3>📌 커뮤니티</h3>
-<ul>
-  <li>게시글 등록과 썸네일</li>
-  <li>댓글과 좋아요</li>
-</ul>
-<h3>📌 중고 물품</h3>
-<ul>
-  <li>중고 물품 매입 및 판매</li>
-</ul>
-<h3>📌 마이페이지</h3>
-<ul>
-  <li>회원 정보수정</li>
-  <li>나의 문의, 리뷰, 게시글, 쇼핑</li>
-  <li>스크랩북</li>
-</ul>
-<h3>📌 관리자</h3>
-<ul>
-  <li>상품 등록, 수정, 배송</li>
-  <li>중고 상품 관리 및 배송</li>
-  <li>고객, 문의, 리뷰 관리</li>
-  <li>통계를 통한 매출확인</li>
-</ul>
+![ezgif com-video-to-gif](https://github.com/bang015/bang015/assets/137017329/fce79b7b-bc11-4d17-b242-db498df19240)
 <br>
 <div> ⭐ 기능구성도 : https://drive.google.com/file/d/1y-01uktdRTbNTj9PdYa_tDSTxb3xG23s/view?usp=sharing  </div>
+
 
 <br>
 <br>
@@ -64,4 +42,3 @@
 <h2>💾 Mysql sql문</h2>
 <div>https://drive.google.com/file/d/1rmM8AHz5vv3P9UWlfg1ExZRXg8wCWYjy/view?usp=sharing</div>
 
-![Footer](https://capsule-render.vercel.app/api?type=waving&color=A782C3&height=200&section=footer)
