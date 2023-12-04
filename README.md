@@ -28,7 +28,7 @@
   <li>상품의 리뷰와 문의를 작성하거나 볼 수 있습니다.</li>
 </ul>
 
-![ezgif com-video-to-gif](https://github.com/bang015/anesi/assets/137017329/ad0ee7b3-78ab-4050-b08a-009869642869)
+![ezgif com-video-to-gif (1)](https://github.com/bang015/anesi/assets/137017329/dfde70f0-d680-4648-bf2b-335d0a624a58)
 
 <h3>[리뷰]</h3>
 <ul>
