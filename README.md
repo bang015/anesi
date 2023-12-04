@@ -55,6 +55,14 @@
 
 ![ezgif com-video-to-gif](https://github.com/bang015/anesi/assets/137017329/9471c742-8ed6-4b0a-a5a5-ae62201d16a6)
 
+<h3>[비회원 주문 조회]</h3>
+<ul>
+  <li>비회원으로 결제 완료시 나오는 주문번호와 이메일로 조회할 수 있습니다.</li>
+  <li>주문 정보는 배송 시작 전 변경 할 수 있으며, 배송이 시작되면 변경 할 수 없습니다.</li>
+</ul>
+
+![ezgif com-video-to-gif (2)](https://github.com/bang015/anesi/assets/137017329/eaffbaa3-e53d-43d1-8481-42eb870a0b21)
+
 <br>
 <div> ⭐ 기능구성도 : https://drive.google.com/file/d/1y-01uktdRTbNTj9PdYa_tDSTxb3xG23s/view?usp=sharing  </div>
 
