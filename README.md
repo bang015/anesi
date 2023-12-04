@@ -30,8 +30,14 @@
 
 ![ezgif com-video-to-gif](https://github.com/bang015/anesi/assets/137017329/ad0ee7b3-78ab-4050-b08a-009869642869)
 
+<h3>[리뷰]</h3>
+<ul>
+  <li>modal을 이용하여 페이지 이동없이 리뷰 작성 할 수 있습니다.</li>
+  <li>마우스 이벤트를 이용하여 직관적인 별점 기능 구현</li>
+  <li>별점&리뷰내용은 필수 입력 사항이며, 리뷰 이미지는 선택 사항 입니다.</li>
+</ul>
 
-
+![ezgif com-video-to-gif (3)](https://github.com/bang015/anesi/assets/137017329/ae6c0223-63d7-46e5-825a-5088f8599e7e)
 
 <br>
 <div> ⭐ 기능구성도 : https://drive.google.com/file/d/1y-01uktdRTbNTj9PdYa_tDSTxb3xG23s/view?usp=sharing  </div>
