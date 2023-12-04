@@ -37,6 +37,7 @@
 
 ![ezgif com-video-to-gif (1)](https://github.com/bang015/anesi/assets/137017329/dfde70f0-d680-4648-bf2b-335d0a624a58)
 
+<br>
 <h3>[리뷰]</h3>
 <ul>
   <li>modal을 이용하여 페이지 이동없이 리뷰 작성할 수 있습니다.</li>
@@ -46,6 +47,7 @@
 
 ![ezgif com-video-to-gif (3)](https://github.com/bang015/anesi/assets/137017329/ae6c0223-63d7-46e5-825a-5088f8599e7e)
 
+<br>
 <h3>[문의]</h3>
 <ul>
   <li>modal을 이용하여 페이지 이동 없이 문의를 작성할 수 있습니다.</li>
@@ -55,6 +57,7 @@
 
 ![ezgif com-video-to-gif](https://github.com/bang015/anesi/assets/137017329/9471c742-8ed6-4b0a-a5a5-ae62201d16a6)
 
+<br>
 <h3>[비회원 주문 조회]</h3>
 <ul>
   <li>비회원으로 결제 완료시 나오는 주문번호와 이메일로 조회할 수 있습니다.</li>
