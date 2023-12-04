@@ -39,12 +39,21 @@
 
 <h3>[리뷰]</h3>
 <ul>
-  <li>modal을 이용하여 페이지 이동없이 리뷰 작성 할 수 있습니다.</li>
+  <li>modal을 이용하여 페이지 이동없이 리뷰 작성할 수 있습니다.</li>
   <li>마우스 이벤트를 이용하여 직관적인 별점 기능 구현</li>
   <li>별점&리뷰내용은 필수 입력 사항이며, 리뷰 이미지는 선택 사항 입니다.</li>
 </ul>
 
 ![ezgif com-video-to-gif (3)](https://github.com/bang015/anesi/assets/137017329/ae6c0223-63d7-46e5-825a-5088f8599e7e)
+
+<h3>[문의]</h3>
+<ul>
+  <li>modal을 이용하여 페이지 이동 없이 문의를 작성할 수 있습니다.</li>
+  <li>상품을 제외한 모든 문의유형은 비밀글로 작성 가능하고 비밀글은 작성자와 관리자만 볼 수 있습니다.</li>
+  <li>문의 내용은 필수 입력 사항이며 문의 유형과 옵션은 기본값이 적용되어있습니다.</li>
+</ul>
+
+![ezgif com-video-to-gif](https://github.com/bang015/anesi/assets/137017329/9471c742-8ed6-4b0a-a5a5-ae62201d16a6)
 
 <br>
 <div> ⭐ 기능구성도 : https://drive.google.com/file/d/1y-01uktdRTbNTj9PdYa_tDSTxb3xG23s/view?usp=sharing  </div>
