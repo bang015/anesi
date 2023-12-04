@@ -5,6 +5,13 @@
 <br>
 <br>
 <h2>✨ 담당 파트 소개</h2>
+<ul>
+  <li>로그인,아이디&비번 찾기</li>
+  <li>상품 상세 페이지</li>
+  <li>리뷰&문의</li>
+  <li>중고 상품 상세&결제</li>
+  <li>비회원 주문 조회</li>
+</ul>
 <div>이 글은 제가 담당한 파트를 소개하는 글 입니다.</div>
 <div>프로젝트의 전체적인 설명은 팀 README에서 확인해주세요!</div>
 <div><b>팀 README : https://github.com/Jeongseonil/anesi/blob/master/README.md</b></div>
